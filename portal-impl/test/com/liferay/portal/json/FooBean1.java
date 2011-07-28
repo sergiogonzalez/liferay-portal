@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
@@ -12,29 +11,27 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/common/referer_common.jsp" %>
+package com.liferay.portal.json;
 
-<script type="text/javascript">
+import com.liferay.portal.kernel.json.JSON;
 
-	<%
-	Boolean logout = (Boolean)request.getAttribute(WebKeys.LOGOUT);
+import java.util.Collection;
 
-	if (logout == null) {
-		logout = Boolean.FALSE;
+/**
+ * @author Igor Spasic
+ */
+public class FooBean1 extends FooBean {
+
+	@JSON
+	public Collection<Object> getCollection() {
+		return super.getCollection();
 	}
-	%>
 
-	<c:if test="<%= logout && BrowserSnifferUtil.isIe(request) && PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), PropsKeys.NTLM_AUTH_ENABLED, PropsValues.NTLM_AUTH_ENABLED) %>">
-		document.execCommand("ClearAuthenticationCache");
-	</c:if>
+	@JSON(include = false)
+	@Override
+	public String getName() {
+		return super.getName();
+	}
 
-	location.href = '<%= HtmlUtil.escapeJS(referer) %>';
-</script>
-
-<%
-if (logout) {
-	session.invalidate();
 }
-%>
