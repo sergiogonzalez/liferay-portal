@@ -31,6 +31,11 @@
 		margin: 0 0 0.5em 0.5em;
 	}
 
+	img.document-thumbnail {
+		max-height: 128px; 
+		max-width: 128px;
+	}
+	
 	img.shortcut-icon {
 		display: inline;
 		margin-left: 10px;
