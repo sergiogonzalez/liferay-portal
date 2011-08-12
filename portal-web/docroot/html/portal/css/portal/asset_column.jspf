@@ -95,6 +95,11 @@
 	overflow: hidden;
 }
 
+.lfr-asset-column-details .lfr-asset-images {
+	background: url(<%= themeImagesPath %>/common/image.png) no-repeat 0 50%;
+	overflow: hidden;
+}
+
 .lfr-asset-column-details .lfr-asset-downloads {
 	padding-left: 0px;
 	overflow: hidden;

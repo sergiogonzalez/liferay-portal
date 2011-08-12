@@ -85,6 +85,8 @@
 <%@ page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
 
 <%
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
+
 PortletPreferences preferences = renderRequest.getPreferences();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
