@@ -57,8 +57,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 				<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= showSubfolders %>" />
 
-				<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= foldersPerPage %>" />
-
 				<aui:field-wrapper label="show-columns">
 
 					<%
@@ -109,8 +107,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDocumentsListingPanel" persistState="<%= true %>" title="documents-listing">
 			<aui:fieldset>
 				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
-
-				<aui:input label="documents-per-page" name="preferences--fileEntriesPerPage--" size="2" type="text" value="<%= fileEntriesPerPage %>" />
 
 				<aui:field-wrapper label="show-columns">
 
