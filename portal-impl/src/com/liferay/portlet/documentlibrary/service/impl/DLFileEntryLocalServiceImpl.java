@@ -609,6 +609,30 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryFinder.findByExtraSettings(start, end);
 	}
 
+	public File getFile(
+			long userId, long fileEntryId, String version,
+			boolean incrementCounter)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
+			fileEntryId);
+
+		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED &&
+			incrementCounter) {
+
+			dlFileEntry.setReadCount(dlFileEntry.getReadCount() + 1);
+
+			dlFileEntryPersistence.update(dlFileEntry, false);
+		}
+
+		dlAppHelperLocalService.getFileAsStream(
+			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
+
+		return DLStoreUtil.getFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), version);
+	}
+
 	public InputStream getFileAsStream(
 			long userId, long fileEntryId, String version)
 		throws PortalException, SystemException {
@@ -1542,7 +1566,7 @@ public class DLFileEntryLocalServiceImpl
 			assetEntry.getEntryId());
 
 		long[] assetLinkIds = StringUtil.split(
-			ListUtil.toString(assetLinks, AssetLink.LINK_ID_ACCESSOR), 0L);
+			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 
 		return updateAsset(
 			userId, dlFileEntry, dlFileVersion, assetCategoryIds, assetTagNames,

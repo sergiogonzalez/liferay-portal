@@ -357,17 +357,20 @@ AUI().add(
 			addStructure: function(groupId, structureId, autoStructureId, name, description, xsd, callback) {
 				var instance = this;
 
+				var parentStructureId = '';
+
 				var addGroupPermissions = true;
 				var addGuestPermissions = true;
-				var parentStructureId = '';
+
+				var defaultLocale = instance.getDefaultLocale();
 
 				var serviceParameterTypes = [
 					'long',
 					'java.lang.String',
 					'boolean',
 					'java.lang.String',
-					'java.lang.String',
-					'java.lang.String',
+					'java.util.Map<java.util.Locale, java.lang.String>',
+					'java.util.Map<java.util.Locale, java.lang.String>',
 					'java.lang.String',
 					'com.liferay.portal.service.ServiceContext'
 				];
@@ -378,8 +381,8 @@ AUI().add(
 						structureId: structureId,
 						autoStructureId: autoStructureId,
 						parentStructureId: parentStructureId,
-						name: name,
-						description: description,
+						nameMap:  '{' + defaultLocale + ':' + name + '}',
+						descriptionMap:  '{' + defaultLocale + ':' + (description == '' ? null : description ) + '}',
 						xsd: xsd,
 						serviceContext: A.JSON.stringify(
 							{
@@ -980,16 +983,14 @@ AUI().add(
 						var exception = message.exception;
 
 						if (!exception) {
-							structureDescriptionInput.val(message.description);
+							structureDescriptionInput.val(dialogFields.dialogDescription.val());
 							structureIdInput.val(message.structureId);
-							structureNameInput.val(message.name);
+							structureNameInput.val(dialogFields.dialogStructureName.val());
 							storedStructureXSD.val(encodeURIComponent(dialogFields.contentXSD));
 
 							dialogFields.dialogStructureGroupId.val(message.structureGroupId);
 							dialogFields.dialogStructureId.val(message.structureId);
-							dialogFields.dialogStructureName.val(message.name);
-							dialogFields.dialogDescription.val(message.description);
-							dialogFields.structureNameLabel.html(message.name);
+							dialogFields.structureNameLabel.html(dialogFields.dialogStructureName.val());
 							dialogFields.saveStructureAutogenerateIdCheckbox.hide();
 
 							if (dialogFields.loadDefaultStructure) {
@@ -1632,12 +1633,14 @@ AUI().add(
 			updateStructure: function(groupId, structureId, parentStructureId, name, description, xsd, callback) {
 				var instance = this;
 
+				var defaultLocale = instance.getDefaultLocale();
+
 				var serviceParameterTypes = [
 					'long',
 					'java.lang.String',
 					'java.lang.String',
-					'java.lang.String',
-					'java.lang.String',
+					'java.util.Map<java.util.Locale, java.lang.String>',
+					'java.util.Map<java.util.Locale, java.lang.String>',
 					'java.lang.String',
 					'com.liferay.portal.service.ServiceContext'
 				];
@@ -1647,8 +1650,8 @@ AUI().add(
 						groupId: groupId,
 						structureId: structureId,
 						parentStructureId: parentStructureId || '',
-						name: name,
-						description: description,
+						nameMap:  '{' + defaultLocale + ':' + name + '}',
+						descriptionMap:  '{' + defaultLocale + ':' + (description == '' ? null : description ) + '}',
 						xsd: xsd,
 						serviceContext: A.JSON.stringify(
 							{

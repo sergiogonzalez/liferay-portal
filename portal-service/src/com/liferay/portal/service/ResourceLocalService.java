@@ -298,9 +298,9 @@ public interface ResourceLocalService extends PersistedModelLocalService {
 	public java.util.List<com.liferay.portal.model.Resource> getResources()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void updateResources(
+	public void updateModelResources(
 		com.liferay.portal.model.AuditedModel auditedModel,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

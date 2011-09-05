@@ -32,7 +32,14 @@ if (Validator.isNotNull(className)) {
 
 	List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
-	vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false));
+	Group group = themeDisplay.getScopeGroup();
+
+	if (group.isLayout()) {
+		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(group.getParentGroupId(), false));
+	}
+	else {
+		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false));
+	}
 
 	if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));
@@ -176,7 +183,7 @@ private String[] _getCategoryIdsNames(String categoryIds, String categoryNames, 
 				category = category.toEscapedModel();
 
 				sb.append(category.getName());
-				sb.append(StringPool.COMMA);
+				sb.append(_CATEGORY_SEPARATOR);
 			}
 
 			sb.setIndex(sb.index() - 1);
@@ -188,4 +195,6 @@ private String[] _getCategoryIdsNames(String categoryIds, String categoryNames, 
 
 	return new String[] {categoryIds, categoryNames};
 }
+
+private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 %>

@@ -57,40 +57,42 @@ public class RatingsStatsFinderImpl
 		List<RatingsStats> list = (List<RatingsStats>)FinderCacheUtil.getResult(
 			FINDER_PATH_FIND_BY_C_C, finderArgs, this);
 
-		if (list == null) {
-			Session session = null;
+		if (list != null) {
+			return list;
+		}
 
-			try {
-				session = openSession();
+		Session session = null;
 
-				String sql = CustomSQLUtil.get(FIND_BY_C_C);
+		try {
+			session = openSession();
 
-				sql = StringUtil.replace(
-					sql, "[$CLASS_PKS$]", StringUtil.merge(classPKs));
+			String sql = CustomSQLUtil.get(FIND_BY_C_C);
 
-				SQLQuery q = session.createSQLQuery(sql);
+			sql = StringUtil.replace(
+				sql, "[$CLASS_PKS$]", StringUtil.merge(classPKs));
 
-				q.addEntity("RatingsStats", RatingsStatsImpl.class);
+			SQLQuery q = session.createSQLQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+			q.addEntity("RatingsStats", RatingsStatsImpl.class);
 
-				qPos.add(classNameId);
+			QueryPos qPos = QueryPos.getInstance(q);
 
-				list = q.list(true);
+			qPos.add(classNameId);
+
+			list = q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			if (list == null) {
+				list = new ArrayList<RatingsStats>();
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
-			}
-			finally {
-				if (list == null) {
-					list = new ArrayList<RatingsStats>();
-				}
 
-				FinderCacheUtil.putResult(
-					FINDER_PATH_FIND_BY_C_C, finderArgs, list);
+			FinderCacheUtil.putResult(
+				FINDER_PATH_FIND_BY_C_C, finderArgs, list);
 
-				closeSession(session);
-			}
+			closeSession(session);
 		}
 
 		return list;

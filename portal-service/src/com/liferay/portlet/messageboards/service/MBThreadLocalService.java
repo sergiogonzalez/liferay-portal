@@ -230,6 +230,12 @@ public interface MBThreadLocalService extends PersistedModelLocalService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	public com.liferay.portlet.messageboards.model.MBThread addThread(
+		long categoryId,
+		com.liferay.portlet.messageboards.model.MBMessage message)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -291,6 +297,10 @@ public interface MBThreadLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getNoAssetThreads()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getPriorityThreads(
 		long categoryId, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -317,6 +327,10 @@ public interface MBThreadLocalService extends PersistedModelLocalService {
 	public int getThreadsCount(long groupId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasAnswerMessage(long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void incrementViewCounter(long threadId, int increment)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -329,6 +343,10 @@ public interface MBThreadLocalService extends PersistedModelLocalService {
 	public com.liferay.portlet.messageboards.model.MBThread splitThread(
 		long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateQuestion(long threadId, boolean question)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -16,8 +16,10 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Brian Wing Shun Chan
@@ -33,13 +35,24 @@ public class UpgradeProcessUtil {
 
 		boolean ranUpgradeProcess = false;
 
-		for (String upgradeProcessClassName : upgradeProcessClassNames) {
-			boolean tempRanUpgradeProcess = _upgradeProcess(
-				buildNumber, upgradeProcessClassName, classLoader);
+		boolean tempIndexReadOnly = SearchEngineUtil.isIndexReadOnly();
 
-			if (tempRanUpgradeProcess) {
-				ranUpgradeProcess = true;
+		if (PropsValues.INDEX_ON_UPGRADE) {
+			SearchEngineUtil.setIndexReadOnly(true);
+		}
+
+		try {
+			for (String upgradeProcessClassName : upgradeProcessClassNames) {
+				boolean tempRanUpgradeProcess = _upgradeProcess(
+					buildNumber, upgradeProcessClassName, classLoader);
+
+				if (tempRanUpgradeProcess) {
+					ranUpgradeProcess = true;
+				}
 			}
+		}
+		finally {
+			SearchEngineUtil.setIndexReadOnly(tempIndexReadOnly);
 		}
 
 		return ranUpgradeProcess;

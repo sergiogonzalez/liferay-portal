@@ -200,6 +200,12 @@ public class MBMessageServiceWrapper implements MBMessageService {
 		_mbMessageService.unsubscribeMessage(messageId);
 	}
 
+	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageService.updateAnswer(messageId, answer, cascade);
+	}
+
 	public com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
 		java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,

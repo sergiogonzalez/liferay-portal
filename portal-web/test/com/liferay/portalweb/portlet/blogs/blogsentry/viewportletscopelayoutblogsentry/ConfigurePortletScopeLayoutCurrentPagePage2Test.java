@@ -47,7 +47,9 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 			RuntimeVariables.replace("Blogs2 Test2 Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options Icon"));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -67,6 +69,9 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
@@ -182,10 +187,11 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Default"),
-			selenium.getText("//div[@id='panel-manage-content']/div[2]/span/a"));
-		selenium.clickAt("//div[@id='panel-manage-content']/div[2]/span/a",
-			RuntimeVariables.replace("Default"));
+		assertEquals(RuntimeVariables.replace("Scope: Default"),
+			selenium.getText(
+				"//div[@id='panel-manage-content']/div[2]/div/span/ul/li/strong/a"));
+		selenium.clickAt("//div[@id='panel-manage-content']/div[2]/div/span/ul/li/strong/a",
+			RuntimeVariables.replace("Scope: Default"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -194,7 +200,7 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-panel-content']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -206,8 +212,10 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Default"),
-			selenium.getText("//div[@class='lfr-panel-content']/ul/li[1]/a"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs2 Test2 Page2"),
-			selenium.getText("//div[@class='lfr-panel-content']/ul/li[2]/a"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 	}
 }

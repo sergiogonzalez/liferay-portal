@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 6.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_6_0_0.dtd">
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 6.1.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_6_1_0.dtd">
 
 <routes>
 	<route>
@@ -66,5 +66,10 @@
 	</route>
 	<route>
 		<pattern>{method}/{controller}/{action}.{format}</pattern>
+	</route>
+	<route>
+		<pattern>{method}/{controller}/{action}/{className}/{folderId:\d+}/{fileName:[^/]+}</pattern>
+		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
+		<implicit-parameter name="p_p_resource_id">download</implicit-parameter>
 	</route>
 </routes>

@@ -109,6 +109,7 @@ import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.struts.StrutsActionRegistry;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
@@ -227,6 +228,8 @@ public class HookHotDeployListener
 		"passwords.passwordpolicytoolkit.generator",
 		"passwords.passwordpolicytoolkit.static",
 		"portlet.add.default.resource.check.enabled",
+		"portlet.add.default.resource.check.whitelist",
+		"portlet.add.default.resource.check.whitelist.actions",
 		"sanitizer.impl",
 		"servlet.session.create.events",
 		"servlet.session.destroy.events",
@@ -1789,6 +1792,8 @@ public class HookHotDeployListener
 		_servicesContainer.addServiceBag(
 			servletContextName, portletClassLoader, serviceType,
 			serviceTypeClass, serviceImplConstructor, previousService);
+
+		ServiceBeanAopProxy.clearMethodInterceptorCache();
 	}
 
 	protected Filter initServletFilter(
@@ -1957,6 +1962,20 @@ public class HookHotDeployListener
 			PropsValues.LOCALES = PropsUtil.getArray(LOCALES);
 
 			LanguageUtil.init();
+		}
+
+		if (containsKey(
+				portalProperties,
+				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST)) {
+
+			PortalUtil.resetPortletAddDefaultResourceCheckWhitelist();
+		}
+
+		if (containsKey(
+				portalProperties,
+				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS)) {
+
+			PortalUtil.resetPortletAddDefaultResourceCheckWhitelistActions();
 		}
 
 		CacheUtil.clearCache();
@@ -2155,6 +2174,8 @@ public class HookHotDeployListener
 			"dockbar.add.portlets",
 			"layout.static.portlets.all",
 			"layout.types",
+			"portlet.add.default.resource.check.whitelist",
+			"portlet.add.default.resource.check.whitelist.actions",
 			"session.phishing.protected.attributes",
 			"users.form.add.identification",
 			"users.form.add.main",

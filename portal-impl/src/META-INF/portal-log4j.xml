@@ -263,7 +263,7 @@
 	</category>
 
 	<category name="com.liferay.portal.googleapps.GHelperUtil">
-		<priority value="ERROR" />
+		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portal.image.HookFactory">
@@ -1031,6 +1031,10 @@
 	</category>
 
 	<category name="org.jabsorb">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.jamwiki.Environment">
 		<priority value="ERROR" />
 	</category>
 

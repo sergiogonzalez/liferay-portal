@@ -123,7 +123,25 @@ portletURL.setParameter("tabs1", tabs1);
 			<aui:input name="groupId" type="hidden" />
 			<aui:input name="deleteStructureIds" type="hidden" />
 
-			<liferay-ui:error exception="<%= RequiredStructureException.class %>" message="required-structures-could-not-be-deleted" />
+			<liferay-ui:error exception="<%= RequiredStructureException.class %>">
+				<liferay-ui:message key="required-structures-could-not-be-deleted" />
+
+				<%
+				RequiredStructureException rse = (RequiredStructureException)errorException;
+				%>
+
+				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_STRUCTURE %>">
+					<liferay-ui:message key="they-are-are-referenced-by-other-structures" />
+				</c:if>
+
+				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_TEMPLATE %>">
+					<liferay-ui:message key="they-are-are-referenced-by-templates" />
+				</c:if>
+
+				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_WEB_CONTENT %>">
+					<liferay-ui:message key="they-are-are-referenced-by-web-contents" />
+				</c:if>
+			</liferay-ui:error>
 
 			<%
 			StructureSearch searchContainer = new StructureSearch(renderRequest, portletURL);
@@ -199,7 +217,11 @@ portletURL.setParameter("tabs1", tabs1);
 			<aui:input name="groupId" type="hidden" />
 			<aui:input name="deleteTemplateIds" type="hidden" />
 
-			<liferay-ui:error exception="<%= RequiredTemplateException.class %>" message="required-templates-could-not-be-deleted" />
+			<liferay-ui:error exception="<%= RequiredTemplateException.class %>">
+				<liferay-ui:message key="required-templates-could-not-be-deleted" />
+
+				<liferay-ui:message key="they-are-are-referenced-by-web-contents" />
+			</liferay-ui:error>
 
 			<%
 			TemplateSearch searchContainer = new TemplateSearch(renderRequest, portletURL);

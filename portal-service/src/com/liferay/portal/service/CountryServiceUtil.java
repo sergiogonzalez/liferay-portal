@@ -45,6 +45,11 @@ public class CountryServiceUtil {
 		return getService().addCountry(name, a2, a3, number, idd, active);
 	}
 
+	public static com.liferay.portal.model.Country fetchCountry(long countryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchCountry(countryId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Country> getCountries()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCountries();

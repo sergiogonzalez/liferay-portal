@@ -226,8 +226,7 @@ public class SitesUtil {
 		}
 
 		if (LayoutPermissionUtil.contains(
-				permissionChecker, groupId, privateLayout, layoutId,
-				ActionKeys.DELETE)) {
+				permissionChecker, layout, ActionKeys.DELETE)) {
 
 			LayoutSettings layoutSettings = LayoutSettings.getInstance(layout);
 
@@ -478,10 +477,6 @@ public class SitesUtil {
 
 		Date layoutModifiedDate = layout.getModifiedDate();
 
-		if (layoutModifiedDate == null) {
-			layoutModifiedDate = new Date();
-		}
-
 		Date lastCopyDate = null;
 
 		String lastCopyDateString = layout.getTypeSettingsProperty(
@@ -498,7 +493,9 @@ public class SitesUtil {
 				return true;
 			}
 		}
-		else if (!layoutModifiedDate.after(templateLayout.getModifiedDate())) {
+		else if ((layoutModifiedDate == null) ||
+				 !layoutModifiedDate.after(templateLayout.getModifiedDate())) {
+
 			return true;
 		}
 

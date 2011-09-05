@@ -106,9 +106,11 @@ MBThread thread = messageDisplay.getThread();
 		function(messageId) {
 			var A = AUI();
 
-			Liferay.Service.MB.MBMessageFlag.addAnswerFlag(
+			Liferay.Service.MB.MBMessage.updateAnswer(
 				{
-					messageId: messageId
+					messageId: messageId,
+					answer: true,
+					cascade: false
 				}
 			);
 
@@ -169,9 +171,11 @@ MBThread thread = messageDisplay.getThread();
 		function(messageId) {
 			var A = AUI();
 
-			Liferay.Service.MB.MBMessageFlag.deleteAnswerFlag(
+			Liferay.Service.MB.MBMessage.updateAnswer(
 				{
-					messageId: messageId
+					messageId: messageId,
+					answer: false,
+					cascade: false
 				}
 			);
 
@@ -201,7 +205,7 @@ MBThread thread = messageDisplay.getThread();
 </aui:script>
 
 <%
-MBMessageFlagLocalServiceUtil.addReadFlags(themeDisplay.getUserId(), thread);
+MBThreadFlagLocalServiceUtil.addThreadFlag(themeDisplay.getUserId(), thread);
 
 message = messageDisplay.getMessage();
 

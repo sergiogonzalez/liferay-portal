@@ -16,37 +16,32 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Tags</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
+	<td>Tags</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>selenium ide</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>selenium ide</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//input[@id='deleteTagButton']</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -54,24 +49,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementNotPresent</td>
-	<td>link=selenium ide</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@id='portletMessages']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='portletMessages']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[2]/ul/li/div/span/a</td>
+	<td>selenium ide</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>link=selenium ide</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementNotPresent</td>
-	<td>link=selenium</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>link=selenium</td>
-	<td></td>
+	<td>selenium ide</td>
 </tr>
 
 </tbody></table>

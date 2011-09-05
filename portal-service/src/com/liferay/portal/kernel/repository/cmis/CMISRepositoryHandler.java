@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.CompanyConstants;
@@ -324,6 +328,20 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 		return false;
 	}
 
+	public boolean isSupportsMinorVersions(String productName) {
+
+		// LPS-20509
+
+		productName = productName.toLowerCase();
+
+		if (productName.contains("filenet") && productName.contains("p8")) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	public Lock lockFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -375,6 +393,12 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 		_baseCmisRepository.revertFileEntry(
 			fileEntryId, version, serviceContext);
+	}
+
+	public Hits search(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		return _baseCmisRepository.search(searchContext, query);
 	}
 
 	public void setCmisRepository(BaseCmisRepository baseCmisRepository) {

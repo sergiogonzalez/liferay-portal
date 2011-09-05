@@ -458,7 +458,7 @@ public abstract class BaseIndexer implements Indexer {
 			return;
 		}
 
-		searchQuery.addTerms(Field.KEYWORDS, keywords, true);
+		searchQuery.addTerms(Field.KEYWORDS, keywords);
 
 		addSearchExpando(searchQuery, searchContext, keywords);
 	}

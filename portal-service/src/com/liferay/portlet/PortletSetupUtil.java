@@ -33,21 +33,21 @@ import javax.portlet.PortletPreferences;
  */
 public class PortletSetupUtil {
 
-	public static final JSONObject cssToJSON(
+	public static JSONObject cssToJSONObject(
 			PortletPreferences portletSetup, String css)
 		throws Exception {
 
 		return _toJSONObject(portletSetup, css);
 	}
 
-	public static final String cssToString(PortletPreferences portletSetup) {
+	public static String cssToJSONString(PortletPreferences portletSetup) {
 		String css = portletSetup.getValue(
 			"portletSetupCss", StringPool.BLANK);
 
 		try {
-			if (Validator.isNotNull(css)) {
-				return _toJSONObject(portletSetup, css).toString();
-			}
+			JSONObject jsonObject = _toJSONObject(portletSetup, css);
+
+			return jsonObject.toString();
 		}
 		catch (Exception e) {
 			css = null;
@@ -60,7 +60,7 @@ public class PortletSetupUtil {
 		return css;
 	}
 
-	private static final JSONObject _toJSONObject(
+	private static JSONObject _toJSONObject(
 			PortletPreferences portletSetup, String css)
 		throws Exception {
 
@@ -68,15 +68,24 @@ public class PortletSetupUtil {
 			_log.debug("Transform CSS to JSON " + css);
 		}
 
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(css);
+		JSONObject cssJSONObject = null;
 
-		JSONObject portletData = JSONFactoryUtil.createJSONObject();
+		if (Validator.isNotNull(css)) {
+			cssJSONObject = JSONFactoryUtil.createJSONObject(css);
 
-		jsonObj.put("portletData", portletData);
+			cssJSONObject.put("hasCssValue", true);
+		}
+		else {
+			cssJSONObject = JSONFactoryUtil.createJSONObject();
+		}
 
-		JSONObject titles = JSONFactoryUtil.createJSONObject();
+		JSONObject portletDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		portletData.put("titles", titles);
+		cssJSONObject.put("portletData", portletDataJSONObject);
+
+		JSONObject titlesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		portletDataJSONObject.put("titles", titlesJSONObject);
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
@@ -87,7 +96,7 @@ public class PortletSetupUtil {
 				"portletSetupTitle_" + languageId, null);
 
 			if (Validator.isNotNull(languageId)) {
-				titles.put(languageId, title);
+				titlesJSONObject.put(languageId, title);
 			}
 		}
 
@@ -98,11 +107,11 @@ public class PortletSetupUtil {
 		String linkToLayoutUuid = GetterUtil.getString(
 			portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
 
-		portletData.put("useCustomTitle", useCustomTitle);
-		portletData.put("showBorders", showBorders);
-		portletData.put("portletLinksTarget", linkToLayoutUuid);
+		portletDataJSONObject.put("useCustomTitle", useCustomTitle);
+		portletDataJSONObject.put("showBorders", showBorders);
+		portletDataJSONObject.put("portletLinksTarget", linkToLayoutUuid);
 
-		return jsonObj;
+		return cssJSONObject;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletSetupUtil.class);

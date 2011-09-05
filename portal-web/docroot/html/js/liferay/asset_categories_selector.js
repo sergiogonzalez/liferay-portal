@@ -34,6 +34,18 @@ AUI().add(
 		var AssetCategoriesSelector = A.Component.create(
 			{
 				ATTRS: {
+					curEntries: {
+						setter: function(value) {
+							var instance = this;
+
+							if (Lang.isString(value)) {
+								value = value.split('_CATEGORY_');
+							}
+
+							return value;
+						},
+						value: ''
+					},
 					curEntryIds: {
 						setter: function(value) {
 							var instance = this;

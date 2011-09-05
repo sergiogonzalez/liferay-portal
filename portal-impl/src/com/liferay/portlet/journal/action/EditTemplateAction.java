@@ -215,41 +215,47 @@ public class EditTemplateAction extends PortletAction {
 	protected JournalTemplate updateTemplate(ActionRequest actionRequest)
 		throws Exception {
 
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		String cmd = ParamUtil.getString(uploadRequest, Constants.CMD);
+		String cmd = ParamUtil.getString(uploadPortletRequest, Constants.CMD);
 
-		long groupId = ParamUtil.getLong(uploadRequest, "groupId");
+		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 
-		String templateId = ParamUtil.getString(uploadRequest, "templateId");
+		String templateId = ParamUtil.getString(
+			uploadPortletRequest, "templateId");
 		boolean autoTemplateId = ParamUtil.getBoolean(
-			uploadRequest, "autoTemplateId");
+			uploadPortletRequest, "autoTemplateId");
 
-		String structureId = ParamUtil.getString(uploadRequest, "structureId");
+		String structureId = ParamUtil.getString(
+			uploadPortletRequest, "structureId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		String xsl = ParamUtil.getString(uploadRequest, "xsl");
+		String xsl = ParamUtil.getString(uploadPortletRequest, "xsl");
 		String xslContent = JS.decodeURIComponent(
-			ParamUtil.getString(uploadRequest, "xslContent"));
-		boolean formatXsl = ParamUtil.getBoolean(uploadRequest, "formatXsl");
+			ParamUtil.getString(uploadPortletRequest, "xslContent"));
+		boolean formatXsl = ParamUtil.getBoolean(
+			uploadPortletRequest, "formatXsl");
 
 		if (Validator.isNull(xsl)) {
 			xsl = xslContent;
 		}
 
 		String langType = ParamUtil.getString(
-			uploadRequest, "langType", JournalTemplateConstants.LANG_TYPE_XSL);
+			uploadPortletRequest, "langType",
+			JournalTemplateConstants.LANG_TYPE_XSL);
 
-		boolean cacheable = ParamUtil.getBoolean(uploadRequest, "cacheable");
+		boolean cacheable = ParamUtil.getBoolean(
+			uploadPortletRequest, "cacheable");
 
-		boolean smallImage = ParamUtil.getBoolean(uploadRequest, "smallImage");
+		boolean smallImage = ParamUtil.getBoolean(
+			uploadPortletRequest, "smallImage");
 		String smallImageURL = ParamUtil.getString(
-			uploadRequest, "smallImageURL");
-		File smallFile = uploadRequest.getFile("smallFile");
+			uploadPortletRequest, "smallImageURL");
+		File smallFile = uploadPortletRequest.getFile("smallFile");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalTemplate.class.getName(), actionRequest);

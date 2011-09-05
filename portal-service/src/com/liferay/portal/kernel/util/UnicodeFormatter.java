@@ -23,6 +23,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  */
 public class UnicodeFormatter {
 
+	public static String bytesToHex(byte[] bytes) {
+		char[] array = new char[bytes.length * 2];
+
+		for (int i = 0; i < bytes.length; i++) {
+			byte b = bytes[i];
+
+			array[(i * 2) + 0] = _HEX_DIGITS[(b >> 4) & 0x0f];
+			array[(i * 2) + 1] = _HEX_DIGITS[b & 0x0f];
+		}
+
+		return new String(array);
+	}
+
 	public static String byteToHex(byte b) {
 		char[] array = {_HEX_DIGITS[(b >> 4) & 0x0f], _HEX_DIGITS[b & 0x0f]};
 

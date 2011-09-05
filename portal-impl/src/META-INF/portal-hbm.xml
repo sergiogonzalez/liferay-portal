@@ -127,9 +127,9 @@
 	<import class="com.liferay.portlet.messageboards.model.MBDiscussion" />
 	<import class="com.liferay.portlet.messageboards.model.MBMailingList" />
 	<import class="com.liferay.portlet.messageboards.model.MBMessage" />
-	<import class="com.liferay.portlet.messageboards.model.MBMessageFlag" />
 	<import class="com.liferay.portlet.messageboards.model.MBStatsUser" />
 	<import class="com.liferay.portlet.messageboards.model.MBThread" />
+	<import class="com.liferay.portlet.messageboards.model.MBThreadFlag" />
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRAction" />
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRule" />
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" />
@@ -299,6 +299,7 @@
 		<property name="a3" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" column="number_" />
 		<property name="idd" type="com.liferay.portal.dao.orm.hibernate.StringType" column="idd_" />
+		<property name="zipRequired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.EmailAddressImpl" table="EmailAddress">
@@ -1974,21 +1975,11 @@
 		<property name="anonymous" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="allowPingbacks" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="answer" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.messageboards.model.impl.MBMessageFlagImpl" table="MBMessageFlag">
-		<cache usage="read-write" />
-		<id name="messageFlagId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="threadId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="messageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="flag" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl" table="MBStatsUser">
 		<cache usage="read-write" />
@@ -2015,10 +2006,20 @@
 		<property name="lastPostByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="question" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl" table="MBThreadFlag">
+		<cache usage="read-write" />
+		<id name="threadFlagId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="threadId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRActionImpl" table="MDRAction">
 		<cache usage="read-write" />

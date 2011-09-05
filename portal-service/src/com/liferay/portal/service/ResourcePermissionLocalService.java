@@ -358,7 +358,7 @@ public interface ResourcePermissionLocalService
 	public java.util.List<java.lang.String> getAvailableResourcePermissionActionIds(
 		long companyId, java.lang.String name, int scope,
 		java.lang.String primKey, long roleId,
-		java.util.List<java.lang.String> actionIds)
+		java.util.Collection<java.lang.String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -427,6 +427,13 @@ public interface ResourcePermissionLocalService
 		com.liferay.portal.model.ResourcePermission resourcePermission,
 		com.liferay.portal.model.ResourceAction resourceAction);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasResourcePermission(
+		java.util.List<com.liferay.portal.model.Resource> resources,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns <code>true</code> if the role has permission at the scope to
 	* perform the action on resources of the type.
@@ -453,6 +460,13 @@ public interface ResourcePermissionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasResourcePermission(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey, long roleId,
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasResourcePermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long[] roleIds,
 		java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

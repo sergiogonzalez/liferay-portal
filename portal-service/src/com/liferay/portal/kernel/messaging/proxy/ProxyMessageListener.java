@@ -76,7 +76,10 @@ public class ProxyMessageListener implements MessageListener {
 			}
 			else {
 				if (proxyResponseException != null) {
-					_log.error(proxyResponseException, proxyResponseException);
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							proxyResponseException, proxyResponseException);
+					}
 				}
 
 				message.setResponse(proxyResponse);

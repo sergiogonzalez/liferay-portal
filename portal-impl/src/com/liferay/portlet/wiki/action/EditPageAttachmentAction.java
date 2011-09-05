@@ -135,8 +135,8 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 	}
 
 	protected void addAttachment(ActionRequest actionRequest) throws Exception {
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
@@ -147,8 +147,8 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 			new ArrayList<ObjectValuePair<String, File>>();
 
 		if (numOfFiles == 0) {
-			File file = uploadRequest.getFile("file");
-			String fileName = uploadRequest.getFileName("file");
+			File file = uploadPortletRequest.getFile("file");
+			String fileName = uploadPortletRequest.getFileName("file");
 
 			if ((file != null) && file.exists()) {
 				ObjectValuePair<String, File> ovp =
@@ -159,9 +159,9 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		}
 		else {
 			for (int i = 1; i <= numOfFiles; i++) {
-				File file = uploadRequest.getFile("file" + i);
+				File file = uploadPortletRequest.getFile("file" + i);
 
-				String fileName = uploadRequest.getFileName("file" + i);
+				String fileName = uploadPortletRequest.getFileName("file" + i);
 
 				if ((file != null) && file.exists()) {
 					ObjectValuePair<String, File> ovp =
@@ -175,6 +175,7 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		WikiPageServiceUtil.addPageAttachments(nodeId, title, files);
 	}
 
+	@Override
 	protected void addMultipleFileEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String selectedFileName, List<String> validFileNames,
@@ -215,12 +216,13 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 	protected void addTempAttachment(ActionRequest actionRequest)
 		throws Exception {
 
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		long nodeId = ParamUtil.getLong(uploadRequest, "nodeId");
-		File file = uploadRequest.getFile("file");
-		String sourceFileName = uploadRequest.getFileName("file");
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+
+		File file = uploadPortletRequest.getFile("file");
+		String sourceFileName = uploadPortletRequest.getFileName("file");
 
 		WikiPageServiceUtil.addTempPageAttachment(
 			nodeId, sourceFileName, _TEMP_FOLDER_NAME, file);

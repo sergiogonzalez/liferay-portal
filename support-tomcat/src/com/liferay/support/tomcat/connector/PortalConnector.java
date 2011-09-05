@@ -41,7 +41,6 @@ public class PortalConnector extends Connector {
 		protocolHandler = connector.getProtocolHandler();
 
 		setAllowTrace(connector.getAllowTrace());
-		setEmptySessionPath(connector.getEmptySessionPath());
 		setEnableLookups(connector.getEnableLookups());
 		setMaxPostSize(connector.getMaxPostSize());
 		setMaxSavePostSize(connector.getMaxSavePostSize());

@@ -15,13 +15,13 @@
 --%>
 
 <%
-JSONObject jsonObj = PortletSetupUtil.cssToJSON(portletSetup, portletSetupCss);
+JSONObject jsonObject = PortletSetupUtil.cssToJSONObject(portletSetup, portletSetupCss);
 
 List finalCSS = new ArrayList();
 
 // Background data
 
-JSONObject bgData = jsonObj.getJSONObject("bgData");
+JSONObject bgData = jsonObject.getJSONObject("bgData");
 
 String bgColor = bgData.getString("backgroundColor");
 String bgImage = bgData.getString("backgroundImage");
@@ -50,7 +50,8 @@ if (useBgImage) {
 
 // Border data
 
-JSONObject borderData = jsonObj.getJSONObject("borderData");
+JSONObject borderData = jsonObject.getJSONObject("borderData");
+
 JSONObject borderWidth = borderData.getJSONObject("borderWidth");
 JSONObject borderStyle = borderData.getJSONObject("borderStyle");
 JSONObject borderColor = borderData.getJSONObject("borderColor");
@@ -154,7 +155,8 @@ else {
 
 // Spacing data
 
-JSONObject spacingData = jsonObj.getJSONObject("spacingData");
+JSONObject spacingData = jsonObject.getJSONObject("spacingData");
+
 JSONObject margin = spacingData.getJSONObject("margin");
 JSONObject padding = spacingData.getJSONObject("padding");
 
@@ -233,7 +235,7 @@ else {
 
 // Text data
 
-JSONObject textData = jsonObj.getJSONObject("textData");
+JSONObject textData = jsonObject.getJSONObject("textData");
 
 String color = textData.getString("color");
 String fontFamily = textData.getString("fontFamily");
@@ -288,7 +290,7 @@ if (Validator.isNotNull(wordSpacing)) {
 
 // Advanced styling
 
-JSONObject advancedData = jsonObj.getJSONObject("advancedData");
+JSONObject advancedData = jsonObject.getJSONObject("advancedData");
 
 String customCSS = advancedData.getString("customCSS");
 
@@ -300,7 +302,7 @@ customCSS = StringUtil.replace(
 
 // Portlet data
 
-JSONObject portletData = jsonObj.getJSONObject("portletData");
+JSONObject portletData = jsonObject.getJSONObject("portletData");
 
 boolean showBorders = portletData.getBoolean("showBorders");
 

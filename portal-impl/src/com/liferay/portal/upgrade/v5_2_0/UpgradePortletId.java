@@ -69,6 +69,27 @@ public class UpgradePortletId extends UpgradeProcess {
 		};
 	}
 
+	protected void updateLayout(long plid, String typeSettings)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update Layout set typeSettings = ? where plid = " + plid);
+
+			ps.setString(1, typeSettings);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
 	protected void updateLayout(
 			long plid, String oldPortletId, String newPortletId)
 		throws Exception {
@@ -91,7 +112,7 @@ public class UpgradePortletId extends UpgradeProcess {
 				String newTypeSettings = StringUtil.replace(
 					typeSettings, oldPortletId, newPortletId);
 
-				updateTypeSettings(plid, newTypeSettings);
+				updateLayout(plid, newTypeSettings);
 			}
 		}
 		finally {
@@ -191,27 +212,6 @@ public class UpgradePortletId extends UpgradeProcess {
 		runSQL(
 			"update ResourceCode set name = '" + newRootPortletId +
 				"' where name = '" + oldRootPortletId + "'");
-	}
-
-	protected void updateTypeSettings(long plid, String typeSettings)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"update Layout set typeSettings = ? where plid = " + plid);
-
-			ps.setString(1, typeSettings);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
 	}
 
 }

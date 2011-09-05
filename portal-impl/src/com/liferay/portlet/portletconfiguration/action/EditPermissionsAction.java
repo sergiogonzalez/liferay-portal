@@ -196,26 +196,6 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		return actionIds;
 	}
 
-	protected void propagateRolePermissions(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), portletResource);
-
-		PermissionPropagator permissionPropagator =
-			portlet.getPermissionPropagatorInstance();
-
-		if (permissionPropagator != null) {
-			permissionPropagator.propagateRolePermissions();
-		}
-	}
-
 	protected void updateGroupPermissions(ActionRequest actionRequest)
 		throws Exception {
 
@@ -293,8 +273,6 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		else {
 			updateRolePermissions_1to4(actionRequest);
 		}
-
-		propagateRolePermissions(actionRequest);
 	}
 
 	protected void updateRolePermissions_1to4(ActionRequest actionRequest)
@@ -372,6 +350,19 @@ public class EditPermissionsAction extends EditConfigurationAction {
 				ResourcePermissionServiceUtil.setIndividualResourcePermissions(
 					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
 					selResource, resourcePrimKey, roleId, actionIds);
+			}
+		}
+
+		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletResource);
+
+			PermissionPropagator permissionPropagator =
+				portlet.getPermissionPropagatorInstance();
+
+			if (permissionPropagator != null) {
+				permissionPropagator.propagateRolePermissions(
+					actionRequest, modelResource, roleIds);
 			}
 		}
 	}

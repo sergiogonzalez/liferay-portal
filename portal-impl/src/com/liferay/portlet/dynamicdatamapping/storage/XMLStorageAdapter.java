@@ -28,14 +28,18 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.query.ComparisonOperator;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.FieldCondition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.FieldConditionImpl;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Junction;
 import com.liferay.portlet.dynamicdatamapping.storage.query.LogicalOperator;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -280,39 +284,48 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 			conditionXPath = _parseCondition(condition);
 		}
 
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
+
 		for (long classPK : classPKs) {
 			DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(
 				classPK);
 
 			Document document = SAXReaderUtil.read(ddmContent.getXml());
 
-			if ((conditionXPath == null) ||
-				((conditionXPath != null) &&
-				  conditionXPath.booleanValueOf(document))) {
+			if ((conditionXPath != null) &&
+				!conditionXPath.booleanValueOf(document)) {
 
-				Fields fields = new Fields();
+				continue;
+			}
 
-				Element rootElement = document.getRootElement();
+			Fields fields = new Fields();
 
-				List<Element> dynamicElementElements = rootElement.elements(
-					"dynamic-element");
+			Element rootElement = document.getRootElement();
 
-				for (Element dynamicElementElement : dynamicElementElements) {
-					String fieldName = dynamicElementElement.attributeValue(
-						"name");
-					String fieldValue = dynamicElementElement.elementText(
-						"dynamic-content");
+			List<Element> dynamicElementElements = rootElement.elements(
+				"dynamic-element");
 
-					if ((fieldNames == null) ||
-						((fieldNames != null) &&
-						 fieldNames.contains(fieldName))) {
+			for (Element dynamicElementElement : dynamicElementElements) {
+				String fieldName = dynamicElementElement.attributeValue("name");
+				String fieldValue = dynamicElementElement.elementText(
+					"dynamic-content");
 
-						fields.put(new Field(fieldName, fieldValue));
-					}
+				if ((fieldNames != null) && !fieldNames.contains(fieldName)) {
+					continue;
 				}
 
-				fieldsList.add(fields);
+				String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+
+				Serializable fieldValueSerializable =
+					FieldConstants.getSerializable(fieldDataType, fieldValue);
+
+				Field field = new Field(fieldName, fieldValueSerializable);
+
+				fields.put(field);
 			}
+
+			fieldsList.add(fields);
 		}
 
 		if (orderByComparator != null) {

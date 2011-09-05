@@ -43,10 +43,10 @@
 
 				${sampleSQLBuilder.insertMBThread(mbThread)}
 
-				${mbMessagesCsvWriter.write(categoryId + "," + threadId + "," + rootMessageId + ",")}
+				${writerMessageBoardsCSV.write(categoryId + "," + threadId + "," + rootMessageId + ",")}
 
 				<#if (mbMessageCounter.value < (maxGroupCount * totalMBMessageCount))>
-					${mbMessagesCsvWriter.write("\n")}
+					${writerMessageBoardsCSV.write("\n")}
 				</#if>
 			</#list>
 		</#if>

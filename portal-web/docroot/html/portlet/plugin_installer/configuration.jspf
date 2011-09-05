@@ -28,7 +28,10 @@
 		long interval = PrefsPropsUtil.getLong(PropsKeys.AUTO_DEPLOY_INTERVAL, PropsValues.AUTO_DEPLOY_INTERVAL);
 
 		for (int i = 0;;) {
-			if (i < Time.MINUTE) {
+			if (i < (Time.SECOND * 5)) {
+				i += Time.SECOND;
+			}
+			else if (i < Time.MINUTE) {
 				i += Time.SECOND * 5;
 			}
 			else {

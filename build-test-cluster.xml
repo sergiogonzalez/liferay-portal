@@ -271,7 +271,7 @@ JkShmFile logs/jk-runtime-status</echo>
 
 	<target name="shutdown-tomcat-cluster-node-1">
 		<echo file="execute-remote-command.bat">
-			cd C:\liferay-portal-${lp.version}\tomcat-6.0.32\bin
+			cd C:\liferay-portal-${lp.version}\tomcat-${app.server.tomcat.version}\bin
 
 			shutdown.bat
 		</echo>
@@ -283,7 +283,7 @@ JkShmFile logs/jk-runtime-status</echo>
 
 	<target name="shutdown-tomcat-cluster-node-2">
 		<echo file="execute-remote-command.bat">
-			cd C:\liferay-portal-${lp.version}\tomcat-6.0.32\bin
+			cd C:\liferay-portal-${lp.version}\tomcat-${app.server.tomcat.version}\bin
 
 			shutdown.bat
 		</echo>
@@ -295,7 +295,7 @@ JkShmFile logs/jk-runtime-status</echo>
 
 	<target name="startup-tomcat-cluster-node-1">
 		<echo file="execute-remote-command.bat">
-			cd C:\liferay-portal-${lp.version}\tomcat-6.0.32\bin
+			cd C:\liferay-portal-${lp.version}\tomcat-${app.server.tomcat.version}\bin
 
 			startup.bat
 		</echo>
@@ -307,7 +307,7 @@ JkShmFile logs/jk-runtime-status</echo>
 
 	<target name="startup-tomcat-cluster-node-2">
 		<echo file="execute-remote-command.bat">
-			cd C:\liferay-portal-${lp.version}\tomcat-6.0.32\bin
+			cd C:\liferay-portal-${lp.version}\tomcat-${app.server.tomcat.version}\bin
 
 			startup.bat
 		</echo>

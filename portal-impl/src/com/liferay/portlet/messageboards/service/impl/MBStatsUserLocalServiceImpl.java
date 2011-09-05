@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
 import com.liferay.portlet.messageboards.service.base.MBStatsUserLocalServiceBaseImpl;
@@ -125,15 +126,27 @@ public class MBStatsUserLocalServiceImpl
 
 	public List<MBStatsUser> getStatsUsersByGroupId(
 			long groupId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		return mbStatsUserPersistence.findByG_NotM(groupId, 0, start, end);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		long defaultUserId = userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		return mbStatsUserPersistence.findByG_NotU_NotM(
+			groupId, defaultUserId, 0, start, end);
 	}
 
 	public int getStatsUsersByGroupIdCount(long groupId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		return mbStatsUserPersistence.countByG_NotM(groupId, 0);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		long defaultUserId = userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		return mbStatsUserPersistence.countByG_NotU_NotM(
+			groupId, defaultUserId, 0);
 	}
 
 	public List<MBStatsUser> getStatsUsersByUserId(long userId)

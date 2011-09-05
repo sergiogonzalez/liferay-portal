@@ -28,16 +28,32 @@
 <%-- Available Translations --%>
 
 <%
-Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+boolean canonicalAlternate = GetterUtil.getBoolean(layout.getTypeSettingsProperties().get("canonical-alternate"), false);
 
-for (Locale curLocale : availableLocales) {
-	if (!curLocale.equals(locale)) {
-		String alternateFriendlyURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay, curLocale);
+if (canonicalAlternate) {
+	Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+	if ((availableLocales.length > 1) && layout.isPublicLayout()) {
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String canonicalURL = PortalUtil.getCanonicalURL(request);
 %>
 
-		<link href="<%= alternateFriendlyURL %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" title="<%= layout.getHTMLTitle(curLocale) %>" />
+		<link href="<%= canonicalURL %>" rel="canonical" />
 
 <%
+		if (locale.equals(defaultLocale)) {
+			for (Locale curLocale : availableLocales) {
+				if (!curLocale.equals(defaultLocale)) {
+					String canonicalAlternateURL = PortalUtil.getCanonicalAlternateURL(request, canonicalURL, curLocale);
+%>
+
+					<link href="<%= canonicalAlternateURL %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" title="<%= layout.getHTMLTitle(curLocale) %>" />
+
+<%
+				}
+			}
+		}
 	}
 }
 %>

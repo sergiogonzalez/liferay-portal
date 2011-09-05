@@ -24,7 +24,6 @@
 <%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalArticleDisplay" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalTemplate" %>
-<%@ page import="com.liferay.portlet.journal.model.JournalArticleConstants" %>
 <%@ page import="com.liferay.portlet.journal.search.ArticleSearch" %>
 <%@ page import="com.liferay.portlet.journal.search.ArticleSearchTerms" %>
 <%@ page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil" %>
@@ -71,7 +70,7 @@ boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enable
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null));
 boolean enableComments = PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableComments", null));
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null));
-boolean enableViewCountIncrement = GetterUtil.getBoolean(preferences.getValue("enableViewCountIncrement", null), true);
+boolean enableViewCountIncrement = GetterUtil.getBoolean(preferences.getValue("enableViewCountIncrement", null), PropsValues.ASSET_ENTRY_INCREMENT_VIEW_COUNTER_ENABLED);
 
 String[] conversions = DocumentConversionUtil.getConversions("html");
 

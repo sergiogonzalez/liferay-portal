@@ -35,9 +35,12 @@ import net.sf.ehcache.event.RegisteredEventListeners;
 import net.sf.ehcache.exceptionhandler.CacheExceptionHandler;
 import net.sf.ehcache.extension.CacheExtension;
 import net.sf.ehcache.loader.CacheLoader;
+import net.sf.ehcache.search.Attribute;
+import net.sf.ehcache.search.Query;
 import net.sf.ehcache.statistics.CacheUsageListener;
 import net.sf.ehcache.statistics.LiveCacheStatistics;
 import net.sf.ehcache.statistics.sampled.SampledCacheStatistics;
+import net.sf.ehcache.terracotta.TerracottaNotRunningException;
 import net.sf.ehcache.transaction.manager.TransactionManagerLookup;
 import net.sf.ehcache.writer.CacheWriter;
 import net.sf.ehcache.writer.CacheWriterManager;
@@ -49,6 +52,14 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public ModifiableEhcacheWrapper(Ehcache ehcache) {
 		_ehcache = ehcache;
+	}
+
+	public void acquireReadLockOnKey(Object key) {
+		_ehcache.acquireReadLockOnKey(key);
+	}
+
+	public void acquireWriteLockOnKey(Object key) {
+		_ehcache.acquireWriteLockOnKey(key);
 	}
 
 	public void addPropertyChangeListener(
@@ -71,6 +82,12 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		return _ehcache.calculateInMemorySize();
 	}
 
+	public long calculateOffHeapSize()
+		throws CacheException, IllegalStateException {
+
+		return _ehcache.calculateOffHeapSize();
+	}
+
 	public void clearStatistics() {
 		_ehcache.clearStatistics();
 	}
@@ -78,6 +95,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return _ehcache.clone();
+	}
+
+	public Query createQuery() {
+		return _ehcache.createQuery();
 	}
 
 	public void disableDynamicFeatures() {
@@ -126,6 +147,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public float getAverageGetTime() {
 		return _ehcache.getAverageGetTime();
+	}
+
+	public long getAverageSearchTime() {
+		return _ehcache.getAverageSearchTime();
 	}
 
 	public BootstrapCacheLoader getBootstrapCacheLoader() {
@@ -191,6 +216,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		return _ehcache.getName();
 	}
 
+	public long getOffHeapStoreSize() throws IllegalStateException {
+		return _ehcache.getOffHeapStoreSize();
+	}
+
 	public Element getQuiet(Object key)
 		throws CacheException, IllegalStateException {
 
@@ -217,6 +246,16 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public SampledCacheStatistics getSampledCacheStatistics() {
 		return _ehcache.getSampledCacheStatistics();
+	}
+
+	public <T> Attribute<T> getSearchAttribute(String attributeName)
+		throws CacheException {
+
+		return _ehcache.getSearchAttribute(attributeName);
+	}
+
+	public long getSearchesPerSecond() {
+		return _ehcache.getSearchesPerSecond();
 	}
 
 	public int getSize() throws CacheException, IllegalStateException {
@@ -265,6 +304,15 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		_ehcache.initialise();
 	}
 
+	public boolean isClusterBulkLoadEnabled()
+		throws TerracottaNotRunningException, UnsupportedOperationException {
+
+		return _ehcache.isClusterBulkLoadEnabled();
+	}
+
+	/**
+	 * @deprecated
+	 */
 	public boolean isClusterCoherent() {
 		return _ehcache.isClusterCoherent();
 	}
@@ -299,12 +347,29 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		return _ehcache.isKeyInCache(key);
 	}
 
+	public boolean isNodeBulkLoadEnabled()
+		throws TerracottaNotRunningException, UnsupportedOperationException {
+
+		return _ehcache.isNodeBulkLoadEnabled();
+	}
+
+	/**
+	 * @deprecated
+	 */
 	public boolean isNodeCoherent() {
 		return _ehcache.isNodeCoherent();
 	}
 
+	public boolean isReadLockedByCurrentThread(Object key) {
+		return _ehcache.isReadLockedByCurrentThread(key);
+	}
+
 	public boolean isSampledStatisticsEnabled() {
 		return _ehcache.isSampledStatisticsEnabled();
+	}
+
+	public boolean isSearchable() {
+		return _ehcache.isSearchable();
 	}
 
 	public boolean isStatisticsEnabled() {
@@ -313,6 +378,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public boolean isValueInCache(Object value) {
 		return _ehcache.isValueInCache(value);
+	}
+
+	public boolean isWriteLockedByCurrentThread(Object key) {
+		return _ehcache.isWriteLockedByCurrentThread(key);
 	}
 
 	public void load(Object key) throws CacheException {
@@ -371,6 +440,14 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public void registerCacheWriter(CacheWriter cacheWriter) {
 		_ehcache.registerCacheWriter(cacheWriter);
+	}
+
+	public void releaseReadLockOnKey(Object key) {
+		_ehcache.releaseReadLockOnKey(key);
+	}
+
+	public void releaseWriteLockOnKey(Object key) {
+		_ehcache.releaseWriteLockOnKey(key);
 	}
 
 	public boolean remove(Object key) throws IllegalStateException {
@@ -446,7 +523,6 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 		return _ehcache.replace(oldElement, newElement);
 	}
-
 	public void setBootstrapCacheLoader(
 			BootstrapCacheLoader bootstrapCacheLoader)
 		throws CacheException {
@@ -476,6 +552,15 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		_ehcache.setName(name);
 	}
 
+	public void setNodeBulkLoadEnabled(boolean enabledBulkLoad)
+		throws TerracottaNotRunningException, UnsupportedOperationException {
+
+		_ehcache.setNodeBulkLoadEnabled(enabledBulkLoad);
+	}
+
+	/**
+	 * @deprecated
+	 */
 	public void setNodeCoherent(boolean nodeCoherent)
 		throws UnsupportedOperationException {
 
@@ -504,6 +589,18 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		_ehcache = ehcache;
 	}
 
+	public boolean tryReadLockOnKey(Object key, long timeout)
+		throws InterruptedException {
+
+		return _ehcache.tryReadLockOnKey(key, timeout);
+	}
+
+	public boolean tryWriteLockOnKey(Object key, long timeout)
+		throws InterruptedException {
+
+		return _ehcache.tryWriteLockOnKey(key, timeout);
+	}
+
 	public void unregisterCacheExtension(CacheExtension cacheExtension) {
 		_ehcache.unregisterCacheExtension(cacheExtension);
 	}
@@ -516,6 +613,15 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		_ehcache.unregisterCacheWriter();
 	}
 
+	public void waitUntilClusterBulkLoadComplete()
+		throws TerracottaNotRunningException, UnsupportedOperationException {
+
+		_ehcache.waitUntilClusterBulkLoadComplete();
+	}
+
+	/**
+	 * @deprecated
+	 */
 	public void waitUntilClusterCoherent()
 		throws UnsupportedOperationException {
 

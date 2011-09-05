@@ -65,6 +65,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
+ * @author Shuyang Zhou
  */
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
@@ -547,6 +548,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getPermissionChecker(), messageId, ActionKeys.SUBSCRIBE);
 
 		mbMessageLocalService.unsubscribeMessage(getUserId(), messageId);
+	}
+
+	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+		throws PortalException, SystemException {
+
+		mbMessageLocalService.updateAnswer(messageId, answer, cascade);
 	}
 
 	public MBMessage updateDiscussionMessage(

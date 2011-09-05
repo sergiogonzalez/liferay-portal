@@ -133,6 +133,6 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 			};
 		</c:if>
 
-		Liferay.Util.getOpener().Liferay.Portlet.refresh(stagingBarPortletBoundaryId, data);
+		Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id_<%= PortletKeys.STAGING_BAR %>_', data);
 	</c:if>
 </aui:script>

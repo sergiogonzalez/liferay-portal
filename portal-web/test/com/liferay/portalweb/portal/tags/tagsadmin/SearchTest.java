@@ -41,92 +41,31 @@ public class SearchTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("tags-admin-search-input")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.type("tags-admin-search-input", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("tags-admin-search-input",
+		selenium.type("//input[@id='_99_tagsAdminSearchInput']",
 			RuntimeVariables.replace("blue"));
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertTrue(selenium.isVisible("link=blue"));
 		assertTrue(selenium.isVisible("link=blue car"));
 		assertTrue(selenium.isVisible("link=blue green"));
-		assertFalse(selenium.isVisible("link=green"));
-		assertFalse(selenium.isVisible("link=green tree"));
-		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		assertFalse(selenium.isElementPresent("link=green"));
+		assertFalse(selenium.isElementPresent("link=green tree"));
+		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("tags-admin-search-input")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.type("tags-admin-search-input", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("tags-admin-search-input",
+		selenium.type("//input[@id='_99_tagsAdminSearchInput']",
 			RuntimeVariables.replace("green"));
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
-		assertFalse(selenium.isVisible("link=blue"));
-		assertFalse(selenium.isVisible("link=blue car"));
+		assertFalse(selenium.isElementPresent("link=blue"));
+		assertFalse(selenium.isElementPresent("link=blue car"));
 		assertTrue(selenium.isVisible("link=blue green"));
 		assertTrue(selenium.isVisible("link=green"));
 		assertTrue(selenium.isVisible("link=green tree"));

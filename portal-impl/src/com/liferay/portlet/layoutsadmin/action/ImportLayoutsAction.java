@@ -54,13 +54,13 @@ public class ImportLayoutsAction extends PortletAction {
 		throws Exception {
 
 		try {
-			UploadPortletRequest uploadRequest =
+			UploadPortletRequest uploadPortletRequest =
 				PortalUtil.getUploadPortletRequest(actionRequest);
 
-			long groupId = ParamUtil.getLong(uploadRequest, "groupId");
+			long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
-				uploadRequest, "privateLayout");
-			File file = uploadRequest.getFile("importFileName");
+				uploadPortletRequest, "privateLayout");
+			File file = uploadPortletRequest.getFile("importFileName");
 
 			if (!file.exists()) {
 				throw new LARFileException("Import file does not exist");

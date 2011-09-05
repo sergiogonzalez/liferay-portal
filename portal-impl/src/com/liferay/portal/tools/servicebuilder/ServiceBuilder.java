@@ -286,7 +286,8 @@ public class ServiceBuilder {
 
 		className = className.substring(0, className.length() - 5);
 
-		content = SourceFormatter.stripImports(content, packagePath, className);
+		content = SourceFormatter.stripJavaImports(
+			content, packagePath, className);
 
 		File tempFile = new File("ServiceBuilder.temp");
 

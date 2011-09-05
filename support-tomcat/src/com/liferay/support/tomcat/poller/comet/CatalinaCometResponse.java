@@ -23,7 +23,7 @@ import java.io.Writer;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.CometEvent;
+import org.apache.catalina.comet.CometEvent;
 
 /**
  * @author Edward Han

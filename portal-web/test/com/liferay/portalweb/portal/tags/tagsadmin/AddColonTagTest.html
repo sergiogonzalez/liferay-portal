@@ -16,52 +16,52 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Tags</td>
-	<td></td>
+	<td>Tags</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>add-tag-button</td>
-	<td></td>
+	<td>//input[@id='_99_addTagButton']</td>
+	<td>Add Tag</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>new-tag-name</td>
-	<td></td>
+	<td>//input[@id='_99_name']</td>
+	<td>Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>new-tag-name</td>
+	<td>//input[@id='_99_name']</td>
 	<td>:test</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>tag-portlet-messages</td>
+	<td>waitForVisible</td>
+	<td>//div[@id='portletMessages']</td>
 	<td>One of your fields contains invalid characters.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>tag-portlet-messages</td>
+	<td>//div[@id='portletMessages']</td>
 	<td>One of your fields contains invalid characters.</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>link=:test</td>
-	<td></td>
+	<td>:test</td>
 </tr>
 
 </tbody></table>

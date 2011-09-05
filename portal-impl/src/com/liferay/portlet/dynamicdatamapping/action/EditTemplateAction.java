@@ -194,24 +194,26 @@ public class EditTemplateAction extends PortletAction {
 	protected DDMTemplate updateTemplate(ActionRequest actionRequest)
 		throws Exception {
 
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		long templateId = ParamUtil.getLong(uploadRequest, "templateId");
+		long templateId = ParamUtil.getLong(uploadPortletRequest, "templateId");
 
-		long groupId = ParamUtil.getLong(uploadRequest, "groupId");
-		long structureId = ParamUtil.getLong(uploadRequest, "structureId");
+		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
+		long structureId = ParamUtil.getLong(
+			uploadPortletRequest, "structureId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		String type = ParamUtil.getString(uploadRequest, "type");
+		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		String language = ParamUtil.getString(
-			uploadRequest, "language", DDMTemplateConstants.LANG_TYPE_VM);
+			uploadPortletRequest, "language",
+			DDMTemplateConstants.LANG_TYPE_VM);
 
-		String script = ParamUtil.getString(uploadRequest, "script");
+		String script = ParamUtil.getString(uploadPortletRequest, "script");
 		String scriptContent = JS.decodeURIComponent(
-			ParamUtil.getString(uploadRequest, "scriptContent"));
+			ParamUtil.getString(uploadPortletRequest, "scriptContent"));
 
 		if (Validator.isNull(script)) {
 			script = scriptContent;

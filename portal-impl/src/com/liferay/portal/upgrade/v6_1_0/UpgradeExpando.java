@@ -32,11 +32,11 @@ public class UpgradeExpando extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateTypeSettingsIndexable();
-		updateTypeSettingsSelection();
+		updateColumnTypeSettingsIndexable();
+		updateColumnTypeSettingsSelection();
 	}
 
-	protected void updateTypeSettings(long columnId, String typeSettings)
+	protected void updateColumnTypeSettings(long columnId, String typeSettings)
 		throws Exception {
 
 		Connection con = null;
@@ -58,7 +58,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		}
 	}
 
-	protected void updateTypeSettingsIndexable() throws Exception {
+	protected void updateColumnTypeSettingsIndexable() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -109,7 +109,8 @@ public class UpgradeExpando extends UpgradeProcess {
 
 				typeSettingsProperties.remove("indexable");
 
-				updateTypeSettings(columnId, typeSettingsProperties.toString());
+				updateColumnTypeSettings(
+					columnId, typeSettingsProperties.toString());
 			}
 		}
 		finally {
@@ -117,7 +118,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		}
 	}
 
-	protected void updateTypeSettingsSelection() throws Exception {
+	protected void updateColumnTypeSettingsSelection() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -141,7 +142,7 @@ public class UpgradeExpando extends UpgradeProcess {
 				typeSettings = typeSettings.replace(
 					"selection=0", "display-type=text-box");
 
-				updateTypeSettings(columnId, typeSettings);
+				updateColumnTypeSettings(columnId, typeSettings);
 			}
 		}
 		finally {

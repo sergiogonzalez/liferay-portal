@@ -114,7 +114,7 @@ StringBundler pageBottomSB = (StringBundler)request.getAttribute(WebKeys.PAGE_BO
 	<%-- Google Analytics --%>
 
 	<%
-	UnicodeProperties groupTypeSettings = layout.getGroup().getTypeSettingsProperties();
+	UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
 
 	String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
 

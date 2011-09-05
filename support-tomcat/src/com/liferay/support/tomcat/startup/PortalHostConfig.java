@@ -56,19 +56,6 @@ public class PortalHostConfig extends HostConfig {
 	}
 
 	@Override
-	protected void deployDescriptor(
-		String contextPath, File contextXml, String file) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"deployDescriptor " + contextPath + " " + contextXml + " " +
-					file);
-		}
-
-		super.deployDescriptor(contextPath, contextXml, file);
-	}
-
-	@Override
 	protected void deployDescriptors(File configBase, String[] files) {
 		super.deployDescriptors(configBase, sortFiles(files));
 	}

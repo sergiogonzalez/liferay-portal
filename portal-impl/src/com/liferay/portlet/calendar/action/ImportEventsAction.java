@@ -50,13 +50,13 @@ public class ImportEventsAction extends PortletAction {
 		throws Exception {
 
 		try {
-			UploadPortletRequest uploadRequest =
+			UploadPortletRequest uploadPortletRequest =
 				PortalUtil.getUploadPortletRequest(actionRequest);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CalEvent.class.getName(), actionRequest);
 
-			File file = uploadRequest.getFile("file");
+			File file = uploadPortletRequest.getFile("file");
 
 			validate(file);
 
