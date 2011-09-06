@@ -63,8 +63,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 						LayoutLister layoutLister = new LayoutLister();
 
-						String rootNodeName = layout.getGroup().getName();
-						LayoutView layoutView = layoutLister.getLayoutView(layout.getGroup().getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
+						Group group = layout.getGroup();
+
+						LayoutView layoutView = layoutLister.getLayoutView(layout.getGroup().getGroupId(), layout.isPrivateLayout(), group.getName(), locale);
 
 						List layoutList = layoutView.getList();
 

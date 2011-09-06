@@ -215,6 +215,7 @@ public class RoleFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params);
+
 			qPos.add(companyId);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
@@ -502,6 +503,7 @@ public class RoleFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params);
+
 			qPos.add(companyId);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);

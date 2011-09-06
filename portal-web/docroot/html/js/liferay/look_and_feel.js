@@ -915,7 +915,7 @@ AUI().add(
 						var firstIndex = 0;
 
 						if (!otherHolders.size()) {
-							otherHolders = fieldset.all('.aui-field');
+							otherHolders = fieldset.all('.aui-field-content');
 							firstIndex = 1;
 						}
 
@@ -1070,8 +1070,11 @@ AUI().add(
 							success: function(event, id, obj) {
 								var objectData = this.get('responseData');
 
-								if (objectData) {
+								if (objectData.hasCssValue) {
 									instance._objData = objectData;
+								}
+								else {
+									instance._objData.portletData = objectData.portletData;
 								}
 
 								onLookAndFeelComplete();

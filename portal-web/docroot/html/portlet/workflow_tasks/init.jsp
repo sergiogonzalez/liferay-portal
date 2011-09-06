@@ -20,6 +20,7 @@
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowException" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandler" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %>
+<%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandlerUtil" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowLog" %>
@@ -31,7 +32,6 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskDisplayTerms" %>
 <%@ page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskSearch" %>
 <%@ page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskSearchTerms" %>
@@ -58,7 +58,7 @@ private boolean _hasOtherAssignees(long[] pooledActorsIds, WorkflowTask workflow
 	return true;
 }
 
-private boolean isAssignedToUser(WorkflowTask workflowTask, User user) {
+private boolean _isAssignedToUser(WorkflowTask workflowTask, User user) {
 	if (workflowTask.getAssigneeUserId() == user.getUserId()) {
 		return true;
 	}

@@ -438,6 +438,10 @@ public class WebServerServlet extends HttpServlet {
 
 				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
+				if (pathArray[0].equals("language")) {
+					return -1;
+				}
+
 				FileEntry fileEntry = getFileEntry(pathArray);
 
 				if (fileEntry == null) {
@@ -669,57 +673,42 @@ public class WebServerServlet extends HttpServlet {
 		else if (documentThumbnail) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
-
-			File thumbnailFile = PDFProcessor.getThumbnailFile(tempFileId);
-
-			inputStream = new FileInputStream(thumbnailFile);
-			contentLength = thumbnailFile.length();
+			inputStream = PDFProcessor.getThumbnailAsStream(fileVersion);
+			contentLength = PDFProcessor.getThumbnailFileSize(fileVersion);
 
 			converted = true;
 		}
 		else if (previewFileIndex > 0) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.PREVIEW_TYPE);
-
-			File previewFile = PDFProcessor.getPreviewFile(
-				tempFileId, previewFileIndex);
-
-			inputStream = new FileInputStream(previewFile);
-			contentLength = previewFile.length();
+			inputStream = PDFProcessor.getPreviewAsStream(
+				fileVersion, previewFileIndex);
+			contentLength = PDFProcessor.getPreviewFileSize(
+				fileVersion, previewFileIndex);
 
 			converted = true;
 		}
 		else if (audioPreview) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(AudioProcessor.PREVIEW_TYPE);
-
-			File previewFile = AudioProcessor.getPreviewFile(tempFileId);
-
-			inputStream = new FileInputStream(previewFile);
-			contentLength = previewFile.length();
+			inputStream = AudioProcessor.getPreviewAsStream(fileVersion);
+			contentLength = AudioProcessor.getPreviewFileSize(fileVersion);
 
 			converted = true;
 		}
 		else if (videoPreview) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(VideoProcessor.PREVIEW_TYPE);
-
-			File previewFile = VideoProcessor.getPreviewFile(tempFileId);
-
-			inputStream = new FileInputStream(previewFile);
-			contentLength = previewFile.length();
+			inputStream = VideoProcessor.getPreviewAsStream(fileVersion);
+			contentLength = VideoProcessor.getPreviewFileSize(fileVersion);
 
 			converted = true;
 		}
 		else if (videoThumbnail) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(VideoProcessor.THUMBNAIL_TYPE);
-
-			File thumbnailFile = VideoProcessor.getThumbnailFile(
-				tempFileId);
-
-			inputStream = new FileInputStream(thumbnailFile);
-			contentLength = thumbnailFile.length();
+			inputStream = VideoProcessor.getThumbnailAsStream(fileVersion);
+			contentLength = VideoProcessor.getThumbnailFileSize(fileVersion);
 
 			converted = true;
 		}
@@ -814,7 +803,7 @@ public class WebServerServlet extends HttpServlet {
 		String type = image.getType();
 
 		if (!type.equals(ImageConstants.TYPE_NOT_AVAILABLE)) {
-			contentType = MimeTypesUtil.getContentType(type);
+			contentType = MimeTypesUtil.getContentType("A." + type);
 
 			response.setContentType(contentType);
 		}

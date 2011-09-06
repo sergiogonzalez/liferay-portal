@@ -46,13 +46,38 @@ public class ConfigureWCPortletWebContentAddedEmailCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Site Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Site Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("link=Site Name"));
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -99,11 +124,13 @@ public class ConfigureWCPortletWebContentAddedEmailCPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
-		assertFalse(selenium.isChecked("_86_emailArticleAddedEnabledCheckbox"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_86_emailArticleAddedEnabledCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_86_emailArticleAddedEnabledCheckbox",
+		selenium.clickAt("//input[@id='_86_emailArticleAddedEnabledCheckbox']",
 			RuntimeVariables.replace("Enabled"));
-		assertTrue(selenium.isChecked("_86_emailArticleAddedEnabledCheckbox"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_emailArticleAddedEnabledCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -112,7 +139,8 @@ public class ConfigureWCPortletWebContentAddedEmailCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("_86_emailArticleAddedEnabledCheckbox"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_emailArticleAddedEnabledCheckbox']"));
 		selenium.saveScreenShotAndSource();
 	}
 }

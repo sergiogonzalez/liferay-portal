@@ -76,10 +76,13 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		_basePath = WebDirDetector.getRootDir(
 			PortalClassLoaderUtil.getClassLoader());
 
-		_loadPaths = new ArrayList<String>(3);
+		_loadPaths = new ArrayList<String>(
+			PropsValues.SCRIPTING_JRUBY_LOAD_PATHS.length);
 
-		_loadPaths.add("META-INF/jruby.home/lib/ruby/1.8");
-		_loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/1.8");
+		for (String gemLibPath : PropsValues.SCRIPTING_JRUBY_LOAD_PATHS) {
+			_loadPaths.add(gemLibPath);
+		}
+
 		_loadPaths.add(
 			"file:" + _basePath +
 				"WEB-INF/lib/ruby-gems.jar!/gems/haml-3.0.25/lib");

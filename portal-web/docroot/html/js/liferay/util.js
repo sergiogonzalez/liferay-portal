@@ -222,6 +222,10 @@
 			}
 		},
 
+		clamp: function(value, min, max) {
+			return Math.min(Math.max(value, min), max);
+		},
+
 		disableEsc: function() {
 			if ((document.all) && (event.keyCode == 27)) {
 				event.returnValue = false;
@@ -541,6 +545,10 @@
 				return buffer.join('');
 			}
 		),
+
+		toNumber: function(value) {
+			return parseInt(value, 10) || 0;
+		},
 
 		uncamelize: function(value, separator) {
 			separator = separator || ' ';
@@ -1059,6 +1067,7 @@
 			ddmURL.setParameter('scopeStorageType', config.storageType);
 			ddmURL.setParameter('scopeStructureName', config.structureName);
 			ddmURL.setParameter('scopeStructureType', config.structureType);
+			ddmURL.setParameter('scopeTemplateType', config.templateType);
 
 			if (config.showManageTemplates) {
 				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);
@@ -1069,11 +1078,16 @@
 			}
 
 			ddmURL.setParameter('structureId', config.structureId);
-			ddmURL.setParameter('struts_action', '/dynamic_data_mapping/view');
 
 			if (config.struts_action) {
 				ddmURL.setParameter('struts_action', config.struts_action);
 			}
+			else {
+				ddmURL.setParameter('struts_action', '/dynamic_data_mapping/view');
+			}
+
+			ddmURL.setParameter('templateHeaderTitle', config.templateHeaderTitle);
+			ddmURL.setParameter('templateId', config.templateId);
 
 			ddmURL.setPortletId(166);
 			ddmURL.setWindowState('pop_up');
@@ -1539,7 +1553,7 @@
 			if (checkbox) {
 				var checked = checkbox.attr('checked');
 
-				var value = '';
+				var value = 'false';
 
 				if (checked) {
 					value = checkbox.val();

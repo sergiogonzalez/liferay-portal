@@ -90,35 +90,39 @@ public class OpenSSOUtil {
 
 		Map<String, String> nameValues = new HashMap<String, String>();
 
-		String url = serviceUrl + _GET_ATTRIBUTES;
+		String url = serviceUrl.concat(_GET_ATTRIBUTES);
 
 		try {
 			URL urlObj = new URL(url);
 
-			HttpURLConnection urlc = (HttpURLConnection)urlObj.openConnection();
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)urlObj.openConnection();
 
-			urlc.setDoOutput(true);
-			urlc.setRequestMethod("POST");
-			urlc.setRequestProperty(
+			httpURLConnection.setDoOutput(true);
+			httpURLConnection.setRequestMethod("POST");
+			httpURLConnection.setRequestProperty(
 				"Content-type", "application/x-www-form-urlencoded");
 
 			String[] cookieNames = _getCookieNames(serviceUrl);
 
-			_setCookieProperty(request, urlc, cookieNames);
+			_setCookieProperty(request, httpURLConnection, cookieNames);
 
 			OutputStreamWriter osw = new OutputStreamWriter(
-				urlc.getOutputStream());
+				httpURLConnection.getOutputStream());
 
 			osw.write("dummy");
 
 			osw.flush();
 
-			int responseCode = urlc.getResponseCode();
+			int responseCode = httpURLConnection.getResponseCode();
 
 			if (responseCode == HttpURLConnection.HTTP_OK) {
+				InputStream inputStream =
+					(InputStream)httpURLConnection.getContent();
+
 				UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(
-						new InputStreamReader((InputStream)urlc.getContent()));
+						new InputStreamReader(inputStream));
 
 				String line = null;
 
@@ -172,17 +176,21 @@ public class OpenSSOUtil {
 		try {
 			String cookieName = null;
 
-			String url = serviceUrl + _GET_COOKIE_NAME;
+			String url = serviceUrl.concat(_GET_COOKIE_NAME);
 
 			URL urlObj = new URL(url);
 
-			HttpURLConnection urlc = (HttpURLConnection)urlObj.openConnection();
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)urlObj.openConnection();
+
+			InputStream inputStream =
+				(InputStream)httpURLConnection.getContent();
 
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
-					new InputStreamReader((InputStream)urlc.getContent()));
+					new InputStreamReader(inputStream));
 
-			int responseCode = urlc.getResponseCode();
+			int responseCode = httpURLConnection.getResponseCode();
 
 			if (responseCode != HttpURLConnection.HTTP_OK) {
 				if (_log.isDebugEnabled()) {
@@ -201,16 +209,20 @@ public class OpenSSOUtil {
 				}
 			}
 
-			url = serviceUrl + _GET_COOKIE_NAMES;
+			url = serviceUrl.concat(_GET_COOKIE_NAMES);
 
 			urlObj = new URL(url);
 
-			urlc = (HttpURLConnection)urlObj.openConnection();
+			httpURLConnection = (HttpURLConnection)urlObj.openConnection();
+
+			inputStream = (InputStream)httpURLConnection.getContent();
 
 			unsyncBufferedReader = new UnsyncBufferedReader(
-				new InputStreamReader((InputStream)urlc.getContent()));
+				new InputStreamReader(inputStream));
 
-			if (urlc.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			if (httpURLConnection.getResponseCode() !=
+					HttpURLConnection.HTTP_OK) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(url + " has response code " + responseCode);
 				}
@@ -262,36 +274,52 @@ public class OpenSSOUtil {
 
 		boolean authenticated = false;
 
-		String url = serviceUrl + _VALIDATE_TOKEN;
-
-		URL urlObj = new URL(url);
-
-		HttpURLConnection urlc = (HttpURLConnection)urlObj.openConnection();
-
-		urlc.setDoOutput(true);
-		urlc.setRequestMethod("POST");
-		urlc.setRequestProperty(
-			"Content-type", "application/x-www-form-urlencoded");
+		boolean hasCookieNames = false;
 
 		String[] cookieNames = _getCookieNames(serviceUrl);
 
-		if (cookieNames.length == 0) {
-			throw new IOException(
-				"Cookie names from OpenSSO service are not accessible");
+		for (String cookieName : cookieNames) {
+			if (CookieUtil.get(request, cookieName) != null) {
+				hasCookieNames = true;
+
+				break;
+			}
 		}
 
-		_setCookieProperty(request, urlc, cookieNames);
+		if (!hasCookieNames) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"User is not logged in because he has no OpenSSO cookies");
+			}
 
-		OutputStreamWriter osw = new OutputStreamWriter(urlc.getOutputStream());
+			return false;
+		}
 
-		osw.write("dummy");
+		String url = serviceUrl.concat(_VALIDATE_TOKEN);
 
-		osw.flush();
+		URL urlObj = new URL(url);
 
-		int responseCode = urlc.getResponseCode();
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)urlObj.openConnection();
+
+		httpURLConnection.setDoOutput(true);
+		httpURLConnection.setRequestMethod("POST");
+		httpURLConnection.setRequestProperty(
+			"Content-type", "application/x-www-form-urlencoded");
+
+		_setCookieProperty(request, httpURLConnection, cookieNames);
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			httpURLConnection.getOutputStream());
+
+		outputStreamWriter.write("dummy");
+
+		outputStreamWriter.flush();
+
+		int responseCode = httpURLConnection.getResponseCode();
 
 		if (responseCode == HttpURLConnection.HTTP_OK) {
-			String data = StringUtil.read(urlc.getInputStream());
+			String data = StringUtil.read(httpURLConnection.getInputStream());
 
 			if (data.toLowerCase().indexOf("boolean=true") != -1) {
 				authenticated = true;
@@ -326,9 +354,10 @@ public class OpenSSOUtil {
 		try {
 			URL urlObj = new URL(url);
 
-			HttpURLConnection urlc = (HttpURLConnection)urlObj.openConnection();
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)urlObj.openConnection();
 
-			int responseCode = urlc.getResponseCode();
+			int responseCode = httpURLConnection.getResponseCode();
 
 			if (responseCode != HttpURLConnection.HTTP_OK) {
 				if (_log.isDebugEnabled()) {

@@ -47,6 +47,13 @@
 				/>
 			</then>
 		</if>
+
+		<mkdir dir="docroot/WEB-INF/classes/META-INF" />
+
+		<manifest file="docroot/WEB-INF/classes/META-INF/MANIFEST.MF">
+			<attribute name="Extension-List" value="crypto" />
+			<attribute name="crypto-Extension-Name" value="javax.crypto" />
+		</manifest>
 	</target>
 
 	<target name="deploy" depends="compile">
@@ -109,6 +116,13 @@
 					</else>
 				</if>
 			</else>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<echo file="${war.file.dest}.dodeploy" />
+			</then>
 		</if>
 
 		<if>

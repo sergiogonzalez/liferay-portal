@@ -27,6 +27,7 @@ import java.util.Map;
  * @author Micha Kiener
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
+ * @author Marcellus Tavares
  */
 @MessagingProxy(mode = ProxyMode.SYNC)
 public interface WorkflowInstanceManager {
@@ -48,8 +49,19 @@ public interface WorkflowInstanceManager {
 		throws WorkflowException;
 
 	public int getWorkflowInstanceCount(
+			long companyId, Long userId, String[] assetClassNames,
+			Boolean completed)
+		throws WorkflowException;
+
+	public int getWorkflowInstanceCount(
 			long companyId, String workflowDefinitionName,
 			Integer workflowDefinitionVersion, Boolean completed)
+		throws WorkflowException;
+
+	public List<WorkflowInstance> getWorkflowInstances(
+			long companyId, Long userId, String[] assetClassNames,
+			Boolean completed, int start, int end,
+			OrderByComparator orderByComparator)
 		throws WorkflowException;
 
 	public List<WorkflowInstance> getWorkflowInstances(

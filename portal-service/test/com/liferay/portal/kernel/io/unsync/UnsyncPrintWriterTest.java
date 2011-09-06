@@ -184,7 +184,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 	}
 
 	private static final String _TEST_FILE_NAME =
-		"UnsyncPrintWriterTest.testFilename";
+		"UnsyncPrintWriterTest.testFile";
 
 	private static Field _writerField;
 

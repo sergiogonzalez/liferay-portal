@@ -46,13 +46,38 @@ public class ConfigureWCPortletEmailFromGmailServerCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Site Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Site Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("link=Site Name"));
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -98,10 +123,10 @@ public class ConfigureWCPortletEmailFromGmailServerCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Email From"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_emailFromName",
+		selenium.type("//input[@id='_86_emailFromName']",
 			RuntimeVariables.replace("Administrator"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_emailFromAddress",
+		selenium.type("//input[@id='_86_emailFromAddress']",
 			RuntimeVariables.replace("liferay.qa.server.trunk@gmail.com"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
@@ -111,8 +136,9 @@ public class ConfigureWCPortletEmailFromGmailServerCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Administrator", selenium.getValue("_86_emailFromName"));
+		assertEquals("Administrator",
+			selenium.getValue("//input[@id='_86_emailFromName']"));
 		assertEquals("liferay.qa.server.trunk@gmail.com",
-			selenium.getValue("_86_emailFromAddress"));
+			selenium.getValue("//input[@id='_86_emailFromAddress']"));
 	}
 }

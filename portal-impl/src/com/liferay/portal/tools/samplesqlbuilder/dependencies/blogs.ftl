@@ -30,10 +30,10 @@
 
 		${sampleSQLBuilder.insertMBDiscussion(mbDiscussion)}
 
-		${blogsEntriesCsvWriter.write(blogsEntry.entryId + "," + blogsEntry.urlTitle + "," + mbMessage.threadId + "," + mbMessage.messageId + ",")}
+		${writerBlogsCSV.write(blogsEntry.entryId + "," + blogsEntry.urlTitle + "," + mbMessage.threadId + "," + mbMessage.messageId + ",")}
 
 		<#if (blogsEntryCount < maxBlogsEntryCount)>
-			${blogsEntriesCsvWriter.write("\n")}
+			${writerBlogsCSV.write("\n")}
 		</#if>
 	</#list>
 </#if>

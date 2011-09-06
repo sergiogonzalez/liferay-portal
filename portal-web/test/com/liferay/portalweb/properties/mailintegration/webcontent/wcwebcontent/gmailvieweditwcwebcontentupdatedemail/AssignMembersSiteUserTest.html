@@ -30,62 +30,57 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>Assign Members</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>Assign Members</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>Assign Members</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Available</td>
-	<td>Available</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
+	<td>link=Add Members</td>
+	<td>Add Members</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_134_toggle_id_enterprise_admin_user_searchkeywords']</td>
-	<td>Search Field</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_174_keywords']</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_toggle_id_enterprise_admin_user_searchkeywords']</td>
+	<td>//input[@name='_174_keywords']</td>
 	<td>usersn</td>
 </tr>
 <tr>
@@ -95,28 +90,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
-	<td>userfn userln</td>
-</tr>
-<tr>
-	<td>assertText</td>
 	<td>//tr[3]/td[3]</td>
 	<td>usersn</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_134_allRowIds']</td>
-	<td>Select All</td>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_174_rowIds'))</td>
+	<td>UserSelectedChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${UserSelectedChecked}</td>
+	<td>UserSelectedIsChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_134_allRowIds']</td>
-	<td>Select All</td>
+	<td>//input[@name='_174_rowIds']</td>
+	<td>User Select</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_134_allRowIds']</td>
-	<td>Select All</td>
+	<td>label</td>
+	<td>UserSelectedIsChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -127,16 +122,6 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
-	<td>userfn userln</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
-	<td>usersn</td>
 </tr>
 
 </tbody></table>

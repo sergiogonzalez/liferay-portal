@@ -67,7 +67,7 @@ if (Validator.isNotNull(ddmStructureId)) {
 	<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
 	<aui:input name="scope" type="hidden" value="<%= DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS %>" />
 
-	<liferay-ui:error exception="<%= RecordSetDDMStructureIdException.class %>" message="please-enter-valid-definition" />
+	<liferay-ui:error exception="<%= RecordSetDDMStructureIdException.class %>" message="please-enter-a-valid-definition" />
 	<liferay-ui:error exception="<%= RecordSetNameException.class %>" message="please-enter-a-valid-name" />
 
 	<liferay-ui:asset-categories-error />

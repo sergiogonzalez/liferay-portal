@@ -106,7 +106,9 @@ public class PluginPackageIndexer extends BaseIndexer {
 
 		document.addText(Field.CONTENT, sb.toString());
 
-		document.addKeyword(Field.PORTLET_ID, PORTLET_ID);
+		document.addKeyword(
+			Field.ENTRY_CLASS_NAME, PluginPackage.class.getName());
+		document.addKeyword(Field.ENTRY_CLASS_PK, pluginPackage.getModuleId());
 
 		ModuleId moduleIdObj = ModuleId.getInstance(
 			pluginPackage.getModuleId());
@@ -114,6 +116,7 @@ public class PluginPackageIndexer extends BaseIndexer {
 		document.addKeyword(Field.GROUP_ID, moduleIdObj.getGroupId());
 
 		document.addDate(Field.MODIFIED_DATE, pluginPackage.getModifiedDate());
+		document.addKeyword(Field.PORTLET_ID, PORTLET_ID);
 
 		String[] statusAndInstalledVersion =
 			PluginPackageUtil.getStatusAndInstalledVersion(pluginPackage);

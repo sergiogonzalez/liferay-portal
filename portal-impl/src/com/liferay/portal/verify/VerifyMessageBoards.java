@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -29,11 +30,79 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 public class VerifyMessageBoards extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyStatisticsForCategories();
+		verifyStatisticsForThreads();
+		verifyAssetsForMessages();
+		verifyAssetsForThreads();
+	}
+
+	protected void verifyAssetsForMessages() throws Exception {
+		List<MBMessage> messages =
+			MBMessageLocalServiceUtil.getNoAssetMessages();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + messages.size() + " messages with no asset");
+		}
+
+		for (MBMessage message : messages) {
+			try {
+				MBMessageLocalServiceUtil.updateAsset(
+					message.getUserId(), message, null, null, null);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to update asset for message " +
+							message.getMessageId() + ": " + e.getMessage());
+				}
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Assets verified for messages");
+		}
+	}
+
+	protected void verifyAssetsForThreads() throws Exception {
+		List<MBThread> threads =
+			MBThreadLocalServiceUtil.getNoAssetThreads();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + threads.size() + " threads with no asset");
+		}
+
+		for (MBThread thread : threads) {
+			try {
+				AssetEntryLocalServiceUtil.updateEntry(
+					thread.getRootMessageUserId(), thread.getGroupId(),
+					MBThread.class.getName(), thread.getThreadId(), null,
+					new long[0], new String[0], false, null, null, null, null,
+					null, String.valueOf(thread.getRootMessageId()), null, null,
+					null, null, 0, 0, null, false);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to update asset for thread " +
+							thread.getThreadId() + ": " + e.getMessage());
+				}
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Assets verified for threads");
+		}
+	}
+
+	protected void verifyStatisticsForCategories() throws Exception {
 		List<MBCategory> categories =
 			MBCategoryLocalServiceUtil.getMBCategories(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -66,7 +135,9 @@ public class VerifyMessageBoards extends VerifyProcess {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Statistics verified for categories");
 		}
+	}
 
+	protected void verifyStatisticsForThreads() throws Exception {
 		List<MBThread> threads = MBThreadLocalServiceUtil.getMBThreads(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -89,32 +160,6 @@ public class VerifyMessageBoards extends VerifyProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Statistics verified for threads");
-		}
-
-		List<MBMessage> messages =
-			MBMessageLocalServiceUtil.getNoAssetMessages();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + messages.size() + " messages with no asset");
-		}
-
-		for (MBMessage message : messages) {
-			try {
-				MBMessageLocalServiceUtil.updateAsset(
-					message.getUserId(), message, null, null, null);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for message " +
-							message.getMessageId() + ": " + e.getMessage());
-				}
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Assets verified for messages");
 		}
 	}
 

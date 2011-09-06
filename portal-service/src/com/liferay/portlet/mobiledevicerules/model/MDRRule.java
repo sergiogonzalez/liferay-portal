@@ -31,4 +31,13 @@ public interface MDRRule extends MDRRuleModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getActions()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
+
+	public void setTypeSettings(java.lang.String typeSettings);
+
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
 }

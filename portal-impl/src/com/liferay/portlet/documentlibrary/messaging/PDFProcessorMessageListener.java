@@ -25,7 +25,7 @@ import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 public class PDFProcessorMessageListener extends BaseMessageListener {
 
 	@Override
-	protected void doReceive(Message message) {
+	protected void doReceive(Message message) throws Exception {
 		FileVersion fileVersion = (FileVersion)message.getPayload();
 
 		PDFProcessor.generateImages(fileVersion);

@@ -25,13 +25,18 @@ public class BoldTextNode extends FormattedTextNode {
 		super(astNode);
 	}
 
-	public BoldTextNode(String content) {
-		super(content);
-	}
-
 	@Override
 	public void accept(ASTVisitor astVisitor) {
 		astVisitor.visit(this);
+	}
+
+	@Override
+	public boolean hasContent() {
+		if ((getChildASTNodes() == null) && (getContent() == null)) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

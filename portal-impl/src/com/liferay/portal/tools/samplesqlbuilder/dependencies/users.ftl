@@ -2,7 +2,7 @@
 
 <#assign groupIds = dataFactory.addUserToGroupIds(group.groupId)>
 <#assign organizationIds = []>
-<#assign roleIds = [dataFactory.administratorRole.roleId]>
+<#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
 
 <#assign firstNames = dataFactory.userNames?first>
 <#assign lastNames = dataFactory.userNames?last>
@@ -31,10 +31,10 @@
 
 		${sampleSQLBuilder.insertMBStatsUser(mbStatsUser)}
 
-		${usersCsvWriter.write(user.getScreenName() + "," + userGroup.groupId + ",")}
+		${writerUsersCSV.write(user.getScreenName() + "," + userGroup.groupId + ",")}
 
 		<#if (userCounter.value < maxUserCount)>
-			${usersCsvWriter.write("\n")}
+			${writerUsersCSV.write("\n")}
 		</#if>
 
 		<#if (lastName_index = 0) && (firstName_index = 0)>
@@ -42,7 +42,7 @@
 		</#if>
 
 		<#if (userCounter.value >= maxUserCount)>
-			${usersCsvWriter.write("\n")}
+			${writerUsersCSV.write("\n")}
 
 			<#break>
 		</#if>

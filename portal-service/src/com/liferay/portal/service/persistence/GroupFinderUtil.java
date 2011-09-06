@@ -67,6 +67,14 @@ public class GroupFinderUtil {
 		return getFinder().findBySystem(companyId);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Group> findByCompanyId(
+		long companyId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByCompanyId(companyId, params, start, end, obc);
+	}
+
 	public static com.liferay.portal.model.Group findByC_N(long companyId,
 		java.lang.String name)
 		throws com.liferay.portal.NoSuchGroupException,

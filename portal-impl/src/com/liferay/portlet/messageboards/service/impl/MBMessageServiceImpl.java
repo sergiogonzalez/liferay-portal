@@ -65,6 +65,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
+ * @author Shuyang Zhou
  */
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
@@ -549,6 +550,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		mbMessageLocalService.unsubscribeMessage(getUserId(), messageId);
 	}
 
+	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+		throws PortalException, SystemException {
+
+		mbMessageLocalService.updateAnswer(messageId, answer, cascade);
+	}
+
 	public MBMessage updateDiscussionMessage(
 			String className, long classPK, String permissionClassName,
 			long permissionClassPK, long permissionOwnerId, long messageId,
@@ -717,7 +724,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 			SyndContent syndContent = new SyndContentImpl();
 
-			syndContent.setType(RSSUtil.DEFAULT_ENTRY_TYPE);
+			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 			syndContent.setValue(value);
 
 			syndEntry.setDescription(syndContent);

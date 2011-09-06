@@ -449,44 +449,46 @@ public class PermissionFinderImpl
 		Long count = (Long)FinderCacheUtil.getResult(
 			FINDER_PATH_COUNT_BY_ROLES_PERMISSIONS, finderArgs, this);
 
-		if (count == null) {
-			Session session = null;
+		if (count != null) {
+			return count.intValue();
+		}
 
-			try {
-				session = openSession();
+		Session session = null;
 
-				String sql = CustomSQLUtil.get(COUNT_BY_ROLES_PERMISSIONS);
+		try {
+			session = openSession();
 
-				sql = StringUtil.replace(
-					sql, "[$PERMISSION_ID$]",
-					getPermissionIds(permissions, "Roles_Permissions"));
-				sql = StringUtil.replace(
-					sql, "[$ROLE_ID$]", getRoleIds(roles, "Roles_Permissions"));
+			String sql = CustomSQLUtil.get(COUNT_BY_ROLES_PERMISSIONS);
 
-				SQLQuery q = session.createSQLQuery(sql);
+			sql = StringUtil.replace(
+				sql, "[$PERMISSION_ID$]",
+				getPermissionIds(permissions, "Roles_Permissions"));
+			sql = StringUtil.replace(
+				sql, "[$ROLE_ID$]", getRoleIds(roles, "Roles_Permissions"));
 
-				q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			SQLQuery q = session.createSQLQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
-				setPermissionIds(qPos, permissions);
-				setRoleIds(qPos, roles);
+			QueryPos qPos = QueryPos.getInstance(q);
 
-				count = (Long)q.uniqueResult();
+			setPermissionIds(qPos, permissions);
+			setRoleIds(qPos, roles);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			if (count == null) {
+				count = Long.valueOf(0);
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
 
-				FinderCacheUtil.putResult(
-					FINDER_PATH_COUNT_BY_ROLES_PERMISSIONS, finderArgs, count);
+			FinderCacheUtil.putResult(
+				FINDER_PATH_COUNT_BY_ROLES_PERMISSIONS, finderArgs, count);
 
-				closeSession(session);
-			}
+			closeSession(session);
 		}
 
 		return count.intValue();
@@ -703,41 +705,44 @@ public class PermissionFinderImpl
 		List<Permission> list = (List<Permission>)FinderCacheUtil.getResult(
 			FINDER_PATH_FIND_BY_A_R, finderArgs, this);
 
-		if (list == null) {
-			Session session = null;
+		if (list != null) {
+			return list;
+		}
 
-			try {
-				session = openSession();
+		Session session = null;
 
-				String sql = CustomSQLUtil.get(FIND_BY_A_R);
+		try {
+			session = openSession();
 
-				sql = StringUtil.replace(
-					sql, "[$RESOURCE_ID$]", getResourceIds(resourceIds));
+			String sql = CustomSQLUtil.get(FIND_BY_A_R);
 
-				SQLQuery q = session.createSQLQuery(sql);
+			sql = StringUtil.replace(
+				sql, "[$RESOURCE_ID$]", getResourceIds(resourceIds));
 
-				q.addEntity("Permission_", PermissionImpl.class);
+			SQLQuery q = session.createSQLQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+			q.addEntity("Permission_", PermissionImpl.class);
 
-				qPos.add(actionId);
-				setResourceIds(qPos, resourceIds);
+			QueryPos qPos = QueryPos.getInstance(q);
 
-				list = q.list(true);
+			qPos.add(actionId);
+
+			setResourceIds(qPos, resourceIds);
+
+			list = q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			if (list == null) {
+				list = new ArrayList<Permission>();
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
-			}
-			finally {
-				if (list == null) {
-					list = new ArrayList<Permission>();
-				}
 
-				FinderCacheUtil.putResult(
-					FINDER_PATH_FIND_BY_A_R, finderArgs, list);
+			FinderCacheUtil.putResult(
+				FINDER_PATH_FIND_BY_A_R, finderArgs, list);
 
-				closeSession(session);
-			}
+			closeSession(session);
 		}
 
 		return list;

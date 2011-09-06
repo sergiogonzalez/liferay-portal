@@ -96,12 +96,12 @@ public class EditUserPortraitAction extends PortletAction {
 				actionRequest);
 		}
 
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		User user = PortalUtil.getSelectedUser(uploadRequest);
+		User user = PortalUtil.getSelectedUser(uploadPortletRequest);
 
-		File file = uploadRequest.getFile("fileName");
+		File file = uploadPortletRequest.getFile("fileName");
 		byte[] bytes = FileUtil.getBytes(file);
 
 		if ((bytes == null) || (bytes.length == 0)) {

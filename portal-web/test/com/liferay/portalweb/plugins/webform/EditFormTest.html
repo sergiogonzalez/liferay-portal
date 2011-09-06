@@ -16,12 +16,12 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Web Form Test Page</td>
-	<td></td>
+	<td>Web Form Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Form Test Page</td>
-	<td></td>
+	<td>Web Form Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//label</td>
+	<td>//div/span[1]/span/label</td>
 	<td>Name</td>
 </tr>
 <tr>
@@ -54,7 +54,7 @@
 	<td>Comments</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//strong/a</td>
 	<td>Options</td>
 </tr>
@@ -64,7 +64,7 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
@@ -75,42 +75,47 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_title_en_US</td>
-	<td></td>
+	<td>//input[@id='_86_title_en_US']</td>
+	<td>Title</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_title_en_US</td>
+	<td>//input[@id='_86_title_en_US']</td>
 	<td>Feed Back</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_description_en_US</td>
+	<td>//textarea[@name='_86_description_en_US']</td>
 	<td>Please let us know what you think!</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_fieldLabel1_en_US</td>
+	<td>//input[@id='_86_fieldLabel1_en_US']</td>
 	<td>Your Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_fieldLabel2_en_US</td>
+	<td>//input[@id='_86_fieldLabel2_en_US']</td>
 	<td>Rate Us!</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_fieldLabel3_en_US</td>
+	<td>//input[@id='_86_fieldLabel3_en_US']</td>
 	<td>Additional Comments</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[2]/span[1]/span/input</td>
+	<td>clickAt</td>
+	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
@@ -121,12 +126,12 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Web Form Test Page</td>
-	<td></td>
+	<td>Web Form Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Form Test Page</td>
-	<td></td>
+	<td>Web Form Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -140,7 +145,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//label</td>
+	<td>//div/span/span/label</td>
 	<td>Your Name</td>
 </tr>
 <tr>

@@ -23,13 +23,19 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.NamedThreadFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.jgroups.Channel;
 import org.jgroups.ChannelException;
@@ -43,6 +49,20 @@ public class ClusterRequestReceiver extends BaseReceiver {
 
 	public ClusterRequestReceiver(ClusterExecutorImpl clusterExecutorImpl) {
 		_clusterExecutorImpl = clusterExecutorImpl;
+	}
+
+	public void destroy() {
+		_parallelExecutorService.shutdownNow();
+		_serialExecutorService.shutdownNow();
+	}
+
+	public void initialize() {
+		_parallelExecutorService = PortalExecutorManagerUtil.getPortalExecutor(
+			ClusterRequestReceiver.class.getName() + "_parallel");
+		_serialExecutorService = Executors.newSingleThreadExecutor(
+			new NamedThreadFactory(
+				ClusterRequestReceiver.class.getName() + "_serial",
+				Thread.NORM_PRIORITY, PortalClassLoaderUtil.getClassLoader()));
 	}
 
 	@Override
@@ -74,7 +94,15 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		if (obj instanceof ClusterRequest) {
 			ClusterRequest clusterRequest = (ClusterRequest)obj;
 
-			processClusterRequest(clusterRequest, sourceAddress, localAddress);
+			RequestTask requestTask = new RequestTask(
+				clusterRequest, sourceAddress, localAddress);
+
+			if (clusterRequest.isParallelized()) {
+				_parallelExecutorService.execute(requestTask);
+			}
+			else {
+				_serialExecutorService.execute(requestTask);
+			}
 		}
 		else if (obj instanceof ClusterNodeResponse) {
 			ClusterNodeResponse clusterNodeResponse = (ClusterNodeResponse)obj;
@@ -82,12 +110,9 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			processClusterResponse(
 				clusterNodeResponse, sourceAddress, localAddress);
 		}
-		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to process message content of type " +
-						obj.getClass().getName());
-			}
+		else if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Unable to process message content of type " + obj.getClass());
 		}
 	}
 
@@ -288,5 +313,29 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		ClusterRequestReceiver.class);
 
 	private ClusterExecutorImpl _clusterExecutorImpl;
+	private ExecutorService _parallelExecutorService;
+	private ExecutorService _serialExecutorService;
+
+	private class RequestTask implements Runnable {
+
+		public RequestTask(
+			ClusterRequest clusterRequest, org.jgroups.Address sourceAddress,
+			org.jgroups.Address localAddress) {
+
+			_clusterRequest = clusterRequest;
+			_sourceAddress = sourceAddress;
+			_localAddress = localAddress;
+		}
+
+		public void run() {
+			processClusterRequest(
+				_clusterRequest, _sourceAddress, _localAddress);
+		}
+
+		private ClusterRequest _clusterRequest;
+		private org.jgroups.Address _localAddress;
+		private org.jgroups.Address _sourceAddress;
+
+	}
 
 }

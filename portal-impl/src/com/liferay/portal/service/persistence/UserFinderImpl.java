@@ -132,6 +132,7 @@ public class UserFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params);
+
 			qPos.add(userId);
 
 			Iterator<Long> itr = q.list().iterator();
@@ -251,6 +252,7 @@ public class UserFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params);
+
 			qPos.add(companyId);
 			qPos.add(false);
 			qPos.add(firstNames, 2);
@@ -454,6 +456,7 @@ public class UserFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params);
+
 			qPos.add(companyId);
 			qPos.add(false);
 			qPos.add(firstNames, 2);

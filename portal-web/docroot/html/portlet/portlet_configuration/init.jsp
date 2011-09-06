@@ -27,13 +27,10 @@
 <%@ page import="com.liferay.portal.ResourcePrimKeyException" %>
 <%@ page import="com.liferay.portal.kernel.lar.PortletDataException" %>
 <%@ page import="com.liferay.portal.kernel.lar.PortletDataHandler" %>
-<%@ page import="com.liferay.portal.kernel.lar.PortletDataHandlerBoolean" %>
-<%@ page import="com.liferay.portal.kernel.lar.PortletDataHandlerChoice" %>
 <%@ page import="com.liferay.portal.kernel.lar.PortletDataHandlerControl" %>
 <%@ page import="com.liferay.portal.kernel.lar.PortletDataHandlerKeys" %>
 <%@ page import="com.liferay.portal.kernel.lar.UserIdStrategy" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletModeFactory" %>
-<%@ page import="com.liferay.portal.security.permission.comparator.ActionComparator" %>
 <%@ page import="com.liferay.portal.service.permission.RolePermissionUtil" %>
 <%@ page import="com.liferay.portlet.PortletQNameUtil" %>
 <%@ page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration" %>
@@ -46,7 +43,6 @@
 <%@ page import="com.liferay.portlet.usersadmin.search.UserGroupSearchTerms" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.UserSearch" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
-<%@ page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

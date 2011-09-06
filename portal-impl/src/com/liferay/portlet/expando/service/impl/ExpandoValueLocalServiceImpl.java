@@ -29,8 +29,10 @@ import com.liferay.portlet.expando.service.base.ExpandoValueLocalServiceBaseImpl
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,41 +50,9 @@ public class ExpandoValueLocalServiceImpl
 
 		ExpandoTable table = expandoTablePersistence.findByPrimaryKey(tableId);
 
-		ExpandoRow row = expandoRowPersistence.fetchByT_C(tableId, classPK);
-
-		if (row == null) {
-			long rowId = counterLocalService.increment();
-
-			row = expandoRowPersistence.create(rowId);
-
-			row.setCompanyId(table.getCompanyId());
-			row.setTableId(tableId);
-			row.setClassPK(classPK);
-
-			expandoRowPersistence.update(row, false);
-		}
-
-		ExpandoValue value = expandoValuePersistence.fetchByC_R(
-			columnId, row.getRowId());
-
-		if (value == null) {
-			long valueId = counterLocalService.increment();
-
-			value = expandoValuePersistence.create(valueId);
-
-			value.setCompanyId(table.getCompanyId());
-			value.setTableId(tableId);
-			value.setColumnId(columnId);
-			value.setRowId(row.getRowId());
-			value.setClassNameId(classNameId);
-			value.setClassPK(classPK);
-		}
-
-		value.setData(data);
-
-		expandoValuePersistence.update(value, false);
-
-		return value;
+		return doAddValue(
+			table.getCompanyId(), classNameId, tableId, columnId, classPK,
+			data);
 	}
 
 	public ExpandoValue addValue(
@@ -801,28 +771,117 @@ public class ExpandoValueLocalServiceImpl
 		for (ExpandoColumn column : columns) {
 			String dataString = data.get(column.getName());
 
-			if (dataString != null) {
-				ExpandoValue value = expandoValuePersistence.fetchByC_R(
-					column.getColumnId(), row.getRowId());
-
-				if (value == null) {
-					long valueId = counterLocalService.increment();
-
-					value = expandoValuePersistence.create(valueId);
-
-					value.setCompanyId(table.getCompanyId());
-					value.setTableId(tableId);
-					value.setColumnId(column.getColumnId());
-					value.setRowId(row.getRowId());
-					value.setClassNameId(classNameId);
-					value.setClassPK(classPK);
-				}
-
-				value.setData(dataString);
-
-				expandoValuePersistence.update(value, false);
+			if (dataString == null) {
+				continue;
 			}
+
+			ExpandoValue value = expandoValuePersistence.fetchByC_R(
+				column.getColumnId(), row.getRowId());
+
+			if (value == null) {
+				long valueId = counterLocalService.increment();
+
+				value = expandoValuePersistence.create(valueId);
+
+				value.setCompanyId(table.getCompanyId());
+				value.setTableId(tableId);
+				value.setColumnId(column.getColumnId());
+				value.setRowId(row.getRowId());
+				value.setClassNameId(classNameId);
+				value.setClassPK(classPK);
+			}
+
+			value.setData(dataString);
+
+			expandoValuePersistence.update(value, false);
 		}
+	}
+
+	public void addValues(
+			long companyId, long classNameId, String tableName, long classPK,
+			Map<String, Serializable> attributes)
+		throws PortalException, SystemException {
+
+		ExpandoTable table = expandoTableLocalService.getTable(
+			companyId, classNameId, tableName);
+
+		List<ExpandoColumn> columns = expandoColumnLocalService.getColumns(
+			table.getTableId(), attributes.keySet());
+
+		ExpandoValue value = new ExpandoValueImpl();
+
+		value.setCompanyId(companyId);
+
+		for (ExpandoColumn column : columns) {
+			Serializable attributeValue = attributes.get(column.getName());
+
+			value.setColumn(column);
+
+			int type = column.getType();
+
+			if (type == ExpandoColumnConstants.BOOLEAN) {
+				value.setBoolean((Boolean)attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
+				value.setBooleanArray((boolean[])attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.DATE) {
+				value.setDate((Date)attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.DATE_ARRAY) {
+				value.setDateArray((Date[])attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.DOUBLE) {
+				value.setDouble((Double)attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
+				value.setDoubleArray((double[])attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.FLOAT) {
+				value.setFloat((Float)attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
+				value.setFloatArray((float[])attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.INTEGER) {
+				value.setInteger((Integer)attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
+				value.setIntegerArray((int[])attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.LONG) {
+				value.setLong((Long)attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.LONG_ARRAY) {
+				value.setLongArray((long[])attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.SHORT) {
+				value.setShort((Short)attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
+				value.setShortArray((short[])attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.STRING_ARRAY) {
+				value.setStringArray((String[])attributeValue);
+			}
+			else {
+				value.setString((String)attributeValue);
+			}
+
+			doAddValue(
+				companyId, classNameId, table.getTableId(),
+				column.getColumnId(), classPK, value.getData());
+		}
+	}
+
+	public void addValues(
+			long companyId, String className, String tableName, long classPK,
+			Map<String, Serializable> attributes)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		addValues(companyId, classNameId, tableName, classPK, attributes);
 	}
 
 	public void deleteColumnValues(long columnId) throws SystemException {
@@ -883,12 +942,14 @@ public class ExpandoValueLocalServiceImpl
 			return;
 		}
 
-		ExpandoColumn column = expandoColumnPersistence.fetchByT_N(
+		List<ExpandoColumn> columns = expandoColumnPersistence.findByT_N(
 			table.getTableId(), columnName);
 
-		if (column == null) {
+		if (columns.isEmpty()) {
 			return;
 		}
+
+		ExpandoColumn column = columns.get(0);
 
 		ExpandoValue value = expandoValuePersistence.fetchByT_C_C(
 			table.getTableId(), column.getColumnId(), classPK);
@@ -955,12 +1016,14 @@ public class ExpandoValueLocalServiceImpl
 			return Collections.emptyList();
 		}
 
-		ExpandoColumn column = expandoColumnPersistence.fetchByT_N(
+		List<ExpandoColumn> columns = expandoColumnPersistence.findByT_N(
 			table.getTableId(), columnName);
 
-		if (column == null) {
+		if (columns.isEmpty()) {
 			return Collections.emptyList();
 		}
+
+		ExpandoColumn column = columns.get(0);
 
 		if (data == null) {
 			return expandoValuePersistence.findByT_C(
@@ -1034,12 +1097,14 @@ public class ExpandoValueLocalServiceImpl
 			return 0;
 		}
 
-		ExpandoColumn column = expandoColumnPersistence.fetchByT_N(
+		List<ExpandoColumn> columns = expandoColumnPersistence.findByT_N(
 			table.getTableId(), columnName);
 
-		if (column == null) {
+		if (columns.isEmpty()) {
 			return 0;
 		}
+
+		ExpandoColumn column = columns.get(0);
 
 		if (data == null) {
 			return expandoValuePersistence.countByT_C(
@@ -1087,6 +1152,33 @@ public class ExpandoValueLocalServiceImpl
 			companyId, className, tableName, columnName, data);
 	}
 
+	public Map<String, Serializable> getData(
+			long companyId, String className, String tableName,
+			Collection<String> columnNames, long classPK)
+		throws PortalException, SystemException {
+
+		List<ExpandoColumn> columns = expandoColumnLocalService.getColumns(
+			companyId, className, tableName, columnNames);
+
+		Map<String, Serializable> attributeValues =
+			new HashMap<String, Serializable>((int)(columnNames.size() * 1.4));
+
+		ExpandoValue value = new ExpandoValueImpl();
+
+		for (ExpandoColumn column : columns) {
+			value.setColumn(column);
+			value.setData(column.getDefaultData());
+
+			Serializable attributeValue = doGetData(
+				companyId, className, tableName, column.getName(),
+				classPK, value, column.getType());
+
+			attributeValues.put(column.getName(), attributeValue);
+		}
+
+		return attributeValues;
+	}
+
 	public Serializable getData(
 			long companyId, String className, String tableName,
 			String columnName, long classPK)
@@ -1097,91 +1189,12 @@ public class ExpandoValueLocalServiceImpl
 
 		ExpandoValue value = new ExpandoValueImpl();
 
-		value.setColumnId(column.getColumnId());
+		value.setColumn(column);
 		value.setData(column.getDefaultData());
 
-		int type = column.getType();
-
-		if (type == ExpandoColumnConstants.BOOLEAN) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getBoolean());
-		}
-		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getBooleanArray());
-		}
-		else if (type == ExpandoColumnConstants.DATE) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getDate());
-		}
-		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getDateArray());
-		}
-		else if (type == ExpandoColumnConstants.DOUBLE) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getDouble());
-		}
-		else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getDoubleArray());
-		}
-		else if (type == ExpandoColumnConstants.FLOAT) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getFloat());
-		}
-		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getFloatArray());
-		}
-		else if (type == ExpandoColumnConstants.INTEGER) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getInteger());
-		}
-		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getIntegerArray());
-		}
-		else if (type == ExpandoColumnConstants.LONG) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getLong());
-		}
-		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getLongArray());
-		}
-		else if (type == ExpandoColumnConstants.SHORT) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getShort());
-		}
-		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getShortArray());
-		}
-		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getStringArray());
-		}
-		else {
-			return expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				value.getString());
-		}
+		return doGetData(
+			companyId, className, tableName, columnName, classPK, value,
+			column.getType());
 	}
 
 	public boolean getData(
@@ -1820,12 +1833,14 @@ public class ExpandoValueLocalServiceImpl
 			return null;
 		}
 
-		ExpandoColumn column = expandoColumnPersistence.fetchByT_N(
+		List<ExpandoColumn> columns = expandoColumnPersistence.findByT_N(
 			table.getTableId(), columnName);
 
-		if (column == null) {
+		if (columns.isEmpty()) {
 			return null;
 		}
+
+		ExpandoColumn column = columns.get(0);
 
 		return expandoValuePersistence.fetchByT_C_C(
 			table.getTableId(), column.getColumnId(), classPK);
@@ -1866,6 +1881,135 @@ public class ExpandoValueLocalServiceImpl
 
 		return expandoValueLocalService.getValue(
 			companyId, className, tableName, columnName, classPK);
+	}
+
+	protected ExpandoValue doAddValue(
+			long companyId, long classNameId, long tableId,
+			long columnId, long classPK, String data)
+		throws SystemException {
+
+		ExpandoRow row = expandoRowPersistence.fetchByT_C(tableId, classPK);
+
+		if (row == null) {
+			long rowId = counterLocalService.increment();
+
+			row = expandoRowPersistence.create(rowId);
+
+			row.setCompanyId(companyId);
+			row.setTableId(tableId);
+			row.setClassPK(classPK);
+
+			expandoRowPersistence.update(row, false);
+		}
+
+		ExpandoValue value = expandoValuePersistence.fetchByC_R(
+			columnId, row.getRowId());
+
+		if (value == null) {
+			long valueId = counterLocalService.increment();
+
+			value = expandoValuePersistence.create(valueId);
+
+			value.setCompanyId(companyId);
+			value.setTableId(tableId);
+			value.setColumnId(columnId);
+			value.setRowId(row.getRowId());
+			value.setClassNameId(classNameId);
+			value.setClassPK(classPK);
+		}
+
+		value.setData(data);
+
+		expandoValuePersistence.update(value, false);
+
+		return value;
+	}
+
+	protected Serializable doGetData(
+			long companyId, String className, String tableName,
+			String columnName, long classPK, ExpandoValue value, int type)
+		throws PortalException, SystemException {
+
+		if (type == ExpandoColumnConstants.BOOLEAN) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getBoolean());
+		}
+		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getBooleanArray());
+		}
+		else if (type == ExpandoColumnConstants.DATE) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getDate());
+		}
+		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getDateArray());
+		}
+		else if (type == ExpandoColumnConstants.DOUBLE) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getDouble());
+		}
+		else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getDoubleArray());
+		}
+		else if (type == ExpandoColumnConstants.FLOAT) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getFloat());
+		}
+		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getFloatArray());
+		}
+		else if (type == ExpandoColumnConstants.INTEGER) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getInteger());
+		}
+		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getIntegerArray());
+		}
+		else if (type == ExpandoColumnConstants.LONG) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getLong());
+		}
+		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getLongArray());
+		}
+		else if (type == ExpandoColumnConstants.SHORT) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getShort());
+		}
+		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getShortArray());
+		}
+		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getStringArray());
+		}
+		else {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getString());
+		}
 	}
 
 }

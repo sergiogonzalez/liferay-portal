@@ -399,6 +399,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		countryImpl.setA3(country.getA3());
 		countryImpl.setNumber(country.getNumber());
 		countryImpl.setIdd(country.getIdd());
+		countryImpl.setZipRequired(country.isZipRequired());
 		countryImpl.setActive(country.isActive());
 
 		return countryImpl;
@@ -1903,10 +1904,12 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(CountryPersistenceImpl.class);
 	private static Country _nullCountry = new CountryImpl() {
+			@Override
 			public Object clone() {
 				return this;
 			}
 
+			@Override
 			public CacheModel<Country> toCacheModel() {
 				return _nullCountryCacheModel;
 			}

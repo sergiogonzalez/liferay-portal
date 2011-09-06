@@ -39,7 +39,7 @@ portletURL.setParameter("structureId", String.valueOf(structureId));
 
 <c:if test="<%= (structure != null) %>">
 	<liferay-ui:header
-		title='<%= LanguageUtil.format(pageContext, "templates-for-structure-x", structure.getName(locale), false) %>'
+		title='<%= LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false) %>'
 		backURL="<%= backURL %>"
 	/>
 </c:if>
@@ -69,27 +69,53 @@ portletURL.setParameter("structureId", String.valueOf(structureId));
 		keyProperty="templateId"
 		modelVar="template"
 	>
+
+		<%
+		String rowHREF = null;
+
+		if (Validator.isNotNull(chooseCallback)) {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("javascript:Liferay.Util.getOpener().");
+			sb.append(chooseCallback);
+			sb.append("('");
+			sb.append(template.getTemplateId());
+			sb.append("', '");
+			sb.append(HtmlUtil.escapeJS(template.getName(locale)));
+			sb.append("', Liferay.Util.getWindow());");
+
+			rowHREF = sb.toString();
+		}
+		%>
+
 		<liferay-ui:search-container-column-text
+			href="<%= rowHREF %>"
 			name="id"
 			property="templateId"
 		/>
 
 		<liferay-ui:search-container-column-text
+			href="<%= rowHREF %>"
 			name="name"
 			value="<%= LanguageUtil.get(pageContext, template.getName(locale)) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= LanguageUtil.get(pageContext, template.getType()) %>"
-		/>
+		<c:if test="<%= Validator.isNull(templateTypeValue) %>">
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="type"
+				value="<%= LanguageUtil.get(pageContext, template.getType()) %>"
+			/>
+		</c:if>
 
 		<liferay-ui:search-container-column-text
+			href="<%= rowHREF %>"
 			name="language"
 			value="<%= LanguageUtil.get(pageContext, template.getLanguage()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			href="<%= rowHREF %>"
 			buffer="buffer"
 			name="modified-date"
 		>

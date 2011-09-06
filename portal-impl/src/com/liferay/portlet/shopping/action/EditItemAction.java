@@ -145,32 +145,35 @@ public class EditItemAction extends PortletAction {
 	}
 
 	protected void updateItem(ActionRequest actionRequest) throws Exception {
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long itemId = ParamUtil.getLong(uploadRequest, "itemId");
+		long itemId = ParamUtil.getLong(uploadPortletRequest, "itemId");
 
 		long groupId = themeDisplay.getScopeGroupId();
-		long categoryId = ParamUtil.getLong(uploadRequest, "categoryId");
-		String sku = ParamUtil.getString(uploadRequest, "sku");
-		String name = ParamUtil.getString(uploadRequest, "name");
-		String description = ParamUtil.getString(uploadRequest, "description");
-		String properties = ParamUtil.getString(uploadRequest, "properties");
+		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
+		String sku = ParamUtil.getString(uploadPortletRequest, "sku");
+		String name = ParamUtil.getString(uploadPortletRequest, "name");
+		String description = ParamUtil.getString(
+			uploadPortletRequest, "description");
+		String properties = ParamUtil.getString(
+			uploadPortletRequest, "properties");
 
-		int fieldsCount = ParamUtil.getInteger(uploadRequest, "fieldsCount", 1);
+		int fieldsCount = ParamUtil.getInteger(
+			uploadPortletRequest, "fieldsCount", 1);
 
 		List<ShoppingItemField> itemFields = new ArrayList<ShoppingItemField>();
 
 		for (int i = 0; i < fieldsCount; i ++) {
 			String fieldName = ParamUtil.getString(
-				uploadRequest, "fieldName" + i);
+				uploadPortletRequest, "fieldName" + i);
 			String fieldValues = ParamUtil.getString(
-				uploadRequest, "fieldValues" + i);
+				uploadPortletRequest, "fieldValues" + i);
 			String fieldDescription = ParamUtil.getString(
-				uploadRequest, "fieldDescription" + i);
+				uploadPortletRequest, "fieldDescription" + i);
 
 			ShoppingItemField itemField = ShoppingItemFieldUtil.create(0);
 
@@ -182,29 +185,32 @@ public class EditItemAction extends PortletAction {
 		}
 
 		String fieldsQuantities = ParamUtil.getString(
-			uploadRequest, "fieldsQuantities");
+			uploadPortletRequest, "fieldsQuantities");
 
-		int pricesCount = ParamUtil.getInteger(uploadRequest, "pricesCount", 1);
+		int pricesCount = ParamUtil.getInteger(
+			uploadPortletRequest, "pricesCount", 1);
 
 		List<ShoppingItemPrice> itemPrices = new ArrayList<ShoppingItemPrice>();
 
 		for (int i = 0; i < pricesCount; i ++) {
 			int minQuantity = ParamUtil.getInteger(
-				uploadRequest, "minQuantity" + i);
+				uploadPortletRequest, "minQuantity" + i);
 			int maxQuantity = ParamUtil.getInteger(
-				uploadRequest, "maxQuantity" + i);
-			double price = ParamUtil.getDouble(uploadRequest, "price" + i);
+				uploadPortletRequest, "maxQuantity" + i);
+			double price = ParamUtil.getDouble(
+				uploadPortletRequest, "price" + i);
 			double discount = ParamUtil.getDouble(
-				uploadRequest, "discount" + i) / 100;
+				uploadPortletRequest, "discount" + i) / 100;
 			boolean taxable = ParamUtil.getBoolean(
-				uploadRequest, "taxable" + i);
+				uploadPortletRequest, "taxable" + i);
 			double shipping = ParamUtil.getDouble(
-				uploadRequest, "shipping" + i);
+				uploadPortletRequest, "shipping" + i);
 			boolean useShippingFormula = ParamUtil.getBoolean(
-				uploadRequest, "useShippingFormula" + i);
-			boolean active = ParamUtil.getBoolean(uploadRequest, "active" + i);
+				uploadPortletRequest, "useShippingFormula" + i);
+			boolean active = ParamUtil.getBoolean(
+				uploadPortletRequest, "active" + i);
 			int defaultPrice = ParamUtil.getInteger(
-				uploadRequest, "defaultPrice");
+				uploadPortletRequest, "defaultPrice");
 
 			int status = ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT;
 
@@ -230,28 +236,31 @@ public class EditItemAction extends PortletAction {
 		}
 
 		boolean requiresShipping = ParamUtil.getBoolean(
-			uploadRequest, "requiresShipping");
+			uploadPortletRequest, "requiresShipping");
 		int stockQuantity = ParamUtil.getInteger(
-			uploadRequest, "stockQuantity");
+			uploadPortletRequest, "stockQuantity");
 
-		boolean featured = ParamUtil.getBoolean(uploadRequest, "featured");
+		boolean featured = ParamUtil.getBoolean(
+			uploadPortletRequest, "featured");
 		Boolean sale = null;
 
-		boolean smallImage = ParamUtil.getBoolean(uploadRequest, "smallImage");
+		boolean smallImage = ParamUtil.getBoolean(
+			uploadPortletRequest, "smallImage");
 		String smallImageURL = ParamUtil.getString(
-			uploadRequest, "smallImageURL");
-		File smallFile = uploadRequest.getFile("smallFile");
+			uploadPortletRequest, "smallImageURL");
+		File smallFile = uploadPortletRequest.getFile("smallFile");
 
 		boolean mediumImage = ParamUtil.getBoolean(
-			uploadRequest, "mediumImage");
+			uploadPortletRequest, "mediumImage");
 		String mediumImageURL = ParamUtil.getString(
-			uploadRequest, "mediumImageURL");
-		File mediumFile = uploadRequest.getFile("mediumFile");
+			uploadPortletRequest, "mediumImageURL");
+		File mediumFile = uploadPortletRequest.getFile("mediumFile");
 
-		boolean largeImage = ParamUtil.getBoolean(uploadRequest, "largeImage");
+		boolean largeImage = ParamUtil.getBoolean(
+			uploadPortletRequest, "largeImage");
 		String largeImageURL = ParamUtil.getString(
-			uploadRequest, "largeImageURL");
-		File largeFile = uploadRequest.getFile("largeFile");
+			uploadPortletRequest, "largeImageURL");
+		File largeFile = uploadPortletRequest.getFile("largeFile");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			ShoppingItem.class.getName(), actionRequest);

@@ -44,6 +44,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 	</c:if>
 
 	<c:if test="<%= !workflowTask.isCompleted() && _isAssignedToUser(workflowTask, user) %>">
+
 		<%
 		List<String> transitionNames = WorkflowTaskManagerUtil.getNextTransitionNames(company.getCompanyId(), user.getUserId(), workflowTask.getWorkflowTaskId());
 

@@ -75,7 +75,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			classname="org.antlr.Tool"
 			classpathref="antlr.classpath"
 			fork="true"
-			maxmemory="512m"
+			maxmemory="1024m"
 			newenvironment="true"
 		>
 			<arg value="-o" />
@@ -214,8 +214,9 @@ public class Creole10Parser]]></replacevalue>
 			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<jvmarg value="-Duser.country=US" />
 			<jvmarg value="-Duser.language=en" />
-			<arg value="${lang.dir}" />
-			<arg value="${lang.file}" />
+			<arg value="lang.dir=${lang.dir}" />
+			<arg value="lang.file=${lang.file}" />
+			<arg value="lang.plugin=false" />
 		</java>
 
 		<copy file="${lang.dir}/${lang.file}.properties" tofile="${lang.dir}/${lang.file}_en.properties" />

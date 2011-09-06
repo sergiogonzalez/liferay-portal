@@ -58,8 +58,9 @@ public class AssignMembersRoleWebContentEditorUserCPActionsTest
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -89,7 +90,7 @@ public class AssignMembersRoleWebContentEditorUserCPActionsTest
 		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_128_toggle_id_enterprise_admin_user_searchkeywords']",
+		selenium.type("//input[@name='_128_keywords']",
 			RuntimeVariables.replace("user"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
@@ -98,7 +99,11 @@ public class AssignMembersRoleWebContentEditorUserCPActionsTest
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("usersn"),
 			selenium.getText("//tr[3]/td[3]"));
+		assertFalse(selenium.isChecked("//input[@name='_128_rowIds']"));
+		selenium.saveScreenShotAndSource();
 		selenium.check("//input[@name='_128_rowIds']");
+		assertTrue(selenium.isChecked("//input[@name='_128_rowIds']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace("Update Associations"));
 		selenium.waitForPageToLoad("30000");

@@ -273,6 +273,12 @@ public class AssetEntryLocalServiceUtil {
 		getService().deleteEntry(className, classPK);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetEntry fetchEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchEntry(entryId);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAncestorEntries(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -376,6 +382,12 @@ public class AssetEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().incrementViewCounter(userId, className, classPK, increment);
+	}
+
+	public static void reindex(
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> entries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().reindex(entries);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,

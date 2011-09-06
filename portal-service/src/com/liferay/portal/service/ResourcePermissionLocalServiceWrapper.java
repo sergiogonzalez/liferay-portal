@@ -387,7 +387,7 @@ public class ResourcePermissionLocalServiceWrapper
 	public java.util.List<java.lang.String> getAvailableResourcePermissionActionIds(
 		long companyId, java.lang.String name, int scope,
 		java.lang.String primKey, long roleId,
-		java.util.List<java.lang.String> actionIds)
+		java.util.Collection<java.lang.String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
@@ -473,6 +473,15 @@ public class ResourcePermissionLocalServiceWrapper
 			resourceAction);
 	}
 
+	public boolean hasResourcePermission(
+		java.util.List<com.liferay.portal.model.Resource> resources,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _resourcePermissionLocalService.hasResourcePermission(resources,
+			roleIds, actionId);
+	}
+
 	/**
 	* Returns <code>true</code> if the role has permission at the scope to
 	* perform the action on resources of the type.
@@ -503,6 +512,15 @@ public class ResourcePermissionLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _resourcePermissionLocalService.hasResourcePermission(companyId,
 			name, scope, primKey, roleId, actionId);
+	}
+
+	public boolean hasResourcePermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long[] roleIds,
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _resourcePermissionLocalService.hasResourcePermission(companyId,
+			name, scope, primKey, roleIds, actionId);
 	}
 
 	public boolean hasScopeResourcePermission(long companyId,

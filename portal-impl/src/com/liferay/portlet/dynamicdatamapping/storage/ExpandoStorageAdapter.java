@@ -27,13 +27,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.query.ComparisonOperator;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.FieldCondition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Junction;
 import com.liferay.portlet.dynamicdatamapping.storage.query.LogicalOperator;
-import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
@@ -44,7 +45,8 @@ import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoRowLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
-import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -227,19 +229,23 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		return false;
 	}
 
-	private void _checkExpandoColumns(ExpandoTable expandoTable, Fields fields)
+	private void _checkExpandoColumns(
+			long ddmStructureId, ExpandoTable expandoTable, Fields fields)
 		throws PortalException, SystemException {
 
 		for (String name : fields.getNames()) {
-			try {
+			ExpandoColumn expandoColumn =
 				ExpandoColumnLocalServiceUtil.getColumn(
 					expandoTable.getTableId(), name);
+
+			if (expandoColumn != null) {
+				continue;
 			}
-			catch (NoSuchColumnException nsce) {
-				ExpandoColumnLocalServiceUtil.addColumn(
-					expandoTable.getTableId(), name,
-					ExpandoColumnConstants.STRING);
-			}
+
+			int type = _getExpandoColumnType(ddmStructureId, name);
+
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), name, type);
 		}
 	}
 
@@ -298,7 +304,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 					ExpandoColumn column = expandoValue.getColumn();
 
 					String fieldName = column.getName();
-					String fieldValue = expandoValue.getData();
+					Serializable fieldValue = expandoValue.getSerializable();
 
 					if ((fieldNames == null) ||
 						((fieldNames != null) &&
@@ -317,6 +323,40 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		}
 
 		return fieldsList;
+	}
+
+	private int _getExpandoColumnType(long ddmStructureId, String name)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
+
+		String fieldDataType = ddmStructure.getFieldDataType(name);
+
+		if (fieldDataType.equals(FieldConstants.BOOLEAN)) {
+			return ExpandoColumnConstants.BOOLEAN;
+		}
+		else if (fieldDataType.equals(FieldConstants.DATE)) {
+			return ExpandoColumnConstants.DATE;
+		}
+		else if (fieldDataType.equals(FieldConstants.DOUBLE)) {
+			return ExpandoColumnConstants.DOUBLE;
+		}
+		else if (fieldDataType.equals(FieldConstants.FLOAT)) {
+			return ExpandoColumnConstants.FLOAT;
+		}
+		else if (fieldDataType.equals(FieldConstants.INTEGER)) {
+			return ExpandoColumnConstants.INTEGER;
+		}
+		else if (fieldDataType.equals(FieldConstants.LONG)) {
+			return ExpandoColumnConstants.LONG;
+		}
+		else if (fieldDataType.equals(FieldConstants.SHORT)) {
+			return ExpandoColumnConstants.SHORT;
+		}
+		else {
+			return ExpandoColumnConstants.STRING;
+		}
 	}
 
 	private long[] _getExpandoRowIds(long ddmStructureId)
@@ -354,7 +394,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				companyId, classNameId, String.valueOf(ddmStructureId));
 		}
 
-		_checkExpandoColumns(expandoTable, fields);
+		_checkExpandoColumns(ddmStructureId, expandoTable, fields);
 
 		return expandoTable;
 	}
@@ -444,7 +484,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		while (itr.hasNext()) {
 			Field field = itr.next();
 
-			ExpandoValueServiceUtil.addValue(
+			ExpandoValueLocalServiceUtil.addValue(
 				expandoTable.getCompanyId(),
 				ExpandoStorageAdapter.class.getName(), expandoTable.getName(),
 				field.getName(), classPK, field.getValue());

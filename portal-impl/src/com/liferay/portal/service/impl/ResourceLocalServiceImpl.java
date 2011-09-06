@@ -258,9 +258,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		return resourcePersistence.findAll();
 	}
 
-	public void updateResources(
-			AuditedModel auditedModel, String[] groupPermissions,
-			String[] guestPermissions)
+	public void updateModelResources(
+			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		ClassedModel classedModel = (ClassedModel)auditedModel;
@@ -269,7 +268,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			auditedModel.getCompanyId(), getGroupId(auditedModel),
 			classedModel.getModelClassName(),
 			String.valueOf(classedModel.getPrimaryKeyObj()),
-			groupPermissions, guestPermissions,
+			serviceContext.getGroupPermissions(),
+			serviceContext.getGuestPermissions(),
 			getPermissionedModel(auditedModel));
 	}
 

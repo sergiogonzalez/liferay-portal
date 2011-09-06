@@ -89,18 +89,14 @@ if (!selectableTree) {
 				function(node) {
 					var newNode = {
 						after: {
-							check: function(event) {
+							checkedChange: function(event) {
 								var plid = TreeUtil.extractPlid(event.target);
 
-								TreeUtil.updateSessionTreeClick(plid, true, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
-							},
-							uncheck: function(event) {
-								var plid = TreeUtil.extractPlid(event.target);
-
-								TreeUtil.updateSessionTreeClick(plid, false, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
+								TreeUtil.updateSessionTreeClick(plid, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
 							}
 						},
 						alwaysShowHitArea: node.hasChildren,
+						expanded : node.selLayoutAncestor,
 						id: TreeUtil.createId(node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
 					};
@@ -206,6 +202,7 @@ if (!selectableTree) {
 		{
 			alwaysShowHitArea: true,
 			draggable: false,
+			expanded: <%= (selPlid > 0) ? true : false %>,
 			id: rootId,
 			label: rootLabel,
 			leaf: false
@@ -239,7 +236,8 @@ if (!selectableTree) {
 						return {
 							groupId: <%= groupId %>,
 							privateLayout: <%= privateLayout %>,
-							parentLayoutId: parentLayoutId
+							parentLayoutId: parentLayoutId,
+							selPlid: '<%= selPlid %>'
 						};
 					},
 					method: AUI.defaults.io.method

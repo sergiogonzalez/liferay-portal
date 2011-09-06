@@ -43,6 +43,10 @@ public class CaptureFrameListener extends MediaListenerAdapter {
 		_width = width;
 	}
 
+	public boolean isWritten() {
+		return _written;
+	}
+
 	@Override
 	public void onVideoPicture(IVideoPictureEvent iVideoPictureEvent) {
 		try {
@@ -59,8 +63,6 @@ public class CaptureFrameListener extends MediaListenerAdapter {
 				}
 			}
 
-			_written = true;
-
 			_file.createNewFile();
 
 			RenderedImage renderedImage = ImageProcessorUtil.scale(
@@ -68,6 +70,8 @@ public class CaptureFrameListener extends MediaListenerAdapter {
 
 			ImageIO.write(
 				renderedImage, _extension, new FileOutputStream(_file));
+
+			_written = true;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

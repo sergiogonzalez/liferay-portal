@@ -16,11 +16,12 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -36,7 +37,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import jodd.io.findfile.FindClass;
+import jodd.io.findfile.ClassFinder;
 import jodd.io.findfile.FindFile;
 import jodd.io.findfile.WildcardFindFile;
 
@@ -44,15 +45,34 @@ import jodd.util.ClassLoaderUtil;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.objectweb.asm.ClassReader;
+
 /**
  * @author Igor Spasic
  */
-public class JSONWebServiceConfigurator extends FindClass {
+public class JSONWebServiceConfigurator extends ClassFinder {
 
-	public JSONWebServiceConfigurator() {
+	public JSONWebServiceConfigurator(String servletContextName) {
 		setIncludedJars(
 			"*portal-impl.jar", "*portal-service.jar", "*_wl_cls_gen.jar",
 			"*-portlet-service.jar");
+
+		_servletContextName = servletContextName;
+	}
+
+	public void clean() {
+		int count =
+			JSONWebServiceActionsManagerUtil.unregisterJSONWebServiceActions(
+				_servletContextName);
+
+		_registeredActionsCount -= count;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Removed " + count +
+					" existing JSON Web Service actions that belonged to " +
+						_servletContextName);
+		}
 	}
 
 	public void configure(ClassLoader classLoader) throws PortalException {
@@ -84,15 +104,15 @@ public class JSONWebServiceConfigurator extends FindClass {
 				classPathFile = servicePropertiesFile.getParentFile();
 
 				libDir = new File(classPathFile.getParent(), "lib");
-
 			}
 
 			classPathFiles = new File[2];
 
 			classPathFiles[0] = classPathFile;
 
-			FindFile findFile = new WildcardFindFile(
-				libDir, "*-portlet-service.jar");
+			FindFile findFile = new WildcardFindFile("*-portlet-service.jar");
+
+			findFile.searchPath(libDir);
 
 			classPathFiles[1] = findFile.nextFile();
 
@@ -126,10 +146,52 @@ public class JSONWebServiceConfigurator extends FindClass {
 
 		_classLoader = classLoader;
 
-		configure(classPathFiles);
+		_configure(classPathFiles);
 	}
 
-	public void configure(File... classPathFiles) throws PortalException {
+	@Override
+	protected void onEntry(EntryData entryData) throws Exception {
+		String className = entryData.getName();
+
+		if (className.endsWith("Service") ||
+			className.endsWith("ServiceImpl")) {
+
+			InputStream inputStream = entryData.openInputStream();
+
+			if (!isTypeSignatureInUse(
+					inputStream, _jsonWebServiceAnnotationBytes)) {
+
+				return;
+			}
+
+			if (!entryData.isArchive()) {
+				StreamUtil.cleanUp(inputStream);
+
+				ClassReader classReader = new ClassReader(
+					entryData.openInputStream());
+
+				JSONWebServiceClassVisitor jsonWebServiceClassVisitor =
+					new JSONWebServiceClassVisitor();
+
+				try {
+					classReader.accept(jsonWebServiceClassVisitor, 0);
+				}
+				catch (Exception e) {
+					return;
+				}
+
+				if (!className.equals(
+						jsonWebServiceClassVisitor.getClassName())) {
+
+					return;
+				}
+			}
+
+			_onJSONWebServiceClass(className);
+		}
+	}
+
+	private void _configure(File... classPathFiles) throws PortalException {
 		StopWatch stopWatch = null;
 
 		if (_log.isDebugEnabled()) {
@@ -149,39 +211,8 @@ public class JSONWebServiceConfigurator extends FindClass {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Configuring " + _registeredActionsCount +
-					" actions in " + stopWatch.getTime() + " ms");
-		}
-	}
-
-	public void setCheckBytecodeSignature(boolean checkBytecodeSignature) {
-		_checkBytecodeSignature = checkBytecodeSignature;
-	}
-
-	public void setJSONWebServiceActionsManager(
-		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
-
-		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
-	}
-
-	@Override
-	protected void onEntry(FindClass.EntryData entryData) throws Exception {
-		String className = entryData.getName();
-
-		if (className.endsWith("Service") ||
-			className.endsWith("ServiceImpl")) {
-
-			if (_checkBytecodeSignature) {
-				InputStream inputStream = entryData.openInputStream();
-
-				if (!isTypeSignatureInUse(
-						inputStream, _jsonWebServiceAnnotationBytes)) {
-
-					return;
-				}
-			}
-
-			_onJSONWebServiceClass(className);
+				"Configured " + _registeredActionsCount + " actions in " +
+					stopWatch.getTime() + " ms");
 		}
 	}
 
@@ -339,8 +370,9 @@ public class JSONWebServiceConfigurator extends FindClass {
 			return;
 		}
 
-		_jsonWebServiceActionsManager.registerJSONWebServiceAction(
-			method.getDeclaringClass(), method, path, httpMethod);
+		JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+			_servletContextName, method.getDeclaringClass(), method, path,
+			httpMethod);
 
 		_registeredActionsCount++;
 	}
@@ -348,14 +380,13 @@ public class JSONWebServiceConfigurator extends FindClass {
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceConfigurator.class);
 
-	private boolean _checkBytecodeSignature = true;
 	private ClassLoader _classLoader;
-	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 	private byte[] _jsonWebServiceAnnotationBytes =
 		getTypeSignatureBytes(JSONWebService.class);
 	private JSONWebServiceMappingResolver _jsonWebServiceMappingResolver =
 		new JSONWebServiceMappingResolver();
 	private int _registeredActionsCount;
+	private String _servletContextName;
 	private Map<Class<?>, Class<?>> _utilClasses =
 		new HashMap<Class<?>, Class<?>>();
 

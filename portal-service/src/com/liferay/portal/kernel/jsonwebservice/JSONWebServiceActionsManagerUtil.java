@@ -25,8 +25,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JSONWebServiceActionsManagerUtil {
 
-	public static List<String[]> dumpMappings() {
-		return _jsonWebServiceActionsManager.dumpMappings();
+	public static JSONWebServiceActionMapping getJSONWebServiceActionMapping(
+		String signature) {
+
+		return getJSONWebServiceActionsManager().
+			getJSONWebServiceActionMapping(signature);
+	}
+
+	public static List<JSONWebServiceActionMapping>
+		getJSONWebServiceActionMappings() {
+
+		return _jsonWebServiceActionsManager.getJSONWebServiceActionMappings();
 	}
 
 	public static JSONWebServiceActionsManager
@@ -35,15 +44,26 @@ public class JSONWebServiceActionsManagerUtil {
 		return _jsonWebServiceActionsManager;
 	}
 
-	public static JSONWebServiceAction lookup(HttpServletRequest request) {
-		return getJSONWebServiceActionsManager().lookup(request);
+	public static JSONWebServiceAction getJSONWebServiceAction(
+		HttpServletRequest request) {
+
+		return getJSONWebServiceActionsManager().getJSONWebServiceAction(
+			request);
 	}
 
 	public static void registerJSONWebServiceAction(
-		Class<?> actionClass, Method actionMethod, String path, String method) {
+		String servletContextName, Class<?> actionClass, Method actionMethod,
+		String path, String method) {
 
 		getJSONWebServiceActionsManager().registerJSONWebServiceAction(
-			actionClass, actionMethod, path, method);
+			servletContextName, actionClass, actionMethod, path, method);
+	}
+
+	public static int unregisterJSONWebServiceActions(
+		String servletContextName) {
+
+		return getJSONWebServiceActionsManager().
+			unregisterJSONWebServiceActions(servletContextName);
 	}
 
 	public void setJSONWebServiceActionsManager(

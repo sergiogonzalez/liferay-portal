@@ -37,6 +37,7 @@ public class ClusterRequest implements Serializable {
 		clusterRequest.setClusterMessageType(ClusterMessageType.NOTIFY);
 		clusterRequest.setMulticast(true);
 		clusterRequest.setOriginatingClusterNode(originatingClusterNode);
+		clusterRequest.setParallelized(true);
 		clusterRequest.setSkipLocal(true);
 		clusterRequest.setUuid(PortalUUIDUtil.generate());
 
@@ -158,6 +159,10 @@ public class ClusterRequest implements Serializable {
 		return _multicast;
 	}
 
+	public boolean isParallelized() {
+		return _parallelized;
+	}
+
 	public boolean isSkipLocal() {
 		return _skipLocal;
 	}
@@ -186,6 +191,10 @@ public class ClusterRequest implements Serializable {
 		_originatingClusterNode = originatingClusterNode;
 	}
 
+	public void setParallelized(boolean parallelized) {
+		_parallelized = parallelized;
+	}
+
 	public void setServletContextName(String servletContextName) {
 		_servletContextName = servletContextName;
 	}
@@ -200,7 +209,7 @@ public class ClusterRequest implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{clusterMessageType=");
 		sb.append(_clusterMessageType);
@@ -216,6 +225,8 @@ public class ClusterRequest implements Serializable {
 
 		sb.append(", servletContextName=");
 		sb.append(_servletContextName);
+		sb.append(", parallelized=");
+		sb.append(_parallelized);
 		sb.append(", skipLocal=");
 		sb.append(_skipLocal);
 		sb.append(", uuid=");
@@ -234,6 +245,7 @@ public class ClusterRequest implements Serializable {
 	private MethodHandler _methodHandler;
 	private boolean _multicast;
 	private ClusterNode _originatingClusterNode;
+	private boolean _parallelized;
 	private String _servletContextName;
 	private boolean _skipLocal;
 	private Set<Address> _targetClusterNodeAddresses;

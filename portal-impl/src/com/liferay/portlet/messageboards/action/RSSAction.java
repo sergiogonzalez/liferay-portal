@@ -73,7 +73,7 @@ public class RSSAction extends Action {
 		int max = ParamUtil.getInteger(
 			request, "max", SearchContainer.DEFAULT_DELTA);
 		String type = ParamUtil.getString(
-			request, "type", RSSUtil.DEFAULT_TYPE);
+			request, "type", RSSUtil.TYPE_DEFAULT);
 		double version = ParamUtil.getDouble(
 			request, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(

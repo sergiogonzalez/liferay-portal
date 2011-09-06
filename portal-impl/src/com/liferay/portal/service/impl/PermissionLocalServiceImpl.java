@@ -247,9 +247,9 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 		List<Permission> permissions = new ArrayList<Permission>();
 
-		for (int i = 0; i < actionIds.length; i++) {
+		for (String actionId : actionIds) {
 			Permission permission = addPermission(
-				companyId, actionIds[i], resourceId);
+				companyId, actionId, resourceId);
 
 			permissions.add(permission);
 		}
@@ -497,8 +497,8 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		}
 		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 			return hasUserPermissions_6(
-				userId, resourceId, resources, actionId, roles, stopWatch,
-				block);
+				userId, resourceId, resources, actionId,
+				permissionCheckerBag.getRoleIds(), stopWatch, block);
 		}
 
 		return false;
@@ -1038,33 +1038,17 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 	protected boolean hasUserPermissions_6(
 			long userId, long resourceId, List<Resource> resources,
-			String actionId, List<Role> roles, StopWatch stopWatch,
+			String actionId, long[] roleIds, StopWatch stopWatch,
 			int block)
 		throws PortalException, SystemException {
 
-		// Iterate the list of resources in reverse order to test permissions
-		// from company scope to individual scope because it is more likely that
-		// a permission is assigned at a higher scope. Optimizing this method
-		// to one SQL call may actually slow things down since most of the calls
-		// will pull from the cache after the first request.
-
-		for (int i = resources.size() - 1; i >= 0; i--) {
-			Resource resource = resources.get(i);
-
-			for (Role role : roles) {
-				if (resourcePermissionLocalService.hasResourcePermission(
-						resource.getCompanyId(), resource.getName(),
-						resource.getScope(), resource.getPrimKey(),
-						role.getRoleId(), actionId)) {
-
-					return true;
-				}
-			}
-		}
+		boolean hasUserPermissions =
+			resourcePermissionLocalService.hasResourcePermission(
+				resources, roleIds, actionId);
 
 		logHasUserPermissions(userId, resourceId, actionId, stopWatch, block++);
 
-		return false;
+		return hasUserPermissions;
 	}
 
 	protected void logHasUserPermissions(

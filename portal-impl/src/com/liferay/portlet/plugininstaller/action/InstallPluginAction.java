@@ -253,8 +253,8 @@ public class InstallPluginAction extends PortletAction {
 	}
 
 	protected void localDeploy(ActionRequest actionRequest) throws Exception {
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		String fileName = null;
 
@@ -266,7 +266,8 @@ public class InstallPluginAction extends PortletAction {
 				BaseDeployer.DEPLOY_TO_PREFIX + deploymentContext + ".war";
 		}
 		else {
-			fileName = GetterUtil.getString(uploadRequest.getFileName("file"));
+			fileName = GetterUtil.getString(uploadPortletRequest.getFileName(
+				"file"));
 
 			int pos = fileName.lastIndexOf(CharPool.PERIOD);
 
@@ -275,7 +276,7 @@ public class InstallPluginAction extends PortletAction {
 			}
 		}
 
-		File file = uploadRequest.getFile("file");
+		File file = uploadPortletRequest.getFile("file");
 
 		byte[] bytes = FileUtil.getBytes(file);
 

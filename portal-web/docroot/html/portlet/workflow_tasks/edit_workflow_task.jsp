@@ -32,8 +32,6 @@ long groupId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.
 String className = (String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
 long classPK = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getCompanyId(), workflowTask.getWorkflowTaskId());
-
 WorkflowHandler workflowHandler = WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 
 AssetRenderer assetRenderer = workflowHandler.getAssetRenderer(classPK);
@@ -120,6 +118,11 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 						</c:if>
 
 						&nbsp;
+
+
+						<%
+						long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getCompanyId(), workflowTask.getWorkflowTaskId());
+						%>
 
 						<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
 							<%= StringPool.DASH %>
@@ -208,7 +211,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					</div>
 
 					<h3 class="task-content-title">
-						<img src="<%= workflowHandler.getIconPath(liferayPortletRequest) %>" alt="" /> <%= workflowHandler.getTitle(classPK, locale) %>
+						<img src="<%= workflowHandler.getIconPath(liferayPortletRequest) %>" alt="" /> <%= HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)) %>
 					</h3>
 
 					<%
@@ -360,7 +363,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 		<div class="lfr-asset-summary">
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"
-				image='../file_system/large/task'
+				image="../file_system/large/task"
 				message="download"
 			/>
 
