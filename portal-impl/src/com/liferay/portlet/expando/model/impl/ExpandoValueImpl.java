@@ -49,6 +49,10 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 	}
 
 	public ExpandoColumn getColumn() throws PortalException, SystemException {
+		if (_column != null) {
+			return _column;
+		}
+
 		long columnId = getColumnId();
 
 		if (columnId <= 0) {
@@ -171,6 +175,12 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		validate(ExpandoColumnConstants.BOOLEAN_ARRAY);
 
 		setData(StringUtil.merge(data));
+	}
+
+	public void setColumn(ExpandoColumn column) {
+		_column = column;
+
+		setColumnId(_column.getColumnId());
 	}
 
 	public void setDate(Date data) throws PortalException, SystemException {
@@ -299,6 +309,8 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		throw new ValueDataException(sb.toString());
 	}
 
-	private static String _EXPANDO_COMMA = "[$LIFERAY_EXPANDO_COMMA]";
+	private static String _EXPANDO_COMMA = "[$LIFERAY_EXPANDO_COMMA$]";
+
+	private transient ExpandoColumn _column;
 
 }

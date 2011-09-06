@@ -151,8 +151,8 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 	protected void updateWorkflowDefinition(ActionRequest actionRequest)
 		throws Exception {
 
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -160,7 +160,7 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 
-		File file = uploadRequest.getFile("file");
+		File file = uploadPortletRequest.getFile("file");
 
 		WorkflowDefinition workflowDefinition = null;
 

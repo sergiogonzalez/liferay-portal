@@ -14,6 +14,14 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portlet.mobiledevicerules.model.MDRAction;
+import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
+
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Edward C. Han
  */
@@ -21,5 +29,41 @@ public class MDRRuleImpl extends MDRRuleBaseImpl {
 
 	public MDRRuleImpl() {
 	}
+
+	public List<MDRAction> getActions() throws SystemException {
+		if (getRuleId() > 0) {
+			return MDRActionLocalServiceUtil.getActions(getRuleId());
+		}
+		else {
+			return Collections.emptyList();
+		}
+	}
+
+	public UnicodeProperties getTypeSettingsProperties() {
+		if (_typeSettingsProperties == null) {
+			_typeSettingsProperties = new UnicodeProperties(true);
+
+			_typeSettingsProperties.fastLoad(getTypeSettings());
+		}
+
+		return _typeSettingsProperties;
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		super.setTypeSettings(typeSettings);
+
+		_typeSettingsProperties = null;
+	}
+
+	public void setTypeSettingsProperties(
+		UnicodeProperties typeSettingsProperties) {
+
+		_typeSettingsProperties = typeSettingsProperties;
+
+		super.setTypeSettings(_typeSettingsProperties.toString());
+	}
+
+	private UnicodeProperties _typeSettingsProperties;
 
 }

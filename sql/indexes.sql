@@ -17,6 +17,7 @@ create index IX_9C7EB9F on AnnouncementsFlag (entryId);
 create unique index IX_4539A99C on AnnouncementsFlag (userId, entryId, value);
 
 create index IX_E639E2F6 on AssetCategory (groupId);
+create index IX_2008FACB on AssetCategory (groupId, vocabularyId);
 create index IX_D61ABE08 on AssetCategory (name, vocabularyId);
 create index IX_7BB1826B on AssetCategory (parentCategoryId);
 create index IX_9DDD15EA on AssetCategory (parentCategoryId, name);
@@ -349,6 +350,7 @@ create index IX_23922F7D on Layout (iconImageId);
 create index IX_D0822724 on Layout (uuid_);
 create unique index IX_CED31606 on Layout (uuid_, groupId);
 
+create index IX_6C226433 on LayoutBranch (layoutSetBranchId);
 create index IX_2C42603E on LayoutBranch (layoutSetBranchId, plid);
 create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);
 
@@ -417,6 +419,7 @@ create index IX_ED39AC98 on MBMessage (groupId, status);
 create index IX_8EB8C5EC on MBMessage (groupId, userId);
 create index IX_377858D2 on MBMessage (groupId, userId, status);
 create index IX_75B95071 on MBMessage (threadId);
+create index IX_9D7C3B23 on MBMessage (threadId, answer);
 create index IX_A7038CD7 on MBMessage (threadId, parentMessageId);
 create index IX_9DC8E57 on MBMessage (threadId, status);
 create index IX_7A040C32 on MBMessage (userId);
@@ -427,17 +430,9 @@ create index IX_3321F142 on MBMessage (userId, classNameId, status);
 create index IX_C57B16BC on MBMessage (uuid_);
 create unique index IX_8D12316E on MBMessage (uuid_, groupId);
 
-create index IX_D180D4AE on MBMessageFlag (messageId);
-create index IX_A6973A8E on MBMessageFlag (messageId, flag);
-create index IX_C1C9A8FD on MBMessageFlag (threadId);
-create index IX_3CFD579D on MBMessageFlag (threadId, flag);
-create index IX_7B2917BE on MBMessageFlag (userId);
-create unique index IX_E9EB6194 on MBMessageFlag (userId, messageId, flag);
-create index IX_2EA537D7 on MBMessageFlag (userId, threadId, flag);
-
 create index IX_A00A898F on MBStatsUser (groupId);
-create index IX_FAB5A88B on MBStatsUser (groupId, messageCount);
 create unique index IX_9168E2C9 on MBStatsUser (groupId, userId);
+create index IX_D33A5445 on MBStatsUser (groupId, userId, messageCount);
 create index IX_847F92B5 on MBStatsUser (userId);
 
 create index IX_41F6DC8A on MBThread (categoryId, priority);
@@ -448,6 +443,10 @@ create index IX_485F7E98 on MBThread (groupId, categoryId, status);
 create index IX_E1E7142B on MBThread (groupId, status);
 create index IX_AEDD9CB5 on MBThread (lastPostDate, priority);
 create index IX_CC993ECB on MBThread (rootMessageId);
+
+create index IX_8CB0A24A on MBThreadFlag (threadId);
+create index IX_A28004B on MBThreadFlag (userId);
+create index IX_33781904 on MBThreadFlag (userId, threadId);
 
 create index IX_4D306B22 on MDRAction (ruleId);
 create index IX_77BB5E9D on MDRAction (uuid_);
@@ -703,17 +702,6 @@ create index IX_786D171A on Subscription (companyId, classNameId, classPK);
 create unique index IX_2E1A92D4 on Subscription (companyId, userId, classNameId, classPK);
 create index IX_54243AFD on Subscription (userId);
 create index IX_E8F34171 on Subscription (userId, classNameId);
-
-create unique index IX_181A4A1B on TasksProposal (classNameId, classPK);
-create index IX_7FB27324 on TasksProposal (groupId);
-create index IX_6EEC675E on TasksProposal (groupId, userId);
-
-create index IX_4D0C7F8D on TasksReview (proposalId);
-create index IX_70AFEA01 on TasksReview (proposalId, stage);
-create index IX_1894B29A on TasksReview (proposalId, stage, completed);
-create index IX_41AFC20C on TasksReview (proposalId, stage, completed, rejected);
-create index IX_36F512E6 on TasksReview (userId);
-create unique index IX_5C6BE4C7 on TasksReview (userId, proposalId);
 
 create index IX_AE6E9907 on Team (groupId);
 create unique index IX_143DC786 on Team (groupId, name);

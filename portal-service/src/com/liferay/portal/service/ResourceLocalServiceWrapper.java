@@ -344,13 +344,12 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService {
 		return _resourceLocalService.getResources();
 	}
 
-	public void updateResources(
+	public void updateModelResources(
 		com.liferay.portal.model.AuditedModel auditedModel,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_resourceLocalService.updateResources(auditedModel, groupPermissions,
-			guestPermissions);
+		_resourceLocalService.updateModelResources(auditedModel, serviceContext);
 	}
 
 	public void updateResources(long companyId, long groupId,

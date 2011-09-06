@@ -19,29 +19,26 @@ import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.ScriptingException;
-import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
-
-import java.io.File;
+import com.liferay.util.ContentUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Raymond Augé
+ * @author Sergio Sánchez
  */
 public class DynamicCSSUtil {
 
 	public static void init() {
-		String rootDir = WebDirDetector.getRootDir(
-			PortalClassLoaderUtil.getClassLoader());
-
-		_rubyScriptFile = new File(rootDir + "WEB-INF/sass/main.rb");
-
 		try {
+			_rubyScript = ContentUtil.get(
+				PortalClassLoaderUtil.getClassLoader(),
+				"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
 
 			// Ruby executor needs to warm up when requiring Sass. Always breaks
 			// the first time without this block.
@@ -50,8 +47,8 @@ public class DynamicCSSUtil {
 				null, new HashMap<String, Object>(), null,
 				"require 'rubygems'\nrequire 'sass'");
 		}
-		catch (ScriptingException se) {
-			_log.error(se, se);
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 
@@ -75,7 +72,7 @@ public class DynamicCSSUtil {
 
 		inputObjects.put("out", unsyncPrintWriter);
 
-		_rubyExecutor.eval(null, inputObjects, null, _rubyScriptFile);
+		_rubyExecutor.eval(null, inputObjects, null, _rubyScript);
 
 		unsyncPrintWriter.flush();
 
@@ -91,6 +88,6 @@ public class DynamicCSSUtil {
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSUtil.class);
 
 	private static RubyExecutor _rubyExecutor = new RubyExecutor();
-	private static File _rubyScriptFile;
+	private static String _rubyScript;
 
 }

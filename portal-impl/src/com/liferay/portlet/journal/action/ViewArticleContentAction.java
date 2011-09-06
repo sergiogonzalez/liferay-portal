@@ -65,7 +65,7 @@ public class ViewArticleContentAction extends Action {
 			HttpServletResponse response)
 		throws Exception {
 
-		UploadServletRequest uploadRequest = null;
+		UploadServletRequest uploadServletRequest = null;
 
 		try {
 			String cmd = ParamUtil.getString(request, Constants.CMD);
@@ -83,16 +83,18 @@ public class ViewArticleContentAction extends Action {
 			String output = null;
 
 			if (cmd.equals(Constants.PREVIEW)) {
-				uploadRequest = PortalUtil.getUploadServletRequest(request);
+				uploadServletRequest = PortalUtil.getUploadServletRequest(
+					request);
 
-				String title = ParamUtil.getString(uploadRequest, "title");
+				String title = ParamUtil.getString(
+					uploadServletRequest, "title");
 				String description = ParamUtil.getString(
-					uploadRequest, "description");
-				String type = ParamUtil.getString(uploadRequest, "type");
+					uploadServletRequest, "description");
+				String type = ParamUtil.getString(uploadServletRequest, "type");
 				String structureId = ParamUtil.getString(
-					uploadRequest, "structureId");
+					uploadServletRequest, "structureId");
 				String templateId = ParamUtil.getString(
-					uploadRequest, "templateId");
+					uploadServletRequest, "templateId");
 
 				Date now = new Date();
 
@@ -100,9 +102,9 @@ public class ViewArticleContentAction extends Action {
 				Date modifiedDate = now;
 				Date displayDate = now;
 
-				User user = PortalUtil.getUser(uploadRequest);
+				User user = PortalUtil.getUser(uploadServletRequest);
 
-				String xml = ParamUtil.getString(uploadRequest, "xml");
+				String xml = ParamUtil.getString(uploadServletRequest, "xml");
 
 				Document doc = SAXReaderUtil.read(xml);
 
@@ -114,7 +116,7 @@ public class ViewArticleContentAction extends Action {
 
 				format(
 					groupId, articleId, version, previewArticleId, root,
-					uploadRequest);
+					uploadServletRequest);
 
 				Map<String, String> tokens = JournalUtil.getTokens(
 					groupId, themeDisplay);
@@ -164,8 +166,8 @@ public class ViewArticleContentAction extends Action {
 			return null;
 		}
 		finally {
-			if (uploadRequest != null) {
-				uploadRequest.cleanUp();
+			if (uploadServletRequest != null) {
+				uploadServletRequest.cleanUp();
 			}
 		}
 	}
@@ -173,7 +175,7 @@ public class ViewArticleContentAction extends Action {
 	protected void format(
 			long groupId, String articleId, double version,
 			String previewArticleId, Element root,
-			UploadServletRequest uploadRequest)
+			UploadServletRequest uploadServletRequest)
 		throws Exception {
 
 		Iterator<Element> itr = root.elements().iterator();
@@ -202,7 +204,7 @@ public class ViewArticleContentAction extends Action {
 			}
 
 			if (elType.equals("image") && Validator.isNull(elContent)) {
-				File file = uploadRequest.getFile(
+				File file = uploadServletRequest.getFile(
 					"structure_image_" + elName + elLanguage);
 				byte[] bytes = FileUtil.getBytes(file);
 
@@ -239,7 +241,7 @@ public class ViewArticleContentAction extends Action {
 
 			format(
 				groupId, articleId, version, previewArticleId, el,
-				uploadRequest);
+				uploadServletRequest);
 		}
 	}
 

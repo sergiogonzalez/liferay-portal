@@ -55,8 +55,8 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Options"),
-					selenium.getText("//strong/a"));
-				selenium.clickAt("//strong/a",
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
@@ -122,7 +122,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
-						"_86_emailArticleAddedEnabledCheckbox"));
+						"//input[@id='_86_emailArticleAddedEnabledCheckbox']"));
 
 				boolean webContentAddedChecked = selenium.isChecked(
 						"_86_emailArticleAddedEnabledCheckbox");
@@ -133,7 +133,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_86_emailArticleAddedEnabledCheckbox",
+				selenium.clickAt("//input[@id='_86_emailArticleAddedEnabledCheckbox']",
 					RuntimeVariables.replace("Enabled"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",
@@ -150,7 +150,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
-						"_86_emailArticleApprovalDeniedEnabledCheckbox"));
+						"//input[@id='_86_emailArticleApprovalDeniedEnabledCheckbox']"));
 
 				boolean webContentDeniedChecked = selenium.isChecked(
 						"_86_emailArticleApprovalDeniedEnabledCheckbox");
@@ -161,7 +161,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_86_emailArticleApprovalDeniedEnabledCheckbox",
+				selenium.clickAt("//input[@id='_86_emailArticleApprovalDeniedEnabledCheckbox']",
 					RuntimeVariables.replace("Enabled"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",
@@ -178,7 +178,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
-						"_86_emailArticleApprovalGrantedEnabledCheckbox"));
+						"//input[@id='_86_emailArticleApprovalGrantedEnabledCheckbox']"));
 
 				boolean webContentGrantedChecked = selenium.isChecked(
 						"_86_emailArticleApprovalGrantedEnabledCheckbox");
@@ -189,7 +189,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_86_emailArticleApprovalGrantedEnabledCheckbox",
+				selenium.clickAt("//input[@id='_86_emailArticleApprovalGrantedEnabledCheckbox']",
 					RuntimeVariables.replace("Enabled"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",
@@ -206,7 +206,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
-						"_86_emailArticleApprovalRequestedEnabledCheckbox"));
+						"//input[@id='_86_emailArticleApprovalRequestedEnabledCheckbox']"));
 
 				boolean webContentRequestedChecked = selenium.isChecked(
 						"_86_emailArticleApprovalRequestedEnabledCheckbox");
@@ -217,7 +217,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_86_emailArticleApprovalRequestedEnabledCheckbox",
+				selenium.clickAt("//input[@id='_86_emailArticleApprovalRequestedEnabledCheckbox']",
 					RuntimeVariables.replace("Enabled"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",
@@ -234,7 +234,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
-						"_86_emailArticleReviewEnabledCheckbox"));
+						"//input[@id='_86_emailArticleReviewEnabledCheckbox']"));
 
 				boolean webContentReviewChecked = selenium.isChecked(
 						"_86_emailArticleReviewEnabledCheckbox");
@@ -245,7 +245,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_86_emailArticleReviewEnabledCheckbox",
+				selenium.clickAt("//input[@id='_86_emailArticleReviewEnabledCheckbox']",
 					RuntimeVariables.replace("Enabled"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",
@@ -262,7 +262,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
-						"_86_emailArticleUpdatedEnabledCheckbox"));
+						"//input[@id='_86_emailArticleUpdatedEnabledCheckbox']"));
 
 				boolean webContentUpdatedChecked = selenium.isChecked(
 						"_86_emailArticleUpdatedEnabledCheckbox");
@@ -273,7 +273,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_86_emailArticleUpdatedEnabledCheckbox",
+				selenium.clickAt("//input[@id='_86_emailArticleUpdatedEnabledCheckbox']",
 					RuntimeVariables.replace("Enabled"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",

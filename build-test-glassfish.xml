@@ -5,7 +5,7 @@
 
 	<target name="run-glassfish">
 		<antcall target="run-simple-server">
-			<param name="simple.server.dir" value="${app.server.parent.dir}/glassfish-3.0.1" />
+			<param name="simple.server.dir" value="${app.server.parent.dir}/glassfish-3.1.1" />
 			<param name="simple.server.bin.dir" value="${app.server.glassfish.dir}/bin" />
 			<param name="simple.server.deploy.dir" value="${app.server.glassfish.instance.dir}/autodeploy" />
 			<param name="simple.server.lib.global.dir" value="${app.server.glassfish.instance.dir}/lib" />

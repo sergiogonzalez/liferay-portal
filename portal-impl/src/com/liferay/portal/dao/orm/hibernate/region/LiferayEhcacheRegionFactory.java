@@ -166,10 +166,10 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 					configurationPath, true, usingDefault);
 			}
 
-			Object transactionManager = getOnePhaseCommitSyncTransactionManager(
-				settings, properties);
+			/*Object transactionManager =
+				getOnePhaseCommitSyncTransactionManager(settings, properties);
 
-			configuration.setDefaultTransactionManager(transactionManager);
+			configuration.setDefaultTransactionManager(transactionManager);*/
 
 			manager = new CacheManager(configuration);
 

@@ -245,6 +245,14 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 		_mbThreadLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public com.liferay.portlet.messageboards.model.MBThread addThread(
+		long categoryId,
+		com.liferay.portlet.messageboards.model.MBMessage message)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.addThread(categoryId, message);
+	}
+
 	public void deleteThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -327,6 +335,11 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 			status, subscribed, includeAnonymous);
 	}
 
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getNoAssetThreads()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getNoAssetThreads();
+	}
+
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getPriorityThreads(
 		long categoryId, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -361,6 +374,11 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 		return _mbThreadLocalService.getThreadsCount(groupId, categoryId, status);
 	}
 
+	public boolean hasAnswerMessage(long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.hasAnswerMessage(threadId);
+	}
+
 	public void incrementViewCounter(long threadId, int increment)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -381,6 +399,12 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mbThreadLocalService.splitThread(messageId, subject,
 			serviceContext);
+	}
+
+	public void updateQuestion(long threadId, boolean question)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbThreadLocalService.updateQuestion(threadId, question);
 	}
 
 	/**

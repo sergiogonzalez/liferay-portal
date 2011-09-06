@@ -18,8 +18,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -31,25 +33,31 @@ import org.aopalliance.intercept.MethodInvocation;
 public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 	extends ChainableMethodAdvice {
 
-	public static void registerAnnotationType(
-		Class<? extends Annotation> annotationType) {
+	public static void registerAnnotationClass(
+		Class<? extends Annotation> annotationClass) {
 
-		_annotationTypes.add(annotationType);
+		_annotationChainableMethodAdvices.put(annotationClass, null);
 	}
 
 	public AnnotationChainableMethodAdvice() {
 		_nullAnnotation = getNullAnnotation();
 
-		_annotationType = _nullAnnotation.annotationType();
+		_annotationClass = _nullAnnotation.annotationType();
+	}
 
-		_annotationTypes.add(_annotationType);
+	public void afterPropertiesSet() {
+		_annotationChainableMethodAdvices.put(_annotationClass, this);
+	}
+
+	public Class<? extends Annotation> getAnnotationClass() {
+		return _annotationClass;
 	}
 
 	public abstract T getNullAnnotation();
 
 	protected T findAnnotation(MethodInvocation methodInvocation) {
 		Annotation annotation = ServiceMethodAnnotationCache.get(
-			methodInvocation, _annotationType, _nullAnnotation);
+			methodInvocation, _annotationClass, _nullAnnotation);
 
 		if (annotation != null) {
 			return (T)annotation;
@@ -81,36 +89,64 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 		}
 
 		if ((annotations != null) && (annotations.length > 0)) {
-			List<Annotation> filteredAnnotations = new ArrayList<Annotation>(
-							annotations.length);
+			List<Annotation> annotationsList = new ArrayList<Annotation>(
+				annotations.length);
 
 			for (Annotation curAnnotation : annotations) {
-				if (_annotationTypes.contains(
+				if (_annotationChainableMethodAdvices.containsKey(
 						curAnnotation.annotationType())) {
 
-					filteredAnnotations.add(curAnnotation);
+					annotationsList.add(curAnnotation);
 				}
 			}
 
-			annotations = filteredAnnotations.toArray(
-				new Annotation[filteredAnnotations.size()]);
+			annotations = annotationsList.toArray(
+				new Annotation[annotationsList.size()]);
 		}
 
 		ServiceMethodAnnotationCache.put(methodInvocation, annotations);
 
+		Set<Class<? extends Annotation>> annotationClasses =
+			new HashSet<Class<? extends Annotation>>();
+
+		annotation = _nullAnnotation;
+
 		for (Annotation curAnnotation : annotations) {
-			if (curAnnotation.annotationType() == _annotationType) {
-				return (T)curAnnotation;
+			Class<? extends Annotation> annotationClass =
+				curAnnotation.annotationType();
+
+			if (annotationClass == _annotationClass) {
+				annotation = curAnnotation;
+			}
+
+			annotationClasses.add(annotationClass);
+		}
+
+		for (Map.Entry<Class<? extends Annotation>,
+				AnnotationChainableMethodAdvice<?>> entry :
+					_annotationChainableMethodAdvices.entrySet()) {
+
+			Class<? extends Annotation> annotationClass = entry.getKey();
+			AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice =
+				entry.getValue();
+
+			if ((!annotationClasses.contains(annotationClass)) &&
+				(annotationChainableMethodAdvice != null)) {
+
+				ServiceBeanAopProxy.removeMethodInterceptor(
+					methodInvocation, annotationChainableMethodAdvice);
 			}
 		}
 
-		return _nullAnnotation;
+		return (T)annotation;
 	}
 
-	private static Set<Class<? extends Annotation>> _annotationTypes =
-		new HashSet<Class<? extends Annotation>>();
+	private static Map<Class<? extends Annotation>,
+		AnnotationChainableMethodAdvice<?>> _annotationChainableMethodAdvices =
+			new HashMap<Class<? extends Annotation>,
+				AnnotationChainableMethodAdvice<?>>();
 
-	private Class<? extends Annotation> _annotationType;
+	private Class<? extends Annotation> _annotationClass;
 	private T _nullAnnotation;
 
 }

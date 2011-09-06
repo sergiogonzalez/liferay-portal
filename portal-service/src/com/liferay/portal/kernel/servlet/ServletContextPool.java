@@ -59,6 +59,10 @@ public class ServletContextPool {
 	}
 
 	private boolean _containsKey(String servletContextName) {
+		if (servletContextName == null) {
+			return false;
+		}
+
 		boolean value = _servletContexts.containsKey(servletContextName);
 
 		if (_log.isDebugEnabled()) {

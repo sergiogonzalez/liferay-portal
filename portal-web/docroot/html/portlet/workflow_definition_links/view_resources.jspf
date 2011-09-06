@@ -43,6 +43,7 @@ List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.get
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/workflow_definition_links/view");
+portletURL.setParameter("tabs1", "default-configuration");
 %>
 
 <portlet:actionURL var="editWorkflowDefinitionLinkURL">

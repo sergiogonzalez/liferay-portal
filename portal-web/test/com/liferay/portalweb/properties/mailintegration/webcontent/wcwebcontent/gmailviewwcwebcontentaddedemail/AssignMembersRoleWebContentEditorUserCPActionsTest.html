@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_128_toggle_id_enterprise_admin_user_searchkeywords']</td>
+	<td>//input[@name='_128_keywords']</td>
 	<td>user</td>
 </tr>
 <tr>
@@ -84,7 +84,17 @@
 	<td>usersn</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_128_rowIds']</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
 	<td>check</td>
+	<td>//input[@name='_128_rowIds']</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@name='_128_rowIds']</td>
 	<td>Checkbox</td>
 </tr>

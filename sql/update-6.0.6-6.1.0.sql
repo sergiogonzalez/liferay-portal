@@ -352,6 +352,7 @@ update MBCategory set displayStyle = 'default';
 alter table MBMailingList add allowAnonymous BOOLEAN;
 
 alter table MBMessage add format VARCHAR(75) null;
+alter table MBMessage add answer BOOLEAN;
 
 COMMIT_TRANSACTION;
 
@@ -359,6 +360,14 @@ update MBMessage set format = 'bbcode';
 
 alter table MBThread add companyId LONG;
 alter table MBThread add rootMessageUserId LONG;
+alter table MBThread add question BOOLEAN;
+
+create table MBThreadFlag (
+	threadFlagId LONG not null primary key,
+	userId LONG,
+	modifiedDate DATE null,
+	threadId LONG
+);
 
 create table MDRAction (
 	uuid_ VARCHAR(75) null,
@@ -373,8 +382,8 @@ create table MDRAction (
 	ruleId LONG,
 	name STRING null,
 	description STRING null,
-	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null
+	type_ VARCHAR(255) null,
+	typeSettings TEXT null
 );
 
 create table MDRRule (
@@ -389,8 +398,8 @@ create table MDRRule (
 	ruleGroupId LONG,
 	name STRING null,
 	description STRING null,
-	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null
+	type_ VARCHAR(255) null,
+	typeSettings TEXT null
 );
 
 create table MDRRuleGroup (
@@ -408,7 +417,7 @@ create table MDRRuleGroup (
 
 alter table PollsVote add companyId LONG;
 alter table PollsVote add userName VARCHAR(75) null;
-alter table PollsVote add createDate DATE null,;
+alter table PollsVote add createDate DATE null;
 alter table PollsVote add modifiedDate DATE null;
 
 create table PortalPreferences (

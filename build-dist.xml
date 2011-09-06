@@ -22,10 +22,7 @@
 	<target name="build-dist-glassfish">
 		<antcall target="unzip-glassfish" />
 
-		<echo file="app.server.${user.name}.properties">app.server.type=glassfish
-
-app.server.glassfish.zip.name=glassfish-v3-web.zip
-app.server.glassfish.zip.url=http://download.java.net/glassfish/v3/release/${app.server.glassfish.zip.name}</echo>
+		<echo file="app.server.${user.name}.properties">app.server.type=glassfish</echo>
 
 		<ant target="deploy" inheritAll="false" />
 
@@ -378,9 +375,9 @@ app.server.glassfish.zip.url=http://download.java.net/glassfish/v3/release/${app
 		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-6.0.32/webapps" />
+			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
 			<param name="deployer.app.server.type" value="tomcat" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-6.0.32/webapps/ROOT/WEB-INF/lib" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/lib" />
 		</antcall>
 	</target>
 
@@ -838,12 +835,12 @@ release was successful.</echo>
 			 src="${app.server.parent.dir}/${app.server.glassfish.zip.name}"
 		>
 			<patternset
-				includes="glassfishv3/glassfish/**"
+				includes="glassfish3/glassfish/**"
 			/>
 			<mapper
 				type="glob"
-				from="glassfishv3/glassfish/*"
-				to="glassfish-3.0.1/*"
+				from="glassfish3/glassfish/*"
+				to="${app.server.glassfish.dir}/*"
 			/>
 		</unzip>
 	</target>
@@ -987,7 +984,7 @@ release was successful.</echo>
 	</target>
 
 	<target name="unzip-resin">
-		<delete dir="${app.server.parent.dir}/resin-4.0.16" />
+		<delete dir="${app.server.parent.dir}/resin-${app.server.resin.version}" />
 
 		<if>
 			<not>
@@ -1007,11 +1004,11 @@ release was successful.</echo>
 			src="${app.server.parent.dir}/${app.server.resin.zip.name}"
 		>
 			<patternset
-				excludes="resin-4.0.16/php/**,resin-4.0.16/webapps/**"
+				excludes="resin-${app.server.resin.version}/php/**,resin-${app.server.resin.version}/webapps/**"
 			/>
 		</unzip>
 
-		<mkdir dir="${app.server.parent.dir}/resin-4.0.16/webapps" />
+		<mkdir dir="${app.server.parent.dir}/resin-${app.server.resin.version}/webapps" />
 	</target>
 
 	<target name="unzip-tomcat">
@@ -1052,11 +1049,11 @@ release was successful.</echo>
 			src="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
 		>
 			<patternset
-				excludes="apache-tomcat-6.0.32/webapps/**"
+				excludes="apache-tomcat-${app.server.tomcat.version}/webapps/**"
 			/>
 			<mapper
 				type="glob"
-				from="apache-tomcat-6.0.32/*"
+				from="apache-tomcat-${app.server.tomcat.version}/*"
 				to="${app.server.tomcat.dir.name}/*"
 			/>
 		</unzip>

@@ -656,6 +656,24 @@ public class ExpandoValueLocalServiceUtil {
 		getService().addValues(classNameId, tableId, columns, classPK, data);
 	}
 
+	public static void addValues(long companyId, long classNameId,
+		java.lang.String tableName, long classPK,
+		java.util.Map<java.lang.String, java.io.Serializable> attributes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addValues(companyId, classNameId, tableName, classPK, attributes);
+	}
+
+	public static void addValues(long companyId, java.lang.String className,
+		java.lang.String tableName, long classPK,
+		java.util.Map<java.lang.String, java.io.Serializable> attributes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addValues(companyId, className, tableName, classPK, attributes);
+	}
+
 	public static void deleteColumnValues(long columnId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteColumnValues(columnId);
@@ -820,6 +838,16 @@ public class ExpandoValueLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getColumnValuesCount(className, tableName, columnName, data);
+	}
+
+	public static java.util.Map<java.lang.String, java.io.Serializable> getData(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getData(companyId, className, tableName, columnNames,
+			classPK);
 	}
 
 	public static java.io.Serializable getData(long companyId,

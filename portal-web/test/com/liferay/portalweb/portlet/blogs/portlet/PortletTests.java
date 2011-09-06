@@ -20,6 +20,7 @@ import com.liferay.portalweb.portlet.blogs.portlet.addportletblogsduplicate.AddP
 import com.liferay.portalweb.portlet.blogs.portlet.configureportletdisplaystyleabstract.ConfigurePortletDisplayStyleAbstractTests;
 import com.liferay.portalweb.portlet.blogs.portlet.configureportletdisplaystylefullcontent.ConfigurePortletDisplayStyleFullContentTests;
 import com.liferay.portalweb.portlet.blogs.portlet.configureportletdisplaystyletitle.ConfigurePortletDisplayStyleTitleTests;
+import com.liferay.portalweb.portlet.blogs.portlet.configureportletremoveallpermissions.ConfigurePortletRemoveAllPermissionTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,6 +38,7 @@ public class PortletTests extends BaseTests {
 		testSuite.addTest(ConfigurePortletDisplayStyleAbstractTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleFullContentTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleTests.suite());
+		testSuite.addTest(ConfigurePortletRemoveAllPermissionTests.suite());
 
 		return testSuite;
 	}

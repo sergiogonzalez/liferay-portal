@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -36,7 +37,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import jodd.io.findfile.FindClass;
+import jodd.io.findfile.ClassFinder;
 import jodd.io.findfile.FindFile;
 import jodd.io.findfile.WildcardFindFile;
 
@@ -44,10 +45,12 @@ import jodd.util.ClassLoaderUtil;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.objectweb.asm.ClassReader;
+
 /**
  * @author Igor Spasic
  */
-public class JSONWebServiceConfigurator extends FindClass {
+public class JSONWebServiceConfigurator extends ClassFinder {
 
 	public JSONWebServiceConfigurator() {
 		setIncludedJars(
@@ -91,8 +94,9 @@ public class JSONWebServiceConfigurator extends FindClass {
 
 			classPathFiles[0] = classPathFile;
 
-			FindFile findFile = new WildcardFindFile(
-				libDir, "*-portlet-service.jar");
+			FindFile findFile = new WildcardFindFile("*-portlet-service.jar");
+
+			findFile.searchPath(libDir);
 
 			classPathFiles[1] = findFile.nextFile();
 
@@ -154,10 +158,6 @@ public class JSONWebServiceConfigurator extends FindClass {
 		}
 	}
 
-	public void setCheckBytecodeSignature(boolean checkBytecodeSignature) {
-		_checkBytecodeSignature = checkBytecodeSignature;
-	}
-
 	public void setJSONWebServiceActionsManager(
 		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
 
@@ -165,17 +165,38 @@ public class JSONWebServiceConfigurator extends FindClass {
 	}
 
 	@Override
-	protected void onEntry(FindClass.EntryData entryData) throws Exception {
+	protected void onEntry(EntryData entryData) throws Exception {
 		String className = entryData.getName();
 
 		if (className.endsWith("Service") ||
 			className.endsWith("ServiceImpl")) {
 
-			if (_checkBytecodeSignature) {
-				InputStream inputStream = entryData.openInputStream();
+			InputStream inputStream = entryData.openInputStream();
 
-				if (!isTypeSignatureInUse(
-						inputStream, _jsonWebServiceAnnotationBytes)) {
+			if (!isTypeSignatureInUse(
+					inputStream, _jsonWebServiceAnnotationBytes)) {
+
+				return;
+			}
+
+			if (!entryData.isArchive()) {
+				StreamUtil.cleanUp(inputStream);
+
+				ClassReader classReader = new ClassReader(
+					entryData.openInputStream());
+
+				JSONWebServiceClassVisitor jsonWebServiceClassVisitor =
+					new JSONWebServiceClassVisitor();
+
+				try {
+					classReader.accept(jsonWebServiceClassVisitor, 0);
+				}
+				catch (Exception e) {
+					return;
+				}
+
+				if (!className.equals(
+						jsonWebServiceClassVisitor.getClassName())) {
 
 					return;
 				}
@@ -348,7 +369,6 @@ public class JSONWebServiceConfigurator extends FindClass {
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceConfigurator.class);
 
-	private boolean _checkBytecodeSignature = true;
 	private ClassLoader _classLoader;
 	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 	private byte[] _jsonWebServiceAnnotationBytes =

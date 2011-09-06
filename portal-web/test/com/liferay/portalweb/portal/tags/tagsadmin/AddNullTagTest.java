@@ -41,12 +41,15 @@ public class AddNullTagTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@id='_99_addTagButton']",
+			RuntimeVariables.replace("Add Tag"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -54,7 +57,7 @@ public class AddNullTagTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("add-tag-button")) {
+				if (selenium.isVisible("//input[@id='_99_name']")) {
 					break;
 				}
 			}
@@ -65,7 +68,10 @@ public class AddNullTagTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("add-tag-button", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_99_name']", RuntimeVariables.replace(""));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -73,7 +79,7 @@ public class AddNullTagTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("new-tag-name")) {
+				if (selenium.isVisible("//div[@id='portletMessages']")) {
 					break;
 				}
 			}
@@ -84,10 +90,9 @@ public class AddNullTagTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("new-tag-name", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
-		assertFalse(selenium.isElementPresent("//li[2]/span/a"));
+		assertEquals(RuntimeVariables.replace(
+				"One of your fields contains invalid characters."),
+			selenium.getText("//div[@id='portletMessages']"));
+		assertFalse(selenium.isElementPresent("//div[2]/ul/li[2]/div/span/a"));
 	}
 }

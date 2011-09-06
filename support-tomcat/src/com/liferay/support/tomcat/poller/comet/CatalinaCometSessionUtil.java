@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.catalina.CometEvent;
+import org.apache.catalina.comet.CometEvent;
 
 /**
  * @author Edward Han

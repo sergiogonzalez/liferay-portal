@@ -16,6 +16,8 @@ package com.liferay.portlet.expando.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.util.PortalUtil;
@@ -41,6 +43,7 @@ public class ExpandoTableLocalServiceImpl
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ExpandoTable addDefaultTable(long companyId, String className)
 		throws PortalException, SystemException {
 
@@ -165,6 +168,30 @@ public class ExpandoTableLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		deleteTables(companyId, classNameId);
+	}
+
+	public ExpandoTable fetchDefaultTable(long companyId, long classNameId)
+		throws SystemException {
+
+		return fetchTable(
+			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
+	}
+
+	public ExpandoTable fetchDefaultTable(long companyId, String className)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return fetchTable(
+			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
+	}
+
+	public ExpandoTable fetchTable(
+			long companyId, long classNameId, String name)
+		throws SystemException {
+
+		return expandoTablePersistence.fetchByC_C_N(
+			companyId, classNameId, name);
 	}
 
 	public ExpandoTable getDefaultTable(long companyId, long classNameId)

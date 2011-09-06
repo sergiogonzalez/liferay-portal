@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.jamwiki.DataHandler;
 import org.jamwiki.model.Category;
+import org.jamwiki.model.Interwiki;
 import org.jamwiki.model.LogItem;
 import org.jamwiki.model.Namespace;
 import org.jamwiki.model.RecentChange;
@@ -50,6 +51,9 @@ public class DummyDataHandler implements DataHandler {
 
 	public boolean canMoveTopic(Topic fromTopic, String destination) {
 		return false;
+	}
+
+	public void deleteInterwiki(Interwiki interwiki) {
 	}
 
 	public void deleteTopic(Topic topic, TopicVersion topicVersion) {
@@ -156,6 +160,18 @@ public class DummyDataHandler implements DataHandler {
 		return null;
 	}
 
+	public Map<String, String> lookupConfiguration() {
+		return null;
+	}
+
+	public Interwiki lookupInterwiki(String interwikiPrefix) {
+		return null;
+	}
+
+	public List<Interwiki> lookupInterwikis() {
+		return null;
+	}
+
 	public Namespace lookupNamespace(
 		String virtualWiki, String namespaceString) {
 
@@ -196,7 +212,25 @@ public class DummyDataHandler implements DataHandler {
 		return null;
 	}
 
+	public List<String> lookupTopicLinkOrphans(
+		String virtualWiki, int namespaceId) {
+
+		return null;
+	}
+
+	public List<String> lookupTopicLinks(String virtualWiki, String topicName) {
+		return null;
+	}
+
+	public String lookupTopicName(String virtualWiki, String topicName) {
+		return null;
+	}
+
 	public TopicVersion lookupTopicVersion(int topicVersionId) {
+		return null;
+	}
+
+	public Integer lookupTopicVersionNextId(int topicVersionId) {
 		return null;
 	}
 
@@ -267,7 +301,13 @@ public class DummyDataHandler implements DataHandler {
 		String userDisplay) {
 	}
 
+	public void writeConfiguration(Map<String, String> configuration) {
+	}
+
 	public void writeFile(WikiFile wikiFile, WikiFileVersion wikiFileVersion) {
+	}
+
+	public void writeInterwiki(Interwiki interwiki) {
 	}
 
 	public void writeNamespace(

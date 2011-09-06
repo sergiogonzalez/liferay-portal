@@ -399,6 +399,11 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		_expandoValue.setBooleanArray(data);
 	}
 
+	public void setColumn(
+		com.liferay.portlet.expando.model.ExpandoColumn column) {
+		_expandoValue.setColumn(column);
+	}
+
 	public void setDate(java.util.Date data)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

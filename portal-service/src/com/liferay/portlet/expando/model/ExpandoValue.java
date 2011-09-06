@@ -107,6 +107,9 @@ public interface ExpandoValue extends ExpandoValueModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void setColumn(
+		com.liferay.portlet.expando.model.ExpandoColumn column);
+
 	public void setDate(java.util.Date data)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

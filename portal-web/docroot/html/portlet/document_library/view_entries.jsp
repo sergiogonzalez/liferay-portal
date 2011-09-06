@@ -57,7 +57,7 @@ portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
 portletURL.setParameter("displayStyle", String.valueOf(displayStyle));
 
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", fileEntriesPerPage, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
 List<String> headerNames = new ArrayList<String>();
 
@@ -245,15 +245,10 @@ for (int i = 0; i < results.size(); i++) {
 					rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 					row.addText(fileEntryTitle, rowURL);
-
 					row.addText(fileEntry.getDescription(), rowURL);
-
 					row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
-
 					row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
-
 					row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
-
 					row.addText(String.valueOf(fileEntry.getReadCount()));
 
 					row.addJSP("/html/portlet/document_library/file_entry_action.jsp");
@@ -276,6 +271,7 @@ for (int i = 0; i < results.size(); i++) {
 				<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="viewFolders" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="entryStart" value="0" />
 				<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 				<portlet:param name="folderStart" value="0" />
@@ -348,7 +344,7 @@ for (int i = 0; i < results.size(); i++) {
 
 					folderDescriptionSearchEntry.setData(data);
 					folderDescriptionSearchEntry.setHref(rowURL.toString());
-					folderDescriptionSearchEntry.setName(folderTitle);
+					folderDescriptionSearchEntry.setName(curFolder.getDescription());
 
 					row.addSearchEntry(folderDescriptionSearchEntry);
 

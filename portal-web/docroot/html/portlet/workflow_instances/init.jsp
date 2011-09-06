@@ -20,6 +20,7 @@
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowException" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandler" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %>
+<%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandlerUtil" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowLog" %>
@@ -30,7 +31,6 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
 
 <%
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);

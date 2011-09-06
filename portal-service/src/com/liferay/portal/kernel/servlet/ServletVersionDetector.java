@@ -23,19 +23,22 @@ import javax.servlet.ServletContext;
 public class ServletVersionDetector {
 
 	public static boolean is2_5() {
-		return _2_5;
-	}
+		if (_2_5 != null) {
+			return _2_5.booleanValue();
+		}
 
-	static {
 		try {
 			ServletContext.class.getMethod("getContextPath");
 
-			_2_5 = true;
+			_2_5 = Boolean.TRUE;
 		}
 		catch (Exception e) {
+			_2_5 = Boolean.FALSE;
 		}
+
+		return _2_5.booleanValue();
 	}
 
-	private static boolean _2_5;
+	private static Boolean _2_5;
 
 }

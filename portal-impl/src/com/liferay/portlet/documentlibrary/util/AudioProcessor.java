@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -23,12 +22,13 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import com.xuggle.mediatool.IMediaReader;
 import com.xuggle.mediatool.IMediaWriter;
@@ -38,8 +38,8 @@ import com.xuggle.xuggler.ICodec;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -47,16 +47,24 @@ import java.util.Vector;
  * @author Sergio González
  * @author Mika Koivisto
  */
-public class AudioProcessor implements DLProcessor {
+public class AudioProcessor extends DLPreviewableProcessor {
 
 	public static final String PREVIEW_TYPE = "mp3";
 
-	public static void generateAudio(FileVersion fileVersion) {
+	public static void generateAudio(FileVersion fileVersion) throws Exception {
 		_instance._generateAudio(fileVersion);
 	}
 
-	public static File getPreviewFile(String id) {
-		return _instance._getPreviewFile(id);
+	public static InputStream getPreviewAsStream(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance.doGetPreviewAsStream(fileVersion);
+	}
+
+	public static long getPreviewFileSize(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance.doGetPreviewFileSize(fileVersion);
 	}
 
 	public static boolean hasAudio(FileEntry fileEntry, String version) {
@@ -93,6 +101,10 @@ public class AudioProcessor implements DLProcessor {
 		return false;
 	}
 
+	public AudioProcessor() {
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
+	}
+
 	public void trigger(FileEntry fileEntry) {
 		try {
 			FileVersion fileVersion = fileEntry.getLatestFileVersion();
@@ -104,7 +116,19 @@ public class AudioProcessor implements DLProcessor {
 		}
 	}
 
-	private void _generateAudio(FileVersion fileVersion) {
+	@Override
+	protected String getPreviewType() {
+		return PREVIEW_TYPE;
+	}
+
+	private void _generateAudio(FileVersion fileVersion) throws Exception {
+		String tempFileId = DLUtil.getTempFileId(
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+		File audioTempFile = _getAudioTempFile(
+			tempFileId, fileVersion.getExtension());
+		File previewTempFile = getPreviewTempFile(tempFileId);
+
 		try {
 			if (!PrefsPropsUtil.getBoolean(
 					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED) ||
@@ -113,78 +137,72 @@ public class AudioProcessor implements DLProcessor {
 				return;
 			}
 
-			String id = DLUtil.getTempFileId(
-				fileVersion.getFileEntryId(), fileVersion.getVersion());
+			if (_isGeneratePreview(fileVersion)) {
+				InputStream inputStream = fileVersion.getContentStream(false);
 
-			File previewFile = _getPreviewFile(id);
-
-			if (_isGeneratePreview(id)) {
-				previewFile.createNewFile();
-
-				File tmpFile = _getAudioTmpFile(id, fileVersion.getExtension());
+				FileUtil.write(audioTempFile, inputStream);
 
 				try {
-					InputStream inputStream = fileVersion.getContentStream(
-						false);
-
-					FileUtil.write(tmpFile, inputStream);
-
-					_generateAudioXuggler(tmpFile, previewFile);
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Xuggler generated a preview audio for " + id);
-					}
+					_generateAudioXuggler(
+						fileVersion, audioTempFile, previewTempFile);
 				}
-				finally {
-					FileUtil.delete(tmpFile);
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Xuggler generated a preview audio for " + tempFileId);
 				}
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
 		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 		finally {
-			_fileEntries.remove(fileVersion.getFileEntryId());
+			_fileVersionIds.remove(fileVersion.getFileVersionId());
+
+			FileUtil.delete(audioTempFile);
+			FileUtil.delete(previewTempFile);
 		}
 	}
 
-	private void _generateAudioXuggler(File srcFile, File destFile)
-		throws SystemException {
+	private void _generateAudioXuggler(
+			FileVersion fileVersion, File srcFile, File destFile)
+		throws Exception {
 
-		try {
-			IMediaReader iMediaReader = ToolFactory.makeReader(
-				srcFile.getCanonicalPath());
+		IMediaReader iMediaReader = ToolFactory.makeReader(
+			srcFile.getCanonicalPath());
 
-			IMediaWriter iMediaWriter = ToolFactory.makeWriter(
-				destFile.getCanonicalPath(), iMediaReader);
+		IMediaWriter iMediaWriter = ToolFactory.makeWriter(
+			destFile.getCanonicalPath(), iMediaReader);
 
-			iMediaWriter.addAudioStream(
-				0, 0, ICodec.ID.CODEC_ID_MP3, _CHANNELS, _SAMPLE_RATE);
+		iMediaWriter.addAudioStream(
+			0, 0, ICodec.ID.CODEC_ID_MP3, _CHANNELS, _SAMPLE_RATE);
 
-			iMediaReader.addListener(iMediaWriter);
+		iMediaReader.addListener(iMediaWriter);
 
-			while (iMediaReader.readPacket() == null) {
-			}
+		while (iMediaReader.readPacket() == null) {
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+
+		addFileToStore(
+			fileVersion.getCompanyId(), PREVIEW_PATH,
+			getPreviewFilePath(fileVersion), destFile);
 	}
 
-	private File _getAudioTmpFile(String id, String targetExtension) {
-		String filePath = _getAudioTmpFilePath(id, targetExtension);
+	private File _getAudioTempFile(String tempFileId, String targetExtension) {
+		String audioTempFilePath = _getAudioTempFilePath(
+			tempFileId, targetExtension);
 
-		return new File(filePath);
+		return new File(audioTempFilePath);
 	}
 
-	private String _getAudioTmpFilePath(String id, String targetExtension) {
-		StringBundler sb = new StringBundler(4);
+	private String _getAudioTempFilePath(
+		String tempFileId, String targetExtension) {
 
-		sb.append(_PREVIEW_PATH);
-		sb.append(id);
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(PREVIEW_TMP_PATH);
+		sb.append(tempFileId);
 
 		if (PREVIEW_TYPE.equals(targetExtension)) {
 			sb.append("_tmp");
@@ -196,31 +214,13 @@ public class AudioProcessor implements DLProcessor {
 		return sb.toString();
 	}
 
-	private File _getPreviewFile(String id) {
-		String filePath = _getPreviewFilePath(id);
-
-		return new File(filePath);
-	}
-
-	private String _getPreviewFilePath(String id) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_PREVIEW_PATH);
-		sb.append(id);
-		sb.append(StringPool.PERIOD);
-		sb.append(PREVIEW_TYPE);
-
-		return sb.toString();
-	}
-
-	private boolean _hasAudio(FileVersion fileVersion) {
-		String id = DLUtil.getTempFileId(
-			fileVersion.getFileEntryId(), fileVersion.getVersion());
-
-		File previewFile = _getPreviewFile(id);
+	private boolean _hasAudio(FileVersion fileVersion) throws Exception {
+		boolean previewExists = DLStoreUtil.hasFile(
+			fileVersion.getCompanyId(), REPOSITORY_ID,
+			getPreviewFilePath(fileVersion));
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
-			if (previewFile.exists()) {
+			if (previewExists) {
 				return true;
 			}
 		}
@@ -228,11 +228,14 @@ public class AudioProcessor implements DLProcessor {
 		return false;
 	}
 
-	private boolean _isGeneratePreview(String id) {
-		File previewFile = _getPreviewFile(id);
+	private boolean _isGeneratePreview(FileVersion fileVersion)
+		throws Exception {
+
+		String previewFilePath = getPreviewFilePath(fileVersion);
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-			!previewFile.exists()) {
+			!DLStoreUtil.hasFile(
+				fileVersion.getCompanyId(), REPOSITORY_ID, previewFilePath)) {
 
 			return true;
 		}
@@ -250,22 +253,19 @@ public class AudioProcessor implements DLProcessor {
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileEntryId()) &&
-			_isSupportedAudio(fileVersion)) {
+		if (_fileVersionIds.contains(fileVersion.getFileVersionId()) ||
+			!_isSupportedAudio(fileVersion)) {
 
-			_fileEntries.add(fileVersion.getFileEntryId());
-
-			MessageBusUtil.sendMessage(
-				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR,
-				fileVersion);
+			return;
 		}
+
+		_fileVersionIds.add(fileVersion.getFileVersionId());
+
+		MessageBusUtil.sendMessage(
+			DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR, fileVersion);
 	}
 
 	private static final int _CHANNELS = 2;
-
-	private static final String _PREVIEW_PATH =
-		SystemProperties.get(SystemProperties.TMP_DIR) +
-			"/liferay/document_preview/";
 
 	private static int _SAMPLE_RATE = 44100;
 
@@ -273,16 +273,8 @@ public class AudioProcessor implements DLProcessor {
 
 	private static AudioProcessor _instance = new AudioProcessor();
 
-	private static List<String> _audioMimeTypes = Arrays.asList(
-		"audio/basic", "audio/mid", "audio/midi", "audio/mod", "audio/mp3",
-		"audio/mpeg", "audio/mpeg3", "audio/wav", "audio/x-mid", "audio/x-midi",
-		"audio/x-mod", "audio/x-mpeg", "audio/x-pn-realaudio",
-		"audio/x-realaudio", "audio/x-wav");
-
-	private List<Long> _fileEntries = new Vector<Long>();
-
-	static {
-		FileUtil.mkdirs(_PREVIEW_PATH);
-	}
+	private static Set<String> _audioMimeTypes = SetUtil.fromArray(
+		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);
+	private static List<Long> _fileVersionIds = new Vector<Long>();
 
 }

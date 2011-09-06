@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -70,6 +71,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -177,8 +179,20 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	public String getContextPath() {
-		//return StringPool.SLASH + _req.getContextPath();
-		return StringPool.SLASH + _portletContext.getPortletContextName();
+		PortletContextImpl portletContextImpl =
+			(PortletContextImpl)_portletContext;
+
+		ServletContext servletContext = portletContextImpl.getServletContext();
+
+		String servletContextName = servletContext.getServletContextName();
+
+		if (ServletContextPool.containsKey(servletContextName)) {
+			servletContext = ServletContextPool.get(servletContextName);
+
+			return servletContext.getContextPath();
+		}
+
+		return StringPool.SLASH.concat(_portletContext.getPortletContextName());
 	}
 
 	public Cookie[] getCookies() {

@@ -149,13 +149,13 @@ public class JournalContentPortletDataHandlerImpl
 			}
 		}
 
-		if (article == null) {
-			return StringPool.BLANK;
-		}
-
 		Document document = SAXReaderUtil.createDocument();
 
 		Element rootElement = document.addElement("journal-content-data");
+
+		if (article == null) {
+			return document.formattedString();
+		}
 
 		String path = JournalPortletDataHandlerImpl.getArticlePath(
 			portletDataContext, article);
@@ -223,7 +223,7 @@ public class JournalContentPortletDataHandlerImpl
 
 		String articleId = portletPreferences.getValue("articleId", null);
 
-		if (Validator.isNotNull(articleId)) {
+		if (Validator.isNotNull(articleId) && (articleElement != null)) {
 			String importedArticleGroupId = articleElement.attributeValue(
 				"imported-article-group-id");
 
@@ -249,6 +249,10 @@ public class JournalContentPortletDataHandlerImpl
 				portletDataContext.getScopeGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), portletId, articleId, true);
 		}
+		else {
+			portletPreferences.setValue("groupId", StringPool.BLANK);
+			portletPreferences.setValue("articleId", StringPool.BLANK);
+		}
 
 		String templateId = portletPreferences.getValue("templateId", null);
 
@@ -260,6 +264,9 @@ public class JournalContentPortletDataHandlerImpl
 			templateId = MapUtil.getString(templateIds, templateId, templateId);
 
 			portletPreferences.setValue("templateId", templateId);
+		}
+		else {
+			portletPreferences.setValue("templateId", StringPool.BLANK);
 		}
 
 		return portletPreferences;

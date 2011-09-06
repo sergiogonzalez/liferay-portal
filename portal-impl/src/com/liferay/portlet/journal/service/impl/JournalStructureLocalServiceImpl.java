@@ -259,19 +259,22 @@ public class JournalStructureLocalServiceImpl
 		if (journalArticlePersistence.countByG_C_S(
 				structure.getGroupId(), 0, structure.getStructureId()) > 0) {
 
-			throw new RequiredStructureException();
+			throw new RequiredStructureException(
+				RequiredStructureException.REFERENCED_WEB_CONTENT);
 		}
 
 		if (journalStructurePersistence.countByG_P(
 				structure.getGroupId(), structure.getStructureId()) > 0) {
 
-			throw new RequiredStructureException();
+			throw new RequiredStructureException(
+				RequiredStructureException.REFERENCED_STRUCTURE);
 		}
 
 		if (journalTemplatePersistence.countByG_S(
 				structure.getGroupId(), structure.getStructureId()) > 0) {
 
-			throw new RequiredStructureException();
+			throw new RequiredStructureException(
+				RequiredStructureException.REFERENCED_TEMPLATE);
 		}
 
 		// WebDAVProps

@@ -20,6 +20,9 @@
 			<arg value="sample.sql.db.type=${sample.sql.db.type}" />
 			<arg value="sample.sql.blogs.entry.comment.count=${sample.sql.blogs.entry.comment.count}" />
 			<arg value="sample.sql.blogs.entry.count=${sample.sql.blogs.entry.count}" />
+			<arg value="sample.sql.dl.file.entry.count=${sample.sql.dl.file.entry.count}" />
+			<arg value="sample.sql.dl.folder.count=${sample.sql.dl.folder.count}" />
+			<arg value="sample.sql.dl.folder.depth=${sample.sql.dl.folder.depth}" />
 			<arg value="sample.sql.group.count=${sample.sql.group.count}" />
 			<arg value="sample.sql.mb.category.count=${sample.sql.mb.category.count}" />
 			<arg value="sample.sql.mb.message.count=${sample.sql.mb.message.count}" />

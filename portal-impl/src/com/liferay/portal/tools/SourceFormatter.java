@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -41,6 +42,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -55,6 +58,7 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Brian Wing Shun Chan
  * @author Igor Spasic
  * @author Wesley Gong
+ * @author Hugo Huijser
  */
 public class SourceFormatter {
 
@@ -112,35 +116,22 @@ public class SourceFormatter {
 		}
 	}
 
-	public static String stripImports(
+	public static String stripJavaImports(
 			String content, String packageDir, String className)
 		throws IOException {
 
-		Pattern pattern = Pattern.compile(
-			"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _javaImportPattern.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
 		}
 
-		String imports = _formatImports(matcher.group());
-
-		content =
-			content.substring(0, matcher.start()) + imports +
-				content.substring(matcher.end());
+		String imports = matcher.group();
 
 		Set<String> classes = ClassUtil.getClasses(
 			new UnsyncStringReader(content), className);
 
-		matcher = pattern.matcher(content);
-
-		matcher.find();
-
-		imports = matcher.group();
-
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -148,7 +139,7 @@ public class SourceFormatter {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.indexOf("import ") != -1) {
+			if (line.contains("import ")) {
 				int importX = line.indexOf(" ");
 				int importY = line.lastIndexOf(".");
 
@@ -171,7 +162,7 @@ public class SourceFormatter {
 			}
 		}
 
-		imports = _formatImports(sb.toString());
+		imports = _formatImports(sb.toString(), 7);
 
 		content =
 			content.substring(0, matcher.start()) + imports +
@@ -190,6 +181,106 @@ public class SourceFormatter {
 			"$1\n\n/**");
 
 		return content;
+	}
+
+	private static void _addJSPIncludeFileNames(
+		String fileName, Set<String> includeFileNames) {
+
+		String content = _jspContents.get(fileName);
+
+		if (Validator.isNull(content)) {
+			return;
+		}
+
+		for (int x = 0;;) {
+			x = content.indexOf("<%@ include file=", x);
+
+			if (x == -1) {
+				break;
+			}
+
+			x = content.indexOf(StringPool.QUOTE, x);
+
+			if (x == -1) {
+				break;
+			}
+
+			int y = content.indexOf(StringPool.QUOTE, x + 1);
+
+			if (y == -1) {
+				break;
+			}
+
+			String includeFileName = content.substring(x + 1, y);
+
+			Matcher matcher = _jspIncludeFilePattern.matcher(includeFileName);
+
+			if (!matcher.find()) {
+				throw new RuntimeException(
+					"Invalid include " + includeFileName);
+			}
+
+			String docrootPath = fileName.substring(
+				0, fileName.indexOf("docroot") + 7);
+
+			includeFileName = docrootPath + includeFileName;
+
+			if ((includeFileName.endsWith("jsp") ||
+				 includeFileName.endsWith("jspf")) &&
+				!includeFileNames.contains(includeFileName) && 
+				!includeFileName.contains("html/portlet/init.jsp")) {
+
+				includeFileNames.add(includeFileName);
+			}
+
+			x = y;
+		}
+	}
+
+	private static void _addJSPReferenceFileNames(
+		String fileName, Set<String> includeFileNames) {
+
+		for (Map.Entry<String, String> entry : _jspContents.entrySet()) {
+			String referenceFileName = entry.getKey();
+			String content = entry.getValue();
+
+			if (content.contains("<%@ include file=\"" + fileName) &&
+				!includeFileNames.contains(referenceFileName)) {
+
+				includeFileNames.add(referenceFileName);
+			}
+		}
+	}
+
+	private static void _addJSPUnusedImports(
+		String fileName, List<String> importLines,
+		List<String> unneededImports) {
+
+		for (String importLine : importLines) {
+			Set<String> includeFileNames = new HashSet<String>();
+
+			includeFileNames.add(fileName);
+
+			Set<String> checkedFileNames =  new HashSet<String>();
+
+			int x = importLine.indexOf(StringPool.QUOTE);
+			int y = importLine.indexOf(StringPool.QUOTE, x + 1);
+
+			if ((x == -1) || (y == -1)) {
+				continue;
+			}
+
+			String className = importLine.substring(x + 1, y);
+
+			className = className.substring(
+				className.lastIndexOf(StringPool.PERIOD) + 1);
+
+			if (!_isJSPImportRequired(
+					fileName, className, includeFileNames, checkedFileNames)) {
+
+				unneededImports.add(importLine);
+			}
+		}
 	}
 
 	private static void _checkPersistenceTestSuite() throws IOException {
@@ -292,25 +383,25 @@ public class SourceFormatter {
 
 			String inlineStringVulnerability1 = "'<%= " + jspVariable + " %>";
 
-			if (jspContent.indexOf(inlineStringVulnerability1) != -1) {
+			if (jspContent.contains(inlineStringVulnerability1)) {
 				xssVulnerable = true;
 			}
 
 			String inlineStringVulnerability2 = "(\"<%= " + jspVariable + " %>";
 
-			if (jspContent.indexOf(inlineStringVulnerability2) != -1) {
+			if (jspContent.contains(inlineStringVulnerability2)) {
 				xssVulnerable = true;
 			}
 
 			String inlineStringVulnerability3 = " \"<%= " + jspVariable + " %>";
 
-			if (jspContent.indexOf(inlineStringVulnerability3) != -1) {
+			if (jspContent.contains(inlineStringVulnerability3)) {
 				xssVulnerable = true;
 			}
 
 			String documentIdVulnerability = ".<%= " + jspVariable + " %>";
 
-			if (jspContent.indexOf(documentIdVulnerability) != -1) {
+			if (jspContent.contains(documentIdVulnerability)) {
 				xssVulnerable = true;
 			}
 
@@ -484,7 +575,7 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			if (content.indexOf("<!-- SourceFormatter.Ignore -->") != -1) {
+			if (content.contains("<!-- SourceFormatter.Ignore -->")) {
 				continue;
 			}
 
@@ -557,8 +648,8 @@ public class SourceFormatter {
 
 		sb.append("<?xml version=\"1.0\"?>\n");
 		sb.append("<!DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL ");
-		sb.append("Routes 6.0.0//EN\" \"http://www.liferay.com/dtd/");
-		sb.append("liferay-friendly-url-routes_6_0_0.dtd\">\n\n<routes>\n");
+		sb.append("Routes 6.1.0//EN\" \"http://www.liferay.com/dtd/");
+		sb.append("liferay-friendly-url-routes_6_1_0.dtd\">\n\n<routes>\n");
 
 		for (ComparableRoute comparableRoute : comparableRoutes) {
 			sb.append("\t<route>\n");
@@ -622,10 +713,11 @@ public class SourceFormatter {
 		return sb.toString();
 	}
 
-	private static String _formatImports(String imports) throws IOException {
-		if ((imports.indexOf("/*") != -1) ||
-			(imports.indexOf("*/") != -1) ||
-			(imports.indexOf("//") != -1)) {
+	private static String _formatImports(String imports, int classStartPos)
+		throws IOException {
+
+		if (imports.contains("/*") || imports.contains("*/") ||
+			imports.contains("//")) {
 
 			return imports + "\n";
 		}
@@ -638,16 +730,16 @@ public class SourceFormatter {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.indexOf("import ") != -1) {
-				if (!importsList.contains(line)) {
-					importsList.add(line);
-				}
+			if ((line.contains("import=") || line.contains("import ")) &&
+				!importsList.contains(line)) {
+
+				importsList.add(line);
 			}
 		}
 
 		importsList = ListUtil.sort(importsList);
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		String temp = null;
 
@@ -662,7 +754,7 @@ public class SourceFormatter {
 				pos = s.indexOf(".");
 			}
 
-			String packageLevel = s.substring(7, pos);
+			String packageLevel = s.substring(classStartPos, pos);
 
 			if ((i != 0) && (!packageLevel.equals(temp))) {
 				sb.append("\n");
@@ -727,15 +819,14 @@ public class SourceFormatter {
 				packagePath, File.separator, StringPool.PERIOD);
 
 			if (packagePath.endsWith(".model")) {
-				if (content.indexOf("extends " + className + "Model") != -1) {
+				if (content.contains("extends " + className + "Model")) {
 					continue;
 				}
 			}
 
-			String newContent = _formatJavaContent(
-				fileName, className, content);
+			String newContent = _formatJavaContent(fileName, content);
 
-			if (newContent.indexOf("$\n */") != -1) {
+			if (newContent.contains("$\n */")) {
 				_sourceFormatterHelper.printError(fileName, "*: " + fileName);
 
 				newContent = StringUtil.replace(
@@ -750,11 +841,18 @@ public class SourceFormatter {
 					fileName, "old (c): " + fileName);
 			}
 
-			if (newContent.indexOf(copyright) == -1) {
-				_sourceFormatterHelper.printError(fileName, "(c): " + fileName);
+			if (!newContent.contains(copyright)) {
+				String customCopyright = _getCustomCopyright(file);
+
+				if (Validator.isNull(customCopyright) ||
+					!newContent.contains(customCopyright)) {
+
+					_sourceFormatterHelper.printError(
+						fileName, "(c): " + fileName);
+				}
 			}
 
-			if (newContent.indexOf(className + ".java.html") != -1) {
+			if (newContent.contains(className + ".java.html")) {
 				_sourceFormatterHelper.printError(
 					fileName, "Java2HTML: " + fileName);
 			}
@@ -769,76 +867,43 @@ public class SourceFormatter {
 					fileName, "UTF-8: " + fileName);
 			}
 
-			if (newContent.contains("com.liferay.portal.PortalException")) {
-				newContent = StringUtil.replace(
-					newContent, "com.liferay.portal.PortalException",
-					"com.liferay.portal.kernel.exception.PortalException");
-			}
+			newContent = StringUtil.replace(
+				newContent,
+				new String[] {
+					"com.liferay.portal.PortalException",
+					"com.liferay.portal.SystemException",
+					"com.liferay.util.LocalizationUtil"
+				},
+				new String[] {
+					"com.liferay.portal.kernel.exception.PortalException",
+					"com.liferay.portal.kernel.exception.SystemException",
+					"com.liferay.portal.kernel.util.LocalizationUtil"
+				});
 
-			if (newContent.contains("com.liferay.portal.SystemException")) {
-				newContent = StringUtil.replace(
-					newContent, "com.liferay.portal.SystemException",
-					"com.liferay.portal.kernel.exception.SystemException");
-			}
+			newContent = stripJavaImports(newContent, packagePath, className);
 
-			if (newContent.contains("com.liferay.util.LocalizationUtil")) {
-				newContent = StringUtil.replace(
-					newContent, "com.liferay.util.LocalizationUtil",
-					"com.liferay.portal.kernel.util.LocalizationUtil");
-			}
-
-			newContent = stripImports(newContent, packagePath, className);
-
-			if (newContent.indexOf(";\n/**") != -1) {
-				newContent = StringUtil.replace(
-					newContent,
+			newContent = StringUtil.replace(
+				newContent,
+				new String[] {
 					";\n/**",
-					";\n\n/**");
-			}
-
-			if (newContent.indexOf("\t/*\n\t *") != -1) {
-				newContent = StringUtil.replace(
-					newContent,
 					"\t/*\n\t *",
-					"\t/**\n\t *");
-			}
-
-			if (newContent.indexOf("if(") != -1) {
-				newContent = StringUtil.replace(
-					newContent,
 					"if(",
-					"if (");
-			}
-
-			if (newContent.indexOf("for(") != -1) {
-				newContent = StringUtil.replace(
-					newContent,
 					"for(",
-					"for (");
-			}
-
-			if (newContent.indexOf("while(") != -1) {
-				newContent = StringUtil.replace(
-					newContent,
 					"while(",
-					"while (");
-			}
-
-			if (newContent.indexOf("){\n") != -1) {
-				newContent = StringUtil.replace(
-					newContent,
 					"){\n",
-					") {\n");
-			}
+					"\n\n\n"
+				},
+				new String[] {
+					";\n\n/**",
+					"\t/**\n\t *",
+					"if (",
+					"for (",
+					"while (",
+					") {\n",
+					"\n\n"
+				});
 
-			if (newContent.indexOf("\n\n\n") != -1) {
-				newContent = StringUtil.replace(
-					newContent,
-					"\n\n\n",
-					"\n\n");
-			}
-
-			if (newContent.indexOf("*/\npackage ") != -1) {
+			if (newContent.contains("*/\npackage ")) {
 				_sourceFormatterHelper.printError(
 					fileName, "package: " + fileName);
 			}
@@ -850,7 +915,7 @@ public class SourceFormatter {
 			}
 
 			if (portalJavaFiles && className.endsWith("ServiceImpl") &&
-				(newContent.indexOf("ServiceUtil.") != -1)) {
+				newContent.contains("ServiceUtil.")) {
 
 				_sourceFormatterHelper.printError(
 					fileName, "ServiceUtil: " + fileName);
@@ -864,13 +929,12 @@ public class SourceFormatter {
 		}
 	}
 
-	private static String _formatJavaContent(
-			String fileName, String className, String content)
+	private static String _formatJavaContent(String fileName, String content)
 		throws IOException {
 
 		boolean longLogFactoryUtil = false;
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
@@ -915,7 +979,7 @@ public class SourceFormatter {
 					fileName, "{:" + fileName + " " + lineCount);
 			}
 
-			StringBuilder lineSB = new StringBuilder();
+			StringBundler lineSB = new StringBundler();
 
 			int spacesPerTab = 4;
 
@@ -1017,13 +1081,27 @@ public class SourceFormatter {
 
 		list.addAll(_sourceFormatterHelper.scanForFiles(directoryScanner));
 
-		String[] files = list.toArray(new String[list.size()]);
+		String[] fileNames = list.toArray(new String[list.size()]);
 
-		for (int i = 0; i < files.length; i++) {
-			File file = new File(basedir + files[i]);
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
 
 			String content = _fileUtil.read(file);
-			String newContent = _formatJSPContent(files[i], content);
+
+			fileName = fileName.replace(
+				CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
+
+			_jspContents.put(fileName, content);
+		}
+
+		boolean stripJSPImports = true;
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = _fileUtil.read(file);
+
+			String newContent = _formatJSPContent(fileName, content);
 
 			newContent = StringUtil.replace(
 				newContent,
@@ -1036,6 +1114,15 @@ public class SourceFormatter {
 					"javascript:"
 				});
 
+			if (stripJSPImports) {
+				try {
+					newContent = _stripJSPImports(fileName, newContent);
+				}
+				catch (RuntimeException re) {
+					stripJSPImports = false;
+				}
+			}
+
 			newContent = StringUtil.replace(
 				newContent,
 				new String[] {
@@ -1045,7 +1132,7 @@ public class SourceFormatter {
 					"* Copyright (c) 2000-2011 Liferay, Inc."
 				});
 
-			if (files[i].endsWith(".jsp") || files[i].endsWith(".jspf")) {
+			if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
 				if ((oldCopyright != null) &&
 					newContent.contains(oldCopyright)) {
 
@@ -1053,12 +1140,23 @@ public class SourceFormatter {
 						newContent, oldCopyright, copyright);
 
 					_sourceFormatterHelper.printError(
-						files[i], "old (c): " + files[i]);
+						fileName, "old (c): " + fileName);
 				}
 
-				if (newContent.indexOf(copyright) == -1) {
-					_sourceFormatterHelper.printError(
-						files[i], "(c): " + files[i]);
+				if (!newContent.contains(copyright)) {
+					String customCopyright = _getCustomCopyright(file);
+
+					if (Validator.isNull(customCopyright) ||
+						!newContent.contains(customCopyright)) {
+
+						_sourceFormatterHelper.printError(
+							fileName, "(c): " + fileName);
+					}
+					else {
+						newContent = StringUtil.replace(
+							newContent, "<%\n" + customCopyright + "\n%>",
+							"<%--\n" + customCopyright + "\n--%>");
+					}
 				}
 				else {
 					newContent = StringUtil.replace(
@@ -1067,43 +1165,34 @@ public class SourceFormatter {
 				}
 			}
 
-			if (newContent.indexOf("alert('<%= LanguageUtil.") != -1) {
-				newContent = StringUtil.replace(
-					newContent, "alert('<%= LanguageUtil.",
-					"alert('<%= UnicodeLanguageUtil.");
-			}
+			newContent = StringUtil.replace(
+				newContent,
+				new String[] {
+					"alert('<%= LanguageUtil.",
+					"alert(\"<%= LanguageUtil.",
+					"confirm('<%= LanguageUtil.",
+					"confirm(\"<%= LanguageUtil."
+				},
+				new String[] {
+					"alert('<%= UnicodeLanguageUtil.",
+					"alert(\"<%= UnicodeLanguageUtil.",
+					"confirm('<%= UnicodeLanguageUtil.",
+					"confirm(\"<%= UnicodeLanguageUtil."
+				});
 
-			if (newContent.indexOf("alert(\"<%= LanguageUtil.") != -1) {
-				newContent = StringUtil.replace(
-					newContent, "alert(\"<%= LanguageUtil.",
-					"alert(\"<%= UnicodeLanguageUtil.");
-			}
-
-			if (newContent.indexOf("confirm('<%= LanguageUtil.") != -1) {
-				newContent = StringUtil.replace(
-					newContent, "confirm('<%= LanguageUtil.",
-					"confirm('<%= UnicodeLanguageUtil.");
-			}
-
-			if (newContent.indexOf("confirm(\"<%= LanguageUtil.") != -1) {
-				newContent = StringUtil.replace(
-					newContent, "confirm(\"<%= LanguageUtil.",
-					"confirm(\"<%= UnicodeLanguageUtil.");
-			}
-
-			if (newContent.indexOf("    ") != -1) {
-				if (!files[i].endsWith("template.vm")) {
+			if (newContent.contains("    ")) {
+				if (!fileName.endsWith("template.vm")) {
 					_sourceFormatterHelper.printError(
-						files[i], "tab: " + files[i]);
+						fileName, "tab: " + fileName);
 				}
 			}
 
-			_checkXSS(files[i], content);
+			_checkXSS(fileName, newContent);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
 
-				_sourceFormatterHelper.printError(files[i], file);
+				_sourceFormatterHelper.printError(fileName, file);
 			}
 		}
 	}
@@ -1111,7 +1200,7 @@ public class SourceFormatter {
 	private static String _formatJSPContent(String fileName, String content)
 		throws IOException {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
@@ -1134,6 +1223,27 @@ public class SourceFormatter {
 
 				_sourceFormatterHelper.printError(
 					fileName, "aui:button " + fileName + " " + lineCount);
+			}
+
+			int x = line.indexOf("<%@ include file");
+
+			if (x != -1) {
+				x = line.indexOf(StringPool.QUOTE, x);
+
+				int y = line.indexOf(StringPool.QUOTE, x + 1);
+
+				if (y != -1) {
+					String includeFileName = line.substring(x + 1, y);
+
+					Matcher matcher = _jspIncludeFilePattern.matcher(
+						includeFileName);
+
+					if (!matcher.find()) {
+						_sourceFormatterHelper.printError(
+							fileName,
+							"include: " + fileName + " " + lineCount);
+					}
+				}
 			}
 
 			line = _replacePrimitiveWrapperInstantiation(
@@ -1204,7 +1314,7 @@ public class SourceFormatter {
 			while ((x != -1) && (y != -1)) {
 				String result = content.substring(x + 1, y + 2);
 
-				if (result.indexOf(quoteType) != -1) {
+				if (result.contains(quoteType)) {
 					int lineCount = 1;
 
 					char contentCharArray[] = content.toCharArray();
@@ -1215,8 +1325,8 @@ public class SourceFormatter {
 						}
 					}
 
-					if (result.indexOf(quoteFix) == -1) {
-						StringBuilder sb = new StringBuilder();
+					if (!result.contains(quoteFix)) {
+						StringBundler sb = new StringBundler(5);
 
 						sb.append(content.substring(0, x));
 						sb.append(quoteFix);
@@ -1272,7 +1382,7 @@ public class SourceFormatter {
 				urlPatterns.add(locale);
 			}
 
-			StringBuilder sb = new StringBuilder();
+			StringBundler sb = new StringBundler();
 
 			for (String urlPattern : urlPatterns) {
 				sb.append("\t<servlet-mapping>\n");
@@ -1313,7 +1423,7 @@ public class SourceFormatter {
 
 			y = newContent.lastIndexOf("</url-pattern>", y) + 15;
 
-			sb = new StringBuilder();
+			sb = new StringBundler();
 
 			sb.append(
 				"\t\t\t<url-pattern>/c/portal/protected</url-pattern>\n");
@@ -1359,25 +1469,76 @@ public class SourceFormatter {
 	private static String _getCopyright() throws IOException {
 		String copyright = _fileUtil.read("copyright.txt");
 
-		if (copyright == null) {
+		if (Validator.isNull(copyright)) {
 			copyright = _fileUtil.read("../copyright.txt");
 		}
 
-		if (copyright == null) {
+		if (Validator.isNull(copyright)) {
 			copyright = _fileUtil.read("../../copyright.txt");
 		}
 
 		return copyright;
 	}
 
+	private static String _getCustomCopyright(File file)
+		throws IOException {
+
+		String absolutePath = _fileUtil.getAbsolutePath(file);
+
+		for (int x = absolutePath.length();;) {
+			x = absolutePath.lastIndexOf(StringPool.SLASH, x);
+
+			if (x == -1) {
+				break;
+			}
+
+			String copyright = _fileUtil.read(
+				absolutePath.substring(0, x + 1) + "copyright.txt");
+
+			if (Validator.isNotNull(copyright)) {
+				return copyright;
+			}
+
+			x = x - 1;
+		}
+
+		return null;
+	}
+
+	private static List<String> _getJSPDuplicateImports(
+		String fileName, String content, List<String> importLines) {
+
+		List<String> duplicateImports = new ArrayList<String>();
+
+		for (String importLine : importLines) {
+			int x = content.indexOf("<%@ include file=");
+
+			if (x == -1) {
+				continue;
+			}
+
+			int y = content.indexOf("<%@ page import=");
+
+			if (y == -1) {
+				continue;
+			}
+
+			if ((x < y) && _isJSPDuplicateImport(fileName, importLine, false)) {
+				duplicateImports.add(importLine);
+			}
+		}
+
+		return duplicateImports;
+	}
+
 	private static String _getOldCopyright() throws IOException {
 		String copyright = _fileUtil.read("old-copyright.txt");
 
-		if (copyright == null) {
+		if (Validator.isNull(copyright)) {
 			copyright = _fileUtil.read("../old-copyright.txt");
 		}
 
-		if (copyright == null) {
+		if (Validator.isNull(copyright)) {
 			copyright = _fileUtil.read("../../old-copyright.txt");
 		}
 
@@ -1537,6 +1698,97 @@ public class SourceFormatter {
 		}
 	}
 
+	private static boolean _isJSPDuplicateImport(
+		String fileName, String importLine, boolean checkFile) {
+
+		String content = _jspContents.get(fileName);
+
+		if (checkFile && content.contains(importLine)) {
+			return true;
+		}
+
+		int x = content.indexOf("<%@ include file=");
+
+		if (x == -1) {
+			return false;
+		}
+
+		x = content.indexOf(StringPool.QUOTE, x);
+
+		if (x == -1) {
+			return false;
+		}
+
+		int y = content.indexOf(StringPool.QUOTE, x + 1);
+
+		if (y == -1) {
+			return false;
+		}
+
+		String includeFileName = content.substring(x + 1, y);
+
+		String docrootPath = fileName.substring(
+			0, fileName.indexOf("docroot") + 7);
+
+		includeFileName = docrootPath + includeFileName;
+
+		return _isJSPDuplicateImport(includeFileName, importLine, true);
+	}
+
+	private static boolean _isJSPImportRequired(
+		String fileName, String className, Set<String> includeFileNames,
+		Set<String> checkedFileNames) {
+
+		if (checkedFileNames.contains(fileName)) {
+			return false;
+		}
+
+		checkedFileNames.add(fileName);
+
+		String content = _jspContents.get(fileName);
+
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
+		Pattern pattern = Pattern.compile(
+			"[^A-Za-z0-9_]" + className + "[^A-Za-z0-9_\"]");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			return true;
+		}
+
+		_addJSPIncludeFileNames(fileName, includeFileNames);
+
+		String docrootPath = fileName.substring(
+			0, fileName.indexOf("docroot") + 7);
+
+		fileName = fileName.replaceFirst(docrootPath, StringPool.BLANK);
+
+		if (fileName.endsWith("init.jsp") ||
+			fileName.contains("init-ext.jsp")) {
+
+			_addJSPReferenceFileNames(fileName, includeFileNames);
+		}
+
+		String[] includeFileNamesArray = includeFileNames.toArray(
+			new String[includeFileNames.size()]);
+
+		for (String includeFileName : includeFileNamesArray) {
+			if (!checkedFileNames.contains(includeFileName) &&
+				_isJSPImportRequired(
+					includeFileName, className, includeFileNames,
+					checkedFileNames)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static void _readExclusions() throws IOException {
 		_exclusionsProperties = new Properties();
 
@@ -1586,6 +1838,74 @@ public class SourceFormatter {
 		return newLine;
 	}
 
+	private static String _stripJSPImports(String fileName, String content)
+		throws IOException {
+
+		fileName = fileName.replace(
+			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
+
+		if (fileName.endsWith("html/common/init.jsp") ||
+			fileName.endsWith("html/portal/init.jsp") ||
+			!fileName.contains("docroot")) {
+
+			return content;
+		}
+
+		Matcher matcher = _jspImportPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String imports = matcher.group();
+
+		List<String> importLines = new ArrayList<String>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.contains("import=")) {
+				importLines.add(line);
+			}
+		}
+
+		List<String> unneededImports = _getJSPDuplicateImports(
+			fileName, content, importLines);
+
+		_addJSPUnusedImports(fileName, importLines, unneededImports);
+
+		for (String unneededImport : unneededImports) {
+			imports = StringUtil.replace(
+				imports, unneededImport, StringPool.BLANK);
+		}
+
+		imports = _formatImports(imports, 17);
+
+		String beforeImports = content.substring(0, matcher.start());
+
+		if (Validator.isNull(imports)) {
+			beforeImports = StringUtil.replaceLast(
+				beforeImports, "\n", StringPool.BLANK);
+		}
+
+		String afterImports = content.substring(matcher.end());
+
+		if (Validator.isNull(afterImports)) {
+			imports = StringUtil.replaceLast(imports, "\n", StringPool.BLANK);
+
+			content = beforeImports + imports;
+
+			return content;
+		}
+
+		content = beforeImports + imports + "\n" + afterImports;
+
+		return content;
+	}
+
 	private static final String[] _TAG_LIBRARIES = new String[] {
 		"aui", "c", "html", "jsp", "liferay-portlet", "liferay-security",
 		"liferay-theme", "liferay-ui", "liferay-util", "portlet", "struts",
@@ -1595,6 +1915,14 @@ public class SourceFormatter {
 	private static String[] _excludes;
 	private static Properties _exclusionsProperties;
 	private static FileImpl _fileUtil = FileImpl.getInstance();
+	private static Pattern _javaImportPattern = Pattern.compile(
+		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
+	private static Map<String, String> _jspContents =
+		new HashMap<String, String>();
+	private static Pattern _jspImportPattern = Pattern.compile(
+		"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
+	private static Pattern _jspIncludeFilePattern = Pattern.compile(
+		"/.*[.]jsp[f]?");
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();
 	private static SourceFormatterHelper _sourceFormatterHelper;
 	private static Pattern _xssPattern = Pattern.compile(

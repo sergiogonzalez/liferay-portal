@@ -110,6 +110,8 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 
 		newMBMessage.setAllowPingbacks(randomBoolean());
 
+		newMBMessage.setAnswer(randomBoolean());
+
 		newMBMessage.setStatus(nextInt());
 
 		newMBMessage.setStatusByUserId(nextLong());
@@ -154,6 +156,7 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingMBMessage.getPriority(), newMBMessage.getPriority());
 		assertEquals(existingMBMessage.getAllowPingbacks(),
 			newMBMessage.getAllowPingbacks());
+		assertEquals(existingMBMessage.getAnswer(), newMBMessage.getAnswer());
 		assertEquals(existingMBMessage.getStatus(), newMBMessage.getStatus());
 		assertEquals(existingMBMessage.getStatusByUserId(),
 			newMBMessage.getStatusByUserId());
@@ -327,6 +330,8 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 		mbMessage.setPriority(nextDouble());
 
 		mbMessage.setAllowPingbacks(randomBoolean());
+
+		mbMessage.setAnswer(randomBoolean());
 
 		mbMessage.setStatus(nextInt());
 

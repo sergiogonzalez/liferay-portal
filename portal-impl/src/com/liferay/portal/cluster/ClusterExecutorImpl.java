@@ -93,6 +93,8 @@ public class ClusterExecutorImpl
 
 		_scheduledExecutorService.shutdownNow();
 
+		_clusterRequestReceiver.destroy();
+
 		_controlChannel.close();
 	}
 
@@ -217,6 +219,8 @@ public class ClusterExecutorImpl
 		_clusterNodeAddresses.put(
 			_localClusterNode.getClusterNodeId(), _localAddress);
 
+		_clusterRequestReceiver.initialize();
+
 		_scheduledExecutorService = Executors.newScheduledThreadPool(
 			1,
 			new NamedThreadFactory(
@@ -315,12 +319,12 @@ public class ClusterExecutorImpl
 		String controlProperty = controlProperties.getProperty(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 
-		ClusterRequestReceiver clusterInvokeReceiver =
-			new ClusterRequestReceiver(this);
+		_clusterRequestReceiver = new ClusterRequestReceiver(this);
 
 		try {
 			_controlChannel = createJChannel(
-				controlProperty, clusterInvokeReceiver, _DEFAULT_CLUSTER_NAME);
+				controlProperty, _clusterRequestReceiver,
+				_DEFAULT_CLUSTER_NAME);
 		}
 		catch (ChannelException ce) {
 			_log.error(ce, ce);
@@ -544,6 +548,7 @@ public class ClusterExecutorImpl
 		new CopyOnWriteArrayList<ClusterEventListener>();
 	private Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<String, Address>();
+	private ClusterRequestReceiver _clusterRequestReceiver;
 	private JChannel _controlChannel;
 	private Map<String, FutureClusterResponses> _futureClusterResponses =
 		new WeakValueConcurrentHashMap<String, FutureClusterResponses>();

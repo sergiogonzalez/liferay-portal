@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_0_0.dtd">
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
 
 <service-builder package-path="com.liferay.portlet.expando">
 	<namespace>Expando</namespace>
@@ -32,9 +32,9 @@
 		<finder name="TableId" return-type="Collection">
 			<finder-column name="tableId" />
 		</finder>
-		<finder name="T_N" return-type="ExpandoColumn" unique="true">
+		<finder name="T_N" return-type="Collection" unique="true">
 			<finder-column name="tableId" />
-			<finder-column name="name" />
+			<finder-column name="name" arrayable-operator="OR" />
 		</finder>
 	</entity>
 	<entity name="ExpandoRow" local-service="true" remote-service="false">

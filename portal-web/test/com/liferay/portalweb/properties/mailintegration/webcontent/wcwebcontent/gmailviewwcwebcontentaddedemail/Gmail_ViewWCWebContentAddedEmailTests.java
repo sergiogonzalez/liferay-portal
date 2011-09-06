@@ -30,6 +30,7 @@ public class Gmail_ViewWCWebContentAddedEmailTests extends BaseTests {
 		testSuite.addTestSuite(ConfigureServerAdministrationMailTest.class);
 		testSuite.addTestSuite(EditPortalInstanceMailDomainTest.class);
 		testSuite.addTestSuite(AddUserGmailTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AssignMembersSiteUserTest.class);
 		testSuite.addTestSuite(
 			ConfigureWCPortletEmailFromGmailServerCPTest.class);
@@ -53,6 +54,7 @@ public class Gmail_ViewWCWebContentAddedEmailTests extends BaseTests {
 		testSuite.addTestSuite(TearDownRoleWebContentEditorTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentCPTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownServerTest.class);
 		testSuite.addTestSuite(TearDownEmailConfigurationTest.class);
 

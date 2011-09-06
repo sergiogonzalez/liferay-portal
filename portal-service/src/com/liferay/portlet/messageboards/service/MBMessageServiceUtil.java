@@ -218,6 +218,13 @@ public class MBMessageServiceUtil {
 		getService().unsubscribeMessage(messageId);
 	}
 
+	public static void updateAnswer(long messageId, boolean answer,
+		boolean cascade)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateAnswer(messageId, answer, cascade);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
 		java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
