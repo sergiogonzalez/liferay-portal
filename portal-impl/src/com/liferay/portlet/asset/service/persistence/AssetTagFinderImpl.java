@@ -295,6 +295,7 @@ public class AssetTagFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, tagProperties);
+
 			qPos.add(groupId);
 			qPos.add(name);
 			qPos.add(name);
@@ -442,6 +443,7 @@ public class AssetTagFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, tagProperties);
+
 			qPos.add(groupId);
 			qPos.add(name);
 			qPos.add(name);

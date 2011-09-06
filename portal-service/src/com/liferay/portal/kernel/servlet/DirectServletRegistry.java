@@ -26,6 +26,7 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -133,8 +134,21 @@ public class DirectServletRegistry {
 			Method method = ReflectionUtil.getDeclaredMethod(
 				servlet.getClass(), "getDependants");
 
-			List<String> dependants = (List<String>)method.invoke(
-				servlet);
+			Collection<String> dependants = null;
+
+			String jasperVersion = JasperVersionDetector.getJasperVersion();
+
+			if (jasperVersion.contains("7.0")) {
+				Map<String, ?> dependantsMap = (Map<String, ?>)method.invoke(
+					servlet);
+
+				if (dependantsMap != null) {
+					dependants = dependantsMap.keySet();
+				}
+			}
+			else {
+				dependants = (List<String>)method.invoke(servlet);
+			}
 
 			if (dependants == null) {
 				return servlet;

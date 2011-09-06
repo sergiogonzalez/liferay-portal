@@ -94,6 +94,10 @@ public class DateUtil_IW {
 		return DateUtil.newDate(date);
 	}
 
+	public long newTime() {
+		return DateUtil.newTime();
+	}
+
 	private DateUtil_IW() {
 	}
 

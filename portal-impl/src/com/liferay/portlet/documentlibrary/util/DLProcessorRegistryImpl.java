@@ -36,13 +36,13 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			return;
 		}
 
-		if (fileEntry == null) {
+		if ((fileEntry == null) || (fileEntry.getSize() == 0)) {
 			return;
 		}
 
-		for (String processorClassName : _DL_FILE_ENTRY_PROCESSORS) {
+		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
 			DLProcessor dlProcessor = (DLProcessor)InstancePool.get(
-				processorClassName);
+				dlProcessorClassName);
 
 			dlProcessor.trigger(fileEntry);
 		}

@@ -41,10 +41,10 @@ public class GetArticleContentAction extends Action {
 		throws Exception {
 
 		try {
-			UploadServletRequest uploadRequest =
+			UploadServletRequest uploadServletRequest =
 				PortalUtil.getUploadServletRequest(request);
 
-			String xml = ParamUtil.getString(uploadRequest, "xml");
+			String xml = ParamUtil.getString(uploadServletRequest, "xml");
 
 			xml = DDMXMLUtil.formatXML(xml);
 

@@ -16,7 +16,6 @@ package com.liferay.util;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -33,30 +32,30 @@ import org.jdom.IllegalDataException;
  */
 public class RSSUtil {
 
-	public static final String RSS = "rss";
-
-	public static final double[] RSS_VERSIONS = new double[] {
-		0.9, 0.91, 0.93, 0.94, 1.0, 2.0
-	};
-
 	public static final String ATOM = "atom";
 
 	public static final double[] ATOM_VERSIONS = new double[] {0.3, 1.0};
-
-	public static final String DEFAULT_TYPE = ATOM;
-
-	public static final double VERSION_DEFAULT = 1.0;
-
-	public static final String DEFAULT_ENTRY_TYPE = "html";
-
-	public static final String DEFAULT_FEED_TYPE = getFeedType(
-		DEFAULT_TYPE, VERSION_DEFAULT);
 
 	public static final String DISPLAY_STYLE_ABSTRACT = "abstract";
 
 	public static final String DISPLAY_STYLE_FULL_CONTENT = "full-content";
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
+
+	public static final String ENTRY_TYPE_DEFAULT = "html";
+
+	public static final String FEED_TYPE_DEFAULT = getFeedType(
+		RSSUtil.TYPE_DEFAULT, RSSUtil.VERSION_DEFAULT);
+
+	public static final String RSS = "rss";
+
+	public static final double[] RSS_VERSIONS = new double[] {
+		0.9, 0.91, 0.93, 0.94, 1.0, 2.0
+	};
+
+	public static final String TYPE_DEFAULT = ATOM;
+
+	public static final double VERSION_DEFAULT = 1.0;
 
 	public static String export(SyndFeed feed) throws FeedException {
 		RSSThreadLocal.setExportRSS(true);
@@ -83,44 +82,43 @@ public class RSSUtil {
 	}
 
 	public static String getFormatType(String format) {
-		String formatType = DEFAULT_TYPE;
-
-		if (StringUtil.contains(format, ATOM)) {
-			formatType = RSSUtil.ATOM;
-		}
-		else if (StringUtil.contains(format, RSS)) {
-			formatType = RSSUtil.RSS;
+		if (format == null) {
+			return TYPE_DEFAULT;
 		}
 
-		return formatType;
+		int x = format.indexOf(ATOM);
+
+		if (x >= 0) {
+			return ATOM;
+		}
+
+		int y = format.indexOf(RSS);
+
+		if (y >= 0) {
+			return RSS;
+		}
+
+		return TYPE_DEFAULT;
 	}
 
 	public static double getFormatVersion(String format) {
-		double formatVersion = VERSION_DEFAULT;
-
-		if (StringUtil.contains(format, "10")) {
-			formatVersion = 1.0;
-		}
-		else if (StringUtil.contains(format, "20")) {
-			formatVersion = 2.0;
+		if (format == null) {
+			return VERSION_DEFAULT;
 		}
 
-		return formatVersion;
-	}
+		int x = format.indexOf("10");
 
-	private static void _regexpStrip(SyndFeed syndFeed) {
-		syndFeed.setTitle(_regexpStrip(syndFeed.getTitle()));
-		syndFeed.setDescription(_regexpStrip(syndFeed.getDescription()));
-
-		List<SyndEntry> syndEntries = syndFeed.getEntries();
-
-		for (SyndEntry syndEntry : syndEntries) {
-			syndEntry.setTitle(_regexpStrip(syndEntry.getTitle()));
-
-			SyndContent syndContent = syndEntry.getDescription();
-
-			syndContent.setValue(_regexpStrip(syndContent.getValue()));
+		if (x >= 0) {
+			return 1.0;
 		}
+
+		int y = format.indexOf("20");
+
+		if (y >= 0) {
+			return 2.0;
+		}
+
+		return VERSION_DEFAULT;
 	}
 
 	private static String _regexpStrip(String text) {
@@ -137,6 +135,21 @@ public class RSSUtil {
 		}
 
 		return new String(array);
+	}
+
+	private static void _regexpStrip(SyndFeed syndFeed) {
+		syndFeed.setTitle(_regexpStrip(syndFeed.getTitle()));
+		syndFeed.setDescription(_regexpStrip(syndFeed.getDescription()));
+
+		List<SyndEntry> syndEntries = syndFeed.getEntries();
+
+		for (SyndEntry syndEntry : syndEntries) {
+			syndEntry.setTitle(_regexpStrip(syndEntry.getTitle()));
+
+			SyndContent syndContent = syndEntry.getDescription();
+
+			syndContent.setValue(_regexpStrip(syndContent.getValue()));
+		}
 	}
 
 	private static final String _REGEXP_STRIP = "[\\d\\w]";

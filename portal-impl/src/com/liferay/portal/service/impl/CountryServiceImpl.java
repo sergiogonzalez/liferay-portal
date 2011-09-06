@@ -78,6 +78,10 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		return country;
 	}
 
+	public Country fetchCountry(long countryId) throws SystemException {
+		return countryPersistence.fetchByPrimaryKey(countryId);
+	}
+
 	public List<Country> getCountries() throws SystemException {
 		return countryPersistence.findAll();
 	}

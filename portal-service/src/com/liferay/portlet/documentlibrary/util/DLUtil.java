@@ -134,15 +134,18 @@ public class DLUtil {
 		portletURL.setParameter(
 			"viewFileEntrySearch", Boolean.TRUE.toString());
 		portletURL.setParameter("viewFolders", Boolean.TRUE.toString());
+		portletURL.setParameter("viewSortButton", Boolean.TRUE.toString());
 
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("folder-id", _getDefaultFolderId(request));
 		data.put("refresh-folders", Boolean.TRUE.toString());
 
-		PortalUtil.addPortletBreadcrumbEntry(
-			request, themeDisplay.translate("documents-home"),
-			portletURL.toString(), data);
+		if (folder != null) {
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, themeDisplay.translate("documents-home"),
+				portletURL.toString(), data);
+		}
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
@@ -240,9 +243,11 @@ public class DLUtil {
 			data.put("folder-id", _getDefaultFolderId(request));
 			data.put("refresh-folders", Boolean.TRUE.toString());
 
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("documents-home"),
-				portletURL.toString(), data);
+			if (folder != null) {
+				PortalUtil.addPortletBreadcrumbEntry(
+					request, themeDisplay.translate("documents-home"),
+					portletURL.toString(), data);
+			}
 		}
 		else {
 			portletURL.setParameter("struts_action", "/document_library/view");

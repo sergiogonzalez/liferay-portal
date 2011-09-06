@@ -14,11 +14,15 @@
 
 package com.liferay.portal.security.permission;
 
+import javax.portlet.ActionRequest;
+
 /**
  * @author Hugo Huijser
  */
 public interface PermissionPropagator {
 
-	public void propagateRolePermissions() throws Exception;
+	public void propagateRolePermissions(
+			ActionRequest actionRequest, String className, long[] roleIds)
+		throws Exception;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.freemarker.FreeMarkerTemplateLoader;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -100,10 +101,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public void addSetting(
 		 String key, String value, boolean configurable, String type,
-		 String[] options) {
+		 String[] options, String script) {
 
 		ThemeSetting themeSetting = new ThemeSettingImpl(
-			configurable, options, type, value);
+			configurable, options, script, type, value);
 
 		_themeSettingsMap.put(key, themeSetting);
 	}
@@ -166,12 +167,20 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	}
 
 	public String getContextPath() {
-		if (isWARFile()) {
-			return StringPool.SLASH.concat(getServletContextName());
-		}
-		else {
+		if (!isWARFile()) {
 			return PortalUtil.getPathContext();
 		}
+
+		String servletContextName = getServletContextName();
+
+		if (ServletContextPool.containsKey(servletContextName)) {
+			ServletContext servletContext = ServletContextPool.get(
+				servletContextName);
+
+			return servletContext.getContextPath();
+		}
+
+		return StringPool.SLASH.concat(servletContextName);
 	}
 
 	public String getCssPath() {
@@ -313,12 +322,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		String contextPath = getContextPath();
 
-		if (isWARFile()) {
-			return proxyPath.concat(contextPath);
-		}
-		else {
+		if (!isWARFile()) {
 			return contextPath;
 		}
+
+		return proxyPath.concat(contextPath);
 	}
 
 	public String getTemplateExtension() {
@@ -415,7 +423,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			key = path.concat(StringPool.POUND).concat(portletId);
 		}
 
-		Boolean resourceExists = _resourceExistsMap.containsKey(key);
+		Boolean resourceExists = _resourceExistsMap.get(key);
 
 		if (resourceExists != null) {
 			return resourceExists;
@@ -471,7 +479,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			themeSetting.setValue(value);
 		}
 		else {
-			addSetting(key, value, false, null, null);
+			addSetting(key, value, false, null, null, null);
 		}
 	}
 

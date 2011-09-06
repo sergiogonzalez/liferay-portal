@@ -969,8 +969,8 @@ var defaultTypes = []]>
 		<path id="jspc.classpath">
 			<pathelement location="${env.JAVA_HOME}/jre/lib/rt.jar" />
 			<path refid="jspc.common.classpath" />
-			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/jonas-web-container-tomcat-6.0/5.1.2/jonas-web-container-tomcat-6.0-5.1.2-ipojo.jar" />
-			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/osgi/javaee-api/5.1.2/javaee-api-5.1.2.jar" />
+			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/jonas-web-container-tomcat-6.0/${app.server.jonas.version}/jonas-web-container-tomcat-6.0-${app.server.jonas.version}-ipojo.jar" />
+			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/osgi/javaee-api/${app.server.jonas.version}/javaee-api-${app.server.jonas.version}.jar" />
 		</path>
 
 		<antcall target="compile-common-jsp" inheritrefs="true">
@@ -1043,6 +1043,8 @@ Please set the property "jdk.6.home" in build.properties.
 			<pathelement location="${app.server.dir}/lib/jasper-jdt.jar" />
 			<pathelement location="${app.server.dir}/lib/jsp-api.jar" />
 			<pathelement location="${app.server.dir}/lib/servlet-api.jar" />
+			<pathelement location="${app.server.dir}/lib/tomcat-api.jar" />
+			<pathelement location="${app.server.dir}/lib/tomcat-util.jar" />
 			<pathelement location="${app.server.bin.dir}/tomcat-juli.jar" />
 		</path>
 
@@ -1070,14 +1072,14 @@ Please set the property "jdk.6.home" in build.properties.
 				<if>
 					<equals arg1="${app.server.type}" arg2="jboss" />
 					<then>
-						<antcall target="compile-jboss" />
+						<!--<antcall target="compile-jboss" />
 
 						<copy todir="${app.server.instance.dir}/work/jboss.web/localhost/_">
 							<fileset dir="classes/${app.server.type}">
 								<exclude name="**/*.jspc_error" />
 								<exclude name="**/*.java" />
 							</fileset>
-						</copy>
+						</copy>-->
 					</then>
 					<elseif>
 						<equals arg1="${app.server.type}" arg2="jonas" />

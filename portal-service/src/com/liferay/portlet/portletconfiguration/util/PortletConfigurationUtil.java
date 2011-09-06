@@ -39,12 +39,14 @@ public class PortletConfigurationUtil {
 		String css = portletSetup.getValue("portletSetupCss", StringPool.BLANK);
 
 		if (Validator.isNotNull(css)) {
-			JSONObject cssJSON = PortletSetupUtil.cssToJSON(portletSetup, css);
+			JSONObject cssJSONObject = PortletSetupUtil.cssToJSONObject(
+				portletSetup, css);
 
-			JSONObject advancedDataJSON = cssJSON.getJSONObject("advancedData");
+			JSONObject advancedDataJSONObject = cssJSONObject.getJSONObject(
+				"advancedData");
 
-			if (advancedDataJSON != null) {
-				customCSSClassName = advancedDataJSON.getString(
+			if (advancedDataJSONObject != null) {
+				customCSSClassName = advancedDataJSONObject.getString(
 					"customCSSClassName");
 			}
 		}
@@ -72,30 +74,30 @@ public class PortletConfigurationUtil {
 		String portletTitle = portletSetup.getValue(
 			"portletSetupTitle_" + languageId, defaultPortletTitle);
 
-		if (Validator.isNull(portletTitle)) {
+		if (Validator.isNotNull(portletTitle)) {
+			return portletTitle;
+		}
 
-			// For backwards compatibility
+		// For backwards compatibility
 
-			String oldPortletTitle = portletSetup.getValue(
-				"portletSetupTitle", null);
+		String oldPortletTitle = portletSetup.getValue(
+			"portletSetupTitle", null);
 
-			if (Validator.isNull(useCustomTitle) &&
-				Validator.isNotNull(oldPortletTitle)) {
+		if (Validator.isNull(useCustomTitle) &&
+			Validator.isNotNull(oldPortletTitle)) {
 
-				portletTitle = oldPortletTitle;
+			portletTitle = oldPortletTitle;
 
-				try {
-					portletSetup.setValue(
-						"portletSetupTitle_" + defaultLanguageId,
-						portletTitle);
-					portletSetup.setValue(
-						"portletSetupUseCustomTitle", Boolean.TRUE.toString());
+			try {
+				portletSetup.setValue(
+					"portletSetupTitle_" + defaultLanguageId, portletTitle);
+				portletSetup.setValue(
+					"portletSetupUseCustomTitle", Boolean.TRUE.toString());
 
-					portletSetup.store();
-				}
-				catch (Exception e) {
-					_log.error(e);
-				}
+				portletSetup.store();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 			}
 		}
 

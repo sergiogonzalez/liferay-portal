@@ -38,7 +38,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 %>
 
 <liferay-ui:icon-menu showExpanded="<%= (row == null) %>" showWhenSingleIcon="<%= (row == null) %>">
-	<c:if test="<%= !workflowTask.isCompleted() && isAssignedToUser(workflowTask, user) %>">
+	<c:if test="<%= !workflowTask.isCompleted() && _isAssignedToUser(workflowTask, user) %>">
 
 		<%
 		List<String> transitionNames = WorkflowTaskManagerUtil.getNextTransitionNames(company.getCompanyId(), user.getUserId(), workflowTask.getWorkflowTaskId());
@@ -78,7 +78,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 
 	</c:if>
 
-	<c:if test="<%= !workflowTask.isCompleted() && !isAssignedToUser(workflowTask, user) %>">
+	<c:if test="<%= !workflowTask.isCompleted() && !_isAssignedToUser(workflowTask, user) %>">
 		<portlet:actionURL var="assignToMeURL">
 			<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
@@ -170,7 +170,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 <aui:script use="liferay-workflow-tasks">
 	var onTaskClickFn = A.rbind(Liferay.WorkflowTasks.onTaskClick, Liferay.WorkflowTasks, '<%= randomId %>');
 
-	<c:if test="<%= !workflowTask.isCompleted() && isAssignedToUser(workflowTask, user) %>">
+	<c:if test="<%= !workflowTask.isCompleted() && _isAssignedToUser(workflowTask, user) %>">
 
 		<%
 		List<String> transitionNames = WorkflowTaskManagerUtil.getNextTransitionNames(company.getCompanyId(), user.getUserId(), workflowTask.getWorkflowTaskId());

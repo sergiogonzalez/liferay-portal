@@ -1453,6 +1453,13 @@ public class DLAppServiceWrapper implements DLAppService {
 			start, end, obc);
 	}
 
+	public void getSubfolderIds(long repositoryId,
+		java.util.List<java.lang.Long> folderIds, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.getSubfolderIds(repositoryId, folderIds, folderId);
+	}
+
 	/**
 	* Returns all the descendant folders of the folder with the primary key.
 	*
@@ -1487,13 +1494,6 @@ public class DLAppServiceWrapper implements DLAppService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getSubfolderIds(repositoryId, folderId, recurse);
-	}
-
-	public void getSubfolderIds(long repositoryId,
-		java.util.List<java.lang.Long> folderIds, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_dlAppService.getSubfolderIds(repositoryId, folderIds, folderId);
 	}
 
 	/**
@@ -1648,6 +1648,13 @@ public class DLAppServiceWrapper implements DLAppService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppService.revertFileEntry(fileEntryId, version, serviceContext);
+	}
+
+	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		com.liferay.portal.kernel.search.Query query)
+		throws com.liferay.portal.kernel.search.SearchException {
+		return _dlAppService.search(repositoryId, searchContext, query);
 	}
 
 	/**
@@ -1847,6 +1854,32 @@ public class DLAppServiceWrapper implements DLAppService {
 		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
 			mimeType, title, description, changeLog, majorVersion, is, size,
 			serviceContext);
+	}
+
+	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
+		long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, java.io.File file,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.updateFileEntryAndCheckIn(fileEntryId,
+			sourceFileName, mimeType, title, description, changeLog,
+			majorVersion, file, serviceContext);
+	}
+
+	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
+		long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, java.io.InputStream is, long size,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.updateFileEntryAndCheckIn(fileEntryId,
+			sourceFileName, mimeType, title, description, changeLog,
+			majorVersion, is, size, serviceContext);
 	}
 
 	/**

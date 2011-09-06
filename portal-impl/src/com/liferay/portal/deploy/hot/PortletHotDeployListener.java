@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistry;
+import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletContextProvider;
@@ -330,9 +331,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			PortletLocalServiceUtil.getWARDisplay(servletContextName, xml);
 
 		for (long companyId : companyIds) {
-			PortletCategory portletCategory =
-				(PortletCategory)WebAppPool.get(
-					String.valueOf(companyId), WebKeys.PORTLET_CATEGORY);
+			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
+				companyId, WebKeys.PORTLET_CATEGORY);
 
 			if (portletCategory != null) {
 				portletCategory.merge(newPortletCategory);
@@ -406,7 +406,10 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		registerClpMessageListeners(servletContext, portletClassLoader);
 
+		// Clear cache
+
 		DirectServletRegistry.clearServlets();
+		FileTimestampUtil.reset();
 
 		// Variables
 
@@ -471,7 +474,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			for (long companyId : companyIds) {
 				PortletCategory portletCategory =
 					(PortletCategory)WebAppPool.get(
-						String.valueOf(companyId), WebKeys.PORTLET_CATEGORY);
+						companyId, WebKeys.PORTLET_CATEGORY);
 
 				portletCategory.separate(portletIds);
 			}

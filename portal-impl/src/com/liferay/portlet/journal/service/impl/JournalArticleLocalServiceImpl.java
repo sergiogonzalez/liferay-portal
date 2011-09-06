@@ -2929,8 +2929,12 @@ public class JournalArticleLocalServiceImpl
 			else {
 				String suffix = StringPool.DASH + i;
 
-				String prefix = newUrlTitle.substring(
-					0, newUrlTitle.length() - suffix.length());
+				String prefix = newUrlTitle;
+
+				if (newUrlTitle.length() > suffix.length()) {
+					prefix = newUrlTitle.substring(
+						0, newUrlTitle.length() - suffix.length());
+				}
 
 				newUrlTitle = prefix + suffix;
 			}

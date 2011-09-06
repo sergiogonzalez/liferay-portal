@@ -71,7 +71,7 @@
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset
 				dir="${app.server.deploy.dir}"
-				includes="*-ext/**,*-hook/**,*-layouttpl/**,*-portlet/**,*-theme/**,*-web/**"
+				includes="*-ext/**,*-ext.war/**,*-hook/**,*-hook.war/**,*-layouttpl/**,*-layouttpl.war/**,*-portlet/**,*-portlet.war/**,*-theme/**,*-theme.war/**,*-web/**,*-web.war/**"
 			/>
 		</delete>
 
@@ -313,59 +313,54 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		<if>
 			<equals arg1="${app.server.type}" arg2="jboss" />
 			<then>
-				<loadfile property="run.conf.content" srcfile="${app.server.bin.dir}/run.conf" />
+				<loadfile property="standalone.conf.content" srcfile="${app.server.bin.dir}/standalone.conf" />
 
-				<antelope:stringutil string="${run.conf.content}" property="run.conf.content.index">
+				<antelope:stringutil string="${standalone.conf.content}" property="standalone.conf.content.index">
 					<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
 				</antelope:stringutil>
 
 				<if>
-					<equals arg1="${run.conf.content.index}" arg2="-1" />
+					<equals arg1="${standalone.conf.content.index}" arg2="-1" />
 					<then>
-						<echo file="${app.server.bin.dir}/run.conf" append="true">
-JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.vfs.forceVfsJar=true -Dorg.jboss.logging.Log4jService.catchSystemOut=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"</echo>
+						<echo file="${app.server.bin.dir}/standalone.conf" append="true">
+JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"</echo>
 					</then>
 				</if>
 
-				<loadfile property="run.conf.bat.content" srcfile="${app.server.bin.dir}/run.conf.bat" />
+				<loadfile property="standalone.conf.bat.content" srcfile="${app.server.bin.dir}/standalone.conf.bat" />
 
-				<antelope:stringutil string="${run.conf.bat.content}" property="run.conf.bat.content.index">
+				<antelope:stringutil string="${standalone.conf.bat.content}" property="standalone.conf.bat.content.index">
 					<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
 				</antelope:stringutil>
 
 				<if>
-					<equals arg1="${run.conf.bat.content.index}" arg2="-1" />
+					<equals arg1="${standalone.conf.bat.content.index}" arg2="-1" />
 					<then>
-						<replace file="${app.server.bin.dir}/run.conf.bat">
+						<replace file="${app.server.bin.dir}/standalone.conf.bat">
 							<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
-							<replacevalue><![CDATA[set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.vfs.forceVfsJar=true -Dorg.jboss.logging.Log4jService.catchSystemOut=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+							<replacevalue><![CDATA[set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 
 :JAVA_OPTS_SET]]></replacevalue>
 						</replace>
 					</then>
 				</if>
 
-				<replace file="${app.server.deploy.dir}/jbossweb.sar/server.xml">
-					<replacetoken><![CDATA[redirectPort="8443" />]]></replacetoken>
-					<replacevalue><![CDATA[redirectPort="8443" URIEncoding="UTF-8" />]]></replacevalue>
-				</replace>
-
-				<move
-					failonerror="false"
-					file="${app.server.dir}/common/lib/hibernate-validator.jar"
-					tofile="${app.server.dir}/common/lib/hibernate-validator.jar.bak"
-				/>
-
-				<move
-					failonerror="false"
-					file="${app.server.dir}/common/lib/slf4j-jboss-logging.jar"
-					tofile="${app.server.dir}/common/lib/slf4j-jboss-logging.jar.bak"
-				/>
+				<if>
+					<not>
+						<available file="${app.server.lib.global.dir}/module.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jboss/modules/module.xml"
+							tofile="${app.server.lib.global.dir}/module.xml"
+						/>
+					</then>
+				</if>
 
 				<delete>
 					<fileset
 						dir="${app.server.lib.portal.dir}"
-						includes="jaxrpc.jar,log4j.jar,stax.jar,xercesImpl.jar,xml-apis.jar"
+						includes="eclipselink.jar"
 					/>
 				</delete>
 			</then>

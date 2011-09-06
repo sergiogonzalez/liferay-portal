@@ -172,6 +172,10 @@ public interface MBMessageService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
 		java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,

@@ -73,7 +73,7 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 				}
 
 				if (!newTypeSettings.equals(typeSettings)) {
-					updateTypeSettings(plid, newTypeSettings);
+					updateLayout(plid, newTypeSettings);
 				}
 			}
 		}
@@ -82,7 +82,7 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 		}
 	}
 
-	protected void updateTypeSettings(long plid, String typeSettings)
+	protected void updateLayout(long plid, String typeSettings)
 		throws Exception {
 
 		Connection con = null;

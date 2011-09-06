@@ -770,6 +770,39 @@ public class MBMessageServiceHttp {
 		}
 	}
 
+	public static void updateAnswer(HttpPrincipal httpPrincipal,
+		long messageId, boolean answer, boolean cascade)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class.getName(),
+					"updateAnswer", _updateAnswerParameterTypes19);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					messageId, answer, cascade);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
@@ -781,7 +814,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class.getName(),
 					"updateDiscussionMessage",
-					_updateDiscussionMessageParameterTypes19);
+					_updateDiscussionMessageParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK, permissionClassName, permissionClassPK,
@@ -824,7 +857,7 @@ public class MBMessageServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class.getName(),
-					"updateMessage", _updateMessageParameterTypes20);
+					"updateMessage", _updateMessageParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					messageId, subject, body, files, existingFiles, priority,
@@ -935,13 +968,16 @@ public class MBMessageServiceHttp {
 	private static final Class<?>[] _unsubscribeMessageParameterTypes18 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateDiscussionMessageParameterTypes19 = new Class[] {
+	private static final Class<?>[] _updateAnswerParameterTypes19 = new Class[] {
+			long.class, boolean.class, boolean.class
+		};
+	private static final Class<?>[] _updateDiscussionMessageParameterTypes20 = new Class[] {
 			java.lang.String.class, long.class, java.lang.String.class,
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateMessageParameterTypes20 = new Class[] {
+	private static final Class<?>[] _updateMessageParameterTypes21 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.util.List.class, java.util.List.class, double.class,
 			boolean.class, com.liferay.portal.service.ServiceContext.class

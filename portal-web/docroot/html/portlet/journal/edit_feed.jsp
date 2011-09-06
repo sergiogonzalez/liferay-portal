@@ -110,7 +110,7 @@ if (Validator.isNull(contentField) || ((structure == null) && !contentField.equa
 	contentField = JournalFeedConstants.WEB_CONTENT_DESCRIPTION;
 }
 
-String feedType = BeanParamUtil.getString(feed, request, "feedType", RSSUtil.DEFAULT_TYPE);
+String feedType = BeanParamUtil.getString(feed, request, "feedType", RSSUtil.TYPE_DEFAULT);
 double feedVersion = BeanParamUtil.getDouble(feed, request, "feedVersion", RSSUtil.VERSION_DEFAULT);
 
 ResourceURL feedURL = null;

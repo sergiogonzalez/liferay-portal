@@ -530,10 +530,7 @@ AUI().add(
 					);
 				}
 
-				var isStaging = BODY.hasClass('staging') || BODY.hasClass('remote-staging');
-				var isLiveView = BODY.hasClass('live-view');
-
-				if (isStaging || isLiveView) {
+				if (BODY.hasClass('staging') || BODY.hasClass('live-view')) {
 					instance.addMenu(
 						{
 							boundingBox: '#' + namespace + 'stagingContainer',
@@ -642,7 +639,7 @@ AUI().add(
 
 								columns.each(
 									function(item, index, collection) {
-										var overlayMask = item.getData('customizatonControls');
+										var overlayMask = item.getData('customizationControls');
 
 										if (!overlayMask) {
 											overlayMask = instance._createCustomizationMask(item);
@@ -651,6 +648,23 @@ AUI().add(
 										overlayMask.toggle();
 									}
 								);
+							}
+						);
+
+						Liferay.publish(
+							'updatedLayout',
+							{
+								defaultFn: function(event) {
+									columns.each(
+										function(item, index, collection) {
+											var overlayMask = item.getData('customizationControls');
+
+											if (overlayMask) {
+												item.setData('customizationControls', null);
+											}
+										}
+									);
+								}
 							}
 						);
 					}

@@ -26,42 +26,50 @@ import java.net.UnknownHostException;
 public class IPDetector {
 
 	public static boolean isPrefersV4() {
-		if (_prefersV4 == null) {
-			_prefersV4 = Boolean.valueOf(
-				System.getProperty("java.net.preferIPv4Stack"));
+		if (_prefersV4 != null) {
+			return _prefersV4.booleanValue();
 		}
+
+		_prefersV4 = Boolean.valueOf(
+			System.getProperty("java.net.preferIPv4Stack"));
 
 		return _prefersV4.booleanValue();
 	}
 
 	public static boolean isPrefersV6() {
-		if (_prefersV6 == null) {
-			_prefersV6 = Boolean.valueOf(
-				System.getProperty("java.net.preferIPv6Stack"));
+		if (_prefersV6 != null) {
+			return _prefersV6.booleanValue();
 		}
+
+		_prefersV6 = Boolean.valueOf(
+			System.getProperty("java.net.preferIPv6Stack"));
 
 		return _prefersV6.booleanValue();
 	}
 
 	public static boolean isSupportsV6() {
-		if (_suppportsV6 == null) {
-			_suppportsV6 = Boolean.FALSE;
+		if (_suppportsV6 != null) {
+			return _suppportsV6.booleanValue();
+		}
 
-			try {
-				InetAddress[] inetAddresses = InetAddress.getAllByName(
-					"localhost");
+		try {
+			InetAddress[] inetAddresses = InetAddress.getAllByName(
+				"localhost");
 
-				for (InetAddress inetAddress : inetAddresses) {
-					if (inetAddress.getHostAddress().contains(":")) {
-						_suppportsV6 = Boolean.TRUE;
+			for (InetAddress inetAddress : inetAddresses) {
+				if (inetAddress.getHostAddress().contains(":")) {
+					_suppportsV6 = Boolean.TRUE;
 
-						break;
-					}
+					break;
 				}
 			}
-			catch (UnknownHostException uhe) {
-				_log.error(uhe, uhe);
-			}
+		}
+		catch (UnknownHostException uhe) {
+			_log.error(uhe, uhe);
+		}
+
+		if (_suppportsV6 == null) {
+			_suppportsV6 = Boolean.FALSE;
 		}
 
 		return _suppportsV6.booleanValue();

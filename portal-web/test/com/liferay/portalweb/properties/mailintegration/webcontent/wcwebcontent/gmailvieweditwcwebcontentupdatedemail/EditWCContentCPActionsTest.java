@@ -45,6 +45,10 @@ public class EditWCContentCPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Site Name"));
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
@@ -59,8 +63,8 @@ public class EditWCContentCPActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//td[7]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[8]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

@@ -222,4 +222,10 @@ public class DateUtil {
 		return new Date(date);
 	}
 
+	public static long newTime() {
+		Date date = new Date();
+
+		return date.getTime();
+	}
+
 }

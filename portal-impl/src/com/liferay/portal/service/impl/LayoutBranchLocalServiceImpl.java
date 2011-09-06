@@ -91,6 +91,7 @@ public class LayoutBranchLocalServiceImpl
 		return layoutBranch;
 	}
 
+	@Override
 	public void deleteLayoutBranch(long layoutBranchId)
 		throws PortalException, SystemException {
 
@@ -102,6 +103,17 @@ public class LayoutBranchLocalServiceImpl
 			layoutBranch.getPlid());
 
 		layoutBranchLocalService.deleteLayoutBranch(layoutBranch);
+	}
+
+	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)
+		throws PortalException, SystemException {
+
+		List<LayoutBranch> layoutBranches =
+			layoutBranchPersistence.findByLayoutSetBranchId(layoutSetBranchId);
+
+		for (LayoutBranch layoutBranch : layoutBranches) {
+			deleteLayoutBranch(layoutBranch.getLayoutBranchId());
+		}
 	}
 
 	@Override
@@ -118,6 +130,14 @@ public class LayoutBranchLocalServiceImpl
 
 		return layoutBranchPersistence.findByL_P(
 			layoutSetBranchId, plid, start, end, orderByComparator);
+	}
+
+	public List<LayoutBranch> getLayoutSetBranchLayoutBranches(
+			long layoutSetBranchId)
+		throws SystemException {
+
+		return layoutBranchPersistence.findByLayoutSetBranchId(
+			layoutSetBranchId);
 	}
 
 	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId, long plid)

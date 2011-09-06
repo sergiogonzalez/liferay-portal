@@ -81,6 +81,20 @@ public class CountryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.CountrySoap fetchCountry(
+		long countryId) throws RemoteException {
+		try {
+			com.liferay.portal.model.Country returnValue = CountryServiceUtil.fetchCountry(countryId);
+
+			return com.liferay.portal.model.CountrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.CountrySoap[] getCountries()
 		throws RemoteException {
 		try {

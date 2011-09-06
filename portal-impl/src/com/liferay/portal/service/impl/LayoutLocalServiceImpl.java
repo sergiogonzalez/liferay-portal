@@ -171,6 +171,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Resources
 
+		boolean addGroupPermissions = true;
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		if (privateLayout && group.isUser()) {
+			addGroupPermissions = false;
+		}
+
 		boolean addGuestPermissions = false;
 
 		if (!privateLayout || type.equals(LayoutConstants.TYPE_CONTROL_PANEL)) {
@@ -179,8 +187,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		resourceLocalService.addResources(
 			user.getCompanyId(), groupId, user.getUserId(),
-			Layout.class.getName(), layout.getPlid(), false, true,
-			addGuestPermissions);
+			Layout.class.getName(), layout.getPlid(), false,
+			addGroupPermissions, addGuestPermissions);
 
 		// Group
 

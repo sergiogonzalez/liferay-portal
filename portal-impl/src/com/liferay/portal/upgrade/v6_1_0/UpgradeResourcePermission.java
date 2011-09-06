@@ -27,15 +27,17 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("update ResourcePermission set scope = ");
 		sb.append(ResourceConstants.SCOPE_GROUP_TEMPLATE);
 		sb.append(", primKey = '");
 		sb.append(String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID));
-		sb.append("' where exists (select roleId from Role_ where ");
-		sb.append("Role_.roleId = ResourcePermission.roleId and ");
-		sb.append("Role_.type_ = ");
+		sb.append("' where scope = ");
+		sb.append(ResourceConstants.SCOPE_COMPANY);
+		sb.append(" and primKey = CAST_TEXT(companyId) and exists (select ");
+		sb.append("roleId from Role_ where Role_.roleId = ");
+		sb.append("ResourcePermission.roleId and Role_.type_ = ");
 		sb.append(RoleConstants.TYPE_PROVIDER);
 		sb.append(")");
 

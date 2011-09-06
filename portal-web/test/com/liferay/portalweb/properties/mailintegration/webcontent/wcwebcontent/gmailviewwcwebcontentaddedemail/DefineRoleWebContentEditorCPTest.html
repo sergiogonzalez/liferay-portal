@@ -70,11 +70,21 @@
 </tr>
 <tr>
 	<td>selectAndWait</td>
-	<td>_128_add-permissions</td>
+	<td>//select[@id='_128_add-permissions']</td>
 	<td>label=Web Content</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
 	<td>check</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']</td>
 	<td>Subscribe</td>
 </tr>
@@ -95,16 +105,26 @@
 </tr>
 <tr>
 	<td>typeKeys</td>
-	<td>_128_add-permissions</td>
-	<td>wwwwwwwwww</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>wwwwwwwww</td>
 </tr>
 <tr>
 	<td>keyPressAndWait</td>
-	<td>_128_add-permissions</td>
+	<td>//select[@id='_128_add-permissions']</td>
 	<td>\13</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
+	<td>Access in Control Panel</td>
+</tr>
+<tr>
 	<td>check</td>
+	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
+	<td>Access in Control Panel</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
 	<td>Access in Control Panel</td>
 </tr>
@@ -120,13 +140,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
-	<td>Access in Control Panel</td>
+	<td>//tr[4]/td[3]</td>
+	<td>Subscribe</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[3]</td>
-	<td>Subscribe</td>
+	<td>//tr[3]/td[3]</td>
+	<td>Access in Control Panel</td>
 </tr>
 
 </tbody></table>

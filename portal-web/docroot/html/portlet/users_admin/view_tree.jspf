@@ -55,7 +55,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 		<c:when test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
 			<%
-			String parentOrganizationName = LanguageUtil.get(pageContext, "users-home");
+			String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
 
 			if (!organization.isRoot()) {
 				Organization parentOrganization = organization.getParentOrganization();
@@ -267,7 +267,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 	</liferay-util:buffer>
 
 	<aui:column columnWidth="<%= (organization != null) ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-		<liferay-ui:panel-container extended="<%= false %>" persistState="<%= true %>">
+		<liferay-ui:panel-container extended="<%= false %>" id="usersAdminOrganizationPanelContainer" persistState="<%= true %>">
 			<%= organizationInfo %>
 
 			<%
@@ -300,13 +300,13 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 			%>
 
 			<c:if test="<%= showOrganizations %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title='<%= (organization == null) ? "organizations" : (organizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(organizationsCount)) %>'>
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title='<%= (organization == null) ? "organizations" : (organizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(organizationsCount)) %>'>
 					<%= organizationsTree %>
 				</liferay-ui:panel>
 			</c:if>
 
 			<c:if test="<%= showUsers %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title='<%= (organization == null) ? "users" : (usersCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(usersCount)) : LanguageUtil.format(pageContext, "x-users", String.valueOf(usersCount)) %>'>
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title='<%= (organization == null) ? "users" : (usersCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(usersCount)) : LanguageUtil.format(pageContext, "x-users", String.valueOf(usersCount)) %>'>
 
 					<%
 					boolean organizationContextView = true;
@@ -324,7 +324,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 				<img alt="<%= HtmlUtil.escape(organization.getName()) %>" class="avatar" src='<%= (organization != null) ? themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(organization.getLogoId()) : "" %>' />
 
 				<div class="lfr-asset-name">
-					<h4><%= organization.getName() %></h4>
+					<h4><%= HtmlUtil.escape(organization.getName()) %></h4>
 				</div>
 			</div>
 

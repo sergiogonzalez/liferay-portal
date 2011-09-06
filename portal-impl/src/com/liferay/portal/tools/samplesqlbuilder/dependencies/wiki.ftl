@@ -38,10 +38,10 @@
 
 				${sampleSQLBuilder.insertMBDiscussion(mbDiscussion)}
 
-				${wikiPagesCsvWriter.write(wikiNode.nodeId + "," + wikiNode.name + "," + wikiPage.resourcePrimKey + "," + wikiPage.title + "," + mbMessage.threadId + "," + mbMessage.messageId + ",")}
+				${writerWikiCSV.write(wikiNode.nodeId + "," + wikiNode.name + "," + wikiPage.resourcePrimKey + "," + wikiPage.title + "," + mbMessage.threadId + "," + mbMessage.messageId + ",")}
 
 				<#if (wikiPageCounter.value < (maxGroupCount * maxWikiNodeCount * maxWikiPageCount))>
-					${wikiPagesCsvWriter.write("\n")}
+					${writerWikiCSV.write("\n")}
 				</#if>
 			</#list>
 		</#if>

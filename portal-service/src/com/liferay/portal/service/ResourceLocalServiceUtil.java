@@ -360,13 +360,12 @@ public class ResourceLocalServiceUtil {
 		return getService().getResources();
 	}
 
-	public static void updateResources(
+	public static void updateModelResources(
 		com.liferay.portal.model.AuditedModel auditedModel,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.updateResources(auditedModel, groupPermissions, guestPermissions);
+		getService().updateModelResources(auditedModel, serviceContext);
 	}
 
 	public static void updateResources(long companyId, long groupId,

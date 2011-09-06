@@ -104,11 +104,11 @@ public class ImportPagesAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		String importProgressId = ParamUtil.getString(
-			uploadRequest, "importProgressId");
+			uploadPortletRequest, "importProgressId");
 
 		ProgressTracker progressTracker = new ProgressTracker(
 			actionRequest, importProgressId);
@@ -117,15 +117,16 @@ public class ImportPagesAction extends PortletAction {
 
 		progressTracker.start();
 
-		long nodeId = ParamUtil.getLong(uploadRequest, "nodeId");
-		String importer = ParamUtil.getString(uploadRequest, "importer");
+		long nodeId = ParamUtil.getLong(uploadPortletRequest, "nodeId");
+		String importer = ParamUtil.getString(uploadPortletRequest, "importer");
 
-		int filesCount = ParamUtil.getInteger(uploadRequest, "filesCount", 10);
+		int filesCount = ParamUtil.getInteger(
+			uploadPortletRequest, "filesCount", 10);
 
 		File[] files = new File[filesCount];
 
 		for (int i = 0; i < filesCount; i++) {
-			files[i] = uploadRequest.getFile("file" + i);
+			files[i] = uploadPortletRequest.getFile("file" + i);
 		}
 
 		NotificationThreadLocal.setEnabled(false);

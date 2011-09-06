@@ -72,12 +72,18 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_128_add-permissions",
+		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked(
+				"//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']"));
+		selenium.saveScreenShotAndSource();
 		selenium.check(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']");
+		assertTrue(selenium.isChecked(
+				"//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -89,14 +95,20 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("_128_add-permissions",
-			RuntimeVariables.replace("wwwwwwwwww"));
+		selenium.typeKeys("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("wwwwwwwww"));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_128_add-permissions",
+		selenium.keyPress("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked(
+				"//input[@value='15ACCESS_IN_CONTROL_PANEL']"));
+		selenium.saveScreenShotAndSource();
 		selenium.check("//input[@value='15ACCESS_IN_CONTROL_PANEL']");
+		assertTrue(selenium.isChecked(
+				"//input[@value='15ACCESS_IN_CONTROL_PANEL']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -104,9 +116,9 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Access in Control Panel"),
-			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText("//tr[4]/td[3]"));
+		assertEquals(RuntimeVariables.replace("Access in Control Panel"),
+			selenium.getText("//tr[3]/td[3]"));
 	}
 }

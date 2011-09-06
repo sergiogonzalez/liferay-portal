@@ -14,10 +14,6 @@
 
 package com.liferay.support.tomcat.connector;
 
-import com.liferay.portal.kernel.util.StringPool;
-
-import javax.servlet.http.Cookie;
-
 import org.apache.catalina.connector.Request;
 
 /**
@@ -25,7 +21,7 @@ import org.apache.catalina.connector.Request;
  */
 public class PortalRequest extends Request {
 
-	@Override
+	/*@Override
 	protected void configureSessionCookie(Cookie cookie) {
 		super.configureSessionCookie(cookie);
 
@@ -70,6 +66,6 @@ public class PortalRequest extends Request {
 		}
 
 		return domain;
-	}
+	}*/
 
 }

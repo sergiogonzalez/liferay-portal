@@ -26,9 +26,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.util.Set" %>
 
-<%@ include file="taglib-init-ext.jspf" %>
+<%@ include file="/html/taglib/taglib-init-ext.jspf" %>
 
 <%!
 private static Object _deserialize(Object obj) {

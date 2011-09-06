@@ -295,7 +295,6 @@ public class OrganizationLocalServiceUtil {
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
-	* @param addresses the organization's addresses
 	* @param serviceContext the organization's service context (optionally
 	<code>null</code>). Can specify the organization's asset category
 	IDs, asset tag names, and expando bridge attributes.
@@ -309,14 +308,13 @@ public class OrganizationLocalServiceUtil {
 		long userId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
 		long countryId, int statusId, java.lang.String comments, boolean site,
-		java.util.List<com.liferay.portal.model.Address> addresses,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addOrganization(userId, parentOrganizationId, name, type,
 			recursable, regionId, countryId, statusId, comments, site,
-			addresses, serviceContext);
+			serviceContext);
 	}
 
 	/**
@@ -782,6 +780,14 @@ public class OrganizationLocalServiceUtil {
 	public static void rebuildTree(long companyId, boolean force)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().rebuildTree(companyId, force);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Organization> search(
+		long companyId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(companyId, params, start, end);
 	}
 
 	/**

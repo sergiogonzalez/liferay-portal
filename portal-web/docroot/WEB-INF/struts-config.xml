@@ -518,14 +518,16 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/search" type="com.liferay.portlet.documentlibrary.action.SearchAction" />
+		<action path="/document_library/search" type="com.liferay.portlet.documentlibrary.action.SearchAction">
+			<forward name="portlet.document_library.view" path="portlet.document_library.view" />
+		</action>
 
 		<action path="/document_library/select_file_entry" type="com.liferay.portlet.documentlibrary.action.ViewAction">
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 			<forward name="portlet.document_library.view" path="portlet.document_library.select_file_entry" />
 		</action>
 
-		<action path="/document_library/select_file_entry_type" forward="portlet.document_library_display.select_file_entry_type" />
+		<action path="/document_library/select_file_entry_type" forward="portlet.document_library.select_file_entry_type" />
 
 		<action path="/document_library/select_folder" type="com.liferay.portlet.documentlibrary.action.EditFolderAction">
 			<forward name="portlet.document_library.edit_folder" path="portlet.document_library.select_folder" />
@@ -1512,6 +1514,8 @@
 		<action path="/roles_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
 
 		<action path="/roles_admin/view" forward="portlet.roles_admin.view" />
+
+		<action path="/roles_admin/view_users" forward="portlet.users_admin.view" />
 
 		<!-- RSS -->
 

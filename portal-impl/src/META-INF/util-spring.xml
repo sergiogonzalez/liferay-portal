@@ -120,6 +120,11 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil" class="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil">
+		<property name="portalCustomSQL">
+			<bean class="com.liferay.portal.dao.orm.common.PortalCustomSQLImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.deploy.DeployManagerUtil" class="com.liferay.portal.kernel.deploy.DeployManagerUtil">
 		<property name="deployManager">
 			<bean class="com.liferay.portal.deploy.DeployManagerImpl" />
@@ -595,6 +600,11 @@
 	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePortlet" class="com.liferay.portlet.layoutconfiguration.util.RuntimePortletImpl" />
 	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil" class="com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil">
 		<property name="runtimePortlet" ref="com.liferay.portlet.layoutconfiguration.util.RuntimePortlet" />
+	</bean>
+	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
+		<property name="sitemap">
+			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
+		</property>
 	</bean>
 	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminImpl" />
 	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil">

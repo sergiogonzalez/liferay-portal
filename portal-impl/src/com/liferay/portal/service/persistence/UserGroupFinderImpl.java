@@ -94,6 +94,7 @@ public class UserGroupFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params);
+
 			qPos.add(companyId);
 			qPos.add(name);
 			qPos.add(name);
@@ -192,6 +193,7 @@ public class UserGroupFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params);
+
 			qPos.add(companyId);
 			qPos.add(name);
 			qPos.add(name);

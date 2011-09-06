@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.search.Document" %>
-<%@ page import="com.liferay.portal.kernel.search.Field" %>
 <%@ page import="com.liferay.portal.kernel.search.Hits" %>
 <%@ page import="com.liferay.portal.kernel.search.Indexer" %>
 <%@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %>
@@ -48,16 +47,16 @@
 <%@ page import="com.liferay.portlet.messageboards.SplitThreadException" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBBan" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBCategory" %>
-<%@ page import="com.liferay.portlet.messageboards.model.MBCategoryDisplay" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBCategoryConstants" %>
+<%@ page import="com.liferay.portlet.messageboards.model.MBCategoryDisplay" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBMailingList" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBMessage" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBMessageConstants" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %>
-<%@ page import="com.liferay.portlet.messageboards.model.MBMessageFlag" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBStatsUser" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBThread" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBThreadConstants" %>
+<%@ page import="com.liferay.portlet.messageboards.model.MBThreadFlag" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBTreeWalker" %>
 <%@ page import="com.liferay.portlet.messageboards.model.impl.MBCategoryDisplayImpl" %>
 <%@ page import="com.liferay.portlet.messageboards.model.impl.MBMessageImpl" %>
@@ -65,10 +64,10 @@
 <%@ page import="com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.MBCategoryServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.messageboards.service.MBMessageFlagLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.MBMessageServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.MBThreadServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" %>
@@ -118,12 +117,12 @@ rssURL.setCacheability(ResourceURL.FULL);
 
 rssURL.setParameter("struts_action", "/message_boards/rss");
 
-if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.DEFAULT_TYPE) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
+if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.TYPE_DEFAULT) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
 	if (rssDelta != SearchContainer.DEFAULT_DELTA) {
 		rssURL.setParameter("max", String.valueOf(rssDelta));
 	}
 
-	if (!rssFormatType.equals(RSSUtil.DEFAULT_TYPE)) {
+	if (!rssFormatType.equals(RSSUtil.TYPE_DEFAULT)) {
 		rssURL.setParameter("type", rssFormatType);
 	}
 

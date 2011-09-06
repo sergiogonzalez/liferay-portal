@@ -36,6 +36,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 
 <c:if test="<%= folder != null %>">
 	<liferay-ui:header
+		escapeXml="<%= false %>"
 		localizeTitle="<%= false %>"
 		title="<%= entry.getName() %>"
 	/>
@@ -112,6 +113,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 				cssClass="lfr-asset-avatar"
 				image="../file_system/large/bookmark"
 				message="download"
+				method="get"
 				url="<%= entry.getUrl() %>"
 			/>
 

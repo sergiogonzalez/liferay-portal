@@ -80,12 +80,12 @@ public class EditCompanyLogoAction extends PortletAction {
 	}
 
 	protected void updateLogo(ActionRequest actionRequest) throws Exception {
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		long companyId = PortalUtil.getCompanyId(actionRequest);
 
-		File file = uploadRequest.getFile("fileName");
+		File file = uploadPortletRequest.getFile("fileName");
 		byte[] bytes = FileUtil.getBytes(file);
 
 		if ((bytes == null) || (bytes.length == 0)) {

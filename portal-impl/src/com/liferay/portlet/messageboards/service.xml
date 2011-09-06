@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_0_0.dtd">
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
 
 <service-builder package-path="com.liferay.portlet.messageboards">
 	<namespace>MB</namespace>
@@ -203,6 +203,7 @@
 		<column name="anonymous" type="boolean" />
 		<column name="priority" type="double" />
 		<column name="allowPingbacks" type="boolean" />
+		<column name="answer" type="boolean" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -259,6 +260,10 @@
 		<finder name="T_P" return-type="Collection">
 			<finder-column name="threadId" />
 			<finder-column name="parentMessageId" />
+		</finder>
+		<finder name="T_A" return-type="Collection">
+			<finder-column name="threadId" />
+			<finder-column name="answer" />
 		</finder>
 		<finder name="T_S" return-type="Collection">
 			<finder-column name="threadId" />
@@ -330,53 +335,6 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.wiki" entity="WikiPage" />
 	</entity>
-	<entity name="MBMessageFlag" human-name="message boards message flag" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="messageFlagId" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="userId" type="long" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="threadId" type="long" />
-		<column name="messageId" type="long" />
-		<column name="flag" type="int" />
-
-		<!-- Finder methods -->
-
-		<finder name="UserId" return-type="Collection">
-			<finder-column name="userId" />
-		</finder>
-		<finder name="ThreadId" return-type="Collection">
-			<finder-column name="threadId" />
-		</finder>
-		<finder name="MessageId" return-type="Collection">
-			<finder-column name="messageId" />
-		</finder>
-		<finder name="T_F" return-type="Collection">
-			<finder-column name="threadId" />
-			<finder-column name="flag" />
-		</finder>
-		<finder name="M_F" return-type="Collection">
-			<finder-column name="messageId" />
-			<finder-column name="flag" />
-		</finder>
-		<finder name="U_T_F" return-type="Collection">
-			<finder-column name="userId" />
-			<finder-column name="threadId" />
-			<finder-column name="flag" />
-		</finder>
-		<finder name="U_M_F" return-type="MBMessageFlag" unique="true">
-			<finder-column name="userId" />
-			<finder-column name="messageId" />
-			<finder-column name="flag" />
-		</finder>
-	</entity>
 	<entity name="MBStatsUser" human-name="message boards stats user" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
@@ -414,10 +372,15 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>
-		<finder name="G_NotM" return-type="Collection">
+		<finder name="G_NotU_NotM" return-type="Collection">
 			<finder-column name="groupId" />
+			<finder-column name="userId" comparator="!=" />
 			<finder-column name="messageCount" comparator="!=" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
 	<entity name="MBThread" human-name="message boards thread" local-service="true" remote-service="true">
 
@@ -443,6 +406,7 @@
 		<column name="lastPostByUserId" type="long" />
 		<column name="lastPostDate" type="Date" />
 		<column name="priority" type="double" />
+		<column name="question" type="boolean" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -506,6 +470,34 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
+	</entity>
+	<entity name="MBThreadFlag" human-name="message boards thread flag" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="threadFlagId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="threadId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="ThreadId" return-type="Collection">
+			<finder-column name="threadId" />
+		</finder>
+		<finder name="U_T" return-type="MBThreadFlag">
+			<finder-column name="userId" />
+			<finder-column name="threadId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>BannedUser</exception>

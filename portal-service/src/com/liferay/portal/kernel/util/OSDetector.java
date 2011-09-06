@@ -22,56 +22,64 @@ import java.io.File;
 public class OSDetector {
 
 	public static boolean isAIX() {
-		if (_aix == null) {
-			String osName = System.getProperty("os.name").toLowerCase();
+		if (_aix != null) {
+			return _aix.booleanValue();
+		}
 
-			if (osName.equals("aix")) {
-				_aix = Boolean.TRUE;
-			}
-			else {
-				_aix = Boolean.FALSE;
-			}
+		String osName = System.getProperty("os.name").toLowerCase();
+
+		if (osName.equals("aix")) {
+			_aix = Boolean.TRUE;
+		}
+		else {
+			_aix = Boolean.FALSE;
 		}
 
 		return _aix.booleanValue();
 	}
 
 	public static boolean isApple() {
-		if (_apple == null) {
-			String osName = System.getProperty("os.name").toLowerCase();
+		if (_apple != null) {
+			return _apple.booleanValue();
+		}
 
-			if (osName.contains("mac")) {
-				_apple = Boolean.TRUE;
-			}
-			else {
-				_apple = Boolean.FALSE;
-			}
+		String osName = System.getProperty("os.name").toLowerCase();
+
+		if (osName.contains("mac")) {
+			_apple = Boolean.TRUE;
+		}
+		else {
+			_apple = Boolean.FALSE;
 		}
 
 		return _apple.booleanValue();
 	}
 
 	public static boolean isUnix() {
-		if (_unix == null) {
-			if (File.pathSeparator.equals(StringPool.COLON)) {
-				_unix = Boolean.TRUE;
-			}
-			else {
-				_unix = Boolean.FALSE;
-			}
+		if (_unix != null) {
+			return _unix.booleanValue();
+		}
+
+		if (File.pathSeparator.equals(StringPool.COLON)) {
+			_unix = Boolean.TRUE;
+		}
+		else {
+			_unix = Boolean.FALSE;
 		}
 
 		return _unix.booleanValue();
 	}
 
 	public static boolean isWindows() {
-		if (_windows == null) {
-			if (File.pathSeparator.equals(StringPool.SEMICOLON)) {
-				_windows = Boolean.TRUE;
-			}
-			else {
-				_windows = Boolean.FALSE;
-			}
+		if (_windows != null) {
+			return _windows.booleanValue();
+		}
+
+		if (File.pathSeparator.equals(StringPool.SEMICOLON)) {
+			_windows = Boolean.TRUE;
+		}
+		else {
+			_windows = Boolean.FALSE;
 		}
 
 		return _windows.booleanValue();

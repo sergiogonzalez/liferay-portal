@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,7 +34,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -49,25 +52,37 @@ public class LangBuilder {
 		" (Automatic Translation)";
 
 	public static void main(String[] args) {
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+
 		System.setProperty("line.separator", StringPool.NEW_LINE);
 
 		InitUtil.initWithSpring();
 
-		if (args.length == 2) {
-			new LangBuilder(args[0], args[1], null);
-		}
-		else if (args.length == 3) {
-			new LangBuilder(args[0], args[1], args[2]);
-		}
-		else {
-			throw new IllegalArgumentException();
-		}
+		String langDir = arguments.get("lang.dir");
+		String langFile = arguments.get("lang.file");
+		boolean langPlugin = GetterUtil.getBoolean(
+			arguments.get("lang.plugin"));
+
+		new LangBuilder(langDir, langFile, langPlugin);
 	}
 
-	public LangBuilder(String langDir, String langFile, String langCode) {
+	public LangBuilder(String langDir, String langFile, boolean langPlugin) {
 		try {
 			_langDir = langDir;
 			_langFile = langFile;
+
+			if (langPlugin) {
+				_portalLanguageProperties = new Properties();
+
+				Class<?> clazz = getClass();
+
+				ClassLoader classLoader = clazz.getClassLoader();
+
+				InputStream is = classLoader.getResourceAsStream(
+					"content/Language.properties");
+
+				_portalLanguageProperties.load(is);
+			}
 
 			File renameKeysFile = new File(_langDir + "/rename.properties");
 
@@ -85,50 +100,45 @@ public class LangBuilder {
 			_orderProperties(
 				new File(_langDir + "/" + _langFile + "_en_GB.properties"));
 
-			if (Validator.isNotNull(langCode) && !langCode.startsWith("$")) {
-				_createProperties(content, langCode);
-			}
-			else {
-				_createProperties(content, "ar"); // Arabic
-				_createProperties(content, "eu"); // Basque
-				_createProperties(content, "bg"); // Bulgarian
-				_createProperties(content, "ca"); // Catalan
-				_createProperties(content, "zh_CN"); // Chinese (China)
-				_createProperties(content, "zh_TW"); // Chinese (Taiwan)
-				_createProperties(content, "hr"); // Croatian
-				_createProperties(content, "cs"); // Czech
-				_createProperties(content, "nl"); // Dutch (Netherlands)
-				_createProperties(content, "nl_BE"); // Dutch (Belgium)
-				_createProperties(content, "et"); // Estonian
-				_createProperties(content, "fi"); // Finnish
-				_createProperties(content, "fr"); // French
-				_createProperties(content, "gl"); // Galician
-				_createProperties(content, "de"); // German
-				_createProperties(content, "el"); // Greek
-				_createProperties(content, "iw"); // Hebrew
-				_createProperties(content, "hi_IN"); // Hindi (India)
-				_createProperties(content, "hu"); // Hungarian
-				_createProperties(content, "in"); // Indonesian
-				_createProperties(content, "it"); // Italian
-				_createProperties(content, "ja"); // Japanese
-				_createProperties(content, "ko"); // Korean
-				_createProperties(content, "nb"); // Norwegian Bokmål
-				_createProperties(content, "fa"); // Persian
-				_createProperties(content, "pl"); // Polish
-				_createProperties(content, "pt_BR"); // Portuguese (Brazil)
-				_createProperties(content, "pt_PT"); // Portuguese (Portugal)
-				_createProperties(content, "ro"); // Romanian
-				_createProperties(content, "ru"); // Russian
-				_createProperties(content, "sr_RS"); // Serbian (Cyrillic)
-				_createProperties(content, "sr_RS_latin"); // Serbian (Latin)
-				_createProperties(content, "sk"); // Slovak
-				_createProperties(content, "sl"); // Slovene
-				_createProperties(content, "es"); // Spanish
-				_createProperties(content, "sv"); // Swedish
-				_createProperties(content, "tr"); // Turkish
-				_createProperties(content, "uk"); // Ukrainian
-				_createProperties(content, "vi"); // Vietnamese
-			}
+			_createProperties(content, "ar"); // Arabic
+			_createProperties(content, "eu"); // Basque
+			_createProperties(content, "bg"); // Bulgarian
+			_createProperties(content, "ca"); // Catalan
+			_createProperties(content, "zh_CN"); // Chinese (China)
+			_createProperties(content, "zh_TW"); // Chinese (Taiwan)
+			_createProperties(content, "hr"); // Croatian
+			_createProperties(content, "cs"); // Czech
+			_createProperties(content, "nl"); // Dutch (Netherlands)
+			_createProperties(content, "nl_BE"); // Dutch (Belgium)
+			_createProperties(content, "et"); // Estonian
+			_createProperties(content, "fi"); // Finnish
+			_createProperties(content, "fr"); // French
+			_createProperties(content, "gl"); // Galician
+			_createProperties(content, "de"); // German
+			_createProperties(content, "el"); // Greek
+			_createProperties(content, "iw"); // Hebrew
+			_createProperties(content, "hi_IN"); // Hindi (India)
+			_createProperties(content, "hu"); // Hungarian
+			_createProperties(content, "in"); // Indonesian
+			_createProperties(content, "it"); // Italian
+			_createProperties(content, "ja"); // Japanese
+			_createProperties(content, "ko"); // Korean
+			_createProperties(content, "nb"); // Norwegian Bokmål
+			_createProperties(content, "fa"); // Persian
+			_createProperties(content, "pl"); // Polish
+			_createProperties(content, "pt_BR"); // Portuguese (Brazil)
+			_createProperties(content, "pt_PT"); // Portuguese (Portugal)
+			_createProperties(content, "ro"); // Romanian
+			_createProperties(content, "ru"); // Russian
+			_createProperties(content, "sr_RS"); // Serbian (Cyrillic)
+			_createProperties(content, "sr_RS_latin"); // Serbian (Latin)
+			_createProperties(content, "sk"); // Slovak
+			_createProperties(content, "sl"); // Slovene
+			_createProperties(content, "es"); // Spanish
+			_createProperties(content, "sv"); // Swedish
+			_createProperties(content, "tr"); // Turkish
+			_createProperties(content, "uk"); // Ukrainian
+			_createProperties(content, "vi"); // Vietnamese
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -329,6 +339,15 @@ public class LangBuilder {
 				String key = line.substring(0, pos);
 				String value = line.substring(pos + 1, line.length());
 
+				if (_portalLanguageProperties != null) {
+					String portalValue = String.valueOf(
+						_portalLanguageProperties.get(key));
+
+					if (value.equals(portalValue)) {
+						System.out.println("Duplicate key " + key);
+					}
+				}
+
 				messages.add(key + "=" + value);
 			}
 			else {
@@ -450,6 +469,7 @@ public class LangBuilder {
 
 	private String _langDir;
 	private String _langFile;
+	private Properties _portalLanguageProperties;
 	private Properties _renameKeys;
 
 }

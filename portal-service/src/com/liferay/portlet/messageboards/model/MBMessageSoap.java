@@ -52,6 +52,7 @@ public class MBMessageSoap implements Serializable {
 		soapModel.setAnonymous(model.getAnonymous());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setAllowPingbacks(model.getAllowPingbacks());
+		soapModel.setAnswer(model.getAnswer());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -288,6 +289,18 @@ public class MBMessageSoap implements Serializable {
 		_allowPingbacks = allowPingbacks;
 	}
 
+	public boolean getAnswer() {
+		return _answer;
+	}
+
+	public boolean isAnswer() {
+		return _answer;
+	}
+
+	public void setAnswer(boolean answer) {
+		_answer = answer;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -341,6 +354,7 @@ public class MBMessageSoap implements Serializable {
 	private boolean _anonymous;
 	private double _priority;
 	private boolean _allowPingbacks;
+	private boolean _answer;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

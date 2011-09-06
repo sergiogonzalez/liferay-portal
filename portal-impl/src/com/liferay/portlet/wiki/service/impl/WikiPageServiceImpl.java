@@ -415,7 +415,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 			SyndContent syndContent = new SyndContentImpl();
 
-			syndContent.setType(RSSUtil.DEFAULT_ENTRY_TYPE);
+			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
 			if (diff) {
 				if (latestPage != null) {

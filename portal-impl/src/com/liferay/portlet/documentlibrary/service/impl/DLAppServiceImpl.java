@@ -23,6 +23,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1637,6 +1641,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return repository.getMountFolders(parentFolderId, start, end, obc);
 	}
 
+	public void getSubfolderIds(
+			long repositoryId, List<Long> folderIds, long folderId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		repository.getSubfolderIds(folderIds, folderId);
+	}
+
 	/**
 	 * Returns all the descendant folders of the folder with the primary key.
 	 *
@@ -1672,15 +1685,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		return repository.getSubfolderIds(folderId, recurse);
-	}
-
-	public void getSubfolderIds(
-			long repositoryId, List<Long> folderIds, long folderId)
-		throws PortalException, SystemException {
-
-		Repository repository = getRepository(repositoryId);
-
-		repository.getSubfolderIds(folderIds, folderId);
 	}
 
 	/**
@@ -1854,6 +1858,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(0, fileEntryId, 0);
 
 		repository.revertFileEntry(fileEntryId, version, serviceContext);
+	}
+
+	public Hits search(
+			long repositoryId, SearchContext searchContext, Query query)
+		throws SearchException {
+
+		try {
+			Repository repository = getRepository(repositoryId);
+
+			return repository.search(searchContext, query);
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
 	}
 
 	/**
@@ -2083,6 +2101,53 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
+
+		DLProcessorRegistryUtil.trigger(fileEntry);
+
+		return fileEntry;
+	}
+
+	public FileEntry updateFileEntryAndCheckIn(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if ((file == null) || !file.exists() || (file.length() == 0)) {
+			return updateFileEntryAndCheckIn(
+				fileEntryId, sourceFileName, mimeType, title, description,
+				changeLog, majorVersion, null, 0, serviceContext);
+		}
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		FileEntry fileEntry = repository.updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, serviceContext);
+
+		repository.checkInFileEntry(
+			fileEntryId, majorVersion, changeLog, serviceContext);
+
+		DLProcessorRegistryUtil.trigger(fileEntry);
+
+		return fileEntry;
+	}
+
+	public FileEntry updateFileEntryAndCheckIn(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		FileEntry fileEntry = repository.updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, is, size, serviceContext);
+
+		repository.checkInFileEntry(
+			fileEntryId, majorVersion, changeLog, serviceContext);
 
 		DLProcessorRegistryUtil.trigger(fileEntry);
 

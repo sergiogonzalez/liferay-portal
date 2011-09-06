@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -79,6 +80,37 @@ public class ClassPathUtil {
 		URL url = classloader.getResource(pathOfClass);
 
 		String path = URLCodec.decodeURL(url.getPath());
+
+		if (ServerDetector.isWebLogic()) {
+			String protocol = url.getProtocol();
+
+			if (protocol.equals("zip")) {
+				path = "file:".concat(path);
+			}
+		}
+
+		if (ServerDetector.isJBoss()) {
+			path = StringUtil.replace(
+				path, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String protocol = url.getProtocol();
+
+			if (protocol.equals("vfs")) {
+				int pos = path.indexOf(".jar/");
+
+				if (pos != -1) {
+					String jarFilePath = path.substring(0, pos + 4);
+
+					File jarFile = new File(jarFilePath);
+
+					if (jarFile.isFile()) {
+						path = jarFilePath + '!' + path.substring(pos + 4);
+					}
+				}
+
+				path = "file:".concat(path);
+			}
+		}
 
 		File dir = null;
 

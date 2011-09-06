@@ -43,6 +43,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
@@ -77,6 +78,7 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
+import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.HostParams;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
@@ -85,6 +87,7 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class HttpImpl implements Http {
 
@@ -544,14 +547,15 @@ public class HttpImpl implements Http {
 	}
 
 	public boolean isNonProxyHost(String host) {
-		if (_nonProxyHostsPattern == null ||
-			_nonProxyHostsPattern.matcher(host).matches()) {
+		if (_nonProxyHostsPattern != null) {
+			Matcher matcher = _nonProxyHostsPattern.matcher(host);
 
-			return true;
+			if (matcher.matches()) {
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isProxyHost(String host) {
@@ -1056,11 +1060,13 @@ public class HttpImpl implements Http {
 						for (Map.Entry<String, String> entry :
 								parts.entrySet()) {
 
-							String key = entry.getKey();
 							String value = entry.getValue();
 
 							if (value != null) {
-								postMethod.addParameter(key, value);
+								StringPart stringPart = new StringPart(
+									entry.getKey(), value);
+
+								partsList.add(stringPart);
 							}
 						}
 					}

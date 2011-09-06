@@ -360,20 +360,21 @@ public class EditArticleAction extends PortletAction {
 		}
 	}
 
-	protected Map<String, byte[]> getImages(UploadPortletRequest uploadRequest)
+	protected Map<String, byte[]> getImages(
+			UploadPortletRequest uploadPortletRequest)
 		throws Exception {
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
 
 		String imagePrefix = "structure_image_";
 
-		Enumeration<String> enu = uploadRequest.getParameterNames();
+		Enumeration<String> enu = uploadPortletRequest.getParameterNames();
 
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
 
 			if (name.startsWith(imagePrefix)) {
-				File file = uploadRequest.getFile(name);
+				File file = uploadPortletRequest.getFile(name);
 				byte[] bytes = FileUtil.getBytes(file);
 
 				if ((bytes != null) && (bytes.length > 0)) {
@@ -464,34 +465,37 @@ public class EditArticleAction extends PortletAction {
 	protected Object[] updateArticle(ActionRequest actionRequest)
 		throws Exception {
 
-		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String cmd = ParamUtil.getString(uploadRequest, Constants.CMD);
+		String cmd = ParamUtil.getString(uploadPortletRequest, Constants.CMD);
 
-		long groupId = ParamUtil.getLong(uploadRequest, "groupId");
+		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 
-		long classNameId = ParamUtil.getLong(uploadRequest, "classNameId");
-		long classPK = ParamUtil.getLong(uploadRequest, "classPK");
+		long classNameId = ParamUtil.getLong(
+			uploadPortletRequest, "classNameId");
+		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
 
-		String articleId = ParamUtil.getString(uploadRequest, "articleId");
+		String articleId = ParamUtil.getString(
+			uploadPortletRequest, "articleId");
 		boolean autoArticleId = ParamUtil.getBoolean(
-			uploadRequest, "autoArticleId");
+			uploadPortletRequest, "autoArticleId");
 
-		double version = ParamUtil.getDouble(uploadRequest, "version");
+		double version = ParamUtil.getDouble(uploadPortletRequest, "version");
 
-		boolean localized = ParamUtil.getBoolean(uploadRequest, "localized");
+		boolean localized = ParamUtil.getBoolean(
+			uploadPortletRequest, "localized");
 
 		String defaultLanguageId = ParamUtil.getString(
-			uploadRequest, "defaultLanguageId");
+			uploadPortletRequest, "defaultLanguageId");
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
 		String toLanguageId = ParamUtil.getString(
-			uploadRequest, "toLanguageId");
+			uploadPortletRequest, "toLanguageId");
 
 		Locale toLocale = null;
 
@@ -500,22 +504,23 @@ public class EditArticleAction extends PortletAction {
 
 		if (Validator.isNull(toLanguageId)) {
 			title = ParamUtil.getString(
-				uploadRequest, "title_" + defaultLanguageId);
+				uploadPortletRequest, "title_" + defaultLanguageId);
 			description = ParamUtil.getString(
-				uploadRequest, "description_" + defaultLanguageId);
+				uploadPortletRequest, "description_" + defaultLanguageId);
 		}
 		else{
 			toLocale = LocaleUtil.fromLanguageId(toLanguageId);
 
-			title = ParamUtil.getString(uploadRequest, "title_" + toLanguageId);
+			title = ParamUtil.getString(
+				uploadPortletRequest, "title_" + toLanguageId);
 			description = ParamUtil.getString(
-				uploadRequest, "description_" + toLanguageId);
+				uploadPortletRequest, "description_" + toLanguageId);
 		}
 
-		String content = ParamUtil.getString(uploadRequest, "content");
+		String content = ParamUtil.getString(uploadPortletRequest, "content");
 
 		Boolean fileItemThresholdSizeExceeded =
-				(Boolean)uploadRequest.getAttribute(
+				(Boolean)uploadPortletRequest.getAttribute(
 			WebKeys.FILE_ITEM_THRESHOLD_SIZE_EXCEEDED);
 
 		if ((fileItemThresholdSizeExceeded != null) &&
@@ -524,76 +529,82 @@ public class EditArticleAction extends PortletAction {
 			throw new ArticleContentSizeException();
 		}
 
-		String type = ParamUtil.getString(uploadRequest, "type");
-		String structureId = ParamUtil.getString(uploadRequest, "structureId");
-		String templateId = ParamUtil.getString(uploadRequest, "templateId");
-		String layoutUuid = ParamUtil.getString(uploadRequest, "layoutUuid");
+		String type = ParamUtil.getString(uploadPortletRequest, "type");
+		String structureId = ParamUtil.getString(
+			uploadPortletRequest, "structureId");
+		String templateId = ParamUtil.getString(
+			uploadPortletRequest, "templateId");
+		String layoutUuid = ParamUtil.getString(
+			uploadPortletRequest, "layoutUuid");
 
 		int displayDateMonth = ParamUtil.getInteger(
-			uploadRequest, "displayDateMonth");
+			uploadPortletRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
-			uploadRequest, "displayDateDay");
+			uploadPortletRequest, "displayDateDay");
 		int displayDateYear = ParamUtil.getInteger(
-			uploadRequest, "displayDateYear");
+			uploadPortletRequest, "displayDateYear");
 		int displayDateHour = ParamUtil.getInteger(
-			uploadRequest, "displayDateHour");
+			uploadPortletRequest, "displayDateHour");
 		int displayDateMinute = ParamUtil.getInteger(
-			uploadRequest, "displayDateMinute");
+			uploadPortletRequest, "displayDateMinute");
 		int displayDateAmPm = ParamUtil.getInteger(
-			uploadRequest, "displayDateAmPm");
+			uploadPortletRequest, "displayDateAmPm");
 
 		if (displayDateAmPm == Calendar.PM) {
 			displayDateHour += 12;
 		}
 
 		int expirationDateMonth = ParamUtil.getInteger(
-			uploadRequest, "expirationDateMonth");
+			uploadPortletRequest, "expirationDateMonth");
 		int expirationDateDay = ParamUtil.getInteger(
-			uploadRequest, "expirationDateDay");
+			uploadPortletRequest, "expirationDateDay");
 		int expirationDateYear = ParamUtil.getInteger(
-			uploadRequest, "expirationDateYear");
+			uploadPortletRequest, "expirationDateYear");
 		int expirationDateHour = ParamUtil.getInteger(
-			uploadRequest, "expirationDateHour");
+			uploadPortletRequest, "expirationDateHour");
 		int expirationDateMinute = ParamUtil.getInteger(
-			uploadRequest, "expirationDateMinute");
+			uploadPortletRequest, "expirationDateMinute");
 		int expirationDateAmPm = ParamUtil.getInteger(
-			uploadRequest, "expirationDateAmPm");
+			uploadPortletRequest, "expirationDateAmPm");
 		boolean neverExpire = ParamUtil.getBoolean(
-			uploadRequest, "neverExpire");
+			uploadPortletRequest, "neverExpire");
 
 		if (expirationDateAmPm == Calendar.PM) {
 			expirationDateHour += 12;
 		}
 
 		int reviewDateMonth = ParamUtil.getInteger(
-			uploadRequest, "reviewDateMonth");
+			uploadPortletRequest, "reviewDateMonth");
 		int reviewDateDay = ParamUtil.getInteger(
-			uploadRequest, "reviewDateDay");
+			uploadPortletRequest, "reviewDateDay");
 		int reviewDateYear = ParamUtil.getInteger(
-			uploadRequest, "reviewDateYear");
+			uploadPortletRequest, "reviewDateYear");
 		int reviewDateHour = ParamUtil.getInteger(
-			uploadRequest, "reviewDateHour");
+			uploadPortletRequest, "reviewDateHour");
 		int reviewDateMinute = ParamUtil.getInteger(
-			uploadRequest, "reviewDateMinute");
+			uploadPortletRequest, "reviewDateMinute");
 		int reviewDateAmPm = ParamUtil.getInteger(
-			uploadRequest, "reviewDateAmPm");
+			uploadPortletRequest, "reviewDateAmPm");
 		boolean neverReview = ParamUtil.getBoolean(
-			uploadRequest, "neverReview");
+			uploadPortletRequest, "neverReview");
 
 		if (reviewDateAmPm == Calendar.PM) {
 			reviewDateHour += 12;
 		}
 
-		boolean indexable = ParamUtil.getBoolean(uploadRequest, "indexable");
+		boolean indexable = ParamUtil.getBoolean(
+			uploadPortletRequest, "indexable");
 
-		boolean smallImage = ParamUtil.getBoolean(uploadRequest, "smallImage");
+		boolean smallImage = ParamUtil.getBoolean(
+			uploadPortletRequest, "smallImage");
 		String smallImageURL = ParamUtil.getString(
-			uploadRequest, "smallImageURL");
-		File smallFile = uploadRequest.getFile("smallFile");
+			uploadPortletRequest, "smallImageURL");
+		File smallFile = uploadPortletRequest.getFile("smallFile");
 
-		Map<String, byte[]> images = getImages(uploadRequest);
+		Map<String, byte[]> images = getImages(uploadPortletRequest);
 
-		String articleURL = ParamUtil.getString(uploadRequest, "articleURL");
+		String articleURL = ParamUtil.getString(
+			uploadPortletRequest, "articleURL");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
@@ -728,12 +739,12 @@ public class EditArticleAction extends PortletAction {
 		// Journal content
 
 		String portletResource = ParamUtil.getString(
-			uploadRequest, "portletResource");
+			uploadPortletRequest, "portletResource");
 
 		if (Validator.isNotNull(portletResource)) {
 			PortletPreferences preferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(
-					uploadRequest, portletResource);
+					uploadPortletRequest, portletResource);
 
 			preferences.setValue(
 				"groupId", String.valueOf(article.getGroupId()));

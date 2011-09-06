@@ -41,6 +41,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Connor McKay
+ * @author Shuyang Zhou
  */
 public class OrganizationFinderImpl
 	extends BasePersistenceImpl<Organization> implements OrganizationFinder {
@@ -53,6 +54,9 @@ public class OrganizationFinderImpl
 
 	public static String COUNT_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".countByC_PO_N_L_S_C_Z_R_C";
+
+	public static String FIND_BY_COMPANY_ID =
+		OrganizationFinder.class.getName() + ".findByCompanyId";
 
 	public static String FIND_BY_C_PO_N_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".findByC_PO_N_S_C_Z_R_C";
@@ -251,6 +255,7 @@ public class OrganizationFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params);
+
 			qPos.add(companyId);
 			qPos.add(parentOrganizationId);
 
@@ -285,6 +290,100 @@ public class OrganizationFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<Organization> findByCompanyId(
+			long companyId, LinkedHashMap<String, Object> params, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		if (params == null) {
+			params = new LinkedHashMap<String, Object>();
+		}
+
+		Long userId = (Long)params.get("usersOrgs");
+
+		LinkedHashMap<String, Object> params1 = params;
+
+		LinkedHashMap<String, Object> params2 =
+			new LinkedHashMap<String, Object>(params1);
+
+		if (userId != null) {
+			params2.remove("usersOrgs");
+			params2.put("organizationsUserGroups", userId);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("(");
+
+		String sql = CustomSQLUtil.get(FIND_BY_COMPANY_ID);
+
+		sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params1));
+		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params1));
+
+		sb.append(sql);
+		sb.append(")");
+
+		if (Validator.isNotNull(userId)) {
+			sql = CustomSQLUtil.get(FIND_BY_COMPANY_ID);
+
+			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params2));
+			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params2));
+
+			sb.append(" UNION (");
+			sb.append(sql);
+			sb.append(")");
+		}
+
+		sql = sb.toString();
+
+		sql = CustomSQLUtil.replaceAndOperator(sql, true);
+		sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("orgId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			setJoin(qPos, params1);
+
+			qPos.add(companyId);
+
+			if (Validator.isNotNull(userId)) {
+				setJoin(qPos, params2);
+
+				qPos.add(companyId);
+			}
+
+			List<Organization> organizations = new ArrayList<Organization>();
+
+			Iterator<Long> itr = (Iterator<Long>)QueryUtil.iterate(
+				q, getDialect(), start, end);
+
+			while (itr.hasNext()) {
+				Long organizationId = itr.next();
+
+				Organization organization = OrganizationUtil.findByPrimaryKey(
+					organizationId.longValue());
+
+				organizations.add(organization);
+			}
+
+			return organizations;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -407,7 +506,6 @@ public class OrganizationFinderImpl
 		sb.setIndex(0);
 
 		sb.append(sql);
-
 		sb.append(")");
 
 		if (Validator.isNotNull(userId)) {
@@ -428,7 +526,6 @@ public class OrganizationFinderImpl
 			sb.setIndex(0);
 
 			sb.append(sql);
-
 			sb.append(")");
 		}
 
@@ -479,6 +576,7 @@ public class OrganizationFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			setJoin(qPos, params1);
+
 			qPos.add(companyId);
 			qPos.add(parentOrganizationId);
 
@@ -504,6 +602,7 @@ public class OrganizationFinderImpl
 
 			if (Validator.isNotNull(userId)) {
 				setJoin(qPos, params2);
+
 				qPos.add(companyId);
 				qPos.add(parentOrganizationId);
 
@@ -568,6 +667,7 @@ public class OrganizationFinderImpl
 		QueryPos qPos = QueryPos.getInstance(q);
 
 		setJoin(qPos, params);
+
 		qPos.add(organizationId);
 
 		Iterator<Long> itr = q.list().iterator();
@@ -625,7 +725,6 @@ public class OrganizationFinderImpl
 			sb.setIndex(0);
 
 			sb.append(sql);
-
 			sb.append(") UNION (");
 
 			if (Validator.isNotNull(type)) {
@@ -657,7 +756,6 @@ public class OrganizationFinderImpl
 			sb.setIndex(0);
 
 			sb.append(sql);
-
 			sb.append(")");
 
 			sql = sb.toString();
@@ -790,7 +888,6 @@ public class OrganizationFinderImpl
 			sb.setIndex(0);
 
 			sb.append(sql);
-
 			sb.append(") UNION (");
 
 			if (Validator.isNotNull(type)) {

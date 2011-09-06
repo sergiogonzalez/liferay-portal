@@ -111,6 +111,7 @@ import net.htmlparser.jericho.StartTag;
  * @author Mika Koivisto
  * @author Jorge Ferrer
  * @author Juan Fernández
+ * @author Shuyang Zhou
  */
 public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
@@ -238,6 +239,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setUserName(userName);
 		message.setCreateDate(serviceContext.getCreateDate(now));
 		message.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		if (threadId > 0) {
+			message.setThreadId(threadId);
+		}
+
+		if (priority != MBThreadConstants.PRIORITY_NOT_GIVEN) {
+			message.setPriority(priority);
+		}
+
 		message.setAllowPingbacks(allowPingbacks);
 		message.setStatus(WorkflowConstants.STATUS_DRAFT);
 		message.setStatusByUserId(user.getUserId());
@@ -264,19 +274,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if ((thread == null) ||
 			(parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
 
-			threadId = counterLocalService.increment();
-
-			thread = mbThreadPersistence.create(threadId);
-
-			thread.setGroupId(groupId);
-			thread.setCompanyId(user.getCompanyId());
-			thread.setCategoryId(categoryId);
-			thread.setRootMessageId(messageId);
-			thread.setRootMessageUserId(user.getUserId());
-			thread.setStatus(WorkflowConstants.STATUS_DRAFT);
-			thread.setStatusByUserId(user.getUserId());
-			thread.setStatusByUserName(userName);
-			thread.setStatusDate(serviceContext.getModifiedDate(now));
+			thread = mbThreadLocalService.addThread(categoryId, message);
 		}
 
 		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
@@ -284,13 +282,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			thread.setPriority(priority);
 
+			mbThreadPersistence.update(thread, false);
+
 			updatePriorities(thread.getThreadId(), priority);
 		}
 
 		// Message
 
 		message.setCategoryId(categoryId);
-		message.setThreadId(threadId);
+		message.setThreadId(thread.getThreadId());
 		message.setRootMessageId(thread.getRootMessageId());
 		message.setParentMessageId(parentMessageId);
 		message.setSubject(subject);
@@ -298,10 +298,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setFormat(format);
 		message.setAttachments(!files.isEmpty());
 		message.setAnonymous(anonymous);
-
-		if (priority != MBThreadConstants.PRIORITY_NOT_GIVEN) {
-			message.setPriority(priority);
-		}
 
 		if (message.isDiscussion()) {
 			long classNameId = PortalUtil.getClassNameId(
@@ -312,6 +308,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setClassNameId(classNameId);
 			message.setClassPK(classPK);
 		}
+
+		mbMessagePersistence.update(message, false);
 
 		// Attachments
 
@@ -349,11 +347,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				}
 			}
 		}
-
-		// Commit
-
-		mbThreadPersistence.update(thread, false);
-		mbMessagePersistence.update(message, false);
 
 		// Resources
 
@@ -547,18 +540,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		int count = mbMessagePersistence.countByT_S(
 			message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
 
-		// Message flags
-
-		if (message.isRoot()) {
-			mbMessageFlagLocalService.deleteQuestionAndAnswerFlags(
-				message.getThreadId());
-		}
-		else if (mbMessageFlagLocalService.hasAnswerFlag(
-					message.getMessageId())) {
-
-			mbMessageFlagService.deleteAnswerFlag(message.getMessageId());
-		}
-
 		if ((count == 1) && !message.isDraft()) {
 
 			// Attachments
@@ -717,10 +698,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		ratingsStatsLocalService.deleteStats(
 			MBMessage.class.getName(), message.getMessageId());
-
-		// Message flags
-
-		mbMessageFlagPersistence.removeByMessageId(message.getMessageId());
 
 		// Resources
 
@@ -1285,6 +1262,33 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subscriptionLocalService.deleteSubscription(
 			userId, MBThread.class.getName(), message.getThreadId());
+	}
+
+	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+		throws PortalException, SystemException {
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		updateAnswer(message, answer, cascade);
+	}
+
+	public void updateAnswer(MBMessage message, boolean answer, boolean cascade)
+		throws PortalException, SystemException {
+
+		if (message.isAnswer() != answer) {
+			message.setAnswer(answer);
+
+			mbMessagePersistence.update(message, false);
+		}
+
+		if (cascade) {
+			List<MBMessage> messages = mbMessagePersistence.findByT_P(
+				message.getThreadId(), message.getMessageId());
+
+			for (MBMessage curMessage : messages) {
+				updateAnswer(curMessage, answer, cascade);
+			}
+		}
 	}
 
 	public void updateAsset(

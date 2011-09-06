@@ -275,6 +275,18 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static void updateAnswer(long messageId, boolean answer,
+		boolean cascade) throws RemoteException {
+		try {
+			MBMessageServiceUtil.updateAnswer(messageId, answer, cascade);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMessageSoap updateDiscussionMessage(
 		java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,

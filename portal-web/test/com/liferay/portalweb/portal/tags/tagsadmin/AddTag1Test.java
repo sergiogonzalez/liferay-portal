@@ -41,13 +41,15 @@ public class AddTag1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("add-tag-button", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@id='_99_addTagButton']",
+			RuntimeVariables.replace("Add Tag"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -55,7 +57,7 @@ public class AddTag1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("new-tag-name")) {
+				if (selenium.isVisible("//input[@id='_99_name']")) {
 					break;
 				}
 			}
@@ -66,9 +68,11 @@ public class AddTag1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("new-tag-name", RuntimeVariables.replace("Blue"));
+		selenium.type("//input[@id='_99_name']",
+			RuntimeVariables.replace("blue"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -76,10 +80,7 @@ public class AddTag1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"tag-portlet-messages"))) {
+				if (selenium.isVisible("//div[@id='portletMessages']")) {
 					break;
 				}
 			}
@@ -91,8 +92,8 @@ public class AddTag1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("tag-portlet-messages"));
+				"Your request processed successfully."),
+			selenium.getText("//div[@id='portletMessages']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -100,7 +101,7 @@ public class AddTag1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//td[2]/div[2]/div[3]/input[2]")) {
+				if (selenium.isVisible("link=blue")) {
 					break;
 				}
 			}
@@ -111,26 +112,5 @@ public class AddTag1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[2]/div[2]/div[3]/input[2]",
-			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=blue")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=blue"));
 	}
 }

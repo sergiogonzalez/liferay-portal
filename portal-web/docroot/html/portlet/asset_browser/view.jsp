@@ -78,9 +78,16 @@ portletURL.setParameter("typeSelection", typeSelection);
 				assetEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 			}
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(typeSelection, assetEntryId);
+			AssetEntry assetEntry = null;
 
-			if (assetEntry.getEntryId() == refererAssetEntryId) {
+			try {
+				assetEntry = AssetEntryLocalServiceUtil.getEntry(typeSelection, assetEntryId);
+			}
+			catch (NoSuchEntryException nsee) {
+				continue;
+			}
+
+			if ((assetEntry.getEntryId() == refererAssetEntryId) || !assetEntry.isVisible()) {
 				continue;
 			}
 
@@ -97,7 +104,7 @@ portletURL.setParameter("typeSelection", typeSelection);
 			sb.append("', '");
 			sb.append(ResourceActionsUtil.getModelResource(locale, assetEntry.getClassName()));
 			sb.append("', '");
-			sb.append(assetRenderer.getTitle(locale));
+			sb.append(HtmlUtil.escapeJS(assetRenderer.getTitle(locale)));
 			sb.append("');Liferay.Util.getWindow().close();");
 
 			String rowHREF = sb.toString();

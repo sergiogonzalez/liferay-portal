@@ -58,16 +58,16 @@ public class UpgradeAssetPublisherManualEntries
 
 			rs = ps.executeQuery();
 
-			rs.next();
+			if (rs.next()) {
+				String classUuid = rs.getString("classUuid");
 
-			String classUuid = rs.getString("classUuid");
+				Element assetEntryUuidElement = rootElement.addElement(
+					"assetEntryUuid");
 
-			Element assetEntryUuidElement = rootElement.addElement(
-				"assetEntryUuid");
+				assetEntryUuidElement.addText(classUuid);
 
-			assetEntryUuidElement.addText(classUuid);
-
-			rootElement.remove(assetEntryIdElement);
+				rootElement.remove(assetEntryIdElement);
+			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -132,7 +132,7 @@ public class UpgradeAssetPublisherManualEntries
 	protected String getUpdatePortletPreferencesWhereClause() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("(portletId like '101_INSTANCE_%') AND ((preferences like ");
+		sb.append("(portletId like '101_INSTANCE_%') and ((preferences like ");
 		sb.append("'%<preference><name>selection-style</name><value>manual");
 		sb.append("</value></preference>%') OR (preferences like ");
 		sb.append("'%<preference><name>selectionStyle</name><value>manual");

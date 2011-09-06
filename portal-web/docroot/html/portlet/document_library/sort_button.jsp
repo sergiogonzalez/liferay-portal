@@ -21,12 +21,18 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
+
+String reverseOrderByType = "asc";
+
+if (orderByType.equals("asc")) {
+	reverseOrderByType = "desc";
+}
 %>
 
 <liferay-ui:icon-menu align="left" direction="down" icon="" message="sort-by" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
 
 	<%
-	String taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('title')";
+	String taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'title','" + reverseOrderByType + "')";
 	%>
 
 	<liferay-ui:icon
@@ -36,7 +42,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	/>
 
 	<%
-	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('creationDate')";
+	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'creationDate','" + reverseOrderByType + "')";
 	%>
 
 	<liferay-ui:icon
@@ -46,7 +52,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	/>
 
 	<%
-	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('modifiedDate')";
+	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'modifiedDate','" + reverseOrderByType + "')";
 	%>
 
 	<liferay-ui:icon
@@ -56,7 +62,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	/>
 
 	<%
-	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('readCount')";
+	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'readCount','" + reverseOrderByType + "')";
 	%>
 
 	<liferay-ui:icon
@@ -66,7 +72,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	/>
 
 	<%
-	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('size')";
+	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'size','" + reverseOrderByType + "')";
 	%>
 
 	<liferay-ui:icon
@@ -80,17 +86,17 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	Liferay.provide(
 		window,
 		'<portlet:namespace />sortEntries',
-		function(orderByCol) {
+		function(folderId, orderByCol, reverseOrderByType) {
 			Liferay.fire(
 				'<portlet:namespace />dataRequest',
 				{
 					requestParams: {
-						'<portlet:namespace />folderId': '<%= folderId %>',
+						'<portlet:namespace />folderId': folderId,
 						'<portlet:namespace />struts_action': '/document_library/view',
 						'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
 						'<portlet:namespace />viewSortButton': <%= Boolean.TRUE.toString() %>,
 						'<portlet:namespace />orderByCol': orderByCol,
-						'<portlet:namespace />orderByType': '<%= (orderByCol.equals("title") && orderByType.equals("asc")) ? "desc" : "asc" %>'
+						'<portlet:namespace />reverseOrderByType': reverseOrderByType
 					}
 				}
 			);

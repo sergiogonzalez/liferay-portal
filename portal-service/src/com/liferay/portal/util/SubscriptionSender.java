@@ -110,7 +110,15 @@ public class SubscriptionSender implements Serializable {
 						companyId, className, classPK);
 
 				for (Subscription subscription : subscriptions) {
-					notifySubscriber(subscription);
+					try {
+						notifySubscriber(subscription);
+					}
+					catch (PortalException pe) {
+						_log.error(
+							"Unable to process subscription: " + subscription);
+
+						continue;
+					}
 				}
 
 				if (bulk) {
@@ -291,6 +299,9 @@ public class SubscriptionSender implements Serializable {
 
 			if (group.isLayout()) {
 				groupId = group.getParentGroupId();
+			}
+			else {
+				groupId = scopeGroupId;
 			}
 		}
 		catch (Exception e) {
