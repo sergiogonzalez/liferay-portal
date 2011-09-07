@@ -25,6 +25,8 @@ long defaultFolderId = GetterUtil.getLong(preferences.getValue("rootFolderId", S
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
 
+long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId");
+
 if ((folder == null) && (defaultFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 	try {
 		folder = DLAppLocalServiceUtil.getFolder(folderId);
@@ -49,8 +51,23 @@ if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGr
 int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId);
 int imagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
 
+String navigation = ParamUtil.getString(request, "navigation","images-home");
+
 long categoryId = ParamUtil.getLong(request, "categoryId");
 String tagName = ParamUtil.getString(request, "tag");
+
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
+}
+else {
+	boolean saveDisplayStyle = ParamUtil.getBoolean(request, "saveDisplayStyle");
+
+	if (saveDisplayStyle && ArrayUtil.contains(PropsValues.DL_DISPLAY_VIEWS, displayStyle)) {
+		portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
+	}
+}
 
 String categoryName = null;
 String vocabularyName = null;
@@ -76,6 +93,86 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/image_gallery_display/view");
 portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("folderId", String.valueOf(folderId));
+
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+int entryStart = ParamUtil.getInteger(request, "entryStart", searchContainer.getStart());
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", searchContainer.getEnd());
+
+int folderStart = ParamUtil.getInteger(request, "folderStart");
+int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
+
+List results = null;
+int total = 0;
+
+if (fileEntryTypeId > 0) {
+	Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
+
+	SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+	searchContext.setEnd(searchContainer.getEnd());
+	searchContext.setStart(searchContainer.getStart());
+
+	Hits hits = indexer.search(searchContext);
+
+	results = new ArrayList();
+
+	for (int i = 0; i < hits.getDocs().length; i++) {
+		Document doc = hits.doc(i);
+
+		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Document library search index is stale and contains file entry {" + fileEntryId + "}");
+			}
+
+			continue;
+		}
+
+		results.add(fileEntry);
+	}
+
+	total = results.size();
+}
+else {
+	if (navigation.equals("images-home")) {
+		if (useAssetEntryQuery) {
+			long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
+
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
+
+			assetEntryQuery.setExcludeZeroViewCount(false);
+
+			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+		}
+		else {
+			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
+			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+		}
+	}
+	else if (navigation.equals("my-images") || navigation.equals("recent-images")) {
+		long groupFileEntriesUserId = 0;
+
+		if (navigation.equals("my-images") && themeDisplay.isSignedIn()) {
+			groupFileEntriesUserId = user.getUserId();
+		}
+
+		results= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, entryStart, entryEnd);
+		total= DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId);
+	}
+}
+
+searchContainer.setResults(results);
+searchContainer.setTotal(total);
+
+request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 
 request.setAttribute("view.jsp-folder", folder);
 
@@ -109,19 +206,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</c:if>
 
 		<%
-		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
 		long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
 
 		assetEntryQuery.setExcludeZeroViewCount(false);
 
-		int total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+		total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
 		searchContainer.setTotal(total);
 
-		List results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 
 		searchContainer.setResults(results);
 
@@ -141,7 +236,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<c:when test='<%= topLink.equals("images-home") %>'>
 		<aui:layout>
 			<c:if test="<%= folder != null %>">
-				<liferay-ui:header
+				<liferay-ui:header 
 					localizeTitle="<%= false %>"
 					title="<%= folder.getName() %>"
 				/>
@@ -163,7 +258,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 							</div>
 
-							<div class="lfr-asset-icon lfr-asset-items last">
+							<div class="lfr-asset-icon lfr-asset-images last">
 								<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
 							</div>
 						</div>
@@ -178,31 +273,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						</liferay-ui:custom-attributes-available>
 					</c:if>
 
-					<c:if test="<%= foldersCount > 0 %>">
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGallerySubFoldersPanel" persistState="<%= true %>" title='<%= (folder != null) ? "subfolders" : "folders" %>'>
-							<liferay-util:include page="/html/portlet/image_gallery_display/view_folders.jsp" />
-						</liferay-ui:panel>
-					</c:if>
+					<%
+					List scores = null;
+					%>
 
-					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryEntriesPanel" persistState="<%= true %>" title="images">
-
-						<%
-						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-						int total = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
-
-						searchContainer.setTotal(total);
-
-						List results = DLAppServiceUtil.getFileEntriesAndFileShortcuts(repositoryId, folderId, status, searchContainer.getStart(), searchContainer.getEnd());
-
-						searchContainer.setResults(results);
-
-						List scores = null;
-						%>
-
-						<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
-
-					</liferay-ui:panel>
+					<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
 				</liferay-ui:panel-container>
 			</aui:column>
 
@@ -249,16 +324,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		if (topLink.equals("my-images") && themeDisplay.isSignedIn()) {
 			groupImagesUserId = user.getUserId();
 		}
-
-		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-		int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId);
-
-		searchContainer.setTotal(total);
-
-		List results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, defaultFolderId, searchContainer.getStart(), searchContainer.getEnd());
-
-		searchContainer.setResults(results);
 		%>
 
 		<aui:layout>
@@ -281,3 +346,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	</c:when>
 </c:choose>
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.image_gallery_display.view_jsp");
+%>
