@@ -257,9 +257,28 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, String[] mimetypes, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return dlFolderFinder.findF_FE_FS_ByG_F_S(
+			groupId, folderId, status, includeMountFolders, start, end, obc);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders)
+		throws SystemException {
+
+		return dlFolderFinder.countF_FE_FS_ByG_F_S(
+			groupId, folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, String[] mimetypes)
 		throws SystemException {
 
 		return dlFolderFinder.countF_FE_FS_ByG_F_S(

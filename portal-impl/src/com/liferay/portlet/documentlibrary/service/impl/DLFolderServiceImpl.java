@@ -179,6 +179,16 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc, String[] mimetypes)
+		throws SystemException {
+
+		return dlFolderFinder.filterFindF_FE_FS_ByG_F_S(
+			groupId, folderId, status, includeMountFolders, start, end, obc);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders)
@@ -187,6 +197,16 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return dlFolderFinder.filterCountF_FE_FS_ByG_F_S(
 			groupId, folderId, status, includeMountFolders);
 	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, String[] mimetypes)
+		throws SystemException {
+
+		return dlFolderFinder.filterCountF_FE_FS_ByG_F_S(
+			groupId, folderId, status, includeMountFolders);
+	}
+
 
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {

@@ -1019,6 +1019,21 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+			long repositoryId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc, String[] mimetypes)
+		throws PortalException, SystemException {
+
+		if (mimetypes == null || mimetypes.length == 0) {
+			return getFoldersAndFileEntriesAndFileShortcuts(
+				repositoryId, folderId, status, includeMountFolders, start, end,
+				obc);
+		}
+
+		return null;
+	}
+
 	/**
 	 * Returns the number of immediate subfolders, file entries, and file
 	 * shortcuts in the parent folder.
@@ -1043,6 +1058,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		return localRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+			long repositoryId, long folderId, int status,
+			boolean includeMountFolders, String[] mimetypes)
+		throws PortalException, SystemException {
+
+		if (mimetypes == null || mimetypes.length == 0) {
+			return getFoldersAndFileEntriesAndFileShortcutsCount(
+				repositoryId, folderId, status, includeMountFolders);
+		}
+
+		return 0;
 	}
 
 	/**
