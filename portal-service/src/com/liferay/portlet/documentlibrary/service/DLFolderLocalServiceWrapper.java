@@ -365,11 +365,28 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		java.lang.String[] mimetypes, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(groupId,
+			folderId, status, includeMountFolders, mimetypes, start, end, obc);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(groupId,
+			folderId, status, includeMountFolders, mimetypes);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)

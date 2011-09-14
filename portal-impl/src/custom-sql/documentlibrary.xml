@@ -216,7 +216,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFE_ByG_F_S">
 		<![CDATA[
 			SELECT
-				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate as createDate, DLFileEntry.modifiedDate as modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate as createDate, DLFileEntry.modifiedDate as modifiedDate, DLFileEntry.name AS name, DLFileEntry.mimeType AS mimeType, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
 			FROM
 				DLFileEntry
 			INNER JOIN

@@ -108,11 +108,29 @@ public class DLFolderServiceWrapper implements DLFolderService {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc,
+		java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(groupId,
+			folderId, status, includeMountFolders, start, end, obc, mimetypes);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(groupId,
+			folderId, status, includeMountFolders, mimetypes);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)

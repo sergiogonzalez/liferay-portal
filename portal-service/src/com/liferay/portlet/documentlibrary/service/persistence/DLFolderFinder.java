@@ -22,6 +22,10 @@ public interface DLFolderFinder {
 		boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countF_FE_FS_ByG_F_S_ByMimetypes(long groupId, long folderId,
+		int status, boolean includeMountFolders, java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int countFE_FS_ByG_F_S(long groupId, long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
