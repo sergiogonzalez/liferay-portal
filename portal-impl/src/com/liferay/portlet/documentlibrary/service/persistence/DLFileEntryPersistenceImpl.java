@@ -267,7 +267,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			if (EntityCacheUtil.getResult(
 						DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileEntryImpl.class, dlFileEntry.getPrimaryKey(), this) == null) {
+						DLFileEntryImpl.class, dlFileEntry.getPrimaryKey()) == null) {
 				cacheResult(dlFileEntry);
 			}
 		}
@@ -302,6 +302,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public void clearCache(DLFileEntry dlFileEntry) {
 		EntityCacheUtil.removeResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryImpl.class, dlFileEntry.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -681,7 +683,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public DLFileEntry fetchByPrimaryKey(long fileEntryId)
 		throws SystemException {
 		DLFileEntry dlFileEntry = (DLFileEntry)EntityCacheUtil.getResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileEntryImpl.class, fileEntryId, this);
+				DLFileEntryImpl.class, fileEntryId);
 
 		if (dlFileEntry == _nullDLFileEntry) {
 			return null;
@@ -8053,10 +8055,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -8076,8 +8076,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

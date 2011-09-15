@@ -95,8 +95,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		for (ClusterGroup clusterGroup : clusterGroups) {
 			if (EntityCacheUtil.getResult(
 						ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-						ClusterGroupImpl.class, clusterGroup.getPrimaryKey(),
-						this) == null) {
+						ClusterGroupImpl.class, clusterGroup.getPrimaryKey()) == null) {
 				cacheResult(clusterGroup);
 			}
 		}
@@ -131,6 +130,8 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	public void clearCache(ClusterGroup clusterGroup) {
 		EntityCacheUtil.removeResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
 			ClusterGroupImpl.class, clusterGroup.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -352,7 +353,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	public ClusterGroup fetchByPrimaryKey(long clusterGroupId)
 		throws SystemException {
 		ClusterGroup clusterGroup = (ClusterGroup)EntityCacheUtil.getResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-				ClusterGroupImpl.class, clusterGroupId, this);
+				ClusterGroupImpl.class, clusterGroupId);
 
 		if (clusterGroup == _nullClusterGroup) {
 			return null;
@@ -515,10 +516,8 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -538,8 +537,8 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

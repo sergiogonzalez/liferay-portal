@@ -271,6 +271,7 @@ alter table Layout add keywords STRING null;
 alter table Layout add robots STRING null;
 alter table Layout add layoutPrototypeUuid VARCHAR(75) null;
 alter table Layout add layoutPrototypeLinkEnabled BOOLEAN null;
+alter table Layout add templateLayoutUuid VARCHAR(75) null;
 alter table Layout drop column layoutPrototypeId;
 alter table Layout drop column dlFolderId;
 
@@ -383,7 +384,7 @@ create table MDRAction (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	ruleGroupId LONG,
+	ruleGroupInstanceId LONG,
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(255) null,
@@ -523,8 +524,11 @@ create table UserNotificationEvent (
 	type_ VARCHAR(75) null,
 	timestamp LONG,
 	deliverBy LONG,
-	payload TEXT null
+	payload TEXT null,
+	archived BOOLEAN
 );
+
+alter table UserNotificationEvent add archived BOOLEAN;
 
 create table VirtualHost (
 	virtualHostId LONG not null primary key,

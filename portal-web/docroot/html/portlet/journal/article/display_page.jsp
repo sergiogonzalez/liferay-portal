@@ -20,88 +20,515 @@
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
+String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
 
 String layoutUuid = BeanParamUtil.getString(article, request, "layoutUuid");
 
-Layout refererLayout = null;
+Layout selLayout = null;
 
-if ((article == null) || article.isNew()) {
-	long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
+String layoutBreadcrumb = StringPool.BLANK;
 
-	if (refererPlid > 0) {
-		refererLayout = LayoutLocalServiceUtil.getLayout(refererPlid);
-	}
+if (Validator.isNotNull(layoutUuid)) {
+	selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId());
+
+	layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
 }
+
+Group parentGroup = themeDisplay.getParentGroup();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="display-page" />
 
-<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
+<h3><liferay-ui:message key="display-page" /><liferay-ui:icon-help message="default-display-page-help" /></h3>
 
-<h3><liferay-ui:message key="display-page" /></h3>
+<div id="<portlet:namespace />pagesContainer">
+	<aui:input id="pagesContainerInput" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
-<%
-List<Layout> privateGroupLayouts = JournalUtil.getDefaultAssetPublisherLayouts(scopeGroupId, true);
-List<Layout> publicGroupLayouts = JournalUtil.getDefaultAssetPublisherLayouts(scopeGroupId, false);
+	<div id="<portlet:namespace />displayPageItemContainer" class="display-page-item-container aui-helper-hidden">
+		<span class="display-page-item">
+			<span>
+				<span id="<portlet:namespace />displayPageNameInput"><%= layoutBreadcrumb %></span>
 
-if (privateGroupLayouts.isEmpty() && publicGroupLayouts.isEmpty()) {
-%>
+				<span class="display-page-item-remove aui-icon aui-icon-close" id="<portlet:namespace />displayPageItemRemove" tabindex="0"></span>
+			</span>
+		</span>
+	</div>
+</div>
 
-	<liferay-ui:message key="there-are-no-pages-configured-to-be-the-display-page" />
+<div class="display-page-toolbar" id="<portlet:namespace />displayPageToolbar"></div>
 
-<%
-}
-else {
-%>
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />loadDisplayPage',
+		function(event) {
+			var A = AUI();
 
-	<aui:select helpMessage="default-display-page-help" label="default-display-page" name="layoutUuid" showEmptyOption="<%= true %>">
+			var Lang = A.Lang;
 
-	<%
-	if (!publicGroupLayouts.isEmpty()) {
-	%>
+			var TPL_TAB_CONTENT = '<div id="<portlet:namespace />{tabId}">' +
+				'<div id="<portlet:namespace />{tabContentId}"></div>' +
+			'</div>';
 
-		<optgroup label="<liferay-ui:message key="public-pages" />">
+			var TPL_TAB_VIEW = '<div id="<portlet:namespace />{pagesTabViewId}"></div>' +
+				'<div class="selected-page-message portlet-msg-alert" id="<portlet:namespace />selectedPageMessage">' +
+					'<liferay-ui:message key="there-is-no-selected-page" />' +
+				'</div>';
 
-		<%
-		for (Layout groupLayout : publicGroupLayouts) {
-		%>
+			var dialog;
 
-			<aui:option label="<%= groupLayout.getName(defaultLanguageId) %>" selected="<%= layoutUuid.equals(groupLayout.getUuid()) || groupLayout.equals(refererLayout) %>" value="<%= groupLayout.getUuid() %>" />
+			var displayPageItemContainer = A.one('#<portlet:namespace />displayPageItemContainer');
+			var displayPageNameInput = A.one('#<portlet:namespace />displayPageNameInput');
+			var pagesContainerInput = A.one('#<portlet:namespace />pagesContainerInput');
 
-		<%
-		}
-		%>
+			var pagesTabViewId = A.guid();
+			var privatePagesTabContentId = A.guid();
+			var privatePagesTabId = A.guid();
+			var publicPagesTabContentId = A.guid();
+			var publicPagesTabId = A.guid();
 
-		</optgroup>
+			var okButton;
+			var privatePagesTabNode;
+			var publicPagesTabNode;
+			var selectedNodeMessage;
+			var tabView;
+			var treeViewPrivate;
+			var treeViewPublic;
 
-	<%
-	}
+			var treePrivatePagesContainerId = '<portlet:namespace />treeContainerPrivatePagesOutput';
+			var treePublicPagesContainerId = '<portlet:namespace />treeContainerPublicPagesOutput';
 
-	if (!privateGroupLayouts.isEmpty()) {
-	%>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPublicPages">
+				<portlet:param name="struts_action" value="/journal/select_display_page" />
+				<portlet:param name="cmd" value="<%= ActionKeys.VIEW_TREE %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
 
-		<optgroup label="<liferay-ui:message key="private-pages" />">
+				<c:if test="<%= selLayout != null && !selLayout.isPrivateLayout() %>">
+					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+				</c:if>
 
-		<%
-		for (Layout groupLayout : privateGroupLayouts) {
-		%>
+				<portlet:param name="treeId" value="treeContainerPublicPages" />
+				<portlet:param name="checkContentDisplayPage" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="expandFirstNode" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="saveState" value="<%= Boolean.FALSE.toString() %>" />
+			</liferay-portlet:resourceURL>
 
-			<aui:option label="<%= groupLayout.getName(defaultLanguageId) %>" selected="<%= layoutUuid.equals(groupLayout.getUuid()) || groupLayout.equals(refererLayout) %>" value="<%= groupLayout.getUuid() %>" />
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPrivatePages">
+				<portlet:param name="struts_action" value="/journal/select_display_page" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
+				<portlet:param name="tabs1" value="private-pages" />
+				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
 
-		<%
-		}
-		%>
+				<c:if test="<%= selLayout != null && selLayout.isPrivateLayout() %>">
+					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+				</c:if>
 
-		</optgroup>
-	<%
-	}
-	%>
+				<portlet:param name="treeId" value="treeContainerPrivatePages" />
+				<portlet:param name="checkContentDisplayPage" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="expandFirstNode" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="saveState" value="<%= Boolean.FALSE.toString() %>" />
+			</liferay-portlet:resourceURL>
 
-	</aui:select>
+			var bindTreeUI = function(treeInstance) {
+				treeInstance.after(
+					'lastSelectedChange',
+					function(event) {
+						setSelectedPage(event.newVal);
+					}
+				);
+			};
 
-<%
-}
-%>
+			var displayPageMessage = function(html, type) {
+				selectedNodeMessage.html(html);
+
+				var cssClass = 'selected-page-message';
+
+				if (type) {
+					cssClass += ' portlet-msg-' + type;
+				}
+
+				selectedNodeMessage.attr('className', cssClass);
+			};
+
+			var getChosenPagePath = function(node) {
+				var buffer = [];
+
+				if (A.instanceOf(node, A.TreeNode)) {
+					buffer.push(node.get('labelEl').text());
+
+					node.eachParent(
+						function(treeNode) {
+							var labelEl = treeNode.get('labelEl');
+
+							if (labelEl) {
+								buffer.unshift(labelEl.text());
+							}
+						}
+					);
+				}
+
+				return buffer.join(' > ');
+			}
+
+			var getDialog = function() {
+				if (!dialog) {
+					var bodyContent = Lang.sub(
+						TPL_TAB_VIEW,
+						{
+							pagesTabViewId: pagesTabViewId
+						}
+					);
+
+					dialog = new A.Dialog(
+						{
+							align: {
+								node: A.one('#portlet_<%= portletDisplay.getId() %>'),
+								points: ['tc', 'tc']
+							},
+							buttons: [
+								{
+									disabled: true,
+									handler: setDisplayPage,
+									label: '<liferay-ui:message key="ok" />'
+								},
+								{
+									handler: function(event) {
+										dialog.hide();
+									},
+									label: '<liferay-ui:message key="cancel" />'
+								}
+							],
+							bodyContent: bodyContent,
+							cssClass: 'display-page-dialog',
+							resizable: false,
+							title: '<liferay-ui:message key="choose-a-display-page" />',
+							visible: false,
+							width: 450
+						}
+					).render();
+
+					selectedNodeMessage = A.one('#<portlet:namespace />selectedPageMessage');
+
+					var dialogButtons = dialog.buttons;
+
+					okButton = dialogButtons.item(0);
+					cancelButton = dialogButtons.item(1);
+
+					var tabs = [];
+
+					<c:if test="<%= parentGroup.getPublicLayoutsPageCount() > 0 %>">
+						tabs.push(
+							{
+								label: '<liferay-ui:message key="public-pages" />',
+								content: Lang.sub(
+									TPL_TAB_CONTENT,
+									{
+										tabContentId: publicPagesTabContentId,
+										tabId: publicPagesTabId
+									}
+								)
+							}
+						);
+					</c:if>
+
+					<c:if test="<%= parentGroup.getPrivateLayoutsPageCount() > 0 %>">
+						tabs.push(
+							{
+								label: '<liferay-ui:message key="private-pages" />',
+								content: Lang.sub(
+									TPL_TAB_CONTENT,
+									{
+										tabContentId: privatePagesTabContentId,
+										tabId: privatePagesTabId
+									}
+								)
+							}
+						);
+					</c:if>
+
+					tabView = new A.TabView(
+						{
+							items: tabs,
+							contentBox: '#<portlet:namespace />' + pagesTabViewId
+						}
+					);
+
+					tabView.render();
+
+					tabView.after(
+						'activeTabChange',
+						function() {
+							displayPageMessage('');
+
+							loadPages();
+						}
+					);
+
+					<c:if test="<%= parentGroup.getPublicLayoutsPageCount() > 0 %>">
+						publicPagesTabNode = A.one('#<portlet:namespace />' + publicPagesTabContentId);
+
+						publicPagesTabNode.plug(A.Plugin.ParseContent);
+					</c:if>
+
+					<c:if test="<%= parentGroup.getPrivateLayoutsPageCount() > 0 %>">
+						privatePagesTabNode = A.one('#<portlet:namespace />' + privatePagesTabContentId);
+
+						privatePagesTabNode.plug(A.Plugin.ParseContent);
+					</c:if>
+
+					dialog.on('visibleChange', onDialogVisibleChange);
+				}
+
+				return dialog;
+			};
+
+			var isPublicPagesTabSelected = function() {
+				var result = <%= parentGroup.getPublicLayoutsPageCount() > 0 %>;
+
+				if (tabView.get('items').length >= 2) {
+					var index = tabView.getTabIndex(tabView.get('activeTab'));
+
+					result = (index == 0);
+				}
+
+				return result;
+			};
+
+			var loadPages = function() {
+				var url;
+
+				var publicPages = isPublicPagesTabSelected();
+
+				if (publicPages && !treeViewPublic) {
+					url = '<%= treeUrlPublicPages %>';
+				}
+				else if (!treeViewPrivate) {
+					url = '<%= treeUrlPrivatePages %>';
+				}
+
+				if (url) {
+					A.io.request(
+						url,
+						{
+							on: {
+								success: function(event, id, obj) {
+									var response = this.get('responseData');
+
+									onPagesLoad(response, publicPages);
+								}
+							}
+						}
+					);
+				}
+				else {
+					var treeInstance = treeViewPrivate;
+
+					if (publicPages) {
+						treeInstance = treeViewPublic;
+					}
+
+					setSelectedPage(treeInstance.get('lastSelected'));
+				}
+			}
+
+			var onDialogVisibleChange = function(event) {
+				if (!event.newVal) {
+					var treeContainer;
+
+					if (treeViewPublic) {
+						treeViewPublic.destroy();
+
+						treeViewPublic = null;
+					}
+
+					if (treeViewPrivate) {
+						treeViewPrivate.destroy();
+
+						treeViewPrivate = null;
+					}
+
+					if (treeContainer) {
+						treeContainer.purge(true);
+					}
+
+					displayPageMessage('<liferay-ui:message key="there-is-no-selected-page" />', 'alert');
+				}
+				else {
+					loadPages();
+				}
+			};
+
+			var onPagesLoad = function(response, publicPages) {
+				var treeContainerId;
+				var treeWrapper;
+
+				if (publicPages) {
+					treeContainerId = treePublicPagesContainerId;
+					treeWrapper = publicPagesTabNode;
+				}
+				else {
+					treeContainerId = treePrivatePagesContainerId;
+					treeWrapper = privatePagesTabNode;
+				}
+
+				if (treeWrapper) {
+					treeWrapper.setContent(response);
+
+					var treeContainer = A.one('#' + treeContainerId);
+
+					var processTreeTask = A.debounce(
+						function() {
+							treeViewInstance = treeContainer.getData('treeInstance');
+
+							if (treeViewInstance) {
+								if (publicPages) {
+									treeViewPublic = treeViewInstance;
+								}
+								else {
+									treeViewPrivate = treeViewInstance;
+								}
+
+								bindTreeUI(treeViewInstance);
+
+								treeContainer.swallowEvent('click', true);
+
+								setSelectedPage(treeViewInstance.get('lastSelected'));
+							}
+							else {
+								processTreeTask();
+							}
+						},
+						100
+					);
+
+					processTreeTask();
+				}
+			};
+
+			var onSelectDisplayPage = function(event) {
+				<c:if test="<%= (parentGroup.getPrivateLayoutsPageCount() > 0) || (parentGroup.getPublicLayoutsPageCount() > 0) %>">
+					getDialog().show();
+				</c:if>
+			};
+
+			var setDisplayPage = function() {
+				var publicPages = isPublicPagesTabSelected();
+
+				var tree;
+
+				if (publicPages && treeViewPublic) {
+					tree = treeViewPublic;
+				}
+				else if (treeViewPrivate){
+					tree = treeViewPrivate;
+				}
+
+				if (tree) {
+					var lastSelected = tree.get('lastSelected');
+
+					if (lastSelected) {
+						var labelEl = lastSelected.get('labelEl');
+
+						var link = labelEl.one('a');
+
+						if (link && !link.hasClass('layout-page-invalid')) {
+							var label = getChosenPagePath(lastSelected);
+
+							var uuid = link.attr('data-uuid');
+
+							pagesContainerInput.val(uuid);
+
+							displayPageNameInput.html(label);
+
+							displayPageItemContainer.show();
+
+							if (A.UA.webkit) {
+								var parentNode = removeDisplayPageItem.get('parentNode');
+
+								removeDisplayPageItem.remove();
+
+								parentNode.appendChild(removeDisplayPageItem);
+							}
+
+							getDialog().hide();
+						}
+					}
+				}
+			};
+
+			var setSelectedPage = function(lastSelectedNode) {
+				var disabled = true;
+
+				var messageText = '<liferay-ui:message key="there-is-no-selected-page" />';
+				var messageType = 'alert';
+
+				if (lastSelectedNode) {
+					var labelEl = lastSelectedNode.get('labelEl');
+
+					var link = labelEl.one('a');
+
+					var text = getChosenPagePath(lastSelectedNode);
+
+					if (link && !link.hasClass('layout-page-invalid')) {
+						disabled = false;
+
+						messageText = text;
+						messageType = 'info';
+					}
+					else if (text) {
+						messageText = Lang.sub('<liferay-ui:message key="x-is-not-a-content-display-page" />', ['"' + text + '"']);
+					}
+				}
+
+				displayPageMessage(messageText, messageType);
+
+				okButton.set('disabled', disabled);
+			};
+
+			var toolbar = new A.Toolbar(
+				{
+					children: [
+						{
+							<c:if test="<%= (parentGroup.getPrivateLayoutsPageCount() <= 0) && (parentGroup.getPublicLayoutsPageCount() <= 0) %>">
+								disabled: true,
+							</c:if>
+
+							icon: 'search',
+							id: '<portlet:namespace />chooseDisplayPage',
+							handler: onSelectDisplayPage,
+							label: '<liferay-ui:message key="select" />'
+						}
+					]
+				}
+			).render('#<portlet:namespace />displayPageToolbar');
+
+			if (displayPageNameInput.text()) {
+				displayPageItemContainer.show();
+			}
+
+			var removeDisplayPageItem = A.one('#<portlet:namespace />displayPageItemRemove');
+
+			removeDisplayPageItem.on(
+				'click',
+				function(event) {
+					pagesContainerInput.val('');
+
+					displayPageItemContainer.hide();
+				}
+			);
+		},
+		['aui-dialog', 'aui-io', 'aui-tabs', 'aui-tree']
+	);
+
+	<c:choose>
+		<c:when test="<%= Validator.isNull(toLanguageId) %>">
+			Liferay.once('formNavigator:reveal<portlet:namespace />displayPage', <portlet:namespace />loadDisplayPage);
+		</c:when>
+		<c:otherwise>
+			<portlet:namespace />loadDisplayPage();
+		</c:otherwise>
+	</c:choose>
+</aui:script>
 
 <c:if test="<%= Validator.isNotNull(layoutUuid) %>">
 
@@ -119,3 +546,35 @@ else {
 		<a href="<%= urlViewInContext %>" target="blank"><%= LanguageUtil.format(pageContext, "view-content-in-x", defaultDisplayLayout.getName(locale)) %></a>
 	</c:if>
 </c:if>
+
+<%!
+private String _getLayoutBreadcrumb(Layout layout, Locale locale) throws Exception {
+	StringBundler sb = new StringBundler();
+
+	if (layout.isPrivateLayout()) {
+		sb.append(LanguageUtil.get(locale, "private-pages"));
+	}
+	else {
+		sb.append(LanguageUtil.get(locale, "public-pages"));
+	}
+
+	sb.append(StringPool.SPACE);
+	sb.append(StringPool.GREATER_THAN);
+	sb.append(StringPool.SPACE);
+
+	List<Layout> ancestors = layout.getAncestors();
+
+	Collections.reverse(ancestors);
+
+	for (Layout ancestor : ancestors) {
+		sb.append(ancestor.getName(locale));
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.GREATER_THAN);
+		sb.append(StringPool.SPACE);
+	}
+
+	sb.append(layout.getName(locale));
+
+	return sb.toString();
+}
+%>

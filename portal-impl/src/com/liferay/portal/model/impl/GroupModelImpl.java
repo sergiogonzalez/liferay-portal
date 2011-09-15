@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -31,8 +32,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -173,8 +172,14 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE = "create table Groups_UserGroups (groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Groups_UserGroups"), true);
-	public static final String MAPPING_TABLE_USERS_GROUPS_NAME = com.liferay.portal.model.impl.UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS = com.liferay.portal.model.impl.UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS;
+	public static final String MAPPING_TABLE_USERS_GROUPS_NAME = "Users_Groups";
+	public static final Object[][] MAPPING_TABLE_USERS_GROUPS_COLUMNS = {
+			{ "userId", Types.BIGINT },
+			{ "groupId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE = "create table Users_Groups (userId LONG not null,groupId LONG not null,primary key (userId, groupId))";
+	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Users_Groups"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Group"));
 
@@ -431,7 +436,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Group)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (Group)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

@@ -109,7 +109,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		for (Ticket ticket : tickets) {
 			if (EntityCacheUtil.getResult(
 						TicketModelImpl.ENTITY_CACHE_ENABLED, TicketImpl.class,
-						ticket.getPrimaryKey(), this) == null) {
+						ticket.getPrimaryKey()) == null) {
 				cacheResult(ticket);
 			}
 		}
@@ -144,6 +144,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	public void clearCache(Ticket ticket) {
 		EntityCacheUtil.removeResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
 			TicketImpl.class, ticket.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY,
 			new Object[] { ticket.getKey() });
@@ -391,7 +393,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 */
 	public Ticket fetchByPrimaryKey(long ticketId) throws SystemException {
 		Ticket ticket = (Ticket)EntityCacheUtil.getResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-				TicketImpl.class, ticketId, this);
+				TicketImpl.class, ticketId);
 
 		if (ticket == _nullTicket) {
 			return null;
@@ -772,10 +774,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -795,8 +795,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

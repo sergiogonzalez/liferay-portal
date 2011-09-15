@@ -136,7 +136,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		for (Region region : regions) {
 			if (EntityCacheUtil.getResult(
 						RegionModelImpl.ENTITY_CACHE_ENABLED, RegionImpl.class,
-						region.getPrimaryKey(), this) == null) {
+						region.getPrimaryKey()) == null) {
 				cacheResult(region);
 			}
 		}
@@ -171,6 +171,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	public void clearCache(Region region) {
 		EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -388,7 +390,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public Region fetchByPrimaryKey(long regionId) throws SystemException {
 		Region region = (Region)EntityCacheUtil.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-				RegionImpl.class, regionId, this);
+				RegionImpl.class, regionId);
 
 		if (region == _nullRegion) {
 			return null;
@@ -1778,10 +1780,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1801,8 +1801,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

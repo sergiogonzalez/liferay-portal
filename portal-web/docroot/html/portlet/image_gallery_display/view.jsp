@@ -178,22 +178,15 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						</liferay-ui:custom-attributes-available>
 					</c:if>
 
-					<c:if test="<%= foldersCount > 0 %>">
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGallerySubFoldersPanel" persistState="<%= true %>" title='<%= (folder != null) ? "subfolders" : "folders" %>'>
-							<liferay-util:include page="/html/portlet/image_gallery_display/view_folders.jsp" />
-						</liferay-ui:panel>
-					</c:if>
-
-					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryEntriesPanel" persistState="<%= true %>" title="images">
-
+					<liferay-ui:panel collapsible="<%= false %>" id="imageGalleryEntriesPanel" title="Media">
 						<%
 						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-						int total = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
+						int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
 
 						searchContainer.setTotal(total);
 
-						List results = DLAppServiceUtil.getFileEntriesAndFileShortcuts(repositoryId, folderId, status, searchContainer.getStart(), searchContainer.getEnd());
+						List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 						searchContainer.setResults(results);
 

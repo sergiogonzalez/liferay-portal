@@ -37,8 +37,6 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class WikiCacheUtil {
 
-	public static final String CACHE_NAME = WikiCacheUtil.class.getName();
-
 	public static void clearCache(long nodeId) {
 		_portalCache.removeAll();
 	}
@@ -103,7 +101,7 @@ public class WikiCacheUtil {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(CACHE_NAME);
+		sb.append(_CACHE_NAME);
 		sb.append(StringPool.POUND);
 		sb.append(StringUtil.toHexString(nodeId));
 		sb.append(title);
@@ -141,11 +139,13 @@ public class WikiCacheUtil {
 		}
 	}
 
+	private static final String _CACHE_NAME = WikiCacheUtil.class.getName();
+
 	private static final String _OUTGOING_LINKS = "OUTGOING_LINKS";
 
 	private static Log _log = LogFactoryUtil.getLog(WikiUtil.class);
 
 	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
-		CACHE_NAME);
+		_CACHE_NAME);
 
 }

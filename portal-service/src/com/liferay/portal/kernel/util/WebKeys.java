@@ -49,6 +49,8 @@ public interface WebKeys {
 
 	public static final String INVOKER_FILTER_URI = "INVOKER_FILTER_URI";
 
+	public static final String JOURNAL_ARTICLE_DISPLAY = "JOURNAL_ARTICLE_DISPLAY";
+
 	public static final String LAST_PATH = "LAST_PATH";
 
 	public static final String LAYOUT = "LAYOUT";

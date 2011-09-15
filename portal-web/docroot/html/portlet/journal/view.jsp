@@ -131,15 +131,15 @@ portletURL.setParameter("tabs1", tabs1);
 				%>
 
 				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_STRUCTURE %>">
-					<liferay-ui:message key="they-are-are-referenced-by-other-structures" />
+					<liferay-ui:message key="they-are-referenced-by-other-structures" />
 				</c:if>
 
 				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_TEMPLATE %>">
-					<liferay-ui:message key="they-are-are-referenced-by-templates" />
+					<liferay-ui:message key="they-are-referenced-by-templates" />
 				</c:if>
 
 				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_WEB_CONTENT %>">
-					<liferay-ui:message key="they-are-are-referenced-by-web-contents" />
+					<liferay-ui:message key="they-are-referenced-by-web-contents" />
 				</c:if>
 			</liferay-ui:error>
 
@@ -191,14 +191,14 @@ portletURL.setParameter("tabs1", tabs1);
 
 				row.addText(structure.getStructureId(), rowURL);
 
-				// Name and description
+				// Name
 
-				if (Validator.isNotNull(structure.getName())) {
-					row.addText(structure.getName(locale), rowURL);
-				}
+				row.addText(HtmlUtil.escape(structure.getName(locale)), rowURL);
 
-				if (Validator.isNotNull(structure.getDescription())) {
-					row.addText(structure.getDescription(locale), rowURL);
+				// Description
+
+				if (Validator.isNotNull(structure.getDescription(locale))) {
+					row.addText(HtmlUtil.escape(structure.getDescription(locale)), rowURL);
 				}
 
 				// Action
@@ -277,7 +277,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 				// Name
 
-				row.addText(template.getName(locale), rowURL);
+				row.addText(HtmlUtil.escape(template.getName(locale)), rowURL);
 
 				// Description and image
 

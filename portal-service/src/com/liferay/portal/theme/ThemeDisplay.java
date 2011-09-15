@@ -181,6 +181,10 @@ public class ThemeDisplay implements Serializable {
 		return _locale;
 	}
 
+	public Group getParentGroup() {
+		return _parentGroup;
+	}
+
 	public long getParentGroupId() {
 		return _parentGroupId;
 	}

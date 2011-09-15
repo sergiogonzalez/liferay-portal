@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,8 +38,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -153,9 +152,18 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return AssetCategory.class.getName();
 	}
 
-	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME = com.liferay.portlet.asset.model.impl.AssetEntryModelImpl.MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME;
+	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME = "AssetEntries_AssetCategories";
+	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_COLUMNS =
+		{
+			{ "entryId", Types.BIGINT },
+			{ "categoryId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_SQL_CREATE =
+		"create table AssetEntries_AssetCategories (entryId LONG not null,categoryId LONG not null,primary key (entryId, categoryId))";
 	public static final boolean FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETCATEGORIES =
-		com.liferay.portlet.asset.model.impl.AssetEntryModelImpl.FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETCATEGORIES;
+		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.AssetEntries_AssetCategories"),
+			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.asset.model.AssetCategory"));
 
@@ -553,7 +561,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (AssetCategory)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (AssetCategory)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

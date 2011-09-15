@@ -30,6 +30,15 @@ public class ChannelHubManagerUtil {
 			companyId, userId, notificationEventUuid);
 	}
 
+	public static void confirmDelivery(
+			long companyId, long userId, String notificationEventUuid,
+			boolean archived)
+		throws ChannelException {
+
+		getChannelHubManager().confirmDelivery(
+			companyId, userId, notificationEventUuid, archived);
+	}
+
 	public static Channel createChannel(long companyId, long userId)
 		throws ChannelException {
 
@@ -42,6 +51,23 @@ public class ChannelHubManagerUtil {
 		return getChannelHubManager().createChannelHub(companyId);
 	}
 
+	public static void deleteUserNotificiationEvent(
+			long companyId, long userId, String notificationEventUuid)
+		throws ChannelException {
+
+		getChannelHubManager().deleteUserNotificiationEvent(
+			companyId, userId, notificationEventUuid);
+	}
+
+	public void deleteUserNotificiationEvents(
+			long companyId, long userId,
+			Collection<String> notificationEventUuids)
+		throws ChannelException {
+
+		getChannelHubManager().deleteUserNotificiationEvents(
+			companyId, userId, notificationEventUuids);
+	}
+
 	public static void destroyChannel(long companyId, long userId)
 		throws ChannelException {
 
@@ -52,6 +78,20 @@ public class ChannelHubManagerUtil {
 		throws ChannelException {
 
 		getChannelHubManager().destroyChannelHub(companyId);
+	}
+
+	public static ChannelHub fetchChannelHub(long companyId)
+		throws ChannelException {
+
+		return getChannelHubManager().fetchChannelHub(companyId);
+	}
+
+	public static ChannelHub fetchChannelHub(
+			long companyId, boolean createIfAbsent)
+		throws ChannelException {
+
+		return getChannelHubManager().fetchChannelHub(
+			companyId, createIfAbsent);
 	}
 
 	public static void flush() throws ChannelException {

@@ -140,7 +140,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			if (EntityCacheUtil.getResult(
 						AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 						AnnouncementsFlagImpl.class,
-						announcementsFlag.getPrimaryKey(), this) == null) {
+						announcementsFlag.getPrimaryKey()) == null) {
 				cacheResult(announcementsFlag);
 			}
 		}
@@ -175,6 +175,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public void clearCache(AnnouncementsFlag announcementsFlag) {
 		EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_E_V,
 			new Object[] {
@@ -444,7 +446,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public AnnouncementsFlag fetchByPrimaryKey(long flagId)
 		throws SystemException {
 		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)EntityCacheUtil.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagImpl.class, flagId, this);
+				AnnouncementsFlagImpl.class, flagId);
 
 		if (announcementsFlag == _nullAnnouncementsFlag) {
 			return null;
@@ -1243,10 +1245,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1266,8 +1266,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -128,7 +128,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 			if (EntityCacheUtil.getResult(
 						OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 						OrgGroupPermissionImpl.class,
-						orgGroupPermission.getPrimaryKey(), this) == null) {
+						orgGroupPermission.getPrimaryKey()) == null) {
 				cacheResult(orgGroupPermission);
 			}
 		}
@@ -163,6 +163,8 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	public void clearCache(OrgGroupPermission orgGroupPermission) {
 		EntityCacheUtil.removeResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			OrgGroupPermissionImpl.class, orgGroupPermission.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -387,7 +389,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	public OrgGroupPermission fetchByPrimaryKey(
 		OrgGroupPermissionPK orgGroupPermissionPK) throws SystemException {
 		OrgGroupPermission orgGroupPermission = (OrgGroupPermission)EntityCacheUtil.getResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
-				OrgGroupPermissionImpl.class, orgGroupPermissionPK, this);
+				OrgGroupPermissionImpl.class, orgGroupPermissionPK);
 
 		if (orgGroupPermission == _nullOrgGroupPermission) {
 			return null;
@@ -1348,10 +1350,8 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1371,8 +1371,8 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

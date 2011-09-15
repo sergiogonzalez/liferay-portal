@@ -85,6 +85,7 @@ public class GetLayoutsAction extends JSONAction {
 			}
 
 			jsonObject.put("type", layout.getType());
+			jsonObject.put("uuid", layout.getUuid());
 
 			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
 				layout);

@@ -258,8 +258,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		for (SocialRequest socialRequest : socialRequests) {
 			if (EntityCacheUtil.getResult(
 						SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRequestImpl.class, socialRequest.getPrimaryKey(),
-						this) == null) {
+						SocialRequestImpl.class, socialRequest.getPrimaryKey()) == null) {
 				cacheResult(socialRequest);
 			}
 		}
@@ -294,6 +293,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public void clearCache(SocialRequest socialRequest) {
 		EntityCacheUtil.removeResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestImpl.class, socialRequest.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -626,7 +627,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public SocialRequest fetchByPrimaryKey(long requestId)
 		throws SystemException {
 		SocialRequest socialRequest = (SocialRequest)EntityCacheUtil.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestImpl.class, requestId, this);
+				SocialRequestImpl.class, requestId);
 
 		if (socialRequest == _nullSocialRequest) {
 			return null;
@@ -4859,10 +4860,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -4882,8 +4881,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

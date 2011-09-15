@@ -190,8 +190,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		for (DDMStructure ddmStructure : ddmStructures) {
 			if (EntityCacheUtil.getResult(
 						DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStructureImpl.class, ddmStructure.getPrimaryKey(),
-						this) == null) {
+						DDMStructureImpl.class, ddmStructure.getPrimaryKey()) == null) {
 				cacheResult(ddmStructure);
 			}
 		}
@@ -226,6 +225,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public void clearCache(DDMStructure ddmStructure) {
 		EntityCacheUtil.removeResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureImpl.class, ddmStructure.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -543,7 +544,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure fetchByPrimaryKey(long structureId)
 		throws SystemException {
 		DDMStructure ddmStructure = (DDMStructure)EntityCacheUtil.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStructureImpl.class, structureId, this);
+				DDMStructureImpl.class, structureId);
 
 		if (ddmStructure == _nullDDMStructure) {
 			return null;
@@ -3716,10 +3717,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3739,8 +3738,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

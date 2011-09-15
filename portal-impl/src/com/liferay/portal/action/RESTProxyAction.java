@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -50,11 +53,30 @@ public class RESTProxyAction extends Action {
 
 		String url = ParamUtil.getString(request, "url");
 
-		if (validate(url)) {
-			String content = HttpUtil.URLtoString(url, true);
-
-			ServletResponseUtil.write(response, content);
+		if (!validate(url)) {
+			return null;
 		}
+
+		Http.Options options = new Http.Options();
+
+		int pos = url.indexOf(CharPool.QUESTION);
+
+		if (pos != -1) {
+			options.setBody(
+				url.substring(pos + 1),
+				ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED,
+				StringPool.UTF8);
+			options.setLocation(url.substring(0, pos));
+		}
+		else {
+			options.setLocation(url);
+		}
+
+		options.setPost(true);
+
+		String content = HttpUtil.URLtoString(options);
+
+		ServletResponseUtil.write(response, content);
 
 		return null;
 	}

@@ -137,7 +137,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	public void cacheResult(List<Lock> locks) {
 		for (Lock lock : locks) {
 			if (EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-						LockImpl.class, lock.getPrimaryKey(), this) == null) {
+						LockImpl.class, lock.getPrimaryKey()) == null) {
 				cacheResult(lock);
 			}
 		}
@@ -172,6 +172,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	public void clearCache(Lock lock) {
 		EntityCacheUtil.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockImpl.class, lock.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K,
 			new Object[] { lock.getClassName(), lock.getKey() });
@@ -435,7 +437,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	public Lock fetchByPrimaryKey(long lockId) throws SystemException {
 		Lock lock = (Lock)EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-				LockImpl.class, lockId, this);
+				LockImpl.class, lockId);
 
 		if (lock == _nullLock) {
 			return null;
@@ -1698,10 +1700,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1721,8 +1721,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

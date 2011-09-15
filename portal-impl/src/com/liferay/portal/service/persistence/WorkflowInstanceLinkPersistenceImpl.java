@@ -118,7 +118,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			if (EntityCacheUtil.getResult(
 						WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 						WorkflowInstanceLinkImpl.class,
-						workflowInstanceLink.getPrimaryKey(), this) == null) {
+						workflowInstanceLink.getPrimaryKey()) == null) {
 				cacheResult(workflowInstanceLink);
 			}
 		}
@@ -153,6 +153,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	public void clearCache(WorkflowInstanceLink workflowInstanceLink) {
 		EntityCacheUtil.removeResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class, workflowInstanceLink.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -383,7 +385,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	public WorkflowInstanceLink fetchByPrimaryKey(long workflowInstanceLinkId)
 		throws SystemException {
 		WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)EntityCacheUtil.getResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowInstanceLinkImpl.class, workflowInstanceLinkId, this);
+				WorkflowInstanceLinkImpl.class, workflowInstanceLinkId);
 
 		if (workflowInstanceLink == _nullWorkflowInstanceLink) {
 			return null;
@@ -1044,10 +1046,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1067,8 +1067,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

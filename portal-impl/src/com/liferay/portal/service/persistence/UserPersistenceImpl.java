@@ -276,7 +276,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void cacheResult(List<User> users) {
 		for (User user : users) {
 			if (EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-						UserImpl.class, user.getPrimaryKey(), this) == null) {
+						UserImpl.class, user.getPrimaryKey()) == null) {
 				cacheResult(user);
 			}
 		}
@@ -311,6 +311,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void clearCache(User user) {
 		EntityCacheUtil.removeResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 			UserImpl.class, user.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CONTACTID,
 			new Object[] { Long.valueOf(user.getContactId()) });
@@ -873,7 +875,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	public User fetchByPrimaryKey(long userId) throws SystemException {
 		User user = (User)EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserImpl.class, userId, this);
+				UserImpl.class, userId);
 
 		if (user == _nullUser) {
 			return null;
@@ -4437,10 +4439,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -4460,8 +4460,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

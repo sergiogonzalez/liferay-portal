@@ -144,8 +144,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
 			if (EntityCacheUtil.getResult(
 						DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStorageLinkImpl.class,
-						ddmStorageLink.getPrimaryKey(), this) == null) {
+						DDMStorageLinkImpl.class, ddmStorageLink.getPrimaryKey()) == null) {
 				cacheResult(ddmStorageLink);
 			}
 		}
@@ -180,6 +179,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	public void clearCache(DDMStorageLink ddmStorageLink) {
 		EntityCacheUtil.removeResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStorageLinkImpl.class, ddmStorageLink.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK,
 			new Object[] { Long.valueOf(ddmStorageLink.getClassPK()) });
@@ -439,7 +440,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	public DDMStorageLink fetchByPrimaryKey(long storageLinkId)
 		throws SystemException {
 		DDMStorageLink ddmStorageLink = (DDMStorageLink)EntityCacheUtil.getResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStorageLinkImpl.class, storageLinkId, this);
+				DDMStorageLinkImpl.class, storageLinkId);
 
 		if (ddmStorageLink == _nullDDMStorageLink) {
 			return null;
@@ -1620,10 +1621,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1643,8 +1642,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

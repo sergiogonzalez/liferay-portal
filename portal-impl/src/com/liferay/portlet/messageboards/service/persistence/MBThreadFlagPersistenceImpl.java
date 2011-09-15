@@ -141,8 +141,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		for (MBThreadFlag mbThreadFlag : mbThreadFlags) {
 			if (EntityCacheUtil.getResult(
 						MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-						MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey(),
-						this) == null) {
+						MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey()) == null) {
 				cacheResult(mbThreadFlag);
 			}
 		}
@@ -177,6 +176,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public void clearCache(MBThreadFlag mbThreadFlag) {
 		EntityCacheUtil.removeResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
 			new Object[] {
@@ -435,7 +436,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public MBThreadFlag fetchByPrimaryKey(long threadFlagId)
 		throws SystemException {
 		MBThreadFlag mbThreadFlag = (MBThreadFlag)EntityCacheUtil.getResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-				MBThreadFlagImpl.class, threadFlagId, this);
+				MBThreadFlagImpl.class, threadFlagId);
 
 		if (mbThreadFlag == _nullMBThreadFlag) {
 			return null;
@@ -1596,10 +1597,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1619,8 +1618,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

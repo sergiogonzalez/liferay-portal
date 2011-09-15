@@ -28,18 +28,16 @@ import com.liferay.portal.kernel.webcache.WebCachePool;
  */
 public class WebCachePoolImpl implements WebCachePool {
 
-	public static final String CACHE_NAME = WebCachePool.class.getName();
-
 	public void afterPropertiesSet() {
-		_cache = _singleVMPool.getCache(CACHE_NAME);
+		_portalCache = _singleVMPool.getCache(_CACHE_NAME);
 	}
 
 	public void clear() {
-		_cache.removeAll();
+		_portalCache.removeAll();
 	}
 
 	public Object get(String key, WebCacheItem wci) {
-		Object obj = _cache.get(key);
+		Object obj = _portalCache.get(key);
 
 		if (obj == null) {
 			try {
@@ -47,7 +45,7 @@ public class WebCachePoolImpl implements WebCachePool {
 
 				int timeToLive = (int)(wci.getRefreshTime() / Time.SECOND);
 
-				_cache.put(key, obj, timeToLive);
+				_portalCache.put(key, obj, timeToLive);
 			}
 			catch (WebCacheException wce) {
 				if (_log.isWarnEnabled()) {
@@ -67,16 +65,18 @@ public class WebCachePoolImpl implements WebCachePool {
 	}
 
 	public void remove(String key) {
-		_cache.remove(key);
+		_portalCache.remove(key);
 	}
 
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
 		_singleVMPool = singleVMPool;
 	}
 
+	private static final String _CACHE_NAME = WebCachePool.class.getName();
+
 	private static Log _log = LogFactoryUtil.getLog(WebCachePoolImpl.class);
 
+	private PortalCache _portalCache;
 	private SingleVMPool _singleVMPool;
-	private PortalCache _cache;
 
 }

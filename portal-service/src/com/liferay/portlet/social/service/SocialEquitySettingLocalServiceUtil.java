@@ -255,18 +255,54 @@ public class SocialEquitySettingLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Returns all the settings for the social equity action.
+	*
+	* @param groupId the primary key of the group
+	* @param className the class name for the target asset
+	* @param actionId the ID of the action
+	* @return the settings for the social equity action
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialEquitySetting> getEquitySettings(
 		long groupId, java.lang.String className, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getEquitySettings(groupId, className, actionId);
 	}
 
+	/**
+	* Returns all the settings for the social equity action.
+	*
+	* @param groupId the primary key of the group
+	* @param classNameId the ID of the target asset's class
+	* @param actionId the ID of the action
+	* @return the settings for the social equity action
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialEquitySetting> getEquitySettings(
 		long groupId, long classNameId, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getEquitySettings(groupId, classNameId, actionId);
 	}
 
+	/**
+	* Updates settings for the model (asset type) in the group.
+	*
+	* <p>
+	* This method accepts a list of social equity action mappings. A
+	* <code>SocialEquityActionMapping</code> contains both participation and
+	* information settings for an action. The
+	* <code>SocialEquityActionMapping</code> class is used by the portal to
+	* store the default settings for social equity actions.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param className the class name of the target asset
+	* @param equityActionMappings the equity action mappings containing the
+	settings to be stored
+	* @throws PortalException if the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void updateEquitySettings(long groupId,
 		java.lang.String className,
 		java.util.List<com.liferay.portlet.social.model.SocialEquityActionMapping> equityActionMappings)

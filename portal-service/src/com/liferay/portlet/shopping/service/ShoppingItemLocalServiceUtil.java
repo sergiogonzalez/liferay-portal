@@ -268,10 +268,10 @@ public class ShoppingItemLocalServiceUtil {
 		java.lang.String properties, java.lang.String fieldsQuantities,
 		boolean requiresShipping, int stockQuantity, boolean featured,
 		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallFile,
+		java.lang.String smallImageURL, java.io.File smallImageFile,
 		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeFile,
+		java.io.File mediumImageFile, boolean largeImage,
+		java.lang.String largeImageURL, java.io.File largeImageFile,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -281,8 +281,9 @@ public class ShoppingItemLocalServiceUtil {
 				   .addItem(userId, groupId, categoryId, sku, name,
 			description, properties, fieldsQuantities, requiresShipping,
 			stockQuantity, featured, sale, smallImage, smallImageURL,
-			smallFile, mediumImage, mediumImageURL, mediumFile, largeImage,
-			largeImageURL, largeFile, itemFields, itemPrices, serviceContext);
+			smallImageFile, mediumImage, mediumImageURL, mediumImageFile,
+			largeImage, largeImageURL, largeImageFile, itemFields, itemPrices,
+			serviceContext);
 	}
 
 	public static void addItemResources(long itemId,
@@ -433,10 +434,10 @@ public class ShoppingItemLocalServiceUtil {
 		java.lang.String fieldsQuantities, boolean requiresShipping,
 		int stockQuantity, boolean featured, java.lang.Boolean sale,
 		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile, boolean mediumImage,
-		java.lang.String mediumImageURL, java.io.File mediumFile,
+		java.io.File smallImageFile, boolean mediumImage,
+		java.lang.String mediumImageURL, java.io.File mediumImageFile,
 		boolean largeImage, java.lang.String largeImageURL,
-		java.io.File largeFile,
+		java.io.File largeImageFile,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -446,8 +447,9 @@ public class ShoppingItemLocalServiceUtil {
 				   .updateItem(userId, itemId, groupId, categoryId, sku, name,
 			description, properties, fieldsQuantities, requiresShipping,
 			stockQuantity, featured, sale, smallImage, smallImageURL,
-			smallFile, mediumImage, mediumImageURL, mediumFile, largeImage,
-			largeImageURL, largeFile, itemFields, itemPrices, serviceContext);
+			smallImageFile, mediumImage, mediumImageURL, mediumImageFile,
+			largeImage, largeImageURL, largeImageFile, itemFields, itemPrices,
+			serviceContext);
 	}
 
 	public static ShoppingItemLocalService getService() {

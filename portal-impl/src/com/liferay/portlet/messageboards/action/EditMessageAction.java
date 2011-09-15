@@ -333,11 +333,10 @@ public class EditMessageAction extends PortletAction {
 					PortalUtil.getUploadPortletRequest(actionRequest);
 
 				for (int i = 1; i <= 5; i++) {
-					InputStream inputStream =
-						uploadPortletRequest.getFileAsStream("msgFile" + i);
-
 					String fileName = uploadPortletRequest.getFileName(
 						"msgFile" + i);
+					InputStream inputStream =
+						uploadPortletRequest.getFileAsStream("msgFile" + i);
 
 					if (inputStream == null) {
 						continue;

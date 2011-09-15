@@ -160,7 +160,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		for (DLFileRank dlFileRank : dlFileRanks) {
 			if (EntityCacheUtil.getResult(
 						DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileRankImpl.class, dlFileRank.getPrimaryKey(), this) == null) {
+						DLFileRankImpl.class, dlFileRank.getPrimaryKey()) == null) {
 				cacheResult(dlFileRank);
 			}
 		}
@@ -195,6 +195,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	public void clearCache(DLFileRank dlFileRank) {
 		EntityCacheUtil.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankImpl.class, dlFileRank.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_F,
 			new Object[] {
@@ -460,7 +462,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	public DLFileRank fetchByPrimaryKey(long fileRankId)
 		throws SystemException {
 		DLFileRank dlFileRank = (DLFileRank)EntityCacheUtil.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileRankImpl.class, fileRankId, this);
+				DLFileRankImpl.class, fileRankId);
 
 		if (dlFileRank == _nullDLFileRank) {
 			return null;
@@ -2088,10 +2090,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2111,8 +2111,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

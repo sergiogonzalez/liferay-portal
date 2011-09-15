@@ -425,7 +425,7 @@ public class SourceFormatter {
 				x = 0;
 			}
 			else {
-				x = x + 5;
+				x = x + 4;
 			}
 		}
 		else if (fileName.endsWith("-hook/build.xml")) {
@@ -1703,6 +1703,10 @@ public class SourceFormatter {
 
 		String content = _jspContents.get(fileName);
 
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
 		if (checkFile && content.contains(importLine)) {
 			return true;
 		}
@@ -1844,9 +1848,10 @@ public class SourceFormatter {
 		fileName = fileName.replace(
 			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
-		if (fileName.endsWith("html/common/init.jsp") ||
-			fileName.endsWith("html/portal/init.jsp") ||
-			!fileName.contains("docroot")) {
+		if (!fileName.contains("docroot") ||
+			fileName.endsWith("init-ext.jsp") ||
+			fileName.endsWith("html/common/init.jsp") ||
+			fileName.endsWith("html/portal/init.jsp")) {
 
 			return content;
 		}

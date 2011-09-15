@@ -170,7 +170,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		for (WikiNode wikiNode : wikiNodes) {
 			if (EntityCacheUtil.getResult(
 						WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-						WikiNodeImpl.class, wikiNode.getPrimaryKey(), this) == null) {
+						WikiNodeImpl.class, wikiNode.getPrimaryKey()) == null) {
 				cacheResult(wikiNode);
 			}
 		}
@@ -205,6 +205,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public void clearCache(WikiNode wikiNode) {
 		EntityCacheUtil.removeResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 			WikiNodeImpl.class, wikiNode.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { wikiNode.getUuid(), Long.valueOf(
@@ -510,7 +512,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	public WikiNode fetchByPrimaryKey(long nodeId) throws SystemException {
 		WikiNode wikiNode = (WikiNode)EntityCacheUtil.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-				WikiNodeImpl.class, nodeId, this);
+				WikiNodeImpl.class, nodeId);
 
 		if (wikiNode == _nullWikiNode) {
 			return null;
@@ -2745,10 +2747,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2768,8 +2768,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

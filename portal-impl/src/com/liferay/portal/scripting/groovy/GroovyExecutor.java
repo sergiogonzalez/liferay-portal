@@ -33,13 +33,9 @@ import java.util.Set;
  */
 public class GroovyExecutor extends BaseScriptingExecutor {
 
-	public static final String CACHE_NAME = GroovyExecutor.class.getName();
-
-	public static final String LANGUAGE = "groovy";
-
 	@Override
 	public void clearCache() {
-		SingleVMPoolUtil.clear(CACHE_NAME);
+		SingleVMPoolUtil.clear(_CACHE_NAME);
 	}
 
 	public Map<String, Object> eval(
@@ -74,7 +70,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	}
 
 	public String getLanguage() {
-		return LANGUAGE;
+		return _LANGUAGE;
 	}
 
 	protected Script getCompiledScript(String script) {
@@ -88,16 +84,20 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 		String key = String.valueOf(script.hashCode());
 
-		Script compiledScript = (Script)SingleVMPoolUtil.get(CACHE_NAME, key);
+		Script compiledScript = (Script)SingleVMPoolUtil.get(_CACHE_NAME, key);
 
 		if (compiledScript == null) {
 			compiledScript = _groovyShell.parse(script);
 
-			SingleVMPoolUtil.put(CACHE_NAME, key, compiledScript);
+			SingleVMPoolUtil.put(_CACHE_NAME, key, compiledScript);
 		}
 
 		return compiledScript;
 	}
+
+	private static final String _CACHE_NAME = GroovyExecutor.class.getName();
+
+	private static final String _LANGUAGE = "groovy";
 
 	private volatile GroovyShell _groovyShell;
 

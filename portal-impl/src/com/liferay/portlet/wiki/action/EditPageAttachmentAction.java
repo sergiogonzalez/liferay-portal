@@ -150,9 +150,9 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 
 		try {
 			if (numOfFiles == 0) {
+				String fileName = uploadPortletRequest.getFileName("file");
 				InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file");
-				String fileName = uploadPortletRequest.getFileName("file");
 
 				if (inputStream != null) {
 					ObjectValuePair<String, InputStream> inputStreamOVP =
@@ -164,10 +164,10 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 			}
 			else {
 				for (int i = 1; i <= numOfFiles; i++) {
-					InputStream inputStream =
-						uploadPortletRequest.getFileAsStream("file" + i);
 					String fileName = uploadPortletRequest.getFileName(
 						"file" + i);
+					InputStream inputStream =
+						uploadPortletRequest.getFileAsStream("file" + i);
 
 					if (inputStream == null) {
 						continue;
@@ -242,12 +242,12 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String sourceFileName = uploadPortletRequest.getFileName("file");
 
 		InputStream inputStream = null;
 
 		try {
 			inputStream = uploadPortletRequest.getFileAsStream("file");
-			String sourceFileName = uploadPortletRequest.getFileName("file");
 
 			WikiPageServiceUtil.addTempPageAttachment(
 				nodeId, sourceFileName, _TEMP_FOLDER_NAME, inputStream);

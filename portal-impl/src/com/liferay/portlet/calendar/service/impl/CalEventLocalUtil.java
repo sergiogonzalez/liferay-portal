@@ -30,8 +30,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CalEventLocalUtil {
 
-	public static final String CACHE_NAME = CalEventLocalUtil.class.getName();
-
 	protected static void clearEventsPool(long groupId) {
 		String key = _encodeKey(groupId);
 
@@ -54,11 +52,13 @@ public class CalEventLocalUtil {
 	}
 
 	private static String _encodeKey(long groupId) {
-		return CACHE_NAME.concat(StringPool.POUND).concat(
+		return _CACHE_NAME.concat(StringPool.POUND).concat(
 			StringUtil.toHexString(groupId));
 	}
 
+	private static final String _CACHE_NAME = CalEventLocalUtil.class.getName();
+
 	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
-		CACHE_NAME);
+		_CACHE_NAME);
 
 }

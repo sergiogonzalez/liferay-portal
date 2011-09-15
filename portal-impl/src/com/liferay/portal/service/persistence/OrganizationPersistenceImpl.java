@@ -164,8 +164,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		for (Organization organization : organizations) {
 			if (EntityCacheUtil.getResult(
 						OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-						OrganizationImpl.class, organization.getPrimaryKey(),
-						this) == null) {
+						OrganizationImpl.class, organization.getPrimaryKey()) == null) {
 				cacheResult(organization);
 			}
 		}
@@ -200,6 +199,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public void clearCache(Organization organization) {
 		EntityCacheUtil.removeResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 			OrganizationImpl.class, organization.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] {
@@ -505,7 +506,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public Organization fetchByPrimaryKey(long organizationId)
 		throws SystemException {
 		Organization organization = (Organization)EntityCacheUtil.getResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-				OrganizationImpl.class, organizationId, this);
+				OrganizationImpl.class, organizationId);
 
 		if (organization == _nullOrganization) {
 			return null;
@@ -3253,10 +3254,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3276,8 +3275,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

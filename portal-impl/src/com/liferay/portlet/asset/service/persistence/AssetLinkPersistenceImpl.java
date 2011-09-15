@@ -187,7 +187,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		for (AssetLink assetLink : assetLinks) {
 			if (EntityCacheUtil.getResult(
 						AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-						AssetLinkImpl.class, assetLink.getPrimaryKey(), this) == null) {
+						AssetLinkImpl.class, assetLink.getPrimaryKey()) == null) {
 				cacheResult(assetLink);
 			}
 		}
@@ -222,6 +222,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public void clearCache(AssetLink assetLink) {
 		EntityCacheUtil.removeResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkImpl.class, assetLink.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_E_E_T,
 			new Object[] {
@@ -489,7 +491,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public AssetLink fetchByPrimaryKey(long linkId) throws SystemException {
 		AssetLink assetLink = (AssetLink)EntityCacheUtil.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-				AssetLinkImpl.class, linkId, this);
+				AssetLinkImpl.class, linkId);
 
 		if (assetLink == _nullAssetLink) {
 			return null;
@@ -2981,10 +2983,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3004,8 +3004,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}
