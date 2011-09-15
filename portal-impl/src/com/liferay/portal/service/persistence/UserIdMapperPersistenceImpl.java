@@ -141,8 +141,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		for (UserIdMapper userIdMapper : userIdMappers) {
 			if (EntityCacheUtil.getResult(
 						UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-						UserIdMapperImpl.class, userIdMapper.getPrimaryKey(),
-						this) == null) {
+						UserIdMapperImpl.class, userIdMapper.getPrimaryKey()) == null) {
 				cacheResult(userIdMapper);
 			}
 		}
@@ -177,6 +176,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	public void clearCache(UserIdMapper userIdMapper) {
 		EntityCacheUtil.removeResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 			UserIdMapperImpl.class, userIdMapper.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
 			new Object[] {
@@ -483,7 +484,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	public UserIdMapper fetchByPrimaryKey(long userIdMapperId)
 		throws SystemException {
 		UserIdMapper userIdMapper = (UserIdMapper)EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-				UserIdMapperImpl.class, userIdMapperId, this);
+				UserIdMapperImpl.class, userIdMapperId);
 
 		if (userIdMapper == _nullUserIdMapper) {
 			return null;
@@ -1536,10 +1537,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1559,8 +1558,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

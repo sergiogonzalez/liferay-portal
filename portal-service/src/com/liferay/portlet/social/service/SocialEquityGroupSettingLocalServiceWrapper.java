@@ -250,18 +250,59 @@ public class SocialEquityGroupSettingLocalServiceWrapper
 		_socialEquityGroupSettingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Returns <code>true</code> if social equity is turned on for the model
+	* (asset type) in the group.
+	*
+	* @param groupId the primary key of the group
+	* @param className the class name for the target asset type
+	* @return <code>true</code> if social equity is enabled for the model;
+	<code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
 	public boolean isEnabled(long groupId, java.lang.String className)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _socialEquityGroupSettingLocalService.isEnabled(groupId,
 			className);
 	}
 
+	/**
+	* Returns <code>true</code> if the specified social equity scoring type is
+	* turned on for the model (asset type) in the group.
+	*
+	* @param groupId the primary key of the group
+	* @param className the class name for the target asset type
+	* @param type the social equity score type, acceptable values are {@link
+	SocialEquitySettingConstants.TYPE_INFORMATION} and {@link
+	SocialEquitySettingConstants.TYPE_PARTICIPATION}
+	* @return <code>true</code> if the given type of social equity scoring is
+	enabled for the model; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
 	public boolean isEnabled(long groupId, java.lang.String className, int type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _socialEquityGroupSettingLocalService.isEnabled(groupId,
 			className, type);
 	}
 
+	/**
+	* Updates the group related social equity settings for the group and model
+	* (asset type).
+	*
+	* <p>
+	* This method stores whether the social equity scoring type (information
+	* or participation) is turned on for the model in the group.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param className the class name for the target asset
+	* @param type the social equity score type, acceptable values are {@link
+	SocialEquitySettingConstants.TYPE_INFORMATION}, {@link
+	SocialEquitySettingConstants.TYPE_PARTICIPATION}
+	* @param enabled whether social equity is turned on
+	* @throws PortalException if the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public void updateEquityGroupSetting(long groupId,
 		java.lang.String className, int type, boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException,

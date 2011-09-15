@@ -130,7 +130,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			if (EntityCacheUtil.getResult(
 						ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 						ServiceComponentImpl.class,
-						serviceComponent.getPrimaryKey(), this) == null) {
+						serviceComponent.getPrimaryKey()) == null) {
 				cacheResult(serviceComponent);
 			}
 		}
@@ -165,6 +165,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	public void clearCache(ServiceComponent serviceComponent) {
 		EntityCacheUtil.removeResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentImpl.class, serviceComponent.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU,
 			new Object[] {
@@ -431,7 +433,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	public ServiceComponent fetchByPrimaryKey(long serviceComponentId)
 		throws SystemException {
 		ServiceComponent serviceComponent = (ServiceComponent)EntityCacheUtil.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-				ServiceComponentImpl.class, serviceComponentId, this);
+				ServiceComponentImpl.class, serviceComponentId);
 
 		if (serviceComponent == _nullServiceComponent) {
 			return null;
@@ -1284,10 +1286,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1307,8 +1307,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

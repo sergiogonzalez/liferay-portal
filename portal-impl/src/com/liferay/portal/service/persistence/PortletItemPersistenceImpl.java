@@ -152,7 +152,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		for (PortletItem portletItem : portletItems) {
 			if (EntityCacheUtil.getResult(
 						PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-						PortletItemImpl.class, portletItem.getPrimaryKey(), this) == null) {
+						PortletItemImpl.class, portletItem.getPrimaryKey()) == null) {
 				cacheResult(portletItem);
 			}
 		}
@@ -187,6 +187,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	public void clearCache(PortletItem portletItem) {
 		EntityCacheUtil.removeResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
 			PortletItemImpl.class, portletItem.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N_P_C,
 			new Object[] {
@@ -475,7 +477,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	public PortletItem fetchByPrimaryKey(long portletItemId)
 		throws SystemException {
 		PortletItem portletItem = (PortletItem)EntityCacheUtil.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-				PortletItemImpl.class, portletItemId, this);
+				PortletItemImpl.class, portletItemId);
 
 		if (portletItem == _nullPortletItem) {
 			return null;
@@ -1853,10 +1855,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1876,8 +1876,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

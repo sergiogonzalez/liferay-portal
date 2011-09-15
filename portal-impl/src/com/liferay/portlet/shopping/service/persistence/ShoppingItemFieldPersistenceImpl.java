@@ -118,7 +118,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 			if (EntityCacheUtil.getResult(
 						ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingItemFieldImpl.class,
-						shoppingItemField.getPrimaryKey(), this) == null) {
+						shoppingItemField.getPrimaryKey()) == null) {
 				cacheResult(shoppingItemField);
 			}
 		}
@@ -153,6 +153,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	public void clearCache(ShoppingItemField shoppingItemField) {
 		EntityCacheUtil.removeResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingItemFieldImpl.class, shoppingItemField.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -376,7 +378,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	public ShoppingItemField fetchByPrimaryKey(long itemFieldId)
 		throws SystemException {
 		ShoppingItemField shoppingItemField = (ShoppingItemField)EntityCacheUtil.getResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingItemFieldImpl.class, itemFieldId, this);
+				ShoppingItemFieldImpl.class, itemFieldId);
 
 		if (shoppingItemField == _nullShoppingItemField) {
 			return null;
@@ -939,10 +941,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -962,8 +962,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

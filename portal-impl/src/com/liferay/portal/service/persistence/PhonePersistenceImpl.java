@@ -167,7 +167,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	public void cacheResult(List<Phone> phones) {
 		for (Phone phone : phones) {
 			if (EntityCacheUtil.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-						PhoneImpl.class, phone.getPrimaryKey(), this) == null) {
+						PhoneImpl.class, phone.getPrimaryKey()) == null) {
 				cacheResult(phone);
 			}
 		}
@@ -202,6 +202,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	public void clearCache(Phone phone) {
 		EntityCacheUtil.removeResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
 			PhoneImpl.class, phone.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -426,7 +428,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	public Phone fetchByPrimaryKey(long phoneId) throws SystemException {
 		Phone phone = (Phone)EntityCacheUtil.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-				PhoneImpl.class, phoneId, this);
+				PhoneImpl.class, phoneId);
 
 		if (phone == _nullPhone) {
 			return null;
@@ -2767,10 +2769,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2790,8 +2790,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -135,7 +135,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			if (EntityCacheUtil.getResult(
 						AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 						AnnouncementsDeliveryImpl.class,
-						announcementsDelivery.getPrimaryKey(), this) == null) {
+						announcementsDelivery.getPrimaryKey()) == null) {
 				cacheResult(announcementsDelivery);
 			}
 		}
@@ -171,6 +171,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		EntityCacheUtil.removeResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsDeliveryImpl.class,
 			announcementsDelivery.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
 			new Object[] {
@@ -442,7 +444,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	public AnnouncementsDelivery fetchByPrimaryKey(long deliveryId)
 		throws SystemException {
 		AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)EntityCacheUtil.getResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class, deliveryId, this);
+				AnnouncementsDeliveryImpl.class, deliveryId);
 
 		if (announcementsDelivery == _nullAnnouncementsDelivery) {
 			return null;
@@ -1233,10 +1235,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1256,8 +1256,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

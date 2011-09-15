@@ -133,7 +133,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		for (Permission permission : permissions) {
 			if (EntityCacheUtil.getResult(
 						PermissionModelImpl.ENTITY_CACHE_ENABLED,
-						PermissionImpl.class, permission.getPrimaryKey(), this) == null) {
+						PermissionImpl.class, permission.getPrimaryKey()) == null) {
 				cacheResult(permission);
 			}
 		}
@@ -168,6 +168,8 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	public void clearCache(Permission permission) {
 		EntityCacheUtil.removeResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionImpl.class, permission.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_R,
 			new Object[] {
@@ -457,7 +459,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	public Permission fetchByPrimaryKey(long permissionId)
 		throws SystemException {
 		Permission permission = (Permission)EntityCacheUtil.getResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-				PermissionImpl.class, permissionId, this);
+				PermissionImpl.class, permissionId);
 
 		if (permission == _nullPermission) {
 			return null;
@@ -1253,10 +1255,8 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1276,8 +1276,8 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

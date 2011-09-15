@@ -128,8 +128,14 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		return UserGroup.class.getName();
 	}
 
-	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_NAME = com.liferay.portal.model.impl.GroupModelImpl.MAPPING_TABLE_GROUPS_USERGROUPS_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS = com.liferay.portal.model.impl.GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_USERGROUPS;
+	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_NAME = "Groups_UserGroups";
+	public static final Object[][] MAPPING_TABLE_GROUPS_USERGROUPS_COLUMNS = {
+			{ "groupId", Types.BIGINT },
+			{ "userGroupId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE = "create table Groups_UserGroups (groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Groups_UserGroups"), true);
 	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_NAME = "UserGroups_Teams";
 	public static final Object[][] MAPPING_TABLE_USERGROUPS_TEAMS_COLUMNS = {
 			{ "userGroupId", Types.BIGINT },
@@ -138,8 +144,14 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (userGroupId LONG not null,teamId LONG not null,primary key (userGroupId, teamId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.UserGroups_Teams"), true);
-	public static final String MAPPING_TABLE_USERS_USERGROUPS_NAME = com.liferay.portal.model.impl.UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_USERS_USERGROUPS = com.liferay.portal.model.impl.UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS;
+	public static final String MAPPING_TABLE_USERS_USERGROUPS_NAME = "Users_UserGroups";
+	public static final Object[][] MAPPING_TABLE_USERS_USERGROUPS_COLUMNS = {
+			{ "userGroupId", Types.BIGINT },
+			{ "userId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE = "create table Users_UserGroups (userGroupId LONG not null,userId LONG not null,primary key (userGroupId, userId))";
+	public static final boolean FINDER_CACHE_ENABLED_USERS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Users_UserGroups"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserGroup"));
 

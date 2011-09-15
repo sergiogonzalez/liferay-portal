@@ -147,8 +147,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		for (PollsQuestion pollsQuestion : pollsQuestions) {
 			if (EntityCacheUtil.getResult(
 						PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-						PollsQuestionImpl.class, pollsQuestion.getPrimaryKey(),
-						this) == null) {
+						PollsQuestionImpl.class, pollsQuestion.getPrimaryKey()) == null) {
 				cacheResult(pollsQuestion);
 			}
 		}
@@ -183,6 +182,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	public void clearCache(PollsQuestion pollsQuestion) {
 		EntityCacheUtil.removeResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
 			PollsQuestionImpl.class, pollsQuestion.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -462,7 +463,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	public PollsQuestion fetchByPrimaryKey(long questionId)
 		throws SystemException {
 		PollsQuestion pollsQuestion = (PollsQuestion)EntityCacheUtil.getResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-				PollsQuestionImpl.class, questionId, this);
+				PollsQuestionImpl.class, questionId);
 
 		if (pollsQuestion == _nullPollsQuestion) {
 			return null;
@@ -2061,10 +2062,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2084,8 +2083,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

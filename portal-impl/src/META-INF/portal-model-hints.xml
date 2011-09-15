@@ -264,6 +264,7 @@
 		<field name="priority" type="int" />
 		<field name="layoutPrototypeUuid" type="String" />
 		<field name="layoutPrototypeLinkEnabled" type="boolean" />
+		<field name="templateLayoutUuid" type="String" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutBranch">
 		<field name="LayoutBranchId" type="long" />
@@ -822,7 +823,6 @@
 		</field>
 		<field name="emailAddress" type="String">
 			<validator name="email" />
-			<validator name="required" />
 		</field>
 		<field name="facebookId" type="long" />
 		<field name="openId" type="String">
@@ -902,6 +902,7 @@
 		<field name="payload" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="archived" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.UserTracker">
 		<field name="userTrackerId" type="long" />
@@ -1955,7 +1956,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="ruleGroupId" type="long" />
+		<field name="ruleGroupInstanceId" type="long" />
 		<field name="name" type="String" localized="true">
 			<hint name="display-width">150</hint>
 			<hint name="max-length">255</hint>
@@ -2013,6 +2014,20 @@
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 		</field>
+	</model>
+	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance">
+		<field name="uuid" type="String" />
+		<field name="ruleGroupInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="ruleGroupId" type="long" />
+		<field name="priority" type="int" />
 	</model>
 	<model name="com.liferay.portlet.polls.model.PollsChoice">
 		<field name="uuid" type="String" />

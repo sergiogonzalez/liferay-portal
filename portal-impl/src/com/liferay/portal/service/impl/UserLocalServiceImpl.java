@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.image.ImageProcessorUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -64,7 +63,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -117,6 +115,7 @@ import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
@@ -139,8 +138,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.mail.internet.InternetAddress;
 
 /**
  * The implementation of the user local service.
@@ -1452,12 +1449,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			serviceContext.getAttribute("sendEmail"));
 
 		if (sendEmail) {
-			try {
-				sendEmail(user, password);
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
+			sendEmail(user, password, serviceContext);
 		}
 
 		Company company = companyPersistence.findByPrimaryKey(
@@ -3303,9 +3295,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			User user, String emailAddress, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Company company = companyLocalService.getCompanyById(
-			user.getCompanyId());
-
 		Ticket ticket = ticketLocalService.addTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			TicketConstants.TYPE_EMAIL_ADDRESS, emailAddress, null,
@@ -3337,81 +3326,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String body = PrefsPropsUtil.getContent(
 			user.getCompanyId(), PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY);
 
-		subject = StringUtil.replace(
-			subject,
-			new String[] {
-				"[$EMAIL_VERIFICATION_CODE$]",
-				"[$EMAIL_VERIFICATION_URL$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$REMOTE_ADDRESS$]",
-				"[$REMOTE_HOST$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]",
-				"[$USER_AGENT$]",
-				"[$USER_ID$]",
-				"[$USER_SCREENNAME$]"
-			},
-			new String[] {
-				ticket.getKey(),
-				verifyEmailAddressURL,
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				serviceContext.getRemoteAddr(),
-				serviceContext.getRemoteHost(),
-				toAddress,
-				toName,
-				serviceContext.getUserAgent(),
-				String.valueOf(user.getUserId()),
-				user.getScreenName()
-			});
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		body = StringUtil.replace(
-			body,
-			new String[] {
-				"[$EMAIL_VERIFICATION_CODE$]",
-				"[$EMAIL_VERIFICATION_URL$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$REMOTE_ADDRESS$]",
-				"[$REMOTE_HOST$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]",
-				"[$USER_AGENT$]",
-				"[$USER_ID$]",
-				"[$USER_SCREENNAME$]"
-			},
-			new String[] {
-				ticket.getKey(),
-				verifyEmailAddressURL,
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				serviceContext.getRemoteAddr(),
-				serviceContext.getRemoteHost(),
-				toAddress,
-				toName,
-				serviceContext.getUserAgent(),
-				String.valueOf(user.getUserId()),
-				user.getScreenName()
-			});
+		subscriptionSender.setBody(body);
+		subscriptionSender.setCompanyId(user.getCompanyId());
+		subscriptionSender.setContextAttributes(
+			"[$EMAIL_VERIFICATION_CODE$]", ticket.getKey(),
+			"[$EMAIL_VERIFICATION_URL$]", verifyEmailAddressURL,
+			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr(),
+			"[$REMOTE_HOST$]", serviceContext.getRemoteHost(), "[$USER_AGENT$]",
+			serviceContext.getUserAgent(), "[$USER_ID$]", user.getUserId(),
+			"[$USER_SCREENNAME$]", user.getScreenName());
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setMailId("user", user.getUserId());
+		subscriptionSender.setSubject(subject);
+		subscriptionSender.setUserId(user.getUserId());
 
-		try {
-			InternetAddress from = new InternetAddress(fromAddress, fromName);
+		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
-			InternetAddress to = new InternetAddress(toAddress, toName);
-
-			MailMessage message = new MailMessage(
-				from, to, subject, body, true);
-
-			mailService.sendEmail(message);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	/**
@@ -3440,14 +3374,126 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		try {
-			doSendPassword(
-				companyId, emailAddress, fromName, fromAddress, subject, body,
+		Company company = companyPersistence.findByPrimaryKey(companyId);
+
+		if (!company.isSendPassword() && !company.isSendPasswordResetLink()) {
+			return;
+		}
+
+		emailAddress = emailAddress.trim().toLowerCase();
+
+		if (Validator.isNull(emailAddress)) {
+			throw new UserEmailAddressException();
+		}
+
+		User user = userPersistence.findByC_EA(companyId, emailAddress);
+
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		String newPassword = StringPool.BLANK;
+		String passwordResetURL = StringPool.BLANK;
+
+		if (company.isSendPasswordResetLink()) {
+			Date expirationDate = new Date(
+				System.currentTimeMillis() +
+					(passwordPolicy.getResetTicketMaxAge() * 1000));
+
+			Ticket ticket = ticketLocalService.addTicket(
+				companyId, User.class.getName(), user.getUserId(),
+				TicketConstants.TYPE_PASSWORD, null, expirationDate,
 				serviceContext);
+
+			passwordResetURL =
+				serviceContext.getPortalURL() + serviceContext.getPathMain() +
+					"/portal/update_password?p_l_id="+
+						serviceContext.getPlid() +
+							"&ticketKey=" + ticket.getKey();
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		else {
+			if (!PwdEncryptor.PASSWORDS_ENCRYPTION_ALGORITHM.equals(
+					PwdEncryptor.TYPE_NONE)) {
+
+				newPassword = PwdToolkitUtil.generate(passwordPolicy);
+
+				boolean passwordReset = false;
+
+				if (passwordPolicy.getChangeable() &&
+					passwordPolicy.getChangeRequired()) {
+
+					passwordReset = true;
+				}
+
+				user.setPassword(PwdEncryptor.encrypt(newPassword));
+				user.setPasswordUnencrypted(newPassword);
+				user.setPasswordEncrypted(true);
+				user.setPasswordReset(passwordReset);
+				user.setPasswordModified(true);
+				user.setPasswordModifiedDate(new Date());
+
+				userPersistence.update(user, false);
+
+				user.setPasswordModified(false);
+			}
+			else {
+				newPassword = user.getPassword();
+			}
 		}
+
+		if (Validator.isNull(fromName)) {
+			fromName = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
+		if (Validator.isNull(fromAddress)) {
+			fromAddress = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
+
+		String toName = user.getFullName();
+		String toAddress = user.getEmailAddress();
+
+		if (Validator.isNull(subject)) {
+			if (company.isSendPasswordResetLink()) {
+				subject = PrefsPropsUtil.getContent(
+					companyId, PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+			}
+			else {
+				subject = PrefsPropsUtil.getContent(
+					companyId, PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
+			}
+		}
+
+		if (Validator.isNull(body)) {
+			if (company.isSendPasswordResetLink()) {
+				body = PrefsPropsUtil.getContent(
+					companyId, PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY);
+			}
+			else {
+				body = PrefsPropsUtil.getContent(
+					companyId, PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY);
+			}
+		}
+
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+		subscriptionSender.setBody(body);
+		subscriptionSender.setCompanyId(companyId);
+		subscriptionSender.setContextAttributes(
+			"[$PASSWORD_RESET_URL$]", passwordResetURL, "[$REMOTE_ADDRESS$]",
+			serviceContext.getRemoteAddr(), "[$REMOTE_HOST$]",
+			serviceContext.getRemoteHost(), "[$USER_AGENT$]",
+			serviceContext.getUserAgent(), "[$USER_ID$]", user.getUserId(),
+			"[$USER_PASSWORD$]", newPassword, "[$USER_SCREENNAME$]",
+			user.getScreenName());
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setMailId("user", user.getUserId());
+		subscriptionSender.setSubject(subject);
+		subscriptionSender.setUserId(user.getUserId());
+
+		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
+
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	/**
@@ -5057,183 +5103,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return authResult;
 	}
 
-	protected void doSendPassword(
-			long companyId, String emailAddress, String fromName,
-			String fromAddress, String subject, String body,
-			ServiceContext serviceContext)
-		throws IOException, PortalException, SystemException {
-
-		Company company = companyPersistence.findByPrimaryKey(companyId);
-
-		if (!company.isSendPassword() && !company.isSendPasswordResetLink()) {
-			return;
-		}
-
-		emailAddress = emailAddress.trim().toLowerCase();
-
-		if (Validator.isNull(emailAddress)) {
-			throw new UserEmailAddressException();
-		}
-
-		User user = userPersistence.findByC_EA(companyId, emailAddress);
-
-		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-		String newPassword = StringPool.BLANK;
-		String passwordResetURL = StringPool.BLANK;
-
-		if (company.isSendPasswordResetLink()) {
-			Date expirationDate = new Date(
-				System.currentTimeMillis() +
-					(passwordPolicy.getResetTicketMaxAge() * 1000));
-
-			Ticket ticket = ticketLocalService.addTicket(
-				companyId, User.class.getName(), user.getUserId(),
-				TicketConstants.TYPE_PASSWORD, null, expirationDate,
-				serviceContext);
-
-			passwordResetURL =
-				serviceContext.getPortalURL() + serviceContext.getPathMain() +
-					"/portal/update_password?p_l_id="+
-						serviceContext.getPlid() +
-							"&ticketKey=" + ticket.getKey();
-		}
-		else {
-			if (!PwdEncryptor.PASSWORDS_ENCRYPTION_ALGORITHM.equals(
-					PwdEncryptor.TYPE_NONE)) {
-
-				newPassword = PwdToolkitUtil.generate(passwordPolicy);
-
-				boolean passwordReset = false;
-
-				if (passwordPolicy.getChangeable() &&
-					passwordPolicy.getChangeRequired()) {
-
-					passwordReset = true;
-				}
-
-				user.setPassword(PwdEncryptor.encrypt(newPassword));
-				user.setPasswordUnencrypted(newPassword);
-				user.setPasswordEncrypted(true);
-				user.setPasswordReset(passwordReset);
-				user.setPasswordModified(true);
-				user.setPasswordModifiedDate(new Date());
-
-				userPersistence.update(user, false);
-
-				user.setPasswordModified(false);
-			}
-			else {
-				newPassword = user.getPassword();
-			}
-		}
-
-		if (Validator.isNull(fromName)) {
-			fromName = PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		}
-
-		if (Validator.isNull(fromAddress)) {
-			fromAddress = PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		}
-
-		String toName = user.getFullName();
-		String toAddress = user.getEmailAddress();
-
-		if (Validator.isNull(subject)) {
-			if (company.isSendPasswordResetLink()) {
-				subject = PrefsPropsUtil.getContent(
-					companyId, PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
-			}
-			else {
-				subject = PrefsPropsUtil.getContent(
-					companyId, PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
-			}
-		}
-
-		if (Validator.isNull(body)) {
-			if (company.isSendPasswordResetLink()) {
-				body = PrefsPropsUtil.getContent(
-					companyId, PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY);
-			}
-			else {
-				body = PrefsPropsUtil.getContent(
-					companyId, PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY);
-			}
-		}
-
-		subject = StringUtil.replace(
-			subject,
-			new String[] {
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PASSWORD_RESET_URL$]",
-				"[$PORTAL_URL$]",
-				"[$REMOTE_ADDRESS$]",
-				"[$REMOTE_HOST$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]",
-				"[$USER_AGENT$]",
-				"[$USER_ID$]",
-				"[$USER_PASSWORD$]",
-				"[$USER_SCREENNAME$]"
-			},
-			new String[] {
-				fromAddress,
-				fromName,
-				passwordResetURL,
-				company.getVirtualHostname(),
-				serviceContext.getRemoteAddr(),
-				serviceContext.getRemoteHost(),
-				toAddress,
-				toName,
-				HtmlUtil.escape(serviceContext.getUserAgent()),
-				String.valueOf(user.getUserId()),
-				newPassword,
-				user.getScreenName()
-			});
-
-		body = StringUtil.replace(
-			body,
-			new String[] {
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PASSWORD_RESET_URL$]",
-				"[$PORTAL_URL$]",
-				"[$REMOTE_ADDRESS$]",
-				"[$REMOTE_HOST$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]",
-				"[$USER_AGENT$]",
-				"[$USER_ID$]",
-				"[$USER_PASSWORD$]",
-				"[$USER_SCREENNAME$]"
-			},
-			new String[] {
-				fromAddress,
-				fromName,
-				passwordResetURL,
-				company.getVirtualHostname(),
-				serviceContext.getRemoteAddr(),
-				serviceContext.getRemoteHost(),
-				toAddress,
-				toName,
-				HtmlUtil.escape(serviceContext.getUserAgent()),
-				String.valueOf(user.getUserId()),
-				newPassword,
-				user.getScreenName()
-			});
-
-		InternetAddress from = new InternetAddress(fromAddress, fromName);
-
-		InternetAddress to = new InternetAddress(toAddress, toName);
-
-		MailMessage message = new MailMessage(from, to, subject, body, true);
-
-		mailService.sendEmail(message);
-	}
-
 	protected String getScreenName(String screenName) {
 		return StringUtil.lowerCase(StringUtil.trim(screenName));
 	}
@@ -5250,8 +5119,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return userIds;
 	}
 
-	protected void sendEmail(User user, String password)
-		throws IOException, PortalException, SystemException {
+	protected void sendEmail(
+			User user, String password, ServiceContext serviceContext)
+		throws SystemException {
 
 		if (!PrefsPropsUtil.getBoolean(
 				user.getCompanyId(),
@@ -5259,9 +5129,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			return;
 		}
-
-		Company company = companyPersistence.findByPrimaryKey(
-			user.getCompanyId());
 
 		String fromName = PrefsPropsUtil.getString(
 			user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
@@ -5286,59 +5153,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY);
 		}
 
-		subject = StringUtil.replace(
-			subject,
-			new String[] {
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]",
-				"[$USER_ID$]",
-				"[$USER_PASSWORD$]",
-				"[$USER_SCREENNAME$]"
-			},
-			new String[] {
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				toAddress,
-				toName,
-				String.valueOf(user.getUserId()),
-				password,
-				user.getScreenName()
-			});
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		body = StringUtil.replace(
-			body,
-			new String[] {
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]",
-				"[$USER_ID$]",
-				"[$USER_PASSWORD$]",
-				"[$USER_SCREENNAME$]"
-			},
-			new String[] {
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				toAddress,
-				toName,
-				String.valueOf(user.getUserId()),
-				password,
-				user.getScreenName()
-			});
+		subscriptionSender.setBody(body);
+		subscriptionSender.setCompanyId(user.getCompanyId());
+		subscriptionSender.setContextAttributes(
+			"[$USER_ID$]", user.getUserId(), "[$USER_PASSWORD$]", password,
+			"[$USER_SCREENNAME$]", user.getScreenName());
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setMailId("user", user.getUserId());
+		subscriptionSender.setSubject(subject);
+		subscriptionSender.setUserId(user.getUserId());
 
-		InternetAddress from = new InternetAddress(fromAddress, fromName);
+		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
-		InternetAddress to = new InternetAddress(toAddress, toName);
-
-		MailMessage message = new MailMessage(from, to, subject, body, true);
-
-		mailService.sendEmail(message);
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	protected Hits search(

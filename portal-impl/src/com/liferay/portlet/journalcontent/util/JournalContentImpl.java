@@ -308,6 +308,8 @@ public class JournalContentImpl implements JournalContent {
 		}
 	}
 
+	protected static final String CACHE_NAME = JournalContent.class.getName();
+
 	protected static Pattern lifecycleRenderPhasePatern = Pattern.compile(
 		"<lifecycle>\\s*RENDER_PHASE\\s*</lifecycle>");
 	protected static PortalCache portalCache = MultiVMPoolUtil.getCache(

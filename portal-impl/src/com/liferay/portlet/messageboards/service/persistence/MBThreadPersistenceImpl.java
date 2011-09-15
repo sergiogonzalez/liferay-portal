@@ -248,7 +248,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		for (MBThread mbThread : mbThreads) {
 			if (EntityCacheUtil.getResult(
 						MBThreadModelImpl.ENTITY_CACHE_ENABLED,
-						MBThreadImpl.class, mbThread.getPrimaryKey(), this) == null) {
+						MBThreadImpl.class, mbThread.getPrimaryKey()) == null) {
 				cacheResult(mbThread);
 			}
 		}
@@ -283,6 +283,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public void clearCache(MBThread mbThread) {
 		EntityCacheUtil.removeResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadImpl.class, mbThread.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOTMESSAGEID,
 			new Object[] { Long.valueOf(mbThread.getRootMessageId()) });
@@ -539,7 +541,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	public MBThread fetchByPrimaryKey(long threadId) throws SystemException {
 		MBThread mbThread = (MBThread)EntityCacheUtil.getResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
-				MBThreadImpl.class, threadId, this);
+				MBThreadImpl.class, threadId);
 
 		if (mbThread == _nullMBThread) {
 			return null;
@@ -8585,10 +8587,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -8608,8 +8608,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

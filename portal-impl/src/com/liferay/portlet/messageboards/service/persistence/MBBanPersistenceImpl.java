@@ -153,7 +153,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	public void cacheResult(List<MBBan> mbBans) {
 		for (MBBan mbBan : mbBans) {
 			if (EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-						MBBanImpl.class, mbBan.getPrimaryKey(), this) == null) {
+						MBBanImpl.class, mbBan.getPrimaryKey()) == null) {
 				cacheResult(mbBan);
 			}
 		}
@@ -188,6 +188,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	public void clearCache(MBBan mbBan) {
 		EntityCacheUtil.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanImpl.class, mbBan.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B,
 			new Object[] {
@@ -446,7 +448,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	public MBBan fetchByPrimaryKey(long banId) throws SystemException {
 		MBBan mbBan = (MBBan)EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-				MBBanImpl.class, banId, this);
+				MBBanImpl.class, banId);
 
 		if (mbBan == _nullMBBan) {
 			return null;
@@ -1992,10 +1994,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2015,8 +2015,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

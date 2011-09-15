@@ -302,6 +302,24 @@ public class DLUtil {
 		return 0;
 	}
 
+	public static String getDividedPath(long id) {
+		StringBundler sb = new StringBundler(16);
+
+		long dividend = id;
+
+		while ((dividend / _DIVISOR) != 0) {
+			sb.append(StringPool.SLASH);
+			sb.append(dividend % _DIVISOR);
+
+			dividend = dividend / _DIVISOR;
+		}
+
+		sb.append(StringPool.SLASH);
+		sb.append(id);
+
+		return sb.toString();
+	}
+
 	public static String getFileIcon(String extension) {
 		return _instance._getFileIcon(extension);
 	}
@@ -448,6 +466,8 @@ public class DLUtil {
 	private static final String _DEFAULT_FILE_ICON = "page";
 
 	private static final String _DEFAULT_GENERIC_NAME = "default";
+
+	private static final long _DIVISOR = 256;
 
 	private static Log _log = LogFactoryUtil.getLog(DLUtil.class);
 

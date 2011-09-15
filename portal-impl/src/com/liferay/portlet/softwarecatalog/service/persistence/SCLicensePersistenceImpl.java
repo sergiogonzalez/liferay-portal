@@ -136,7 +136,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		for (SCLicense scLicense : scLicenses) {
 			if (EntityCacheUtil.getResult(
 						SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-						SCLicenseImpl.class, scLicense.getPrimaryKey(), this) == null) {
+						SCLicenseImpl.class, scLicense.getPrimaryKey()) == null) {
 				cacheResult(scLicense);
 			}
 		}
@@ -171,6 +171,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void clearCache(SCLicense scLicense) {
 		EntityCacheUtil.removeResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
 			SCLicenseImpl.class, scLicense.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -402,7 +404,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public SCLicense fetchByPrimaryKey(long licenseId)
 		throws SystemException {
 		SCLicense scLicense = (SCLicense)EntityCacheUtil.getResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-				SCLicenseImpl.class, licenseId, this);
+				SCLicenseImpl.class, licenseId);
 
 		if (scLicense == _nullSCLicense) {
 			return null;
@@ -2125,10 +2127,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2148,8 +2148,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

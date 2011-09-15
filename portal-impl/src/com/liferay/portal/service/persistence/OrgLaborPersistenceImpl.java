@@ -110,7 +110,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		for (OrgLabor orgLabor : orgLabors) {
 			if (EntityCacheUtil.getResult(
 						OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-						OrgLaborImpl.class, orgLabor.getPrimaryKey(), this) == null) {
+						OrgLaborImpl.class, orgLabor.getPrimaryKey()) == null) {
 				cacheResult(orgLabor);
 			}
 		}
@@ -145,6 +145,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	public void clearCache(OrgLabor orgLabor) {
 		EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
 			OrgLaborImpl.class, orgLabor.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -375,7 +377,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	public OrgLabor fetchByPrimaryKey(long orgLaborId)
 		throws SystemException {
 		OrgLabor orgLabor = (OrgLabor)EntityCacheUtil.getResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborImpl.class, orgLaborId, this);
+				OrgLaborImpl.class, orgLaborId);
 
 		if (orgLabor == _nullOrgLabor) {
 			return null;
@@ -943,10 +945,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -966,8 +966,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

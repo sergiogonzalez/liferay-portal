@@ -35,6 +35,51 @@ import java.util.Iterator;
  */
 public class UpgradeJournal extends UpgradeProcess {
 
+	protected void addDynamicElementInstanceId(Element root) throws Exception {
+		Iterator<Element> itr = root.elements().iterator();
+
+		while (itr.hasNext()) {
+			Element element = itr.next();
+
+			if (!element.getName().equals("dynamic-element")) {
+				continue;
+			}
+
+			String instanceId = element.attributeValue("instance-id");
+			String type = element.attributeValue("type");
+
+			if (Validator.isNull(instanceId)) {
+				instanceId = PwdGenerator.getPassword();
+
+				element.addAttribute("instance-id", instanceId);
+
+				if (type.equals("image")) {
+					updateJournalArticleImageInstanceId(element, instanceId);
+				}
+			}
+
+			addDynamicElementInstanceId(element);
+		}
+	}
+
+	protected String addDynamicElementInstanceId(String content)
+		throws Exception {
+
+		Document doc = SAXReaderUtil.read(content);
+
+		Element root = doc.getRootElement();
+
+		addDynamicElementInstanceId(root);
+
+		return DDMXMLUtil.formatXML(doc);
+	}
+
+	protected void deleteJournalArticleImages() throws Exception {
+		runSQL(
+			"delete from JournalArticleImage where elInstanceId is null or " +
+				"elInstanceId = ''");
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		Connection con = null;
@@ -72,51 +117,6 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 
 		deleteJournalArticleImages();
-	}
-
-	protected String addDynamicElementInstanceId(String content)
-		throws Exception {
-
-		Document doc = SAXReaderUtil.read(content);
-
-		Element root = doc.getRootElement();
-
-		addDynamicElementInstanceId(root);
-
-		return DDMXMLUtil.formatXML(doc);
-	}
-
-	protected void addDynamicElementInstanceId(Element root) throws Exception {
-		Iterator<Element> itr = root.elements().iterator();
-
-		while (itr.hasNext()) {
-			Element element = itr.next();
-
-			if (!element.getName().equals("dynamic-element")) {
-				continue;
-			}
-
-			String instanceId = element.attributeValue("instance-id");
-			String type = element.attributeValue("type");
-
-			if (Validator.isNull(instanceId)) {
-				instanceId = PwdGenerator.getPassword();
-
-				element.addAttribute("instance-id", instanceId);
-
-				if (type.equals("image")) {
-					updateJournalArticleImageInstanceId(element, instanceId);
-				}
-			}
-
-			addDynamicElementInstanceId(element);
-		}
-	}
-
-	protected void deleteJournalArticleImages() throws Exception {
-		runSQL(
-			"delete from JournalArticleImage where elInstanceId is null or " +
-				"elInstanceId = ''");
 	}
 
 	protected void updateJournalArticleContent(long id, String content)

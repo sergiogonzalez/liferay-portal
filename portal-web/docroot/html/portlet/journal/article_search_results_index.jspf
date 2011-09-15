@@ -26,32 +26,30 @@ journalParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(JournalArticle.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-Hits hits = null;
+int total = 0;
 
-if (searchTerms.isAdvancedSearch()) {
-	hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), 0, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), StringUtil.valueOf(searchTerms.getStatusCode()), searchTerms.getStructureId(), searchTerms.getTemplateId(), journalParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+while (true) {
+	Hits hits = null;
+
+	if (searchTerms.isAdvancedSearch()) {
+		hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), 0, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), StringUtil.valueOf(searchTerms.getStatusCode()), searchTerms.getStructureId(), searchTerms.getTemplateId(), journalParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+	else {
+		hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), 0, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+
+	Tuple tuple = JournalUtil.getArticles(hits);
+
+	boolean corruptIndex = (Boolean)tuple.getObject(1);
+
+	if (!corruptIndex) {
+		results = (List<JournalArticle>)tuple.getObject(0);
+		total = hits.getLength();
+
+		break;
+	}
 }
-else {
-	hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), 0, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-}
 
-Tuple tuple = JournalUtil.getArticles(hits);
-
-boolean corruptIndex = (Boolean)tuple.getObject(1);
-
-if (!corruptIndex) {
-	results = (List<JournalArticle>)tuple.getObject(0);
-	int total = hits.getLength();
-
-	searchContainer.setResults(results);
-	searchContainer.setTotal(total);
-}
-else {
-	journalParams.remove("expandoAttributes");
-%>
-
-	<%@ include file="/html/portlet/journal/article_search_results_database.jspf" %>
-
-<%
-}
+searchContainer.setResults(results);
+searchContainer.setTotal(total);
 %>

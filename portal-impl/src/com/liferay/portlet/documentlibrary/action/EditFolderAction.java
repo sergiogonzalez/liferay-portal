@@ -29,6 +29,7 @@ import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import javax.portlet.ActionRequest;
@@ -65,6 +66,9 @@ public class EditFolderAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.MOVE)) {
 				moveFolders(actionRequest);
+			}
+			else if (cmd.equals("updateWorkflowDefinitions")) {
+				updateWorkflowDefinitions(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -128,11 +132,11 @@ public class EditFolderAction extends PortletAction {
 			long[] folderIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-			for (int i = 0; i < folderIds.length; i++) {
-				DLAppServiceUtil.deleteFolder(folderIds[i]);
+			for (long curFolderId : folderIds) {
+				DLAppServiceUtil.deleteFolder(curFolderId);
 
 				AssetPublisherUtil.removeRecentFolderId(
-					actionRequest, DLFileEntry.class.getName(), folderIds[i]);
+					actionRequest, DLFileEntry.class.getName(), curFolderId);
 			}
 		}
 	}
@@ -154,9 +158,9 @@ public class EditFolderAction extends PortletAction {
 			long[] folderIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-			for (int i = 0; i < folderIds.length; i++) {
+			for (long curFolderId : folderIds) {
 				DLAppServiceUtil.moveFolder(
-					folderIds[i], parentFolderId, serviceContext);
+					curFolderId, parentFolderId, serviceContext);
 			}
 		}
 	}
@@ -188,6 +192,17 @@ public class EditFolderAction extends PortletAction {
 			DLAppServiceUtil.updateFolder(
 				folderId, name, description, serviceContext);
 		}
+	}
+
+	protected void updateWorkflowDefinitions(ActionRequest actionRequest)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), actionRequest);
+
+		DLAppServiceUtil.updateFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
+			serviceContext);
 	}
 
 }

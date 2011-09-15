@@ -123,7 +123,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		for (AssetTag assetTag : assetTags) {
 			if (EntityCacheUtil.getResult(
 						AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-						AssetTagImpl.class, assetTag.getPrimaryKey(), this) == null) {
+						AssetTagImpl.class, assetTag.getPrimaryKey()) == null) {
 				cacheResult(assetTag);
 			}
 		}
@@ -158,6 +158,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public void clearCache(AssetTag assetTag) {
 		EntityCacheUtil.removeResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagImpl.class, assetTag.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -390,7 +392,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	public AssetTag fetchByPrimaryKey(long tagId) throws SystemException {
 		AssetTag assetTag = (AssetTag)EntityCacheUtil.getResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagImpl.class, tagId, this);
+				AssetTagImpl.class, tagId);
 
 		if (assetTag == _nullAssetTag) {
 			return null;
@@ -1310,10 +1312,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1333,8 +1333,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

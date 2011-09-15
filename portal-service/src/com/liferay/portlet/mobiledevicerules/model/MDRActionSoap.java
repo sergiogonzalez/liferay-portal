@@ -41,7 +41,7 @@ public class MDRActionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setRuleGroupId(model.getRuleGroupId());
+		soapModel.setRuleGroupInstanceId(model.getRuleGroupInstanceId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
@@ -178,12 +178,12 @@ public class MDRActionSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public long getRuleGroupId() {
-		return _ruleGroupId;
+	public long getRuleGroupInstanceId() {
+		return _ruleGroupInstanceId;
 	}
 
-	public void setRuleGroupId(long ruleGroupId) {
-		_ruleGroupId = ruleGroupId;
+	public void setRuleGroupInstanceId(long ruleGroupInstanceId) {
+		_ruleGroupInstanceId = ruleGroupInstanceId;
 	}
 
 	public String getName() {
@@ -228,7 +228,7 @@ public class MDRActionSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _ruleGroupId;
+	private long _ruleGroupInstanceId;
 	private String _name;
 	private String _description;
 	private String _type;

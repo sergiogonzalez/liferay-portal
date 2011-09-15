@@ -535,14 +535,17 @@ public class LanguageImpl implements Language {
 		for (int i = 0; i < localesArray.length; i++) {
 			String languageId = localesArray[i];
 
-			int pos = languageId.indexOf(CharPool.UNDERLINE);
-
-			String language = languageId.substring(0, pos);
-			//String country = languageId.substring(pos + 1);
-
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			_charEncodings.put(locale.toString(), StringPool.UTF8);
+
+			String language = languageId;
+
+			int pos = languageId.indexOf(CharPool.UNDERLINE);
+
+			if (pos > 0) {
+				language = languageId.substring(0, pos);
+			}
 
 			if (_localesMap.containsKey(language)) {
 				_duplicateLanguageCodes.add(language);

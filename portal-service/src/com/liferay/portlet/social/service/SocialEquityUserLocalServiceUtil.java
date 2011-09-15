@@ -255,38 +255,129 @@ public class SocialEquityUserLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Removes ranking for the user with respect to all groups.
+	*
+	* <p>
+	* This method is called by the portal when a user is deactivated.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void clearRanks(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().clearRanks(userId);
 	}
 
+	/**
+	* Returns the contribution equity score for the user.
+	*
+	* <p>
+	* This method should only be used if social equity is turned on for only
+	* one group, as it returns the contribution score for the first group it
+	* finds. The first group found can be different from one execution to the
+	* next.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @return the contribution equity score
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.social.model.SocialEquityValue getContributionEquity(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getContributionEquity(userId);
 	}
 
+	/**
+	* Returns the contribution equity score of the user with respect to the
+	* group.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the group
+	* @return the contribution equity score
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.social.model.SocialEquityValue getContributionEquity(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getContributionEquity(userId, groupId);
 	}
 
+	/**
+	* Returns the participation equity score for the user.
+	*
+	* <p>
+	* This method should only be used if social equity is turned on for only
+	* one group, as it returns the participation score for the first group it
+	* finds. The first group found can be different from one execution to the
+	* next.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @return the participation equity score
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.social.model.SocialEquityValue getParticipationEquity(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getParticipationEquity(userId);
 	}
 
+	/**
+	* Returns the participation equity score of the user with respect to the
+	* group.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the group
+	* @return the participation equity score
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.social.model.SocialEquityValue getParticipationEquity(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getParticipationEquity(userId, groupId);
 	}
 
+	/**
+	* Returns the rank of the user in the group based on the user's personal
+	* equity.
+	*
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user
+	* @return the rank for the user in the group
+	* @throws SystemException if a system exception occurred
+	*/
 	public static int getRank(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRank(groupId, userId);
 	}
 
+	/**
+	* Returns an ordered range of all the social equity users in the group
+	* with rankings greater than zero. It is strongly suggested to use {@link
+	* com.liferay.portlet.social.util.comparator.SocialEquityUserRankComparator}
+	* as the ordering comparator.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
+	* full result set.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param orderByComparator the comparator to order the social equity
+	users, such as {@link
+	com.liferay.portlet.social.util.comparator.SocialEquityUserRankComparator}
+	(optionally <code>null</code>)
+	* @return the ordered range of the social equity users
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialEquityUser> getRankedEquityUsers(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -295,6 +386,15 @@ public class SocialEquityUserLocalServiceUtil {
 				   .getRankedEquityUsers(groupId, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of the social equity users in the group with rankings
+	* greater than zero.
+	*
+	* @param groupId the primary key of the group
+	* @return the number of social equity users with rankings greater than
+	zero
+	* @throws SystemException if a system exception occurred
+	*/
 	public static int getRankedEquityUsersCount(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRankedEquityUsersCount(groupId);

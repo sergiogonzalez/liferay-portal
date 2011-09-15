@@ -158,7 +158,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 			if (EntityCacheUtil.getResult(
 						SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 						SCProductScreenshotImpl.class,
-						scProductScreenshot.getPrimaryKey(), this) == null) {
+						scProductScreenshot.getPrimaryKey()) == null) {
 				cacheResult(scProductScreenshot);
 			}
 		}
@@ -193,6 +193,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	public void clearCache(SCProductScreenshot scProductScreenshot) {
 		EntityCacheUtil.removeResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 			SCProductScreenshotImpl.class, scProductScreenshot.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
 			new Object[] { Long.valueOf(scProductScreenshot.getThumbnailId()) });
@@ -510,7 +512,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	public SCProductScreenshot fetchByPrimaryKey(long productScreenshotId)
 		throws SystemException {
 		SCProductScreenshot scProductScreenshot = (SCProductScreenshot)EntityCacheUtil.getResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-				SCProductScreenshotImpl.class, productScreenshotId, this);
+				SCProductScreenshotImpl.class, productScreenshotId);
 
 		if (scProductScreenshot == _nullSCProductScreenshot) {
 			return null;
@@ -1693,10 +1695,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1716,8 +1716,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

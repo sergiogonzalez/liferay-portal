@@ -137,8 +137,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		return Role.class.getName();
 	}
 
-	public static final String MAPPING_TABLE_GROUPS_ROLES_NAME = com.liferay.portal.model.impl.GroupModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES = com.liferay.portal.model.impl.GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES;
+	public static final String MAPPING_TABLE_GROUPS_ROLES_NAME = "Groups_Roles";
+	public static final Object[][] MAPPING_TABLE_GROUPS_ROLES_COLUMNS = {
+			{ "groupId", Types.BIGINT },
+			{ "roleId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE = "create table Groups_Roles (groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Groups_Roles"), true);
 	public static final String MAPPING_TABLE_ROLES_PERMISSIONS_NAME = "Roles_Permissions";
 	public static final Object[][] MAPPING_TABLE_ROLES_PERMISSIONS_COLUMNS = {
 			{ "roleId", Types.BIGINT },
@@ -147,8 +153,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public static final String MAPPING_TABLE_ROLES_PERMISSIONS_SQL_CREATE = "create table Roles_Permissions (roleId LONG not null,permissionId LONG not null,primary key (roleId, permissionId))";
 	public static final boolean FINDER_CACHE_ENABLED_ROLES_PERMISSIONS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Roles_Permissions"), true);
-	public static final String MAPPING_TABLE_USERS_ROLES_NAME = com.liferay.portal.model.impl.UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_USERS_ROLES = com.liferay.portal.model.impl.UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES;
+	public static final String MAPPING_TABLE_USERS_ROLES_NAME = "Users_Roles";
+	public static final Object[][] MAPPING_TABLE_USERS_ROLES_COLUMNS = {
+			{ "userId", Types.BIGINT },
+			{ "roleId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE = "create table Users_Roles (userId LONG not null,roleId LONG not null,primary key (userId, roleId))";
+	public static final boolean FINDER_CACHE_ENABLED_USERS_ROLES = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Users_Roles"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Role"));
 

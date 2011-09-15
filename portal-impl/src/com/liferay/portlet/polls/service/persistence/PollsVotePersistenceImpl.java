@@ -141,7 +141,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		for (PollsVote pollsVote : pollsVotes) {
 			if (EntityCacheUtil.getResult(
 						PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-						PollsVoteImpl.class, pollsVote.getPrimaryKey(), this) == null) {
+						PollsVoteImpl.class, pollsVote.getPrimaryKey()) == null) {
 				cacheResult(pollsVote);
 			}
 		}
@@ -176,6 +176,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public void clearCache(PollsVote pollsVote) {
 		EntityCacheUtil.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteImpl.class, pollsVote.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U,
 			new Object[] {
@@ -437,7 +439,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 */
 	public PollsVote fetchByPrimaryKey(long voteId) throws SystemException {
 		PollsVote pollsVote = (PollsVote)EntityCacheUtil.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-				PollsVoteImpl.class, voteId, this);
+				PollsVoteImpl.class, voteId);
 
 		if (pollsVote == _nullPollsVote) {
 			return null;
@@ -1604,10 +1606,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1627,8 +1627,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -148,8 +148,17 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return DLFolder.class.getName();
 	}
 
-	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME = com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS = com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS;
+	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME = "DLFileEntryTypes_DLFolders";
+	public static final Object[][] MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_COLUMNS =
+		{
+			{ "fileEntryTypeId", Types.BIGINT },
+			{ "folderId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_SQL_CREATE =
+		"create table DLFileEntryTypes_DLFolders (fileEntryTypeId LONG not null,folderId LONG not null,primary key (fileEntryTypeId, folderId))";
+	public static final boolean FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.DLFileEntryTypes_DLFolders"),
+			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFolder"));
 
