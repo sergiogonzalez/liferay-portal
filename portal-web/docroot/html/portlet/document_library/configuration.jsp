@@ -34,10 +34,74 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
 	<aui:input name="preferences--folderColumns--" type="hidden" />
 	<aui:input name="preferences--fileEntryColumns--" type="hidden" />
+	<aui:input name="preferences--displayViews--" type="hidden" />
 
 	<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
 
 	<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryItemsListingPanel" persistState="<%= true %>" title="display-settings">
+			<aui:fieldset>
+
+				<aui:select label="maximum-entries-to-display" name="preferences--itemsPerPage--">
+					<%
+					for (int deltaValue : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+					%>
+
+						<aui:option label="<%= deltaValue %>" selected="<%= itemsPerPage == deltaValue %>" />
+
+					<%
+					}
+					%>
+				</aui:select>
+
+				<aui:field-wrapper label="display-style-views">
+
+					<%
+					Set availableDisplayViews = SetUtil.fromArray(PropsValues.DL_DISPLAY_VIEWS);
+
+					// Left list
+
+					List leftList = new ArrayList();
+
+					for (int i = 0; i < displayViews.length; i++) {
+						String displayView = displayViews[i];
+
+						leftList.add(new KeyValuePair(displayView, LanguageUtil.get(pageContext, displayView)));
+					}
+
+					// Right list
+
+					List rightList = new ArrayList();
+
+					Arrays.sort(displayViews);
+
+					Iterator itr = availableDisplayViews.iterator();
+
+					while (itr.hasNext()) {
+						String displayView = (String)itr.next();
+
+						if (Arrays.binarySearch(displayViews, displayView) < 0) {
+							rightList.add(new KeyValuePair(displayView, LanguageUtil.get(pageContext, displayView)));
+						}
+					}
+
+					rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+					%>
+
+					<liferay-ui:input-move-boxes
+						leftTitle="current"
+						rightTitle="available"
+						leftBoxName="currentDisplayViews"
+						rightBoxName="availableDisplayViews"
+						leftReorder="true"
+						leftList="<%= leftList %>"
+						rightList="<%= rightList %>"
+					/>
+				</aui:field-wrapper>
+
+			</aui:fieldset>
+		</liferay-ui:panel>
+
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
 			<aui:fieldset>
 				<aui:field-wrapper label="root-folder">
@@ -56,8 +120,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
 
 				<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= showSubfolders %>" />
-
-				<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= foldersPerPage %>" />
 
 				<aui:field-wrapper label="show-columns">
 
@@ -109,8 +171,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDocumentsListingPanel" persistState="<%= true %>" title="documents-listing">
 			<aui:fieldset>
 				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
-
-				<aui:input label="documents-per-page" name="preferences--fileEntriesPerPage--" size="2" type="text" value="<%= fileEntriesPerPage %>" />
 
 				<aui:field-wrapper label="show-columns">
 
@@ -198,6 +258,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		window,
 		'<portlet:namespace />saveConfiguration',
 		function() {
+			document.<portlet:namespace />fm.<portlet:namespace />displayViews.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentDisplayViews);
 			document.<portlet:namespace />fm.<portlet:namespace />folderColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentFolderColumns);
 			document.<portlet:namespace />fm.<portlet:namespace />fileEntryColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentFileEntryColumns);
 

@@ -100,6 +100,10 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
+int itemsPerPage = PrefsParamUtil.getInteger(preferences, request, "itemsPerPage", SearchContainer.DEFAULT_DELTA);
+
+String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, request, "displayViews", StringUtil.merge(PropsValues.DL_DISPLAY_VIEWS)));
+
 long rootFolderId = PrefsParamUtil.getLong(preferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 String rootFolderName = StringPool.BLANK;
@@ -116,7 +120,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 boolean showFoldersSearch = PrefsParamUtil.getBoolean(preferences, request, "showFoldersSearch", true);
 boolean showSubfolders = PrefsParamUtil.getBoolean(preferences, request, "showSubfolders", true);
-int foldersPerPage = PrefsParamUtil.getInteger(preferences, request, "foldersPerPage", SearchContainer.DEFAULT_DELTA);
 
 String defaultFolderColumns = "name,num-of-folders,num-of-documents";
 
@@ -154,7 +157,6 @@ else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(
 }
 
 boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
-int fileEntriesPerPage = PrefsParamUtil.getInteger(preferences, request, "fileEntriesPerPage", SearchContainer.DEFAULT_DELTA);
 
 String defaultFileEntryColumns = "name,size";
 
