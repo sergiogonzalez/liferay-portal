@@ -29,9 +29,6 @@ import java.util.List;
  */
 public class JavaScriptBundleUtil {
 
-	public static final String CACHE_NAME =
-		JavaScriptBundleUtil.class.getName();
-
 	public static void clearCache() {
 		_portalCache.removeAll();
 	}
@@ -89,7 +86,10 @@ public class JavaScriptBundleUtil {
 		return dependencies;
 	}
 
+	private static final String _CACHE_NAME =
+		JavaScriptBundleUtil.class.getName();
+
 	private static PortalCache _portalCache = SingleVMPoolUtil.getCache(
-		CACHE_NAME);
+		_CACHE_NAME);
 
 }

@@ -133,6 +133,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return assetEntryPersistence.fetchByPrimaryKey(entryId);
 	}
 
+	public AssetEntry fetchEntry(String className, long classPK)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return assetEntryPersistence.fetchByC_C(classNameId, classPK);
+	}
+
 	public List<AssetEntry> getAncestorEntries(long entryId)
 		throws PortalException, SystemException {
 

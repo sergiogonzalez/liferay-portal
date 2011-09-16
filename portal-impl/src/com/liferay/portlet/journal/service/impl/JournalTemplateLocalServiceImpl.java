@@ -68,7 +68,7 @@ public class JournalTemplateLocalServiceImpl
 			boolean autoTemplateId, String structureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String xsl, boolean formatXsl, String langType, boolean cacheable,
-			boolean smallImage, String smallImageURL, File smallFile,
+			boolean smallImage, String smallImageURL, File smallImageFile,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -92,17 +92,17 @@ public class JournalTemplateLocalServiceImpl
 			throw new TemplateXslException();
 		}
 
-		byte[] smallBytes = null;
+		byte[] smallImageBytes = null;
 
 		try {
-			smallBytes = FileUtil.getBytes(smallFile);
+			smallImageBytes = FileUtil.getBytes(smallImageFile);
 		}
 		catch (IOException ioe) {
 		}
 
 		validate(
 			groupId, templateId, autoTemplateId, nameMap, xsl, smallImage,
-			smallImageURL, smallFile, smallBytes);
+			smallImageURL, smallImageFile, smallImageBytes);
 
 		if (autoTemplateId) {
 			templateId = String.valueOf(counterLocalService.increment());
@@ -156,7 +156,8 @@ public class JournalTemplateLocalServiceImpl
 		// Small image
 
 		saveImages(
-			smallImage, template.getSmallImageId(), smallFile, smallBytes);
+			smallImage, template.getSmallImageId(), smallImageFile,
+			smallImageBytes);
 
 		return template;
 	}
@@ -285,10 +286,10 @@ public class JournalTemplateLocalServiceImpl
 			Image image = imageLocalService.getImage(
 				oldTemplate.getSmallImageId());
 
-			byte[] smallBytes = image.getTextObj();
+			byte[] smallImageBytes = image.getTextObj();
 
 			imageLocalService.updateImage(
-				newTemplate.getSmallImageId(), smallBytes);
+				newTemplate.getSmallImageId(), smallImageBytes);
 		}
 
 		// Resources
@@ -503,7 +504,7 @@ public class JournalTemplateLocalServiceImpl
 			long groupId, String templateId, String structureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String xsl, boolean formatXsl, String langType, boolean cacheable,
-			boolean smallImage, String smallImageURL, File smallFile,
+			boolean smallImage, String smallImageURL, File smallImageFile,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -525,16 +526,17 @@ public class JournalTemplateLocalServiceImpl
 			throw new TemplateXslException();
 		}
 
-		byte[] smallBytes = null;
+		byte[] smallImageBytes = null;
 
 		try {
-			smallBytes = FileUtil.getBytes(smallFile);
+			smallImageBytes = FileUtil.getBytes(smallImageFile);
 		}
 		catch (IOException ioe) {
 		}
 
 		validate(
-			nameMap, xsl, smallImage, smallImageURL, smallFile, smallBytes);
+			nameMap, xsl, smallImage, smallImageURL, smallImageFile,
+			smallImageBytes);
 
 		JournalTemplate template = journalTemplatePersistence.findByG_T(
 			groupId, templateId);
@@ -572,19 +574,20 @@ public class JournalTemplateLocalServiceImpl
 		// Small image
 
 		saveImages(
-			smallImage, template.getSmallImageId(), smallFile, smallBytes);
+			smallImage, template.getSmallImageId(), smallImageFile,
+			smallImageBytes);
 
 		return template;
 	}
 
 	protected void saveImages(
-			boolean smallImage, long smallImageId, File smallFile,
-			byte[] smallBytes)
+			boolean smallImage, long smallImageId, File smallImageFile,
+			byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		if (smallImage) {
-			if ((smallFile != null) && (smallBytes != null)) {
-				imageLocalService.updateImage(smallImageId, smallBytes);
+			if ((smallImageFile != null) && (smallImageBytes != null)) {
+				imageLocalService.updateImage(smallImageId, smallImageBytes);
 			}
 		}
 		else {
@@ -604,7 +607,7 @@ public class JournalTemplateLocalServiceImpl
 	protected void validate(
 			long groupId, String templateId, boolean autoTemplateId,
 			Map<Locale, String> nameMap, String xsl, boolean smallImage,
-			String smallImageURL, File smallFile, byte[] smallBytes)
+			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		if (!autoTemplateId) {
@@ -619,12 +622,13 @@ public class JournalTemplateLocalServiceImpl
 		}
 
 		validate(
-			nameMap, xsl, smallImage, smallImageURL, smallFile, smallBytes);
+			nameMap, xsl, smallImage, smallImageURL, smallImageFile,
+			smallImageBytes);
 	}
 
 	protected void validate(
 			Map<Locale, String> nameMap, String xsl, boolean smallImage,
-			String smallImageURL, File smallFile, byte[] smallBytes)
+			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		if (nameMap.isEmpty()) {
@@ -638,9 +642,9 @@ public class JournalTemplateLocalServiceImpl
 			PropsKeys.JOURNAL_IMAGE_EXTENSIONS, StringPool.COMMA);
 
 		if (smallImage && Validator.isNull(smallImageURL) &&
-			smallFile != null && smallBytes != null) {
+			(smallImageFile != null) && (smallImageBytes != null)) {
 
-			String smallImageName = smallFile.getName();
+			String smallImageName = smallImageFile.getName();
 
 			if (smallImageName != null) {
 				boolean validSmallImageExtension = false;
@@ -665,8 +669,8 @@ public class JournalTemplateLocalServiceImpl
 				PropsKeys.JOURNAL_IMAGE_SMALL_MAX_SIZE);
 
 			if ((smallImageMaxSize > 0) &&
-				((smallBytes == null) ||
-					(smallBytes.length > smallImageMaxSize))) {
+				((smallImageBytes == null) ||
+				 (smallImageBytes.length > smallImageMaxSize))) {
 
 				throw new TemplateSmallImageSizeException();
 			}

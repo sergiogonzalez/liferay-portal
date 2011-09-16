@@ -944,13 +944,13 @@ AUI().add(
 							buttons: [
 								{
 									handler: saveCallback,
-									text: Liferay.Language.get('save')
+									label: Liferay.Language.get('save')
 								},
 								{
 									handler: function() {
 										this.close();
 									},
-									text: Liferay.Language.get('cancel')
+									label: Liferay.Language.get('cancel')
 								}
 							],
 							centered: true,
@@ -2157,7 +2157,7 @@ AUI().add(
 					);
 				};
 
-				_attachButtonInputSelector('documentlibrary', 'DocumentLibrary', 'selectDocumentLibrary');
+				_attachButtonInputSelector('documentlibrary', 'Documents and Media', 'selectDocumentLibrary');
 
 				container.delegate(
 					'mouseover',

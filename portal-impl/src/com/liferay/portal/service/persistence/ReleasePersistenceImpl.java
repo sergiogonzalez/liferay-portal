@@ -109,7 +109,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		for (Release release : releases) {
 			if (EntityCacheUtil.getResult(
 						ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-						ReleaseImpl.class, release.getPrimaryKey(), this) == null) {
+						ReleaseImpl.class, release.getPrimaryKey()) == null) {
 				cacheResult(release);
 			}
 		}
@@ -144,6 +144,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	public void clearCache(Release release) {
 		EntityCacheUtil.removeResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseImpl.class, release.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
 			new Object[] { release.getServletContextName() });
@@ -390,7 +392,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 */
 	public Release fetchByPrimaryKey(long releaseId) throws SystemException {
 		Release release = (Release)EntityCacheUtil.getResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-				ReleaseImpl.class, releaseId, this);
+				ReleaseImpl.class, releaseId);
 
 		if (release == _nullRelease) {
 			return null;
@@ -772,10 +774,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -795,8 +795,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

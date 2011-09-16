@@ -123,6 +123,8 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 
 		newLayout.setLayoutPrototypeLinkEnabled(randomBoolean());
 
+		newLayout.setTemplateLayoutUuid(randomString());
+
 		_persistence.update(newLayout, false);
 
 		Layout existingLayout = _persistence.findByPrimaryKey(newLayout.getPrimaryKey());
@@ -164,6 +166,8 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 			newLayout.getLayoutPrototypeUuid());
 		assertEquals(existingLayout.getLayoutPrototypeLinkEnabled(),
 			newLayout.getLayoutPrototypeLinkEnabled());
+		assertEquals(existingLayout.getTemplateLayoutUuid(),
+			newLayout.getTemplateLayoutUuid());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -300,6 +304,14 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 			existingLayoutModelImpl.getOriginalPrivateLayout());
 		assertTrue(Validator.equals(existingLayoutModelImpl.getFriendlyURL(),
 				existingLayoutModelImpl.getOriginalFriendlyURL()));
+
+		assertEquals(existingLayoutModelImpl.getGroupId(),
+			existingLayoutModelImpl.getOriginalGroupId());
+		assertEquals(existingLayoutModelImpl.getPrivateLayout(),
+			existingLayoutModelImpl.getOriginalPrivateLayout());
+		assertTrue(Validator.equals(
+				existingLayoutModelImpl.getTemplateLayoutUuid(),
+				existingLayoutModelImpl.getOriginalTemplateLayoutUuid()));
 	}
 
 	protected Layout addLayout() throws Exception {
@@ -360,6 +372,8 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 		layout.setLayoutPrototypeUuid(randomString());
 
 		layout.setLayoutPrototypeLinkEnabled(randomBoolean());
+
+		layout.setTemplateLayoutUuid(randomString());
 
 		_persistence.update(layout, false);
 

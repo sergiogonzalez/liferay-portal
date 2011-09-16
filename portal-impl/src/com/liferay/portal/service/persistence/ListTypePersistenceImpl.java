@@ -110,7 +110,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		for (ListType listType : listTypes) {
 			if (EntityCacheUtil.getResult(
 						ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-						ListTypeImpl.class, listType.getPrimaryKey(), this) == null) {
+						ListTypeImpl.class, listType.getPrimaryKey()) == null) {
 				cacheResult(listType);
 			}
 		}
@@ -145,6 +145,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public void clearCache(ListType listType) {
 		EntityCacheUtil.removeResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeImpl.class, listType.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -360,7 +362,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	public ListType fetchByPrimaryKey(int listTypeId) throws SystemException {
 		ListType listType = (ListType)EntityCacheUtil.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-				ListTypeImpl.class, listTypeId, this);
+				ListTypeImpl.class, listTypeId);
 
 		if (listType == _nullListType) {
 			return null;
@@ -955,10 +957,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -978,8 +978,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

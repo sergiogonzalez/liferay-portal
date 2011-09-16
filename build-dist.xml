@@ -915,17 +915,18 @@ release was successful.</echo>
 			src="${app.server.parent.dir}/${app.server.jetty.zip.name}"
 		>
 			<patternset
-				excludes="jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/bin/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts-available/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contrib/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/overlays/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/webapps/**"
+				excludes="jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/bin/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts-available/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/javadoc/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/overlays/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/webapps/**"
 			/>
 			<mapper
 				type="glob"
-				from="jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/*"
+				from="jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/*"
 				to="jetty-${app.server.jetty.version}/*"
 			/>
 		</unzip>
 
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/bin" />
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/contexts" />
+		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/temp" />
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/webapps" />
 	</target>
 
@@ -966,7 +967,7 @@ release was successful.</echo>
 			/>
 			<fileset
 				dir="${app.server.parent.dir}/jonas-${app.server.jonas.version}/deploy"
-				includes="ctxroot.xml,doc.xml,jonasAdmin.xml"
+				includes="ctxroot.xml,doc.xml,jdbc-ds.xml,jonasAdmin.xml"
 			/>
 			<fileset
 				dir="${app.server.parent.dir}/jonas-${app.server.jonas.version}/repositories/maven2-internal"
@@ -974,16 +975,20 @@ release was successful.</echo>
 			/>
 		</delete>
 
-		<replace
-			file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/jonas.properties"
-			token="HSQL1"
-			value=""
-		/>
+		<replace file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/jonas.properties">
+			<replacefilter token="HSQL1" value="" />
+			<replacefilter token="jtm,db,resource,ejb3,jaxws,web,ear,depmonitor" value="jtm,resource,ejb3,jaxws,web,ear,validation,depmonitor" />
+		</replace>
 
 		<replace file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/tomcat6-server.xml">
 			<replacefilter token="9000" value="8080" />
 			<replacefilter token="9009" value="8009" />
 			<replacefilter token="9043" value="8443" />
+		</replace>
+
+		<replace file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/osgi/defaults.properties">
+			<replacetoken><![CDATA[javase-packages ${javase-${javase.version}}]]></replacetoken>
+			<replacevalue><![CDATA[javase-packages ${javase-${javase.version}}, com.sun.jmx.mbeanserver, com.sun.crypto.provider, org.apache.felix.framework]]></replacevalue>
 		</replace>
 	</target>
 

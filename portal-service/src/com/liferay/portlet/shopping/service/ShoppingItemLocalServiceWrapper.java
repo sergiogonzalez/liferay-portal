@@ -260,10 +260,10 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 		java.lang.String properties, java.lang.String fieldsQuantities,
 		boolean requiresShipping, int stockQuantity, boolean featured,
 		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallFile,
+		java.lang.String smallImageURL, java.io.File smallImageFile,
 		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeFile,
+		java.io.File mediumImageFile, boolean largeImage,
+		java.lang.String largeImageURL, java.io.File largeImageFile,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -272,9 +272,9 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 		return _shoppingItemLocalService.addItem(userId, groupId, categoryId,
 			sku, name, description, properties, fieldsQuantities,
 			requiresShipping, stockQuantity, featured, sale, smallImage,
-			smallImageURL, smallFile, mediumImage, mediumImageURL, mediumFile,
-			largeImage, largeImageURL, largeFile, itemFields, itemPrices,
-			serviceContext);
+			smallImageURL, smallImageFile, mediumImage, mediumImageURL,
+			mediumImageFile, largeImage, largeImageURL, largeImageFile,
+			itemFields, itemPrices, serviceContext);
 	}
 
 	public void addItemResources(long itemId, boolean addGroupPermissions,
@@ -431,10 +431,10 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 		java.lang.String fieldsQuantities, boolean requiresShipping,
 		int stockQuantity, boolean featured, java.lang.Boolean sale,
 		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile, boolean mediumImage,
-		java.lang.String mediumImageURL, java.io.File mediumFile,
+		java.io.File smallImageFile, boolean mediumImage,
+		java.lang.String mediumImageURL, java.io.File mediumImageFile,
 		boolean largeImage, java.lang.String largeImageURL,
-		java.io.File largeFile,
+		java.io.File largeImageFile,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -443,9 +443,9 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 		return _shoppingItemLocalService.updateItem(userId, itemId, groupId,
 			categoryId, sku, name, description, properties, fieldsQuantities,
 			requiresShipping, stockQuantity, featured, sale, smallImage,
-			smallImageURL, smallFile, mediumImage, mediumImageURL, mediumFile,
-			largeImage, largeImageURL, largeFile, itemFields, itemPrices,
-			serviceContext);
+			smallImageURL, smallImageFile, mediumImage, mediumImageURL,
+			mediumImageFile, largeImage, largeImageURL, largeImageFile,
+			itemFields, itemPrices, serviceContext);
 	}
 
 	public ShoppingItemLocalService getWrappedShoppingItemLocalService() {

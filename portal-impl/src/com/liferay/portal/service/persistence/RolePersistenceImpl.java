@@ -189,7 +189,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void cacheResult(List<Role> roles) {
 		for (Role role : roles) {
 			if (EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-						RoleImpl.class, role.getPrimaryKey(), this) == null) {
+						RoleImpl.class, role.getPrimaryKey()) == null) {
 				cacheResult(role);
 			}
 		}
@@ -224,6 +224,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void clearCache(Role role) {
 		EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 			RoleImpl.class, role.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] { Long.valueOf(role.getCompanyId()), role.getName() });
@@ -548,7 +550,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public Role fetchByPrimaryKey(long roleId) throws SystemException {
 		Role role = (Role)EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-				RoleImpl.class, roleId, this);
+				RoleImpl.class, roleId);
 
 		if (role == _nullRole) {
 			return null;
@@ -4448,10 +4450,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -4471,8 +4471,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

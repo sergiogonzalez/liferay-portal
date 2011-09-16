@@ -26,9 +26,6 @@ import org.apache.velocity.runtime.resource.util.StringResourceRepository;
  */
 public class StringResourceRepositoryImpl implements StringResourceRepository {
 
-	public static final String CACHE_NAME =
-		StringResourceRepository.class.getName();
-
 	public String getEncoding() {
 		return _encoding;
 	}
@@ -65,8 +62,11 @@ public class StringResourceRepositoryImpl implements StringResourceRepository {
 		_encoding = encoding;
 	}
 
+	private static final String _CACHE_NAME =
+		StringResourceRepository.class.getName();
+
 	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
-		CACHE_NAME);
+		_CACHE_NAME);
 
 	private String _encoding = StringPool.UTF8;
 

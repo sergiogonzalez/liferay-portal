@@ -169,7 +169,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if (EntityCacheUtil.getResult(
 						PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 						PortletPreferencesImpl.class,
-						portletPreferences.getPrimaryKey(), this) == null) {
+						portletPreferences.getPrimaryKey()) == null) {
 				cacheResult(portletPreferences);
 			}
 		}
@@ -204,6 +204,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public void clearCache(PortletPreferences portletPreferences) {
 		EntityCacheUtil.removeResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesImpl.class, portletPreferences.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O_P_P,
 			new Object[] {
@@ -488,7 +490,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences fetchByPrimaryKey(long portletPreferencesId)
 		throws SystemException {
 		PortletPreferences portletPreferences = (PortletPreferences)EntityCacheUtil.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				PortletPreferencesImpl.class, portletPreferencesId, this);
+				PortletPreferencesImpl.class, portletPreferencesId);
 
 		if (portletPreferences == _nullPortletPreferences) {
 			return null;
@@ -2236,10 +2238,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2259,8 +2259,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

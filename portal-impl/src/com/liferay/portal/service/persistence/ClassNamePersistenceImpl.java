@@ -109,7 +109,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		for (ClassName className : classNames) {
 			if (EntityCacheUtil.getResult(
 						ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-						ClassNameImpl.class, className.getPrimaryKey(), this) == null) {
+						ClassNameImpl.class, className.getPrimaryKey()) == null) {
 				cacheResult(className);
 			}
 		}
@@ -144,6 +144,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	public void clearCache(ClassName className) {
 		EntityCacheUtil.removeResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 			ClassNameImpl.class, className.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE,
 			new Object[] { className.getValue() });
@@ -386,7 +388,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	public ClassName fetchByPrimaryKey(long classNameId)
 		throws SystemException {
 		ClassName className = (ClassName)EntityCacheUtil.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-				ClassNameImpl.class, classNameId, this);
+				ClassNameImpl.class, classNameId);
 
 		if (className == _nullClassName) {
 			return null;
@@ -766,10 +768,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -789,8 +789,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -206,7 +206,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 			if (EntityCacheUtil.getResult(
 						JournalTemplateModelImpl.ENTITY_CACHE_ENABLED,
 						JournalTemplateImpl.class,
-						journalTemplate.getPrimaryKey(), this) == null) {
+						journalTemplate.getPrimaryKey()) == null) {
 				cacheResult(journalTemplate);
 			}
 		}
@@ -241,6 +241,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	public void clearCache(JournalTemplate journalTemplate) {
 		EntityCacheUtil.removeResult(JournalTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			JournalTemplateImpl.class, journalTemplate.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -587,7 +589,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 */
 	public JournalTemplate fetchByPrimaryKey(long id) throws SystemException {
 		JournalTemplate journalTemplate = (JournalTemplate)EntityCacheUtil.getResult(JournalTemplateModelImpl.ENTITY_CACHE_ENABLED,
-				JournalTemplateImpl.class, id, this);
+				JournalTemplateImpl.class, id);
 
 		if (journalTemplate == _nullJournalTemplate) {
 			return null;
@@ -3945,10 +3947,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3968,8 +3968,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

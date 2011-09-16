@@ -110,7 +110,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		for (Contact contact : contacts) {
 			if (EntityCacheUtil.getResult(
 						ContactModelImpl.ENTITY_CACHE_ENABLED,
-						ContactImpl.class, contact.getPrimaryKey(), this) == null) {
+						ContactImpl.class, contact.getPrimaryKey()) == null) {
 				cacheResult(contact);
 			}
 		}
@@ -145,6 +145,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	public void clearCache(Contact contact) {
 		EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactImpl.class, contact.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -387,7 +389,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	public Contact fetchByPrimaryKey(long contactId) throws SystemException {
 		Contact contact = (Contact)EntityCacheUtil.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-				ContactImpl.class, contactId, this);
+				ContactImpl.class, contactId);
 
 		if (contact == _nullContact) {
 			return null;
@@ -943,10 +945,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -966,8 +966,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

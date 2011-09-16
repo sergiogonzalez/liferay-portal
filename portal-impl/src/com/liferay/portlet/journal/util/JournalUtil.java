@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.CharPool;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -354,37 +355,17 @@ public class JournalUtil {
 			catch (NoSuchArticleException nsae) {
 				corruptIndex = true;
 
-				StringBundler sb = new StringBundler();
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					JournalArticle.class);
 
-				sb.append("Article ");
-				sb.append(articleId);
-				sb.append(" exists in the search index but not in the ");
-				sb.append("database. The search index is corrupt. Reindexing ");
-				sb.append("of articles may be required.");
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
 
-				_log.error(sb.toString());
+				indexer.delete(companyId, document.getUID());
 			}
 		}
 
 		return new Tuple(articles, corruptIndex);
-	}
-
-	public static List<Layout> getDefaultAssetPublisherLayouts(
-			long groupId, boolean privateLayout)
-		throws SystemException {
-
-		List<Layout> defaultAssetPublisherLayouts = new ArrayList<Layout>();
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout);
-
-		for (Layout layout : layouts) {
-			if (layout.isContentDisplayPage()) {
-				defaultAssetPublisherLayouts.add(layout);
-			}
-		}
-
-		return defaultAssetPublisherLayouts;
 	}
 
 	public static String getEmailArticleAddedBody(

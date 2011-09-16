@@ -116,7 +116,7 @@ boolean hasVideo = VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion());
 
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
-AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(DLFileEntryConstants.getClassName(), assetClassPK);
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
@@ -635,6 +635,14 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 							searchContainer.setHeaderNames(headerNames);
 
+							PortletURL viewFileEntryURL = renderResponse.createRenderURL();
+
+							viewFileEntryURL.setParameter("struts_action", "/document_library/view_file_entry");
+							viewFileEntryURL.setParameter("redirect", currentURL);
+							viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+
+							searchContainer.setIteratorURL(viewFileEntryURL);
+
 							if (comparableFileEntry) {
 								RowChecker rowChecker = new RowChecker(renderResponse);
 
@@ -917,5 +925,5 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 </aui:script>
 
 <%
-DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
+DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse, true);
 %>

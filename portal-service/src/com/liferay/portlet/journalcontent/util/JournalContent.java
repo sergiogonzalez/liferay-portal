@@ -22,8 +22,6 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
  */
 public interface JournalContent {
 
-	public static final String CACHE_NAME = JournalContent.class.getName();
-
 	public static final String ARTICLE_SEPARATOR = "_ARTICLE_";
 
 	public static final String LANGUAGE_SEPARATOR = "_LANGUAGE_";

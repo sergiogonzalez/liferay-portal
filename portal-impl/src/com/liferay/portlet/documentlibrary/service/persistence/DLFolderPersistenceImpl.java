@@ -245,7 +245,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		for (DLFolder dlFolder : dlFolders) {
 			if (EntityCacheUtil.getResult(
 						DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-						DLFolderImpl.class, dlFolder.getPrimaryKey(), this) == null) {
+						DLFolderImpl.class, dlFolder.getPrimaryKey()) == null) {
 				cacheResult(dlFolder);
 			}
 		}
@@ -280,6 +280,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public void clearCache(DLFolder dlFolder) {
 		EntityCacheUtil.removeResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 			DLFolderImpl.class, dlFolder.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { dlFolder.getUuid(), Long.valueOf(
@@ -631,7 +633,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	public DLFolder fetchByPrimaryKey(long folderId) throws SystemException {
 		DLFolder dlFolder = (DLFolder)EntityCacheUtil.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-				DLFolderImpl.class, folderId, this);
+				DLFolderImpl.class, folderId);
 
 		if (dlFolder == _nullDLFolder) {
 			return null;
@@ -5223,10 +5225,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -5246,8 +5246,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

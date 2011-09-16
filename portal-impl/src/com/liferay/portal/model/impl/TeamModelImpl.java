@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -31,8 +32,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -132,10 +131,22 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		return Team.class.getName();
 	}
 
-	public static final String MAPPING_TABLE_USERS_TEAMS_NAME = com.liferay.portal.model.impl.UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_USERS_TEAMS = com.liferay.portal.model.impl.UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS;
-	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_NAME = com.liferay.portal.model.impl.UserGroupModelImpl.MAPPING_TABLE_USERGROUPS_TEAMS_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS = com.liferay.portal.model.impl.UserGroupModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS;
+	public static final String MAPPING_TABLE_USERS_TEAMS_NAME = "Users_Teams";
+	public static final Object[][] MAPPING_TABLE_USERS_TEAMS_COLUMNS = {
+			{ "userId", Types.BIGINT },
+			{ "teamId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE = "create table Users_Teams (userId LONG not null,teamId LONG not null,primary key (userId, teamId))";
+	public static final boolean FINDER_CACHE_ENABLED_USERS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Users_Teams"), true);
+	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_NAME = "UserGroups_Teams";
+	public static final Object[][] MAPPING_TABLE_USERGROUPS_TEAMS_COLUMNS = {
+			{ "userGroupId", Types.BIGINT },
+			{ "teamId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (userGroupId LONG not null,teamId LONG not null,primary key (userGroupId, teamId))";
+	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.UserGroups_Teams"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Team"));
 
@@ -287,7 +298,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Team)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (Team)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

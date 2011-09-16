@@ -160,7 +160,7 @@
 		<column name="logoId" type="long" />
 		<column name="system" type="boolean" />
 		<column name="maxUsers" type="int" />
-        <column name="active" type="boolean" />
+		<column name="active" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -486,6 +486,7 @@
 		<column name="priority" type="int" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
+		<column name="templateLayoutUuid" type="String" />
 
 		<!-- Order -->
 
@@ -529,6 +530,11 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_P_TLU" return-type="Layout">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="templateLayoutUuid" />
+		</finder>
 
 		<!-- References -->
 
@@ -564,7 +570,7 @@
 
 		<!-- Finder methods -->
 
-        <finder name="LayoutSetBranchId" return-type="Collection">
+		<finder name="LayoutSetBranchId" return-type="Collection">
 			<finder-column name="layoutSetBranchId" />
 		</finder>
 		<finder name="L_P" return-type="Collection">
@@ -2119,8 +2125,8 @@
 		<column name="parentUserGroupId" type="long" />
 		<column name="name" type="String" accessor="true" />
 		<column name="description" type="String" />
-        <column name="publicLayoutSetPrototypeId" type="long" />
-        <column name="privateLayoutSetPrototypeId" type="long" />
+		<column name="publicLayoutSetPrototypeId" type="long" />
+		<column name="privateLayoutSetPrototypeId" type="long" />
 		<column name="addedByLDAPImport" type="boolean" />
 
 		<!-- Relationships -->
@@ -2252,10 +2258,11 @@
 		<column name="timestamp" type="long" />
 		<column name="deliverBy" type="long" />
 		<column name="payload" type="String" />
+		<column name="archived" type="boolean" />
 
 		<!-- Order -->
 
-		<order by="asc">
+		<order by="desc">
 			<order-column name="timestamp" />
 		</order>
 
@@ -2263,6 +2270,10 @@
 
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
+		</finder>
+		<finder name="U_A" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="archived" />
 		</finder>
 	</entity>
 	<entity name="UserTracker" local-service="true" remote-service="false">

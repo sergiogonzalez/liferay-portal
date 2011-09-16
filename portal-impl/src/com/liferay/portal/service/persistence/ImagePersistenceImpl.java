@@ -111,7 +111,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	public void cacheResult(List<Image> images) {
 		for (Image image : images) {
 			if (EntityCacheUtil.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-						ImageImpl.class, image.getPrimaryKey(), this) == null) {
+						ImageImpl.class, image.getPrimaryKey()) == null) {
 				cacheResult(image);
 			}
 		}
@@ -146,6 +146,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	public void clearCache(Image image) {
 		EntityCacheUtil.removeResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
 			ImageImpl.class, image.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -365,7 +367,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	public Image fetchByPrimaryKey(long imageId) throws SystemException {
 		Image image = (Image)EntityCacheUtil.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-				ImageImpl.class, imageId, this);
+				ImageImpl.class, imageId);
 
 		if (image == _nullImage) {
 			return null;
@@ -921,10 +923,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -944,8 +944,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

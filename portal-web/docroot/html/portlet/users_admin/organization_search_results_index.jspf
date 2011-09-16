@@ -24,32 +24,28 @@ organizationParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(Organization.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-Hits hits = null;
+while (true) {
+	Hits hits = null;
 
-if (searchTerms.isAdvancedSearch()) {
-	hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	if (searchTerms.isAdvancedSearch()) {
+		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+	else {
+		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+
+	Tuple tuple = UsersAdminUtil.getOrganizations(hits);
+
+	boolean corruptIndex = (Boolean)tuple.getObject(1);
+
+	if (!corruptIndex) {
+		results = (List<User>)tuple.getObject(0);
+		total = hits.getLength();
+
+		break;
+	}
 }
-else {
-	hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-}
 
-Tuple tuple = UsersAdminUtil.getOrganizations(hits);
-
-boolean corruptIndex = (Boolean)tuple.getObject(1);
-
-if (!corruptIndex) {
-	results = (List<User>)tuple.getObject(0);
-	total = hits.getLength();
-
-	pageContext.setAttribute("results", results);
-	pageContext.setAttribute("total", total);
-}
-else {
-	organizationParams.remove("expandoAttributes");
-%>
-
-	<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
-
-<%
-}
+pageContext.setAttribute("results", results);
+pageContext.setAttribute("total", total);
 %>

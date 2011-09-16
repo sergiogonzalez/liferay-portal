@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,8 +46,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Blob;
 import java.sql.Types;
@@ -225,33 +224,25 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#if column.mappingTable??>
 			<#assign entityShortName = stringUtil.shorten(entity.name, 9, "")>
 
-			<#if stringUtil.startsWith(column.mappingTable, entityShortName) || stringUtil.startsWith(column.mappingTable, portletShortName + "_" + entityShortName)>
-				public static final String MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME = "${column.mappingTable}";
+			public static final String MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME = "${column.mappingTable}";
 
-				<#compress>
-					public static final Object[][] MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_COLUMNS = {
-						<#list serviceBuilder.getMappingEntities(column.mappingTable) as mapColumn>
-							<#assign sqlType = serviceBuilder.getSqlType(mapColumn.getType())>
+			<#compress>
+				public static final Object[][] MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_COLUMNS = {
+					<#list serviceBuilder.getMappingEntities(column.mappingTable) as mapColumn>
+						<#assign sqlType = serviceBuilder.getSqlType(mapColumn.getType())>
 
-							{"${mapColumn.DBName}", Types.${sqlType}}
+						{"${mapColumn.DBName}", Types.${sqlType}}
 
-							<#if mapColumn_has_next>
-								,
-							</#if>
-						</#list>
-					};
-				</#compress>
+						<#if mapColumn_has_next>
+							,
+						</#if>
+					</#list>
+				};
+			</#compress>
 
-				public static final String MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_SQL_CREATE = "${serviceBuilder.getCreateMappingTableSQL(serviceBuilder.getEntityMapping(column.mappingTable))}";
+			public static final String MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_SQL_CREATE = "${serviceBuilder.getCreateMappingTableSQL(serviceBuilder.getEntityMapping(column.mappingTable))}";
 
-				public static final boolean FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)} = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${column.mappingTable}"), true);
-			<#else>
-				<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
-
-				public static final String MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME = ${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME;
-
-				public static final boolean FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)} = ${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)};
-			</#if>
+			public static final boolean FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)} = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${column.mappingTable}"), true);
 		</#if>
 	</#list>
 
@@ -580,7 +571,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (${entity.name})Proxy.newProxyInstance(_classLoader, _escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+				_escapedModelProxy = (${entity.name})ProxyUtil.newProxyInstance(_classLoader, _escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
 			}
 
 			return _escapedModelProxy;

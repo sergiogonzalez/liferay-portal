@@ -279,6 +279,12 @@ public class AssetEntryLocalServiceUtil {
 		return getService().fetchEntry(entryId);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetEntry fetchEntry(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchEntry(className, classPK);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAncestorEntries(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

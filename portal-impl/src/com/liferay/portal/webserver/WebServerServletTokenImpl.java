@@ -24,11 +24,8 @@ import com.liferay.portlet.journalcontent.util.JournalContentUtil;
  */
 public class WebServerServletTokenImpl implements WebServerServletToken {
 
-	public static final String CACHE_NAME =
-		WebServerServletToken.class.getName();
-
 	public void afterPropertiesSet() {
-		_portalCache = _multiVMPool.getCache(CACHE_NAME);
+		_portalCache = _multiVMPool.getCache(_CACHE_NAME);
 	}
 
 	public String getToken(long imageId) {
@@ -64,6 +61,9 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 	private String _createToken(long imageId) {
 		return String.valueOf(System.currentTimeMillis());
 	}
+
+	private static final String _CACHE_NAME =
+		WebServerServletToken.class.getName();
 
 	private MultiVMPool _multiVMPool;
 	private PortalCache _portalCache;

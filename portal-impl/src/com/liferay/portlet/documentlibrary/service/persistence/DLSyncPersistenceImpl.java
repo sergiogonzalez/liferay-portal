@@ -129,7 +129,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		for (DLSync dlSync : dlSyncs) {
 			if (EntityCacheUtil.getResult(
 						DLSyncModelImpl.ENTITY_CACHE_ENABLED, DLSyncImpl.class,
-						dlSync.getPrimaryKey(), this) == null) {
+						dlSync.getPrimaryKey()) == null) {
 				cacheResult(dlSync);
 			}
 		}
@@ -164,6 +164,8 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public void clearCache(DLSync dlSync) {
 		EntityCacheUtil.removeResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncImpl.class, dlSync.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
 			new Object[] { Long.valueOf(dlSync.getFileId()) });
@@ -410,7 +412,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 */
 	public DLSync fetchByPrimaryKey(long syncId) throws SystemException {
 		DLSync dlSync = (DLSync)EntityCacheUtil.getResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
-				DLSyncImpl.class, syncId, this);
+				DLSyncImpl.class, syncId);
 
 		if (dlSync == _nullDLSync) {
 			return null;
@@ -1248,10 +1250,8 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1271,8 +1271,8 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

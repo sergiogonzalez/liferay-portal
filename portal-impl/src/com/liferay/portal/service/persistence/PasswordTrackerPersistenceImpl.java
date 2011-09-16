@@ -113,7 +113,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			if (EntityCacheUtil.getResult(
 						PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
 						PasswordTrackerImpl.class,
-						passwordTracker.getPrimaryKey(), this) == null) {
+						passwordTracker.getPrimaryKey()) == null) {
 				cacheResult(passwordTracker);
 			}
 		}
@@ -148,6 +148,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	public void clearCache(PasswordTracker passwordTracker) {
 		EntityCacheUtil.removeResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordTrackerImpl.class, passwordTracker.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -370,7 +372,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	public PasswordTracker fetchByPrimaryKey(long passwordTrackerId)
 		throws SystemException {
 		PasswordTracker passwordTracker = (PasswordTracker)EntityCacheUtil.getResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
-				PasswordTrackerImpl.class, passwordTrackerId, this);
+				PasswordTrackerImpl.class, passwordTrackerId);
 
 		if (passwordTracker == _nullPasswordTracker) {
 			return null;
@@ -933,10 +935,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -956,8 +956,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

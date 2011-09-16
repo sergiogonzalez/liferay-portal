@@ -207,6 +207,10 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			return;
 		}
 
+		if (userId == 0) {
+			userId = userLocalService.getDefaultUserId(companyId);
+		}
+
 		WorkflowHandler workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 
@@ -242,7 +246,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		WorkflowInstance workflowInstance =
 			WorkflowInstanceManagerUtil.startWorkflowInstance(
 				companyId, groupId, userId, workflowDefinitionName,
-			workflowDefinitionVersion, null, workflowContext);
+				workflowDefinitionVersion, null, workflowContext);
 
 		addWorkflowInstanceLink(
 			userId, companyId, groupId, className, classPK,

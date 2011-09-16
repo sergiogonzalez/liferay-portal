@@ -30,9 +30,6 @@ import java.util.Map;
  */
 public class PortletPreferencesLocalUtil {
 
-	public static final String CACHE_NAME =
-		PortletPreferencesLocalUtil.class.getName();
-
 	public static Map<Serializable, BasePreferencesImpl> getPreferencesPool(
 		long ownerId, int ownerType) {
 
@@ -60,8 +57,11 @@ public class PortletPreferencesLocalUtil {
 		_portalCache.remove(key);
 	}
 
+	public static final String _CACHE_NAME =
+		PortletPreferencesLocalUtil.class.getName();
+
 	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
-		CACHE_NAME);
+		_CACHE_NAME);
 
 	private static class PreferencesPoolKey implements Serializable {
 
