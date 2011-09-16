@@ -119,9 +119,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 }
 
 boolean showFoldersSearch = PrefsParamUtil.getBoolean(preferences, request, "showFoldersSearch", true);
-boolean showSubfolders = PrefsParamUtil.getBoolean(preferences, request, "showSubfolders", true);
-
-String defaultFolderColumns = "name,num-of-folders,num-of-documents";
 
 String portletId = portletDisplay.getId();
 
@@ -141,44 +138,27 @@ if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showTabs = true;
 }
 
-if (showActions) {
-	defaultFolderColumns += ",action";
-}
-
-String allFolderColumns = defaultFolderColumns;
-
-String[] folderColumns = StringUtil.split(PrefsParamUtil.getString(preferences, request, "folderColumns", defaultFolderColumns));
-
-if (!showActions) {
-	folderColumns = ArrayUtil.remove(folderColumns, "action");
-}
-else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(folderColumns, "action")) {
-	folderColumns = ArrayUtil.append(folderColumns, "action");
-}
-
 boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 
-String defaultFileEntryColumns = "name,size";
+String defaultEntryColumns = "name,size";
 
 if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
-	defaultFileEntryColumns += ",downloads";
+	defaultEntryColumns += ",downloads";
 }
-
-defaultFileEntryColumns += ",locked";
 
 if (showActions) {
-	defaultFileEntryColumns += ",action";
+	defaultEntryColumns += ",action";
 }
 
-String allFileEntryColumns = defaultFileEntryColumns;
+String allEntryColumns = defaultEntryColumns + ",modified-date,create-date";
 
-String[] fileEntryColumns = StringUtil.split(PrefsParamUtil.getString(preferences, request, "fileEntryColumns", defaultFileEntryColumns));
+String[] entryColumns = StringUtil.split(PrefsParamUtil.getString(preferences, request, "entryColumns", defaultEntryColumns));
 
 if (!showActions) {
-	fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
+	entryColumns = ArrayUtil.remove(entryColumns, "action");
 }
-else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(fileEntryColumns, "action")) {
-	fileEntryColumns = ArrayUtil.append(fileEntryColumns, "action");
+else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(entryColumns, "action")) {
+	entryColumns = ArrayUtil.append(entryColumns, "action");
 }
 
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
