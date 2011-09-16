@@ -174,7 +174,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		for (MBCategory mbCategory : mbCategories) {
 			if (EntityCacheUtil.getResult(
 						MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-						MBCategoryImpl.class, mbCategory.getPrimaryKey(), this) == null) {
+						MBCategoryImpl.class, mbCategory.getPrimaryKey()) == null) {
 				cacheResult(mbCategory);
 			}
 		}
@@ -209,6 +209,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public void clearCache(MBCategory mbCategory) {
 		EntityCacheUtil.removeResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryImpl.class, mbCategory.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -487,7 +489,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public MBCategory fetchByPrimaryKey(long categoryId)
 		throws SystemException {
 		MBCategory mbCategory = (MBCategory)EntityCacheUtil.getResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-				MBCategoryImpl.class, categoryId, this);
+				MBCategoryImpl.class, categoryId);
 
 		if (mbCategory == _nullMBCategory) {
 			return null;
@@ -3776,10 +3778,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3799,8 +3799,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

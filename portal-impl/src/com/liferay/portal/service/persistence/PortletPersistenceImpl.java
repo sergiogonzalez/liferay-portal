@@ -126,7 +126,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		for (Portlet portlet : portlets) {
 			if (EntityCacheUtil.getResult(
 						PortletModelImpl.ENTITY_CACHE_ENABLED,
-						PortletImpl.class, portlet.getPrimaryKey(), this) == null) {
+						PortletImpl.class, portlet.getPrimaryKey()) == null) {
 				cacheResult(portlet);
 			}
 		}
@@ -161,6 +161,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	public void clearCache(Portlet portlet) {
 		EntityCacheUtil.removeResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletImpl.class, portlet.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
 			new Object[] {
@@ -422,7 +424,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	public Portlet fetchByPrimaryKey(long id) throws SystemException {
 		Portlet portlet = (Portlet)EntityCacheUtil.getResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
-				PortletImpl.class, id, this);
+				PortletImpl.class, id);
 
 		if (portlet == _nullPortlet) {
 			return null;
@@ -1215,10 +1217,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1238,8 +1238,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

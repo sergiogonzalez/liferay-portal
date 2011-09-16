@@ -133,6 +133,7 @@
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRAction" />
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRule" />
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" />
+	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance" />
 	<import class="com.liferay.portlet.polls.model.PollsChoice" />
 	<import class="com.liferay.portlet.polls.model.PollsQuestion" />
 	<import class="com.liferay.portlet.polls.model.PollsVote" />
@@ -381,6 +382,7 @@
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="layoutPrototypeUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="layoutPrototypeLinkEnabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="templateLayoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutBranchImpl" table="LayoutBranch">
 		<cache usage="read-write" />
@@ -1013,6 +1015,7 @@
 		<property name="timestamp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="deliverBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="payload" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="archived" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserTrackerImpl" table="UserTracker">
 		<cache usage="read-write" />
@@ -2036,7 +2039,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="ruleGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="ruleGroupInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
@@ -2074,6 +2077,23 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceImpl" table="MDRRuleGroupInstance">
+		<cache usage="read-write" />
+		<id name="ruleGroupInstanceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="ruleGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.polls.model.impl.PollsChoiceImpl" table="PollsChoice">
 		<cache usage="read-write" />

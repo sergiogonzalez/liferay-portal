@@ -18,17 +18,16 @@ import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
@@ -600,15 +599,13 @@ public class UsersAdminImpl implements UsersAdmin {
 			catch (NoSuchOrganizationException nsoe) {
 				corruptIndex = true;
 
-				StringBundler sb = new StringBundler();
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					Organization.class);
 
-				sb.append("Organization ");
-				sb.append(organizationId);
-				sb.append(" exists in the search index but not in the ");
-				sb.append("database. The search index is corrupt. Reindexing ");
-				sb.append("of organizations may be required.");
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
 
-				_log.error(sb.toString());
+				indexer.delete(companyId, document.getUID());
 			}
 		}
 
@@ -872,10 +869,12 @@ public class UsersAdminImpl implements UsersAdmin {
 			catch (NoSuchUserException nsue) {
 				corruptIndex = true;
 
-				_log.error(
-					"User " + userId + " exists in the search index but not " +
-						"in the database. The search index is corrupt. " +
-							"Re-indexing of users may be required.");
+				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
 			}
 		}
 
@@ -1211,7 +1210,5 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(UsersAdminImpl.class);
 
 }

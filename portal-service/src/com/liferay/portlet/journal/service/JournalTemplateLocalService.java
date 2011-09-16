@@ -253,7 +253,7 @@ public interface JournalTemplateLocalService extends PersistedModelLocalService 
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsl, boolean formatXsl, java.lang.String langType,
 		boolean cacheable, boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile,
+		java.io.File smallImageFile,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -394,7 +394,7 @@ public interface JournalTemplateLocalService extends PersistedModelLocalService 
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsl, boolean formatXsl, java.lang.String langType,
 		boolean cacheable, boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile,
+		java.io.File smallImageFile,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

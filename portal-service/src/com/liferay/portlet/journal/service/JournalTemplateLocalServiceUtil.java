@@ -278,14 +278,14 @@ public class JournalTemplateLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsl, boolean formatXsl, java.lang.String langType,
 		boolean cacheable, boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile,
+		java.io.File smallImageFile,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addTemplate(userId, groupId, templateId, autoTemplateId,
 			structureId, nameMap, descriptionMap, xsl, formatXsl, langType,
-			cacheable, smallImage, smallImageURL, smallFile, serviceContext);
+			cacheable, smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
 	public static void addTemplateResources(long groupId,
@@ -478,14 +478,14 @@ public class JournalTemplateLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsl, boolean formatXsl, java.lang.String langType,
 		boolean cacheable, boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile,
+		java.io.File smallImageFile,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTemplate(groupId, templateId, structureId, nameMap,
 			descriptionMap, xsl, formatXsl, langType, cacheable, smallImage,
-			smallImageURL, smallFile, serviceContext);
+			smallImageURL, smallImageFile, serviceContext);
 	}
 
 	public static JournalTemplateLocalService getService() {

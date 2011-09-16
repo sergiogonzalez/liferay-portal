@@ -264,17 +264,15 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 	protected boolean isDefaultRepository() {
 		if (_groupId == _repositoryId) {
-			return false;
+			return true;
 		}
 		else {
-			return true;
+			return false;
 		}
 	}
 
 	protected long toFolderId(long folderId) {
-		if ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			isDefaultRepository()) {
-
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return _dlFolderId;
 		}
 		else {

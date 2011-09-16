@@ -196,7 +196,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
 			if (EntityCacheUtil.getResult(
 						DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-						DDMTemplateImpl.class, ddmTemplate.getPrimaryKey(), this) == null) {
+						DDMTemplateImpl.class, ddmTemplate.getPrimaryKey()) == null) {
 				cacheResult(ddmTemplate);
 			}
 		}
@@ -231,6 +231,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public void clearCache(DDMTemplate ddmTemplate) {
 		EntityCacheUtil.removeResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateImpl.class, ddmTemplate.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -510,7 +512,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate fetchByPrimaryKey(long templateId)
 		throws SystemException {
 		DDMTemplate ddmTemplate = (DDMTemplate)EntityCacheUtil.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-				DDMTemplateImpl.class, templateId, this);
+				DDMTemplateImpl.class, templateId);
 
 		if (ddmTemplate == _nullDDMTemplate) {
 			return null;
@@ -3788,10 +3790,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3811,8 +3811,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

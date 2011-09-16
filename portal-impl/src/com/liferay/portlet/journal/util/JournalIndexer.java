@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -70,6 +69,10 @@ public class JournalIndexer extends BaseIndexer {
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	public String getPortletId() {
+		return PORTLET_ID;
 	}
 
 	@Override
@@ -141,13 +144,9 @@ public class JournalIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		JournalArticle article = (JournalArticle)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			PORTLET_ID, article.getGroupId(), article.getArticleId());
-
-		SearchEngineUtil.deleteDocument(
-			article.getCompanyId(), document.get(Field.UID));
+		deleteDocument(
+			article.getCompanyId(), article.getGroupId(),
+			article.getArticleId());
 	}
 
 	@Override

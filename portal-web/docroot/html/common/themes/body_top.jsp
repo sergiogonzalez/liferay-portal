@@ -30,4 +30,6 @@ StringBundler bodyTopSB = (StringBundler)request.getAttribute(WebKeys.PAGE_BODY_
 
 </c:if>
 
+<%@ include file="/html/common/themes/top_messages.jsp" %>
+
 <liferay-util:include page="/html/common/themes/body_top-ext.jsp" />

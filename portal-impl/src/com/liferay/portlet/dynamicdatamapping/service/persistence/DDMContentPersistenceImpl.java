@@ -155,7 +155,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		for (DDMContent ddmContent : ddmContents) {
 			if (EntityCacheUtil.getResult(
 						DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-						DDMContentImpl.class, ddmContent.getPrimaryKey(), this) == null) {
+						DDMContentImpl.class, ddmContent.getPrimaryKey()) == null) {
 				cacheResult(ddmContent);
 			}
 		}
@@ -190,6 +190,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	public void clearCache(DDMContent ddmContent) {
 		EntityCacheUtil.removeResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
 			DDMContentImpl.class, ddmContent.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -464,7 +466,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	public DDMContent fetchByPrimaryKey(long contentId)
 		throws SystemException {
 		DDMContent ddmContent = (DDMContent)EntityCacheUtil.getResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-				DDMContentImpl.class, contentId, this);
+				DDMContentImpl.class, contentId);
 
 		if (ddmContent == _nullDDMContent) {
 			return null;
@@ -2081,10 +2083,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2104,8 +2104,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

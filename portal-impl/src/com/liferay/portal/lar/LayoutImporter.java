@@ -814,6 +814,13 @@ public class LayoutImporter {
 					groupId, privateLayout);
 			}
 		}
+		else if (layoutsImportMode.equals(
+					PortletDataHandlerKeys.
+						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			existingLayout = LayoutUtil.fetchByG_P_TLU(
+				groupId, privateLayout, layout.getUuid());
+		}
 		else {
 
 			// The default behaviour of import mode is
@@ -853,7 +860,16 @@ public class LayoutImporter {
 
 			importedLayout = LayoutUtil.create(plid);
 
-			importedLayout.setUuid(layout.getUuid());
+			if (layoutsImportMode.equals(
+					PortletDataHandlerKeys.
+						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+				importedLayout.setTemplateLayoutUuid(layout.getUuid());
+			}
+			else {
+				importedLayout.setUuid(layout.getUuid());
+			}
+
 			importedLayout.setGroupId(groupId);
 			importedLayout.setPrivateLayout(privateLayout);
 			importedLayout.setLayoutId(layoutId);

@@ -141,7 +141,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		for (MDRRule mdrRule : mdrRules) {
 			if (EntityCacheUtil.getResult(
 						MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-						MDRRuleImpl.class, mdrRule.getPrimaryKey(), this) == null) {
+						MDRRuleImpl.class, mdrRule.getPrimaryKey()) == null) {
 				cacheResult(mdrRule);
 			}
 		}
@@ -176,6 +176,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	public void clearCache(MDRRule mdrRule) {
 		EntityCacheUtil.removeResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
 			MDRRuleImpl.class, mdrRule.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { mdrRule.getUuid(), Long.valueOf(mdrRule.getGroupId()) });
@@ -448,7 +450,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	public MDRRule fetchByPrimaryKey(long ruleId) throws SystemException {
 		MDRRule mdrRule = (MDRRule)EntityCacheUtil.getResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-				MDRRuleImpl.class, ruleId, this);
+				MDRRuleImpl.class, ruleId);
 
 		if (mdrRule == _nullMDRRule) {
 			return null;
@@ -1666,10 +1668,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1689,8 +1689,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}
@@ -1736,6 +1736,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	protected MDRRulePersistence mdrRulePersistence;
 	@BeanReference(type = MDRRuleGroupPersistence.class)
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
+	@BeanReference(type = MDRRuleGroupInstancePersistence.class)
+	protected MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence;
 	@BeanReference(type = ResourcePersistence.class)
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)

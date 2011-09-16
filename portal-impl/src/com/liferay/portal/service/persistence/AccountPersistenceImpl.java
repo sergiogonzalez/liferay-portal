@@ -95,7 +95,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		for (Account account : accounts) {
 			if (EntityCacheUtil.getResult(
 						AccountModelImpl.ENTITY_CACHE_ENABLED,
-						AccountImpl.class, account.getPrimaryKey(), this) == null) {
+						AccountImpl.class, account.getPrimaryKey()) == null) {
 				cacheResult(account);
 			}
 		}
@@ -130,6 +130,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	public void clearCache(Account account) {
 		EntityCacheUtil.removeResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
 			AccountImpl.class, account.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -358,7 +360,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	 */
 	public Account fetchByPrimaryKey(long accountId) throws SystemException {
 		Account account = (Account)EntityCacheUtil.getResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
-				AccountImpl.class, accountId, this);
+				AccountImpl.class, accountId);
 
 		if (account == _nullAccount) {
 			return null;
@@ -519,10 +521,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -542,8 +542,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -32,8 +33,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -148,8 +147,17 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return DLFolder.class.getName();
 	}
 
-	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME = com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME;
-	public static final boolean FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS = com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS;
+	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME = "DLFileEntryTypes_DLFolders";
+	public static final Object[][] MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_COLUMNS =
+		{
+			{ "fileEntryTypeId", Types.BIGINT },
+			{ "folderId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_SQL_CREATE =
+		"create table DLFileEntryTypes_DLFolders (fileEntryTypeId LONG not null,folderId LONG not null,primary key (fileEntryTypeId, folderId))";
+	public static final boolean FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.DLFileEntryTypes_DLFolders"),
+			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFolder"));
 
@@ -405,7 +413,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (DLFolder)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (DLFolder)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

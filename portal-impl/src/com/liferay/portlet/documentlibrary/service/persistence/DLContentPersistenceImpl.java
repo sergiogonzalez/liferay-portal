@@ -146,7 +146,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		for (DLContent dlContent : dlContents) {
 			if (EntityCacheUtil.getResult(
 						DLContentModelImpl.ENTITY_CACHE_ENABLED,
-						DLContentImpl.class, dlContent.getPrimaryKey(), this) == null) {
+						DLContentImpl.class, dlContent.getPrimaryKey()) == null) {
 				cacheResult(dlContent);
 			}
 
@@ -185,6 +185,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	public void clearCache(DLContent dlContent) {
 		EntityCacheUtil.removeResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentImpl.class, dlContent.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P_R_P_V,
 			new Object[] {
@@ -484,7 +486,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	public DLContent fetchByPrimaryKey(long contentId)
 		throws SystemException {
 		DLContent dlContent = (DLContent)EntityCacheUtil.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-				DLContentImpl.class, contentId, this);
+				DLContentImpl.class, contentId);
 
 		if (dlContent == _nullDLContent) {
 			return null;
@@ -1553,10 +1555,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1576,8 +1576,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -148,7 +148,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		for (UserGroup userGroup : userGroups) {
 			if (EntityCacheUtil.getResult(
 						UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-						UserGroupImpl.class, userGroup.getPrimaryKey(), this) == null) {
+						UserGroupImpl.class, userGroup.getPrimaryKey()) == null) {
 				cacheResult(userGroup);
 			}
 		}
@@ -183,6 +183,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void clearCache(UserGroup userGroup) {
 		EntityCacheUtil.removeResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			UserGroupImpl.class, userGroup.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] {
@@ -479,7 +481,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup fetchByPrimaryKey(long userGroupId)
 		throws SystemException {
 		UserGroup userGroup = (UserGroup)EntityCacheUtil.getResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-				UserGroupImpl.class, userGroupId, this);
+				UserGroupImpl.class, userGroupId);
 
 		if (userGroup == _nullUserGroup) {
 			return null;
@@ -2450,10 +2452,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2473,8 +2473,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

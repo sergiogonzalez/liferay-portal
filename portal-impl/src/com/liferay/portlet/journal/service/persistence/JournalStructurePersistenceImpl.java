@@ -194,7 +194,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			if (EntityCacheUtil.getResult(
 						JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 						JournalStructureImpl.class,
-						journalStructure.getPrimaryKey(), this) == null) {
+						journalStructure.getPrimaryKey()) == null) {
 				cacheResult(journalStructure);
 			}
 		}
@@ -229,6 +229,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	public void clearCache(JournalStructure journalStructure) {
 		EntityCacheUtil.removeResult(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 			JournalStructureImpl.class, journalStructure.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -548,7 +550,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	public JournalStructure fetchByPrimaryKey(long id)
 		throws SystemException {
 		JournalStructure journalStructure = (JournalStructure)EntityCacheUtil.getResult(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-				JournalStructureImpl.class, id, this);
+				JournalStructureImpl.class, id);
 
 		if (journalStructure == _nullJournalStructure) {
 			return null;
@@ -3718,10 +3720,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3741,8 +3741,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

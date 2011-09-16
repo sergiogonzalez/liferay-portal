@@ -1027,6 +1027,11 @@ public class OrganizationFinderImpl
 			Map.Entry<String, Object> entry = itr.next();
 
 			String key = entry.getKey();
+
+			if (key.equals("expandoAttributes")) {
+				continue;
+			}
+
 			Object value = entry.getValue();
 
 			if (Validator.isNotNull(value)) {
@@ -1089,6 +1094,11 @@ public class OrganizationFinderImpl
 			Map.Entry<String, Object> entry = itr.next();
 
 			String key = entry.getKey();
+
+			if (key.equals("expandoAttributes")) {
+				continue;
+			}
+
 			Object value = entry.getValue();
 
 			if (Validator.isNotNull(value)) {
@@ -1204,6 +1214,12 @@ public class OrganizationFinderImpl
 		}
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.equals("expandoAttributes")) {
+				continue;
+			}
+
 			Object value = entry.getValue();
 
 			if (value instanceof Long) {

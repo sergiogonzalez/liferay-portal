@@ -921,10 +921,24 @@ var defaultTypes = []]>
 	<target name="compile-common-jsp">
 		<delete dir="${jspc.classes.dir}" quiet="true" />
 
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<equals arg1="${ant.java.version}" arg2="1.5" />
+			</and>
+			<then>
+				<var name="jspc.java.home" value="${jdk.windows.home}" />
+			</then>
+			<else>
+				<var name="jspc.java.home" value="${env.JAVA_HOME}" />
+			</else>
+		</if>
+
 		<java
 			classname="org.apache.jasper.JspC"
 			classpathref="jspc.classpath"
 			fork="true"
+			jvm="${jspc.java.home}/bin/java"
 			newenvironment="true"
 			outputproperty="jspc.output"
 		>
@@ -1023,8 +1037,21 @@ Please set the property "jdk.6.home" in build.properties.
 	<target name="compile-tomcat">
 		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
 
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<equals arg1="${ant.java.version}" arg2="1.5" />
+			</and>
+			<then>
+				<var name="jspc.java.home" value="${jdk.windows.home}" />
+			</then>
+			<else>
+				<var name="jspc.java.home" value="${env.JAVA_HOME}" />
+			</else>
+		</if>
+
 		<path id="jspc.classpath">
-			<pathelement location="${env.JAVA_HOME}/jre/lib/rt.jar" />
+			<pathelement location="${jspc.java.home}/jre/lib/rt.jar" />
 			<path refid="jspc.common.classpath" />
 			<pathelement location="${app.server.dir}/lib/el-api.jar" />
 			<pathelement location="${app.server.dir}/lib/jasper.jar" />

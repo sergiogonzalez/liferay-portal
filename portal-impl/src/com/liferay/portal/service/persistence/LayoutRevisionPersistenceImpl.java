@@ -233,8 +233,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		for (LayoutRevision layoutRevision : layoutRevisions) {
 			if (EntityCacheUtil.getResult(
 						LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutRevisionImpl.class,
-						layoutRevision.getPrimaryKey(), this) == null) {
+						LayoutRevisionImpl.class, layoutRevision.getPrimaryKey()) == null) {
 				cacheResult(layoutRevision);
 			}
 		}
@@ -269,6 +268,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public void clearCache(LayoutRevision layoutRevision) {
 		EntityCacheUtil.removeResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionImpl.class, layoutRevision.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_H_P,
 			new Object[] {
@@ -563,7 +564,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public LayoutRevision fetchByPrimaryKey(long layoutRevisionId)
 		throws SystemException {
 		LayoutRevision layoutRevision = (LayoutRevision)EntityCacheUtil.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutRevisionImpl.class, layoutRevisionId, this);
+				LayoutRevisionImpl.class, layoutRevisionId);
 
 		if (layoutRevision == _nullLayoutRevision) {
 			return null;
@@ -4473,10 +4474,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -4496,8 +4495,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

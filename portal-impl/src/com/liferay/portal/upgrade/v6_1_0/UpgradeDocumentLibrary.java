@@ -34,6 +34,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -47,6 +48,40 @@ import java.util.Set;
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
+	protected void addDLSync(
+			long syncId, long companyId, Date createDate, Date modifiedDate,
+			long fileId, long repositoryId, long parentFolderId, String event,
+			String type)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"insert into DLSync (syncId, companyId, createDate, " +
+					"modifiedDate, fileId, repositoryId, parentFolderId, " +
+						"event, type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			ps.setLong(1, syncId);
+			ps.setLong(2, companyId);
+			ps.setDate(3, createDate);
+			ps.setDate(4, createDate);
+			ps.setLong(5, fileId);
+			ps.setLong(6, repositoryId);
+			ps.setLong(7, parentFolderId);
+			ps.setString(8, event);
+			ps.setString(9, type);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateFileEntries();
@@ -55,6 +90,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		updateFileVersions();
 		updateLocks();
 		updateThumbnails();
+		//updateSyncs();
 	}
 
 	protected long getFileEntryId(long groupId, long folderId, String name)
@@ -309,6 +345,51 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						"update Lock_ set key_ = '" + fileEntryId +
 							"' where lockId = " + lockId);
 				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateSyncs() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			StringBundler sb = new StringBundler(10);
+
+			sb.append("select DLFileEntry.fileEntryId as fileId, ");
+			sb.append("DLFileEntry.groupId as groupId, DLFileEntry.companyId");
+			sb.append(" as companyId, DLFileEntry.createDate as createDate, ");
+			sb.append("DLFileEntry.folderId as parentFolderId, 'file' as ");
+			sb.append("type from DLFileEntry union all select ");
+			sb.append("DLFolder.folderId as fileId, DLFolder.groupId as ");
+			sb.append("groupId, DLFolder.companyId as companyId, ");
+			sb.append("DLFolder.createDate as createDate, ");
+			sb.append("DLFolder.parentFolderId as parentFolderId, 'folder' ");
+			sb.append("as type  from DLFolder");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long fileId = rs.getLong("fileId");
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				Date createDate = rs.getDate("createDate");
+				long parentFolderId = rs.getLong("parentFolderId");
+				String type = rs.getString("type");
+
+				addDLSync(
+					increment(), companyId, createDate, createDate, fileId,
+					groupId, parentFolderId, "add", type);
 			}
 		}
 		finally {

@@ -133,7 +133,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			if (EntityCacheUtil.getResult(
 						ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingCategoryImpl.class,
-						shoppingCategory.getPrimaryKey(), this) == null) {
+						shoppingCategory.getPrimaryKey()) == null) {
 				cacheResult(shoppingCategory);
 			}
 		}
@@ -168,6 +168,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	public void clearCache(ShoppingCategory shoppingCategory) {
 		EntityCacheUtil.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -396,7 +398,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	public ShoppingCategory fetchByPrimaryKey(long categoryId)
 		throws SystemException {
 		ShoppingCategory shoppingCategory = (ShoppingCategory)EntityCacheUtil.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingCategoryImpl.class, categoryId, this);
+				ShoppingCategoryImpl.class, categoryId);
 
 		if (shoppingCategory == _nullShoppingCategory) {
 			return null;
@@ -2136,10 +2138,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2159,8 +2159,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

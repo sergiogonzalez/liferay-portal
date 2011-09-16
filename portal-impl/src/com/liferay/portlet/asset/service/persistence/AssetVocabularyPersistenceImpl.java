@@ -179,7 +179,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			if (EntityCacheUtil.getResult(
 						AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetVocabularyImpl.class,
-						assetVocabulary.getPrimaryKey(), this) == null) {
+						assetVocabulary.getPrimaryKey()) == null) {
 				cacheResult(assetVocabulary);
 			}
 		}
@@ -214,6 +214,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	public void clearCache(AssetVocabulary assetVocabulary) {
 		EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -531,7 +533,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	public AssetVocabulary fetchByPrimaryKey(long vocabularyId)
 		throws SystemException {
 		AssetVocabulary assetVocabulary = (AssetVocabulary)EntityCacheUtil.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetVocabularyImpl.class, vocabularyId, this);
+				AssetVocabularyImpl.class, vocabularyId);
 
 		if (assetVocabulary == _nullAssetVocabulary) {
 			return null;
@@ -2774,10 +2776,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2797,8 +2797,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

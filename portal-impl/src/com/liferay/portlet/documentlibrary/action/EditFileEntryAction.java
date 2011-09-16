@@ -408,13 +408,12 @@ public class EditFileEntryAction extends PortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
+		String sourceFileName = uploadPortletRequest.getFileName("file");
 
 		InputStream inputStream = null;
 
 		try {
 			inputStream = uploadPortletRequest.getFileAsStream("file");
-
-			String sourceFileName = uploadPortletRequest.getFileName("file");
 
 			DLAppServiceUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), folderId, sourceFileName,

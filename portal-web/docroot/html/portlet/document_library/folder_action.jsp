@@ -69,6 +69,8 @@ if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGr
 	status = WorkflowConstants.STATUS_ANY;
 }
 
+boolean folderSelected = GetterUtil.getBoolean((String)request.getAttribute("view_entries.jsp-folderSelected"));
+
 String modelResource = null;
 String modelResourceDescription = null;
 String resourcePrimKey = null;
@@ -167,7 +169,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 					<portlet:actionURL var="deleteURL">
 						<portlet:param name="struts_action" value="/document_library/edit_folder" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= view ? redirectURL : redirect %>" />
+						<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					</portlet:actionURL>
 
@@ -183,7 +185,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 					<portlet:actionURL var="deleteURL">
 						<portlet:param name="struts_action" value="/document_library/edit_repository" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= view ? redirectURL : redirect %>" />
+						<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					</portlet:actionURL>
 
@@ -220,7 +222,12 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 				</c:if>
 			</c:when>
 			<c:otherwise>
-				<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
+
+				<%
+				boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null);
+				%>
+
+				<c:if test="<%= showActions && workflowEnabled && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
 					<portlet:renderURL var="editURL">
 						<portlet:param name="struts_action" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= redirect %>" />

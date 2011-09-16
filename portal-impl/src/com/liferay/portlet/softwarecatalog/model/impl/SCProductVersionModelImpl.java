@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -33,8 +34,6 @@ import com.liferay.portlet.softwarecatalog.model.SCProductVersionModel;
 import com.liferay.portlet.softwarecatalog.model.SCProductVersionSoap;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -143,9 +142,18 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	}
 
 	public static final String MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_NAME =
-		com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl.MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_NAME;
+		"SCFrameworkVersi_SCProductVers";
+	public static final Object[][] MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_COLUMNS =
+		{
+			{ "frameworkVersionId", Types.BIGINT },
+			{ "productVersionId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_SQL_CREATE =
+		"create table SCFrameworkVersi_SCProductVers (frameworkVersionId LONG not null,productVersionId LONG not null,primary key (frameworkVersionId, productVersionId))";
 	public static final boolean FINDER_CACHE_ENABLED_SCFRAMEWORKVERSI_SCPRODUCTVERS =
-		com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl.FINDER_CACHE_ENABLED_SCFRAMEWORKVERSI_SCPRODUCTVERS;
+		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.SCFrameworkVersi_SCProductVers"),
+			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.softwarecatalog.model.SCProductVersion"));
 
@@ -328,7 +336,7 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (SCProductVersion)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (SCProductVersion)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

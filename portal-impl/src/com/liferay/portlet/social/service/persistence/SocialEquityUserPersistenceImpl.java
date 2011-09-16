@@ -185,7 +185,7 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 			if (EntityCacheUtil.getResult(
 						SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 						SocialEquityUserImpl.class,
-						socialEquityUser.getPrimaryKey(), this) == null) {
+						socialEquityUser.getPrimaryKey()) == null) {
 				cacheResult(socialEquityUser);
 			}
 		}
@@ -220,6 +220,8 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 	public void clearCache(SocialEquityUser socialEquityUser) {
 		EntityCacheUtil.removeResult(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityUserImpl.class, socialEquityUser.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
 			new Object[] {
@@ -485,7 +487,7 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 	public SocialEquityUser fetchByPrimaryKey(long equityUserId)
 		throws SystemException {
 		SocialEquityUser socialEquityUser = (SocialEquityUser)EntityCacheUtil.getResult(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-				SocialEquityUserImpl.class, equityUserId, this);
+				SocialEquityUserImpl.class, equityUserId);
 
 		if (socialEquityUser == _nullSocialEquityUser) {
 			return null;
@@ -2858,10 +2860,8 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2881,8 +2881,8 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

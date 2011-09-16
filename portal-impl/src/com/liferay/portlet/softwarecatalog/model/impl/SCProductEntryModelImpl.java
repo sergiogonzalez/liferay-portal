@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -33,8 +34,6 @@ import com.liferay.portlet.softwarecatalog.model.SCProductEntryModel;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntrySoap;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -149,9 +148,18 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		return SCProductEntry.class.getName();
 	}
 
-	public static final String MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME = com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME;
+	public static final String MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME = "SCLicenses_SCProductEntries";
+	public static final Object[][] MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_COLUMNS =
+		{
+			{ "licenseId", Types.BIGINT },
+			{ "productEntryId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_SQL_CREATE =
+		"create table SCLicenses_SCProductEntries (licenseId LONG not null,productEntryId LONG not null,primary key (licenseId, productEntryId))";
 	public static final boolean FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES =
-		com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl.FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES;
+		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.SCLicenses_SCProductEntries"),
+			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.softwarecatalog.model.SCProductEntry"));
 
@@ -399,7 +407,7 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (SCProductEntry)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (SCProductEntry)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

@@ -159,8 +159,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		for (MBMailingList mbMailingList : mbMailingLists) {
 			if (EntityCacheUtil.getResult(
 						MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-						MBMailingListImpl.class, mbMailingList.getPrimaryKey(),
-						this) == null) {
+						MBMailingListImpl.class, mbMailingList.getPrimaryKey()) == null) {
 				cacheResult(mbMailingList);
 			}
 		}
@@ -195,6 +194,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	public void clearCache(MBMailingList mbMailingList) {
 		EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListImpl.class, mbMailingList.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -520,7 +521,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	public MBMailingList fetchByPrimaryKey(long mailingListId)
 		throws SystemException {
 		MBMailingList mbMailingList = (MBMailingList)EntityCacheUtil.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-				MBMailingListImpl.class, mailingListId, this);
+				MBMailingListImpl.class, mailingListId);
 
 		if (mbMailingList == _nullMBMailingList) {
 			return null;
@@ -1950,10 +1951,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1973,8 +1972,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

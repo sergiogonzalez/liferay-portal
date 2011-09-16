@@ -164,8 +164,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		for (UserGroupRole userGroupRole : userGroupRoles) {
 			if (EntityCacheUtil.getResult(
 						UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-						UserGroupRoleImpl.class, userGroupRole.getPrimaryKey(),
-						this) == null) {
+						UserGroupRoleImpl.class, userGroupRole.getPrimaryKey()) == null) {
 				cacheResult(userGroupRole);
 			}
 		}
@@ -200,6 +199,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public void clearCache(UserGroupRole userGroupRole) {
 		EntityCacheUtil.removeResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
 			UserGroupRoleImpl.class, userGroupRole.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -421,7 +422,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole fetchByPrimaryKey(UserGroupRolePK userGroupRolePK)
 		throws SystemException {
 		UserGroupRole userGroupRole = (UserGroupRole)EntityCacheUtil.getResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-				UserGroupRoleImpl.class, userGroupRolePK, this);
+				UserGroupRoleImpl.class, userGroupRolePK);
 
 		if (userGroupRole == _nullUserGroupRole) {
 			return null;
@@ -2615,10 +2616,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2638,8 +2637,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}
