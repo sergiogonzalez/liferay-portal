@@ -35,6 +35,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<aui:input name="preferences--entryColumns--" type="hidden" />
 	<aui:input name="preferences--displayViews--" type="hidden" />
 
+	<liferay-ui:error key="displayStyleViewsCannotBeEmpty" message="display-style-views-cannot-be-empty" />
 	<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
 
 	<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
