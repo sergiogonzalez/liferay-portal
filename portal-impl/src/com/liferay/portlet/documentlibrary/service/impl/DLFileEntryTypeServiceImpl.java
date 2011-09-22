@@ -23,6 +23,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeServiceBa
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,12 +66,28 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			long groupId, int start, int end)
 		throws SystemException {
 
+		long[] groupIds = new long[] {groupId};
+
+		return getFileEntryTypes(groupIds, start, end);
+	}
+
+	public List<DLFileEntryType> getFileEntryTypes(
+			long[] groupIds, int start, int end)
+		throws SystemException {
+
 		return dlFileEntryTypePersistence.filterFindByGroupId(
-			groupId, start, end);
+			groupIds, start, end);
 	}
 
 	public int getFileEntryTypesCount(long groupId) throws SystemException {
-		return dlFileEntryTypePersistence.filterCountByGroupId(groupId);
+		long[] groupIds = new long[] {groupId};
+
+		return getFileEntryTypesCount(groupIds);
+	}
+
+	public int getFileEntryTypesCount(long[] groupIds) throws SystemException {
+
+		return dlFileEntryTypePersistence.filterCountByGroupId(groupIds);
 	}
 
 	public void updateFileEntryType(

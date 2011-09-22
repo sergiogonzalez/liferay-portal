@@ -28,7 +28,15 @@ if (repositoryId <= 0) {
 	repositoryId = BeanParamUtil.getLong(fileEntry, request, "groupId");
 }
 
-List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+Group scopeGroup = themeDisplay.getScopeGroup();
+
+long[] groupIds = new long[] {scopeGroupId, themeDisplay.getCompanyGroupId()};
+
+if (scopeGroup.isLayout()) {
+	groupIds = new long[] {scopeGroup.getParentGroupId(), themeDisplay.getCompanyGroupId()};
+}
+
+List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 

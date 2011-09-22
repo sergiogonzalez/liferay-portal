@@ -326,7 +326,15 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 			</c:if>
 
 			<%
-			int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(scopeGroupId);
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			long[] groupIds = new long[] {scopeGroupId, themeDisplay.getCompanyGroupId()};
+
+			if (scopeGroup.isLayout()) {
+				groupIds = new long[] {scopeGroup.getParentGroupId(), themeDisplay.getCompanyGroupId()};
+			}
+
+			int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(groupIds);
 			%>
 
 			<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">

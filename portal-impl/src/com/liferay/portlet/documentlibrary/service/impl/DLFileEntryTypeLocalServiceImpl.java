@@ -147,7 +147,15 @@ public class DLFileEntryTypeLocalServiceImpl
 	public List<DLFileEntryType> getFileEntryTypes(long groupId)
 		throws SystemException {
 
-		return dlFileEntryTypePersistence.findByGroupId(groupId);
+		long[] groupIds = new long[] {groupId};
+
+		return getFileEntryTypes(groupIds);
+	}
+
+	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds)
+		throws SystemException {
+
+		return dlFileEntryTypePersistence.findByGroupId(groupIds);
 	}
 
 	public List<DLFileEntryType> getFileEntryTypes(
@@ -169,6 +177,15 @@ public class DLFileEntryTypeLocalServiceImpl
 			long groupId, long folderId, boolean inherited)
 		throws PortalException, SystemException {
 
+		long[] groupIds = new long[] {groupId};
+
+		return getFolderFileEntryTypes(groupIds, folderId, inherited);
+	}
+
+	public List<DLFileEntryType> getFolderFileEntryTypes(
+			long[] groupIds, long folderId, boolean inherited)
+		throws PortalException, SystemException {
+
 		if (!inherited) {
 			return dlFolderPersistence.getDLFileEntryTypes(folderId);
 		}
@@ -184,7 +201,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		if ((dlFileEntryTypes == null) || dlFileEntryTypes.isEmpty()) {
 			dlFileEntryTypes = new ArrayList<DLFileEntryType>(
-				getFileEntryTypes(groupId));
+				getFileEntryTypes(groupIds));
 
 			dlFileEntryTypes.add(new DLFileEntryTypeImpl());
 		}
@@ -197,15 +214,34 @@ public class DLFileEntryTypeLocalServiceImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
+		long[] groupIds = new long[] {groupId};
+
+		return search(
+			companyId, groupIds, keywords, start, end, orderByComparator);
+	}
+
+	public List<DLFileEntryType> search(
+			long companyId, long[] groupIds, String keywords, int start,
+			int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
 		return dlFileEntryTypeFinder.findByKeywords(
-			companyId, groupId, keywords, start, end, orderByComparator);
+			companyId, groupIds, keywords, start, end, orderByComparator);
 	}
 
 	public int searchCount(long companyId, long groupId, String keywords)
 		throws SystemException {
 
+		long[] groupIds = new long[] {groupId};
+
+		return searchCount(companyId, groupIds, keywords);
+	}
+
+	public int searchCount(long companyId, long[] groupIds, String keywords)
+		throws SystemException {
+
 		return dlFileEntryTypeFinder.countByKeywords(
-			companyId, groupId, keywords);
+			companyId, groupIds, keywords);
 	}
 
 	public void updateFileEntryType(

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,6 +51,15 @@ public class DLFileEntryTypeFinderImpl
 			long companyId, long groupId, String keywords)
 		throws SystemException {
 
+		long[] groupIds = new long[] {groupId};
+
+		return countByKeywords(companyId, groupIds, keywords);
+	}
+
+	public int countByKeywords(
+			long companyId, long[] groupIds, String keywords)
+		throws SystemException {
+
 		String[] names = null;
 		String[] descriptions = null;
 		boolean andOperator = false;
@@ -63,7 +73,7 @@ public class DLFileEntryTypeFinderImpl
 		}
 
 		return countByC_G_N_D_S(
-			companyId, groupId, names, descriptions, andOperator);
+			companyId, groupIds, names, descriptions, andOperator);
 	}
 
 	public int countByC_G_N_D_S(
@@ -74,12 +84,14 @@ public class DLFileEntryTypeFinderImpl
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
+		long[] groupIds = new long[] {groupId};
+
 		return countByC_G_N_D_S(
-			companyId, groupId, names, descriptions, andOperator);
+			companyId, groupIds, names, descriptions, andOperator);
 	}
 
 	public int countByC_G_N_D_S(
-			long companyId, long groupId, String[] names, String[] descriptions,
+			long companyId, long[] groupIds, String[] names, String[] descriptions,
 			boolean andOperator)
 		throws SystemException {
 
@@ -93,9 +105,7 @@ public class DLFileEntryTypeFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_G_N_D_S);
 
-			if (groupId <= 0) {
-				sql = StringUtil.replace(sql, "(groupId = ?) AND", "");
-			}
+			sql = StringUtil.replace(sql, "[$GROUPID$]", getGroupIds(groupIds));
 
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
@@ -111,7 +121,7 @@ public class DLFileEntryTypeFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-			qPos.add(groupId);
+			qPos.add(groupIds);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
 
@@ -140,6 +150,17 @@ public class DLFileEntryTypeFinderImpl
 			int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
+		long[] groupIds = new long[] {groupId};
+
+		return findByKeywords(
+			companyId, groupIds, keywords, start, end, orderByComparator);
+	}
+
+	public List<DLFileEntryType> findByKeywords(
+			long companyId, long[] groupIds, String keywords,
+			int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
 		String[] names = null;
 		String[] descriptions = null;
 		boolean andOperator = false;
@@ -153,7 +174,7 @@ public class DLFileEntryTypeFinderImpl
 		}
 
 		return findByC_G_N_D_S(
-			companyId, groupId, names, descriptions, andOperator, start, end,
+			companyId, groupIds, names, descriptions, andOperator, start, end,
 			orderByComparator);
 	}
 
@@ -177,6 +198,19 @@ public class DLFileEntryTypeFinderImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
+		long[] groupIds = new long[] {groupId};
+
+		return findByC_G_N_D_S(
+			companyId, groupIds, names, descriptions, andOperator, start, end,
+			orderByComparator);
+	}
+
+	public List<DLFileEntryType> findByC_G_N_D_S(
+			long companyId, long[] groupIds, String[] names,
+			String[] descriptions, boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
 		names = CustomSQLUtil.keywords(names);
 		descriptions = CustomSQLUtil.keywords(descriptions, false);
 
@@ -187,9 +221,7 @@ public class DLFileEntryTypeFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_G_N_D_S);
 
-			if (groupId <= 0) {
-				sql = StringUtil.replace(sql, "(groupId = ?) AND", "");
-			}
+			sql = StringUtil.replace(sql, "[$GROUPID$]", getGroupIds(groupIds));
 
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
@@ -213,7 +245,7 @@ public class DLFileEntryTypeFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-			qPos.add(groupId);
+			qPos.add(groupIds);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
 
@@ -226,6 +258,28 @@ public class DLFileEntryTypeFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected String getGroupIds(long[] groupIds) {
+		if (groupIds.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(groupIds.length * 2);
+
+		sb.append("(");
+
+		for (int i = 0; i < groupIds.length; i++) {
+			sb.append("groupId = ?");
+
+			if ((i + 1) < groupIds.length) {
+				sb.append(" OR ");
+			}
+		}
+
+		sb.append(") AND");
+
+		return sb.toString();
 	}
 
 }
