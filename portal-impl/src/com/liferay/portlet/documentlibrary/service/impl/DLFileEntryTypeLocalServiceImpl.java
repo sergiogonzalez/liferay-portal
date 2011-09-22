@@ -89,7 +89,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		throws PortalException, SystemException {
 
 		List<DLFileEntryType> dlFileEntryTypes = getFolderFileEntryTypes(
-			dlFolder.getGroupId(), dlFolder.getFolderId(), true);
+			new long[] {dlFolder.getGroupId()}, dlFolder.getFolderId(), true);
 
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 
@@ -144,14 +144,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 	}
 
-	public List<DLFileEntryType> getFileEntryTypes(long groupId)
-		throws SystemException {
-
-		long[] groupIds = new long[] {groupId};
-
-		return getFileEntryTypes(groupIds);
-	}
-
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds)
 		throws SystemException {
 
@@ -171,15 +163,6 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		return dlFileEntryTypePersistence.findByG_N_D(
 			groupId, name, description);
-	}
-
-	public List<DLFileEntryType> getFolderFileEntryTypes(
-			long groupId, long folderId, boolean inherited)
-		throws PortalException, SystemException {
-
-		long[] groupIds = new long[] {groupId};
-
-		return getFolderFileEntryTypes(groupIds, folderId, inherited);
 	}
 
 	public List<DLFileEntryType> getFolderFileEntryTypes(
@@ -210,31 +193,12 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	public List<DLFileEntryType> search(
-			long companyId, long groupId, String keywords, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
-
-		long[] groupIds = new long[] {groupId};
-
-		return search(
-			companyId, groupIds, keywords, start, end, orderByComparator);
-	}
-
-	public List<DLFileEntryType> search(
 			long companyId, long[] groupIds, String keywords, int start,
 			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return dlFileEntryTypeFinder.findByKeywords(
 			companyId, groupIds, keywords, start, end, orderByComparator);
-	}
-
-	public int searchCount(long companyId, long groupId, String keywords)
-		throws SystemException {
-
-		long[] groupIds = new long[] {groupId};
-
-		return searchCount(companyId, groupIds, keywords);
 	}
 
 	public int searchCount(long companyId, long[] groupIds, String keywords)

@@ -48,15 +48,6 @@ public class DLFileEntryTypeFinderImpl
 		DLFileEntryTypeFinder.class.getName() + ".findByC_G_N_D_S";
 
 	public int countByKeywords(
-			long companyId, long groupId, String keywords)
-		throws SystemException {
-
-		long[] groupIds = new long[] {groupId};
-
-		return countByKeywords(companyId, groupIds, keywords);
-	}
-
-	public int countByKeywords(
 			long companyId, long[] groupIds, String keywords)
 		throws SystemException {
 
@@ -143,17 +134,6 @@ public class DLFileEntryTypeFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	public List<DLFileEntryType> findByKeywords(
-			long companyId, long groupId, String keywords,
-			int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-
-		long[] groupIds = new long[] {groupId};
-
-		return findByKeywords(
-			companyId, groupIds, keywords, start, end, orderByComparator);
 	}
 
 	public List<DLFileEntryType> findByKeywords(
