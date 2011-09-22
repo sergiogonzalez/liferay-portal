@@ -81,7 +81,7 @@ public class DLAppLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -135,7 +135,7 @@ public class DLAppLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -191,7 +191,7 @@ public class DLAppLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -898,6 +898,18 @@ public class DLAppLocalServiceUtil {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc,
+		java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(repositoryId,
+			folderId, status, includeMountFolders, start, end, obc, mimetypes);
+	}
+
 	/**
 	* Returns the number of immediate subfolders, file entries, and file
 	* shortcuts in the parent folder.
@@ -921,6 +933,16 @@ public class DLAppLocalServiceUtil {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 			folderId, status, includeMountFolders);
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders, java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(repositoryId,
+			folderId, status, includeMountFolders, mimetypes);
 	}
 
 	/**
@@ -1186,7 +1208,7 @@ public class DLAppLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1244,7 +1266,7 @@ public class DLAppLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1303,7 +1325,7 @@ public class DLAppLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1406,7 +1428,7 @@ public class DLAppLocalServiceUtil {
 	* @param description the folder's new description
 	* @param serviceContext the service context to be applied. In a Liferay
 	repository, it may include:
-	
+
 	<ul>
 	<li>
 	defaultFileEntryTypeId - the file entry type to default all

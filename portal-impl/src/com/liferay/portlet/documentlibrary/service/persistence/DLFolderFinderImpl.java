@@ -65,8 +65,17 @@ public class DLFolderFinderImpl
 			boolean includeMountFolders)
 		throws SystemException {
 
-		return doCountF_FE_FS_ByG_F_S(
-			groupId, folderId, status, includeMountFolders, false);
+		return doCountF_FE_FS_ByG_F_S_ByMimetypes(
+			groupId, folderId, status, includeMountFolders, null, false);
+	}
+
+	public int countF_FE_FS_ByG_F_S_ByMimetypes(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, String[] mimetypes)
+		throws SystemException {
+
+		return doCountF_FE_FS_ByG_F_S_ByMimetypes(
+			groupId, folderId, status, includeMountFolders, mimetypes, false);
 	}
 
 	public int countFE_FS_ByG_F_S(long groupId, long folderId, int status)
@@ -134,6 +143,17 @@ public class DLFolderFinderImpl
 			boolean includeMountFolders, boolean inlineSQLHelper)
 		throws SystemException {
 
+		return doCountF_FE_FS_ByG_F_S_ByMimetypes(
+			groupId, folderId, status, includeMountFolders, null,
+			inlineSQLHelper);
+	}
+
+	protected int doCountF_FE_FS_ByG_F_S_ByMimetypes(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, String[] mimetypes,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
 		Session session = null;
 
 		try {
@@ -175,6 +195,27 @@ public class DLFolderFinderImpl
 
 			sb.append(sql);
 			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			if (mimetypes != null) {
+				int i = 0;
+
+				for (String mimetype : mimetypes) {
+
+					if (i == 0) {
+						sb.append("AND (");
+					}
+					else {
+						sb.append(" OR ");
+					}
+
+					sb.append(" DLFileEntry.mimeType " + StringPool.LIKE + " ");
+					sb.append(mimetype);
+
+					i++;
+				}
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
 
 			sql = sb.toString();
 
@@ -336,6 +377,17 @@ public class DLFolderFinderImpl
 			OrderByComparator obc, boolean inlineSQLHelper)
 		throws SystemException {
 
+		return doFindF_FE_FS_ByG_F_S_ByMimetypes(
+			groupId, folderId, status, includeMountFolders, null, start, end,
+			obc, inlineSQLHelper);
+	}
+
+	protected List<Object> doFindF_FE_FS_ByG_F_S_ByMimetypes(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, String[] mimetypes, int start, int end,
+			OrderByComparator obc, boolean inlineSQLHelper)
+		throws SystemException {
+
 		Session session = null;
 
 		try {
@@ -376,6 +428,28 @@ public class DLFolderFinderImpl
 			}
 
 			sb.append(sql);
+
+			if (mimetypes != null) {
+				int i = 0;
+
+				for (String mimetype : mimetypes) {
+
+					if (i == 0) {
+						sb.append("AND (");
+					}
+					else {
+						sb.append(" OR ");
+					}
+
+					sb.append(" mimeType " + StringPool.LIKE + " ");
+					sb.append(mimetype);
+
+					i++;
+				}
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
 			sb.append(")) TEMP_TABLE ORDER BY modelFolder DESC, title ASC");
 
 			sql = sb.toString();

@@ -104,8 +104,22 @@ public interface DLFolderService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc,
+		java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		java.lang.String[] mimetypes)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

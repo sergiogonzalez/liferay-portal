@@ -139,8 +139,18 @@ public interface Repository {
 			int end, OrderByComparator obc)
 		throws SystemException;
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+			long folderId, int status, boolean includeMountFolders, int start,
+			int end, OrderByComparator obc, String[] mimetypes)
+		throws SystemException;
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, boolean includeMountFolders)
+		throws SystemException;
+
+	public int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+			long folderId, int status, boolean includeMountFolders,
+			String[] mimetypes)
 		throws SystemException;
 
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)

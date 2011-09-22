@@ -379,12 +379,31 @@ public class DLFolderLocalServiceUtil {
 			status, includeMountFolders, start, end, obc);
 	}
 
+	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		java.lang.String[] mimetypes, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndFileEntriesAndFileShortcutsByMimeTypes(groupId,
+			folderId, status, includeMountFolders, mimetypes, start, end, obc);
+	}
+
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, status, includeMountFolders);
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndFileEntriesAndFileShortcutsByMimeTypesCount(groupId,
+			folderId, status, includeMountFolders, mimetypes);
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId)

@@ -29,6 +29,15 @@ public class DLFolderFinderUtil {
 			includeMountFolders);
 	}
 
+	public static int countF_FE_FS_ByG_F_S_ByMimetypes(long groupId,
+		long folderId, int status, boolean includeMountFolders,
+		java.lang.String[] mimetypes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .countF_FE_FS_ByG_F_S_ByMimetypes(groupId, folderId, status,
+			includeMountFolders, mimetypes);
+	}
+
 	public static int countFE_FS_ByG_F_S(long groupId, long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().countFE_FS_ByG_F_S(groupId, folderId, status);
