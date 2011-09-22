@@ -94,7 +94,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 
 		long defaultFileEntryTypeId = getDefaultFileEntryType(
-			dlFolder.getGroupId(), dlFolder.getFolderId());
+			dlFolder.getFolderId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -123,7 +123,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
-	public long getDefaultFileEntryType(long groupId, long folderId)
+	public long getDefaultFileEntryType(long folderId)
 		throws PortalException, SystemException {
 
 		folderId = getFileEntryTypesPrimaryFolderId(folderId);

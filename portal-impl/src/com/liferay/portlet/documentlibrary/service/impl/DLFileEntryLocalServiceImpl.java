@@ -1379,8 +1379,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (fileEntryTypeId == -1) {
 			fileEntryTypeId =
-				dlFileEntryTypeLocalService.getDefaultFileEntryType(
-					groupId, folderId);
+				dlFileEntryTypeLocalService.getDefaultFileEntryType(folderId);
 		}
 		else {
 			List<DLFileEntryType> dlFileEntryTypes =
