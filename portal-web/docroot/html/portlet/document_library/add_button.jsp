@@ -23,7 +23,15 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+Group scopeGroup = themeDisplay.getScopeGroup();
+
+long[] groupIds = new long[] {scopeGroupId, themeDisplay.getCompanyGroupId()};
+
+if (scopeGroup.isLayout()) {
+	groupIds = new long[] {scopeGroup.getParentGroupId(), themeDisplay.getCompanyGroupId()};
+}
+
+List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 %>
 
 <liferay-ui:icon-menu align="left" icon="" direction="down" message="add" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">

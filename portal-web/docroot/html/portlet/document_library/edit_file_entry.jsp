@@ -276,7 +276,15 @@ else if (dlFileEntryType != null) {
 			<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
 
 				<%
-				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(scopeGroupId, folderId, true);
+				Group scopeGroup = themeDisplay.getScopeGroup();
+
+				long[] groupIds = new long[] {scopeGroupId, themeDisplay.getCompanyGroupId()};
+
+				if (scopeGroup.isLayout()) {
+					groupIds = new long[] {scopeGroup.getParentGroupId(), themeDisplay.getCompanyGroupId()};
+				}
+
+				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(groupIds, folderId, true);
 				%>
 
 				<c:choose>
