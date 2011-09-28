@@ -81,7 +81,7 @@ public interface DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -130,7 +130,7 @@ public interface DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -181,7 +181,7 @@ public interface DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -497,6 +497,13 @@ public interface DLAppLocalService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long repositoryId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.repository.model.FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -1098,7 +1105,7 @@ public interface DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1151,7 +1158,7 @@ public interface DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1205,7 +1212,7 @@ public interface DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1291,7 +1298,7 @@ public interface DLAppLocalService {
 	* @param description the folder's new description
 	* @param serviceContext the service context to be applied. In a Liferay
 	repository, it may include:
-	
+
 	<ul>
 	<li>
 	defaultFileEntryTypeId - the file entry type to default all
