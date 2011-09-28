@@ -55,6 +55,7 @@ boolean showActions = PrefsParamUtil.getBoolean(preferences, request, "showActio
 boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
 boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
+boolean showPrevAndNextNavigation = PrefsParamUtil.getBoolean(preferences, request, "showPrevAndNextNavigation", PropsValues.IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED);
 
 String[] mimeTypes = StringUtil.split(PrefsParamUtil.getString(preferences, request, "mimeTypes", _defaultMimeTypes));
 
