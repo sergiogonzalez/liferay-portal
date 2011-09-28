@@ -96,6 +96,15 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMStructure"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMStructure"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static long STRUCTUREKEY_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long DESCRIPTION_COLUMN_BITMASK = 16L;
+	public static long NAME_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -140,14 +149,6 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return DDMStructure.class;
-	}
-
-	public String getModelClassName() {
-		return DDMStructure.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.dynamicdatamapping.model.DDMStructure"));
 
@@ -168,6 +169,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return DDMStructure.class;
+	}
+
+	public String getModelClassName() {
+		return DDMStructure.class.getName();
 	}
 
 	@JSON
@@ -207,6 +216,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -292,7 +303,19 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -306,6 +329,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	}
 
 	public void setStructureKey(String structureKey) {
+		_columnBitmask |= STRUCTUREKEY_COLUMN_BITMASK;
+
 		if (_originalStructureKey == null) {
 			_originalStructureKey = _structureKey;
 		}
@@ -367,6 +392,12 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
 	}
 
@@ -404,6 +435,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 			setName(name, locale, defaultLocale);
 		}
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -457,6 +492,12 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	}
 
 	public void setDescription(String description) {
+		_columnBitmask |= DESCRIPTION_COLUMN_BITMASK;
+
+		if (_originalDescription == null) {
+			_originalDescription = _description;
+		}
+
 		_description = description;
 	}
 
@@ -499,6 +540,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		}
 	}
 
+	public String getOriginalDescription() {
+		return GetterUtil.getString(_originalDescription);
+	}
+
 	@JSON
 	public String getXsd() {
 		if (_xsd == null) {
@@ -525,6 +570,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	public void setStorageType(String storageType) {
 		_storageType = storageType;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -636,7 +685,17 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		ddmStructureModelImpl._setOriginalGroupId = false;
 
+		ddmStructureModelImpl._originalClassNameId = ddmStructureModelImpl._classNameId;
+
+		ddmStructureModelImpl._setOriginalClassNameId = false;
+
 		ddmStructureModelImpl._originalStructureKey = ddmStructureModelImpl._structureKey;
+
+		ddmStructureModelImpl._originalName = ddmStructureModelImpl._name;
+
+		ddmStructureModelImpl._originalDescription = ddmStructureModelImpl._description;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -853,12 +912,17 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private String _structureKey;
 	private String _originalStructureKey;
 	private String _name;
+	private String _originalName;
 	private String _description;
+	private String _originalDescription;
 	private String _xsd;
 	private String _storageType;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DDMStructure _escapedModelProxy;
 }

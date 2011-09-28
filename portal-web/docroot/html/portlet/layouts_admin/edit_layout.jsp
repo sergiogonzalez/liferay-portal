@@ -158,6 +158,7 @@ String[][] categorySections = {mainSections};
 							var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 
 							var popup = null;
+							var exportPopup = null;
 
 							var layoutToolbar = new A.Toolbar(
 								{
@@ -189,6 +190,7 @@ String[][] categorySections = {mainSections};
 												label: '<liferay-ui:message key="add-child-page" />'
 											},
 										</c:if>
+
 										{
 											handler: function(event) {
 												Liferay.Util.openWindow(
@@ -212,7 +214,59 @@ String[][] categorySections = {mainSections};
 											},
 											icon: 'circle-minus',
 											label: '<liferay-ui:message key="delete" />'
-										}
+										},
+
+										<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.MANAGE_LAYOUTS) %>">
+											{
+												type: 'ToolbarSpacer'
+											},
+											{
+												handler: function(event) {
+													if (!exportPopup) {
+														exportPopup = new A.Dialog(
+															{
+																centered: true,
+																constrain: true,
+																cssClass: 'lfr-export-dialog',
+																modal: true,
+																title: '<liferay-ui:message key="export" />',
+																width: 600
+															}
+														).render();
+
+														<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+															<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+															<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+															<portlet:param name="redirect" value="<%= currentURL %>" />
+															<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+															<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+															<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+															<portlet:param name="layoutIds" value="<%= String.valueOf(layoutId) %>" />
+															<portlet:param name="rootNodeName" value="<%= selLayout.getName(locale) %>" />
+														</portlet:renderURL>
+
+														exportPopup.plug(
+															A.Plugin.IO,
+															{
+																after: {
+																	success: function() {
+																		exportPopup.centered();
+																	}
+																},
+																autoLoad: false,
+																uri: '<%= exportPagesURL.toString() %>'
+															}
+														);
+													}
+
+													exportPopup.show();
+
+													exportPopup.io.start();
+												},
+												icon: 'arrowthick-1-b',
+												label: '<liferay-ui:message key="export" />'
+											}
+										</c:if>
 									]
 								}
 							).render();

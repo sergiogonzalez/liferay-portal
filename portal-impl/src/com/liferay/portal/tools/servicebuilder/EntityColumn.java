@@ -237,12 +237,12 @@ public class EntityColumn implements Cloneable {
 		return _convertNull;
 	}
 
-	public boolean isFetchFinderPath() {
-		return _fetchFinderPath;
-	}
-
 	public boolean isFilterPrimary() {
 		return _filterPrimary;
+	}
+
+	public boolean isFinderPath() {
+		return _finderPath;
 	}
 
 	public boolean isJsonEnabled() {
@@ -338,8 +338,8 @@ public class EntityColumn implements Cloneable {
 		_dbName = dbName;
 	}
 
-	public void setFetchFinderPath(boolean fetchFinderPath) {
-		_fetchFinderPath = fetchFinderPath;
+	public void setFinderPath(boolean finderPath) {
+		_finderPath = finderPath;
 	}
 
 	public void setIdParam(String idParam) {
@@ -393,8 +393,8 @@ public class EntityColumn implements Cloneable {
 	private boolean _convertNull;
 	private String _dbName;
 	private String _ejbName;
-	private boolean _fetchFinderPath;
 	private boolean _filterPrimary;
+	private boolean _finderPath;
 	private String _humanName;
 	private String _idParam;
 	private String _idType;

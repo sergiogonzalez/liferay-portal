@@ -240,6 +240,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 		super.setKey(Base64.objectToString(keyObj));
 	}
 
-	private Key _keyObj = null;
+	private Key _keyObj;
 
 }

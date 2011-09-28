@@ -14,11 +14,58 @@
 
 package com.liferay.portlet.mobiledevicerules.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceServiceBaseImpl;
+import com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil;
+import com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil;
 
 /**
  * @author Edward C. Han
  */
 public class MDRRuleGroupInstanceServiceImpl
 	extends MDRRuleGroupInstanceServiceBaseImpl {
+
+	public MDRRuleGroupInstance addRuleGroupInstance(
+			long groupId, String className, long classPK, long ruleGroupId,
+			int priority, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		MDRPermissionUtil.check(
+			getPermissionChecker(), groupId,
+			ActionKeys.ADD_RULE_GROUP_INSTANCE);
+
+		return  mdrRuleGroupInstanceLocalService.addRuleGroupInstance(
+			groupId, className, classPK, ruleGroupId, priority, serviceContext);
+	}
+
+	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance)
+		throws PortalException, SystemException {
+
+		MDRRuleGroupInstancePermissionUtil.check(
+			getPermissionChecker(), ruleGroupInstance, ActionKeys.DELETE);
+
+		mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
+			ruleGroupInstance);
+	}
+
+	public MDRRuleGroupInstance updateRuleGroupInstance(
+			long ruleGroupInstanceId, int priority)
+		throws PortalException, SystemException {
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			mdrRuleGroupInstancePersistence.findByPrimaryKey(
+				ruleGroupInstanceId);
+
+		MDRRuleGroupInstancePermissionUtil.check(
+			getPermissionChecker(), ruleGroupInstance.getRuleGroupInstanceId(),
+			ActionKeys.UPDATE);
+
+		return mdrRuleGroupInstanceLocalService.updateRuleGroupInstance(
+			ruleGroupInstanceId, priority);
+	}
+
 }

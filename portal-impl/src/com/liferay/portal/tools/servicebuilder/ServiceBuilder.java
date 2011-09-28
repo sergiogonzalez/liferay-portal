@@ -1395,12 +1395,10 @@ public class ServiceBuilder {
 
 		String key = sb.toString();
 
-		if (tempMap.containsKey(key)) {
+		if (tempMap.put(key, key) != null) {
 			return true;
 		}
 		else {
-			tempMap.put(key, key);
-
 			return false;
 		}
 	}
@@ -4642,10 +4640,8 @@ public class ServiceBuilder {
 
 				EntityColumn col = Entity.getColumn(finderColName, columnList);
 
-				if (!col.isFetchFinderPath() &&
-					!finderReturn.equals("Collection")) {
-
-					col.setFetchFinderPath(true);
+				if (!col.isFinderPath()) {
+					col.setFinderPath(true);
 				}
 
 				col = (EntityColumn)col.clone();

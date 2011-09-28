@@ -28,7 +28,7 @@
 		<column name="classPK" type="long" />
 		<column name="ruleGroupInstanceId" type="long" />
 		<column name="name" type="String"  localized="true" />
-		<column name="description" type="String" localized="true"/>
+		<column name="description" type="String" localized="true" />
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />
 
@@ -125,8 +125,8 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="ruleGroupId" type="long"/>
-		<column name="priority" type="int"/>
+		<column name="ruleGroupId" type="long" />
+		<column name="priority" type="int" />
 
 		<!-- Finder methods -->
 

@@ -81,6 +81,13 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Company"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Company"),
+			true);
+	public static long LOGOID_COLUMN_BITMASK = 1L;
+	public static long MX_COLUMN_BITMASK = 2L;
+	public static long SYSTEM_COLUMN_BITMASK = 4L;
+	public static long WEBID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -121,14 +128,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Company.class;
-	}
-
-	public String getModelClassName() {
-		return Company.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Company"));
 
@@ -149,6 +148,14 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return Company.class;
+	}
+
+	public String getModelClassName() {
+		return Company.class.getName();
 	}
 
 	@JSON
@@ -180,6 +187,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public void setWebId(String webId) {
+		_columnBitmask |= WEBID_COLUMN_BITMASK;
+
 		if (_originalWebId == null) {
 			_originalWebId = _webId;
 		}
@@ -216,6 +225,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public void setMx(String mx) {
+		_columnBitmask |= MX_COLUMN_BITMASK;
+
 		if (_originalMx == null) {
 			_originalMx = _mx;
 		}
@@ -247,6 +258,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public void setLogoId(long logoId) {
+		_columnBitmask |= LOGOID_COLUMN_BITMASK;
+
 		if (!_setOriginalLogoId) {
 			_setOriginalLogoId = true;
 
@@ -270,7 +283,19 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public void setSystem(boolean system) {
+		_columnBitmask |= SYSTEM_COLUMN_BITMASK;
+
+		if (!_setOriginalSystem) {
+			_setOriginalSystem = true;
+
+			_originalSystem = _system;
+		}
+
 		_system = system;
+	}
+
+	public boolean getOriginalSystem() {
+		return _originalSystem;
 	}
 
 	@JSON
@@ -293,6 +318,10 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setActive(boolean active) {
 		_active = active;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -401,6 +430,12 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		companyModelImpl._originalLogoId = companyModelImpl._logoId;
 
 		companyModelImpl._setOriginalLogoId = false;
+
+		companyModelImpl._originalSystem = companyModelImpl._system;
+
+		companyModelImpl._setOriginalSystem = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -552,8 +587,11 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	private long _originalLogoId;
 	private boolean _setOriginalLogoId;
 	private boolean _system;
+	private boolean _originalSystem;
+	private boolean _setOriginalSystem;
 	private int _maxUsers;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Company _escapedModelProxy;
 }
