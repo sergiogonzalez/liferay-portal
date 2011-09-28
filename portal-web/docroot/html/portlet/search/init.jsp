@@ -16,49 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %>
-<%@ page import="com.liferay.portal.kernel.search.Document" %>
-<%@ page import="com.liferay.portal.kernel.search.FacetedSearcher" %>
-<%@ page import="com.liferay.portal.kernel.search.Hits" %>
-<%@ page import="com.liferay.portal.kernel.search.Indexer" %>
-<%@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %>
-<%@ page import="com.liferay.portal.kernel.search.OpenSearch" %>
-<%@ page import="com.liferay.portal.kernel.search.OpenSearchUtil" %>
-<%@ page import="com.liferay.portal.kernel.search.SearchContext" %>
-<%@ page import="com.liferay.portal.kernel.search.SearchContextFactory" %>
-<%@ page import="com.liferay.portal.kernel.search.Summary" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.AssetEntriesFacet" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.Facet" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.ScopeFacet" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.collector.FacetCollector" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.collector.TermCollector" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.config.FacetConfiguration" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.config.FacetConfigurationUtil" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil" %>
-<%@ page import="com.liferay.portal.kernel.search.facet.util.RangeParserUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %>
-<%@ page import="com.liferay.portal.kernel.xml.Element" %>
-<%@ page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %>
-<%@ page import="com.liferay.portal.security.permission.comparator.ModelResourceComparator" %>
-<%@ page import="com.liferay.portal.service.PortletLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %>
-<%@ page import="com.liferay.portlet.asset.NoSuchCategoryException" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
-<%@ page import="com.liferay.util.PropertyComparator" %>
-
-<%@ page import="java.util.Comparator" %>
-<%@ page import="java.util.LinkedList" %>
+<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@ page import="com.liferay.portal.kernel.search.Document" %><%@ page import="com.liferay.portal.kernel.search.FacetedSearcher" %><%@ page import="com.liferay.portal.kernel.search.Hits" %><%@ page import="com.liferay.portal.kernel.search.Indexer" %><%@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@ page import="com.liferay.portal.kernel.search.OpenSearch" %><%@ page import="com.liferay.portal.kernel.search.OpenSearchUtil" %><%@ page import="com.liferay.portal.kernel.search.SearchContext" %><%@ page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@ page import="com.liferay.portal.kernel.search.Summary" %><%@ page import="com.liferay.portal.kernel.search.facet.AssetEntriesFacet" %><%@ page import="com.liferay.portal.kernel.search.facet.Facet" %><%@ page import="com.liferay.portal.kernel.search.facet.ScopeFacet" %><%@ page import="com.liferay.portal.kernel.search.facet.collector.FacetCollector" %><%@ page import="com.liferay.portal.kernel.search.facet.collector.TermCollector" %><%@ page import="com.liferay.portal.kernel.search.facet.config.FacetConfiguration" %><%@ page import="com.liferay.portal.kernel.search.facet.config.FacetConfigurationUtil" %><%@ page import="com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil" %><%@ page import="com.liferay.portal.kernel.search.facet.util.RangeParserUtil" %><%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@ page import="com.liferay.portal.kernel.xml.Element" %><%@ page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %><%@ page import="com.liferay.portal.security.permission.comparator.ModelResourceComparator" %><%@ page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@ page import="com.liferay.portlet.asset.NoSuchCategoryException" %><%@ page import="com.liferay.portlet.asset.model.AssetCategory" %><%@ page import="com.liferay.portlet.asset.model.AssetEntry" %><%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@ page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@ page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %><%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@ page import="com.liferay.util.PropertyComparator" %><%@ page import="java.util.Comparator" %><%@ page import="java.util.LinkedList" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);

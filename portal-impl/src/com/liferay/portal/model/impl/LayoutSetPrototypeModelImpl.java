@@ -85,6 +85,12 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.LayoutSetPrototype"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.LayoutSetPrototype"),
+			true);
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -123,14 +129,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return LayoutSetPrototype.class;
-	}
-
-	public String getModelClassName() {
-		return LayoutSetPrototype.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.LayoutSetPrototype"));
 
@@ -153,6 +151,14 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return LayoutSetPrototype.class;
+	}
+
+	public String getModelClassName() {
+		return LayoutSetPrototype.class.getName();
+	}
+
 	@JSON
 	public String getUuid() {
 		if (_uuid == null) {
@@ -164,7 +170,15 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -182,7 +196,19 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -312,7 +338,23 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	}
 
 	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -409,6 +451,19 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	@Override
 	public void resetOriginalValues() {
+		LayoutSetPrototypeModelImpl layoutSetPrototypeModelImpl = this;
+
+		layoutSetPrototypeModelImpl._originalUuid = layoutSetPrototypeModelImpl._uuid;
+
+		layoutSetPrototypeModelImpl._originalCompanyId = layoutSetPrototypeModelImpl._companyId;
+
+		layoutSetPrototypeModelImpl._setOriginalCompanyId = false;
+
+		layoutSetPrototypeModelImpl._originalActive = layoutSetPrototypeModelImpl._active;
+
+		layoutSetPrototypeModelImpl._setOriginalActive = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -525,12 +580,18 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 			LayoutSetPrototype.class
 		};
 	private String _uuid;
+	private String _originalUuid;
 	private long _layoutSetPrototypeId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _name;
 	private String _description;
 	private String _settings;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private LayoutSetPrototype _escapedModelProxy;
 }

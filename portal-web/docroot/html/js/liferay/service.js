@@ -781,6 +781,7 @@ Liferay.Service.registerClass(
 		getFolder: true,
 		getFolderIds: true,
 		getFolders: true,
+		getFoldersAndFileEntriesAndFileShortcuts: true,
 		getFoldersAndFileEntriesAndFileShortcutsCount: true,
 		getFoldersCount: true,
 		getMountFolders: true,
@@ -1020,6 +1021,51 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.register("Liferay.Service.MDR", "com.liferay.portlet.mobiledevicerules.service");
+
+Liferay.Service.registerClass(
+	Liferay.Service.MDR, "MDRAction",
+	{
+		addAction: true,
+		deleteAction: true,
+		fetchAction: true,
+		getAction: true,
+		updateAction: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.MDR, "MDRRule",
+	{
+		addRule: true,
+		deleteRule: true,
+		fetchRule: true,
+		getRule: true,
+		updateRule: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.MDR, "MDRRuleGroup",
+	{
+		addRuleGroup: true,
+		copyRuleGroup: true,
+		deleteRuleGroup: true,
+		fetchRuleGroup: true,
+		getRuleGroup: true,
+		updateRuleGroup: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.MDR, "MDRRuleGroupInstance",
+	{
+		addRuleGroupInstance: true,
+		deleteRuleGroupInstance: true,
+		getRuleGroupInstances: true,
+		getRuleGroupInstancesCount: true,
+		updateRuleGroupInstance: true
+	}
+);
 
 Liferay.Service.register("Liferay.Service.Polls", "com.liferay.portlet.polls.service");
 

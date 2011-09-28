@@ -56,7 +56,7 @@ else {
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
@@ -227,7 +227,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 							</li>
 
 							<%
-							List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+							List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(DLUtil.getGroupIds(themeDisplay), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 							%>
 
 							<c:if test="<%= !fileEntryTypes.isEmpty() %>">

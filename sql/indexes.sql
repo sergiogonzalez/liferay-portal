@@ -176,6 +176,9 @@ create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId);
 
 create index IX_9B3F8F9D on DLContent (companyId, portletId, repositoryId, path_);
 create unique index IX_19EC270B on DLContent (companyId, portletId, repositoryId, path_, version);
+create index IX_6A83A66A on DLContent (companyId, repositoryId);
+create index IX_EB531760 on DLContent (companyId, repositoryId, path_);
+create unique index IX_FDD1AAA8 on DLContent (companyId, repositoryId, path_, version);
 
 create index IX_4CB1B2B4 on DLFileEntry (companyId);
 create index IX_F4AF5636 on DLFileEntry (groupId);
@@ -466,6 +469,7 @@ create unique index IX_46665CC4 on MDRRuleGroup (uuid_, groupId);
 
 create index IX_C95A08D8 on MDRRuleGroupInstance (classNameId, classPK);
 create unique index IX_808A0036 on MDRRuleGroupInstance (classNameId, classPK, ruleGroupId);
+create index IX_22DAB85C on MDRRuleGroupInstance (groupId, classNameId, classPK);
 create index IX_BF3E642B on MDRRuleGroupInstance (ruleGroupId);
 create index IX_B6A6BD91 on MDRRuleGroupInstance (uuid_);
 create unique index IX_9CBC6A39 on MDRRuleGroupInstance (uuid_, groupId);

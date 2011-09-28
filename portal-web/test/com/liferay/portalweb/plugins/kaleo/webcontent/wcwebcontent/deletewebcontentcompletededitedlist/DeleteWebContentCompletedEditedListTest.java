@@ -42,10 +42,12 @@ public class DeleteWebContentCompletedEditedListTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
@@ -56,7 +58,8 @@ public class DeleteWebContentCompletedEditedListTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//td[6]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//td[7]/a"));
-		selenium.clickAt("_15_rowIds", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@name='_15_rowIds']",
+			RuntimeVariables.replace(""));
 		selenium.click(RuntimeVariables.replace("//input[@value='Delete']"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()

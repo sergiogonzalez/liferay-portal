@@ -16,5 +16,4 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.unitconverter.model.Conversion" %>
-<%@ page import="com.liferay.portlet.unitconverter.util.ConverterUtil" %>
+<%@ page import="com.liferay.portlet.unitconverter.model.Conversion" %><%@ page import="com.liferay.portlet.unitconverter.util.ConverterUtil" %>
