@@ -735,7 +735,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public User getUserById(long userId)
 		throws PortalException, SystemException {
 
-		User user = userLocalService.getUserById(userId);
+		User user = userPersistence.findByPrimaryKey(userId);
 
 		UserPermissionUtil.check(
 			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);

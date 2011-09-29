@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
@@ -60,10 +61,6 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		dlContent.setSize(bytes.length);
 
 		dlContentPersistence.update(dlContent, false);
-
-		unsyncByteArrayInputStream.reset();
-
-		dlContent.setData(dataOutputBlob);
 
 		return dlContent;
 	}
@@ -112,6 +109,42 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, portletId, repositoryId, path);
 	}
 
+	public void deleteContentsByDirectory(
+			long companyId, String portletId, long repositoryId, String dirName)
+		throws SystemException {
+
+		if (!dirName.endsWith(StringPool.SLASH)) {
+			dirName = dirName.concat(StringPool.SLASH);
+		}
+
+		dirName.concat(StringPool.PERCENT);
+
+		dlContentPersistence.removeByC_P_R_LikeP(
+			companyId, portletId, repositoryId, dirName);
+	}
+
+	public DLContent getContent(
+			long companyId, long repositoryId, String path)
+		throws NoSuchContentException, SystemException {
+
+		List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
+			companyId, repositoryId, path);
+
+		if (dlContents == null || dlContents.isEmpty()) {
+			throw new NoSuchContentException(path);
+		}
+
+		return dlContents.get(0);
+	}
+
+	public DLContent getContent(
+			long companyId, long repositoryId, String path, String version)
+		throws NoSuchContentException, SystemException {
+
+		return dlContentPersistence.findByC_R_P_V(
+			companyId, repositoryId, path, version);
+	}
+
 	public DLContent getContent(
 			long companyId, String portletId, long repositoryId, String path,
 			String version)
@@ -121,11 +154,17 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, portletId, repositoryId, path, version);
 	}
 
-	public List<DLContent> getContentReferences(
+	public List<DLContent> getContents(long companyId, long repositoryId)
+		throws SystemException {
+
+		return dlContentPersistence.findByC_R(companyId, repositoryId);
+	}
+
+	public List<DLContent> getContents(
 			long companyId, long repositoryId, String path)
 		throws SystemException {
 
-		return dlContentFinder.findByC_R_P(companyId, repositoryId, path);
+		return dlContentPersistence.findByC_R_P(companyId, repositoryId, path);
 	}
 
 	public List<DLContent> getContents(
@@ -134,6 +173,35 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 		return dlContentPersistence.findByC_P_R_P(
 			companyId, portletId, repositoryId, path);
+	}
+
+	public List<DLContent> getContentsByDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws SystemException {
+
+		if (!dirName.endsWith(StringPool.SLASH)) {
+			dirName = dirName.concat(StringPool.SLASH);
+		}
+
+		dirName.concat(StringPool.PERCENT);
+
+		return dlContentPersistence.findByC_R_LikeP(
+			companyId, repositoryId, dirName);
+	}
+
+	public boolean hasContent(
+			long companyId, long repositoryId, String path, String version)
+		throws SystemException {
+
+		int count = dlContentPersistence.countByC_R_P_V(
+			companyId, repositoryId, path, version);
+
+		if (count > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean hasContent(

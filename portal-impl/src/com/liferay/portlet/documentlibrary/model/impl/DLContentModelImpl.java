@@ -69,6 +69,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		};
 	public static final String TABLE_SQL_CREATE = "create table DLContent (contentId LONG not null primary key,groupId LONG,companyId LONG,portletId VARCHAR(75) null,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLContent";
+	public static final String ORDER_BY_JPQL = " ORDER BY dlContent.version DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY DLContent.version DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -78,15 +80,14 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
 			true);
-
-	public Class<?> getModelClass() {
-		return DLContent.class;
-	}
-
-	public String getModelClassName() {
-		return DLContent.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long PATH_COLUMN_BITMASK = 2L;
+	public static long PORTLETID_COLUMN_BITMASK = 4L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 8L;
+	public static long VERSION_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLContent"));
 
@@ -107,6 +108,14 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return DLContent.class;
+	}
+
+	public String getModelClassName() {
+		return DLContent.class.getName();
 	}
 
 	public long getContentId() {
@@ -130,6 +139,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -153,6 +164,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setPortletId(String portletId) {
+		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
+
 		if (_originalPortletId == null) {
 			_originalPortletId = _portletId;
 		}
@@ -169,6 +182,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalRepositoryId) {
 			_setOriginalRepositoryId = true;
 
@@ -192,6 +207,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setPath(String path) {
+		_columnBitmask |= PATH_COLUMN_BITMASK;
+
 		if (_originalPath == null) {
 			_originalPath = _path;
 		}
@@ -213,6 +230,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setVersion(String version) {
+		_columnBitmask |= VERSION_COLUMN_BITMASK;
+
 		if (_originalVersion == null) {
 			_originalVersion = _version;
 		}
@@ -257,6 +276,10 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	public void setSize(long size) {
 		_size = size;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -309,17 +332,17 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public int compareTo(DLContent dlContent) {
-		long primaryKey = dlContent.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getVersion().compareTo(dlContent.getVersion());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -371,6 +394,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		dlContentModelImpl._originalVersion = dlContentModelImpl._version;
 
 		_dataBlobModel = null;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -511,5 +536,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	private DLContentDataBlobModel _dataBlobModel;
 	private long _size;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DLContent _escapedModelProxy;
 }

@@ -71,15 +71,10 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserTrackerPath"),
 			true);
-
-	public Class<?> getModelClass() {
-		return UserTrackerPath.class;
-	}
-
-	public String getModelClassName() {
-		return UserTrackerPath.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.UserTrackerPath"),
+			true);
+	public static long USERTRACKERID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserTrackerPath"));
 
@@ -102,6 +97,14 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return UserTrackerPath.class;
+	}
+
+	public String getModelClassName() {
+		return UserTrackerPath.class.getName();
+	}
+
 	public long getUserTrackerPathId() {
 		return _userTrackerPathId;
 	}
@@ -115,7 +118,19 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	}
 
 	public void setUserTrackerId(long userTrackerId) {
+		_columnBitmask |= USERTRACKERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserTrackerId) {
+			_setOriginalUserTrackerId = true;
+
+			_originalUserTrackerId = _userTrackerId;
+		}
+
 		_userTrackerId = userTrackerId;
+	}
+
+	public long getOriginalUserTrackerId() {
+		return _originalUserTrackerId;
 	}
 
 	public String getPath() {
@@ -137,6 +152,10 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	public void setPathDate(Date pathDate) {
 		_pathDate = pathDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -230,6 +249,13 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	@Override
 	public void resetOriginalValues() {
+		UserTrackerPathModelImpl userTrackerPathModelImpl = this;
+
+		userTrackerPathModelImpl._originalUserTrackerId = userTrackerPathModelImpl._userTrackerId;
+
+		userTrackerPathModelImpl._setOriginalUserTrackerId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -312,8 +338,11 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		};
 	private long _userTrackerPathId;
 	private long _userTrackerId;
+	private long _originalUserTrackerId;
+	private boolean _setOriginalUserTrackerId;
 	private String _path;
 	private Date _pathDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private UserTrackerPath _escapedModelProxy;
 }

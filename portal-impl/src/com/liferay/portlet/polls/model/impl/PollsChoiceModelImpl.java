@@ -81,15 +81,12 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.polls.model.PollsChoice"),
 			true);
-
-	public Class<?> getModelClass() {
-		return PollsChoice.class;
-	}
-
-	public String getModelClassName() {
-		return PollsChoice.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.polls.model.PollsChoice"),
+			true);
+	public static long NAME_COLUMN_BITMASK = 1L;
+	public static long QUESTIONID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.polls.model.PollsChoice"));
 
@@ -112,6 +109,14 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return PollsChoice.class;
+	}
+
+	public String getModelClassName() {
+		return PollsChoice.class.getName();
+	}
+
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -122,7 +127,15 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	public long getChoiceId() {
@@ -138,6 +151,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	}
 
 	public void setQuestionId(long questionId) {
+		_columnBitmask |= QUESTIONID_COLUMN_BITMASK;
+
 		if (!_setOriginalQuestionId) {
 			_setOriginalQuestionId = true;
 
@@ -161,6 +176,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -262,6 +279,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 			setDescription(description, locale, defaultLocale);
 		}
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -370,11 +391,15 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public void resetOriginalValues() {
 		PollsChoiceModelImpl pollsChoiceModelImpl = this;
 
+		pollsChoiceModelImpl._originalUuid = pollsChoiceModelImpl._uuid;
+
 		pollsChoiceModelImpl._originalQuestionId = pollsChoiceModelImpl._questionId;
 
 		pollsChoiceModelImpl._setOriginalQuestionId = false;
 
 		pollsChoiceModelImpl._originalName = pollsChoiceModelImpl._name;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -469,6 +494,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 			PollsChoice.class
 		};
 	private String _uuid;
+	private String _originalUuid;
 	private long _choiceId;
 	private long _questionId;
 	private long _originalQuestionId;
@@ -477,5 +503,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	private String _originalName;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private PollsChoice _escapedModelProxy;
 }
