@@ -110,6 +110,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Layout"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Layout"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long FRIENDLYURL_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long ICONIMAGEID_COLUMN_BITMASK = 8L;
+	public static long LAYOUTID_COLUMN_BITMASK = 16L;
+	public static long PARENTLAYOUTID_COLUMN_BITMASK = 32L;
+	public static long PRIVATELAYOUT_COLUMN_BITMASK = 64L;
+	public static long TEMPLATELAYOUTUUID_COLUMN_BITMASK = 128L;
+	public static long TYPE_COLUMN_BITMASK = 256L;
+	public static long UUID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -169,14 +182,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Layout.class;
-	}
-
-	public String getModelClassName() {
-		return Layout.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Layout"));
 
@@ -197,6 +202,14 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return Layout.class;
+	}
+
+	public String getModelClassName() {
+		return Layout.class.getName();
 	}
 
 	@JSON
@@ -236,6 +249,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -255,7 +270,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -286,6 +313,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
+		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
+
 		if (!_setOriginalPrivateLayout) {
 			_setOriginalPrivateLayout = true;
 
@@ -305,6 +334,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setLayoutId(long layoutId) {
+		_columnBitmask |= LAYOUTID_COLUMN_BITMASK;
+
 		if (!_setOriginalLayoutId) {
 			_setOriginalLayoutId = true;
 
@@ -324,7 +355,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setParentLayoutId(long parentLayoutId) {
+		_columnBitmask |= PARENTLAYOUTID_COLUMN_BITMASK;
+
+		if (!_setOriginalParentLayoutId) {
+			_setOriginalParentLayoutId = true;
+
+			_originalParentLayoutId = _parentLayoutId;
+		}
+
 		_parentLayoutId = parentLayoutId;
+	}
+
+	public long getOriginalParentLayoutId() {
+		return _originalParentLayoutId;
 	}
 
 	@JSON
@@ -789,7 +832,17 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setType(String type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	@JSON
@@ -830,6 +883,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setFriendlyURL(String friendlyURL) {
+		_columnBitmask |= FRIENDLYURL_COLUMN_BITMASK;
+
 		if (_originalFriendlyURL == null) {
 			_originalFriendlyURL = _friendlyURL;
 		}
@@ -860,6 +915,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setIconImageId(long iconImageId) {
+		_columnBitmask |= ICONIMAGEID_COLUMN_BITMASK;
+
 		if (!_setOriginalIconImageId) {
 			_setOriginalIconImageId = true;
 
@@ -991,6 +1048,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setTemplateLayoutUuid(String templateLayoutUuid) {
+		_columnBitmask |= TEMPLATELAYOUTUUID_COLUMN_BITMASK;
+
 		if (_originalTemplateLayoutUuid == null) {
 			_originalTemplateLayoutUuid = _templateLayoutUuid;
 		}
@@ -1000,6 +1059,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public String getOriginalTemplateLayoutUuid() {
 		return GetterUtil.getString(_originalTemplateLayoutUuid);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -1146,6 +1209,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setOriginalGroupId = false;
 
+		layoutModelImpl._originalCompanyId = layoutModelImpl._companyId;
+
+		layoutModelImpl._setOriginalCompanyId = false;
+
 		layoutModelImpl._originalPrivateLayout = layoutModelImpl._privateLayout;
 
 		layoutModelImpl._setOriginalPrivateLayout = false;
@@ -1154,6 +1221,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setOriginalLayoutId = false;
 
+		layoutModelImpl._originalParentLayoutId = layoutModelImpl._parentLayoutId;
+
+		layoutModelImpl._setOriginalParentLayoutId = false;
+
+		layoutModelImpl._originalType = layoutModelImpl._type;
+
 		layoutModelImpl._originalFriendlyURL = layoutModelImpl._friendlyURL;
 
 		layoutModelImpl._originalIconImageId = layoutModelImpl._iconImageId;
@@ -1161,6 +1234,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutModelImpl._setOriginalIconImageId = false;
 
 		layoutModelImpl._originalTemplateLayoutUuid = layoutModelImpl._templateLayoutUuid;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1546,6 +1621,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _privateLayout;
@@ -1555,12 +1632,15 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private long _originalLayoutId;
 	private boolean _setOriginalLayoutId;
 	private long _parentLayoutId;
+	private long _originalParentLayoutId;
+	private boolean _setOriginalParentLayoutId;
 	private String _name;
 	private String _title;
 	private String _description;
 	private String _keywords;
 	private String _robots;
 	private String _type;
+	private String _originalType;
 	private String _typeSettings;
 	private boolean _hidden;
 	private String _friendlyURL;
@@ -1580,5 +1660,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _templateLayoutUuid;
 	private String _originalTemplateLayoutUuid;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Layout _escapedModelProxy;
 }

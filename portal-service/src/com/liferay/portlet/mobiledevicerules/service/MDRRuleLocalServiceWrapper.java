@@ -262,19 +262,19 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService {
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule addRule(
-		long groupId, long ruleGroupId,
+		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mdrRuleLocalService.addRule(groupId, ruleGroupId, nameMap,
+		return _mdrRuleLocalService.addRule(ruleGroupId, nameMap,
 			descriptionMap, type, typeSettings, serviceContext);
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule addRule(
-		long groupId, long ruleGroupId,
+		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type,
@@ -282,7 +282,7 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mdrRuleLocalService.addRule(groupId, ruleGroupId, nameMap,
+		return _mdrRuleLocalService.addRule(ruleGroupId, nameMap,
 			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 

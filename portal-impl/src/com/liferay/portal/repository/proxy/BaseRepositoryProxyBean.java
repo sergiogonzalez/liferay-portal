@@ -200,6 +200,14 @@ public class BaseRepositoryProxyBean
 			folderId, status);
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		return _baseRepository.getFileEntriesPrevAndNext(
+			fileEntryId, orderByComparator);
+	}
+
 	public int getFileEntriesCount(long folderId)
 		throws SystemException {
 
@@ -283,12 +291,35 @@ public class BaseRepositoryProxyBean
 		return toObjectProxyBeans(objects);
 	}
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		List<Object> objects =
+			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
+				folderId, status, mimeTypes, includeMountFolders, start, end,
+				obc);
+
+		return toObjectProxyBeans(objects);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, boolean includeMountFolders)
 		throws SystemException {
 
 		return _baseRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws SystemException {
+
+		return _baseRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
@@ -352,16 +383,16 @@ public class BaseRepositoryProxyBean
 		return _baseRepository.getRepositoryId();
 	}
 
-	public List<Long> getSubfolderIds(long folderId, boolean recurse)
-		throws SystemException {
-
-		return _baseRepository.getSubfolderIds(folderId, recurse);
-	}
-
 	public void getSubfolderIds(List<Long> folderIds, long folderId)
 		throws SystemException {
 
 		_baseRepository.getSubfolderIds(folderIds, folderId);
+	}
+
+	public List<Long> getSubfolderIds(long folderId, boolean recurse)
+		throws SystemException {
+
+		return _baseRepository.getSubfolderIds(folderId, recurse);
 	}
 
 	public String[] getSupportedConfigurations() {

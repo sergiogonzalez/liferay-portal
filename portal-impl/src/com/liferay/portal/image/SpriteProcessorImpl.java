@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.awt.Point;
 import java.awt.Transparency;
@@ -87,10 +88,16 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 		Collections.sort(images);
 
-		File dir = images.get(0).getParentFile();
+		String spriteRootDirName = PropsValues.SPRITE_ROOT_DIR;
+
+		if (Validator.isNull(spriteRootDirName)) {
+			File image = images.get(0);
+
+			spriteRootDirName = String.valueOf(image.getParentFile());
+		}
 
 		File spritePropertiesFile = new File(
-			dir.toString() + StringPool.SLASH + spritePropertiesFileName);
+			spriteRootDirName + StringPool.SLASH + spritePropertiesFileName);
 
 		boolean build = false;
 
@@ -189,7 +196,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 				null);
 
 			File spriteFile = new File(
-				dir.toString() + StringPool.SLASH + spriteFileName);
+				spriteRootDirName + StringPool.SLASH + spriteFileName);
 
 			ImageIO.write(renderedImage, "png", spriteFile);
 
@@ -206,7 +213,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			renderedImage = imageWorker.getPlanarImage();
 
 			spriteFile = new File(
-				dir.toString() + StringPool.SLASH +
+				spriteRootDirName + StringPool.SLASH +
 					StringUtil.replace(spriteFileName, ".png", ".gif"));
 
 			FileOutputStream fos = new FileOutputStream(spriteFile);

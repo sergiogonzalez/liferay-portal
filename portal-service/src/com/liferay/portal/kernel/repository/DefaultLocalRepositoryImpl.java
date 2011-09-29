@@ -113,6 +113,14 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		return _repository.getFileEntriesCount(folderId);
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		return _repository.getFileEntriesPrevAndNext(
+			fileEntryId, orderByComparator);
+	}
+
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -176,6 +184,16 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 			folderId, status, true, start, end, obc);
 	}
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start,	int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return _repository.getFoldersAndFileEntriesAndFileShortcuts(
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status)
 		throws SystemException {
@@ -190,6 +208,15 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 
 		return _repository.getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws SystemException {
+
+		return _repository.getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)

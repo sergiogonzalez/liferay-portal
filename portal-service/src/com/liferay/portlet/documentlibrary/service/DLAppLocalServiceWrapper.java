@@ -71,7 +71,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -124,7 +124,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -179,7 +179,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -537,6 +537,15 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 		return _dlAppLocalService.getFileEntriesCount(repositoryId, folderId);
 	}
 
+	public com.liferay.portal.kernel.repository.model.FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.getFileEntriesPrevAndNext(fileEntryId,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the file entry with the primary key.
 	*
@@ -879,6 +888,16 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
+	}
+
 	/**
 	* Returns the number of immediate subfolders, file entries, and file
 	* shortcuts in the parent folder.
@@ -901,6 +920,15 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	/**
@@ -1162,7 +1190,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1219,7 +1247,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1277,7 +1305,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1376,7 +1404,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 	* @param description the folder's new description
 	* @param serviceContext the service context to be applied. In a Liferay
 	repository, it may include:
-	
+
 	<ul>
 	<li>
 	defaultFileEntryTypeId - the file entry type to default all

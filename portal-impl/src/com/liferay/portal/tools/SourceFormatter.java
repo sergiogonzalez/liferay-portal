@@ -1187,6 +1187,33 @@ public class SourceFormatter {
 				}
 			}
 
+			if (fileName.endsWith("init.jsp")) {
+				int x = newContent.indexOf("<%@ page import=");
+
+				int y = newContent.lastIndexOf("<%@ page import=");
+
+				y = newContent.indexOf("%>", y);
+
+				if ((x != -1) && (y != -1) && (y > x)) {
+					String imports = newContent.substring(x, y);
+
+					imports = StringUtil.replace(
+						imports, new String[] {"\n", "\r"},
+						new String[] {"", ""});
+
+					// Set convertImportsToSingleLine to false to revert imports
+					// from a single line to multiple lines
+
+					boolean convertImportsToSingleLine = true;
+
+					if (convertImportsToSingleLine) {
+						newContent =
+							newContent.substring(0, x) + imports +
+								newContent.substring(y);
+					}
+				}
+			}
+
 			_checkXSS(fileName, newContent);
 
 			if ((newContent != null) && !content.equals(newContent)) {
@@ -1849,9 +1876,7 @@ public class SourceFormatter {
 			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
 		if (!fileName.contains("docroot") ||
-			fileName.endsWith("init-ext.jsp") ||
-			fileName.endsWith("html/common/init.jsp") ||
-			fileName.endsWith("html/portal/init.jsp")) {
+			fileName.endsWith("init-ext.jsp")) {
 
 			return content;
 		}
@@ -1864,27 +1889,33 @@ public class SourceFormatter {
 
 		String imports = matcher.group();
 
-		List<String> importLines = new ArrayList<String>();
+		imports = StringUtil.replace(imports, "><%@", ">\n<%@");
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
+		if (!fileName.endsWith("html/common/init.jsp") &&
+			!fileName.endsWith("html/portal/init.jsp")) {
 
-		String line = null;
+			List<String> importLines = new ArrayList<String>();
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.contains("import=")) {
-				importLines.add(line);
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports));
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.contains("import=")) {
+					importLines.add(line);
+				}
 			}
-		}
 
-		List<String> unneededImports = _getJSPDuplicateImports(
-			fileName, content, importLines);
+			List<String> unneededImports = _getJSPDuplicateImports(
+				fileName, content, importLines);
 
-		_addJSPUnusedImports(fileName, importLines, unneededImports);
+			_addJSPUnusedImports(fileName, importLines, unneededImports);
 
-		for (String unneededImport : unneededImports) {
-			imports = StringUtil.replace(
-				imports, unneededImport, StringPool.BLANK);
+			for (String unneededImport : unneededImports) {
+				imports = StringUtil.replace(
+					imports, unneededImport, StringPool.BLANK);
+			}
 		}
 
 		imports = _formatImports(imports, 17);

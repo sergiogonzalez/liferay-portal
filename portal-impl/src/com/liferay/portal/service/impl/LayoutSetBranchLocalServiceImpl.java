@@ -53,7 +53,7 @@ public class LayoutSetBranchLocalServiceImpl
 
 		// Layout branch
 
-		User user = userLocalService.getUserById(userId);
+		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
 		validate(groupId, privateLayout, name, master);

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -200,6 +201,20 @@ public class LiferayLocalRepository
 			getGroupId(), toFolderId(folderId));
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		DLFileEntry[] dlFileEntries =
+			dlFileEntryLocalService.getFileEntriesPrevAndNext(
+				fileEntryId, orderByComparator);
+
+		List<FileEntry> fileEntries =
+			toFileEntries(ListUtil.fromArray(dlFileEntries));
+
+		return fileEntries.toArray(new FileEntry[fileEntries.size()]);
+	}
+
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -279,6 +294,20 @@ public class LiferayLocalRepository
 		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
 	}
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =
+			dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
+				getGroupId(), toFolderId(folderId), status, mimeTypes,
+				includeMountFolders, start, end, obc);
+
+		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, boolean includeMountFolders)
 		throws SystemException {
@@ -286,6 +315,17 @@ public class LiferayLocalRepository
 		return dlFolderLocalService.
 			getFoldersAndFileEntriesAndFileShortcutsCount(
 				getGroupId(), toFolderId(folderId), status,
+				includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws SystemException {
+
+		return dlFolderLocalService.
+			getFoldersAndFileEntriesAndFileShortcutsCount(
+				getGroupId(), toFolderId(folderId), status, mimeTypes,
 				includeMountFolders);
 	}
 

@@ -16,35 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %>
-<%@ page import="com.liferay.portal.kernel.repository.model.FileVersion" %>
-<%@ page import="com.liferay.portal.kernel.repository.model.Folder" %>
-<%@ page import="com.liferay.portal.kernel.search.Document" %>
-<%@ page import="com.liferay.portal.kernel.search.Hits" %>
-<%@ page import="com.liferay.portal.kernel.search.Indexer" %>
-<%@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %>
-<%@ page import="com.liferay.portal.kernel.search.SearchContext" %>
-<%@ page import="com.liferay.portal.kernel.search.SearchContextFactory" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.persistence.AssetEntryQuery" %>
-<%@ page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %>
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %>
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %>
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %>
-<%@ page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
+<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@ page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@ page import="com.liferay.portal.kernel.repository.model.Folder" %><%@ page import="com.liferay.portal.kernel.search.Document" %><%@ page import="com.liferay.portal.kernel.search.Hits" %><%@ page import="com.liferay.portal.kernel.search.Indexer" %><%@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@ page import="com.liferay.portal.kernel.search.SearchContext" %><%@ page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@ page import="com.liferay.portlet.asset.model.AssetCategory" %><%@ page import="com.liferay.portlet.asset.model.AssetEntry" %><%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@ page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.persistence.AssetEntryQuery" %><%@ page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><%@ page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@ page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@ page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %><%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %><%@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %><%@ page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %><%@ page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
@@ -83,6 +55,24 @@ boolean showActions = PrefsParamUtil.getBoolean(preferences, request, "showActio
 boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
 boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
+boolean showPrevAndNextNavigation = PrefsParamUtil.getBoolean(preferences, request, "showPrevAndNextNavigation", PropsValues.IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED);
+
+String[] mimeTypes = StringUtil.split(PrefsParamUtil.getString(preferences, request, "mimeTypes", _defaultMimeTypes));
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+%>
+
+<%!
+private static Set<String> _allMimeTypes;
+private static String _defaultMimeTypes;
+
+static {
+	_allMimeTypes = new LinkedHashSet<String>();
+
+	_allMimeTypes.addAll(VideoProcessor.getVideoMimeTypes());
+	_allMimeTypes.addAll(ImageProcessor.getImageMimeTypes());
+	_allMimeTypes.addAll(AudioProcessor.getAudioMimeTypes());
+
+	_defaultMimeTypes = StringUtil.merge(_allMimeTypes.toArray(new String[_allMimeTypes.size()]));
+}
 %>

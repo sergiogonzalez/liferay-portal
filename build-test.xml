@@ -2795,6 +2795,8 @@ file.
 			</else>
 		</if>
 
+		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
+
 		<ant dir="portal-web" target="test-class" inheritAll="false">
 			<property name="class" value="${test.class}" />
 		</ant>
@@ -3096,15 +3098,15 @@ executable ZIP file.
 	<target name="test">
 		<antcall target="prepare-mysql" />
 
-		<antcall target="rebuild-database" inheritAll="false" />
+		<antcall target="rebuild-database" inheritAll="false">
+			<param name="test.database.minimal" value="true" />
+		</antcall>
 
 		<antcall target="revert-test-properties" />
 
 		<ant dir="portal-impl" target="test-class" inheritAll="false">
 			<property name="class" value="ServiceTestSuite" />
 		</ant>
-
-		<antcall target="rebuild-database" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-class" inheritAll="false">
 			<property name="class" value="PersistenceTestSuite" />
