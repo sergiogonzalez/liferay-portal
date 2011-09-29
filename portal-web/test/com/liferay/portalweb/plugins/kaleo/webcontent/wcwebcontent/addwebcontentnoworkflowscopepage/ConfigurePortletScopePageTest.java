@@ -42,7 +42,7 @@ public class ConfigurePortletScopePageTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -87,19 +87,24 @@ public class ConfigurePortletScopePageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Scope", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_scopeLayoutUuid",
+		selenium.select("//select[@id='_86_scopeType']",
+			RuntimeVariables.replace("label=Select Layout"));
+		selenium.select("//select[@id='_86_scopeLayoutUuid']",
 			RuntimeVariables.replace(
 				"label=Current Page (Web Content Display Page)"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Select Layout",
+			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		assertEquals("Current Page (Web Content Display Page)",
-			selenium.getSelectedLabel("_86_scopeLayoutUuid"));
+			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 	}
 }

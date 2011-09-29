@@ -277,11 +277,10 @@ public class DLFileEntryTypeLocalServiceWrapper
 		_dlFileEntryTypeLocalService.deleteFileEntryTypes(folderId);
 	}
 
-	public long getDefaultFileEntryType(long groupId, long folderId)
+	public long getDefaultFileEntryType(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeLocalService.getDefaultFileEntryType(groupId,
-			folderId);
+		return _dlFileEntryTypeLocalService.getDefaultFileEntryType(folderId);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
@@ -289,12 +288,6 @@ public class DLFileEntryTypeLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
-	}
-
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeLocalService.getFileEntryTypes(groupId);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
@@ -311,27 +304,33 @@ public class DLFileEntryTypeLocalServiceWrapper
 			description);
 	}
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFolderFileEntryTypes(
-		long groupId, long folderId, boolean inherited)
+		long[] groupIds, long folderId, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeLocalService.getFolderFileEntryTypes(groupId,
+		return _dlFileEntryTypeLocalService.getFolderFileEntryTypes(groupIds,
 			folderId, inherited);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
-		long companyId, long groupId, java.lang.String keywords, int start,
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeLocalService.search(companyId, groupId,
+		return _dlFileEntryTypeLocalService.search(companyId, groupIds,
 			keywords, start, end, orderByComparator);
 	}
 
-	public int searchCount(long companyId, long groupId,
+	public int searchCount(long companyId, long[] groupIds,
 		java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeLocalService.searchCount(companyId, groupId,
+		return _dlFileEntryTypeLocalService.searchCount(companyId, groupIds,
 			keywords);
 	}
 

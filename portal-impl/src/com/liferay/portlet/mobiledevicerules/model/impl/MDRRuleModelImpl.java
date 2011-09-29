@@ -95,6 +95,12 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.mobiledevicerules.model.MDRRule"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.mobiledevicerules.model.MDRRule"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long RULEGROUPID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,14 +144,6 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return MDRRule.class;
-	}
-
-	public String getModelClassName() {
-		return MDRRule.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.mobiledevicerules.model.MDRRule"));
 
@@ -166,6 +164,14 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return MDRRule.class;
+	}
+
+	public String getModelClassName() {
+		return MDRRule.class.getName();
 	}
 
 	@JSON
@@ -205,6 +211,8 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -282,7 +290,19 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	}
 
 	public void setRuleGroupId(long ruleGroupId) {
+		_columnBitmask |= RULEGROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalRuleGroupId) {
+			_setOriginalRuleGroupId = true;
+
+			_originalRuleGroupId = _ruleGroupId;
+		}
+
 		_ruleGroupId = ruleGroupId;
+	}
+
+	public long getOriginalRuleGroupId() {
+		return _originalRuleGroupId;
 	}
 
 	@JSON
@@ -495,6 +515,10 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		_typeSettings = typeSettings;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public MDRRule toEscapedModel() {
 		if (isEscapedModel()) {
@@ -602,6 +626,12 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		mdrRuleModelImpl._originalGroupId = mdrRuleModelImpl._groupId;
 
 		mdrRuleModelImpl._setOriginalGroupId = false;
+
+		mdrRuleModelImpl._originalRuleGroupId = mdrRuleModelImpl._ruleGroupId;
+
+		mdrRuleModelImpl._setOriginalRuleGroupId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -804,10 +834,13 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _ruleGroupId;
+	private long _originalRuleGroupId;
+	private boolean _setOriginalRuleGroupId;
 	private String _name;
 	private String _description;
 	private String _type;
 	private String _typeSettings;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private MDRRule _escapedModelProxy;
 }

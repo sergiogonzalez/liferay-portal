@@ -16,15 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.NoSuchTagException" %>
-<%@ page import="com.liferay.portlet.asset.NoSuchTagPropertyException" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetTag" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetTagProperty" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.xslcontent.util.XSLContentUtil" %>
-
-<%@ page import="java.net.URL" %>
+<%@ page import="com.liferay.portlet.asset.NoSuchTagException" %><%@ page import="com.liferay.portlet.asset.NoSuchTagPropertyException" %><%@ page import="com.liferay.portlet.asset.model.AssetTag" %><%@ page import="com.liferay.portlet.asset.model.AssetTagProperty" %><%@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@ page import="com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil" %><%@ page import="com.liferay.portlet.xslcontent.util.XSLContentUtil" %><%@ page import="java.net.URL" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

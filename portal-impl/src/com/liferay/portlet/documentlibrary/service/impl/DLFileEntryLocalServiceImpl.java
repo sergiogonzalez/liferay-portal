@@ -131,8 +131,7 @@ public class DLFileEntryLocalServiceImpl
 			counterLocalService.increment(DLFileEntry.class.getName()));
 		String extension = getExtension(title, sourceFileName);
 		fileEntryTypeId = getFileEntryTypeId(
-			groupId, folderId, fileEntryTypeId);
-
+			DLUtil.getGroupIds(groupId), folderId, fileEntryTypeId);
 		Date now = new Date();
 
 		validateFile(groupId, folderId, title, extension, file, is);
@@ -940,8 +939,8 @@ public class DLFileEntryLocalServiceImpl
 		String extraSettings = StringPool.BLANK;
 
 		fileEntryTypeId = getFileEntryTypeId(
-			dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-			fileEntryTypeId);
+			DLUtil.getGroupIds(dlFileEntry.getGroupId()),
+			dlFileEntry.getFolderId(), fileEntryTypeId);
 
 		return updateFileEntry(
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
@@ -1374,18 +1373,17 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected Long getFileEntryTypeId(
-			long groupId, long folderId, long fileEntryTypeId)
+			long[] groupIds, long folderId, long fileEntryTypeId)
 		throws PortalException, SystemException {
 
 		if (fileEntryTypeId == -1) {
 			fileEntryTypeId =
-				dlFileEntryTypeLocalService.getDefaultFileEntryType(
-					groupId, folderId);
+				dlFileEntryTypeLocalService.getDefaultFileEntryType(folderId);
 		}
 		else {
 			List<DLFileEntryType> dlFileEntryTypes =
 				dlFileEntryTypeLocalService.getFolderFileEntryTypes(
-					groupId, folderId, true);
+					groupIds, folderId, true);
 
 			boolean found = false;
 
@@ -1593,6 +1591,9 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry = checkOutFileEntry(userId, fileEntryId);
 		}
 		else if (!checkedOut) {
+			lockFileEntry(userId, fileEntryId);
+		}
+		else if (!hasFileEntryLock(userId, fileEntryId)) {
 			lockFileEntry(userId, fileEntryId);
 		}
 
