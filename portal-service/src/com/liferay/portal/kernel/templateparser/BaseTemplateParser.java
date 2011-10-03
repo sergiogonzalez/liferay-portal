@@ -231,6 +231,7 @@ public abstract class BaseTemplateParser implements TemplateParser {
 
 		templateContext.put("company", getCompany());
 		templateContext.put("companyId", getCompanyId());
+		templateContext.put("device", _themeDisplay.getDevice());
 		templateContext.put("groupId", getGroupId());
 
 		Locale locale = LocaleUtil.fromLanguageId(_languageId);
@@ -239,7 +240,6 @@ public abstract class BaseTemplateParser implements TemplateParser {
 
 		templateContext.put(
 			"permissionChecker", PermissionThreadLocal.getPermissionChecker());
-
 		templateContext.put("viewMode", _viewMode);
 	}
 

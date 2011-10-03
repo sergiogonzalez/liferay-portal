@@ -121,6 +121,7 @@
 			<basic name="active">
 				<column name="ACTIVE_" />
 			</basic>
+			<transient name="keyObj" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>

@@ -37,6 +37,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 
 import java.io.Serializable;
 
@@ -179,6 +180,10 @@ public class ThemeDisplay implements Serializable {
 
 	public Locale getLocale() {
 		return _locale;
+	}
+
+	public MDRRuleGroupInstance getMDRRuleGroupInstance() {
+		return _mdrRuleGroupInstance;
 	}
 
 	public Group getParentGroup() {
@@ -872,6 +877,12 @@ public class ThemeDisplay implements Serializable {
 		setLookAndFeel(getPathContext(), theme, colorScheme);
 	}
 
+	public void setMDRRuleGroupInstance(
+		MDRRuleGroupInstance mdrRuleGroupInstance) {
+
+		_mdrRuleGroupInstance = mdrRuleGroupInstance;
+	}
+
 	public void setParentGroupId(long parentGroupId) {
 		_parentGroupId = parentGroupId;
 
@@ -1273,6 +1284,7 @@ public class ThemeDisplay implements Serializable {
 	private boolean _lifecycleRender;
 	private boolean _lifecycleResource;
 	private Locale _locale;
+	private MDRRuleGroupInstance _mdrRuleGroupInstance;
 	private Group _parentGroup;
 	private long _parentGroupId;
 	private String _pathApplet = StringPool.BLANK;
