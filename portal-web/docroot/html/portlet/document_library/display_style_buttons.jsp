@@ -72,7 +72,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 			Liferay.fire(
 				'<portlet:namespace />dataRequest',
 				{
-					requestParams: config
+					requestParams: config,
+					src: 0
 				}
 			);
 		}
@@ -90,7 +91,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 						{
 							handler: A.bind(onButtonClick, null, '<%= displayViews[0] %>'),
 							icon: 'display-<%= displayViews[0] %>',
-							title: '<%= LanguageUtil.get(pageContext, displayViews[0] + "-view") %>'
+							title: '<%= UnicodeLanguageUtil.get(pageContext, displayViews[0] + "-view") %>'
 						}
 
 					<%
@@ -100,7 +101,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 							, {
 								handler: A.bind(onButtonClick, null, '<%= displayViews[i] %>'),
 								icon: 'display-<%= displayViews[i] %>',
-								title: '<%= LanguageUtil.get(pageContext, displayViews[i] + "-view") %>'
+								title: '<%= UnicodeLanguageUtil.get(pageContext, displayViews[i] + "-view") %>'
 							}
 
 					<%

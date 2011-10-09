@@ -31,7 +31,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"link=Document Library Display Test Page")) {
+							"link=Documents and Media Display Test Page")) {
 					break;
 				}
 			}
@@ -42,8 +42,8 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Display Test Page",
-			RuntimeVariables.replace("Document Library Display Test Page"));
+		selenium.clickAt("link=Documents and Media Display Test Page",
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@title='Search Documents']",

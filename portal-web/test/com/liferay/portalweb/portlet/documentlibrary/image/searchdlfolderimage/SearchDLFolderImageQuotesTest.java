@@ -30,7 +30,7 @@ public class SearchDLFolderImageQuotesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ public class SearchDLFolderImageQuotesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_keywords']",
@@ -72,7 +72,8 @@ public class SearchDLFolderImageQuotesTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder Image Title"),
-			selenium.getText("//a[@class='document-link']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("\"DL1 Folder1 Image1 Title1\""));
 		selenium.saveScreenShotAndSource();
@@ -99,6 +100,7 @@ public class SearchDLFolderImageQuotesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent("//a[@class='document-link']"));
+		assertFalse(selenium.isElementPresent(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

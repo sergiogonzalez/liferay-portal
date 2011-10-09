@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name</td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name Edit</td>
 </tr>
 <tr>
@@ -80,18 +80,23 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//td[2]/a/span/span</td>
+	<td>//tr[3]/td[2]/a/span/span</td>
 	<td>DML Folder Name Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a/span/span</td>
+	<td>//tr[3]/td[2]/a/span/span</td>
 	<td>DML Folder Name Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>DML Folder Description Edit</td>
+	<td>//tr[3]/td[3]</td>
+	<td>0k</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[4]</td>
+	<td>0</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -100,15 +105,14 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name Edit</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

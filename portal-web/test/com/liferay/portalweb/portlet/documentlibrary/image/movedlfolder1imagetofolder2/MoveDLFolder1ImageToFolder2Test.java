@@ -30,7 +30,7 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,14 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[1]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
@@ -58,7 +59,7 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder1 Image Title")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -109,6 +110,8 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder1 Image Title"),
 			selenium.getText("//span[@class='file-title']"));
+		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
+			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
@@ -121,7 +124,7 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Documents Home")) {
+				if (selenium.isVisible("//li[@class='first']/span/a")) {
 					break;
 				}
 			}
@@ -132,7 +135,9 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Documents Home",
+		assertEquals(RuntimeVariables.replace("Documents Home"),
+			selenium.getText("//li[@class='first']/span/a"));
+		selenium.clickAt("//li[@class='first']/span/a",
 			RuntimeVariables.replace("Documents Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -144,6 +149,26 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@value='Choose this Folder']");
 		selenium.selectWindow("null");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DL Folder2 Name")
+										.equals(selenium.getText(
+								"//a[@id='_20_folderName']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//a[@id='_20_folderName']"));

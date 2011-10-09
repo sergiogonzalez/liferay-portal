@@ -46,12 +46,11 @@ public class DeleteFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
-				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FolderCheckbox']"));
+				"//input[@id='_20_rowIdsFolderCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FolderCheckbox']",
+		selenium.clickAt("//input[@id='_20_rowIdsFolderCheckbox']",
 			RuntimeVariables.replace("Entry Check Box"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FolderCheckbox']"));
+		assertTrue(selenium.isChecked("//input[@id='_20_rowIdsFolderCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));

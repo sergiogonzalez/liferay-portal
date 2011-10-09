@@ -46,7 +46,8 @@ public class EditFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("xPath=(//span[@class='overlay document-action']/span/ul/li/strong/a)[2]",
 			RuntimeVariables.replace("Drop Down"));
 
@@ -89,7 +90,8 @@ public class EditFolderTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DML Folder Name Edit"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//button[@title='List View']",
 			RuntimeVariables.replace("List View"));
 
@@ -101,7 +103,7 @@ public class EditFolderTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DML Folder Name Edit")
 										.equals(selenium.getText(
-								"//td[2]/a/span/span"))) {
+								"//tr[3]/td[2]/a/span/span"))) {
 					break;
 				}
 			}
@@ -113,9 +115,11 @@ public class EditFolderTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name Edit"),
-			selenium.getText("//td[2]/a/span/span"));
-		assertEquals(RuntimeVariables.replace("DML Folder Description Edit"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[3]/td[2]/a/span/span"));
+		assertEquals(RuntimeVariables.replace("0k"),
+			selenium.getText("//tr[3]/td[3]"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[3]/td[4]"));
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
 
@@ -127,7 +131,7 @@ public class EditFolderTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DML Folder Name Edit")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -139,6 +143,7 @@ public class EditFolderTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name Edit"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

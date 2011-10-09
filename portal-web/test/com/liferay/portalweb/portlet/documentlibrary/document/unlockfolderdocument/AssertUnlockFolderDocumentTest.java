@@ -46,8 +46,9 @@ public class AssertUnlockFolderDocumentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
@@ -73,19 +74,24 @@ public class AssertUnlockFolderDocumentTest extends BaseTestCase {
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertFalse(selenium.isElementPresent("//img[@class='locked-icon']"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
-				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 0 week."));
+				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."));
+		assertFalse(selenium.isElementPresent(
+				"//div[@class='portlet-msg-lock portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[1]"));
 		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
-				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 0 week."));
+				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."));
+		assertFalse(selenium.isElementPresent(
+				"//div[@class='portlet-msg-lock portlet-msg-success']"));
 	}
 }

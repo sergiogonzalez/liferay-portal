@@ -82,7 +82,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//select[@id='_86_currentFileEntryColumns']")) {
+							"//select[@id='_86_currentEntryColumns']")) {
 					break;
 				}
 			}
@@ -93,11 +93,30 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.addSelection("//select[@id='_86_currentFileEntryColumns']",
+		selenium.addSelection("//select[@id='_86_currentEntryColumns']",
 			RuntimeVariables.replace("Name"));
 		selenium.clickAt("xPath=(//button[@title='Move selected items from Current to Available.'])[2]",
 			RuntimeVariables.replace(
 				"Move selected items from Current to Available."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isPartialText(
+							"//select[@id='_86_availableEntryColumns']", "Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -128,8 +147,8 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//button[@title='List View']",
-			RuntimeVariables.replace("List View"));
+		selenium.clickAt("//button[@title='Icon View']",
+			RuntimeVariables.replace("Icon View"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -137,9 +156,8 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
-										.equals(selenium.getText(
-								"//a/span/span"))) {
+				if (selenium.isVisible(
+							"//button[@title='Icon View' and contains(@class,'aui-buttonitem-focused')]")) {
 					break;
 				}
 			}
@@ -151,8 +169,9 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//a/span/span"));
-		selenium.clickAt("//a/span/span",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
@@ -161,8 +180,9 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document Description")
-										.equals(selenium.getText("//td[3]/a"))) {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//span[@id='_20_breadcrumb']/ul/li[2]/span/a"))) {
 					break;
 				}
 			}
@@ -173,6 +193,51 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//button[@title='List View']",
+			RuntimeVariables.replace("List View"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//button[@title='List View' and contains(@class,'aui-buttonitem-focused')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("0.5k")
+										.equals(selenium.getText(
+								"//tr[3]/td[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("0.5k"),
+			selenium.getText("//tr[3]/td[2]"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[3]/td[3]"));
 		assertFalse(selenium.isTextPresent("DML Folder Document Title"));
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
@@ -185,7 +250,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DML Folder Document Title")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -197,6 +262,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

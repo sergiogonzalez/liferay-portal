@@ -87,6 +87,25 @@ public class ConfigurePortletHideFolderSearchTest extends BaseTestCase {
 					}
 
 					try {
+						if (selenium.isVisible("//iframe")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.selectFrame("//iframe");
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
 						if (selenium.isVisible(
 									"//input[@id='_86_showFoldersSearchCheckbox']")) {
 							break;
@@ -127,6 +146,8 @@ public class ConfigurePortletHideFolderSearchTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertFalse(selenium.isChecked(
 						"//input[@id='_86_showFoldersSearchCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				selenium.selectFrame("relative=top");
 				selenium.saveScreenShotAndSource();
 				selenium.open("/web/guest/home/");
 
