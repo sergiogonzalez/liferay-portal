@@ -15,27 +15,27 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Document Library Test Page</td>
-	<td>Document Library Test Page</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td>Document Library Test Page</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//a[@class='document-link']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder Image1 Title</td>
 </tr>
 <tr>
@@ -95,17 +95,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='document-link'])[1]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
 	<td>DL Folder Image1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='document-link'])[2]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>DL Folder Image2 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>xPath=(//a[@class='document-link'])[2]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>DL Folder Image2 Title</td>
 </tr>
 <tr>
@@ -138,7 +138,6 @@
 	<td>//div[2]/div[2]/div/div[2]/div[2]/div</td>
 	<td>Content Type image/jpeg</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

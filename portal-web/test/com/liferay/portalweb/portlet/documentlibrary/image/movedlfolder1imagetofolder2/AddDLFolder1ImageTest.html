@@ -15,22 +15,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Document Library Test Page</td>
-	<td>Document Library Test Page</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td>Document Library Test Page</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder1 Name</td>
 </tr>
 <tr>
@@ -95,12 +95,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='document-link']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder1 Image Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@class='document-link']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder1 Image Title</td>
 </tr>
 <tr>
@@ -133,7 +133,6 @@
 	<td>//div[2]/div[2]/div/div[2]/div[2]/div</td>
 	<td>Content Type image/jpeg</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

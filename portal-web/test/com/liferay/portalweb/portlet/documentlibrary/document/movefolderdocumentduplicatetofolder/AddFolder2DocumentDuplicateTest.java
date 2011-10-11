@@ -46,8 +46,9 @@ public class AddFolder2DocumentDuplicateTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder2 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[2]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DML Folder2 Name"));
 
 		for (int second = 0;; second++) {
@@ -137,6 +138,7 @@ public class AddFolder2DocumentDuplicateTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DML Folder1 Document Title"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

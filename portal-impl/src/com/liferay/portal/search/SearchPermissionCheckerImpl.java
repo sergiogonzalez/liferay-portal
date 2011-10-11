@@ -70,7 +70,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	public void addPermissionFields(long companyId, Document document) {
 		try {
 			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+
 			String className = document.get(Field.ENTRY_CLASS_NAME);
+
+			if (Validator.isNull(className)) {
+				return;
+			}
 
 			String classPK = document.get(Field.ROOT_ENTRY_CLASS_PK);
 
@@ -78,17 +83,23 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				classPK = document.get(Field.ENTRY_CLASS_PK);
 			}
 
-			if (Validator.isNotNull(className) &&
-				Validator.isNotNull(classPK)) {
+			if (Validator.isNull(classPK)) {
+				return;
+			}
 
-				if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-					doAddPermissionFields_5(
-						companyId, groupId, className, classPK, document);
-				}
-				else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-					doAddPermissionFields_6(
-						companyId, groupId, className, classPK, document);
-				}
+			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+
+			if (!indexer.isFilterSearch()) {
+				return;
+			}
+
+			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
+				doAddPermissionFields_5(
+					companyId, groupId, className, classPK, document);
+			}
+			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+				doAddPermissionFields_6(
+					companyId, groupId, className, classPK, document);
 			}
 		}
 		catch (NoSuchResourceException nsre) {

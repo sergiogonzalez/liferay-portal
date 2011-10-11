@@ -46,8 +46,9 @@ public class AssertLockFolderDocumentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
@@ -73,13 +74,14 @@ public class AssertLockFolderDocumentTest extends BaseTestCase {
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertTrue(selenium.isVisible("//img[@class='locked-icon']"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 0 week."),
+				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."),
 			selenium.getText(
 				"//div[@class='portlet-msg-lock portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -88,7 +90,7 @@ public class AssertLockFolderDocumentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 0 week."),
+				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

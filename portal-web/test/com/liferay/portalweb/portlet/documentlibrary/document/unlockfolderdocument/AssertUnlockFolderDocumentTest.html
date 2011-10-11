@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name</td>
 </tr>
 <tr>
@@ -50,18 +50,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Document Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Document Title</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 0 week.</td>
+	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@class='portlet-msg-lock portlet-msg-success']</td>
+	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -75,10 +80,14 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 0 week.</td>
+	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@class='portlet-msg-lock portlet-msg-success']</td>
+	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

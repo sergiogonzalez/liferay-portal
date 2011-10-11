@@ -147,10 +147,11 @@ public class ConfigurePortletRootFolderRemoveSubfolderTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isElementPresent(
 				"//span[@id='_20_breadcrumb']/ul/li[1]/span/a"));
-		selenium.clickAt("//span[@class='document-title']",
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
@@ -175,6 +176,7 @@ public class ConfigurePortletRootFolderRemoveSubfolderTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a[2]"));
 		assertEquals(RuntimeVariables.replace("DML Subfolder Name"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

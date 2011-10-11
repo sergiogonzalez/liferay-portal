@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+String navigation = ParamUtil.getString(request, "navigation", "documents-home");
+
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
@@ -25,13 +27,13 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId");
 
+String dlFileEntryTypeName = null;
+
 int status = WorkflowConstants.STATUS_APPROVED;
 
 if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
-
-String navigation = ParamUtil.getString(request, "navigation","documents-home");
 
 long categoryId = ParamUtil.getLong(request, "categoryId");
 String tagName = ParamUtil.getString(request, "tag");
@@ -110,6 +112,10 @@ int total = 0;
 if (fileEntryTypeId > 0) {
 	Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
 
+	DLFileEntryType dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
+
+	dlFileEntryTypeName = dlFileEntryType.getName();
+
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setEnd(searchContainer.getEnd());
@@ -178,9 +184,18 @@ request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 %>
 
 <c:if test="<%= results.isEmpty() %>">
-	<div class="portlet-msg-info">
-		<%= LanguageUtil.get(pageContext, "there-are-no-documents-in-this-folder") %>
-	</div>
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(dlFileEntryTypeName) %>">
+			<div class="portlet-msg-info">
+				<%= LanguageUtil.format(pageContext, "there-are-no-x-files-in-this-folder", StringUtil.lowerCase(dlFileEntryTypeName)) %>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="portlet-msg-info">
+				<%= LanguageUtil.get(pageContext, "there-are-no-documents-or-media-files-in-this-folder") %>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </c:if>
 
 <%
@@ -266,7 +281,20 @@ for (int i = 0; i < results.size(); i++) {
 						}
 
 						if (columnName.equals("name")) {
-							row.addText(fileEntryTitle, rowURL);
+							TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
+
+							folderTitleSearchEntry.setCssClass("document-display-style selectable");
+
+							Map<String,Object> data = new HashMap<String,Object>();
+
+							data.put("file-entry-id", fileEntry.getFileEntryId());
+
+							folderTitleSearchEntry.setData(data);
+
+							folderTitleSearchEntry.setHref(rowURL.toString());
+							folderTitleSearchEntry.setName(fileEntryTitle);
+
+							row.addSearchEntry(folderTitleSearchEntry);
 						}
 
 						if (columnName.equals("size")) {
@@ -299,8 +327,20 @@ for (int i = 0; i < results.size(); i++) {
 				<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 			</liferay-portlet:resourceURL>
 
+			<%
+			int foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+			int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status);
+
+			String folderImage = "folder_empty";
+
+			if ((foldersCount + fileEntriesCount) > 0) {
+				folderImage = "folder_full_document";
+			}
+			%>
+
 			<c:choose>
 				<c:when test='<%= !displayStyle.equals("list") %>'>
+
 					<%
 					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
@@ -311,6 +351,8 @@ for (int i = 0; i < results.size(); i++) {
 					request.setAttribute("view_entries.jsp-folder", curFolder);
 					request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
 					request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
+
+					request.setAttribute("view_entries.jsp-folderImage", folderImage);
 
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 					request.setAttribute("view_entries.jsp-viewEntriesURL", viewEntriesURL);
@@ -329,7 +371,7 @@ for (int i = 0; i < results.size(); i++) {
 				<c:otherwise>
 					<liferay-util:buffer var="folderTitle">
 						<liferay-ui:icon
-							image="folder"
+							image="<%= folderImage %>"
 							label="<%= true %>"
 							message="<%= curFolder.getName() %>"
 						/>

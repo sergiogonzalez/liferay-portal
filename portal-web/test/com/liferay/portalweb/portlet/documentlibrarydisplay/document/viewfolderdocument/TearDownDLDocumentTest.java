@@ -36,7 +36,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"link=Document Library Test Page")) {
+									"link=Documents and Media Test Page")) {
 							break;
 						}
 					}
@@ -47,20 +47,10 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Document Library Test Page",
-					RuntimeVariables.replace("Document Library Test Page"));
+				selenium.clickAt("link=Documents and Media Test Page",
+					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-
-				boolean iconViewNotSelected = selenium.isElementPresent(
-						"aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active");
-
-				if (iconViewNotSelected) {
-					label = 2;
-
-					continue;
-				}
-
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
 
@@ -70,8 +60,8 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//button[@class='aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active']")) {
+						if (selenium.isVisible(
+									"//button[@title='Icon View' and contains(@class,'aui-buttonitem-focused')]")) {
 							break;
 						}
 					}
@@ -83,13 +73,11 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 
-			case 2:
-
 				boolean dmlDocumentPresent = selenium.isElementPresent(
 						"//div[1]/a/span[1]/img");
 
 				if (!dmlDocumentPresent) {
-					label = 3;
+					label = 2;
 
 					continue;
 				}
@@ -136,7 +124,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 3:
+			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"There are no documents in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));

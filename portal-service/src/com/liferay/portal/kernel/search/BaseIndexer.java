@@ -147,7 +147,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		facetQuery.addExactTerm(Field.ENTRY_CLASS_NAME, className);
 
-		if (searchContext.getUserId() > 0) {
+		if (isFilterSearch() && searchContext.getUserId() > 0) {
 			SearchPermissionChecker searchPermissionChecker =
 				SearchEngineUtil.getSearchPermissionChecker();
 
@@ -755,12 +755,12 @@ public abstract class BaseIndexer implements Indexer {
 			AssetCategoryLocalServiceUtil.getCategoryNames(
 				className, classPK);
 
-		document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
+		document.addText(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
 
 		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			className, classPK);
 
-		document.addKeyword(Field.ASSET_TAG_NAMES, assetTagNames);
+		document.addText(Field.ASSET_TAG_NAMES, assetTagNames);
 
 		document.addKeyword(Field.ENTRY_CLASS_NAME, className);
 		document.addKeyword(Field.ENTRY_CLASS_PK, classPK);

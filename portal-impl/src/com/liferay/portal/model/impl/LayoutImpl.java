@@ -623,6 +623,20 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public void setGroupId(long groupId) {
+		super.setGroupId(groupId);
+
+		_layoutSet = null;
+	}
+
+	@Override
+	public void setPrivateLayout(boolean privateLayout) {
+		super.setPrivateLayout(privateLayout);
+
+		_layoutSet = null;
+	}
+
+	@Override
 	public void setTypeSettings(String typeSettings) {
 		_typeSettingsProperties = null;
 

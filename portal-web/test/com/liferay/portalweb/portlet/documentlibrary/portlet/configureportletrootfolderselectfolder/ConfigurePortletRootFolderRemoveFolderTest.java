@@ -147,7 +147,8 @@ public class ConfigurePortletRootFolderRemoveFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isElementPresent(
 				"//span[@id='_20_breadcrumb']/ul/li[1]/span/a"));
 	}

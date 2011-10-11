@@ -51,16 +51,6 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-
-				boolean iconViewNotSelected = selenium.isElementPresent(
-						"aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active");
-
-				if (iconViewNotSelected) {
-					label = 2;
-
-					continue;
-				}
-
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
 
@@ -70,8 +60,8 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//button[@class='aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active']")) {
+						if (selenium.isVisible(
+									"//button[contains(@class,'item-focused') and @title='Icon View']")) {
 							break;
 						}
 					}
