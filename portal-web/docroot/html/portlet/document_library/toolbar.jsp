@@ -143,6 +143,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 					width:820
 				},
 				showManageTemplates: 'false',
+				showGlobalScope: 'true',
 				storageType: 'xml',
 				structureName: 'metadata-set',
 				structureType: 'com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata',

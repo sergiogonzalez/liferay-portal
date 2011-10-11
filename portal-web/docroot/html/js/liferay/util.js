@@ -1073,6 +1073,8 @@
 
 			ddmURL.setEscapeXML(false);
 
+            ddmURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
+
 			ddmURL.setParameter('chooseCallback', config.chooseCallback);
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
@@ -1081,6 +1083,7 @@
 			ddmURL.setParameter('scopeStructureType', config.structureType);
 			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
+            ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
 
 			if (config.showManageTemplates) {
 				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);
