@@ -46,8 +46,9 @@ public class AddFolderDocument3Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
@@ -137,10 +138,13 @@ public class AddFolderDocument3Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document1 Title"),
-			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document2 Title"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document3 Title"),
-			selenium.getText("xPath=(//span[@class='document-title'])[3]"));
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
 	}
 }

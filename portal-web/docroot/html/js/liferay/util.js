@@ -711,7 +711,7 @@
 	Liferay.provide(
 		Util,
 		'checkAll',
-		function(form, name, allBox) {
+		function(form, name, allBox, selectClassName) {
 			var selector;
 
 			if (isArray(name)) {
@@ -724,6 +724,10 @@
 			form = A.one(form);
 
 			form.all(selector).set('checked', A.one(allBox).get('checked'));
+
+			if (selectClassName) {
+				form.all(selectClassName).toggleClass('selected', A.one(allBox).get('checked'));
+			}
 		},
 		['aui-base']
 	);
@@ -1069,13 +1073,17 @@
 
 			ddmURL.setEscapeXML(false);
 
+            ddmURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
+
 			ddmURL.setParameter('chooseCallback', config.chooseCallback);
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStorageType', config.storageType);
 			ddmURL.setParameter('scopeStructureName', config.structureName);
 			ddmURL.setParameter('scopeStructureType', config.structureType);
+			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
+            ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
 
 			if (config.showManageTemplates) {
 				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);

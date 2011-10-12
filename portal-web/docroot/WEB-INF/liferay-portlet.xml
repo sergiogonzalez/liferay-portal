@@ -228,9 +228,6 @@
 		<indexer-class>com.liferay.portlet.documentlibrary.util.DLIndexer</indexer-class>
 		<open-search-class>com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl</open-search-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>document_library</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/documentlibrary/document-library-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl</portlet-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.portlet.documentlibrary.social.DLActivityInterpreter</social-activity-interpreter-class>
 		<webdav-storage-token>document_library</webdav-storage-token>
@@ -1139,6 +1136,19 @@
 		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
 	</portlet>
 	<portlet>
+		<portlet-name>127</portlet-name>
+		<icon>/html/icons/user_groups_admin.png</icon>
+		<struts-path>user_groups_admin</struts-path>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<control-panel-entry-category>portal</control-panel-entry-category>
+		<control-panel-entry-weight>4.5</control-panel-entry-weight>
+		<use-default-template>false</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
+	</portlet>
+	<portlet>
 		<portlet-name>128</portlet-name>
 		<icon>/html/icons/roles_admin.png</icon>
 		<struts-path>roles_admin</struts-path>
@@ -1697,7 +1707,7 @@
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>chooseCallback,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateType,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
+		<autopropagated-parameters>chooseCallback,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.jsp</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_mapping/js/main.js</header-portlet-javascript>

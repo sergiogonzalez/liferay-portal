@@ -30,7 +30,7 @@ public class AddDLFolderImage2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,14 @@ public class AddDLFolderImage2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
@@ -58,7 +59,7 @@ public class AddDLFolderImage2Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder Image1 Title")
 										.equals(selenium.getText(
-								"//a[@class='document-link']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -136,10 +137,12 @@ public class AddDLFolderImage2Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image1 Title"),
-			selenium.getText("xPath=(//a[@class='document-link'])[1]"));
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image2 Title"),
-			selenium.getText("xPath=(//a[@class='document-link'])[2]"));
-		selenium.clickAt("xPath=(//a[@class='document-link'])[2]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DL Folder Image2 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

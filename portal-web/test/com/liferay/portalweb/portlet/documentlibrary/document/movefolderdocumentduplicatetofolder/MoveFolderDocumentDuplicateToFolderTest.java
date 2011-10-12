@@ -47,8 +47,9 @@ public class MoveFolderDocumentDuplicateToFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder1 Name"));
 
 		for (int second = 0;; second++) {
@@ -73,14 +74,15 @@ public class MoveFolderDocumentDuplicateToFolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertEquals(RuntimeVariables.replace("DML Folder1 Document Title"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isChecked(
-				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
+				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']",
+		selenium.clickAt("//input[@id='_20_rowIdsFileEntryCheckbox']",
 			RuntimeVariables.replace("Entry Check Box"));
 		assertTrue(selenium.isChecked(
-				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
+				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
@@ -112,6 +114,8 @@ public class MoveFolderDocumentDuplicateToFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));

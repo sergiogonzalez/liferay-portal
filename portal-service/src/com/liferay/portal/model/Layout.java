@@ -175,6 +175,10 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypeURL();
 
+	public void setGroupId(long groupId);
+
+	public void setPrivateLayout(boolean privateLayout);
+
 	public void setTypeSettings(java.lang.String typeSettings);
 
 	public void setTypeSettingsProperties(

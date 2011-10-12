@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name</td>
 </tr>
 <tr>
@@ -45,12 +45,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Document Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Document Title</td>
 </tr>
 <tr>
@@ -145,12 +145,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Name</td>
 </tr>
 <tr>
@@ -165,12 +165,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Document Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder Document Title</td>
 </tr>
 <tr>
@@ -244,11 +244,15 @@
 	<td>Compare Versions</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//tr/td[2]/table[@class='taglib-diff-table']</td>
+	<td>assertText</td>
+	<td>//ins</td>
 	<td>CompareVersionsTest</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//del</td>
+	<td>This is a test document.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

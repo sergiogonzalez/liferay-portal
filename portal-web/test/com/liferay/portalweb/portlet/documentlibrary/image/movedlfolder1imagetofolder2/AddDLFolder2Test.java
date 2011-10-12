@@ -30,7 +30,7 @@ public class AddDLFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ public class AddDLFolder2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add"),
@@ -89,8 +89,10 @@ public class AddDLFolder2Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 	}
 }

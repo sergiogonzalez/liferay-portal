@@ -46,8 +46,9 @@ public class AddFolderDocumentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
@@ -105,6 +106,10 @@ public class AddFolderDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_document.txt"));
 		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_20_file']",
+			RuntimeVariables.replace(
+				"L:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_document.txt"));
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DML Folder Document Title"));
 		selenium.saveScreenShotAndSource();
@@ -137,6 +142,7 @@ public class AddFolderDocumentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

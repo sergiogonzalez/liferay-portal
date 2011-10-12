@@ -31,7 +31,7 @@ public class ViewFolderTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Document Library Display Test Page")) {
+							"link=Documents and Media Display Test Page")) {
 					break;
 				}
 			}
@@ -42,7 +42,7 @@ public class ViewFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Display Test Page",
+		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

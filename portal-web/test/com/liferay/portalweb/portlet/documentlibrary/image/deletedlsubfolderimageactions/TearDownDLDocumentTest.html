@@ -15,23 +15,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Document Library Test Page</td>
-	<td>Document Library Test Page</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td>Document Library Test Page</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active'))</td>
-	<td>iconViewNotSelected</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${iconViewNotSelected}</td>
-	<td>IconViewSelected</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,9 +29,9 @@
 	<td>Icon View</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//button[@class='aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active']</td>
-	<td>Icon View Selected</td>
+	<td>waitForVisible</td>
+	<td>//button[contains(@class,'item-focused') and @title='Icon View']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>label</td>
@@ -113,7 +103,6 @@
 	<td>//div[@class='portlet-msg-info']</td>
 	<td>There are no documents in this folder.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -212,11 +212,15 @@ public class PortletKeys {
 
 	public static final String TAGS_ENTRIES_NAVIGATION = "141";
 
+	public static final String TOP_USERS = "159";
+
 	public static final String TRANSLATOR = "26";
 
 	public static final String UNIT_CONVERTER = "27";
 
 	public static final String UPDATE_MANAGER = "104";
+
+	public static final String USER_GROUPS_ADMIN = "127";
 
 	public static final String USERS_ADMIN = "125";
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.parsers.bbcode;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -83,9 +84,9 @@ public class BBCodeParser {
 					break;
 				}
 
-				String endTag = bbCodeToken.getEndTag();
+				String endTag = GetterUtil.getString(bbCodeToken.getEndTag());
 
-				if (!endTag.equals("code")) {
+				if (endTag.equals("code")) {
 					break;
 				}
 			}

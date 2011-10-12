@@ -30,7 +30,7 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,14 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[1]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
@@ -82,7 +83,7 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -93,13 +94,14 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[2]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DL Folder2 Name"));
 
 		for (int second = 0;; second++) {
@@ -110,7 +112,7 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Subfolder Name")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -122,6 +124,7 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Subfolder Name"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

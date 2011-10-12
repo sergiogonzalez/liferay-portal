@@ -59,7 +59,7 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DML Folder Document Title")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -71,7 +71,8 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//button[@title='List View']",
 			RuntimeVariables.replace("List View"));
 
@@ -107,7 +108,7 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DML Folder Document Title")
 										.equals(selenium.getText(
-								"//td[2]/a/span/span"))) {
+								"//tr[3]/td[2]/a/span/span"))) {
 					break;
 				}
 			}
@@ -119,9 +120,11 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//td[2]/a/span/span"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document Description"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[3]/td[2]/a/span/span"));
+		assertEquals(RuntimeVariables.replace("0.5k"),
+			selenium.getText("//tr[3]/td[3]"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[3]/td[4]"));
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
 
@@ -133,7 +136,7 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DML Folder Document Title")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -145,6 +148,7 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

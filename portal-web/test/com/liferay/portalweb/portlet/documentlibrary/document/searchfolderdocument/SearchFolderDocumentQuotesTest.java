@@ -72,7 +72,8 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 				"Searched for \"DML Folder Document Title\" in every folder."),
 			selenium.getText("//div[@class='search-info']/span[1]"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -122,7 +123,8 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Searched for \"DML Folder Document Title 1\" in every folder."),
 			selenium.getText("//div[@class='search-info']/span[1]"));
-		assertFalse(selenium.isElementPresent("//span[@class='document-title']"));
+		assertFalse(selenium.isElementPresent(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isElementPresent("link=DML Folder Document Title"));
 	}
 }
