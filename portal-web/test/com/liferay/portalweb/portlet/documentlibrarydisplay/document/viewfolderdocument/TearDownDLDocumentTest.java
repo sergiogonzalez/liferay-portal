@@ -30,13 +30,13 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
 						if (selenium.isVisible(
-									"link=Document Library Test Page")) {
+									"link=Documents and Media Test Page")) {
 							break;
 						}
 					}
@@ -46,32 +46,20 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Document Library Test Page",
-					RuntimeVariables.replace("Document Library Test Page"));
+				selenium.clickAt("link=Documents and Media Test Page",
+					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				boolean iconViewNotSelected = selenium.isElementPresent(
-						"aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active");
-
-				if (iconViewNotSelected) {
-					label = 2;
-
-					continue;
-				}
-
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//button[@class='aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active']")) {
+						if (selenium.isVisible(
+									"//button[@title='Icon View' and contains(@class,'aui-buttonitem-focused')]")) {
 							break;
 						}
 					}
@@ -80,28 +68,22 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
-
-			case 2:
 
 				boolean dmlDocumentPresent = selenium.isElementPresent(
 						"//div[1]/a/span[1]/img");
 
 				if (!dmlDocumentPresent) {
-					label = 3;
+					label = 2;
 
 					continue;
 				}
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
 					RuntimeVariables.replace("All Entries Check Box"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -109,7 +91,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -125,7 +107,6 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -134,9 +115,8 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
-			case 3:
+			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"There are no documents in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));

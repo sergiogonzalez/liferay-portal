@@ -4455,6 +4455,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 			if (list.isEmpty()) {
 				if (parentOrganizationId > 0) {
+					session.clear();
+
 					Organization parentOrganization = findByPrimaryKey(parentOrganizationId);
 
 					return parentOrganization.getLeftOrganizationId();

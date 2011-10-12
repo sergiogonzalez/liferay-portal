@@ -1012,21 +1012,20 @@ else {
 	</div>
 </c:if>
 
-<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".doRefresh") %>'>
+<%
+String doRefreshPortletId = null;
 
-	<%
-	String doRefreshPortletId = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doRefresh");
-
+if (themeDisplay.isStatePopUp() && ((doRefreshPortletId = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doRefresh")) != null)) {
 	if (Validator.isNull(doRefreshPortletId) && (portletResourcePortlet != null)) {
 		doRefreshPortletId = portletResourcePortlet.getPortletId();
 	}
-	%>
+%>
 
 	<aui:script position="inline" use="aui-base">
 		if (window.parent) {
 			var data = null;
 
-			var curPortletBoundaryId = '#doRefreshPortletId_<%= doRefreshPortletId %>_';
+			var curPortletBoundaryId = '#p_p_id_<%= doRefreshPortletId %>_';
 
 			<c:if test='<%= (portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".notAjaxable") %>'>
 				data = {
@@ -1037,9 +1036,10 @@ else {
 			Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
 		}
 	</aui:script>
-</c:if>
 
 <%
+}
+
 themeDisplay.setScopeGroupId(previousScopeGroupId);
 themeDisplay.setParentGroupId(previousParentGroupId);
 

@@ -43,6 +43,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutReference;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
@@ -171,6 +172,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long layoutId = getNextLayoutId(groupId, privateLayout);
+		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+			groupId, privateLayout);
 		parentLayoutId = getParentLayoutId(
 			groupId, privateLayout, parentLayoutId);
 		String name = nameMap.get(LocaleUtil.getDefault());
@@ -194,6 +197,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setCreateDate(serviceContext.getCreateDate(now));
 		layout.setModifiedDate(serviceContext.getModifiedDate(now));
 		layout.setPrivateLayout(privateLayout);
+		layout.setLayoutSet(layoutSet);
 		layout.setLayoutId(layoutId);
 		layout.setParentLayoutId(parentLayoutId);
 		layout.setNameMap(nameMap);
@@ -2098,7 +2102,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	protected void validateFirstLayout(String type)
 		throws PortalException {
 
-		if (!PortalUtil.isLayoutFirstPageable(type)) {
+		if (Validator.isNull(type) || !PortalUtil.isLayoutFirstPageable(type)) {
 			throw new LayoutTypeException(LayoutTypeException.FIRST_LAYOUT);
 		}
 	}

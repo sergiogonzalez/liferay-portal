@@ -1086,7 +1086,7 @@ public class PortalImpl implements Portal {
 			portletId = PortletKeys.DOCUMENT_LIBRARY;
 		}
 		else if (className.startsWith("com.liferay.portlet.imagegallery")) {
-			portletId = PortletKeys.IMAGE_GALLERY_DISPLAY;
+			portletId = PortletKeys.MEDIA_GALLERY_DISPLAY;
 		}
 		else if (className.startsWith("com.liferay.portlet.journal")) {
 			portletId = PortletKeys.JOURNAL;

@@ -131,7 +131,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
 
 		<%
-		if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
+		if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			PortalUtil.addPageKeywords(tagName, request);
 			PortalUtil.addPageKeywords(categoryTitle, request);
 		}
@@ -224,7 +224,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		if (folder != null) {
 			IGUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 
-			if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
+			if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				PortalUtil.setPageSubtitle(folder.getName(), request);
 				PortalUtil.setPageDescription(folder.getDescription(), request);
 			}

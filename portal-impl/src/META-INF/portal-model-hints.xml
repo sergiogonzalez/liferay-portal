@@ -1585,6 +1585,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="type" type="String" />
+		<field name="mode" type="String" />
 		<field name="language" type="String" />
 		<field name="script" type="String">
 			<hint-collection name="CLOB" />
@@ -2326,6 +2327,49 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="receiverUserId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivityAchievement">
+		<field name="activityAchievementId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="long" />
+		<field name="name" type="String" />
+		<field name="firstInGroup" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivityCounter">
+		<field name="activityCounterId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="name" type="String" />
+		<field name="type" type="int" />
+		<field name="currentValue" type="int" />
+		<field name="totalValue" type="int" />
+		<field name="graceValue" type="int" />
+		<field name="startPeriod" type="int" />
+		<field name="endPeriod" type="int" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivityLimit">
+		<field name="activityLimitId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="activityType" type="int" />
+		<field name="activityCounterName" type="String" />
+		<field name="value" type="String" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivitySetting">
+		<field name="activitySettingId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="activityType" type="int" />
+		<field name="name" type="String" />
+		<field name="value" type="String" />
 	</model>
 	<model name="com.liferay.portlet.social.model.SocialEquityAssetEntry">
 		<field name="equityAssetEntryId" type="long" />

@@ -17,7 +17,8 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect", currentURL);
+String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect");
+String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
@@ -73,13 +74,7 @@ String[] advancedSections = PropsValues.SITES_FORM_ADD_ADVANCED;
 
 if (group != null) {
 	mainSections = PropsValues.SITES_FORM_UPDATE_MAIN;
-
-	if (windowState.equals(LiferayWindowState.POP_UP) && ArrayUtil.contains(mainSections, "site_url")) {
-		mainSections = ArrayUtil.remove(mainSections, "site_url");
-	}
-
 	seoSections = PropsValues.SITES_FORM_UPDATE_SEO;
-
 	advancedSections = PropsValues.SITES_FORM_UPDATE_ADVANCED;
 }
 

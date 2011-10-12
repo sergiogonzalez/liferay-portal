@@ -735,7 +735,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			return;
 		}
 
-		List<File> images = new ArrayList<File>(resourcePaths.size());
+		List<File> imageFiles = new ArrayList<File>(resourcePaths.size());
 
 		for (String curResourcePath : resourcePaths) {
 			if (curResourcePath.endsWith(StringPool.SLASH)) {
@@ -746,7 +746,9 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 					servletContext, curResourcePath);
 
 				if (realPath != null) {
-					images.add(new File(realPath));
+					File imageFile = new File(realPath);
+
+					imageFiles.add(imageFile);
 				}
 				else {
 					if (ServerDetector.isTomcat()) {
@@ -769,8 +771,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			servletContext, theme.getImagesPath());
 
 		Properties spriteProperties = SpriteProcessorUtil.generate(
-			images, spriteFileName, spritePropertiesFileName,
-			spritePropertiesRootPath, 16, 16, 10240);
+			servletContext, imageFiles, spriteFileName,
+			spritePropertiesFileName, spritePropertiesRootPath, 16, 16, 10240);
 
 		if (spriteProperties == null) {
 			return;

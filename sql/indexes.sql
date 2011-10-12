@@ -169,7 +169,7 @@ create index IX_17692B58 on DDMStructureLink (structureId);
 create index IX_DB24DDDD on DDMTemplate (groupId);
 create index IX_33BEF579 on DDMTemplate (language);
 create index IX_C9757A51 on DDMTemplate (structureId);
-create index IX_5BC0E264 on DDMTemplate (structureId, type_);
+create index IX_D9A5303B on DDMTemplate (structureId, type_, mode);
 create index IX_C4F283C8 on DDMTemplate (type_);
 create index IX_F2A243A7 on DDMTemplate (uuid_);
 create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId);
@@ -664,11 +664,30 @@ create index IX_82E39A0C on SocialActivity (classNameId);
 create index IX_A853C757 on SocialActivity (classNameId, classPK);
 create index IX_64B1BC66 on SocialActivity (companyId);
 create index IX_2A2468 on SocialActivity (groupId);
+create index IX_FB604DC7 on SocialActivity (groupId, userId, classNameId, classPK, type_, receiverUserId);
 create unique index IX_8F32DEC9 on SocialActivity (groupId, userId, createDate, classNameId, classPK, type_, receiverUserId);
 create index IX_1271F25F on SocialActivity (mirrorActivityId);
 create index IX_1F00C374 on SocialActivity (mirrorActivityId, classNameId, classPK);
 create index IX_121CA3CB on SocialActivity (receiverUserId);
 create index IX_3504B8BC on SocialActivity (userId);
+
+create index IX_83E16F2F on SocialActivityAchievement (groupId, firstInGroup);
+create index IX_8F6408F0 on SocialActivityAchievement (groupId, name);
+create index IX_C8FD892B on SocialActivityAchievement (groupId, userId);
+create index IX_AABC18E9 on SocialActivityAchievement (groupId, userId, firstInGroup);
+create unique index IX_D4390CAA on SocialActivityAchievement (groupId, userId, name);
+
+create index IX_A4B9A23B on SocialActivityCounter (classNameId, classPK);
+create unique index IX_F1E9638F on SocialActivityCounter (groupId, classNameId, classPK, name, type_, endPeriod);
+create unique index IX_1F8CF3D6 on SocialActivityCounter (groupId, classNameId, classPK, name, type_, startPeriod);
+create index IX_8B05455C on SocialActivityCounter (groupId, classNameId, classPK, type_);
+
+create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
+create unique index IX_F1C1A617 on SocialActivityLimit (groupId, userId, classNameId, classPK, activityType, activityCounterName);
+
+create index IX_384788CD on SocialActivitySetting (groupId, activityType);
+create index IX_1E9CF33B on SocialActivitySetting (groupId, classNameId, activityType);
+create index IX_D984AABA on SocialActivitySetting (groupId, classNameId, activityType, name);
 
 create unique index IX_22F6B5CB on SocialEquityAssetEntry (assetEntryId);
 

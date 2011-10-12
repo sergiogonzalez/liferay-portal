@@ -25,32 +25,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder1 Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DML Folder1 Document Title</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']</td>
+	<td>//input[@id='_20_rowIdsFileEntryCheckbox']</td>
 	<td>Document Entry Check Box</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']</td>
+	<td>//input[@id='_20_rowIdsFileEntryCheckbox']</td>
 	<td>Document Entry Check Box</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']</td>
+	<td>//input[@id='_20_rowIdsFileEntryCheckbox']</td>
 	<td>Document Entry Check Box</td>
 </tr>
 <tr>
@@ -148,7 +148,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

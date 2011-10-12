@@ -5,6 +5,7 @@ AUI().add(
 		var HistoryManager = Liferay.HistoryManager;
 		var Lang = A.Lang;
 		var Node = A.Node;
+		var Widget = A.Widget;
 
 		var owns = AObject.owns;
 
@@ -38,6 +39,8 @@ AUI().add(
 
 		var INVALID_VALUE = A.Attribute.INVALID_VALUE;
 
+		var LABEL = 'label';
+
 		var LIFECYCLE_RENDER = 0;
 
 		var LIFECYCLE_PROCESS = 1;
@@ -45,6 +48,10 @@ AUI().add(
 		var MESSAGE_TYPE_ERROR = 'error';
 
 		var MESSAGE_TYPE_SUCCESS = 'success';
+
+		var NODE = 'node';
+
+		var PARENT_NODE = 'parentNode';
 
 		var TPL_MESSAGES_CATEGORY = '<div class="aui-helper-hidden lfr-message-response" id="vocabulary-category-messages" />';
 
@@ -181,7 +188,7 @@ AUI().add(
 					_afterDragEnter: function(event) {
 						var instance = this;
 
-						var dropNode = event.drop.get('node');
+						var dropNode = event.drop.get(NODE);
 
 						dropNode.addClass(CSS_ACTIVE_AREA);
 					},
@@ -189,7 +196,7 @@ AUI().add(
 					_afterDragExit: function(event) {
 						var instance = this;
 
-						var dropNode = event.target.get('node');
+						var dropNode = event.target.get(NODE);
 
 						dropNode.removeClass(CSS_ACTIVE_AREA);
 					},
@@ -377,7 +384,7 @@ AUI().add(
 									},
 									dropInsert: function(event) {
 										var tree = event.tree;
-										var parentNode = tree.dropNode.get('parentNode');
+										var parentNode = tree.dropNode.get(PARENT_NODE);
 										var fromCategoryId = instance._getCategoryId(tree.dragNode);
 										var toCategoryId = instance._getCategoryId(parentNode);
 										var vocabularyId = instance._selectedVocabularyId;
@@ -490,14 +497,15 @@ AUI().add(
 
 						instance._bindCloseEvent(instance._panelEdit);
 
-						instance._panelEdit.after(
+						instance._panelEdit.on(
 							'visibleChange',
 							function(event) {
 								if (!event.newVal) {
-									var body = instance._panelEdit.getStdModNode(A.WidgetStdMod.BODY);
-									body.empty();
+									instance._processAutoFieldsTriggers(event, instance._destroyFloatingPanels);
 
-									instance._hideFloatingPanels(event);
+									var body = instance._panelEdit.getStdModNode(A.WidgetStdMod.BODY);
+
+									body.empty();
 								}
 							}
 						);
@@ -670,6 +678,18 @@ AUI().add(
 							},
 							A.bind(callback, instance)
 						);
+					},
+
+					_destroyFloatingPanels: function(autoFieldsInstance, panelInstance) {
+						var instance = this;
+
+						if (autoFieldsInstance) {
+							autoFieldsInstance.destroy();
+						}
+
+						if (panelInstance) {
+							panelInstance.destroy();
+						}
 					},
 
 					_displayVocabularyCategoriesImpl: function(categories, callback) {
@@ -1080,7 +1100,7 @@ AUI().add(
 					_getParentCategoryId: function(node) {
 						var instance = this;
 
-						var parentNode = node.get('parentNode');
+						var parentNode = node.get(PARENT_NODE);
 
 						return instance._getCategoryId(parentNode);
 					},
@@ -1174,18 +1194,7 @@ AUI().add(
 					_hideFloatingPanels: function(event) {
 						var instance = this;
 
-						var contextPanel = event.currentTarget;
-						var boundingBox = contextPanel.get('boundingBox');
-						var autoFieldsTriggers = boundingBox.all('.lfr-floating-trigger');
-
-						autoFieldsTriggers.each(
-							function(item, index, collection) {
-								var autoFieldsInstance = item.getData('autoFieldsInstance');
-								var panelInstance = item.getData('panelInstance');
-
-								instance._resetInputLocalized(autoFieldsInstance, panelInstance);
-							}
-						);
+						instance._processAutoFieldsTriggers(event, instance._resetInputLocalized);
 					},
 
 					_hideSection: function(exp) {
@@ -1590,8 +1599,8 @@ AUI().add(
 					_onDragDrop: function(event) {
 						var instance = this;
 
-						var dragNode = event.drag.get('node');
-						var dropNode = event.drop.get('node');
+						var dragNode = event.drag.get(NODE);
+						var dropNode = event.drop.get(NODE);
 
 						var node = A.Widget.getByNode(dragNode);
 
@@ -1806,6 +1815,25 @@ AUI().add(
 						}
 
 						instance._loadData();
+					},
+
+					_processAutoFieldsTriggers: function(event, callback) {
+						var instance = this;
+
+						var contextPanel = event.currentTarget;
+
+						var boundingBox = contextPanel.get('boundingBox');
+
+						var autoFieldsTriggers = boundingBox.all('.lfr-floating-trigger');
+
+						autoFieldsTriggers.each(
+							function(item, index, collection) {
+								var autoFieldsInstance = item.getData('autoFieldsInstance');
+								var panelInstance = item.getData('panelInstance');
+
+								callback.call(instance, autoFieldsInstance, panelInstance);
+							}
+						);
 					},
 
 					_processCategoryDeletion: function(result) {
@@ -2240,16 +2268,51 @@ AUI().add(
 				EXTENDS: A.TreeViewDD,
 
 				prototype: {
+					_findCategoryByName: function(event) {
+						var dragNode = event.drag.get(NODE).get(PARENT_NODE);
+						var dropNode = event.drop.get(NODE).get(PARENT_NODE);
+
+						var dragTreeNode = Widget.getByNode(dragNode);
+						var dropTreeNode = Widget.getByNode(dropNode);
+
+						var categoryName = dragTreeNode.get(LABEL);
+
+						var children = dropTreeNode.get('children');
+
+						return A.some(
+							children,
+							function(item, index, collection){
+								return (item.get(LABEL) === categoryName);
+							}
+						);
+					},
+
+					_onDropHit: function(event) {
+						var instance = this;
+
+						if (instance._findCategoryByName(event)) {
+							event.halt();
+						}
+						else {
+							CategoriesTree.superclass._onDropHit.apply(instance, arguments);
+						}
+					},
+
 					_updateNodeState: function(event) {
 						var instance = this;
 
-						var dropNode = event.drop.get('node');
-
-						if (dropNode && dropNode.hasClass('vocabulary-category')) {
-							instance._appendState(dropNode);
+						if (instance._findCategoryByName(event)) {
+							event.halt();
 						}
 						else {
-							CategoriesTree.superclass._updateNodeState.apply(instance, arguments);
+							var dropNode = event.drop.get(NODE);
+
+							if (dropNode && dropNode.hasClass('vocabulary-category')) {
+								instance._appendState(dropNode);
+							}
+							else {
+								CategoriesTree.superclass._updateNodeState.apply(instance, arguments);
+							}
 						}
 					}
 				}

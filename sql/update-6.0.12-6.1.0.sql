@@ -70,6 +70,24 @@ create table DDLRecordSet (
 	scope INTEGER
 );
 
+create table DDLRecordVersion (
+	recordVersionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	DDMStorageId LONG,
+	recordSetId LONG,
+	recordId LONG,
+	version VARCHAR(75) null,
+	displayIndex INTEGER,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
+);
+
 create table DDMContent (
 	uuid_ VARCHAR(75) null,
 	contentId LONG not null primary key,
@@ -129,6 +147,7 @@ create table DDMTemplate (
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(75) null,
+	mode VARCHAR(75) null,
 	language VARCHAR(75) null,
 	script TEXT null
 );
@@ -137,7 +156,6 @@ create table DLContent (
 	contentId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
-	portletId VARCHAR(75) null,
 	repositoryId LONG,
 	path_ VARCHAR(255) null,
 	version VARCHAR(75) null,
@@ -394,10 +412,20 @@ create table MDRRuleGroup (
 	description STRING null
 );
 
-alter table PollsVote add companyId LONG;
-alter table PollsVote add userName VARCHAR(75) null;
-alter table PollsVote add createDate DATE null;
-alter table PollsVote add modifiedDate DATE null;
+create table MDRRuleGroupInstance (
+	uuid_ VARCHAR(75) null,
+	ruleGroupInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	ruleGroupId LONG,
+	priority INTEGER
+);
 
 create table Repository (
 	repositoryId LONG not null primary key,
@@ -444,6 +472,53 @@ create table ResourceTypePermission (
 	name VARCHAR(75) null,
 	roleId LONG,
 	actionIds LONG
+);
+
+create table SocialActivityAchievement (
+	activityAchievementId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate LONG,
+	name VARCHAR(75) null,
+	firstInGroup BOOLEAN
+);
+
+create table SocialActivityCounter (
+	activityCounterId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	classNameId LONG,
+	classPK LONG,
+	name VARCHAR(75) null,
+	type_ INTEGER,
+	currentValue INTEGER,
+	totalValue INTEGER,
+	graceValue INTEGER,
+	startPeriod INTEGER,
+	endPeriod INTEGER
+);
+
+create table SocialActivityLimit (
+	activityLimitId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	classNameId LONG,
+	classPK LONG,
+	activityType INTEGER,
+	activityCounterName VARCHAR(75) null,
+	value VARCHAR(75) null
+);
+
+create table SocialActivitySetting (
+	activitySettingId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	classNameId LONG,
+	activityType INTEGER,
+	name VARCHAR(75) null,
+	value VARCHAR(75) null
 );
 
 update Role_ set name = 'Site Administrator' where name = 'Community Administrator';

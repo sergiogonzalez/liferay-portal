@@ -503,6 +503,7 @@ create table DDMTemplate (
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(75) null,
+	mode VARCHAR(75) null,
 	language VARCHAR(75) null,
 	script TEXT null
 );
@@ -1863,6 +1864,53 @@ create table SocialActivity (
 	type_ INTEGER,
 	extraData STRING null,
 	receiverUserId LONG
+);
+
+create table SocialActivityAchievement (
+	activityAchievementId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate LONG,
+	name VARCHAR(75) null,
+	firstInGroup BOOLEAN
+);
+
+create table SocialActivityCounter (
+	activityCounterId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	classNameId LONG,
+	classPK LONG,
+	name VARCHAR(75) null,
+	type_ INTEGER,
+	currentValue INTEGER,
+	totalValue INTEGER,
+	graceValue INTEGER,
+	startPeriod INTEGER,
+	endPeriod INTEGER
+);
+
+create table SocialActivityLimit (
+	activityLimitId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	classNameId LONG,
+	classPK LONG,
+	activityType INTEGER,
+	activityCounterName VARCHAR(75) null,
+	value VARCHAR(75) null
+);
+
+create table SocialActivitySetting (
+	activitySettingId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	classNameId LONG,
+	activityType INTEGER,
+	name VARCHAR(75) null,
+	value VARCHAR(75) null
 );
 
 create table SocialEquityAssetEntry (
