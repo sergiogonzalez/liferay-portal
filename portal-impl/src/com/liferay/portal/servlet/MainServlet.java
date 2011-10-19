@@ -94,6 +94,7 @@ import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.portlet.social.messaging.CheckEquityLogMessageListener;
+import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.servlet.DynamicServletRequest;
 import com.liferay.util.servlet.EncryptedServletRequest;
@@ -257,6 +258,17 @@ public class MainServlet extends ActionServlet {
 		}
 
 		if (_log.isDebugEnabled()) {
+			_log.debug("Initialize social");
+		}
+
+		try {
+			initSocial(pluginPackage);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize themes");
 		}
 
@@ -344,10 +356,6 @@ public class MainServlet extends ActionServlet {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize message resources");
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -973,6 +981,21 @@ public class MainServlet extends ActionServlet {
 		String contextPath = PortalUtil.getPathContext();
 
 		ServletContextPool.put(contextPath, servletContext);
+	}
+
+	protected void initSocial(PluginPackage pluginPackage) throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		ServletContext servletContext = getServletContext();
+
+		String[] xmls = new String[] {
+			HttpUtil.URLtoString(
+				servletContext.getResource("/WEB-INF/liferay-social.xml")),
+			HttpUtil.URLtoString(
+				servletContext.getResource("/WEB-INF/liferay-social-ext.xml"))
+		};
+
+		SocialConfigurationUtil.read(classLoader, xmls);
 	}
 
 	protected void initSocialEquityLogScheduler() throws Exception {

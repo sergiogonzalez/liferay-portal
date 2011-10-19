@@ -350,6 +350,13 @@ public class PortalUtil {
 			category, themeDisplay);
 	}
 
+	public static String getCreateAccountURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getPortal().getCreateAccountURL(request, themeDisplay);
+	}
+
 	public static String getCurrentCompleteURL(HttpServletRequest request) {
 		return getPortal().getCurrentCompleteURL(request);
 	}
@@ -1539,6 +1546,12 @@ public class PortalUtil {
 
 		return getPortal().updatePortletMode(
 			portletId, user, layout, portletMode, request);
+	}
+
+	public static String updateRedirect(
+		String redirect, String oldPath, String newPath) {
+
+		return getPortal().updateRedirect(redirect, oldPath, newPath);
 	}
 
 	public static WindowState updateWindowState(

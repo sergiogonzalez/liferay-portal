@@ -152,18 +152,18 @@ public interface SocialActivityCounterModel extends AttachedModel,
 	public void setName(String name);
 
 	/**
-	 * Returns the type of this social activity counter.
+	 * Returns the owner type of this social activity counter.
 	 *
-	 * @return the type of this social activity counter
+	 * @return the owner type of this social activity counter
 	 */
-	public int getType();
+	public int getOwnerType();
 
 	/**
-	 * Sets the type of this social activity counter.
+	 * Sets the owner type of this social activity counter.
 	 *
-	 * @param type the type of this social activity counter
+	 * @param ownerType the owner type of this social activity counter
 	 */
-	public void setType(int type);
+	public void setOwnerType(int ownerType);
 
 	/**
 	 * Returns the current value of this social activity counter.

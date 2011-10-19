@@ -3523,13 +3523,10 @@ public class ServiceBuilder {
 			if (Validator.isNotNull(createTableSQL)) {
 				_createSQLTables(sqlFile, createTableSQL, entity, true);
 
-				File updateSQLFile = new File(
-					_sqlDir + "/update-6.0.6-6.1.0.sql");
-
-				if (updateSQLFile.exists()) {
-					_createSQLTables(
-						updateSQLFile, createTableSQL, entity, false);
-				}
+				_updateSQLFile(
+					"update-6.0.6-6.1.0.sql", createTableSQL, entity);
+				_updateSQLFile(
+					"update-6.0.12-6.1.0.sql", createTableSQL, entity);
 			}
 		}
 
@@ -4792,6 +4789,17 @@ public class ServiceBuilder {
 		StringUtil.readLines(classLoader.getResourceAsStream(fileName), lines);
 
 		return lines;
+	}
+
+	private void _updateSQLFile(
+			String sqlFileName, String createTableSQL, Entity entity)
+		throws IOException {
+
+		File updateSQLFile = new File(_sqlDir + "/" + sqlFileName);
+
+		if (updateSQLFile.exists()) {
+			_createSQLTables(updateSQLFile, createTableSQL, entity, false);
+		}
 	}
 
 	private static final int _SESSION_TYPE_LOCAL = 1;

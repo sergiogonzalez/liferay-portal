@@ -14,17 +14,25 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_F_S">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
 			FROM
 				DLFileEntry
-			INNER JOIN
-				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
 			WHERE
 				(DLFileEntry.groupId = ?) AND
+				[$FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_F_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			WHERE
+				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.status = ?) AND
 				[$FOLDER_ID$]
 		]]>
@@ -144,17 +152,25 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F_S">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
 			FROM
 				DLFileEntry
-			INNER JOIN
-				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
 			WHERE
 				(DLFileEntry.groupId = ?) AND
+				[$FILE_ENTRY_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			WHERE
+				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.status = ?) AND
 				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
@@ -184,6 +200,17 @@
 				(DLFolder.groupId = ?) AND
 				(DLFolder.mountPoint = ?) AND
 				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFE_ByG_F">
+		<![CDATA[
+			SELECT
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate as createDate, DLFileEntry.modifiedDate as modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
+			FROM
+				DLFileEntry
+			WHERE
+				(DLFileEntry.groupId = ?) AND
+				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFE_ByG_F_S">

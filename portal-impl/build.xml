@@ -217,6 +217,7 @@ public class Creole10Parser]]></replacevalue>
 			<arg value="lang.dir=${lang.dir}" />
 			<arg value="lang.file=${lang.file}" />
 			<arg value="lang.plugin=false" />
+			<arg value="lang.translate=true" />
 		</java>
 
 		<copy file="${lang.dir}/${lang.file}.properties" tofile="${lang.dir}/${lang.file}_en.properties" />

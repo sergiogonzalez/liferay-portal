@@ -198,6 +198,8 @@ create index IX_D49AB5D1 on DLFileEntryMetadata (uuid_);
 
 create index IX_4501FD9C on DLFileEntryType (groupId);
 create unique index IX_E9B6A85B on DLFileEntryType (groupId, name);
+create index IX_90724726 on DLFileEntryType (uuid_);
+create unique index IX_1399D844 on DLFileEntryType (uuid_, groupId);
 
 create index IX_8373EC7C on DLFileEntryTypes_DDMStructures (fileEntryTypeId);
 create index IX_F147CF3F on DLFileEntryTypes_DDMStructures (structureId);
@@ -219,6 +221,7 @@ create unique index IX_FDB4A946 on DLFileShortcut (uuid_, groupId);
 create index IX_C68DC967 on DLFileVersion (fileEntryId);
 create index IX_D47BB14D on DLFileVersion (fileEntryId, status);
 create unique index IX_E2815081 on DLFileVersion (fileEntryId, version);
+create index IX_DFD809D3 on DLFileVersion (groupId, folderId, status);
 
 create index IX_A74DB14C on DLFolder (companyId);
 create index IX_F2EA1ACE on DLFolder (groupId);
@@ -679,9 +682,9 @@ create index IX_AABC18E9 on SocialActivityAchievement (groupId, userId, firstInG
 create unique index IX_D4390CAA on SocialActivityAchievement (groupId, userId, name);
 
 create index IX_A4B9A23B on SocialActivityCounter (classNameId, classPK);
-create unique index IX_F1E9638F on SocialActivityCounter (groupId, classNameId, classPK, name, type_, endPeriod);
-create unique index IX_1F8CF3D6 on SocialActivityCounter (groupId, classNameId, classPK, name, type_, startPeriod);
-create index IX_8B05455C on SocialActivityCounter (groupId, classNameId, classPK, type_);
+create unique index IX_1B7E3B67 on SocialActivityCounter (groupId, classNameId, classPK, name, ownerType, endPeriod);
+create unique index IX_374B35AE on SocialActivityCounter (groupId, classNameId, classPK, name, ownerType, startPeriod);
+create index IX_926CDD04 on SocialActivityCounter (groupId, classNameId, classPK, ownerType);
 
 create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
 create unique index IX_F1C1A617 on SocialActivityLimit (groupId, userId, classNameId, classPK, activityType, activityCounterName);

@@ -36,7 +36,7 @@ public class SocialActivityCounterSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
-		soapModel.setType(model.getType());
+		soapModel.setOwnerType(model.getOwnerType());
 		soapModel.setCurrentValue(model.getCurrentValue());
 		soapModel.setTotalValue(model.getTotalValue());
 		soapModel.setGraceValue(model.getGraceValue());
@@ -145,12 +145,12 @@ public class SocialActivityCounterSoap implements Serializable {
 		_name = name;
 	}
 
-	public int getType() {
-		return _type;
+	public int getOwnerType() {
+		return _ownerType;
 	}
 
-	public void setType(int type) {
-		_type = type;
+	public void setOwnerType(int ownerType) {
+		_ownerType = ownerType;
 	}
 
 	public int getCurrentValue() {
@@ -199,7 +199,7 @@ public class SocialActivityCounterSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private String _name;
-	private int _type;
+	private int _ownerType;
 	private int _currentValue;
 	private int _totalValue;
 	private int _graceValue;

@@ -103,6 +103,8 @@ page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
 page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %><%@
 page import="com.liferay.util.RSSUtil" %>
 
+<%@ page import="java.net.URLDecoder" %>
+
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 

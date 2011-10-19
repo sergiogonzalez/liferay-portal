@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
-.aui-document-library-file-entry-cell-editor-hidden, .aui-fileupload-cell-editor-hidden {
+.aui-document-library-file-entry-cell-editor-hidden, .aui-fileupload-cell-editor-hidden, .aui-password-cell-editor-hidden {
 	display: none;
 }
 
@@ -41,7 +41,7 @@
 	}
 
 	.yui3-datatable-liner {
-		height: 17px;
+		min-height: 17px;
 		padding: 1px 10px;
 	}
 

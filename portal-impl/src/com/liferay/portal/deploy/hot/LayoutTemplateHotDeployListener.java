@@ -37,28 +37,34 @@ import javax.servlet.ServletContext;
  */
 public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 
-	public void invokeDeploy(HotDeployEvent event) throws HotDeployException {
+	public void invokeDeploy(HotDeployEvent hotDeployEvent)
+		throws HotDeployException {
+
 		try {
-			doInvokeDeploy(event);
+			doInvokeDeploy(hotDeployEvent);
 		}
 		catch (Throwable t) {
 			throwHotDeployException(
-				event, "Error registering layout templates for ", t);
+				hotDeployEvent, "Error registering layout templates for ", t);
 		}
 	}
 
-	public void invokeUndeploy(HotDeployEvent event) throws HotDeployException {
+	public void invokeUndeploy(HotDeployEvent hotDeployEvent)
+		throws HotDeployException {
+
 		try {
-			doInvokeUndeploy(event);
+			doInvokeUndeploy(hotDeployEvent);
 		}
 		catch (Throwable t) {
 			throwHotDeployException(
-				event, "Error unregistering layout templates for ", t);
+				hotDeployEvent, "Error unregistering layout templates for ", t);
 		}
 	}
 
-	protected void doInvokeDeploy(HotDeployEvent event) throws Exception {
-		ServletContext servletContext = event.getServletContext();
+	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
+		throws Exception {
+
+		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		String servletContextName = servletContext.getServletContextName();
 
@@ -81,7 +87,7 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 		List<ObjectValuePair<String, Boolean>> layoutTemplateIds =
 			LayoutTemplateLocalServiceUtil.init(
 				servletContextName, servletContext, xmls,
-				event.getPluginPackage());
+				hotDeployEvent.getPluginPackage());
 
 		_vars.put(servletContextName, layoutTemplateIds);
 
@@ -99,8 +105,10 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	protected void doInvokeUndeploy(HotDeployEvent event) throws Exception {
-		ServletContext servletContext = event.getServletContext();
+	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent)
+		throws Exception {
+
+		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		String servletContextName = servletContext.getServletContextName();
 

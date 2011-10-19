@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityCounter}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialActivityCounter
  * @generated
  */
-public class SocialActivityCounterWrapper implements SocialActivityCounter {
+public class SocialActivityCounterWrapper implements SocialActivityCounter,
+	ModelWrapper<SocialActivityCounter> {
 	public SocialActivityCounterWrapper(
 		SocialActivityCounter socialActivityCounter) {
 		_socialActivityCounter = socialActivityCounter;
@@ -173,21 +176,21 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter {
 	}
 
 	/**
-	* Returns the type of this social activity counter.
+	* Returns the owner type of this social activity counter.
 	*
-	* @return the type of this social activity counter
+	* @return the owner type of this social activity counter
 	*/
-	public int getType() {
-		return _socialActivityCounter.getType();
+	public int getOwnerType() {
+		return _socialActivityCounter.getOwnerType();
 	}
 
 	/**
-	* Sets the type of this social activity counter.
+	* Sets the owner type of this social activity counter.
 	*
-	* @param type the type of this social activity counter
+	* @param ownerType the owner type of this social activity counter
 	*/
-	public void setType(int type) {
-		_socialActivityCounter.setType(type);
+	public void setOwnerType(int ownerType) {
+		_socialActivityCounter.setOwnerType(ownerType);
 	}
 
 	/**
@@ -354,7 +357,18 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter {
 		_socialActivityCounter.persist();
 	}
 
+	public boolean isActivePeriod() {
+		return _socialActivityCounter.isActivePeriod();
+	}
+
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialActivityCounter getWrappedSocialActivityCounter() {
+		return _socialActivityCounter;
+	}
+
+	public SocialActivityCounter getWrappedModel() {
 		return _socialActivityCounter;
 	}
 

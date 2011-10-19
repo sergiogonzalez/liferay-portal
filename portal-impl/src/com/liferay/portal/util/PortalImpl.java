@@ -154,6 +154,7 @@ import com.liferay.portlet.PortletPreferencesWrapper;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.PortletResponseImpl;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseImpl;
@@ -1236,6 +1237,38 @@ public class PortalImpl implements Portal {
 			themeDisplay.getCompanyId(), category);
 
 		return filterControlPanelPortlets(portlets, category, themeDisplay);
+	}
+
+	public String getCreateAccountURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
+			PortletURL createAccountURL = PortletURLFactoryUtil.create(
+				request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+				PortletRequest.RENDER_PHASE);
+
+			createAccountURL.setWindowState(WindowState.MAXIMIZED);
+			createAccountURL.setPortletMode(PortletMode.VIEW);
+
+			createAccountURL.setParameter("saveLastPath", "0");
+			createAccountURL.setParameter(
+				"struts_action", "/login/create_account");
+
+			return createAccountURL.toString();
+		}
+
+		try {
+			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				themeDisplay.getScopeGroupId(), false,
+				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
+
+			return PortalUtil.getLayoutURL(layout, themeDisplay);
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getCurrentCompleteURL(HttpServletRequest request) {
@@ -4930,6 +4963,21 @@ public class PortalImpl implements Portal {
 
 			return portletMode;
 		}
+	}
+
+	public String updateRedirect(
+		String redirect, String oldPath, String newPath) {
+
+		if (Validator.isNotNull(redirect) && (oldPath != null) &&
+			!oldPath.equals(newPath)) {
+
+			redirect = StringUtil.replace(redirect, oldPath, newPath);
+			redirect = StringUtil.replace(
+				redirect, HttpUtil.encodeURL(oldPath),
+				HttpUtil.encodeURL(newPath));
+		}
+
+		return redirect;
 	}
 
 	public WindowState updateWindowState(

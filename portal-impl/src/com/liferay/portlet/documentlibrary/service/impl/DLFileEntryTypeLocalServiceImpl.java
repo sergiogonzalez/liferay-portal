@@ -78,6 +78,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
 
+		dlFileEntryType.setUuid(serviceContext.getUuid());
 		dlFileEntryType.setGroupId(groupId);
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());
@@ -116,7 +117,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 
-		long defaultFileEntryTypeId = getDefaultFileEntryType(
+		long defaultFileEntryTypeId = getDefaultFileEntryTypeId(
 			dlFolder.getFolderId());
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -157,7 +158,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
-	public long getDefaultFileEntryType(long folderId)
+	public long getDefaultFileEntryTypeId(long folderId)
 		throws PortalException, SystemException {
 
 		folderId = getFileEntryTypesPrimaryFolderId(folderId);

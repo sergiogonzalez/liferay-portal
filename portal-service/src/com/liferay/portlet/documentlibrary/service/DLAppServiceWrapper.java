@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLAppService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLAppService
  * @generated
  */
-public class DLAppServiceWrapper implements DLAppService {
+public class DLAppServiceWrapper implements DLAppService,
+	ServiceWrapper<DLAppService> {
 	public DLAppServiceWrapper(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}
@@ -2025,11 +2028,25 @@ public class DLAppServiceWrapper implements DLAppService {
 			lockUuid);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLAppService getWrappedDLAppService() {
 		return _dlAppService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	public DLAppService getWrappedService() {
+		return _dlAppService;
+	}
+
+	public void setWrappedService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}
 

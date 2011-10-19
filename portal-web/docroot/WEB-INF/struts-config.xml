@@ -53,7 +53,9 @@
 			<forward name="portal.layout" path="portal.layout" />
 		</action>
 
-		<action path="/portal/license" forward="portal.license" />
+		<action path="/portal/license" type="com.liferay.portal.action.UpdateLicenseAction">
+			<forward name="portal.license" path="portal.license" />
+		</action>
 
 		<action path="/portal/login" type="com.liferay.portal.action.LoginAction" />
 
@@ -1023,10 +1025,6 @@
 			<forward name="portlet.login.create_anonymous_account" path="portlet.login.create_anonymous_account" />
 		</action>
 
-		<action path="/login/facebook_connect" type="com.liferay.portlet.login.action.FacebookConnectAction">
-			<forward name="portlet.login.facebook_login" path="portlet.login.facebook_login" />
-		</action>
-
 		<action path="/login/facebook_connect_oauth" type="com.liferay.portlet.login.action.FacebookConnectAction" />
 
 		<action path="/login/forgot_password" type="com.liferay.portlet.login.action.ForgotPasswordAction">
@@ -1376,6 +1374,8 @@
 		</action>
 
 		<!-- Polls Display -->
+
+		<action path="/polls_display/add_question_redirect" forward="portlet.polls_display.add_question_redirect" />
 
 		<action path="/polls_display/view" type="com.liferay.portlet.pollsdisplay.action.ViewAction">
 			<forward name="portlet.polls_display.error" path="portlet.polls_display.error" />

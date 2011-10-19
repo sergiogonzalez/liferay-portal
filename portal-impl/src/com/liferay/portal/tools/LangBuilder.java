@@ -62,20 +62,25 @@ public class LangBuilder {
 		String langFile = arguments.get("lang.file");
 		boolean langPlugin = GetterUtil.getBoolean(
 			arguments.get("lang.plugin"));
+		boolean langTranslate = GetterUtil.getBoolean(
+			arguments.get("lang.translate"), true);
 
 		try {
-			new LangBuilder(langDir, langFile, langPlugin);
+			new LangBuilder(langDir, langFile, langPlugin, langTranslate);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public LangBuilder(String langDir, String langFile, boolean langPlugin)
+	public LangBuilder(
+			String langDir, String langFile, boolean langPlugin,
+			boolean langTranslate)
 		throws Exception {
 
 		_langDir = langDir;
 		_langFile = langFile;
+		_langTranslate = langTranslate;
 
 		if (langPlugin) {
 			_portalLanguageProperties = new Properties();
@@ -530,6 +535,10 @@ public class LangBuilder {
 			return null;
 		}
 
+		if (!_langTranslate) {
+			return null;
+		}
+
 		// Limit the number of retries to 3
 
 		if (limit == 3) {
@@ -570,6 +579,7 @@ public class LangBuilder {
 
 	private String _langDir;
 	private String _langFile;
+	private boolean _langTranslate;
 	private Properties _portalLanguageProperties;
 	private Properties _renameKeys;
 

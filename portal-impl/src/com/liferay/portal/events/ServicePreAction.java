@@ -969,6 +969,7 @@ public class ServicePreAction extends Action {
 					pageSettingsURL.setParameter("tabs1", "public-pages");
 				}
 
+				pageSettingsURL.setParameter("closeRedirect", currentURL);
 				pageSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
 				pageSettingsURL.setParameter("selPlid", String.valueOf(plid));
@@ -1038,6 +1039,7 @@ public class ServicePreAction extends Action {
 				siteSettingsURL.setParameter(
 					"struts_action", "/sites_admin/edit_site");
 
+				siteSettingsURL.setParameter("closeRedirect", currentURL);
 				siteSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
 

@@ -1351,6 +1351,7 @@
 		<field name="fileVersionId" type="long" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryType">
+		<field name="uuid" type="String" />
 		<field name="fileEntryTypeId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1396,6 +1397,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="repositoryId" type="long" />
+		<field name="folderId" type="long" />
 		<field name="fileEntryId" type="long" />
 		<field name="extension" type="String" />
 		<field name="mimeType" type="String" />
@@ -1412,10 +1414,6 @@
 		<field name="fileEntryTypeId" type="long" />
 		<field name="version" type="String" />
 		<field name="size" type="long" />
-		<field name="smallImageId" type="long" />
-		<field name="largeImageId" type="long" />
-		<field name="custom1ImageId" type="long" />
-		<field name="custom2ImageId" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -2344,7 +2342,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="name" type="String" />
-		<field name="type" type="int" />
+		<field name="ownerType" type="int" />
 		<field name="currentValue" type="int" />
 		<field name="totalValue" type="int" />
 		<field name="graceValue" type="int" />

@@ -559,6 +559,7 @@ create table DLFileEntryMetadata (
 );
 
 create table DLFileEntryType (
+	uuid_ VARCHAR(75) null,
 	fileEntryTypeId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -617,6 +618,7 @@ create table DLFileVersion (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	repositoryId LONG,
+	folderId LONG,
 	fileEntryId LONG,
 	extension VARCHAR(75) null,
 	mimeType VARCHAR(75) null,
@@ -627,10 +629,6 @@ create table DLFileVersion (
 	fileEntryTypeId LONG,
 	version VARCHAR(75) null,
 	size_ LONG,
-	smallImageId LONG,
-	largeImageId LONG,
-	custom1ImageId LONG,
-	custom2ImageId LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -1883,7 +1881,7 @@ create table SocialActivityCounter (
 	classNameId LONG,
 	classPK LONG,
 	name VARCHAR(75) null,
-	type_ INTEGER,
+	ownerType INTEGER,
 	currentValue INTEGER,
 	totalValue INTEGER,
 	graceValue INTEGER,

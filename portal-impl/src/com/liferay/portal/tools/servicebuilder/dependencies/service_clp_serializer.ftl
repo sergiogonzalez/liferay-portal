@@ -264,7 +264,7 @@ public class ClpSerializer {
 							<#if column.localized>
 								Method method${column_index}CurrentLanguageId = oldModelClass.getMethod("get${column.methodName}CurrentLanguageId");
 
-								String value${column_index}CurrentLanguageId = (String)method${column_index}.invoke(oldModel, (Object[])null);
+								String value${column_index}CurrentLanguageId = (String)method${column_index}CurrentLanguageId.invoke(oldModel, (Object[])null);
 
 								newModel.set${column.methodName}CurrentLanguageId(value${column_index}CurrentLanguageId);
 							</#if>

@@ -27,7 +27,6 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.ActionRequestImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
@@ -169,7 +168,7 @@ public class EditTemplateAction extends PortletAction {
 			actionRequest, "saveCallback");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			(ActionRequestImpl)actionRequest, portletConfig.getPortletName(),
+			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setWindowState(actionRequest.getWindowState());

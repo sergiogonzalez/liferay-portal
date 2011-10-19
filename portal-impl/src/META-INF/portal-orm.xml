@@ -1787,6 +1787,9 @@
 	<mapped-superclass class="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl">
 		<attributes>
 			<id name="fileEntryTypeId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
@@ -1861,6 +1864,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="repositoryId" />
+			<basic name="folderId" />
 			<basic name="fileEntryId" />
 			<basic name="extension" />
 			<basic name="mimeType" />
@@ -1873,10 +1877,6 @@
 			<basic name="size">
 				<column name="SIZE_" />
 			</basic>
-			<basic name="smallImageId" />
-			<basic name="largeImageId" />
-			<basic name="custom1ImageId" />
-			<basic name="custom2ImageId" />
 			<basic name="status" />
 			<basic name="statusByUserId" />
 			<basic name="statusByUserName" />
@@ -3113,9 +3113,7 @@
 			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="name" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
+			<basic name="ownerType" />
 			<basic name="currentValue" />
 			<basic name="totalValue" />
 			<basic name="graceValue" />
@@ -4188,7 +4186,9 @@
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityImpl" name="SocialActivity">
 		<table name="SocialActivity" />
-		<attributes />
+		<attributes>
+			<transient name="assetEntry" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl" name="SocialActivityAchievement">
 		<table name="SocialActivityAchievement" />
@@ -4200,7 +4200,9 @@
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityLimitImpl" name="SocialActivityLimit">
 		<table name="SocialActivityLimit" />
-		<attributes />
+		<attributes>
+			<transient name="count" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivitySettingImpl" name="SocialActivitySetting">
 		<table name="SocialActivitySetting" />

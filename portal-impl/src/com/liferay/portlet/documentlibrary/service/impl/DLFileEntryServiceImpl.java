@@ -177,6 +177,19 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		deleteFileEntry(dlFileEntry.getFileEntryId());
 	}
 
+	public DLFileEntry fetchFileEntryByImageId(long imageId)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = dlFileEntryFinder.fetchByAnyImageId(imageId);
+
+		if (dlFileEntry != null) {
+			DLFileEntryPermission.check(
+				getPermissionChecker(), dlFileEntry, ActionKeys.VIEW);
+		}
+
+		return dlFileEntry;
+	}
+
 	public InputStream getFileAsStream(long fileEntryId, String version)
 		throws PortalException, SystemException {
 

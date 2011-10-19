@@ -72,6 +72,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "repositoryId", Types.BIGINT },
+			{ "folderId", Types.BIGINT },
 			{ "fileEntryId", Types.BIGINT },
 			{ "extension", Types.VARCHAR },
 			{ "mimeType", Types.VARCHAR },
@@ -82,16 +83,12 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "fileEntryTypeId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
 			{ "size_", Types.BIGINT },
-			{ "smallImageId", Types.BIGINT },
-			{ "largeImageId", Types.BIGINT },
-			{ "custom1ImageId", Types.BIGINT },
-			{ "custom2ImageId", Types.BIGINT },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,repositoryId LONG,fileEntryId LONG,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersion.fileEntryId DESC, DLFileVersion.createDate DESC";
@@ -108,8 +105,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFileVersion"),
 			true);
 	public static long FILEENTRYID_COLUMN_BITMASK = 1L;
-	public static long STATUS_COLUMN_BITMASK = 2L;
-	public static long VERSION_COLUMN_BITMASK = 4L;
+	public static long FOLDERID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long STATUS_COLUMN_BITMASK = 8L;
+	public static long VERSION_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -127,6 +126,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setRepositoryId(soapModel.getRepositoryId());
+		model.setFolderId(soapModel.getFolderId());
 		model.setFileEntryId(soapModel.getFileEntryId());
 		model.setExtension(soapModel.getExtension());
 		model.setMimeType(soapModel.getMimeType());
@@ -137,10 +137,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		model.setFileEntryTypeId(soapModel.getFileEntryTypeId());
 		model.setVersion(soapModel.getVersion());
 		model.setSize(soapModel.getSize());
-		model.setSmallImageId(soapModel.getSmallImageId());
-		model.setLargeImageId(soapModel.getLargeImageId());
-		model.setCustom1ImageId(soapModel.getCustom1ImageId());
-		model.setCustom2ImageId(soapModel.getCustom2ImageId());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -210,7 +206,19 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -269,6 +277,27 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
+	}
+
+	@JSON
+	public long getFolderId() {
+		return _folderId;
+	}
+
+	public void setFolderId(long folderId) {
+		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
+
+		if (!_setOriginalFolderId) {
+			_setOriginalFolderId = true;
+
+			_originalFolderId = _folderId;
+		}
+
+		_folderId = folderId;
+	}
+
+	public long getOriginalFolderId() {
+		return _originalFolderId;
 	}
 
 	@JSON
@@ -419,42 +448,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	@JSON
-	public long getSmallImageId() {
-		return _smallImageId;
-	}
-
-	public void setSmallImageId(long smallImageId) {
-		_smallImageId = smallImageId;
-	}
-
-	@JSON
-	public long getLargeImageId() {
-		return _largeImageId;
-	}
-
-	public void setLargeImageId(long largeImageId) {
-		_largeImageId = largeImageId;
-	}
-
-	@JSON
-	public long getCustom1ImageId() {
-		return _custom1ImageId;
-	}
-
-	public void setCustom1ImageId(long custom1ImageId) {
-		_custom1ImageId = custom1ImageId;
-	}
-
-	@JSON
-	public long getCustom2ImageId() {
-		return _custom2ImageId;
-	}
-
-	public void setCustom2ImageId(long custom2ImageId) {
-		_custom2ImageId = custom2ImageId;
-	}
-
-	@JSON
 	public int getStatus() {
 		return _status;
 	}
@@ -600,6 +593,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionImpl.setUserName(getUserName());
 		dlFileVersionImpl.setCreateDate(getCreateDate());
 		dlFileVersionImpl.setRepositoryId(getRepositoryId());
+		dlFileVersionImpl.setFolderId(getFolderId());
 		dlFileVersionImpl.setFileEntryId(getFileEntryId());
 		dlFileVersionImpl.setExtension(getExtension());
 		dlFileVersionImpl.setMimeType(getMimeType());
@@ -610,10 +604,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionImpl.setFileEntryTypeId(getFileEntryTypeId());
 		dlFileVersionImpl.setVersion(getVersion());
 		dlFileVersionImpl.setSize(getSize());
-		dlFileVersionImpl.setSmallImageId(getSmallImageId());
-		dlFileVersionImpl.setLargeImageId(getLargeImageId());
-		dlFileVersionImpl.setCustom1ImageId(getCustom1ImageId());
-		dlFileVersionImpl.setCustom2ImageId(getCustom2ImageId());
 		dlFileVersionImpl.setStatus(getStatus());
 		dlFileVersionImpl.setStatusByUserId(getStatusByUserId());
 		dlFileVersionImpl.setStatusByUserName(getStatusByUserName());
@@ -689,6 +679,14 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public void resetOriginalValues() {
 		DLFileVersionModelImpl dlFileVersionModelImpl = this;
 
+		dlFileVersionModelImpl._originalGroupId = dlFileVersionModelImpl._groupId;
+
+		dlFileVersionModelImpl._setOriginalGroupId = false;
+
+		dlFileVersionModelImpl._originalFolderId = dlFileVersionModelImpl._folderId;
+
+		dlFileVersionModelImpl._setOriginalFolderId = false;
+
 		dlFileVersionModelImpl._originalFileEntryId = dlFileVersionModelImpl._fileEntryId;
 
 		dlFileVersionModelImpl._setOriginalFileEntryId = false;
@@ -732,6 +730,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		}
 
 		dlFileVersionCacheModel.repositoryId = getRepositoryId();
+
+		dlFileVersionCacheModel.folderId = getFolderId();
 
 		dlFileVersionCacheModel.fileEntryId = getFileEntryId();
 
@@ -795,14 +795,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		dlFileVersionCacheModel.size = getSize();
 
-		dlFileVersionCacheModel.smallImageId = getSmallImageId();
-
-		dlFileVersionCacheModel.largeImageId = getLargeImageId();
-
-		dlFileVersionCacheModel.custom1ImageId = getCustom1ImageId();
-
-		dlFileVersionCacheModel.custom2ImageId = getCustom2ImageId();
-
 		dlFileVersionCacheModel.status = getStatus();
 
 		dlFileVersionCacheModel.statusByUserId = getStatusByUserId();
@@ -829,7 +821,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{fileVersionId=");
 		sb.append(getFileVersionId());
@@ -845,6 +837,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getCreateDate());
 		sb.append(", repositoryId=");
 		sb.append(getRepositoryId());
+		sb.append(", folderId=");
+		sb.append(getFolderId());
 		sb.append(", fileEntryId=");
 		sb.append(getFileEntryId());
 		sb.append(", extension=");
@@ -865,14 +859,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getVersion());
 		sb.append(", size=");
 		sb.append(getSize());
-		sb.append(", smallImageId=");
-		sb.append(getSmallImageId());
-		sb.append(", largeImageId=");
-		sb.append(getLargeImageId());
-		sb.append(", custom1ImageId=");
-		sb.append(getCustom1ImageId());
-		sb.append(", custom2ImageId=");
-		sb.append(getCustom2ImageId());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -887,7 +873,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileVersion");
@@ -920,6 +906,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(
 			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
 		sb.append(getRepositoryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>folderId</column-name><column-value><![CDATA[");
+		sb.append(getFolderId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
@@ -962,22 +952,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getSize());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>smallImageId</column-name><column-value><![CDATA[");
-		sb.append(getSmallImageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>largeImageId</column-name><column-value><![CDATA[");
-		sb.append(getLargeImageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>custom1ImageId</column-name><column-value><![CDATA[");
-		sb.append(getCustom1ImageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>custom2ImageId</column-name><column-value><![CDATA[");
-		sb.append(getCustom2ImageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -1005,12 +979,17 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		};
 	private long _fileVersionId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private long _repositoryId;
+	private long _folderId;
+	private long _originalFolderId;
+	private boolean _setOriginalFolderId;
 	private long _fileEntryId;
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;
@@ -1024,10 +1003,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private String _version;
 	private String _originalVersion;
 	private long _size;
-	private long _smallImageId;
-	private long _largeImageId;
-	private long _custom1ImageId;
-	private long _custom2ImageId;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

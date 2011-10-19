@@ -225,7 +225,7 @@
 
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 	</entity>
-	<entity name="DLFileEntryType" human-name="document library file entry type" local-service="true" remote-service="true">
+	<entity name="DLFileEntryType" human-name="document library file entry type" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -385,6 +385,7 @@
 		<!-- Other fields -->
 
 		<column name="repositoryId" type="long" />
+		<column name="folderId" type="long" />
 		<column name="fileEntryId" type="long" />
 		<column name="extension" type="String" />
 		<column name="mimeType" type="String" />
@@ -395,10 +396,6 @@
 		<column name="fileEntryTypeId" type="long" />
 		<column name="version" type="String" />
 		<column name="size" type="long" />
-		<column name="smallImageId" type="long" />
-		<column name="largeImageId" type="long" />
-		<column name="custom1ImageId" type="long" />
-		<column name="custom2ImageId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -422,6 +419,11 @@
 		</finder>
 		<finder name="F_S" return-type="Collection">
 			<finder-column name="fileEntryId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_F_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
 			<finder-column name="status" />
 		</finder>
 	</entity>

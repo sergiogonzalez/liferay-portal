@@ -44,8 +44,8 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		sb.append(classPK);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", type=");
-		sb.append(type);
+		sb.append(", ownerType=");
+		sb.append(ownerType);
 		sb.append(", currentValue=");
 		sb.append(currentValue);
 		sb.append(", totalValue=");
@@ -77,7 +77,7 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 			socialActivityCounterImpl.setName(name);
 		}
 
-		socialActivityCounterImpl.setType(type);
+		socialActivityCounterImpl.setOwnerType(ownerType);
 		socialActivityCounterImpl.setCurrentValue(currentValue);
 		socialActivityCounterImpl.setTotalValue(totalValue);
 		socialActivityCounterImpl.setGraceValue(graceValue);
@@ -95,7 +95,7 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 	public long classNameId;
 	public long classPK;
 	public String name;
-	public int type;
+	public int ownerType;
 	public int currentValue;
 	public int totalValue;
 	public int graceValue;

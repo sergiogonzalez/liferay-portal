@@ -80,7 +80,7 @@ public class SocialActivityCounterPersistenceTest
 
 		newSocialActivityCounter.setName(randomString());
 
-		newSocialActivityCounter.setType(nextInt());
+		newSocialActivityCounter.setOwnerType(nextInt());
 
 		newSocialActivityCounter.setCurrentValue(nextInt());
 
@@ -108,8 +108,8 @@ public class SocialActivityCounterPersistenceTest
 			newSocialActivityCounter.getClassPK());
 		assertEquals(existingSocialActivityCounter.getName(),
 			newSocialActivityCounter.getName());
-		assertEquals(existingSocialActivityCounter.getType(),
-			newSocialActivityCounter.getType());
+		assertEquals(existingSocialActivityCounter.getOwnerType(),
+			newSocialActivityCounter.getOwnerType());
 		assertEquals(existingSocialActivityCounter.getCurrentValue(),
 			newSocialActivityCounter.getCurrentValue());
 		assertEquals(existingSocialActivityCounter.getTotalValue(),
@@ -248,8 +248,8 @@ public class SocialActivityCounterPersistenceTest
 		assertTrue(Validator.equals(
 				existingSocialActivityCounterModelImpl.getName(),
 				existingSocialActivityCounterModelImpl.getOriginalName()));
-		assertEquals(existingSocialActivityCounterModelImpl.getType(),
-			existingSocialActivityCounterModelImpl.getOriginalType());
+		assertEquals(existingSocialActivityCounterModelImpl.getOwnerType(),
+			existingSocialActivityCounterModelImpl.getOriginalOwnerType());
 		assertEquals(existingSocialActivityCounterModelImpl.getStartPeriod(),
 			existingSocialActivityCounterModelImpl.getOriginalStartPeriod());
 
@@ -262,8 +262,8 @@ public class SocialActivityCounterPersistenceTest
 		assertTrue(Validator.equals(
 				existingSocialActivityCounterModelImpl.getName(),
 				existingSocialActivityCounterModelImpl.getOriginalName()));
-		assertEquals(existingSocialActivityCounterModelImpl.getType(),
-			existingSocialActivityCounterModelImpl.getOriginalType());
+		assertEquals(existingSocialActivityCounterModelImpl.getOwnerType(),
+			existingSocialActivityCounterModelImpl.getOriginalOwnerType());
 		assertEquals(existingSocialActivityCounterModelImpl.getEndPeriod(),
 			existingSocialActivityCounterModelImpl.getOriginalEndPeriod());
 	}
@@ -284,7 +284,7 @@ public class SocialActivityCounterPersistenceTest
 
 		socialActivityCounter.setName(randomString());
 
-		socialActivityCounter.setType(nextInt());
+		socialActivityCounter.setOwnerType(nextInt());
 
 		socialActivityCounter.setCurrentValue(nextInt());
 

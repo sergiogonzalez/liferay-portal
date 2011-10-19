@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntry}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFileEntry
  * @generated
  */
-public class DLFileEntryWrapper implements DLFileEntry {
+public class DLFileEntryWrapper implements DLFileEntry,
+	ModelWrapper<DLFileEntry> {
 	public DLFileEntryWrapper(DLFileEntry dlFileEntry) {
 		_dlFileEntry = dlFileEntry;
 	}
@@ -689,10 +692,6 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		return _dlFileEntry.getIcon();
 	}
 
-	public java.lang.String getImageType() {
-		return _dlFileEntry.getImageType();
-	}
-
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -706,10 +705,6 @@ public class DLFileEntryWrapper implements DLFileEntry {
 
 	public java.lang.String getLuceneProperties() {
 		return _dlFileEntry.getLuceneProperties();
-	}
-
-	public java.lang.String getNameWithExtension() {
-		return _dlFileEntry.getNameWithExtension();
 	}
 
 	public boolean hasLock() {
@@ -730,7 +725,14 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		_dlFileEntry.setFileVersion(dlFileVersion);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFileEntry getWrappedDLFileEntry() {
+		return _dlFileEntry;
+	}
+
+	public DLFileEntry getWrappedModel() {
 		return _dlFileEntry;
 	}
 

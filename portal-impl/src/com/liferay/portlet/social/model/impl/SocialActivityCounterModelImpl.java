@@ -61,14 +61,14 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "type_", Types.INTEGER },
+			{ "ownerType", Types.INTEGER },
 			{ "currentValue", Types.INTEGER },
 			{ "totalValue", Types.INTEGER },
 			{ "graceValue", Types.INTEGER },
 			{ "startPeriod", Types.INTEGER },
 			{ "endPeriod", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,type_ INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityCounter";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -87,8 +87,8 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public static long ENDPERIOD_COLUMN_BITMASK = 4L;
 	public static long GROUPID_COLUMN_BITMASK = 8L;
 	public static long NAME_COLUMN_BITMASK = 16L;
-	public static long STARTPERIOD_COLUMN_BITMASK = 32L;
-	public static long TYPE_COLUMN_BITMASK = 64L;
+	public static long OWNERTYPE_COLUMN_BITMASK = 32L;
+	public static long STARTPERIOD_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivityCounter"));
 
@@ -226,24 +226,24 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		return GetterUtil.getString(_originalName);
 	}
 
-	public int getType() {
-		return _type;
+	public int getOwnerType() {
+		return _ownerType;
 	}
 
-	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
+	public void setOwnerType(int ownerType) {
+		_columnBitmask |= OWNERTYPE_COLUMN_BITMASK;
 
-		if (!_setOriginalType) {
-			_setOriginalType = true;
+		if (!_setOriginalOwnerType) {
+			_setOriginalOwnerType = true;
 
-			_originalType = _type;
+			_originalOwnerType = _ownerType;
 		}
 
-		_type = type;
+		_ownerType = ownerType;
 	}
 
-	public int getOriginalType() {
-		return _originalType;
+	public int getOriginalOwnerType() {
+		return _originalOwnerType;
 	}
 
 	public int getCurrentValue() {
@@ -350,7 +350,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		socialActivityCounterImpl.setClassNameId(getClassNameId());
 		socialActivityCounterImpl.setClassPK(getClassPK());
 		socialActivityCounterImpl.setName(getName());
-		socialActivityCounterImpl.setType(getType());
+		socialActivityCounterImpl.setOwnerType(getOwnerType());
 		socialActivityCounterImpl.setCurrentValue(getCurrentValue());
 		socialActivityCounterImpl.setTotalValue(getTotalValue());
 		socialActivityCounterImpl.setGraceValue(getGraceValue());
@@ -424,9 +424,9 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 		socialActivityCounterModelImpl._originalName = socialActivityCounterModelImpl._name;
 
-		socialActivityCounterModelImpl._originalType = socialActivityCounterModelImpl._type;
+		socialActivityCounterModelImpl._originalOwnerType = socialActivityCounterModelImpl._ownerType;
 
-		socialActivityCounterModelImpl._setOriginalType = false;
+		socialActivityCounterModelImpl._setOriginalOwnerType = false;
 
 		socialActivityCounterModelImpl._originalStartPeriod = socialActivityCounterModelImpl._startPeriod;
 
@@ -461,7 +461,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 			socialActivityCounterCacheModel.name = null;
 		}
 
-		socialActivityCounterCacheModel.type = getType();
+		socialActivityCounterCacheModel.ownerType = getOwnerType();
 
 		socialActivityCounterCacheModel.currentValue = getCurrentValue();
 
@@ -492,8 +492,8 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		sb.append(getClassPK());
 		sb.append(", name=");
 		sb.append(getName());
-		sb.append(", type=");
-		sb.append(getType());
+		sb.append(", ownerType=");
+		sb.append(getOwnerType());
 		sb.append(", currentValue=");
 		sb.append(getCurrentValue());
 		sb.append(", totalValue=");
@@ -541,8 +541,8 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
+			"<column><column-name>ownerType</column-name><column-value><![CDATA[");
+		sb.append(getOwnerType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>currentValue</column-name><column-value><![CDATA[");
@@ -587,9 +587,9 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	private boolean _setOriginalClassPK;
 	private String _name;
 	private String _originalName;
-	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
+	private int _ownerType;
+	private int _originalOwnerType;
+	private boolean _setOriginalOwnerType;
 	private int _currentValue;
 	private int _totalValue;
 	private int _graceValue;

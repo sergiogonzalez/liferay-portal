@@ -156,7 +156,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="name" type="String" />
-		<column name="type" type="int" />
+		<column name="ownerType" type="int" />
 		<column name="currentValue" type="int" />
 		<column name="totalValue" type="int" />
 		<column name="graceValue" type="int" />
@@ -169,26 +169,26 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="G_C_C_T" return-type="Collection" where="endPeriod = -1">
+		<finder name="G_C_C_O" return-type="Collection" where="endPeriod = -1">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
-			<finder-column name="type" />
+			<finder-column name="ownerType" />
 		</finder>
-		<finder name="G_C_C_N_T_S" return-type="SocialActivityStatsEntry" unique="true">
+		<finder name="G_C_C_N_O_S" return-type="SocialActivityStatsEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="name" />
-			<finder-column name="type" />
+			<finder-column name="ownerType" />
 			<finder-column name="startPeriod" />
 		</finder>
-		<finder name="G_C_C_N_T_E" return-type="SocialActivityStatsEntry" unique="true">
+		<finder name="G_C_C_N_O_E" return-type="SocialActivityStatsEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="name" />
-			<finder-column name="type" />
+			<finder-column name="ownerType" />
 			<finder-column name="endPeriod" />
 		</finder>
 

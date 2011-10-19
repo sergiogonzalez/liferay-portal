@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivitySettingService}.
@@ -24,17 +26,74 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialActivitySettingServiceWrapper
-	implements SocialActivitySettingService {
+	implements SocialActivitySettingService,
+		ServiceWrapper<SocialActivitySettingService> {
 	public SocialActivitySettingServiceWrapper(
 		SocialActivitySettingService socialActivitySettingService) {
 		_socialActivitySettingService = socialActivitySettingService;
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
+		long groupId, java.lang.String className, int activityType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingService.getActivityDefinition(groupId,
+			className, activityType);
+	}
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityDefinition> getActivityDefinitions(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingService.getActivityDefinitions(groupId,
+			className);
+	}
+
+	public com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingService.getJSONActivityDefinitions(groupId,
+			className);
+	}
+
+	public void updateActivitySetting(long groupId, java.lang.String className,
+		boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivitySettingService.updateActivitySetting(groupId, className,
+			enabled);
+	}
+
+	public void updateActivitySettings(long groupId,
+		java.lang.String className, int activityType,
+		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> counters)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivitySettingService.updateActivitySettings(groupId,
+			className, activityType, counters);
+	}
+
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialActivitySettingService getWrappedSocialActivitySettingService() {
 		return _socialActivitySettingService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialActivitySettingService(
+		SocialActivitySettingService socialActivitySettingService) {
+		_socialActivitySettingService = socialActivitySettingService;
+	}
+
+	public SocialActivitySettingService getWrappedService() {
+		return _socialActivitySettingService;
+	}
+
+	public void setWrappedService(
 		SocialActivitySettingService socialActivitySettingService) {
 		_socialActivitySettingService = socialActivitySettingService;
 	}

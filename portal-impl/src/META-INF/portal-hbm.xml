@@ -1465,6 +1465,7 @@
 		<id name="fileEntryTypeId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1516,6 +1517,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="folderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="extension" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="mimeType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -1526,10 +1528,6 @@
 		<property name="fileEntryTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
-		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="largeImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="custom1ImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="custom2ImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -2392,7 +2390,7 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
+		<property name="ownerType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="currentValue" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="totalValue" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="graceValue" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

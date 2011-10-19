@@ -19,6 +19,7 @@ import com.liferay.portal.editor.fckeditor.exception.FCKException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -28,7 +29,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -40,6 +40,7 @@ import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.w3c.dom.Document;
@@ -178,36 +179,25 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			fileElement.setAttribute("desc", fileEntry.getTitle());
 			fileElement.setAttribute("size", getSize(fileEntry.getSize()));
 
-			boolean hasImages = ImageProcessor.hasImages(
-				fileEntry.getFileVersion());
+			StringBundler sb = new StringBundler(8);
 
-			StringBundler sb = null;
+			sb.append("/documents/");
+			sb.append(group.getGroupId());
+			sb.append(StringPool.SLASH);
+			sb.append(fileEntry.getFolderId());
+			sb.append(StringPool.SLASH);
+			sb.append(HttpUtil.encodeURL(fileEntry.getTitle()));
 
-			if (hasImages) {
-				sb = new StringBundler(7);
+			Set<String> imageMimeTypes = ImageProcessor.getImageMimeTypes();
 
-				ThemeDisplay themeDisplay = commandArgument.getThemeDisplay();
-
-				sb.append(themeDisplay.getPathImage());
-				sb.append("/image_gallery?uuid=");
-				sb.append(fileEntry.getUuid());
-				sb.append("&groupId=");
-				sb.append(folder.getGroupId());
+			if (imageMimeTypes.contains(fileEntry.getMimeType())) {
 				sb.append("&t=");
 
-				long largeImageId = fileEntry.getLargeImageId();
+				FileVersion fileVersion = fileEntry.getFileVersion();
 
-				sb.append(WebServerServletTokenUtil.getToken(largeImageId));
-			}
-			else {
-				sb = new StringBundler(6);
-
-				sb.append("/documents/");
-				sb.append(group.getGroupId());
-				sb.append(StringPool.SLASH);
-				sb.append(fileEntry.getFolderId());
-				sb.append(StringPool.SLASH);
-				sb.append(HttpUtil.encodeURL(fileEntry.getTitle()));
+				sb.append(
+					WebServerServletTokenUtil.getToken(
+						fileVersion.getFileVersionId()));
 			}
 
 			fileElement.setAttribute("url", sb.toString());

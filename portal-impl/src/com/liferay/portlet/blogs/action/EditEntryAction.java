@@ -35,7 +35,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.ActionRequestImpl;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
@@ -279,7 +278,7 @@ public class EditEntryAction extends PortletAction {
 		boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			(ActionRequestImpl)actionRequest, portletConfig.getPortletName(),
+			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setWindowState(actionRequest.getWindowState());
