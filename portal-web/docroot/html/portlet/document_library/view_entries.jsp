@@ -264,6 +264,10 @@ for (int i = 0; i < results.size(); i++) {
 
 					ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 
+					if (Validator.isNotNull(fileShortcut)) {
+						row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
+					}
+
 					PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 					rowURL.setParameter("struts_action", "/document_library/view_file_entry");
