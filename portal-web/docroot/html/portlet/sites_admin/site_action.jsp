@@ -20,6 +20,8 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Group group = (Group)row.getObject();
+
+boolean organizationUser = GetterUtil.getBoolean((Serializable)row.getParameter("organizationUser"), false);
 %>
 
 <liferay-ui:icon-menu>
@@ -91,7 +93,7 @@ Group group = (Group)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= (group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) %>">
+	<c:if test="<%= (!organizationUser && (group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) %>">
 		<portlet:actionURL var="leaveURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
 			<portlet:param name="<%= Constants.CMD %>" value="group_users" />

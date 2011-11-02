@@ -148,7 +148,23 @@ pageContext.setAttribute("portletURL", portletURL);
 
 			sb.append("<br />");
 			sb.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
-		}
+		}else{
+            LinkedHashMap organizationParams = new LinkedHashMap();
+            organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
+            int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams);
+            List<Organization> organizationsGroups = OrganizationLocalServiceUtil.search(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams, 0, organizationsCount);
+
+            for(Organization organization : organizationsGroups){
+                for(long organizationId : user.getOrganizationIds()){
+                    if(organizationId == organization.getOrganizationId()){
+                        sb.append("<br />");
+                        sb.append(LanguageUtil.format(pageContext, "belongs-to-x-organization", LanguageUtil.get(pageContext, organization.getName())));
+                        row.setParameter("organizationUser", true);
+                        break;
+                    }
+                }
+            }
+        }
 
 		row.addText(sb.toString());
 
