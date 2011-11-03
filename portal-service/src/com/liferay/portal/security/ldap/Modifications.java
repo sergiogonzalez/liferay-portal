@@ -43,9 +43,21 @@ public class Modifications {
 		ModificationItem modificationItem = new ModificationItem(
 			modificationOp, basicAttribute);
 
-		_items.add(modificationItem);
+		_modificationItems.add(modificationItem);
 
 		return modificationItem;
+	}
+
+	public ModificationItem addItem(
+		int modificationOp, String id, Object value) {
+
+		BasicAttribute basicAttribute = new BasicAttribute(id);
+
+		if (value != null) {
+			basicAttribute.add(value);
+		}
+
+		return addItem(modificationOp, basicAttribute);
 	}
 
 	public ModificationItem addItem(
@@ -60,17 +72,23 @@ public class Modifications {
 		return addItem(modificationOp, basicAttribute);
 	}
 
+	public ModificationItem addItem(String id, Object value) {
+		return addItem(DirContext.REPLACE_ATTRIBUTE, id, value);
+	}
+
 	public ModificationItem addItem(String id, String value) {
 		return addItem(DirContext.REPLACE_ATTRIBUTE, id, value);
 	}
 
 	public ModificationItem[] getItems() {
-		return _items.toArray(new ModificationItem[_items.size()]);
+		return _modificationItems.toArray(
+			new ModificationItem[_modificationItems.size()]);
 	}
 
 	private Modifications() {
 	}
 
-	private List<ModificationItem> _items = new ArrayList<ModificationItem>();
+	private List<ModificationItem> _modificationItems =
+		new ArrayList<ModificationItem>();
 
 }

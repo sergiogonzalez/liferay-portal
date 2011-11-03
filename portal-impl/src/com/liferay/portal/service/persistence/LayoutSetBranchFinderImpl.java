@@ -57,10 +57,10 @@ public class LayoutSetBranchFinderImpl
 			qPos.add(privateLayout);
 			qPos.add(true);
 
-			List<LayoutSetBranch> list = q.list();
+			List<LayoutSetBranch> layoutSetBranches = q.list();
 
-			if (!list.isEmpty()) {
-				return list.get(0);
+			if (!layoutSetBranches.isEmpty()) {
+				return layoutSetBranches.get(0);
 			}
 		}
 		catch (Exception e) {

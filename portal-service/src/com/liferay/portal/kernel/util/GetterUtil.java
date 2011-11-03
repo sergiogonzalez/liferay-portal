@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.io.Serializable;
-
 import java.text.DateFormat;
 
 import java.util.Date;
@@ -63,7 +61,7 @@ public class GetterUtil {
 
 	public static final String DEFAULT_STRING = StringPool.BLANK;
 
-	public static boolean get(Serializable value, boolean defaultValue) {
+	public static boolean get(Object value, boolean defaultValue) {
 		if (value == null) {
 			return defaultValue;
 		}
@@ -82,7 +80,7 @@ public class GetterUtil {
 	}
 
 	public static Date get(
-		Serializable value, DateFormat dateFormat, Date defaultValue) {
+		Object value, DateFormat dateFormat, Date defaultValue) {
 
 		if (value == null) {
 			return defaultValue;
@@ -101,7 +99,7 @@ public class GetterUtil {
 		return defaultValue;
 	}
 
-	public static double get(Serializable value, double defaultValue) {
+	public static double get(Object value, double defaultValue) {
 		if (value == null) {
 			return defaultValue;
 		}
@@ -125,7 +123,7 @@ public class GetterUtil {
 		return defaultValue;
 	}
 
-	public static float get(Serializable value, float defaultValue) {
+	public static float get(Object value, float defaultValue) {
 		if (value == null) {
 			return defaultValue;
 		}
@@ -149,7 +147,7 @@ public class GetterUtil {
 		return defaultValue;
 	}
 
-	public static int get(Serializable value, int defaultValue) {
+	public static int get(Object value, int defaultValue) {
 		if (value == null) {
 			return defaultValue;
 		}
@@ -173,7 +171,7 @@ public class GetterUtil {
 		return defaultValue;
 	}
 
-	public static long get(Serializable value, long defaultValue) {
+	public static long get(Object value, long defaultValue) {
 		if (value == null) {
 			return defaultValue;
 		}
@@ -197,7 +195,7 @@ public class GetterUtil {
 		return defaultValue;
 	}
 
-	public static Number get(Serializable value, Number defaultValue) {
+	public static Number get(Object value, Number defaultValue) {
 		if (value == null) {
 			return defaultValue;
 		}
@@ -243,7 +241,7 @@ public class GetterUtil {
 		return defaultValue;
 	}
 
-	public static short get(Serializable value, short defaultValue) {
+	public static short get(Object value, short defaultValue) {
 		if (value == null) {
 			return defaultValue;
 		}
@@ -267,7 +265,7 @@ public class GetterUtil {
 		return defaultValue;
 	}
 
-	public static String get(Serializable value, String defaultValue) {
+	public static String get(Object value, String defaultValue) {
 		if (value == null) {
 			return defaultValue;
 		}
@@ -388,11 +386,11 @@ public class GetterUtil {
 		return value;
 	}
 
-	public static boolean getBoolean(Serializable value) {
+	public static boolean getBoolean(Object value) {
 		return getBoolean(value, DEFAULT_BOOLEAN);
 	}
 
-	public static boolean getBoolean(Serializable value, boolean defaultValue) {
+	public static boolean getBoolean(Object value, boolean defaultValue) {
 		return get(value, defaultValue);
 	}
 
@@ -404,12 +402,12 @@ public class GetterUtil {
 		return get(value, defaultValue);
 	}
 
-	public static boolean[] getBooleanValues(Serializable value) {
+	public static boolean[] getBooleanValues(Object value) {
 		return getBooleanValues(value, DEFAULT_BOOLEAN_VALUES);
 	}
 
 	public static boolean[] getBooleanValues(
-		Serializable value, boolean[] defaultValue) {
+		Object value, boolean[] defaultValue) {
 
 		Class<?> clazz = value.getClass();
 
@@ -447,12 +445,12 @@ public class GetterUtil {
 		return booleanValues;
 	}
 
-	public static Date getDate(Serializable value, DateFormat dateFormat) {
+	public static Date getDate(Object value, DateFormat dateFormat) {
 		return getDate(value, dateFormat, new Date());
 	}
 
 	public static Date getDate(
-		Serializable value, DateFormat dateFormat, Date defaultValue) {
+		Object value, DateFormat dateFormat, Date defaultValue) {
 
 		return get(value, dateFormat, defaultValue);
 	}
@@ -467,14 +465,12 @@ public class GetterUtil {
 		return get(value, dateFormat, defaultValue);
 	}
 
-	public static Date[] getDateValues(
-		Serializable value, DateFormat dateFormat) {
-
+	public static Date[] getDateValues(Object value, DateFormat dateFormat) {
 		return getDateValues(value, dateFormat, DEFAULT_DATE_VALUES);
 	}
 
 	public static Date[] getDateValues(
-		Serializable value, DateFormat dateFormat, Date[] defaultValue) {
+		Object value, DateFormat dateFormat, Date[] defaultValue) {
 
 		Class<?> clazz = value.getClass();
 
@@ -512,11 +508,11 @@ public class GetterUtil {
 		return dateValues;
 	}
 
-	public static double getDouble(Serializable value) {
+	public static double getDouble(Object value) {
 		return getDouble(value, DEFAULT_DOUBLE);
 	}
 
-	public static double getDouble(Serializable value, double defaultValue) {
+	public static double getDouble(Object value, double defaultValue) {
 		return get(value, defaultValue);
 	}
 
@@ -528,12 +524,12 @@ public class GetterUtil {
 		return get(value, defaultValue);
 	}
 
-	public static double[] getDoubleValues(Serializable value) {
+	public static double[] getDoubleValues(Object value) {
 		return getDoubleValues(value, DEFAULT_DOUBLE_VALUES);
 	}
 
 	public static double[] getDoubleValues(
-		Serializable value, double[] defaultValue) {
+		Object value, double[] defaultValue) {
 
 		Class<?> clazz = value.getClass();
 
@@ -571,11 +567,11 @@ public class GetterUtil {
 		return doubleValues;
 	}
 
-	public static float getFloat(Serializable value) {
+	public static float getFloat(Object value) {
 		return getFloat(value, DEFAULT_FLOAT);
 	}
 
-	public static float getFloat(Serializable value, float defaultValue) {
+	public static float getFloat(Object value, float defaultValue) {
 		return get(value, defaultValue);
 	}
 
@@ -587,13 +583,11 @@ public class GetterUtil {
 		return get(value, defaultValue);
 	}
 
-	public static float[] getFloatValues(Serializable value) {
+	public static float[] getFloatValues(Object value) {
 		return getFloatValues(value, DEFAULT_FLOAT_VALUES);
 	}
 
-	public static float[] getFloatValues(
-		Serializable value, float[] defaultValue) {
-
+	public static float[] getFloatValues(Object value, float[] defaultValue) {
 		Class<?> clazz = value.getClass();
 
 		if (clazz.isArray()) {
@@ -630,11 +624,11 @@ public class GetterUtil {
 		return floatValues;
 	}
 
-	public static int getInteger(Serializable value) {
+	public static int getInteger(Object value) {
 		return getInteger(value, DEFAULT_INTEGER);
 	}
 
-	public static int getInteger(Serializable value, int defaultValue) {
+	public static int getInteger(Object value, int defaultValue) {
 		return get(value, defaultValue);
 	}
 
@@ -646,13 +640,11 @@ public class GetterUtil {
 		return get(value, defaultValue);
 	}
 
-	public static int[] getIntegerValues(Serializable value) {
+	public static int[] getIntegerValues(Object value) {
 		return getIntegerValues(value, DEFAULT_INTEGER_VALUES);
 	}
 
-	public static int[] getIntegerValues(
-		Serializable value, int[] defaultValue) {
-
+	public static int[] getIntegerValues(Object value, int[] defaultValue) {
 		Class<?> clazz = value.getClass();
 
 		if (clazz.isArray()) {
@@ -687,11 +679,11 @@ public class GetterUtil {
 		return intValues;
 	}
 
-	public static long getLong(Serializable value) {
+	public static long getLong(Object value) {
 		return getLong(value, DEFAULT_LONG);
 	}
 
-	public static long getLong(Serializable value, long defaultValue) {
+	public static long getLong(Object value, long defaultValue) {
 		return get(value, defaultValue);
 	}
 
@@ -703,13 +695,11 @@ public class GetterUtil {
 		return get(value, defaultValue);
 	}
 
-	public static long[] getLongValues(Serializable value) {
+	public static long[] getLongValues(Object value) {
 		return getLongValues(value, DEFAULT_LONG_VALUES);
 	}
 
-	public static long[] getLongValues(
-		Serializable value, long[] defaultValue) {
-
+	public static long[] getLongValues(Object value, long[] defaultValue) {
 		Class<?> clazz = value.getClass();
 
 		if (clazz.isArray()) {
@@ -755,11 +745,11 @@ public class GetterUtil {
 		return longValues;
 	}
 
-	public static Number getNumber(Serializable value) {
+	public static Number getNumber(Object value) {
 		return getNumber(value, DEFAULT_NUMBER);
 	}
 
-	public static Number getNumber(Serializable value, Number defaultValue) {
+	public static Number getNumber(Object value, Number defaultValue) {
 		return get(value, defaultValue);
 	}
 
@@ -783,11 +773,11 @@ public class GetterUtil {
 		return value;
 	}
 
-	public static short getShort(Serializable value) {
+	public static short getShort(Object value) {
 		return getShort(value, DEFAULT_SHORT);
 	}
 
-	public static short getShort(Serializable value, short defaultValue) {
+	public static short getShort(Object value, short defaultValue) {
 		return get(value, defaultValue);
 	}
 
@@ -799,13 +789,11 @@ public class GetterUtil {
 		return get(value, defaultValue);
 	}
 
-	public static short[] getShortValues(Serializable value) {
+	public static short[] getShortValues(Object value) {
 		return getShortValues(value, DEFAULT_SHORT_VALUES);
 	}
 
-	public static short[] getShortValues(
-		Serializable value, short[] defaultValue) {
-
+	public static short[] getShortValues(Object value, short[] defaultValue) {
 		Class<?> clazz = value.getClass();
 
 		if (clazz.isArray()) {
@@ -842,11 +830,11 @@ public class GetterUtil {
 		return shortValues;
 	}
 
-	public static String getString(Serializable value) {
+	public static String getString(Object value) {
 		return getString(value, DEFAULT_STRING);
 	}
 
-	public static String getString(Serializable value, String defaultValue) {
+	public static String getString(Object value, String defaultValue) {
 		return get(value, defaultValue);
 	}
 

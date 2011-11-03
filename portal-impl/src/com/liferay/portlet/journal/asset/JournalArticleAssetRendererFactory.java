@@ -40,8 +40,6 @@ import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.journal.service.permission.JournalStructurePermission;
 
-import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,7 +144,7 @@ public class JournalArticleAssetRendererFactory
 		}
 
 		long classTypeId = GetterUtil.getLong(
-			(Serializable)liferayPortletRequest.getAttribute(
+			liferayPortletRequest.getAttribute(
 				WebKeys.ASSET_RENDERER_FACTORY_CLASS_TYPE_ID));
 
 		if ((classTypeId > 0) &&

@@ -150,6 +150,14 @@ public class StringUtil_IW {
 		return StringUtil.merge(col, delimiter);
 	}
 
+	public java.lang.String merge(char[] array) {
+		return StringUtil.merge(array);
+	}
+
+	public java.lang.String merge(char[] array, java.lang.String delimiter) {
+		return StringUtil.merge(array, delimiter);
+	}
+
 	public java.lang.String merge(double[] array) {
 		return StringUtil.merge(array);
 	}

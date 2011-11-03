@@ -94,12 +94,12 @@ int counter = 0;
 for (SearchResult searchResult : searchResults) {
 	Attributes attributes = searchResult.getAttributes();
 
-	String screenName = LDAPUtil.getAttributeValue(attributes, userMappings.getProperty("screenName")).toLowerCase();
-	String password = LDAPUtil.getAttributeValue(attributes, userMappings.getProperty("password")).toLowerCase();
-	String emailAddress = LDAPUtil.getAttributeValue(attributes, userMappings.getProperty("emailAddress"));
-	String firstName = LDAPUtil.getAttributeValue(attributes, userMappings.getProperty("firstName"));
-	String lastName = LDAPUtil.getAttributeValue(attributes, userMappings.getProperty("lastName"));
-	String jobTitle = LDAPUtil.getAttributeValue(attributes, userMappings.getProperty("jobTitle"));
+	String screenName = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("screenName")).toLowerCase();
+	String password = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("password")).toLowerCase();
+	String emailAddress = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("emailAddress"));
+	String firstName = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("firstName"));
+	String lastName = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("lastName"));
+	String jobTitle = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("jobTitle"));
 	Attribute attribute = attributes.get(userMappings.getProperty("group"));
 
 	if (Validator.isNull(screenName) || Validator.isNull(password) || Validator.isNull(emailAddress) || Validator.isNull(firstName) || Validator.isNull(lastName)) {

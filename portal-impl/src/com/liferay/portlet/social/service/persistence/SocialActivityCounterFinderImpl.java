@@ -34,8 +34,6 @@ import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -159,14 +157,11 @@ public class SocialActivityCounterFinderImpl
 				SocialActivityCounter activityCounter =
 					new SocialActivityCounterImpl();
 
-				activityCounter.setName(
-					GetterUtil.getString((Serializable)array[0]));
+				activityCounter.setName(GetterUtil.getString(array[0]));
 				activityCounter.setCurrentValue(
-					GetterUtil.getInteger((Serializable)array[1]));
-				activityCounter.setStartPeriod(
-					GetterUtil.getInteger((Serializable)array[2]));
-				activityCounter.setEndPeriod(
-					GetterUtil.getInteger((Serializable)array[3]));
+					GetterUtil.getInteger(array[1]));
+				activityCounter.setStartPeriod(GetterUtil.getInteger(array[2]));
+				activityCounter.setEndPeriod(GetterUtil.getInteger(array[3]));
 
 				activityCounters.add(activityCounter);
 			}
@@ -221,12 +216,10 @@ public class SocialActivityCounterFinderImpl
 				SocialActivityCounter activityCounter =
 					new SocialActivityCounterImpl();
 
-				activityCounter.setClassNameId(
-					GetterUtil.getLong((Serializable)array[0]));
-				activityCounter.setName(
-					GetterUtil.getString((Serializable)array[1]));
+				activityCounter.setClassNameId(GetterUtil.getLong(array[0]));
+				activityCounter.setName(GetterUtil.getString(array[1]));
 				activityCounter.setCurrentValue(
-					GetterUtil.getInteger((Serializable)array[2]));
+					GetterUtil.getInteger(array[2]));
 
 				activityCounters.add(activityCounter);
 			}

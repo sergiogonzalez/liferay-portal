@@ -195,7 +195,7 @@ public class InvokerFilterChain implements FilterChain {
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader previousClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		currentThread.setContextClassLoader(_contextClassLoader);
 
@@ -203,7 +203,7 @@ public class InvokerFilterChain implements FilterChain {
 			filter.doFilter(servletRequest, servletResponse, this);
 		}
 		finally {
-			currentThread.setContextClassLoader(previousClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
