@@ -34,8 +34,6 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -247,11 +245,9 @@ public class AssetTagFinderImpl
 
 				AssetTag assetTag = new AssetTagImpl();
 
-				assetTag.setTagId(
-					GetterUtil.getLong((Serializable)array[0]));
-				assetTag.setName(GetterUtil.getString((Serializable)array[1]));
-				assetTag.setAssetCount(
-					GetterUtil.getInteger((Serializable)array[2]));
+				assetTag.setTagId(GetterUtil.getLong(array[0]));
+				assetTag.setName(GetterUtil.getString(array[1]));
+				assetTag.setAssetCount(GetterUtil.getInteger(array[2]));
 
 				assetTags.add(assetTag);
 			}
@@ -460,26 +456,11 @@ public class AssetTagFinderImpl
 			qPos.add(groupId);
 			qPos.add(name);
 
-			List<AssetTag> list = q.list();
+			List<AssetTag> tags = q.list();
 
-			if (list.size() == 0) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("No AssetTag exists with the key ");
-				sb.append("{groupId=");
-				sb.append(groupId);
-				sb.append(", name=");
-				sb.append(name);
-				sb.append("}");
-
-				throw new NoSuchTagException(sb.toString());
+			if (!tags.isEmpty()) {
+				return tags.get(0);
 			}
-			else {
-				return list.get(0);
-			}
-		}
-		catch (NoSuchTagException nste) {
-			throw nste;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -487,6 +468,17 @@ public class AssetTagFinderImpl
 		finally {
 			closeSession(session);
 		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("No AssetTag exists with the key ");
+		sb.append("{groupId=");
+		sb.append(groupId);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append("}");
+
+		throw new NoSuchTagException(sb.toString());
 	}
 
 	protected List<AssetTag> doFindByG_C_N(

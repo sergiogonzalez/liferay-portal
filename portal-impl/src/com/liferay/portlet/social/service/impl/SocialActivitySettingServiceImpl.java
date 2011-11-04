@@ -19,11 +19,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.service.base.SocialActivitySettingServiceBaseImpl;
+import com.liferay.portlet.social.util.comparator.SocialActivityDefinitionNameComparator;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 import java.util.List;
 
@@ -70,6 +74,11 @@ public class SocialActivitySettingServiceImpl
 		List<SocialActivityDefinition> activityDefinitions =
 			socialActivitySettingLocalService.getActivityDefinitions(
 				groupId, className);
+
+		Collections.sort(
+			activityDefinitions,
+			new SocialActivityDefinitionNameComparator(
+				LocaleThreadLocal.getThemeDisplayLocale()));
 
 		for (SocialActivityDefinition activityDefinition :
 				activityDefinitions) {

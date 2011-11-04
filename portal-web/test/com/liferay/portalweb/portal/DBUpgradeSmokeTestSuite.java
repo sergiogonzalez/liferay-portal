@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.kernel.dao.orm;
+package com.liferay.portalweb.portal;
+
+import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.smoke.login.LoginTests;
+import com.liferay.portalweb.portal.logout.LogoutTests;
+import com.liferay.portalweb.portal.smoke.SmokeTests;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class LockModeImpl implements LockMode {
+public class DBUpgradeSmokeTestSuite extends BaseTests {
 
-	public LockModeImpl(String name) {
-		_name = name;
+	public static Test suite() {
+		TestSuite testSuite = new TestSuite();
+
+		testSuite.addTest(LoginTests.suite());
+		testSuite.addTest(SmokeTests.suite());
+		testSuite.addTest(LogoutTests.suite());
+
+		testSuite.addTestSuite(StopSeleniumTest.class);
+
+		return testSuite;
 	}
-
-	public String getName() {
-		return _name;
-	}
-
-	private String _name;
 
 }

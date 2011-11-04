@@ -119,14 +119,13 @@ public class DLFileEntryFinderImpl
 			qPos.add(imageId);
 			qPos.add(imageId);
 
-			List<DLFileEntry> list = q.list();
+			List<DLFileEntry> dlFileEntries = q.list();
 
-			if (list.isEmpty()) {
-				return null;
+			if (!dlFileEntries.isEmpty()) {
+				return dlFileEntries.get(0);
 			}
-			else {
-				return list.get(0);
-			}
+
+			return null;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -148,13 +147,12 @@ public class DLFileEntryFinderImpl
 
 		DLFileEntry dlFileEntry = fetchByAnyImageId(imageId);
 
-		if (dlFileEntry == null) {
-			throw new NoSuchFileEntryException(
-				"No DLFileEntry exists with the imageId " + imageId);
-		}
-		else {
+		if (dlFileEntry != null) {
 			return dlFileEntry;
 		}
+
+		throw new NoSuchFileEntryException(
+			"No DLFileEntry exists with the imageId " + imageId);
 	}
 
 	public List<DLFileEntry> findByExtraSettings(int start, int end)

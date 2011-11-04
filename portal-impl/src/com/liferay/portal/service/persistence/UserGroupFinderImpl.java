@@ -142,10 +142,10 @@ public class UserGroupFinderImpl
 			qPos.add(companyId);
 			qPos.add(name);
 
-			List<UserGroup> list = q.list();
+			List<UserGroup> userGroups = q.list();
 
-			if (!list.isEmpty()) {
-				return list.get(0);
+			if (!userGroups.isEmpty()) {
+				return userGroups.get(0);
 			}
 		}
 		catch (Exception e) {

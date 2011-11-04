@@ -17,10 +17,12 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.ExpiredLockException;
 import com.liferay.portal.NoSuchLockException;
+import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.LockLocalServiceBaseImpl;
@@ -168,14 +170,22 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		return lock;
 	}
 
-	@Transactional(isolation = Isolation.SERIALIZABLE)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
 			String className, String key, String owner,
 			boolean retrieveFromCache)
 		throws SystemException {
 
-		Lock lock = lockPersistence.fetchByC_K(
-			className, key, retrieveFromCache);
+		return lock(className, key, null, owner, retrieveFromCache);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Lock lock(
+			String className, String key, String expectedOwner,
+			String updatedOwner, boolean retrieveFromCache)
+		throws SystemException {
+
+		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
 
 		if (lock == null) {
 			long lockId = counterLocalService.increment();
@@ -185,42 +195,13 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lock.setCreateDate(new Date());
 			lock.setClassName(className);
 			lock.setKey(key);
-			lock.setOwner(owner);
+			lock.setOwner(updatedOwner);
 
 			lockPersistence.update(lock, false);
 
 			lock.setNew(true);
 		}
-
-		return lock;
-	}
-
-	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public Lock lock(
-			String className, String key, String expectedOwner,
-			String updatedOwner, boolean retrieveFromCache)
-		throws SystemException {
-
-		Lock lock = lockPersistence.fetchByC_K(
-			className, key, retrieveFromCache);
-
-		if (lock != null) {
-			String owner = lock.getOwner();
-
-			if (!owner.equals(expectedOwner)) {
-				return lock;
-			}
-
-			lockPersistence.remove(lock);
-
-			lock = null;
-		}
-
-		if (lock == null) {
-			long lockId = counterLocalService.increment();
-
-			lock = lockPersistence.create(lockId);
-
+		else if (Validator.equals(lock.getOwner(), expectedOwner)) {
 			lock.setCreateDate(new Date());
 			lock.setClassName(className);
 			lock.setKey(key);
@@ -273,20 +254,19 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 	}
 
-	@Transactional(isolation = Isolation.SERIALIZABLE)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(
 			String className, String key, String owner,
 			boolean retrieveFromCache)
 		throws SystemException {
 
-		Lock lock = lockPersistence.fetchByC_K(
-			className, key, retrieveFromCache);
+		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
 
 		if (lock == null) {
 			return;
 		}
 
-		if (lock.getOwner().equals(owner)) {
+		if (Validator.equals(lock.getOwner(), owner)) {
 			deleteLock(lock);
 		}
 	}

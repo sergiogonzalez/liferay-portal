@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "images-home");
+String topLink = ParamUtil.getString(request, "topLink", "home");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
@@ -111,6 +111,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%
 		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
+		searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
+
 		long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
@@ -138,7 +140,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		%>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("images-home") %>'>
+	<c:when test='<%= topLink.equals("home") %>'>
 		<aui:layout>
 			<c:if test="<%= folder != null %>">
 				<liferay-ui:header
@@ -148,53 +150,53 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</c:if>
 
 			<aui:column columnWidth="<%= showFolderMenu ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-				<div id="<portlet:namespace />imageGalleryAssetInfo">
-					<c:if test="<%= folder != null %>">
-						<div class="lfr-asset-description">
-							<%= HtmlUtil.escape(folder.getDescription()) %>
+				<c:if test="<%= folder != null %>">
+					<div class="lfr-asset-description">
+						<%= HtmlUtil.escape(folder.getDescription()) %>
+					</div>
+
+					<div class="lfr-asset-metadata">
+						<div class="lfr-asset-icon lfr-asset-date">
+							<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate())) %>
 						</div>
 
-						<div class="lfr-asset-metadata">
-							<div class="lfr-asset-icon lfr-asset-date">
-								<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate())) %>
-							</div>
-
-							<div class="lfr-asset-icon lfr-asset-subfolders">
-								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
-							</div>
-
-							<div class="lfr-asset-icon lfr-asset-items last">
-								<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
-							</div>
+						<div class="lfr-asset-icon lfr-asset-subfolders">
+							<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 						</div>
 
-						<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-							<liferay-ui:custom-attribute-list
-								className="<%= DLFolderConstants.getClassName() %>"
-								classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-								editable="<%= false %>"
-								label="<%= true %>"
-							/>
-						</liferay-ui:custom-attributes-available>
-					</c:if>
+						<div class="lfr-asset-icon lfr-asset-items last">
+							<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
+						</div>
+					</div>
 
-					<%
-					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+					<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= DLFolderConstants.getClassName() %>"
+							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
+				</c:if>
 
-					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mimeTypes, false);
+				<%
+				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-					searchContainer.setTotal(total);
+				searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
 
-					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mimeTypes, false);
 
-					searchContainer.setResults(results);
+				searchContainer.setTotal(total);
 
-					List scores = null;
-					%>
+				List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-					<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+				searchContainer.setResults(results);
 
-				</div>
+				List scores = null;
+				%>
+
+				<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+
 			</aui:column>
 
 			<c:if test="<%= showFolderMenu %>">
@@ -203,11 +205,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<liferay-ui:icon
 							cssClass="lfr-asset-avatar"
 							image='<%= "../file_system/large/" + (((foldersCount + imagesCount) > 0) ? "folder_full_image" : "folder_empty") %>'
-							message='<%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "images-home") %>'
+							message='<%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %>'
 						/>
 
 						<div class="lfr-asset-name">
-							<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "images-home") %></h4>
+							<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %></h4>
 						</div>
 					</div>
 
@@ -232,16 +234,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		%>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("my-images") || topLink.equals("recent-images") %>'>
+	<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
 
 		<%
 		long groupImagesUserId = 0;
 
-		if (topLink.equals("my-images") && themeDisplay.isSignedIn()) {
+		if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
 			groupImagesUserId = user.getUserId();
 		}
 
 		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+		searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
 
 		int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId);
 

@@ -22,41 +22,41 @@ public class GetterUtil_IW {
 		return _instance;
 	}
 
-	public boolean get(java.io.Serializable value, boolean defaultValue) {
+	public boolean get(java.lang.Object value, boolean defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
 
-	public java.util.Date get(java.io.Serializable value,
+	public java.util.Date get(java.lang.Object value,
 		java.text.DateFormat dateFormat, java.util.Date defaultValue) {
 		return GetterUtil.get(value, dateFormat, defaultValue);
 	}
 
-	public double get(java.io.Serializable value, double defaultValue) {
+	public double get(java.lang.Object value, double defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
 
-	public float get(java.io.Serializable value, float defaultValue) {
+	public float get(java.lang.Object value, float defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
 
-	public int get(java.io.Serializable value, int defaultValue) {
+	public int get(java.lang.Object value, int defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
 
-	public long get(java.io.Serializable value, long defaultValue) {
+	public long get(java.lang.Object value, long defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
 
-	public java.lang.Number get(java.io.Serializable value,
+	public java.lang.Number get(java.lang.Object value,
 		java.lang.Number defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
 
-	public short get(java.io.Serializable value, short defaultValue) {
+	public short get(java.lang.Object value, short defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
 
-	public java.lang.String get(java.io.Serializable value,
+	public java.lang.String get(java.lang.Object value,
 		java.lang.String defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
@@ -95,11 +95,11 @@ public class GetterUtil_IW {
 		return GetterUtil.get(value, defaultValue);
 	}
 
-	public boolean getBoolean(java.io.Serializable value) {
+	public boolean getBoolean(java.lang.Object value) {
 		return GetterUtil.getBoolean(value);
 	}
 
-	public boolean getBoolean(java.io.Serializable value, boolean defaultValue) {
+	public boolean getBoolean(java.lang.Object value, boolean defaultValue) {
 		return GetterUtil.getBoolean(value, defaultValue);
 	}
 
@@ -111,11 +111,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getBoolean(value, defaultValue);
 	}
 
-	public boolean[] getBooleanValues(java.io.Serializable value) {
+	public boolean[] getBooleanValues(java.lang.Object value) {
 		return GetterUtil.getBooleanValues(value);
 	}
 
-	public boolean[] getBooleanValues(java.io.Serializable value,
+	public boolean[] getBooleanValues(java.lang.Object value,
 		boolean[] defaultValue) {
 		return GetterUtil.getBooleanValues(value, defaultValue);
 	}
@@ -129,12 +129,12 @@ public class GetterUtil_IW {
 		return GetterUtil.getBooleanValues(values, defaultValue);
 	}
 
-	public java.util.Date getDate(java.io.Serializable value,
+	public java.util.Date getDate(java.lang.Object value,
 		java.text.DateFormat dateFormat) {
 		return GetterUtil.getDate(value, dateFormat);
 	}
 
-	public java.util.Date getDate(java.io.Serializable value,
+	public java.util.Date getDate(java.lang.Object value,
 		java.text.DateFormat dateFormat, java.util.Date defaultValue) {
 		return GetterUtil.getDate(value, dateFormat, defaultValue);
 	}
@@ -149,12 +149,12 @@ public class GetterUtil_IW {
 		return GetterUtil.getDate(value, dateFormat, defaultValue);
 	}
 
-	public java.util.Date[] getDateValues(java.io.Serializable value,
+	public java.util.Date[] getDateValues(java.lang.Object value,
 		java.text.DateFormat dateFormat) {
 		return GetterUtil.getDateValues(value, dateFormat);
 	}
 
-	public java.util.Date[] getDateValues(java.io.Serializable value,
+	public java.util.Date[] getDateValues(java.lang.Object value,
 		java.text.DateFormat dateFormat, java.util.Date[] defaultValue) {
 		return GetterUtil.getDateValues(value, dateFormat, defaultValue);
 	}
@@ -169,11 +169,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getDateValues(values, dateFormat, defaultValue);
 	}
 
-	public double getDouble(java.io.Serializable value) {
+	public double getDouble(java.lang.Object value) {
 		return GetterUtil.getDouble(value);
 	}
 
-	public double getDouble(java.io.Serializable value, double defaultValue) {
+	public double getDouble(java.lang.Object value, double defaultValue) {
 		return GetterUtil.getDouble(value, defaultValue);
 	}
 
@@ -185,11 +185,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getDouble(value, defaultValue);
 	}
 
-	public double[] getDoubleValues(java.io.Serializable value) {
+	public double[] getDoubleValues(java.lang.Object value) {
 		return GetterUtil.getDoubleValues(value);
 	}
 
-	public double[] getDoubleValues(java.io.Serializable value,
+	public double[] getDoubleValues(java.lang.Object value,
 		double[] defaultValue) {
 		return GetterUtil.getDoubleValues(value, defaultValue);
 	}
@@ -203,11 +203,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getDoubleValues(values, defaultValue);
 	}
 
-	public float getFloat(java.io.Serializable value) {
+	public float getFloat(java.lang.Object value) {
 		return GetterUtil.getFloat(value);
 	}
 
-	public float getFloat(java.io.Serializable value, float defaultValue) {
+	public float getFloat(java.lang.Object value, float defaultValue) {
 		return GetterUtil.getFloat(value, defaultValue);
 	}
 
@@ -219,12 +219,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getFloat(value, defaultValue);
 	}
 
-	public float[] getFloatValues(java.io.Serializable value) {
+	public float[] getFloatValues(java.lang.Object value) {
 		return GetterUtil.getFloatValues(value);
 	}
 
-	public float[] getFloatValues(java.io.Serializable value,
-		float[] defaultValue) {
+	public float[] getFloatValues(java.lang.Object value, float[] defaultValue) {
 		return GetterUtil.getFloatValues(value, defaultValue);
 	}
 
@@ -237,11 +236,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getFloatValues(values, defaultValue);
 	}
 
-	public int getInteger(java.io.Serializable value) {
+	public int getInteger(java.lang.Object value) {
 		return GetterUtil.getInteger(value);
 	}
 
-	public int getInteger(java.io.Serializable value, int defaultValue) {
+	public int getInteger(java.lang.Object value, int defaultValue) {
 		return GetterUtil.getInteger(value, defaultValue);
 	}
 
@@ -253,11 +252,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getInteger(value, defaultValue);
 	}
 
-	public int[] getIntegerValues(java.io.Serializable value) {
+	public int[] getIntegerValues(java.lang.Object value) {
 		return GetterUtil.getIntegerValues(value);
 	}
 
-	public int[] getIntegerValues(java.io.Serializable value, int[] defaultValue) {
+	public int[] getIntegerValues(java.lang.Object value, int[] defaultValue) {
 		return GetterUtil.getIntegerValues(value, defaultValue);
 	}
 
@@ -269,11 +268,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getIntegerValues(values, defaultValue);
 	}
 
-	public long getLong(java.io.Serializable value) {
+	public long getLong(java.lang.Object value) {
 		return GetterUtil.getLong(value);
 	}
 
-	public long getLong(java.io.Serializable value, long defaultValue) {
+	public long getLong(java.lang.Object value, long defaultValue) {
 		return GetterUtil.getLong(value, defaultValue);
 	}
 
@@ -285,11 +284,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getLong(value, defaultValue);
 	}
 
-	public long[] getLongValues(java.io.Serializable value) {
+	public long[] getLongValues(java.lang.Object value) {
 		return GetterUtil.getLongValues(value);
 	}
 
-	public long[] getLongValues(java.io.Serializable value, long[] defaultValue) {
+	public long[] getLongValues(java.lang.Object value, long[] defaultValue) {
 		return GetterUtil.getLongValues(value, defaultValue);
 	}
 
@@ -301,11 +300,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getLongValues(values, defaultValue);
 	}
 
-	public java.lang.Number getNumber(java.io.Serializable value) {
+	public java.lang.Number getNumber(java.lang.Object value) {
 		return GetterUtil.getNumber(value);
 	}
 
-	public java.lang.Number getNumber(java.io.Serializable value,
+	public java.lang.Number getNumber(java.lang.Object value,
 		java.lang.Number defaultValue) {
 		return GetterUtil.getNumber(value, defaultValue);
 	}
@@ -328,11 +327,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getObject(value, defaultValue);
 	}
 
-	public short getShort(java.io.Serializable value) {
+	public short getShort(java.lang.Object value) {
 		return GetterUtil.getShort(value);
 	}
 
-	public short getShort(java.io.Serializable value, short defaultValue) {
+	public short getShort(java.lang.Object value, short defaultValue) {
 		return GetterUtil.getShort(value, defaultValue);
 	}
 
@@ -344,12 +343,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getShort(value, defaultValue);
 	}
 
-	public short[] getShortValues(java.io.Serializable value) {
+	public short[] getShortValues(java.lang.Object value) {
 		return GetterUtil.getShortValues(value);
 	}
 
-	public short[] getShortValues(java.io.Serializable value,
-		short[] defaultValue) {
+	public short[] getShortValues(java.lang.Object value, short[] defaultValue) {
 		return GetterUtil.getShortValues(value, defaultValue);
 	}
 
@@ -362,11 +360,11 @@ public class GetterUtil_IW {
 		return GetterUtil.getShortValues(values, defaultValue);
 	}
 
-	public java.lang.String getString(java.io.Serializable value) {
+	public java.lang.String getString(java.lang.Object value) {
 		return GetterUtil.getString(value);
 	}
 
-	public java.lang.String getString(java.io.Serializable value,
+	public java.lang.String getString(java.lang.Object value,
 		java.lang.String defaultValue) {
 		return GetterUtil.getString(value, defaultValue);
 	}

@@ -226,26 +226,11 @@ public class AssetCategoryFinderImpl
 			qPos.add(groupId);
 			qPos.add(name);
 
-			List<AssetCategory> list = q.list();
+			List<AssetCategory> categories = q.list();
 
-			if (list.size() == 0) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("No AssetCategory exists with the key ");
-				sb.append("{groupId=");
-				sb.append(groupId);
-				sb.append(", name=");
-				sb.append(name);
-				sb.append("}");
-
-				throw new NoSuchCategoryException(sb.toString());
+			if (!categories.isEmpty()) {
+				return categories.get(0);
 			}
-			else {
-				return list.get(0);
-			}
-		}
-		catch (NoSuchCategoryException nsee) {
-			throw nsee;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -253,6 +238,17 @@ public class AssetCategoryFinderImpl
 		finally {
 			closeSession(session);
 		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("No AssetCategory exists with the key ");
+		sb.append("{groupId=");
+		sb.append(groupId);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append("}");
+
+		throw new NoSuchCategoryException(sb.toString());
 	}
 
 	public List<AssetCategory> findByC_C(long classNameId, long classPK)

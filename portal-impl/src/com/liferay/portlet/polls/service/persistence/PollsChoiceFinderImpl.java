@@ -55,14 +55,13 @@ public class PollsChoiceFinderImpl
 			qPos.add(uuid);
 			qPos.add(groupId);
 
-			List<PollsChoice> list = q.list();
+			List<PollsChoice> choices = q.list();
 
-			if (list.isEmpty()) {
-				return null;
+			if (!choices.isEmpty()) {
+				return choices.get(0);
 			}
-			else {
-				return list.get(0);
-			}
+
+			return null;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -77,20 +76,19 @@ public class PollsChoiceFinderImpl
 
 		PollsChoice choice = fetchByUUID_G(uuid, groupId);
 
-		if (choice == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("No PollsChoice exists with the key {uuid=");
-			sb.append(uuid);
-			sb.append(", groupId=");
-			sb.append(groupId);
-			sb.append("}");
-
-			throw new NoSuchChoiceException(sb.toString());
-		}
-		else {
+		if (choice != null) {
 			return choice;
 		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("No PollsChoice exists with the key {uuid=");
+		sb.append(uuid);
+		sb.append(", groupId=");
+		sb.append(groupId);
+		sb.append("}");
+
+		throw new NoSuchChoiceException(sb.toString());
 	}
 
 }

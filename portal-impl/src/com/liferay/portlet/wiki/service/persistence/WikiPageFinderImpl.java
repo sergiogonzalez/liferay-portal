@@ -130,23 +130,11 @@ public class WikiPageFinderImpl
 
 			qPos.add(resourcePrimKey);
 
-			List<WikiPage> list = q.list();
+			List<WikiPage> pages = q.list();
 
-			if (list.size() == 0) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append("No WikiPage exists with the key {resourcePrimKey");
-				sb.append(resourcePrimKey);
-				sb.append("}");
-
-				throw new NoSuchPageException(sb.toString());
+			if (!pages.isEmpty()) {
+				return pages.get(0);
 			}
-			else {
-				return list.get(0);
-			}
-		}
-		catch (NoSuchPageException nspe) {
-			throw nspe;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -154,6 +142,14 @@ public class WikiPageFinderImpl
 		finally {
 			closeSession(session);
 		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("No WikiPage exists with the key {resourcePrimKey");
+		sb.append(resourcePrimKey);
+		sb.append("}");
+
+		throw new NoSuchPageException(sb.toString());
 	}
 
 	public List<WikiPage> findByCreateDate(

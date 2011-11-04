@@ -14,12 +14,15 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -90,6 +93,12 @@ public class SocialActivityDefinition implements Serializable {
 
 	public String getModelName() {
 		return _modelName;
+	}
+
+	public String getName(Locale locale) {
+		return LanguageUtil.get(
+			locale,
+			"social.activity." + _modelName + "." + _languageKey);
 	}
 
 	public boolean isCounterEnabled() {

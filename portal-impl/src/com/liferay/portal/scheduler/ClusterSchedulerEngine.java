@@ -749,16 +749,32 @@ public class ClusterSchedulerEngine
 	protected Lock lockMemorySchedulerCluster(String owner) throws Exception {
 		Lock lock = null;
 
-		if (owner == null) {
-			lock = LockLocalServiceUtil.lock(
-				_LOCK_CLASS_NAME, _LOCK_CLASS_NAME, _localClusterNodeAddress,
-				PropsValues.MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED);
-		}
-		else {
-			lock = LockLocalServiceUtil.lock(
-				_LOCK_CLASS_NAME, _LOCK_CLASS_NAME, owner,
-				_localClusterNodeAddress,
-				PropsValues.MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED);
+		while (true) {
+			try {
+				if (owner == null) {
+					lock = LockLocalServiceUtil.lock(
+						_LOCK_CLASS_NAME, _LOCK_CLASS_NAME,
+						_localClusterNodeAddress,
+						PropsValues.
+							MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED);
+				}
+				else {
+					lock = LockLocalServiceUtil.lock(
+						_LOCK_CLASS_NAME, _LOCK_CLASS_NAME, owner,
+						_localClusterNodeAddress,
+						PropsValues.
+							MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED);
+				}
+
+				break;
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to obtain memory scheduler cluster lock. " +
+							"Trying again.");
+				}
+			}
 		}
 
 		if (!lock.isNew()) {

@@ -34,45 +34,96 @@ import javax.naming.directory.Attributes;
  */
 public class LDAPUtil {
 
-	public static String getAttributeValue(
+	public static Object getAttributeObject(
 			Attributes attributes, Properties properties, String key)
 		throws NamingException {
 
 		String id = properties.getProperty(key);
 
-		return getAttributeValue(attributes, id);
+		return getAttributeObject(attributes, id);
 	}
 
-	public static String getAttributeValue(
+	public static Object getAttributeObject(
+			Attributes attributes, Properties properties, String key,
+			Object defaultValue)
+		throws NamingException {
+
+		String id = properties.getProperty(key);
+
+		return getAttributeObject(attributes, id, defaultValue);
+	}
+
+	public static Object getAttributeObject(Attributes attributes, String id)
+		throws NamingException {
+
+		return getAttributeObject(attributes, id, null);
+	}
+
+	public static Object getAttributeObject(
+			Attributes attributes, String id, Object defaultValue)
+		throws NamingException {
+
+		Attribute attribute = attributes.get(id);
+
+		if (attribute == null) {
+			return defaultValue;
+		}
+
+		Object object = attribute.get();
+
+		if (object == null) {
+			return defaultValue;
+		}
+
+		return object;
+	}
+
+	public static String getAttributeString(
+			Attributes attributes, Properties properties, String key)
+		throws NamingException {
+
+		String id = properties.getProperty(key);
+
+		return getAttributeString(attributes, id);
+	}
+
+	public static String getAttributeString(
 			Attributes attributes, Properties properties, String key,
 			String defaultValue)
 		throws NamingException {
 
 		String id = properties.getProperty(key);
 
-		return getAttributeValue(attributes, id, defaultValue);
+		return getAttributeString(attributes, id, defaultValue);
 	}
 
-	public static String getAttributeValue(Attributes attributes, String id)
+	public static String getAttributeString(Attributes attributes, String id)
 		throws NamingException {
 
-		return getAttributeValue(attributes, id, StringPool.BLANK);
+		return getAttributeString(attributes, id, StringPool.BLANK);
 	}
 
-	public static String getAttributeValue(
+	public static String getAttributeString(
 			Attributes attributes, String id, String defaultValue)
 		throws NamingException {
 
-		try {
-			Attribute attribute = attributes.get(id);
+		Attribute attribute = attributes.get(id);
 
-			Object obj = attribute.get();
-
-			return obj.toString();
-		}
-		catch (NullPointerException npe) {
+		if (attribute == null) {
 			return defaultValue;
 		}
+
+		Object object = attribute.get();
+
+		if (object == null) {
+			return defaultValue;
+		}
+
+		return object.toString();
+	}
+
+	public static String getFullProviderURL(String baseURL, String baseDN) {
+		return baseURL + StringPool.SLASH + baseDN;
 	}
 
 	public static Date parseDate(String date) throws Exception {
@@ -104,10 +155,6 @@ public class LDAPUtil {
 			format);
 
 		return dateFormat.parse(date);
-	}
-
-	public static String getFullProviderURL(String baseURL, String baseDN) {
-		return baseURL + StringPool.SLASH + baseDN;
 	}
 
 }

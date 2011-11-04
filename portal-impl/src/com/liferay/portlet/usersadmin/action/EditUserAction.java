@@ -512,6 +512,12 @@ public class EditUserAction extends PortletAction {
 
 		User user = PortalUtil.getSelectedUser(actionRequest);
 
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		if (deleteLogo) {
+			UserServiceUtil.deletePortrait(user.getUserId());
+		}
+
 		Contact contact = user.getContact();
 
 		String oldPassword = AdminUtil.getUpdateUserPassword(
@@ -629,13 +635,6 @@ public class EditUserAction extends PortletAction {
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;
-		}
-
-		boolean deletePortrait = ParamUtil.getBoolean(
-			actionRequest, "deletePortrait");
-
-		if (deletePortrait) {
-			UserServiceUtil.deletePortrait(user.getUserId());
 		}
 
 		if (user.getUserId() == themeDisplay.getUserId()) {

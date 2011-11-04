@@ -446,26 +446,11 @@ public class JournalArticleFinderImpl
 			qPos.add(resourcePrimKey);
 			qPos.add(displayDate_TS);
 
-			List<JournalArticle> list = q.list();
+			List<JournalArticle> articles = q.list();
 
-			if (list.size() == 0) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("No JournalArticle exists with the key ");
-				sb.append("{resourcePrimKey=");
-				sb.append(resourcePrimKey);
-				sb.append(", displayDate=");
-				sb.append(displayDate);
-				sb.append("}");
-
-				throw new NoSuchArticleException(sb.toString());
+			if (!articles.isEmpty()) {
+				return articles.get(0);
 			}
-			else {
-				return list.get(0);
-			}
-		}
-		catch (NoSuchArticleException nsae) {
-			throw nsae;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -473,6 +458,17 @@ public class JournalArticleFinderImpl
 		finally {
 			closeSession(session);
 		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("No JournalArticle exists with the key ");
+		sb.append("{resourcePrimKey=");
+		sb.append(resourcePrimKey);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
+		sb.append("}");
+
+		throw new NoSuchArticleException(sb.toString());
 	}
 
 	public List<JournalArticle> findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(

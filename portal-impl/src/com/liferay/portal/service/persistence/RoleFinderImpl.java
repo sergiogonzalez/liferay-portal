@@ -375,10 +375,10 @@ public class RoleFinderImpl
 			qPos.add(companyId);
 			qPos.add(name);
 
-			List<Role> list = q.list();
+			List<Role> roles = q.list();
 
-			if (!list.isEmpty()) {
-				return list.get(0);
+			if (!roles.isEmpty()) {
+				return roles.get(0);
 			}
 		}
 		catch (Exception e) {
