@@ -148,7 +148,55 @@ pageContext.setAttribute("portletURL", portletURL);
 
 			sb.append("<br />");
 			sb.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
-		}
+		}else{
+            boolean organizationUser = false;
+            LinkedHashMap organizationParams = new LinkedHashMap();
+            organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
+            int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams);
+            List<Organization> organizationsGroups = OrganizationLocalServiceUtil.search(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams, 0, organizationsCount);
+
+            for(Organization organization : organizationsGroups){
+                for(long organizationId : user.getOrganizationIds()){
+                    if(organizationId == organization.getOrganizationId()){
+    %>
+
+                        <liferay-util:buffer var="userHelpIcon">
+                            <liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "user-belongs-to-x-organization", LanguageUtil.get(pageContext, organization.getName())) %>' />
+                        </liferay-util:buffer>
+
+    <%
+                        sb.append(userHelpIcon);
+                        organizationUser = true;
+                        break;
+                    }
+                }
+            }
+            row.setParameter("organizationUser", organizationUser);
+
+            if(organizationUser == false){
+                LinkedHashMap userGroupParams = new LinkedHashMap();
+                userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
+                int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, null, userGroupParams);
+                List<UserGroup> userGroupsGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), null, null, userGroupParams, 0, userGroupsCount, null);
+
+                for(UserGroup userGroup : userGroupsGroups){
+                    for(long userGroupId : user.getUserGroupIds()){
+                        if(userGroupId == userGroup.getUserGroupId()){
+    %>
+
+                            <liferay-util:buffer var="userHelpIcon2">
+                                <liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "user-belongs-to-x-user-group", LanguageUtil.get(pageContext, userGroup.getName())) %>' />
+                            </liferay-util:buffer>
+
+    <%
+                            sb.append(userHelpIcon2);
+                            row.setParameter("userGroupUser", true);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
 		row.addText(sb.toString());
 
