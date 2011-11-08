@@ -62,6 +62,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
@@ -231,7 +232,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		validate(subject, body);
 
 		subject = getSubject(subject, body);
-		body = getBody(subject, body);
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
@@ -1363,7 +1363,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		validate(subject, body);
 
 		subject = getSubject(subject, body);
-		body = getBody(subject, body);
 
 		message.setModifiedDate(serviceContext.getModifiedDate(now));
 		message.setSubject(subject);
@@ -1786,14 +1785,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected String getBody(String subject, String body) {
-		if (Validator.isNull(body)) {
-			return subject;
-		}
-
-		return body;
-	}
-
 	protected String getSubject(String subject, String body) {
 		if (Validator.isNull(subject)) {
 			return StringUtil.shorten(body);
@@ -2120,9 +2111,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	protected void validate(String subject, String body)
 		throws PortalException {
 
-		if (Validator.isNull(subject) && Validator.isNull(body)) {
+		if (Validator.isNull(subject)) {
 			throw new MessageSubjectException();
 		}
+
+        if (Validator.isNull(body)) {
+            throw new MessageBodyException();
+        }
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -162,6 +162,12 @@
 		</for>
 	</target>
 
+	<target name="build-dist-plugins">
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.includes.required}</echo>
+
+		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
+	</target>
+
 	<target name="build-dist-resin">
 		<antcall target="unzip-resin" />
 
@@ -659,9 +665,7 @@ know what you are doing as it can cause loss of data.
 
 		<antcall target="zip-portal-war" />
 
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.includes.required}</echo>
-
-		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
+		<antcall target="build-dist-plugins" />
 
 		<antcall target="build-dist-geronimo" />
 		<antcall target="build-dist-glassfish" />
@@ -1362,11 +1366,12 @@ sh startWebLogic.sh</echo>
 			<available file="${zip.executable.dir}/../data" />
 			<then>
 				<delete dir="${zip.executable.dir}/../patching-tool" />
-				<mkdir dir="${zip.executable.dir}/../patching-tool" />
 
 				<if>
 					<available file="${patching.tool.source.dir}" type="dir" />
 					<then>
+						<mkdir dir="${zip.executable.dir}/../patching-tool" />
+
 						<copy todir="${zip.executable.dir}/../patching-tool">
 							<fileset
 								dir="${patching.tool.source.dir}/scripts"
