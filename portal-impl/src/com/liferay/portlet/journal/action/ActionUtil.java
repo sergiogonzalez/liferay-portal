@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -41,6 +42,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionUtil {
 
 	public static void getArticle(HttpServletRequest request) throws Exception {
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
 		long groupId = ParamUtil.getLong(request, "groupId");
 		long classNameId = ParamUtil.getLong(request, "classNameId");
 		long classPK = ParamUtil.getLong(request, "classPK");
@@ -49,7 +52,7 @@ public class ActionUtil {
 
 		JournalArticle article = null;
 
-		if (Validator.isNotNull(articleId)) {
+		if (!cmd.equals(Constants.ADD) && Validator.isNotNull(articleId)) {
 			article = JournalArticleServiceUtil.getLatestArticle(
 				groupId, articleId, WorkflowConstants.STATUS_ANY);
 		}

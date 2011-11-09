@@ -611,6 +611,8 @@ public class PropsValues {
 
 	public static final String[] IG_IMAGE_THUMBNAIL_MIME_TYPES = PropsUtil.getArray(PropsKeys.IG_IMAGE_THUMBNAIL_MIME_TYPES);
 
+	public static final boolean IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED));
+
 	public static final boolean IG_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IG_PUBLISH_TO_LIVE_BY_DEFAULT));
 
 	public static final boolean IMAGE_AUTO_SCALE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGE_AUTO_SCALE));
@@ -1057,6 +1059,8 @@ public class PropsValues {
 
 	public static final boolean ORGANIZATIONS_USER_GROUP_MEMBERSHIP_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_USER_GROUP_MEMBERSHIP_ENABLED));
 
+	public static final boolean OSGI_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.OSGI_ENABLED));
+
 	public static final int OSGI_FRAMEWORK_BEGINNING_START_LEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.OSGI_FRAMEWORK_BEGINNING_START_LEVEL));
 
 	public static final String OSGI_FRAMEWORK_STORAGE = PropsUtil.get(PropsKeys.OSGI_FRAMEWORK_STORAGE);
@@ -1498,6 +1502,8 @@ public class PropsValues {
 	public static final String WEB_SERVER_PROTOCOL = PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL);
 
 	public static final boolean WEB_SERVER_PROXY_LEGACY_MODE =  GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_PROXY_LEGACY_MODE));
+
+	public static final boolean WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED));
 
 	public static final String[] WEBDAV_IGNORE = PropsUtil.getArray(PropsKeys.WEBDAV_IGNORE);
 

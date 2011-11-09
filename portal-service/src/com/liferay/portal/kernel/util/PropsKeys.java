@@ -755,6 +755,8 @@ public interface PropsKeys {
 
 	public static final String IG_IMAGE_THUMBNAIL_MIME_TYPES = "ig.image.thumbnail.mime.types";
 
+	public static final String IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = "ig.previous.and.next.navigation.enabled";
+
 	public static final String IG_PUBLISH_TO_LIVE_BY_DEFAULT = "ig.publish.to.live.by.default";
 
 	public static final String IMAGE_AUTO_SCALE = "image.auto.scale";
@@ -1471,6 +1473,8 @@ public interface PropsKeys {
 
 	public static final String ORGANIZATIONS_USER_GROUP_MEMBERSHIP_ENABLED = "organizations.user.group.membership.enabled";
 
+	public static final String OSGI_ENABLED = "osgi.enabled";
+
 	public static final String OSGI_FRAMEWORK_BEGINNING_START_LEVEL = "osgi.framework.beginning.start.level";
 
 	public static final String OSGI_FRAMEWORK_STORAGE = "osgi.framework.storage";
@@ -2062,6 +2066,8 @@ public interface PropsKeys {
 	public static final String WEB_SERVER_PROTOCOL = "web.server.protocol";
 
 	public static final String WEB_SERVER_PROXY_LEGACY_MODE = "web.server.proxy.legacy.mode";
+
+	public static final String WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED = "web.server.servlet.directory.indexing.enabled";
 
 	public static final String WEBDAV_IGNORE = "webdav.ignore";
 

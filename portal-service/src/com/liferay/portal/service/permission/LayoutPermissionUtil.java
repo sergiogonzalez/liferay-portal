@@ -48,11 +48,31 @@ public class LayoutPermissionUtil {
 	}
 
 	public static boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			boolean checkResourcePermission, String actionId)
+		throws PortalException, SystemException {
+
+		return getLayoutPermission().contains(
+			permissionChecker, layout, checkResourcePermission, actionId);
+	}
+
+	public static boolean contains(
 			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws PortalException, SystemException {
 
 		return getLayoutPermission().contains(
 			permissionChecker, layout, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			String controlPanelCategory, boolean checkResourcePermission,
+			String actionId)
+		throws PortalException, SystemException {
+
+		return getLayoutPermission().contains(
+			permissionChecker, layout, controlPanelCategory,
+			checkResourcePermission, actionId);
 	}
 
 	public static boolean contains(

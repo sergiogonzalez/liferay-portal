@@ -78,6 +78,15 @@ public class LayoutPermissionImpl implements LayoutPermission {
 	}
 
 	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			boolean checkResourcePermission, String actionId)
+		throws PortalException, SystemException {
+
+		return contains(
+			permissionChecker, layout, null, checkResourcePermission, actionId);
+	}
+
+	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws PortalException, SystemException {
 
@@ -86,17 +95,65 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
+			String controlPanelCategory, boolean checkResourcePermission,
+			String actionId)
+		throws PortalException, SystemException {
+
+		return containsWithViewableGroup(
+			permissionChecker, layout, controlPanelCategory,
+			checkResourcePermission, actionId);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
 			String controlPanelCategory, String actionId)
 		throws PortalException, SystemException {
 
-		if (actionId.equals(ActionKeys.VIEW)) {
-			User user = UserLocalServiceUtil.getUserById(
-				permissionChecker.getUserId());
+		return contains(
+			permissionChecker, layout, controlPanelCategory, false, actionId);
+	}
 
-			return isViewableGroup(
-				user, layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), controlPanelCategory, permissionChecker);
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId,
+			boolean privateLayout, long layoutId, String actionId)
+		throws PortalException, SystemException {
+
+		return contains(
+			permissionChecker, groupId, privateLayout, layoutId, null,
+			actionId);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId,
+			boolean privateLayout, long layoutId, String controlPanelCategory,
+			String actionId)
+		throws PortalException, SystemException {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			groupId, privateLayout, layoutId);
+
+		if (isAttemptToModifyLockedLayout(layout, actionId)) {
+			return false;
 		}
+
+		return contains(
+			permissionChecker, layout, controlPanelCategory, actionId);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long plid, String actionId)
+		throws PortalException, SystemException {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		return contains(permissionChecker, layout, actionId);
+	}
+
+	protected boolean containsWithoutViewableGroup(
+			PermissionChecker permissionChecker, Layout layout,
+			String controlPanelCategory, boolean checkResourcePermission,
+			String actionId)
+		throws PortalException, SystemException {
 
 		if ((layout.isPrivateLayout() &&
 			 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) ||
@@ -121,8 +178,11 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			return false;
 		}
 
+		User user = UserLocalServiceUtil.getUserById(
+			permissionChecker.getUserId());
+
 		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&
-			!group.isUser()) {
+			!user.isDefaultUser() && !group.isUser()) {
 
 			// This is new way of doing an ownership check without having to
 			// have a userId field on the model. When the instance model was
@@ -162,7 +222,8 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			return true;
 		}
 
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
+			!actionId.equals(ActionKeys.VIEW)) {
 
 			// Check upward recursively to see if any pages above grant the
 			// action
@@ -222,40 +283,21 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			actionId);
 	}
 
-	public boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String actionId)
-		throws PortalException, SystemException {
-
-		return contains(
-			permissionChecker, groupId, privateLayout, layoutId, null,
-			actionId);
-	}
-
-	public boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String controlPanelCategory,
+	protected boolean containsWithViewableGroup(
+			PermissionChecker permissionChecker, Layout layout,
+			String controlPanelCategory, boolean checkResourcePermission,
 			String actionId)
 		throws PortalException, SystemException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			groupId, privateLayout, layoutId);
-
-		if (isAttemptToModifyLockedLayout(layout, actionId)) {
-			return false;
+		if (actionId.equals(ActionKeys.VIEW)) {
+			return isViewableGroup(
+				permissionChecker, layout, controlPanelCategory,
+				checkResourcePermission);
 		}
 
-		return contains(
-			permissionChecker, layout, controlPanelCategory, actionId);
-	}
-
-	public boolean contains(
-			PermissionChecker permissionChecker, long plid, String actionId)
-		throws PortalException, SystemException {
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		return contains(permissionChecker, layout, actionId);
+		return containsWithoutViewableGroup(
+			permissionChecker, layout, controlPanelCategory,
+			checkResourcePermission, actionId);
 	}
 
 	protected boolean isAttemptToModifyLockedLayout(
@@ -272,11 +314,11 @@ public class LayoutPermissionImpl implements LayoutPermission {
 	}
 
 	protected boolean isViewableGroup(
-			User user, long groupId, boolean privateLayout, long layoutId,
-			String controlPanelCategory, PermissionChecker permissionChecker)
+			PermissionChecker permissionChecker, Layout layout,
+			String controlPanelCategory, boolean checkResourcePermission)
 		throws PortalException, SystemException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = GroupLocalServiceUtil.getGroup(layout.getGroupId());
 
 		// Inactive sites are not viewable
 
@@ -297,7 +339,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		if (group.isUser()) {
 			long groupUserId = group.getClassPK();
 
-			if (groupUserId == user.getUserId()) {
+			if (groupUserId == permissionChecker.getUserId()) {
 				return true;
 			}
 			else {
@@ -307,7 +349,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 					return false;
 				}
 
-				if (privateLayout) {
+				if (layout.isPrivateLayout()) {
 					if (UserPermissionUtil.contains(
 							permissionChecker, groupUserId,
 							groupUser.getOrganizationIds(),
@@ -331,7 +373,8 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 		if (group.isStagingGroup()) {
 			if (GroupPermissionUtil.contains(
-					permissionChecker, groupId, ActionKeys.VIEW_STAGING)) {
+					permissionChecker, group.getGroupId(),
+					ActionKeys.VIEW_STAGING)) {
 
 				return true;
 			}
@@ -339,9 +382,10 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			return false;
 		}
 
-		// Most public layouts are viewable
+		if (containsWithoutViewableGroup(
+				permissionChecker, layout, controlPanelCategory,
+				checkResourcePermission, ActionKeys.VIEW)) {
 
-		if (!privateLayout) {
 			return true;
 		}
 
@@ -367,14 +411,17 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		// or by users who can update the site
 
 		if (group.isSite()) {
-			if (GroupLocalServiceUtil.hasUserGroup(user.getUserId(), groupId)) {
+			if (GroupLocalServiceUtil.hasUserGroup(
+					permissionChecker.getUserId(), group.getGroupId())) {
+
 				return true;
 			}
 			else if (GroupPermissionUtil.contains(
-						permissionChecker, groupId,
+						permissionChecker, group.getGroupId(),
 						ActionKeys.MANAGE_LAYOUTS) ||
 					 GroupPermissionUtil.contains(
-						permissionChecker, groupId, ActionKeys.UPDATE)) {
+						permissionChecker, group.getGroupId(),
+						ActionKeys.UPDATE)) {
 
 				return true;
 			}
@@ -410,7 +457,8 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			long organizationId = group.getOrganizationId();
 
 			if (OrganizationLocalServiceUtil.hasUserOrganization(
-					user.getUserId(), organizationId, false, true, false)) {
+					permissionChecker.getUserId(), organizationId, false, true,
+					false)) {
 
 				return true;
 			}
@@ -423,7 +471,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
 				List<Organization> userOrgs =
 					OrganizationLocalServiceUtil.getUserOrganizations(
-						user.getUserId(), true);
+						permissionChecker.getUserId(), true);
 
 				for (Organization organization : userOrgs) {
 					for (Organization ancestorOrganization :
