@@ -94,6 +94,11 @@
 		<tag-class>com.liferay.taglib.ui.AssetLinksTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>assetEntryId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -985,6 +990,11 @@
 		<tag-class>com.liferay.taglib.ui.InputAssetLinksTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>assetEntryId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1247,6 +1257,11 @@
 		<attribute>
 			<name>model</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>placeholder</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

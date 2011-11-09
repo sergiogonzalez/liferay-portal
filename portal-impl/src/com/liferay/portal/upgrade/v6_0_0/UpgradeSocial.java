@@ -82,8 +82,6 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected Object[] getGroup(long groupId) throws Exception {
-		Object[] group = null;
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -97,23 +95,21 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
 
-				group = new Object[] {classNameId, classPK};
+				return new Object[] {classNameId, classPK};
 			}
+
+			return null;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-
-		return group;
 	}
 
 	protected Object[] getLayout(long plid) throws Exception {
-		Object[] layout = null;
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -127,17 +123,17 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				long groupId = rs.getLong("groupId");
 
-				layout = new Object[] {groupId};
+				return new Object[] {groupId};
 			}
+
+			return null;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-
-		return layout;
 	}
 
 	protected void updateGroupId() throws Exception {

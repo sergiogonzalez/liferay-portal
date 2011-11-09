@@ -239,8 +239,6 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected Object[] getImage(long imageId) throws Exception {
-		Object[] image = null;
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -253,18 +251,18 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				String type = rs.getString("type_");
 				long size = rs.getLong("size_");
 
-				image = new Object[] {type, size};
+				return new Object[] {type, size};
 			}
+
+			return null;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-
-		return image;
 	}
 
 	protected void migrateFile(

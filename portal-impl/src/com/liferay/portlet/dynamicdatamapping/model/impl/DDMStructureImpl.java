@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.model.CacheField;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,7 +45,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public List<String> getAvailableLocales() {
-		Document document = _getDocument();
+		Document document = getDocument();
 
 		Element rootElement = document.getRootElement();
 
@@ -55,11 +56,25 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public String getDefaultLocale() {
-		Document document = _getDocument();
+		Document document = getDocument();
 
 		Element rootElement = document.getRootElement();
 
 		return rootElement.attributeValue("default-locale");
+	}
+
+	@Override
+	public Document getDocument() {
+		if (_document == null) {
+			try {
+				_document = SAXReaderUtil.read(getXsd());
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		return _document;
 	}
 
 	public String getFieldDataType(String fieldName) {
@@ -128,7 +143,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 			XPath xPathSelector = SAXReaderUtil.createXPath(sb.toString());
 
-			Node node = xPathSelector.selectSingleNode(_getDocument());
+			Node node = xPathSelector.selectSingleNode(getDocument());
 
 			if (node != null) {
 				return _getField(
@@ -142,6 +157,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return null;
 	}
 
+	@Override
 	public Map<String, Map<String, String>> getFieldsMap() {
 		return _getFieldsMap(getDefaultLocale());
 	}
@@ -161,24 +177,21 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
+	public void setDocument(Document document) {
+		_document = document;
+	}
+
+	@Override
+	public void setFieldsMap(Map<String, Map<String, String>> fieldsMap) {
+		_fieldsMap = fieldsMap;
+	}
+
+	@Override
 	public void setXsd(String xsd) {
 		super.setXsd(xsd);
 
 		_document = null;
 		_fieldsMap = null;
-	}
-
-	private Document _getDocument() {
-		if (_document == null) {
-			try {
-				_document = SAXReaderUtil.read(getXsd());
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		return _document;
 	}
 
 	private Map<String, String> _getField(Element element, String locale) {
@@ -228,7 +241,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 						"//dynamic-element[@dataType]");
 
 					List<Node> nodes = xPathSelector.selectNodes(
-						_getDocument());
+						getDocument());
 
 					Iterator<Node> itr = nodes.iterator();
 
@@ -248,7 +261,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);
 
+	@CacheField
 	private Document _document;
+
+	@CacheField
 	private Map<String, Map<String, String>> _fieldsMap;
 
 }

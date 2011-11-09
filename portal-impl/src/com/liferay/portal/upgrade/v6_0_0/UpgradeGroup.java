@@ -34,8 +34,6 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected Object[] getLayout(long plid) throws Exception {
-		Object[] layout = null;
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -49,17 +47,17 @@ public class UpgradeGroup extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				long groupId = rs.getLong("groupId");
 
-				layout = new Object[] {groupId};
+				return new Object[] {groupId};
 			}
+
+			return null;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-
-		return layout;
 	}
 
 	protected void updateParentGroupId() throws Exception {

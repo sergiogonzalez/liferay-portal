@@ -104,10 +104,9 @@ AUI().add(
 						var formNode = instance.formNode;
 						var formValidator = instance.formValidator;
 
-						formValidator.on('submit', instance._onValidatorSubmit, instance);
+						formValidator.on('submit', A.bind('_onValidatorSubmit', instance));
 
-						formNode.delegate('blur', instance._onFieldFocusChange, 'button,input,select,textarea', instance);
-						formNode.delegate('focus', instance._onFieldFocusChange, 'button,input,select,textarea', instance);
+						formNode.delegate(['blur', 'focus'], A.bind('_onFieldFocusChange', instance), 'button,input,select,textarea');
 					},
 
 					_defaultSubmitFn: function(event) {

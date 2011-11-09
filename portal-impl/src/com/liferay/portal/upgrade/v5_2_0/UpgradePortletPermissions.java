@@ -86,8 +86,6 @@ public class UpgradePortletPermissions extends UpgradeProcess {
 	}
 
 	protected Object[] getLayout(long plid) throws Exception {
-		Object[] layout = null;
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -101,18 +99,18 @@ public class UpgradePortletPermissions extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 
-				layout = new Object[] {groupId, companyId};
+				return new Object[] {groupId, companyId};
 			}
+
+			return null;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-
-		return layout;
 	}
 
 	protected long getPortletPermissionsCount(

@@ -91,7 +91,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ser
 	</#list>
 
 	<#list cacheFields as cacheField>
-		public ${cacheField.type.fullyQualifiedName} ${cacheField.name};
+		public ${cacheField.type.genericValue} ${cacheField.name};
 	</#list>
 
 }

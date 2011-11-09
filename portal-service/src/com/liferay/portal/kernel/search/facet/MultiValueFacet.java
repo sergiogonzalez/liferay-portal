@@ -103,7 +103,6 @@ public class MultiValueFacet extends BaseFacet {
 			facetQuery, BooleanClauseOccur.MUST.getName());
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		MultiValueFacet.class);
+	private static Log _log = LogFactoryUtil.getLog(MultiValueFacet.class);
 
 }

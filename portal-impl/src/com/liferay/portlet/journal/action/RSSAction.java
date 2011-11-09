@@ -90,7 +90,9 @@ public class RSSAction extends PortletAction {
 		OutputStream outputStream = resourceResponse.getPortletOutputStream();
 
 		try {
-			outputStream.write(getRSS(resourceRequest, resourceResponse));
+			byte[] bytes = getRSS(resourceRequest, resourceResponse);
+
+			outputStream.write(bytes);
 		}
 		finally {
 			outputStream.close();

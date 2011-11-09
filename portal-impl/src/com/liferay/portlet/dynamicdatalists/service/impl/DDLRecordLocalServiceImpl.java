@@ -17,6 +17,8 @@ package com.liferay.portlet.dynamicdatalists.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -25,9 +27,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
@@ -35,6 +40,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 import com.liferay.portlet.dynamicdatalists.util.comparator.DDLRecordVersionVersionComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -159,6 +165,19 @@ public class DDLRecordLocalServiceImpl
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 				record.getCompanyId(), record.getGroupId(),
 				DDLRecord.class.getName(), recordVersion.getPrimaryKey());
+		}
+
+		// Document library
+
+		try {
+			DLStoreUtil.deleteDirectory(
+				record.getCompanyId(), CompanyConstants.SYSTEM,
+				DDLUtil.getRecordFileUploadPath(record));
+		}
+		catch (NoSuchDirectoryException nsde) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsde.getMessage());
+			}
 		}
 	}
 
@@ -563,5 +582,8 @@ public class DDLRecordLocalServiceImpl
 
 		ddlRecordVersionPersistence.update(recordVersion, false);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DDLRecordLocalServiceImpl.class);
 
 }

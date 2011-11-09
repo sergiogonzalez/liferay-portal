@@ -445,135 +445,126 @@ public class ArrayUtil {
 		if ((array == null) || (array.length == 0)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value == array[i]) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value == array[i]) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static boolean contains(byte[] array, byte value) {
 		if ((array == null) || (array.length == 0)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value == array[i]) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value == array[i]) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static boolean contains(char[] array, char value) {
 		if ((array == null) || (array.length == 0)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value == array[i]) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value == array[i]) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static boolean contains(double[] array, double value) {
 		if ((array == null) || (array.length == 0)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value == array[i]) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value == array[i]) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static boolean contains(float[] array, float value) {
 		if ((array == null) || (array.length == 0)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value == array[i]) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value == array[i]) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static boolean contains(int[] array, int value) {
 		if ((array == null) || (array.length == 0)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value == array[i]) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value == array[i]) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static boolean contains(long[] array, long value) {
 		if ((array == null) || (array.length == 0)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value == array[i]) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value == array[i]) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static boolean contains(Object[] array, Object value) {
 		if ((array == null) || (array.length == 0) || (value == null)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value.equals(array[i])) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value.equals(array[i])) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static boolean contains(short[] array, short value) {
 		if ((array == null) || (array.length == 0)) {
 			return false;
 		}
-		else {
-			for (int i = 0; i < array.length; i++) {
-				if (value == array[i]) {
-					return true;
-				}
-			}
 
-			return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value == array[i]) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	public static String[] distinct(String[] array) {

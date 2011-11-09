@@ -38,6 +38,27 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
+Set<Long> parentPlids = new HashSet<Long>();
+
+long parentPlid = refererPlid;
+
+while (parentPlid > 0) {
+	try {
+		Layout parentLayout = LayoutLocalServiceUtil.getLayout(parentPlid);
+
+		if (parentLayout.isRootLayout()) {
+			break;
+		}
+
+		parentPlid = parentLayout.getParentPlid();
+
+		parentPlids.add(parentPlid);
+	}
+	catch (Exception e) {
+		break;
+	}
+}
+
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
 String layoutSetBranchName = StringPool.BLANK;
@@ -302,7 +323,7 @@ String[][] categorySections = {mainSections};
 
 			if (action == '<%= Constants.DELETE %>') {
 				<c:choose>
-					<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) %>">
+					<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) || parentPlids.contains(selPlid) %>">
 						alert('<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-this-page-because-you-are-currently-accessing-this-page") %>');
 
 						return false;

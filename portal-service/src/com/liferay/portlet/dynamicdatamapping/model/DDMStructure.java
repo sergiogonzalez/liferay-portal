@@ -35,6 +35,8 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public java.lang.String getDefaultLocale();
 
+	public com.liferay.portal.kernel.xml.Document getDocument();
+
 	public java.lang.String getFieldDataType(java.lang.String fieldName);
 
 	public boolean getFieldDisplayChildLabelAsValue(java.lang.String fieldName);
@@ -71,6 +73,11 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public java.lang.String getFieldType(java.lang.String fieldName);
 
 	public boolean hasField(java.lang.String fieldName);
+
+	public void setDocument(com.liferay.portal.kernel.xml.Document document);
+
+	public void setFieldsMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> fieldsMap);
 
 	public void setXsd(java.lang.String xsd);
 }

@@ -127,10 +127,9 @@ for (Object result : results) {
 <%
 }
 
-ResourceURL rssURL = new PortletURLImpl(request, PortletKeys.BLOGS, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
+ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 
 rssURL.setCacheability(ResourceURL.FULL);
-
 rssURL.setParameter("struts_action", "/blogs/rss");
 
 if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.TYPE_DEFAULT) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {

@@ -128,6 +128,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 <aui:form action="<%= editFileEntry %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" />
 </aui:form>
 
 <c:if test="<%= folder != null %>">
@@ -231,7 +232,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						}
 						%>
 
-						<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" />
+						<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 					</span>
 
 					<span class="user-date">
@@ -250,8 +251,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<c:if test="<%= enableRelatedAssets %>">
 						<div class="entry-links">
 							<liferay-ui:asset-links
-								className="<%= DLFileEntryConstants.getClassName() %>"
-								classPK="<%= assetClassPK %>"
+								assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 							/>
 						</div>
 					</c:if>
@@ -894,6 +894,26 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						},
 
 					</c:if>
+				</c:if>
+
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
+
+					{
+
+						<portlet:renderURL var="viewFolderURL">
+							<portlet:param name="struts_action" value="/document_library/view" />
+							<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+						</portlet:renderURL>
+
+						handler: function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
+							document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
+							submitForm(document.<portlet:namespace />fm);
+						},
+						icon: 'delete',
+						label: '<liferay-ui:message key="delete" />'
+					},
+
 				</c:if>
 
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
