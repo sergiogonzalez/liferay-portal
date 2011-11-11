@@ -35,6 +35,7 @@ import com.liferay.portal.service.WebDAVPropsLocalServiceUtil;
 import com.liferay.util.xml.DocUtil;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -185,15 +186,6 @@ public abstract class BasePropMethodImpl implements Method {
 			Lock lock = resource.getLock();
 
 			if (lock != null) {
-				long now = System.currentTimeMillis();
-
-				long timeRemaining =
-					(lock.getExpirationDate().getTime() - now) / Time.SECOND;
-
-				if (timeRemaining <= 0) {
-					timeRemaining = 1;
-				}
-
 				Element lockDiscoveryElement = DocUtil.add(
 					successPropElement, LOCKDISCOVERY);
 
@@ -217,9 +209,31 @@ public abstract class BasePropMethodImpl implements Method {
 
 				DocUtil.add(
 					activeLockElement, createQName("owner"), lock.getOwner());
-				DocUtil.add(
-					activeLockElement, createQName("timeout"),
-					"Second-" + timeRemaining);
+
+				long timeRemaining = 0;
+
+				Date expirationDate = lock.getExpirationDate();
+
+				if (expirationDate != null) {
+					long now = System.currentTimeMillis();
+
+					timeRemaining =
+						(expirationDate.getTime() - now) / Time.SECOND;
+
+					if (timeRemaining <= 0) {
+						timeRemaining = 1;
+					}
+				}
+
+				if (timeRemaining > 0) {
+					DocUtil.add(
+						activeLockElement, createQName("timeout"),
+						"Second-" + timeRemaining);
+				}
+				else {
+					DocUtil.add(
+						activeLockElement, createQName("timeout"), "Infinite");
+				}
 
 				if (webDavRequest.getUserId() == lock.getUserId()) {
 					Element lockTokenElement = DocUtil.add(

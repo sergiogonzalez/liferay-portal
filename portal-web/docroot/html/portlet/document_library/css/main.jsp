@@ -468,8 +468,12 @@
 			}
 		}
 
-		.aui-icon-download, .aui-icon-edit, .aui-icon-lock, .aui-icon-move, .aui-icon-permissions, .aui-icon-unlock {
+		.aui-icon-delete, .aui-icon-download, .aui-icon-edit, .aui-icon-lock, .aui-icon-move, .aui-icon-permissions, .aui-icon-undo, .aui-icon-unlock {
 			background: url() no-repeat 0 0;
+		}
+
+		.aui-icon-delete {
+			background-image: url(<%= themeImagesPath %>/common/delete.png);
 		}
 
 		.aui-icon-download {
@@ -490,6 +494,10 @@
 
 		.aui-icon-permissions {
 			background-image: url(<%= themeImagesPath %>/common/permissions.png);
+		}
+
+		.aui-icon-undo {
+			background-image: url(<%= themeImagesPath %>/common/undo.png);
 		}
 
 		.aui-icon-unlock {
@@ -518,21 +526,18 @@
 		}
 	}
 
-	.view {
-		border: 1px solid #7B7B7B;
-
+	.lfr-app-column-view {
 		.portlet-msg-info, .portlet-msg-success {
 			border-width: 0 0 1px;
 			margin: 0 auto;
 		}
 
-		.view-content {
+		.lfr-app-column-view-content {
 			background-color: #FAFAFA;
 		}
 	}
 
 	.context-pane-content {
-		border-left: 1px solid #7B7B7B;
 		position: relative;
 	}
 
@@ -547,7 +552,7 @@
 		text-align: center;
 	}
 
-	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .view .taglib-search-iterator-page-iterator-bottom {
+	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .lfr-app-column-view .taglib-search-iterator-page-iterator-bottom {
 		bottom: 0;
 		left: 0;
 		position: absolute;

@@ -156,12 +156,12 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 }
 
 if (total == 0) {
-	if (!showPortletWithNoResults && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName))) {
+	if (!showPortletWithNoResults && ((addPortletURLs == null) || addPortletURLs.isEmpty()) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName))) {
 		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 	}
 %>
 
-	<p>
+	<div class="portlet-msg-info">
 		<c:choose>
 			<c:when test="<%= !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
 				<liferay-ui:message key="there-are-no-results" />
@@ -170,7 +170,7 @@ if (total == 0) {
 				<liferay-ui:message key="there-are-no-related-assets" />
 			</c:otherwise>
 		</c:choose>
-	</p>
+	</div>
 
 <%
 }

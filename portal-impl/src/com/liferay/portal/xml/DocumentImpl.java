@@ -15,6 +15,7 @@
 package com.liferay.portal.xml;
 
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Visitor;
 import com.liferay.util.xml.XMLFormatter;
@@ -43,7 +44,9 @@ public class DocumentImpl extends BranchImpl implements Document {
 		return this;
 	}
 
-	public Document addDocType(String name, String publicId, String systemId) {
+	public Document addDocumentType(
+		String name, String publicId, String systemId) {
+
 		_document.addDocType(name, publicId, systemId);
 
 		return this;
@@ -79,6 +82,10 @@ public class DocumentImpl extends BranchImpl implements Document {
 
 		return XMLFormatter.toString(
 			_document, indent, expandEmptyElements, trimText);
+	}
+
+	public DocumentType getDocumentType() {
+		return new DocumentTypeImpl(_document.getDocType());
 	}
 
 	public Element getRootElement() {

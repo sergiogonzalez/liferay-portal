@@ -23,6 +23,33 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 <aui:script use="aui-io-request,io-upload-iframe,liferay-portlet-dynamic-data-lists,liferay-portlet-url">
 	var SpreadSheet = Liferay.SpreadSheet;
 
+	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+
+	DEFAULTS_FORM_VALIDATOR.RULES.requiredFields = function(value) {
+		var spreadSheet = window.<portlet:namespace />spreadSheet;
+		var activeColumn = spreadSheet.selection.getActiveColumn();
+		var activeColumnKey = activeColumn.get('key');
+		var activeRecord = spreadSheet.selection.getActiveRecord();
+
+		var valid = true;
+
+		A.Array.each(
+			window.<portlet:namespace />structure,
+			function(item, index, collection) {
+				var fieldName = item.name;
+				var fieldValue = activeRecord.getValue(fieldName);
+
+				if (!fieldValue && (activeColumnKey !== fieldName) && (item.required === 'true')) {
+					valid = false;
+				}
+			}
+		);
+
+		return valid;
+	};
+
+	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = Liferay.Language.get('please-fill-out-all-required-fields');
+
 	var DLFileEntryCellEditor = A.Component.create(
 		{
 			NAME: 'document-library-file-entry-cell-editor',
@@ -130,34 +157,20 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					return instance.get('value');
 				},
 
-				_handleException: function(exception) {
+				uploadFile: function() {
 					var instance = this;
 
-					var errorMessage = '';
+					var elementName = instance.get('elementName');
+					var record = instance.get('record');
 
-					if (exception.indexOf('com.liferay.portlet.documentlibrary.FileSizeException') > -1) {
-						errorMessage = '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>';
-					}
-
-					instance._showErrorMessage(errorMessage);
-				},
-
-				_handleSaveEvent: function(event) {
-					var instance = this;
+					var recordData = record.get('data');
 
 					var portletURL = Liferay.PortletURL.createResourceURL();
 
-					portletURL.setParameter('fieldName', instance.get('elementName'));
-					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-
-					var record = instance.get('record');
-					var recordData = record.get('data');
-
-					if (recordData.recordId) {
-						portletURL.setParameter('recordId', recordData.recordId);
-					}
-
 					portletURL.setParameter('ddmStructureId', <%= ddmStructure.getStructureId() %>);
+					portletURL.setParameter('fieldName', elementName);
+					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+					portletURL.setParameter('recordId', recordData.recordId);
 					portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
 
 					portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
@@ -181,26 +194,82 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 							method: 'POST',
 							on: {
 								complete: function(ioEvent, id, xhr) {
-									instance._onUploadComplete.call(instance, event, xhr);
+									instance._onUploadComplete.call(instance, xhr);
 								}
 							}
 						}
 					);
 				},
 
-				_onUploadComplete: function(event, xhr) {
+				_handleException: function(exception) {
+					var instance = this;
+
+					var errorMessage = '';
+
+					if (exception.indexOf('com.liferay.portlet.documentlibrary.FileSizeException') > -1) {
+						errorMessage = '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>';
+					}
+
+					instance._showErrorMessage(errorMessage);
+				},
+
+				_handleSaveEvent: function(event) {
+					var instance = this;
+
+					var record = instance.get('record');
+
+					var recordData = record.get('data');
+
+					if (!recordData.recordId) {
+						var serviceParameterTypes = [
+							'long',
+							'long',
+							'int',
+							'java.util.Map<java.lang.String, java.io.Serializable>',
+							'com.liferay.portal.service.ServiceContext'
+						];
+
+						Liferay.Service.DDL.DDLRecord.addRecord(
+							{
+								groupId: themeDisplay.getScopeGroupId(),
+								recordsetId: <%= recordSet.getRecordSetId() %>,
+								displayIndex: 0,
+								fieldsMap: JSON.stringify({}),
+								serviceContext: JSON.stringify(
+									{
+										scopeGroupId: themeDisplay.getScopeGroupId(),
+										userId: themeDisplay.getUserId(),
+										workflowAction: Liferay.Workflow.ACTION_SAVE_DRAFT
+									}
+								),
+								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+							},
+							function(response) {
+								if (response.recordId > 0) {
+									recordData.recordId = response.recordId;
+								}
+
+								instance.uploadFile();
+							}
+						);
+					}
+					else {
+						instance.uploadFile();
+					}
+				},
+
+				_onUploadComplete: function(xhr) {
 					var instance = this;
 
 					var responseText = xhr.responseText;
 
 					if (responseText) {
 						var data = A.JSON.parse(responseText);
+
 						var exception = data.exception;
 
 						if (!exception) {
-							if (data.uuid) {
-								instance.set('value', responseText);
-							}
+							instance.set('value', responseText);
 
 							FileUploadCellEditor.superclass._handleSaveEvent.apply(instance, arguments);
 						}
@@ -220,6 +289,14 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					contentBox.prepend(messageNode);
 
 					setTimeout(A.fn('remove', messageNode, null), 5000);
+				},
+
+				_syncElementsFocus: function() {
+					var instance = this;
+
+					instance.elements.val('');
+
+					instance.validator.resetAllFields();
 				},
 
 				_uiSetValue: function(val) {

@@ -122,12 +122,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 <portlet:actionURL var="editFileEntry">
 	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editFileEntry %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 </aui:form>
 
 <c:if test="<%= folder != null %>">
@@ -231,7 +231,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						}
 						%>
 
-						<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" />
+						<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 					</span>
 
 					<span class="user-date">
@@ -250,8 +250,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<c:if test="<%= enableRelatedAssets %>">
 						<div class="entry-links">
 							<liferay-ui:asset-links
-								className="<%= DLFileEntryConstants.getClassName() %>"
-								classPK="<%= assetClassPK %>"
+								assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 							/>
 						</div>
 					</c:if>
@@ -284,9 +283,6 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<div>
 
 						<%
-						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileVersion.getMimeType());
-						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileVersion.getMimeType());
-
 						int previewFileCount = 0;
 						String previewFileURL = null;
 						String videoThumbnailURL = null;
@@ -318,8 +314,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							}
 						}
 
-						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(supportedAudio));
-						request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(supportedVideo));
+						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
+						request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
 
 						request.setAttribute("view_file_entry.jsp-previewFileURL", previewFileURL);
 						request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
@@ -333,7 +329,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test ="<%= !hasImages && !supportedAudio && !supportedVideo %>">
+									<c:when test ="<%= !hasImages && !hasAudio && !hasVideo %>">
 										<div class="lfr-preview-file" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content" id="<portlet:namespace />previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
@@ -378,7 +374,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 											</div>
 										</div>
 									</c:when>
-									<c:when test="<%= supportedAudio || supportedVideo %>">
+									<c:when test="<%= hasAudio || hasVideo %>">
 										<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
 										</div>
@@ -912,6 +908,28 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						},
 						icon: 'permissions',
 						label: '<liferay-ui:message key="permissions" />'
+					},
+
+				</c:if>
+
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
+
+					{
+
+						<portlet:renderURL var="viewFolderURL">
+							<portlet:param name="struts_action" value="/document_library/view" />
+							<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+						</portlet:renderURL>
+
+						handler: function(event) {
+							if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this-entry") %>')) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
+								document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
+								submitForm(document.<portlet:namespace />fm);
+							}
+						},
+						icon: 'delete',
+						label: '<liferay-ui:message key="delete" />'
 					}
 
 				</c:if>

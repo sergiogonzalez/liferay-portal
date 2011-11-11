@@ -23,7 +23,8 @@ public interface Document extends Branch {
 
 	public Document addComment(String comment);
 
-	public Document addDocType(String name, String publicId, String systemId);
+	public Document addDocumentType(
+		String name, String publicId, String systemId);
 
 	public String formattedString() throws IOException;
 
@@ -35,6 +36,8 @@ public interface Document extends Branch {
 	public String formattedString(
 			String indent, boolean expandEmptyElements, boolean trimText)
 		throws IOException;
+
+	public DocumentType getDocumentType();
 
 	public Element getRootElement();
 

@@ -217,6 +217,14 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return sb.toString();
 	}
 
+	protected long increment() throws Exception {
+		return CounterLocalServiceUtil.increment();
+	}
+
+	protected long increment(String name) throws Exception {
+		return CounterLocalServiceUtil.increment(name);
+	}
+
 	protected void initClass() {
 		clazz = getClass();
 		classLoader = clazz.getClassLoader();
@@ -368,8 +376,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		viewPath = actionPath;
 	}
 
-	protected void renderError(String message) {
-		portletRequest.setAttribute("message", message);
+	protected void renderError(String pattern, Object... arguments) {
+		portletRequest.setAttribute("arguments", arguments);
+		portletRequest.setAttribute("pattern", pattern);
 
 		render(_VIEW_PATH_ERROR);
 	}
@@ -437,7 +446,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		BeanPropertiesUtil.setProperties(baseModel, request);
 
 		if (baseModel.isNew()) {
-			baseModel.setPrimaryKeyObj(CounterLocalServiceUtil.increment());
+			baseModel.setPrimaryKeyObj(increment());
 		}
 
 		updateAuditedModel(baseModel);

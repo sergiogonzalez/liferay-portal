@@ -49,7 +49,7 @@ if (fileEntryType != null) {
 	}
 }
 
-String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields");
+String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields", "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE");
 %>
 
 <liferay-util:buffer var="removeStructureIcon">
@@ -146,6 +146,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 					width:680
 				},
 				saveCallback: '<%= renderResponse.getNamespace() + "selectDDMStructure" %>',
+				showGlobalScope: true,
 				showManageTemplates: false,
 				showToolbar: true,
 				storageType: 'xml',

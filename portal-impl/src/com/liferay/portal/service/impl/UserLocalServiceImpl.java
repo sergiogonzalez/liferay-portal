@@ -1684,8 +1684,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Social
 
 		socialActivityLocalService.deleteUserActivities(user.getUserId());
-		socialEquityLogLocalService.deactivateUserEquityLogs(user.getUserId());
-		socialEquityUserLocalService.deleteSocialEquityUser(user.getUserId());
 		socialRequestLocalService.deleteReceiverUserRequests(user.getUserId());
 		socialRequestLocalService.deleteUserRequests(user.getUserId());
 
@@ -3311,6 +3309,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			User user, String emailAddress, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		if (user.isEmailAddressVerified() &&
+			emailAddress.equalsIgnoreCase(user.getEmailAddress())) {
+
+			return;
+		}
+
 		Ticket ticket = ticketLocalService.addTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			TicketConstants.TYPE_EMAIL_ADDRESS, emailAddress, null,
@@ -3811,28 +3815,56 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		emailAddress1 = emailAddress1.trim().toLowerCase();
 		emailAddress2 = emailAddress2.trim().toLowerCase();
 
-		if (!emailAddress1.equals(emailAddress2)) {
-			throw new UserEmailAddressException();
-		}
-
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		validateEmailAddress(user.getCompanyId(), emailAddress1);
-		validateEmailAddress(user.getCompanyId(), emailAddress2);
-
-		if (!user.getEmailAddress().equalsIgnoreCase(emailAddress1)) {
-			if (userPersistence.fetchByC_EA(
-					user.getCompanyId(), emailAddress1) != null) {
-
-				throw new DuplicateUserEmailAddressException();
-			}
-		}
+		validateEmailAddress(user, emailAddress1, emailAddress2);
 
 		setEmailAddress(
 			user, password, user.getFirstName(), user.getMiddleName(),
 			user.getLastName(), emailAddress1);
 
 		userPersistence.update(user, false);
+
+		return user;
+	}
+
+	/**
+	 * Updates the user's email address or sends verification email.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  password the user's password
+	 * @param  emailAddress1 the user's new email address
+	 * @param  emailAddress2 the user's new email address confirmation
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User updateEmailAddress(
+			long userId, String password, String emailAddress1,
+			String emailAddress2, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		emailAddress1 = emailAddress1.trim().toLowerCase();
+		emailAddress2 = emailAddress2.trim().toLowerCase();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		validateEmailAddress(user, emailAddress1, emailAddress2);
+
+		Company company = companyPersistence.findByPrimaryKey(
+			user.getCompanyId());
+
+		if (!company.isStrangersVerify()) {
+			setEmailAddress(
+				user, password, user.getFirstName(), user.getMiddleName(),
+				user.getLastName(), emailAddress1);
+
+			userPersistence.update(user, false);
+		}
+		else {
+			sendEmailAddressVerification(user, emailAddress1, serviceContext);
+		}
 
 		return user;
 	}
@@ -4486,15 +4518,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		boolean oldActive = user.isActive();
-
 		user.setStatus(status);
 
 		userPersistence.update(user, false);
-
-		if (!user.isActive() && oldActive) {
-			socialEquityUserLocalService.clearRanks(user.getUserId());
-		}
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
@@ -4666,6 +4692,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
+		user.setFacebookId(facebookId);
 		user.setOpenId(openId);
 		user.setLanguageId(languageId);
 		user.setTimeZoneId(timeZoneId);
@@ -5456,6 +5483,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		for (String reservedEmailAddress : reservedEmailAddresses) {
 			if (emailAddress.equalsIgnoreCase(reservedEmailAddress)) {
 				throw new ReservedUserEmailAddressException();
+			}
+		}
+	}
+
+	protected void validateEmailAddress(
+			User user, String emailAddress1, String emailAddress2)
+		throws PortalException, SystemException {
+
+		if (!emailAddress1.equals(emailAddress2)) {
+			throw new UserEmailAddressException();
+		}
+
+		validateEmailAddress(user.getCompanyId(), emailAddress1);
+		validateEmailAddress(user.getCompanyId(), emailAddress2);
+
+		if (!emailAddress1.equalsIgnoreCase(user.getEmailAddress())) {
+			if (userPersistence.fetchByC_EA(
+					user.getCompanyId(), emailAddress1) != null) {
+
+				throw new DuplicateUserEmailAddressException();
 			}
 		}
 	}

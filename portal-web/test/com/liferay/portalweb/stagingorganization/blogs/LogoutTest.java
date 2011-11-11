@@ -22,8 +22,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class LogoutTest extends BaseTestCase {
 	public void testLogout() throws Exception {
-		selenium.open("/web/guest/home/");
-
 		for (int second = 0;; second++) {
 			if (second >= 90) {
 				fail("timeout");
@@ -40,7 +38,7 @@ public class LogoutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Sign Out", RuntimeVariables.replace(""));
+		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -49,7 +47,7 @@ public class LogoutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_58_login")) {
+				if (selenium.isElementPresent("//input[@id='_58_login']")) {
 					break;
 				}
 			}

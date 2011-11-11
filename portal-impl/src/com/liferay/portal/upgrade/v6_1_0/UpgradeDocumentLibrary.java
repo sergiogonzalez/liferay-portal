@@ -48,7 +48,7 @@ import java.util.Set;
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
-	protected void addDLSync(
+	protected void addSync(
 			long syncId, long companyId, Date createDate, Date modifiedDate,
 			long fileId, long repositoryId, long parentFolderId, String event,
 			String type)
@@ -386,7 +386,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long parentFolderId = rs.getLong("parentFolderId");
 				String type = rs.getString("type");
 
-				addDLSync(
+				addSync(
 					increment(), companyId, createDate, createDate, fileId,
 					groupId, parentFolderId, "add", type);
 			}
@@ -465,6 +465,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	private static Set<String> _imageMimeTypes = SetUtil.fromArray(
-		PropsValues.IG_IMAGE_THUMBNAIL_MIME_TYPES);
+		PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
 
 }

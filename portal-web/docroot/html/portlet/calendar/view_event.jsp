@@ -179,7 +179,7 @@ request.setAttribute("view_event.jsp-event", event);
 					<liferay-ui:message key="location" />:
 				</dt>
 				<dd>
-					<span class="location"><%= event.getLocation() %></span>
+					<span class="location"><%= HtmlUtil.escape(event.getLocation()) %></span>
 				</dd>
 			</c:if>
 		</dl>
@@ -223,8 +223,7 @@ request.setAttribute("view_event.jsp-event", event);
 		<c:if test="<%= enableRelatedAssets %>">
 			<div class="entry-links">
 				<liferay-ui:asset-links
-					className="<%= CalEvent.class.getName() %>"
-					classPK="<%= event.getEventId() %>"
+					assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 				/>
 			</div>
 		</c:if>

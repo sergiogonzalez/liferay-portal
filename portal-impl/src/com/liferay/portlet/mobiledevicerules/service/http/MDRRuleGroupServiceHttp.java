@@ -132,87 +132,16 @@ public class MDRRuleGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup copyRuleGroup(
-		HttpPrincipal httpPrincipal,
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup,
-		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
-					"copyRuleGroup", _copyRuleGroupParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					ruleGroup, groupId, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static void deleteRuleGroup(HttpPrincipal httpPrincipal,
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
-					"deleteRuleGroup", _deleteRuleGroupParameterTypes3);
+					"deleteRuleGroup", _deleteRuleGroupParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					ruleGroupId);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static void deleteRuleGroup(HttpPrincipal httpPrincipal,
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
-					"deleteRuleGroup", _deleteRuleGroupParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, ruleGroup);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -242,7 +171,7 @@ public class MDRRuleGroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
-					"fetchRuleGroup", _fetchRuleGroupParameterTypes5);
+					"fetchRuleGroup", _fetchRuleGroupParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					ruleGroupId);
@@ -279,7 +208,7 @@ public class MDRRuleGroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
-					"getRuleGroup", _getRuleGroupParameterTypes6);
+					"getRuleGroup", _getRuleGroupParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					ruleGroupId);
@@ -319,7 +248,7 @@ public class MDRRuleGroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
-					"updateRuleGroup", _updateRuleGroupParameterTypes7);
+					"updateRuleGroup", _updateRuleGroupParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					ruleGroupId, nameMap, descriptionMap, serviceContext);
@@ -359,23 +288,16 @@ public class MDRRuleGroupServiceHttp {
 			long.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _copyRuleGroupParameterTypes2 = new Class[] {
-			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup.class,
-			long.class, com.liferay.portal.service.ServiceContext.class
-		};
-	private static final Class<?>[] _deleteRuleGroupParameterTypes3 = new Class[] {
+	private static final Class<?>[] _deleteRuleGroupParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _deleteRuleGroupParameterTypes4 = new Class[] {
-			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup.class
-		};
-	private static final Class<?>[] _fetchRuleGroupParameterTypes5 = new Class[] {
+	private static final Class<?>[] _fetchRuleGroupParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getRuleGroupParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getRuleGroupParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateRuleGroupParameterTypes7 = new Class[] {
+	private static final Class<?>[] _updateRuleGroupParameterTypes5 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

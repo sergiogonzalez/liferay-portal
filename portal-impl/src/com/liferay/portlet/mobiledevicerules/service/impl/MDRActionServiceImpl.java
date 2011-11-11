@@ -65,12 +65,6 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 
 		MDRAction action = mdrActionPersistence.findByPrimaryKey(actionId);
 
-		deleteAction(action);
-	}
-
-	public void deleteAction(MDRAction action)
-		throws PortalException, SystemException {
-
 		MDRRuleGroupInstancePermissionUtil.check(
 			getPermissionChecker(), action.getRuleGroupInstanceId(),
 			ActionKeys.UPDATE);

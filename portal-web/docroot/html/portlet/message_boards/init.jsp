@@ -49,10 +49,9 @@ boolean threadAsQuestionByDefault = GetterUtil.getBoolean(preferences.getValue("
 String rssFormatType = RSSUtil.getFormatType(rssFormat);
 double rssFormatVersion = RSSUtil.getFormatVersion(rssFormat);
 
-ResourceURL rssURL = new PortletURLImpl(request, PortletKeys.MESSAGE_BOARDS, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
+ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 
 rssURL.setCacheability(ResourceURL.FULL);
-
 rssURL.setParameter("struts_action", "/message_boards/rss");
 
 if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.TYPE_DEFAULT) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {

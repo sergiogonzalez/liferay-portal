@@ -173,7 +173,23 @@ public class ServletResponseUtil {
 
 				response.setContentLength(contentLength);
 
-				response.flushBuffer();
+				try {
+					response.flushBuffer();
+				}
+				catch (NullPointerException npe) {
+
+					// http://java.net/jira/browse/GLASSFISH-17150
+
+					if (!ServerDetector.isGlassfish()) {
+						throw npe;
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Ignoring NullPointerException because of " +
+								"GLASSFISH-17150");
+					}
+				}
 
 				if (response instanceof ByteBufferServletResponse) {
 					ByteBufferServletResponse byteBufferResponse =
@@ -195,8 +211,8 @@ public class ServletResponseUtil {
 			}
 		}
 		catch (IOException ioe) {
-			if (ioe instanceof SocketException ||
-				ioe.getClass().getName().equals(_CLIENT_ABORT_EXCEPTION)) {
+			if ((ioe instanceof SocketException) ||
+				isClientAbortException(ioe)) {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(ioe);
@@ -235,8 +251,8 @@ public class ServletResponseUtil {
 			}
 		}
 		catch (IOException ioe) {
-			if (ioe instanceof SocketException ||
-				ioe.getClass().getName().equals(_CLIENT_ABORT_EXCEPTION)) {
+			if ((ioe instanceof SocketException) ||
+				isClientAbortException(ioe)) {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(ioe);
@@ -362,6 +378,19 @@ public class ServletResponseUtil {
 		}
 		else {
 			write(response, stringResponse.getString());
+		}
+	}
+
+	protected static boolean isClientAbortException(IOException ioe) {
+		Class<?> clazz = ioe.getClass();
+
+		String className = clazz.getName();
+
+		if (className.equals(_CLIENT_ABORT_EXCEPTION)) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 

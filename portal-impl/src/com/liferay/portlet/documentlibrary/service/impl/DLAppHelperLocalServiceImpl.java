@@ -157,7 +157,7 @@ public class DLAppHelperLocalServiceImpl
 
 	public void getFileAsStream(
 			long userId, FileEntry fileEntry, boolean incrementCounter)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		// File rank
 

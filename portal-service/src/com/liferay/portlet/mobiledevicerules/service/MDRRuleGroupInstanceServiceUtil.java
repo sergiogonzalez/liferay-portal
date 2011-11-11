@@ -65,13 +65,6 @@ public class MDRRuleGroupInstanceServiceUtil {
 		getService().deleteRuleGroupInstance(ruleGroupInstanceId);
 	}
 
-	public static void deleteRuleGroupInstance(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance ruleGroupInstance)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRuleGroupInstance(ruleGroupInstance);
-	}
-
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
 		java.lang.String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

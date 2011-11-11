@@ -57,25 +57,10 @@ public class MDRRuleGroupServiceUtil {
 		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
 	}
 
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup copyRuleGroup(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup,
-		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().copyRuleGroup(ruleGroup, groupId, serviceContext);
-	}
-
 	public static void deleteRuleGroup(long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteRuleGroup(ruleGroupId);
-	}
-
-	public static void deleteRuleGroup(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRuleGroup(ruleGroup);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchRuleGroup(

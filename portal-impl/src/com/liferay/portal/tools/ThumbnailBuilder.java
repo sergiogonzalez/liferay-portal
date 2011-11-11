@@ -65,10 +65,10 @@ public class ThumbnailBuilder {
 
 			ImageBag imageBag = _imageProcessorUtil.read(originalFile);
 
-			RenderedImage thumbnail = _imageProcessorUtil.scale(
+			RenderedImage renderedImage = _imageProcessorUtil.scale(
 				imageBag.getRenderedImage(), height, width);
 
-			ImageIO.write(thumbnail, imageBag.getType(), thumbnailFile);
+			ImageIO.write(renderedImage, imageBag.getType(), thumbnailFile);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

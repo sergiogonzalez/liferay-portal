@@ -293,7 +293,14 @@ for (int i = 0; i < results.size(); i++) {
 					<%
 					List resultRows = searchContainer.getResultRows();
 
-					ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
+					ResultRow row = null;
+
+					if (fileShortcut == null) {
+						row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
+					}
+					else {
+						row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
+					}
 
 					for (String columnName : entryColumns) {
 						if (columnName.equals("action")) {

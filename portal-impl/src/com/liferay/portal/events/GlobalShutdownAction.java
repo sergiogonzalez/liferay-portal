@@ -195,25 +195,14 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		// Programmatically exit
 
-		if (GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.SHUTDOWN_PROGRAMMATICALLY_EXIT))) {
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.SHUTDOWN_PROGRAMMATICALLY_EXIT))) {
 
 			Thread currentThread = Thread.currentThread();
 
-			ThreadGroup threadGroup = currentThread.getThreadGroup();
+			ThreadGroup threadGroup = getThreadGroup();
 
-			for (int i = 0; i < 10; i++) {
-				if (threadGroup.getParent() == null) {
-					break;
-				}
-				else {
-					threadGroup = threadGroup.getParent();
-				}
-			}
-
-			Thread[] threads = new Thread[threadGroup.activeCount() * 2];
-
-			threadGroup.enumerate(threads);
+			Thread[] threads = getThreads(threadGroup);
 
 			for (Thread thread : threads) {
 				if ((thread == null) || (thread == currentThread)) {
@@ -229,6 +218,31 @@ public class GlobalShutdownAction extends SimpleAction {
 
 			threadGroup.destroy();
 		}
+	}
+
+	protected ThreadGroup getThreadGroup() {
+		Thread currentThread = Thread.currentThread();
+
+		ThreadGroup threadGroup = currentThread.getThreadGroup();
+
+		for (int i = 0; i < 10; i++) {
+			if (threadGroup.getParent() == null) {
+				break;
+			}
+			else {
+				threadGroup = threadGroup.getParent();
+			}
+		}
+
+		return threadGroup;
+	}
+
+	protected Thread[] getThreads(ThreadGroup threadGroup) {
+		Thread[] threads = new Thread[threadGroup.activeCount() * 2];
+
+		threadGroup.enumerate(threads);
+
+		return threads;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(GlobalShutdownAction.class);

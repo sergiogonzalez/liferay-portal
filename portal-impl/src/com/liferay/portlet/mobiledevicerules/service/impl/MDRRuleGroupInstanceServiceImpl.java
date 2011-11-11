@@ -68,12 +68,6 @@ public class MDRRuleGroupInstanceServiceImpl
 			mdrRuleGroupInstancePersistence.findByPrimaryKey(
 				ruleGroupInstanceId);
 
-		deleteRuleGroupInstance(ruleGroupInstance);
-	}
-
-	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance)
-		throws PortalException, SystemException {
-
 		MDRRuleGroupInstancePermissionUtil.check(
 			getPermissionChecker(), ruleGroupInstance, ActionKeys.DELETE);
 

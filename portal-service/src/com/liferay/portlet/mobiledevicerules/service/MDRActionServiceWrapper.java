@@ -62,13 +62,6 @@ public class MDRActionServiceWrapper implements MDRActionService,
 		_mdrActionService.deleteAction(actionId);
 	}
 
-	public void deleteAction(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction action)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_mdrActionService.deleteAction(action);
-	}
-
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction fetchAction(
 		long actionId)
 		throws com.liferay.portal.kernel.exception.PortalException,

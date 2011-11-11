@@ -55,6 +55,10 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		_instance._generateVideo(fileVersion);
 	}
 
+	public static DLProcessor getInstance() {
+		return _instance;
+	}
+
 	public static InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
@@ -89,7 +93,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		try {
 			hasVideo = _instance._hasVideo(fileVersion);
 
-			if (!hasVideo) {
+			if (!hasVideo && _instance.isSupported(fileVersion)) {
 				_instance._queueGeneration(fileVersion);
 			}
 		}
@@ -100,13 +104,13 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		return hasVideo;
 	}
 
-	public static boolean isSupportedVideo(String mimeType) {
-		return _instance._isSupportedVideo(mimeType);
-	}
-
 	public VideoProcessor() {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
+	}
+
+	public boolean isSupported(String mimeType) {
+		return _videoMimeTypes.contains(mimeType);
 	}
 
 	public void trigger(FileVersion fileVersion) {
@@ -221,8 +225,8 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 				try {
 					_generateThumbnailXuggler(
 						fileVersion, file,
-						PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT,
-						PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH);
+						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
+						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -293,7 +297,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	}
 
 	private boolean _hasVideo(FileVersion fileVersion) throws Exception {
-		if (!_isSupportedVideo(fileVersion)) {
+		if (!isSupported(fileVersion)) {
 			return false;
 		}
 
@@ -355,21 +359,9 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		}
 	}
 
-	private boolean _isSupportedVideo(FileVersion fileVersion) {
-		if (fileVersion == null) {
-			return false;
-		}
-
-		return _isSupportedVideo(fileVersion.getMimeType());
-	}
-
-	public boolean _isSupportedVideo(String mimeType) {
-		return _videoMimeTypes.contains(mimeType);
-	}
-
 	private void _queueGeneration(FileVersion fileVersion) {
 		if (_fileVersionIds.contains(fileVersion.getFileVersionId()) ||
-			!_isSupportedVideo(fileVersion)) {
+			!isSupported(fileVersion)) {
 
 			return;
 		}
@@ -383,7 +375,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	private static int _SAMPLE_RATE = 44100;
 
 	private static int _THUMBNAIL_PERCENTAGE =
-		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_THUMBNAIL_PERCENTAGE;
+		PropsValues.DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE;
 
 	private static Log _log = LogFactoryUtil.getLog(VideoProcessor.class);
 

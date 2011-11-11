@@ -77,6 +77,9 @@ public class PermissionFinderImpl
 	public static String FIND_BY_R_R =
 		PermissionFinder.class.getName() + ".findByR_R";
 
+	public static String FIND_BY_R_S =
+		PermissionFinder.class.getName() + ".findByR_S";
+
 	public static String FIND_BY_U_R =
 		PermissionFinder.class.getName() + ".findByU_R";
 
@@ -778,8 +781,9 @@ public class PermissionFinderImpl
 		}
 	}
 
-	public List<Permission> findByR_R(
-			long roleId, long resourceId) throws SystemException {
+	public List<Permission> findByR_R(long roleId, long resourceId)
+		throws SystemException {
+
 		Session session = null;
 
 		try {
@@ -795,6 +799,37 @@ public class PermissionFinderImpl
 
 			qPos.add(roleId);
 			qPos.add(resourceId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<Permission> findByR_S(long roleId, int[] scopes)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_R_S);
+
+			sql = StringUtil.replace(sql, "[$SCOPE$]", getScopes(scopes));
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("Permission_", PermissionImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(roleId);
+			qPos.add(scopes);
 
 			return q.list(true);
 		}
@@ -1057,6 +1092,31 @@ public class PermissionFinderImpl
 				sb.append(" OR ");
 			}
 		}
+
+		return sb.toString();
+	}
+
+	/**
+	 * @see {@link ResourcePermissionFinderImpl#getScopes(int[])}
+	 */
+	protected String getScopes(int[] scopes) {
+		if (scopes.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(scopes.length * 2 + 1);
+
+		sb.append("(");
+
+		for (int i = 0; i < scopes.length; i++) {
+			sb.append("ResourceCode.scope = ? ");
+
+			if ((i + 1) != scopes.length) {
+				sb.append("OR ");
+			}
+		}
+
+		sb.append(")");
 
 		return sb.toString();
 	}

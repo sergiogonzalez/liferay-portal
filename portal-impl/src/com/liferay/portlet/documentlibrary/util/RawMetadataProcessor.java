@@ -81,6 +81,14 @@ public class RawMetadataProcessor implements DLProcessor {
 		}
 	}
 
+	public boolean isSupported(FileVersion fileVersion) {
+		return true;
+	}
+
+	public boolean isSupported(String mimeType) {
+		return true;
+	}
+
 	/**
 	 * Saves the raw metadata present in the file version.
 	 *

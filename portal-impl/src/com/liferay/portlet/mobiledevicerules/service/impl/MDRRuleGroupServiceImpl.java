@@ -48,16 +48,9 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 			long ruleGroupId, long groupId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		MDRRuleGroup ruleGroup = getRuleGroup(ruleGroupId);
-
-		return copyRuleGroup(ruleGroup, groupId, serviceContext);
-	}
-
-	public MDRRuleGroup copyRuleGroup(
-			MDRRuleGroup ruleGroup, long groupId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
 		PermissionChecker permissionChecker = getPermissionChecker();
+
+		MDRRuleGroup ruleGroup = getRuleGroup(ruleGroupId);
 
 		MDRRuleGroupPermissionUtil.check(
 			permissionChecker, ruleGroup, ActionKeys.VIEW);
@@ -74,12 +67,6 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
 			ruleGroupId);
-
-		deleteRuleGroup(ruleGroup);
-	}
-
-	public void deleteRuleGroup(MDRRuleGroup ruleGroup)
-		throws PortalException, SystemException {
 
 		MDRRuleGroupPermissionUtil.check(
 			getPermissionChecker(), ruleGroup, ActionKeys.DELETE);

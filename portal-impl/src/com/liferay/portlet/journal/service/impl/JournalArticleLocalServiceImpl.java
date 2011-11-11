@@ -59,7 +59,6 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -518,14 +517,7 @@ public class JournalArticleLocalServiceImpl
 			newArticleId = String.valueOf(counterLocalService.increment());
 		}
 		else {
-			validate(newArticleId);
-
-			JournalArticle newArticle = journalArticlePersistence.fetchByG_A_V(
-				groupId, newArticleId, version);
-
-			if (newArticle != null) {
-				throw new DuplicateArticleIdException();
-			}
+			validate(groupId, newArticleId);
 		}
 
 		long id = counterLocalService.increment();
@@ -2386,17 +2378,6 @@ public class JournalArticleLocalServiceImpl
 
 		if (article.getClassNameId() == 0) {
 
-			// Social
-
-			if ((oldStatus != WorkflowConstants.STATUS_APPROVED) &&
-				(status == WorkflowConstants.STATUS_APPROVED)) {
-
-				socialEquityLogLocalService.addEquityLogs(
-					userId, JournalArticle.class.getName(),
-					article.getResourcePrimKey(), ActionKeys.ADD_ARTICLE,
-					StringPool.BLANK);
-			}
-
 			// Email
 
 			if ((oldStatus == WorkflowConstants.STATUS_PENDING) &&
@@ -3329,14 +3310,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (!autoArticleId) {
-			validate(articleId);
-
-			JournalArticle article = journalArticlePersistence.fetchByG_A_V(
-				groupId, articleId, version);
-
-			if (article != null) {
-				throw new DuplicateArticleIdException();
-			}
+			validate(groupId, articleId);
 		}
 
 		validate(
@@ -3345,11 +3319,17 @@ public class JournalArticleLocalServiceImpl
 			smallImageBytes);
 	}
 
-	protected void validate(String articleId) throws PortalException {
+	protected void validate(long groupId, String articleId)
+		throws PortalException, SystemException {
+
 		if ((Validator.isNull(articleId)) ||
 			(articleId.indexOf(CharPool.SPACE) != -1)) {
 
 			throw new ArticleIdException();
+		}
+
+		if (journalArticlePersistence.countByG_A(groupId, articleId) > 0) {
+			throw new DuplicateArticleIdException();
 		}
 	}
 

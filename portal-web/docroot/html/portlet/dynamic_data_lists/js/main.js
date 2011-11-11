@@ -348,7 +348,8 @@ AUI().add(
 
 								if (type === 'ddm-fileupload') {
 									config.validator.rules[name] = {
-										acceptFiles: structureField.acceptFiles
+										acceptFiles: structureField.acceptFiles,
+										requiredFields: true
 									};
 								}
 							}

@@ -62,13 +62,6 @@ public class MDRRuleServiceWrapper implements MDRRuleService,
 		_mdrRuleService.deleteRule(ruleId);
 	}
 
-	public void deleteRule(
-		com.liferay.portlet.mobiledevicerules.model.MDRRule rule)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_mdrRuleService.deleteRule(rule);
-	}
-
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule fetchRule(
 		long ruleId)
 		throws com.liferay.portal.kernel.exception.PortalException,

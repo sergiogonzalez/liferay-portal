@@ -62,6 +62,11 @@ public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public boolean isCategorizable() {
+		return false;
+	}
+
+	@Override
 	public boolean isLinkable() {
 		return _LINKABLE;
 	}

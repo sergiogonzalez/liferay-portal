@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -42,7 +44,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -142,7 +146,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		try {
 			hasImages = _instance._hasImages(fileVersion);
 
-			if (!hasImages) {
+			if (!hasImages && _instance.isSupported(fileVersion)) {
 				_instance._queueGeneration(fileVersion);
 			}
 		}
@@ -197,6 +201,31 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		catch (Exception e) {
 			_log.warn(e, e);
 		}
+	}
+
+	public boolean isSupported(String mimeType) {
+		if (mimeType.equals(ContentTypes.APPLICATION_PDF) ||
+			mimeType.equals(ContentTypes.APPLICATION_X_PDF)) {
+
+			return true;
+		}
+
+		if (DocumentConversionUtil.isEnabled()) {
+			Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
+
+			for (String extension : extensions) {
+				extension = extension.substring(1);
+
+				String[] targetExtensions =
+					DocumentConversionUtil.getConversions(extension);
+
+				if (Arrays.binarySearch(targetExtensions, "pdf") >= 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public void trigger(FileVersion fileVersion) {
@@ -293,8 +322,8 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 				fileVersion, file,
 				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH,
 				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH, false);
+				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
+				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH, false);
 
 			if (_log.isInfoEnabled()) {
 				int previewFileCount = getPreviewFileCount(fileVersion);
@@ -309,10 +338,13 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		if (_isGenerateThumbnail(fileVersion)) {
 			_generateImagesIM(
 				fileVersion, file,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DEPTH,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH, true);
+				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DEPTH,
+				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI,
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH),
+				true);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -445,9 +477,12 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 				if (generateThumbnail && (i == 0)) {
 					_generateImagesPB(
 						fileVersion, pdPage,
-						PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
-						PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT,
-						PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH, true, 0);
+						PropsValues.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI,
+						PrefsPropsUtil.getInteger(
+							PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT),
+						PrefsPropsUtil.getInteger(
+							PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH),
+						true, 0);
 
 					if (_log.isInfoEnabled()) {
 						_log.info(
@@ -463,8 +498,8 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 				_generateImagesPB(
 					fileVersion, pdPage,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH, false,
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH, false,
 					i + 1);
 			}
 
@@ -492,7 +527,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 		RenderedImage renderedImage = pdPage.convertToImage(
 			BufferedImage.TYPE_INT_RGB,
-			PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI);
+			PropsValues.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI);
 
 		if (height != 0) {
 			renderedImage = ImageProcessorUtil.scale(

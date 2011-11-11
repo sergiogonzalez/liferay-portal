@@ -76,20 +76,6 @@ public class MDRRuleServiceSoap {
 		}
 	}
 
-	public static void deleteRule(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap rule)
-		throws RemoteException {
-		try {
-			MDRRuleServiceUtil.deleteRule(com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleModelImpl.toModel(
-					rule));
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap fetchRule(
 		long ruleId) throws RemoteException {
 		try {

@@ -43,7 +43,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"insert into MBThreadFlag (threadFlagId, userId, " +
-					"modifiedDate, threadId) values (?, ? ,? ,?)");
+					"modifiedDate, threadId) values (?, ?, ?, ?)");
 
 			ps.setLong(1, threadFlagId);
 			ps.setLong(2, userId);

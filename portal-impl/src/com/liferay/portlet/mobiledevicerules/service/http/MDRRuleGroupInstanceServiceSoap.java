@@ -115,20 +115,6 @@ public class MDRRuleGroupInstanceServiceSoap {
 		}
 	}
 
-	public static void deleteRuleGroupInstance(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap ruleGroupInstance)
-		throws RemoteException {
-		try {
-			MDRRuleGroupInstanceServiceUtil.deleteRuleGroupInstance(com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceModelImpl.toModel(
-					ruleGroupInstance));
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap[] getRuleGroupInstances(
 		java.lang.String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

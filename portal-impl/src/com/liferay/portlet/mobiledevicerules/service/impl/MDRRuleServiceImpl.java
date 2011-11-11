@@ -64,12 +64,6 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 
 		MDRRule rule = mdrRulePersistence.findByPrimaryKey(ruleId);
 
-		deleteRule(rule);
-	}
-
-	public void deleteRule(MDRRule rule)
-		throws PortalException, SystemException {
-
 		MDRRuleGroupPermissionUtil.check(
 			getPermissionChecker(), rule.getRuleGroupId(), ActionKeys.UPDATE);
 

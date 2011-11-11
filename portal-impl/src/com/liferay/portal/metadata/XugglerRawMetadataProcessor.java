@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.AudioProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.VideoProcessor;
 
 import com.xuggle.xuggler.IContainer;
@@ -143,15 +144,22 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 
 	protected boolean isSupported(String mimeType) throws SystemException {
 		if (PrefsPropsUtil.getBoolean(
-				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED) &&
-			(AudioProcessor.isSupportedAudio(mimeType) ||
-			 VideoProcessor.isSupportedVideo(mimeType))) {
+				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {
 
-			return true;
+			DLProcessor audioDLProcessor = AudioProcessor.getInstance();
+
+			if (audioDLProcessor.isSupported(mimeType)) {
+				return true;
+			}
+
+			DLProcessor videoDLProcessor = VideoProcessor.getInstance();
+
+			if (videoDLProcessor.isSupported(mimeType)) {
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

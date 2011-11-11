@@ -815,8 +815,11 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		try {
-			return moveFileEntryImpl(
+			DLFileEntry dlFileEntry = moveFileEntryImpl(
 				userId, fileEntryId, newFolderId, serviceContext);
+
+			return dlFileEntryTypeLocalService.updateFileEntryFileEntryType(
+				dlFileEntry, serviceContext);
 		}
 		finally {
 			if (!isFileEntryCheckedOut(fileEntryId)) {
@@ -910,15 +913,18 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			if (renderedImage != null) {
-				int dimension = PrefsPropsUtil.getInteger(
-					PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION);
+				int height = PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT);
+				int width = PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH);
 
-				RenderedImage thumbnail = ImageProcessorUtil.scale(
-					renderedImage, dimension, dimension);
+				RenderedImage thumbnailRenderedImage =
+					ImageProcessorUtil.scale(renderedImage, height, width);
 
 				imageLocalService.updateImage(
 					smallImageId,
-					ImageProcessorUtil.getBytes(thumbnail, contentType));
+					ImageProcessorUtil.getBytes(
+						thumbnailRenderedImage, contentType));
 			}
 		}
 		catch (IOException ioe) {

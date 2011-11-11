@@ -14,12 +14,13 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -36,8 +37,7 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(
-			ThemeDisplay themeDisplay, Serializable fieldValue)
-		throws PortalException {
+		ThemeDisplay themeDisplay, Serializable fieldValue) {
 
 		if (Validator.isNull(fieldValue) ||
 			fieldValue.equals(JSONFactoryUtil.getNullJSON())) {
@@ -45,10 +45,19 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 			return StringPool.BLANK;
 		}
 
-		String fieldValueJSON = GetterUtil.getString(fieldValue);
+		JSONObject fieldValueJSONObject = null;
 
-		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject(
-			fieldValueJSON);
+		try {
+			fieldValueJSONObject = JSONFactoryUtil.createJSONObject(
+				String.valueOf(fieldValue));
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON", jsone);
+			}
+
+			return StringPool.BLANK;
+		}
 
 		long fileEntryGroupId = fieldValueJSONObject.getLong("groupId");
 		String fileEntryUUID = fieldValueJSONObject.getString("uuid");
@@ -71,5 +80,8 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 
 		return StringPool.BLANK;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DocumentLibraryFieldRenderer.class);
 
 }

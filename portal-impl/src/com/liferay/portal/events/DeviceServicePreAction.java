@@ -110,7 +110,7 @@ public class DeviceServicePreAction extends Action {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private static Log _log = LogFactoryUtil.getLog(
 		DeviceServicePreAction.class);
 
 }

@@ -104,6 +104,11 @@ public class LayoutRevisionAssetRendererFactory
 	}
 
 	@Override
+	public boolean isCategorizable() {
+		return false;
+	}
+
+	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
