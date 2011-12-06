@@ -44,6 +44,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -440,16 +441,16 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_foldersAndDocuments, _shortcuts, _ranks, _categories, _comments,
-			_ratings, _tags
+			_foldersAndDocuments, _repositories, _shortcuts, _ranks,
+			_categories, _comments, _ratings, _tags
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_foldersAndDocuments, _shortcuts, _ranks, _categories, _comments,
-			_ratings, _tags
+			_foldersAndDocuments, _repositories, _shortcuts, _ranks,
+			_categories, _comments, _ratings, _tags
 		};
 	}
 
@@ -769,6 +770,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		if (!portletDataContext.isPathNotProcessed(path)) {
 			return;
 		}
+
+		repositoryElement.addAttribute(
+			"repositoryClassName", repository.getClassName());
 
 		portletDataContext.addClassedModel(
 			repositoryElement, path, repository, _NAMESPACE);
@@ -1345,11 +1349,14 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			repositoryPath, repository, _NAMESPACE);
 
+		long classNameId = PortalUtil.getClassNameId(
+			repositoryElement.attributeValue("repositoryClassName"));
+
 		RepositoryServiceUtil.addRepository(
-			portletDataContext.getScopeGroupId(), repository.getClassNameId(),
+			portletDataContext.getScopeGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, repository.getName(),
 			repository.getDescription(), repository.getPortletId(),
-			repository.getTypeSettingsProperties(),	serviceContext);
+			repository.getTypeSettingsProperties(), serviceContext);
 	}
 
 	protected static boolean isDuplicateFileEntry(
@@ -1468,11 +1475,16 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					folder, false);
 			}
 			else {
-				Repository repository =
-					RepositoryUtil.findByPrimaryKey(folder.getRepositoryId());
+				if (portletDataContext.getBooleanParameter(
+					_NAMESPACE, "repositories")) {
 
-				exportRepository(
-					portletDataContext, repositoryElement, repository);
+					Repository repository =
+						RepositoryUtil.findByPrimaryKey(
+							folder.getRepositoryId());
+
+					exportRepository(
+						portletDataContext, repositoryElement, repository);
+				}
 			}
 		}
 
@@ -1525,13 +1537,15 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			importFileEntryType(portletDataContext, fileEntryTypeElement);
 		}
 
-		Element repositoriesElement = rootElement.element("repositories");
+		if (portletDataContext.getBooleanParameter(
+			_NAMESPACE, "repositories")) {
 
-		List<Element> repositoryElements =
-			repositoriesElement.elements("repository");
+			List<Element> repositoryElements =
+				rootElement.element("repositories").elements("repository");
 
-		for (Element repositoryElement : repositoryElements) {
-			importRepository(portletDataContext, repositoryElement);
+			for (Element repositoryElement : repositoryElements) {
+				importRepository(portletDataContext, repositoryElement);
+			}
 		}
 
 		Element foldersElement = rootElement.element("folders");
@@ -1611,6 +1625,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static PortletDataHandlerBoolean _ratings =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
+
+	private static PortletDataHandlerBoolean _repositories =
+		new PortletDataHandlerBoolean(_NAMESPACE, "repositories", false, false);
 
 	private static PortletDataHandlerBoolean _shortcuts=
 		new PortletDataHandlerBoolean(_NAMESPACE, "shortcuts");
