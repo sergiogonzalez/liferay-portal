@@ -93,8 +93,8 @@ public class PermissionServiceSoap {
 	* @param name the service name
 	* @param primKey the primary key of the service
 	* @throws PortalException if the group did not have permission to the
-	service, if a group with the primary key could not be found or
-	if the permission information was invalid
+	service, if a group with the primary key could not be found or if
+	the permission information was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void checkPermission(long groupId, java.lang.String name,
@@ -116,8 +116,8 @@ public class PermissionServiceSoap {
 	* @param name the service name
 	* @param primKey the primary key of the service
 	* @throws PortalException if the group did not have permission to the
-	service, if a group with the primary key could not be found or
-	if the permission information was invalid
+	service, if a group with the primary key could not be found or if
+	the permission information was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void checkPermission(long groupId, java.lang.String name,
@@ -285,8 +285,8 @@ public class PermissionServiceSoap {
 
 	/**
 	* Sets the organization permission to perform the actions on the resource
-	* for a particular group, replacing the organization's existing
-	* permissions on the resource.
+	* for a particular group, replacing the organization's existing permissions
+	* on the resource.
 	*
 	* @param organizationId the primary key of the organization
 	* @param groupId the primary key of the group in which to scope the

@@ -51,8 +51,8 @@ public interface AssetTagPropertyService {
 	* @param key the key to be associated to the value
 	* @param value the value to which the key will refer
 	* @return the created asset tag property
-	* @throws PortalException if the user did not have permission to update
-	the asset tag, or if the key or value were invalid
+	* @throws PortalException if the user did not have permission to update the
+	asset tag, or if the key or value were invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty addTagProperty(
@@ -105,8 +105,8 @@ public interface AssetTagPropertyService {
 	* @param value the new value to which the key will refer
 	* @return the updated asset tag property
 	* @throws PortalException if an asset tag property with the primary key
-	could not be found, if the user did not have permission to
-	update the asset tag, or if the key or value were invalid
+	could not be found, if the user did not have permission to update
+	the asset tag, or if the key or value were invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty updateTagProperty(

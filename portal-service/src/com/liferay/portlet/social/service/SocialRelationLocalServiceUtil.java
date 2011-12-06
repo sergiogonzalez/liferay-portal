@@ -269,8 +269,8 @@ public class SocialRelationLocalServiceUtil {
 	* @param type the type of the relation
 	* @return the social relation
 	* @throws PortalException if the users could not be found, if the users
-	were not from the same company, or if either of the users was
-	the default user
+	were not from the same company, or if either of the users was the
+	default user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialRelation addRelation(
@@ -295,8 +295,8 @@ public class SocialRelationLocalServiceUtil {
 	}
 
 	/**
-	* Removes the matching relation (and its inverse in case of a
-	* bidirectional relation) from the database.
+	* Removes the matching relation (and its inverse in case of a bidirectional
+	* relation) from the database.
 	*
 	* @param userId1 the user that is the subject of the relation
 	* @param userId2 the user at the other end of the relation
@@ -362,8 +362,8 @@ public class SocialRelationLocalServiceUtil {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param userId the primary key of the user
@@ -435,8 +435,8 @@ public class SocialRelationLocalServiceUtil {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param userId the primary key of the user
@@ -461,8 +461,8 @@ public class SocialRelationLocalServiceUtil {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param userId1 the user that is the subject of the relation
@@ -525,9 +525,9 @@ public class SocialRelationLocalServiceUtil {
 
 	/**
 	* Returns <code>true</code> if the users can be in a relation of the given
-	* type where the user with primary key <code>userId1</code> is User1 of
-	* the relation and the user with the primary key <code>userId2</code> is
-	* User2 of the relation.
+	* type where the user with primary key <code>userId1</code> is User1 of the
+	* relation and the user with the primary key <code>userId2</code> is User2
+	* of the relation.
 	*
 	* <p>
 	* This method returns <code>false</code> if User1 and User2 are the same,

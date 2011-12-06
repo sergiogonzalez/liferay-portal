@@ -288,8 +288,7 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the asset tag statistics instance matching the tag statistics
-	* ID.
+	* Deletes the asset tag statistics instance matching the tag statistics ID.
 	*
 	* @param tagStatsId the primary key of the asset tag statistics instance
 	* @throws PortalException if the assetTagStats with the primary key could
@@ -326,8 +325,8 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the asset tag statistics instances associated
-	* with the asset entry matching the class name ID.
+	* Returns a range of all the asset tag statistics instances associated with
+	* the asset entry matching the class name ID.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -335,15 +334,15 @@ public class AssetTagStatsLocalServiceUtil {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param classNameId the asset entry's class name ID
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of asset tag statistics associated with the asset
-	entry matching the class name ID
+	* @return the range of asset tag statistics associated with the asset entry
+	matching the class name ID
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTagStats> getTagStats(

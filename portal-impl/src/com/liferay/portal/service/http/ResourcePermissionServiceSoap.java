@@ -79,9 +79,9 @@ public class ResourcePermissionServiceSoap {
 	* If a company scope permission is granted to resources that the role
 	* already had group scope permissions to, the group scope permissions are
 	* deleted. Likewise, if a group scope permission is granted to resources
-	* that the role already had company scope permissions to, the company
-	* scope permissions are deleted. Be aware that this latter behavior can
-	* result in an overall reduction in permissions for the role.
+	* that the role already had company scope permissions to, the company scope
+	* permissions are deleted. Be aware that this latter behavior can result in
+	* an overall reduction in permissions for the role.
 	* </p>
 	*
 	* <p>
@@ -101,8 +101,8 @@ public class ResourcePermissionServiceSoap {
 	* @param actionId the action ID
 	* @throws PortalException if the user did not have permission to add
 	resource permissions, or if scope was set to individual scope or
-	if a role with the primary key or a resource action with the
-	name and action ID could not be found
+	if a role with the primary key or a resource action with the name
+	and action ID could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addResourcePermission(long groupId, long companyId,
@@ -121,8 +121,8 @@ public class ResourcePermissionServiceSoap {
 
 	/**
 	* Revokes permission at the scope from the role to perform the action on
-	* resources of the type. For example, this method could be used to revoke
-	* a group scope permission to edit blog posts.
+	* resources of the type. For example, this method could be used to revoke a
+	* group scope permission to edit blog posts.
 	*
 	* <p>
 	* Depending on the scope, the value of <code>primKey</code> will have
@@ -190,9 +190,8 @@ public class ResourcePermissionServiceSoap {
 	}
 
 	/**
-	* Updates the role's permissions at the scope, setting the actions that
-	* can be performed on resources of the type. Existing actions are
-	* replaced.
+	* Updates the role's permissions at the scope, setting the actions that can
+	* be performed on resources of the type. Existing actions are replaced.
 	*
 	* <p>
 	* This method can be used to set permissions at any scope, but it is

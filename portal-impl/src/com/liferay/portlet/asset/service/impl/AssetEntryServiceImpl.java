@@ -211,53 +211,68 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		int end = entryQuery.getEnd();
 		int start = entryQuery.getStart();
 
-		entryQuery.setEnd(end + PropsValues.ASSET_FILTER_SEARCH_LIMIT);
-		entryQuery.setStart(0);
+		if (entryQuery.isEnablePermissions()) {
+			entryQuery.setEnd(end + PropsValues.ASSET_FILTER_SEARCH_LIMIT);
+			entryQuery.setStart(0);
+		}
 
 		List<AssetEntry> entries = assetEntryLocalService.getEntries(
 			entryQuery);
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		List<AssetEntry> filteredEntries = null;
+		int filteredEntriesCount = 0;
 
-		List<AssetEntry> filteredEntries = new ArrayList<AssetEntry>();
+		if (entryQuery.isEnablePermissions()) {
+			PermissionChecker permissionChecker = getPermissionChecker();
 
-		for (AssetEntry entry : entries) {
-			String className = entry.getClassName();
-			long classPK = entry.getClassPK();
+			filteredEntries = new ArrayList<AssetEntry>();
 
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
+			for (AssetEntry entry : entries) {
+				String className = entry.getClassName();
+				long classPK = entry.getClassPK();
 
-			try {
-				if (assetRendererFactory.hasPermission(
-						permissionChecker, classPK, ActionKeys.VIEW)) {
+				AssetRendererFactory assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(className);
 
-					filteredEntries.add(entry);
+				try {
+					if (assetRendererFactory.hasPermission(
+							permissionChecker, classPK, ActionKeys.VIEW)) {
+
+						filteredEntries.add(entry);
+					}
+				}
+				catch (Exception e) {
+				}
+
+				if (filteredEntries.size() > end) {
+					break;
 				}
 			}
-			catch (Exception e) {
+
+			filteredEntriesCount = filteredEntries.size();
+
+			if ((end != QueryUtil.ALL_POS) && (start != QueryUtil.ALL_POS)) {
+				if (end > filteredEntriesCount) {
+					end = filteredEntriesCount;
+				}
+
+				if (start > filteredEntriesCount) {
+					start = filteredEntriesCount;
+				}
+
+				filteredEntries = filteredEntries.subList(start, end);
 			}
+
+			entryQuery.setEnd(end);
+			entryQuery.setStart(start);
+		}
+		else {
+			filteredEntries = entries;
+			filteredEntriesCount = entries.size();
 		}
 
-		int length = filteredEntries.size();
-
-		if ((end != QueryUtil.ALL_POS) && (start != QueryUtil.ALL_POS)) {
-			if (end > length) {
-				end = length;
-			}
-
-			if (start > length) {
-				start = length;
-			}
-
-			filteredEntries = filteredEntries.subList(start, end);
-		}
-
-		entryQuery.setEnd(end);
-		entryQuery.setStart(start);
-
-		results = new Object[] {filteredEntries, length};
+		results = new Object[] {filteredEntries, filteredEntriesCount};
 
 		threadLocalCache.put(key, results);
 

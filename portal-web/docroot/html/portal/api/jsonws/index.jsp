@@ -22,31 +22,30 @@
 
 <div id="header">
 	<div id="header-content">
-		<h1><a href="jsonws">JSONWS API</a></h1>
+		<h1><a href="jsonws">JSON Web Services API</a></h1>
 	</div>
 </div>
 
 <div id="content">
+	<c:choose>
+		<c:when test="<%= PropsValues.JSON_WEB_SERVICE_ENABLED %>">
+			<%
+			String signature = ParamUtil.getString(request, "signature");
+			%>
 
-	<%
-	String signature = ParamUtil.getString(request, "signature");
-
-	if (Validator.isNull(signature)) {
-	%>
-
-		<%@ include file="/html/portal/api/jsonws/actions.jspf" %>
-
-	<%
-	}
-	else {
-	%>
-
-		<%@ include file="/html/portal/api/jsonws/action.jspf" %>
-
-	<%
-	}
-	%>
-
+			<c:choose>
+				<c:when test="<%= Validator.isNull(signature) %>">
+					<%@ include file="/html/portal/api/jsonws/actions.jspf" %>
+				</c:when>
+				<c:otherwise>
+					<%@ include file="/html/portal/api/jsonws/action.jspf" %>
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+		<c:otherwise>
+			JSON web services are disabled.
+		</c:otherwise>
+	</c:choose>
 </div>
 
 <div id="footer">

@@ -449,8 +449,8 @@ public interface CompanyLocalService extends PersistedModelLocalService {
 	*
 	* @param userId the primary key of the user
 	* @return Returns the first company if there is only one company or the
-	user's company if there are more than one company;
-	<code>0</code> otherwise
+	user's company if there are more than one company; <code>0</code>
+	otherwise
 	* @throws Exception if a user with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -480,8 +480,8 @@ public interface CompanyLocalService extends PersistedModelLocalService {
 	*
 	* @param companyId the primary key of the company
 	* @param userId the primary key of the user
-	* @param keywords the keywords (space separated),which may occur in
-	assets in the company (optionally <code>null</code>)
+	* @param keywords the keywords (space separated),which may occur in assets
+	in the company (optionally <code>null</code>)
 	* @param start the lower bound of the range of assets to return
 	* @param end the upper bound of the range of assets to return (not
 	inclusive)
@@ -594,8 +594,8 @@ public interface CompanyLocalService extends PersistedModelLocalService {
 	*
 	* @param companyId the primary key of the company
 	* @param bytes the bytes of the company's logo image
-	* @throws PortalException if the company's logo ID could not be found or
-	if the logo's image was corrupted
+	* @throws PortalException if the company's logo ID could not be found or if
+	the logo's image was corrupted
 	* @throws SystemException if a system exception occurred
 	*/
 	public void updateLogo(long companyId, byte[] bytes)
@@ -620,8 +620,8 @@ public interface CompanyLocalService extends PersistedModelLocalService {
 	*
 	* @param companyId the primary key of the company
 	* @param is the input stream of the company's logo image
-	* @throws PortalException if the company's logo ID could not be found or
-	if the company's logo image was corrupted
+	* @throws PortalException if the company's logo ID could not be found or if
+	the company's logo image was corrupted
 	* @throws SystemException if a system exception occurred
 	*/
 	public void updateLogo(long companyId, java.io.InputStream is)
@@ -635,8 +635,8 @@ public interface CompanyLocalService extends PersistedModelLocalService {
 	* @param companyId the primary key of the company
 	* @param properties the company's properties. See {@link
 	com.liferay.portal.kernel.util.UnicodeProperties}
-	* @throws PortalException if the properties contained new locales that
-	were not supported
+	* @throws PortalException if the properties contained new locales that were
+	not supported
 	* @throws SystemException if a system exception occurred
 	*/
 	public void updatePreferences(long companyId,

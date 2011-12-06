@@ -67,8 +67,7 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	}
 
 	/**
-	* Removes the activity interpreter from the list of available
-	* interpreters.
+	* Removes the activity interpreter from the list of available interpreters.
 	*
 	* @param activityInterpreter the activity interpreter
 	*/
@@ -83,8 +82,8 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	*
 	* <p>
 	* This method finds the appropriate interpreter for the activity by going
-	* through the available interpreters and asking them if they can handle
-	* the asset type of the activity.
+	* through the available interpreters and asking them if they can handle the
+	* asset type of the activity.
 	* </p>
 	*
 	* @param activity the activity to be translated to human readable form

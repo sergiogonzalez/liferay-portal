@@ -375,8 +375,8 @@ public class CompanyServiceSoap {
 	with email addresses that match the company mail suffix
 	* @param strangersVerify whether to require strangers who create accounts
 	to be verified via email
-	* @param siteLogo whether to to allow site administrators to use their
-	own logo instead of the enterprise logo
+	* @param siteLogo whether to to allow site administrators to use their own
+	logo instead of the enterprise logo
 	* @throws PortalException if the user was not an administrator
 	* @throws SystemException if a system exception occurred
 	*/

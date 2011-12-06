@@ -313,8 +313,8 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	*
 	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if a portal exception occurred
+	* @throws PortalException if a user with the primary key could not be found
+	or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
@@ -326,8 +326,8 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if a portal exception occurred
+	* @throws PortalException if a user with the primary key could not be found
+	or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public void copyUserGroupLayouts(long userGroupId, long userId)
@@ -387,8 +387,7 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 		long userId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns <code>true</code> if the user group is associated with the
-	* group.
+	* Returns <code>true</code> if the user group is associated with the group.
 	*
 	* @param groupId the primary key of the group
 	* @param userGroupId the primary key of the user group
@@ -423,16 +422,16 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the user group's company
 	* @param name the user group's name (optionally <code>null</code>)
 	* @param description the user group's description (optionally
 	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). For
-	more information see {@link
+	* @param params the finder params (optionally <code>null</code>). For more
+	information see {@link
 	com.liferay.portal.service.persistence.UserGroupFinder}
 	* @param start the lower bound of the range of user groups to return
 	* @param end the upper bound of the range of user groups to return (not
@@ -457,8 +456,8 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	* @param name the user group's name (optionally <code>null</code>)
 	* @param description the user group's description (optionally
 	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). For
-	more information see {@link
+	* @param params the finder params (optionally <code>null</code>). For more
+	information see {@link
 	com.liferay.portal.service.persistence.UserGroupFinder}
 	* @return the number of matching user groups
 	* @throws SystemException if a system exception occurred
@@ -516,8 +515,8 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	* @param privateLayoutSetPrototypeId the primary key of the user group's
 	private layout set
 	* @return the user group
-	* @throws PortalException if a user group with the primary key could not
-	be found or if the new information was invalid
+	* @throws PortalException if a user group with the primary key could not be
+	found or if the new information was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserGroup updateUserGroup(long companyId,

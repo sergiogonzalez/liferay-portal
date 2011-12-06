@@ -50,13 +50,13 @@ public interface User extends UserModel, PersistedModel {
 
 	public java.lang.String getDisplayEmailAddress();
 
-	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+	public java.lang.String getDisplayURL(java.lang.String portalURL,
+		java.lang.String mainPath)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.lang.String getDisplayURL(java.lang.String portalURL,
-		java.lang.String mainPath)
+	public java.lang.String getDisplayURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -97,7 +97,17 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portal.model.Group> getMySites(
+		boolean includeControlPanel, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portal.model.Group> getMySites(int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Group> getMySites(
+		java.lang.String[] classNames, boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -154,13 +164,16 @@ public interface User extends UserModel, PersistedModel {
 	public java.util.List<com.liferay.portal.model.Team> getTeams()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.TimeZone getTimeZone();
+
 	public long[] getUserGroupIds()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.TimeZone getTimeZone();
+	public java.util.List<com.liferay.portal.model.Website> getWebsites()
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean hasCompanyMx()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -207,7 +220,4 @@ public interface User extends UserModel, PersistedModel {
 	public void setPasswordUnencrypted(java.lang.String passwordUnencrypted);
 
 	public void setTimeZoneId(java.lang.String timeZoneId);
-
-	public java.util.List<com.liferay.portal.model.Website> getWebsites()
-		throws com.liferay.portal.kernel.exception.SystemException;
 }

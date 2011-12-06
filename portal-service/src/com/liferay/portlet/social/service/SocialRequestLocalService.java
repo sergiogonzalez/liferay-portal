@@ -271,8 +271,8 @@ public interface SocialRequestLocalService extends PersistedModelLocalService {
 	* @param receiverUserId the primary key of the user receiving the request
 	* @return the social request
 	* @throws PortalException if the users could not be found, if the users
-	were not from the same company, or if either of the users was
-	the default user
+	were not from the same company, or if either of the users was the
+	default user
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.social.model.SocialRequest addRequest(
@@ -330,8 +330,8 @@ public interface SocialRequestLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param receiverUserId the primary key of the receiving user
@@ -355,8 +355,8 @@ public interface SocialRequestLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param receiverUserId the primary key of the receiving user
@@ -404,8 +404,8 @@ public interface SocialRequestLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param userId the primary key of the requesting user
@@ -429,8 +429,8 @@ public interface SocialRequestLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param userId the primary key of the requesting user

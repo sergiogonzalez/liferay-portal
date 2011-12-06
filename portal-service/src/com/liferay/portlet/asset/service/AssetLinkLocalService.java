@@ -332,8 +332,8 @@ public interface AssetLinkLocalService extends PersistedModelLocalService {
 	* entry ID.
 	*
 	* @param entryId the primary key of the asset entry
-	* @return the asset links whose first or second entry ID is the given
-	entry ID
+	* @return the asset links whose first or second entry ID is the given entry
+	ID
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

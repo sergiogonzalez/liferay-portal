@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.InputStream;
@@ -40,6 +42,7 @@ import java.net.URLDecoder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import jodd.io.findfile.ClassFinder;
 import jodd.io.findfile.FindFile;
@@ -72,10 +75,12 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		_registeredActionsCount -= count;
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Removed " + count +
-					" existing JSON Web Service actions that belonged to " +
-						_servletContextName);
+			if (count != 0) {
+				_log.debug(
+					"Removed " + count +
+						" existing JSON Web Service actions that belonged to " +
+							_servletContextName);
+			}
 		}
 	}
 
@@ -374,6 +379,10 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		String httpMethod = _jsonWebServiceMappingResolver.resolveHttpMethod(
 			method);
 
+		if (_invalidHttpMethods.contains(httpMethod)) {
+			return;
+		}
+
 		Class<?> utilClass = _loadUtilClass(implementationClass);
 
 		try {
@@ -395,6 +404,8 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		JSONWebServiceConfigurator.class);
 
 	private ClassLoader _classLoader;
+	private Set<String> _invalidHttpMethods = SetUtil.fromArray(
+		PropsValues.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS);
 	private byte[] _jsonWebServiceAnnotationBytes =
 		getTypeSignatureBytes(JSONWebService.class);
 	private JSONWebServiceMappingResolver _jsonWebServiceMappingResolver =

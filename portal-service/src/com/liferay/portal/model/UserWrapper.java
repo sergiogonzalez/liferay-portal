@@ -934,18 +934,18 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getDisplayEmailAddress();
 	}
 
-	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _user.getDisplayURL(themeDisplay);
-	}
-
 	public java.lang.String getDisplayURL(java.lang.String portalURL,
 		java.lang.String mainPath)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _user.getDisplayURL(portalURL, mainPath);
+	}
+
+	public java.lang.String getDisplayURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getDisplayURL(themeDisplay);
 	}
 
 	public boolean getFemale()
@@ -1004,10 +1004,24 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getMySites();
 	}
 
+	public java.util.List<com.liferay.portal.model.Group> getMySites(
+		boolean includeControlPanel, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getMySites(includeControlPanel, max);
+	}
+
 	public java.util.List<com.liferay.portal.model.Group> getMySites(int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _user.getMySites(max);
+	}
+
+	public java.util.List<com.liferay.portal.model.Group> getMySites(
+		java.lang.String[] classNames, boolean includeControlPanel, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getMySites(classNames, includeControlPanel, max);
 	}
 
 	public java.util.List<com.liferay.portal.model.Group> getMySites(
@@ -1093,6 +1107,10 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getTeams();
 	}
 
+	public java.util.TimeZone getTimeZone() {
+		return _user.getTimeZone();
+	}
+
 	public long[] getUserGroupIds()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getUserGroupIds();
@@ -1103,8 +1121,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getUserGroups();
 	}
 
-	public java.util.TimeZone getTimeZone() {
-		return _user.getTimeZone();
+	public java.util.List<com.liferay.portal.model.Website> getWebsites()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _user.getWebsites();
 	}
 
 	public boolean hasCompanyMx()
@@ -1173,11 +1192,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 	public void setPasswordUnencrypted(java.lang.String passwordUnencrypted) {
 		_user.setPasswordUnencrypted(passwordUnencrypted);
-	}
-
-	public java.util.List<com.liferay.portal.model.Website> getWebsites()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _user.getWebsites();
 	}
 
 	/**

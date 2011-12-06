@@ -260,17 +260,41 @@ public interface GroupService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
+		long userId, java.lang.String[] classNames,
+		boolean includeControlPanel, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
-	* Returns the guest or current user's layout set group, organization
-	* groups, inherited organization groups, and site groups.
+	* Returns the user's group &quot;places&quot; associated with the group
+	* entity class names, including the control panel group if the user is
+	* permitted to view the control panel.
 	*
-	* @return the user's layout set group, organization groups, and inherited
-	organization groups, and site groups
+	* <p>
+	* <ul> <li> Class name &quot;User&quot; includes the user's layout set
+	* group. </li> <li> Class name &quot;Organization&quot; includes the user's
+	* immediate organization groups and inherited organization groups. </li>
+	* <li> Class name &quot;Group&quot; includes the user's immediate
+	* organization groups and site groups. </li> <li> A <code>classNames</code>
+	* value of <code>null</code> includes the user's layout set group,
+	* organization groups, inherited organization groups, and site groups.
+	* </li> </ul>
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param classNames the group entity class names (optionally
+	<code>null</code>). For more information see {@link
+	#getUserPlaces(long, String[], int)}
+	* @param max the maximum number of groups to return
+	* @return the user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserSites()
+	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
+		long userId, java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -305,33 +329,16 @@ public interface GroupService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the user's group &quot;places&quot; associated with the group
-	* entity class names, including the control panel group if the user is
-	* permitted to view the control panel.
+	* Returns the guest or current user's layout set group, organization
+	* groups, inherited organization groups, and site groups.
 	*
-	* <p>
-	* <ul> <li> Class name &quot;User&quot; includes the user's layout set
-	* group. </li> <li> Class name &quot;Organization&quot; includes the user's
-	* immediate organization groups and inherited organization groups. </li>
-	* <li> Class name &quot;Group&quot; includes the user's immediate
-	* organization groups and site groups. </li> <li> A <code>classNames</code>
-	* value of <code>null</code> includes the user's layout set group,
-	* organization groups, inherited organization groups, and site groups.
-	* </li> </ul>
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param classNames the group entity class names (optionally
-	<code>null</code>). For more information see {@link
-	#getUserPlaces(long, String[], int)}
-	* @param max the maximum number of groups to return
-	* @return the user's group &quot;places&quot;
+	* @return the user's layout set group, organization groups, and inherited
+	organization groups, and site groups
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
-		long userId, java.lang.String[] classNames, int max)
+	public java.util.List<com.liferay.portal.model.Group> getUserSites()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

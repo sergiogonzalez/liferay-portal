@@ -749,9 +749,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 
 	/**
 	* Sets the name of the permission propagator class of the portlet.
-	*
-	* @param pollerProcessorClass the name of the permission propagator class
-	of the portlet
 	*/
 	public void setPermissionPropagatorClass(
 		java.lang.String permissionPropagatorClass);

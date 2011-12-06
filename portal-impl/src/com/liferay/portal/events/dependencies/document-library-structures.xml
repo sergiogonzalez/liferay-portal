@@ -2,6 +2,82 @@
 
 <root>
 	<structure>
+		<name><![CDATA[Default Image's Metadata Set]]></name>
+		<description><![CDATA[Default Image's Metadata Set]]></description>
+		<root available-locales="en_US" default-locale="en_US">
+			<dynamic-element dataType="string" name="author" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Author]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="license" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[License]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="location" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Location]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+		</root>
+	</structure>
+	<structure>
+		<name><![CDATA[Default Video's Metadata Set]]></name>
+		<description><![CDATA[Default Video's Metadata Set]]></description>
+		<root available-locales="en_US" default-locale="en_US">
+			<dynamic-element dataType="string" name="author" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Author]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="license" type="textarea">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[License]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="location" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Location]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="runningTime" type="textarea">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Running Time]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="subtitles" type="textarea">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Subtitles]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+		</root>
+	</structure>
+	<structure>
 		<name><![CDATA[Dublin Core Metadata Initiative]]></name>
 		<description><![CDATA[Dublin Core Metadata Initiative]]></description>
 		<root available-locales="en_US" default-locale="en_US">
@@ -96,82 +172,6 @@
 			<dynamic-element dataType="string" name="subject" type="textarea">
 				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Subject]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
-				</meta-data>
-			</dynamic-element>
-		</root>
-	</structure>
-	<structure>
-		<name><![CDATA[Default Image's Metadata Set]]></name>
-		<description><![CDATA[Default Image's Metadata Set]]></description>
-		<root available-locales="en_US" default-locale="en_US">
-			<dynamic-element dataType="string" name="author" type="text">
-				<meta-data locale="en_US">
-					<entry name="label"><![CDATA[Author]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
-				</meta-data>
-			</dynamic-element>
-			<dynamic-element dataType="string" name="license" type="text">
-				<meta-data locale="en_US">
-					<entry name="label"><![CDATA[License]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
-				</meta-data>
-			</dynamic-element>
-			<dynamic-element dataType="string" name="location" type="text">
-				<meta-data locale="en_US">
-					<entry name="label"><![CDATA[Location]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
-				</meta-data>
-			</dynamic-element>
-		</root>
-	</structure>
-	<structure>
-		<name><![CDATA[Default Video's Metadata Set]]></name>
-		<description><![CDATA[Default Video's Metadata Set]]></description>
-		<root available-locales="en_US" default-locale="en_US">
-			<dynamic-element dataType="string" name="author" type="text">
-				<meta-data locale="en_US">
-					<entry name="label"><![CDATA[Author]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
-				</meta-data>
-			</dynamic-element>
-			<dynamic-element dataType="string" name="license" type="textarea">
-				<meta-data locale="en_US">
-					<entry name="label"><![CDATA[License]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
-				</meta-data>
-			</dynamic-element>
-			<dynamic-element dataType="string" name="location" type="text">
-				<meta-data locale="en_US">
-					<entry name="label"><![CDATA[Location]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
-				</meta-data>
-			</dynamic-element>
-			<dynamic-element dataType="string" name="runningTime" type="textarea">
-				<meta-data locale="en_US">
-					<entry name="label"><![CDATA[Running Time]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
-				</meta-data>
-			</dynamic-element>
-			<dynamic-element dataType="string" name="subtitles" type="textarea">
-				<meta-data locale="en_US">
-					<entry name="label"><![CDATA[Subtitles]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
 					<entry name="showLabel"><![CDATA[true]]></entry>

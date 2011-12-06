@@ -167,4 +167,12 @@ public interface Element extends Branch {
 
 	public void setQName(QName qName);
 
+	public void sortAttributes(boolean recursive);
+
+	public void sortElementsByAttribute(
+		String elementName, String attributeName);
+
+	public void sortElementsByChildElement(
+		String elementName, String childElementName);
+
 }

@@ -1101,6 +1101,7 @@ Please set the property "jdk.6.home" in build.properties.
 						<include name="**/*.properties" />
 						<include name="**/*.tld" />
 						<include name="**/*.vm" />
+						<include name="**/*.wsdd" />
 						<include name="**/*.xml" />
 					</fileset>
 				</copy>

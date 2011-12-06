@@ -371,8 +371,8 @@ public class AssetLinkLocalServiceUtil {
 	* entry ID.
 	*
 	* @param entryId the primary key of the asset entry
-	* @return the asset links whose first or second entry ID is the given
-	entry ID
+	* @return the asset links whose first or second entry ID is the given entry
+	ID
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> getLinks(

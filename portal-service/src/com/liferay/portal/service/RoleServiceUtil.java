@@ -69,9 +69,9 @@ public class RoleServiceUtil {
 	*
 	* @param userId the primary key of the user
 	* @param roleIds the primary keys of the roles
-	* @throws PortalException if a user with the primary key could not be
-	found or if the user did not have permission to assign members
-	to one of the roles
+	* @throws PortalException if a user with the primary key could not be found
+	or if the user did not have permission to assign members to one
+	of the roles
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addUserRoles(long userId, long[] roleIds)
@@ -84,10 +84,10 @@ public class RoleServiceUtil {
 	* Deletes the role with the primary key and its associated permissions.
 	*
 	* @param roleId the primary key of the role
-	* @throws PortalException if the user did not have permission to delete
-	the role, if a role with the primary key could not be found, if
-	the role is a default system role, or if the role's resource
-	could not be found
+	* @throws PortalException if the user did not have permission to delete the
+	role, if a role with the primary key could not be found, if the
+	role is a default system role, or if the role's resource could
+	not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteRole(long roleId)
@@ -116,8 +116,8 @@ public class RoleServiceUtil {
 	*
 	* @param roleId the primary key of the role
 	* @return the role with the primary key
-	* @throws PortalException if a role with the primary key could not be
-	found or if the user did not have permission to view the role
+	* @throws PortalException if a role with the primary key could not be found
+	or if the user did not have permission to view the role
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Role getRole(long roleId)
@@ -131,16 +131,14 @@ public class RoleServiceUtil {
 	*
 	* <p>
 	* The method searches the system roles map first for default roles. If a
-	* role with the name is not found, then the method will query the
-	* database.
+	* role with the name is not found, then the method will query the database.
 	* </p>
 	*
 	* @param companyId the primary key of the company
 	* @param name the role's name
 	* @return the role with the name
-	* @throws PortalException if a role with the name could not be found in
-	the company or if the user did not have permission to view the
-	role
+	* @throws PortalException if a role with the name could not be found in the
+	company or if the user did not have permission to view the role
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Role getRole(long companyId,
@@ -224,9 +222,8 @@ public class RoleServiceUtil {
 	search
 	* @return <code>true</code> if the user is associated with the regular
 	role; <code>false</code> otherwise
-	* @throws PortalException if a role with the name could not be found in
-	the company or if a default user for the company could not be
-	found
+	* @throws PortalException if a role with the name could not be found in the
+	company or if a default user for the company could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean hasUserRole(long userId, long companyId,
@@ -266,9 +263,9 @@ public class RoleServiceUtil {
 	* @param userId the primary key of the user
 	* @param roleIds the primary keys of the roles
 	* @throws PortalException if a user with the primary key could not be
-	found, if the user did not have permission to remove members
-	from a role, or if a role with any one of the primary keys could
-	not be found
+	found, if the user did not have permission to remove members from
+	a role, or if a role with any one of the primary keys could not
+	be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetUserRoles(long userId, long[] roleIds)
@@ -288,9 +285,9 @@ public class RoleServiceUtil {
 	<code>null</code>) to replace those existing for the role
 	* @param subtype the role's new subtype (optionally <code>null</code>)
 	* @return the role with the primary key
-	* @throws PortalException if the user did not have permission to update
-	the role, if a role with the primary could not be found, or if
-	the role's name was invalid
+	* @throws PortalException if the user did not have permission to update the
+	role, if a role with the primary could not be found, or if the
+	role's name was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Role updateRole(long roleId,

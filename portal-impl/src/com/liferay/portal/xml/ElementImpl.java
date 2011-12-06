@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -468,6 +469,78 @@ public class ElementImpl extends BranchImpl implements Element {
 		QNameImpl qNameImpl = (QNameImpl)qName;
 
 		_element.setQName(qNameImpl.getWrappedQName());
+	}
+
+	public void sortAttributes(boolean recursive) {
+		Map<String, Attribute> attributesMap = new TreeMap<String, Attribute>();
+
+		List<Attribute> attributes = attributes();
+
+		for (Attribute attribute : attributes) {
+			attribute.detach();
+
+			attributesMap.put(attribute.getName(), attribute);
+		}
+
+		for (Map.Entry<String, Attribute> entry : attributesMap.entrySet()) {
+			Attribute attribute = entry.getValue();
+
+			add(attribute);
+		}
+
+		if (!recursive) {
+			return;
+		}
+
+		List<Element> elements = elements();
+
+		for (Element element : elements) {
+			element.sortAttributes(true);
+		}
+	}
+
+	public void sortElementsByAttribute(
+		String elementName, String attributeName) {
+
+		Map<String, Element> elementsMap = new TreeMap<String, Element>();
+
+		List<Element> elements = elements(elementName);
+
+		for (Element element : elements) {
+			element.detach();
+
+			String attributeValue = element.attributeValue(attributeName);
+
+			elementsMap.put(attributeValue, element);
+		}
+
+		for (Map.Entry<String, Element> entry : elementsMap.entrySet()) {
+			Element element = entry.getValue();
+
+			add(element);
+		}
+	}
+
+	public void sortElementsByChildElement(
+		String elementName, String childElementName) {
+
+		Map<String, Element> elementsMap = new TreeMap<String, Element>();
+
+		List<Element> elements = elements(elementName);
+
+		for (Element element : elements) {
+			element.detach();
+
+			String childElementValue = element.elementText(childElementName);
+
+			elementsMap.put(childElementValue, element);
+		}
+
+		for (Map.Entry<String, Element> entry : elementsMap.entrySet()) {
+			Element element = entry.getValue();
+
+			add(element);
+		}
 	}
 
 	@Override

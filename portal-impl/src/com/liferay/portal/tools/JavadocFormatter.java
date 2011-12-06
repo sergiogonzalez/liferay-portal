@@ -16,8 +16,10 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -124,7 +126,7 @@ public class JavadocFormatter {
 		if ((fileNames.length == 0) && Validator.isNotNull(limit) &&
 			!limit.startsWith("$")) {
 
-			StringBuilder sb = new StringBuilder("Limit file not found: ");
+			StringBundler sb = new StringBundler("Limit file not found: ");
 
 			sb.append(limit);
 
@@ -140,6 +142,29 @@ public class JavadocFormatter {
 			fileName = StringUtil.replace(fileName, "\\", "/");
 
 			_format(fileName);
+		}
+
+		for (Map.Entry<String, Tuple> entry : _javadocxXmlTuples.entrySet()) {
+			Tuple javadocsXmlTuple = entry.getValue();
+
+			File javadocsXmlFile = (File)javadocsXmlTuple.getObject(1);
+			String oldJavadocsXmlContent =
+				(String)javadocsXmlTuple.getObject(2);
+			Document javadocsXmlDocument =
+				(Document)javadocsXmlTuple.getObject(3);
+
+			Element javadocsXmlRootElement =
+				javadocsXmlDocument.getRootElement();
+
+			javadocsXmlRootElement.sortElementsByChildElement(
+				"javadoc", "type");
+
+			String newJavadocsXmlContent =
+				javadocsXmlDocument.formattedString();
+
+			if (!oldJavadocsXmlContent.equals(newJavadocsXmlContent)) {
+				_fileUtil.write(javadocsXmlFile, newJavadocsXmlContent);
+			}
 		}
 	}
 
@@ -195,7 +220,7 @@ public class JavadocFormatter {
 	private String _addDocletTags(
 		Element parentElement, String[] names, String indent) {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		int maxNameLength = 0;
 
@@ -553,7 +578,7 @@ public class JavadocFormatter {
 
 		String className = _getClassName(fileName);
 
-		JavaDocBuilder builder = new JavaDocBuilder();
+		JavaDocBuilder javadocBuilder = new JavaDocBuilder();
 
 		if (reader == null) {
 			File file = new File(fileName);
@@ -562,19 +587,19 @@ public class JavadocFormatter {
 				return null;
 			}
 
-			builder.addSource(file);
+			javadocBuilder.addSource(file);
 		}
 		else {
-			builder.addSource(reader);
+			javadocBuilder.addSource(reader);
 		}
 
-		return builder.getClassByName(className);
+		return javadocBuilder.getClassByName(className);
 	}
 
 	private String _getJavaClassComment(
 		Element rootElement, JavaClass javaClass) {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		String indent = StringPool.BLANK;
 
@@ -675,7 +700,7 @@ public class JavadocFormatter {
 
 		String indent = _getIndent(lines, javaField);
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
 		sb.append("/**\n");
@@ -726,7 +751,7 @@ public class JavadocFormatter {
 
 		String indent = _getIndent(lines, javaMethod);
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
 		sb.append("/**\n");
@@ -767,7 +792,7 @@ public class JavadocFormatter {
 	}
 
 	private String _getMethodKey(Element methodElement) {
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		sb.append(methodElement.elementText("name"));
 		sb.append("(");
@@ -787,7 +812,7 @@ public class JavadocFormatter {
 	}
 
 	private String _getMethodKey(JavaMethod javaMethod) {
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		sb.append(javaMethod.getName());
 		sb.append("(");
@@ -955,7 +980,7 @@ public class JavadocFormatter {
 			}
 		}
 
-		StringBuilder sb = new StringBuilder(content.length());
+		StringBundler sb = new StringBundler(content.length());
 
 		for (String line : lines) {
 			if (line != null) {
@@ -993,6 +1018,8 @@ public class JavadocFormatter {
 
 		Document document = _getJavadocDocument(javaClass);
 
+		_updateJavadocsXmlFile(fileName, javaClass, document);
+
 		_updateJavaFromDocument(
 			fileName, originalContent, javadocLessContent, document);
 	}
@@ -1011,6 +1038,55 @@ public class JavadocFormatter {
 		return text;
 	}
 
+	private Tuple _getJavadocsXmlTuple(String fileName) throws Exception {
+		File file = new File(fileName);
+		
+		String absolutePath = file.getAbsolutePath();
+
+		absolutePath = StringUtil.replace(absolutePath, "\\", "/");
+
+		int pos = absolutePath.indexOf("/portal-impl/src/");
+
+		String srcDirName = null;
+
+		if (pos != -1) {
+			srcDirName = absolutePath.substring(0, pos + 17);
+		}
+		else {
+			pos = absolutePath.indexOf("/WEB-INF/src/");
+
+			if (pos != -1) {
+				srcDirName = absolutePath.substring(0, pos + 13);
+			}
+		}
+
+		if (srcDirName == null) {
+			return null;
+		}
+
+		Tuple tuple = _javadocxXmlTuples.get(srcDirName);
+
+		File javadocsXmlFile = new File(srcDirName, "META-INF/javadocs.xml");
+
+		if (!javadocsXmlFile.exists()) {
+			_fileUtil.write(
+				javadocsXmlFile,
+				"<?xml version=\"1.0\"?>\n\n<javadocs>\n</javadocs>");
+		}
+
+		String javadocsXmlContent = _fileUtil.read(javadocsXmlFile);
+
+		Document javadocsXmlDocument = _saxReaderUtil.read(javadocsXmlContent);
+
+		tuple = new Tuple(
+			srcDirName, javadocsXmlFile, javadocsXmlContent,
+			javadocsXmlDocument);
+
+		_javadocxXmlTuples.put(srcDirName, tuple);
+
+		return tuple;
+	}
+
 	private String _trimMultilineText(String text) {
 		String[] textArray = StringUtil.splitLines(text);
 
@@ -1019,6 +1095,54 @@ public class JavadocFormatter {
 		}
 
 		return StringUtil.merge(textArray, " ");
+	}
+
+	private void _updateJavadocsXmlFile(
+			String fileName, JavaClass javaClass, Document javaClassDocument)
+		throws Exception {
+
+		String javaClassFullyQualifiedName = javaClass.getFullyQualifiedName();
+
+		if (!javaClassFullyQualifiedName.contains(".service.") ||
+			!javaClassFullyQualifiedName.endsWith("ServiceImpl")) {
+
+			return;
+		}
+
+		Tuple javadocsXmlTuple = _getJavadocsXmlTuple(fileName);
+
+		if (javadocsXmlTuple == null) {
+			return;
+		}
+
+		Document javadocsXmlDocument = (Document)javadocsXmlTuple.getObject(3);
+
+		Element javadocsXmlRootElement = javadocsXmlDocument.getRootElement();
+
+		List<Element> javadocElements = javadocsXmlRootElement.elements(
+			"javadoc");
+
+		for (Element javadocElement : javadocElements) {
+			String type = javadocElement.elementText("type");
+
+			if (type.equals(javaClassFullyQualifiedName)) {
+				Element javaClassRootElement =
+					javaClassDocument.getRootElement();
+
+				if (Validator.equals(
+						javadocElement.formattedString(),
+						javaClassRootElement.formattedString())) {
+
+					return;
+				}
+
+				javadocElement.detach();
+
+				break;
+			}
+		}
+
+		javadocsXmlRootElement.add(javaClassDocument.getRootElement());
 	}
 
 	private void _updateJavaFromDocument(
@@ -1105,7 +1229,7 @@ public class JavadocFormatter {
 				_getJavaFieldComment(lines, fieldElementsMap, javaField));
 		}
 
-		StringBuilder sb = new StringBuilder(javadocLessContent.length());
+		StringBundler sb = new StringBundler(javadocLessContent.length());
 
 		for (int lineNumber = 1; lineNumber <= lines.length; lineNumber++) {
 			String line = lines[lineNumber - 1];
@@ -1176,5 +1300,7 @@ public class JavadocFormatter {
 
 	private String _basedir = "./";
 	private boolean _initializeMissingJavadocs;
+ 	private Map<String, Tuple> _javadocxXmlTuples =
+		new HashMap<String, Tuple>();
 
 }

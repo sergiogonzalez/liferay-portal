@@ -604,13 +604,13 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Returns <code>true</code> if the password policy has been assigned to
-	* the organization.
+	* Returns <code>true</code> if the password policy has been assigned to the
+	* organization.
 	*
 	* @param passwordPolicyId the primary key of the password policy
 	* @param organizationId the primary key of the organization
-	* @return <code>true</code> if the password policy has been assigned to
-	the organization; <code>false</code> otherwise
+	* @return <code>true</code> if the password policy has been assigned to the
+	organization; <code>false</code> otherwise
 	* @throws SystemException if a system exception occurred
 	*/
 	public boolean hasPasswordPolicyOrganization(long passwordPolicyId,
@@ -622,8 +622,8 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	/**
 	* Returns <code>true</code> if the user is a member of the organization.
-	* This method is usually called to determine if the user has view access
-	* to a resource belonging to the organization.
+	* This method is usually called to determine if the user has view access to
+	* a resource belonging to the organization.
 	*
 	* @param userId the primary key of the user
 	* @param organizationId the primary key of the organization
@@ -639,9 +639,9 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	/**
 	* Returns <code>true</code> if the user is a member of the organization,
-	* optionally focusing on sub-organizations or the specified
-	* organization. This method is usually called to determine if the user has
-	* view access to a resource belonging to the organization.
+	* optionally focusing on sub-organizations or the specified organization.
+	* This method is usually called to determine if the user has view access to
+	* a resource belonging to the organization.
 	*
 	* <p>
 	*

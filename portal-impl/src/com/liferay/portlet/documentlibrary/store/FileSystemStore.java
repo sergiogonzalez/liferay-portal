@@ -128,6 +128,11 @@ public class FileSystemStore extends BaseStore {
 
 		FileUtil.deltree(dirNameDir);
 
+		RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
+			companyId, repositoryId);
+
+		_repositoryDirs.remove(repositoryDirKey);
+
 		deleteEmptyAncestors(parentFile);
 	}
 
@@ -145,7 +150,7 @@ public class FileSystemStore extends BaseStore {
 
 		FileUtil.deltree(fileNameDir);
 
-		deleteEmptyAncestors(parentFile);
+		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
 
 	@Override
@@ -165,7 +170,7 @@ public class FileSystemStore extends BaseStore {
 
 		fileNameVersionFile.delete();
 
-		deleteEmptyAncestors(parentFile);
+		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
 
 	@Override
@@ -306,7 +311,7 @@ public class FileSystemStore extends BaseStore {
 
 		fileNameDir.renameTo(newFileNameDir);
 
-		deleteEmptyAncestors(parentFile);
+		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
 
 	public void updateFile(
@@ -326,7 +331,7 @@ public class FileSystemStore extends BaseStore {
 
 		fileNameDir.renameTo(newFileNameDir);
 
-		deleteEmptyAncestors(parentFile);
+		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
 
 	@Override
@@ -370,14 +375,31 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected void deleteEmptyAncestors(File file) {
+		deleteEmptyAncestors(-1, -1, file);
+	}
+
+	protected void deleteEmptyAncestors(
+		long companyId, long repositoryId, File file) {
+
 		String[] fileNames = file.list();
 
 		if (fileNames.length == 0) {
+			String fileName = file.getName();
+
+			if ((repositoryId > 0) &&
+				fileName.equals(String.valueOf(repositoryId))) {
+
+				RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
+					companyId, repositoryId);
+
+				_repositoryDirs.remove(repositoryDirKey);
+			}
+
 			File parentFile = file.getParentFile();
 
 			file.delete();
 
-			deleteEmptyAncestors(parentFile);
+			deleteEmptyAncestors(companyId, repositoryId, parentFile);
 		}
 	}
 
@@ -442,8 +464,8 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected File getRepositoryDir(long companyId, long repositoryId) {
-		RepositoryDirKey repositoryDirKey =
-			new RepositoryDirKey(companyId, repositoryId);
+		RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
+			companyId, repositoryId);
 
 		File repositoryDir = _repositoryDirs.get(repositoryDirKey);
 

@@ -298,8 +298,8 @@ public interface CompanyService {
 	*
 	* @param companyId the primary key of the company
 	* @param inputStream the input stream of the company's logo image
-	* @throws PortalException if the company's logo ID could not be found or
-	if the logo's image was corrupted or if the user was an
+	* @throws PortalException if the company's logo ID could not be found or if
+	the logo's image was corrupted or if the user was an
 	administrator
 	* @throws SystemException if a system exception occurred
 	*/
@@ -337,8 +337,8 @@ public interface CompanyService {
 	with email addresses that match the company mail suffix
 	* @param strangersVerify whether to require strangers who create accounts
 	to be verified via email
-	* @param siteLogo whether to to allow site administrators to use their
-	own logo instead of the enterprise logo
+	* @param siteLogo whether to to allow site administrators to use their own
+	logo instead of the enterprise logo
 	* @throws PortalException if the user was not an administrator
 	* @throws SystemException if a system exception occurred
 	*/

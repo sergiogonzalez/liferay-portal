@@ -70,9 +70,9 @@ public class UserServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @param userIds the primary keys of the users
-	* @throws PortalException if a group or user with the primary key could
-	not be found, or if the user did not have permission to assign
-	group members
+	* @throws PortalException if a group or user with the primary key could not
+	be found, or if the user did not have permission to assign group
+	members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addGroupUsers(long groupId, long[] userIds,
@@ -94,8 +94,8 @@ public class UserServiceSoap {
 	* @param organizationId the primary key of the organization
 	* @param userIds the primary keys of the users
 	* @throws PortalException if an organization or user with the primary key
-	could not be found, if the user did not have permission to
-	assign organization members, or if current user did not have an
+	could not be found, if the user did not have permission to assign
+	organization members, or if current user did not have an
 	organization in common with a given user
 	* @throws SystemException if a system exception occurred
 	*/
@@ -188,8 +188,8 @@ public class UserServiceSoap {
 	* </p>
 	*
 	* @param companyId the primary key of the user's company
-	* @param autoPassword whether a password should be automatically
-	generated for the user
+	* @param autoPassword whether a password should be automatically generated
+	for the user
 	* @param password1 the user's password
 	* @param password2 the user's password confirmation
 	* @param autoScreenName whether a screen name should be automatically
@@ -223,8 +223,8 @@ public class UserServiceSoap {
 	their new account
 	* @param serviceContext the user's service context (optionally
 	<code>null</code>). Can specify the user's universally unique
-	identifier (with the <code>uuid</code> attribute), asset
-	category IDs, asset tag names, and expando bridge attributes.
+	identifier (with the <code>uuid</code> attribute), asset category
+	IDs, asset tag names, and expando bridge attributes.
 	* @return the new user
 	* @throws PortalException if the user's information was invalid, if the
 	creator did not have permission to add users, if the email
@@ -288,8 +288,8 @@ public class UserServiceSoap {
 	* </p>
 	*
 	* @param companyId the primary key of the user's company
-	* @param autoPassword whether a password should be automatically
-	generated for the user
+	* @param autoPassword whether a password should be automatically generated
+	for the user
 	* @param password1 the user's password
 	* @param password2 the user's password confirmation
 	* @param autoScreenName whether a screen name should be automatically
@@ -318,8 +318,8 @@ public class UserServiceSoap {
 	their new account
 	* @param serviceContext the user's service context (optionally
 	<code>null</code>). Can specify the user's universally unique
-	identifier (with the <code>uuid</code> attribute), asset
-	category IDs, asset tag names, and expando bridge attributes.
+	identifier (with the <code>uuid</code> attribute), asset category
+	IDs, asset tag names, and expando bridge attributes.
 	* @return the new user
 	* @throws PortalException if the user's information was invalid, if the
 	creator did not have permission to add users, or if the email
@@ -368,8 +368,8 @@ public class UserServiceSoap {
 	* </p>
 	*
 	* @param companyId the primary key of the user's company
-	* @param autoPassword whether a password should be automatically
-	generated for the user
+	* @param autoPassword whether a password should be automatically generated
+	for the user
 	* @param password1 the user's password
 	* @param password2 the user's password confirmation
 	* @param autoScreenName whether a screen name should be automatically
@@ -403,8 +403,8 @@ public class UserServiceSoap {
 	their new account
 	* @param serviceContext the user's service context (optionally
 	<code>null</code>). Can specify the user's universally unique
-	identifier (with the <code>uuid</code> attribute), asset
-	category IDs, asset tag names, and expando bridge attributes.
+	identifier (with the <code>uuid</code> attribute), asset category
+	IDs, asset tag names, and expando bridge attributes.
 	* @return the new user
 	* @throws PortalException if the user's information was invalid, if the
 	creator did not have permission to add users, if the email
@@ -468,8 +468,8 @@ public class UserServiceSoap {
 	* </p>
 	*
 	* @param companyId the primary key of the user's company
-	* @param autoPassword whether a password should be automatically
-	generated for the user
+	* @param autoPassword whether a password should be automatically generated
+	for the user
 	* @param password1 the user's password
 	* @param password2 the user's password confirmation
 	* @param autoScreenName whether a screen name should be automatically
@@ -498,8 +498,8 @@ public class UserServiceSoap {
 	their new account
 	* @param serviceContext the user's service context (optionally
 	<code>null</code>). Can specify the user's universally unique
-	identifier (with the <code>uuid</code> attribute), asset
-	category IDs, asset tag names, and expando bridge attributes.
+	identifier (with the <code>uuid</code> attribute), asset category
+	IDs, asset tag names, and expando bridge attributes.
 	* @return the new user
 	* @throws PortalException if the user's information was invalid, if the
 	creator did not have permission to add users, or if the email
@@ -605,9 +605,8 @@ public class UserServiceSoap {
 	* Deletes the user.
 	*
 	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if the current user did not have permission to delete
-	the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the current user did not have permission to delete the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteUser(long userId) throws RemoteException {
@@ -744,9 +743,8 @@ public class UserServiceSoap {
 	*
 	* @param userId the primary key of the user
 	* @return the user with the primary key
-	* @throws PortalException if a user with the primary key could not be
-	found or if the current user did not have permission to view the
-	user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the current user did not have permission to view the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap getUserById(long userId)
@@ -769,9 +767,8 @@ public class UserServiceSoap {
 	* @param companyId the primary key of the user's company
 	* @param screenName the user's screen name
 	* @return the user with the screen name
-	* @throws PortalException if a user with the screen name could not be
-	found or if the current user did not have permission to veiw the
-	user
+	* @throws PortalException if a user with the screen name could not be found
+	or if the current user did not have permission to veiw the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap getUserByScreenName(
@@ -820,8 +817,7 @@ public class UserServiceSoap {
 	* @param companyId the primary key of the user's company
 	* @param screenName the user's screen name
 	* @return the primary key of the user with the screen name
-	* @throws PortalException if a user with the screen name could not be
-	found
+	* @throws PortalException if a user with the screen name could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static long getUserIdByScreenName(long companyId,
@@ -921,8 +917,8 @@ public class UserServiceSoap {
 	* name and email address.
 	*
 	* @param companyId the primary key of the user's company
-	* @param autoPassword whether a password should be automatically
-	generated for the user
+	* @param autoPassword whether a password should be automatically generated
+	for the user
 	* @param password1 the user's password
 	* @param password2 the user's password confirmation
 	* @param autoScreenName whether a screen name should be automatically
@@ -1159,8 +1155,7 @@ public class UserServiceSoap {
 	* Updates the user's response to the terms of use agreement.
 	*
 	* @param userId the primary key of the user
-	* @param agreedToTermsOfUse whether the user has agree to the terms of
-	use
+	* @param agreedToTermsOfUse whether the user has agree to the terms of use
 	* @return the user
 	* @throws PortalException if the current user did not have permission to
 	update the user's agreement to terms-of-use
@@ -1189,9 +1184,8 @@ public class UserServiceSoap {
 	* @param emailAddress1 the user's new email address
 	* @param emailAddress2 the user's new email address confirmation
 	* @return the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if the current user did not have permission to update
-	the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the current user did not have permission to update the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap updateEmailAddress(
@@ -1243,9 +1237,8 @@ public class UserServiceSoap {
 	* @param userId the primary key of the user
 	* @param openId the new OpenID
 	* @return the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if the current user did not have permission to update
-	the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the current user did not have permission to update the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap updateOpenId(long userId,
@@ -1269,9 +1262,8 @@ public class UserServiceSoap {
 	*
 	* @param userId the primary key of the user
 	* @param organizationIds the primary keys of the organizations
-	* @throws PortalException if a user with the primary key could not be
-	found or if the current user did not have permission to update
-	the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the current user did not have permission to update the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void updateOrganizations(long userId, long[] organizationIds,
@@ -1289,8 +1281,7 @@ public class UserServiceSoap {
 	}
 
 	/**
-	* Updates the user's password without tracking or validation of the
-	* change.
+	* Updates the user's password without tracking or validation of the change.
 	*
 	* @param userId the primary key of the user
 	* @param password1 the user's new password
@@ -1298,9 +1289,8 @@ public class UserServiceSoap {
 	* @param passwordReset whether the user should be asked to reset their
 	password the next time they log in
 	* @return the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if the current user did not have permission to update
-	the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the current user did not have permission to update the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap updatePassword(
@@ -1380,8 +1370,8 @@ public class UserServiceSoap {
 	* @param screenName the user's new screen name
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
-	found, if the new screen name was invalid, or if the current
-	user did not have permission to update the user
+	found, if the new screen name was invalid, or if the current user
+	did not have permission to update the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap updateScreenName(
@@ -1407,8 +1397,8 @@ public class UserServiceSoap {
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
 	found, if the current user was updating her own status to
-	anything but {@link WorkflowConstants.STATUS_APPROVED}, or if
-	the current user did not have permission to update the user's
+	anything but {@link WorkflowConstants.STATUS_APPROVED}, or if the
+	current user did not have permission to update the user's
 	workflow status.
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1486,8 +1476,8 @@ public class UserServiceSoap {
 	bridge attributes.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
-	found, if the new information was invalid, or if the current
-	user did not have permission to update the user
+	found, if the new information was invalid, or if the current user
+	did not have permission to update the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap updateUser(long userId,
@@ -1602,8 +1592,8 @@ public class UserServiceSoap {
 	bridge attributes.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
-	found, if the new information was invalid, or if the current
-	user did not have permission to update the user
+	found, if the new information was invalid, or if the current user
+	did not have permission to update the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap updateUser(long userId,

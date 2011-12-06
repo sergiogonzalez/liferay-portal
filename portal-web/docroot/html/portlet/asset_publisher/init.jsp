@@ -196,6 +196,10 @@ if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || defaultAsse
 	defaultAssetPublisher = true;
 }
 
+boolean enablePermissions = GetterUtil.getBoolean(preferences.getValue("enablePermissions", null));
+
+assetEntryQuery.setEnablePermissions(enablePermissions);
+
 boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null));
 boolean enableComments = GetterUtil.getBoolean(preferences.getValue("enableComments", null));

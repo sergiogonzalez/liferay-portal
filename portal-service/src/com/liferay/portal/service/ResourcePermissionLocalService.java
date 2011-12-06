@@ -251,9 +251,9 @@ public interface ResourcePermissionLocalService
 	* If a company scope permission is granted to resources that the role
 	* already had group scope permissions to, the group scope permissions are
 	* deleted. Likewise, if a group scope permission is granted to resources
-	* that the role already had company scope permissions to, the company
-	* scope permissions are deleted. Be aware that this latter behavior can
-	* result in an overall reduction in permissions for the role.
+	* that the role already had company scope permissions to, the company scope
+	* permissions are deleted. Be aware that this latter behavior can result in
+	* an overall reduction in permissions for the role.
 	* </p>
 	*
 	* <p>
@@ -270,8 +270,8 @@ public interface ResourcePermissionLocalService
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
-	* @throws PortalException if scope was set to individual scope or if a
-	role with the primary key or a resource action with the name and
+	* @throws PortalException if scope was set to individual scope or if a role
+	with the primary key or a resource action with the name and
 	action ID could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -288,8 +288,8 @@ public interface ResourcePermissionLocalService
 	* <p>
 	* This method should only be used to add default permissions to existing
 	* resources en masse during upgrades or while verifying permissions. For
-	* example, this method could be used to grant site members individual
-	* scope permissions to view all blog posts.
+	* example, this method could be used to grant site members individual scope
+	* permissions to view all blog posts.
 	* </p>
 	*
 	* @param resourceName the resource's name, which can be either a class
@@ -485,8 +485,8 @@ public interface ResourcePermissionLocalService
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param roleId the primary key of the role
@@ -510,8 +510,8 @@ public interface ResourcePermissionLocalService
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param scopes the scopes
@@ -524,15 +524,15 @@ public interface ResourcePermissionLocalService
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns <code>true</code> if the resource permission grants permission
-	* to perform the resource action. Note that this method does not ensure
-	* that the resource permission refers to the same type of resource as the
+	* Returns <code>true</code> if the resource permission grants permission to
+	* perform the resource action. Note that this method does not ensure that
+	* the resource permission refers to the same type of resource as the
 	* resource action.
 	*
 	* @param resourcePermission the resource permission
 	* @param resourceAction the resource action
-	* @return <code>true</code> if the resource permission grants permission
-	to perform the resource action
+	* @return <code>true</code> if the resource permission grants permission to
+	perform the resource action
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasActionId(
@@ -662,8 +662,7 @@ public interface ResourcePermissionLocalService
 	*
 	* @param fromRoleId the primary key of the source role
 	* @param toRoleId the primary key of the destination role
-	* @throws PortalException if a role with the primary key could not be
-	found
+	* @throws PortalException if a role with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void mergePermissions(long fromRoleId, long toRoleId)
@@ -678,8 +677,8 @@ public interface ResourcePermissionLocalService
 	*
 	* @param resourcePermissionId the primary key of the resource permission
 	* @param toRoleId the primary key of the role
-	* @throws PortalException if a resource permission or role with the
-	primary key could not be found
+	* @throws PortalException if a resource permission or role with the primary
+	key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void reassignPermissions(long resourcePermissionId, long toRoleId)
@@ -688,8 +687,8 @@ public interface ResourcePermissionLocalService
 
 	/**
 	* Revokes permission at the scope from the role to perform the action on
-	* resources of the type. For example, this method could be used to revoke
-	* a group scope permission to edit blog posts.
+	* resources of the type. For example, this method could be used to revoke a
+	* group scope permission to edit blog posts.
 	*
 	* <p>
 	* Depending on the scope, the value of <code>primKey</code> will have
@@ -736,8 +735,8 @@ public interface ResourcePermissionLocalService
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the role's permissions at the scope, setting the actions that
-	* can be performed on resources of the type, also setting the owner of any
+	* Updates the role's permissions at the scope, setting the actions that can
+	* be performed on resources of the type, also setting the owner of any
 	* newly created resource permissions. Existing actions are replaced.
 	*
 	* <p>
@@ -772,9 +771,8 @@ public interface ResourcePermissionLocalService
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the role's permissions at the scope, setting the actions that
-	* can be performed on resources of the type. Existing actions are
-	* replaced.
+	* Updates the role's permissions at the scope, setting the actions that can
+	* be performed on resources of the type. Existing actions are replaced.
 	*
 	* <p>
 	* This method can be used to set permissions at any scope, but it is

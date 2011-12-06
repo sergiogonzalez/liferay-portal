@@ -24,7 +24,8 @@ String displayActivityCounterName = PrefsParamUtil.getString(preferences, reques
 Collection<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
 
 activityCounterNames.addAll(SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_CREATOR));
-activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENT);
+
+activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS);
 %>
 
 <div class="aui-field-row query-row">

@@ -81,6 +81,7 @@ public class SourceFormatter {
 						_checkPersistenceTestSuite();
 						_formatJSP();
 						_formatAntXML();
+						_formatDDLStructuresXML();
 						_formatFriendlyURLRoutesXML();
 						_formatSH();
 						_formatWebXML();
@@ -553,6 +554,72 @@ public class SourceFormatter {
 				previousName = name;
 			}
 		}
+	}
+
+	private static void _formatDDLStructuresXML()
+		throws DocumentException, IOException {
+
+		String basedir =
+			"./portal-impl/src/com/liferay/portal/events/dependencies/";
+
+		if (!_fileUtil.exists(basedir)) {
+			return;
+		}
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(new String[] {"**\\*structures.xml"});
+
+		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
+			directoryScanner);
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = _fileUtil.read(file);
+
+			String newContent = _formatDDLStructuresXML(content);
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				_fileUtil.write(file, newContent);
+
+				_sourceFormatterHelper.printError(fileName, file);
+			}
+		}
+	}
+
+	private static String _formatDDLStructuresXML(String content)
+		throws DocumentException, IOException {
+
+		Document document = _saxReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		rootElement.sortAttributes(true);
+
+		rootElement.sortElementsByChildElement("structure", "name");
+
+		List<Element> structureElements = rootElement.elements("structure");
+
+		for (Element structureElement : structureElements) {
+			Element structureRootElement = structureElement.element("root");
+
+			structureRootElement.sortElementsByAttribute(
+				"dynamic-element", "name");
+
+			List<Element> dynamicElementElements =
+				structureRootElement.elements("dynamic-element");
+
+			for (Element dynamicElementElement : dynamicElementElements) {
+				Element metaDataElement = dynamicElementElement.element(
+					"meta-data");
+
+				metaDataElement.sortElementsByAttribute("entry", "name");
+			}
+		}
+
+		return document.formattedString();
 	}
 
 	private static void _formatFriendlyURLRoutesXML()

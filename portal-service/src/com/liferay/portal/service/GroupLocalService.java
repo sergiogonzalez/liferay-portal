@@ -322,8 +322,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* @param companyId the primary key of the company
 	* @throws PortalException if a default user for the company could not be
 	found, if the group's information was invalid, if a layout could
-	not be found, or if a valid friendly URL could not be created
-	for the group
+	not be found, or if a valid friendly URL could not be created for
+	the group
 	* @throws SystemException if a system exception occurred
 	*/
 	public void checkCompanyGroup(long companyId)
@@ -331,9 +331,9 @@ public interface GroupLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates systems groups and other related data needed by the system on
-	* the very first startup. Also takes care of creating the control panel
-	* groups and layouts.
+	* Creates systems groups and other related data needed by the system on the
+	* very first startup. Also takes care of creating the control panel groups
+	* and layouts.
 	*
 	* @param companyId the primary key of the company
 	* @throws PortalException if a new system group could not be created
@@ -393,8 +393,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
@@ -426,8 +426,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* @param companyId the primary key of the company
 	* @param friendlyURL the group's friendlyURL
 	* @return the group with the friendly URL
-	* @throws PortalException if a matching group could not be found, or if
-	the friendly URL was invalid
+	* @throws PortalException if a matching group could not be found, or if the
+	friendly URL was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -530,8 +530,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param className the entity's class name
@@ -658,8 +658,7 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	*
 	* @param userId the primary key of the user
 	* @return the user's groups and organization groups
-	* @throws PortalException if a user with the primary key could not be
-	found
+	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -677,8 +676,7 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* @param inherit whether to include the user's inherited organization
 	groups and user groups
 	* @return the user's groups and immediate organization groups
-	* @throws PortalException if a user with the primary key could not be
-	found
+	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -699,8 +697,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param userId the primary key of the user
@@ -711,8 +709,7 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	inclusive)
 	* @return the range of the user's groups and immediate organization groups
 	ordered by name
-	* @throws PortalException if a user with the primary key could not be
-	found
+	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -731,18 +728,17 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param userId the primary key of the user
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
-	* @return the range of the user's groups and organization groups ordered
-	by name
-	* @throws PortalException if a user with the primary key could not be
-	found
+	* @return the range of the user's groups and organization groups ordered by
+	name
+	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -756,8 +752,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	*
 	* @param userGroups the user groups
 	* @return the groups associated with the user groups
-	* @throws PortalException if any one of the user group's group could not
-	be found
+	* @throws PortalException if any one of the user group's group could not be
+	found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -780,8 +776,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 
 	/**
 	* Returns the range of all groups associated with the user's organization
-	* groups, including the ancestors of the organization groups, unless
-	* portal property <code>organizations.membership.strict</code> is set to
+	* groups, including the ancestors of the organization groups, unless portal
+	* property <code>organizations.membership.strict</code> is set to
 	* <code>true</code>.
 	*
 	* <p>
@@ -790,8 +786,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param userId the primary key of the user
@@ -800,8 +796,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	inclusive)
 	* @return the range of groups associated with the user's organization
 	groups
-	* @throws PortalException if a user with the primary key could not be
-	found or if another portal exception occurred
+	* @throws PortalException if a user with the primary key could not be found
+	or if another portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -857,8 +853,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	*
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
-	* @param inherit whether to include organization groups and user groups
-	to which the user belongs in the determination
+	* @param inherit whether to include organization groups and user groups to
+	which the user belongs in the determination
 	* @return <code>true</code> if the user is associated with the group;
 	<code>false</code> otherwise
 	* @throws SystemException if a system exception occurred
@@ -897,22 +893,22 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
-	* @param classNameIds the class names of entities to include in the
-	search (optionally <code>null</code>)
+	* @param classNameIds the class names of entities to include in the search
+	(optionally <code>null</code>)
 	* @param name the group's name (optionally <code>null</code>)
 	* @param description the group's description (optionally
 	<code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and
-	user groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry
-	with key &quot;inherit&quot; mapped to a non-<code>null</code>
-	object. For more information see {@link
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
 	com.liferay.portal.service.persistence.GroupFinder}
 	com.liferay.portal.service.persistence.GroupFinder}
 	* @param start the lower bound of the range of groups to return
@@ -930,8 +926,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the groups that match the class name
-	* IDs, name, and description, optionally including the user's inherited
+	* Returns an ordered range of all the groups that match the class name IDs,
+	* name, and description, optionally including the user's inherited
 	* organization groups and user groups. System and staged groups are not
 	* included.
 	*
@@ -941,8 +937,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
@@ -952,11 +948,11 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* @param description the group's description (optionally
 	<code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and
-	user groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry
-	with key &quot;inherit&quot; mapped to a non-<code>null</code>
-	object. For more information see {@link
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
 	com.liferay.portal.service.persistence.GroupFinder}
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
@@ -986,8 +982,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
@@ -995,10 +991,10 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* @param description the group's description (optionally
 	<code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organizations and user groups in
-	the search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For
-	more information see {@link
+	include the user's inherited organizations and user groups in the
+	search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
 	com.liferay.portal.service.persistence.GroupFinder}
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
@@ -1025,8 +1021,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
@@ -1034,10 +1030,10 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* @param description the group's description (optionally
 	<code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organizations and user groups in
-	the search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For
-	more information see {@link
+	include the user's inherited organizations and user groups in the
+	search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
 	com.liferay.portal.service.persistence.GroupFinder}
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
@@ -1060,16 +1056,16 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* groups and user groups. System and staged groups are not included.
 	*
 	* @param companyId the primary key of the company
-	* @param classNameIds the class names of entities to include in the
-	search (optionally <code>null</code>)
+	* @param classNameIds the class names of entities to include in the search
+	(optionally <code>null</code>)
 	* @param name the group's name (optionally <code>null</code>)
 	* @param description the group's description (optionally
 	<code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). To
 	include the user's inherited organization groups and user groups
 	in the search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For
-	more information see {@link
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
 	com.liferay.portal.service.persistence.GroupFinder}
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
@@ -1081,10 +1077,10 @@ public interface GroupLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of groups and immediate organization groups that
-	* match the name and description, optionally including the user's
-	* inherited organization groups and user groups. System and staged groups
-	* are not included.
+	* Returns the number of groups and immediate organization groups that match
+	* the name and description, optionally including the user's inherited
+	* organization groups and user groups. System and staged groups are not
+	* included.
 	*
 	* @param companyId the primary key of the company
 	* @param name the group's name (optionally <code>null</code>)
@@ -1093,8 +1089,8 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* @param params the finder params (optionally <code>null</code>). To
 	include the user's inherited organization groups and user groups
 	in the search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For
-	more information see {@link
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
 	com.liferay.portal.service.persistence.GroupFinder}
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
@@ -1144,8 +1140,7 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	* @param assetCategoryIds the primary keys of the asset categories
 	(optionally <code>null</code>)
 	* @param assetTagNames the asset tag names (optionally <code>null</code>)
-	* @throws PortalException if a user with the primary key could not be
-	found
+	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void updateAsset(long userId, com.liferay.portal.model.Group group,

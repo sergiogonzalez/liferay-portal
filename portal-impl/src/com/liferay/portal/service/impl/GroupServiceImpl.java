@@ -351,75 +351,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return filterGroups(groups);
 	}
 
-	/**
-	 * Returns the guest or current user's layout set group, organization
-	 * groups, inherited organization groups, and site groups.
-	 *
-	 * @return the user's layout set group, organization groups, and inherited
-	 *         organization groups, and site groups
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Group> getUserSites() throws PortalException, SystemException {
-		return getUserPlaces(null, QueryUtil.ALL_POS);
-	}
-
-	/**
-	 * Returns the guest or current user's group &quot;places&quot; associated
-	 * with the group entity class names, including the control panel group if
-	 * the user is permitted to view the control panel.
-	 *
-	 * <p>
-	 * <ul> <li> Class name &quot;User&quot; includes the user's layout set
-	 * group. </li> <li> Class name &quot;Organization&quot; includes the user's
-	 * immediate organization groups and inherited organization groups. </li>
-	 * <li> Class name &quot;Group&quot; includes the user's immediate
-	 * organization groups and site groups. </li> <li> A <code>classNames</code>
-	 * value of <code>null</code> includes the user's layout set group,
-	 * organization groups, inherited organization groups, and site groups.
-	 * </li> </ul>
-	 * </p>
-	 *
-	 * @param  classNames the group entity class names (optionally
-	 *         <code>null</code>). For more information see {@link
-	 *         #getUserPlaces(String[], int)}
-	 * @param  max the maximum number of groups to return
-	 * @return the user's group &quot;places&quot;
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Group> getUserPlaces(String[] classNames, int max)
-		throws PortalException, SystemException {
-
-		return getUserPlaces(getGuestOrUserId(), classNames, max);
-	}
-
-	/**
-	 * Returns the user's group &quot;places&quot; associated with the group
-	 * entity class names, including the control panel group if the user is
-	 * permitted to view the control panel.
-	 *
-	 * <p>
-	 * <ul> <li> Class name &quot;User&quot; includes the user's layout set
-	 * group. </li> <li> Class name &quot;Organization&quot; includes the user's
-	 * immediate organization groups and inherited organization groups. </li>
-	 * <li> Class name &quot;Group&quot; includes the user's immediate
-	 * organization groups and site groups. </li> <li> A <code>classNames</code>
-	 * value of <code>null</code> includes the user's layout set group,
-	 * organization groups, inherited organization groups, and site groups.
-	 * </li> </ul>
-	 * </p>
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  classNames the group entity class names (optionally
-	 *         <code>null</code>). For more information see {@link
-	 *         #getUserPlaces(long, String[], int)}
-	 * @param  max the maximum number of groups to return
-	 * @return the user's group &quot;places&quot;
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Group> getUserPlaces(long userId, String[] classNames, int max)
+	public List<Group> getUserPlaces(
+			long userId, String[] classNames, boolean includeControlPanel,
+			int max)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.fetchByPrimaryKey(userId);
@@ -500,7 +434,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			}
 		}
 
-		if (PortalPermissionUtil.contains(
+		if (includeControlPanel &&
+			PortalPermissionUtil.contains(
 				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
 			Group controlPanelGroup = groupLocalService.getGroup(
@@ -514,6 +449,80 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return Collections.unmodifiableList(userPlaces);
+	}
+
+	/**
+	 * Returns the user's group &quot;places&quot; associated with the group
+	 * entity class names, including the control panel group if the user is
+	 * permitted to view the control panel.
+	 *
+	 * <p>
+	 * <ul> <li> Class name &quot;User&quot; includes the user's layout set
+	 * group. </li> <li> Class name &quot;Organization&quot; includes the user's
+	 * immediate organization groups and inherited organization groups. </li>
+	 * <li> Class name &quot;Group&quot; includes the user's immediate
+	 * organization groups and site groups. </li> <li> A <code>classNames</code>
+	 * value of <code>null</code> includes the user's layout set group,
+	 * organization groups, inherited organization groups, and site groups.
+	 * </li> </ul>
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  classNames the group entity class names (optionally
+	 *         <code>null</code>). For more information see {@link
+	 *         #getUserPlaces(long, String[], int)}
+	 * @param  max the maximum number of groups to return
+	 * @return the user's group &quot;places&quot;
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Group> getUserPlaces(long userId, String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getUserPlaces(userId, classNames, false, max);
+	}
+
+	/**
+	 * Returns the guest or current user's group &quot;places&quot; associated
+	 * with the group entity class names, including the control panel group if
+	 * the user is permitted to view the control panel.
+	 *
+	 * <p>
+	 * <ul> <li> Class name &quot;User&quot; includes the user's layout set
+	 * group. </li> <li> Class name &quot;Organization&quot; includes the user's
+	 * immediate organization groups and inherited organization groups. </li>
+	 * <li> Class name &quot;Group&quot; includes the user's immediate
+	 * organization groups and site groups. </li> <li> A <code>classNames</code>
+	 * value of <code>null</code> includes the user's layout set group,
+	 * organization groups, inherited organization groups, and site groups.
+	 * </li> </ul>
+	 * </p>
+	 *
+	 * @param  classNames the group entity class names (optionally
+	 *         <code>null</code>). For more information see {@link
+	 *         #getUserPlaces(String[], int)}
+	 * @param  max the maximum number of groups to return
+	 * @return the user's group &quot;places&quot;
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Group> getUserPlaces(String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getUserPlaces(getGuestOrUserId(), classNames, false, max);
+	}
+
+	/**
+	 * Returns the guest or current user's layout set group, organization
+	 * groups, inherited organization groups, and site groups.
+	 *
+	 * @return the user's layout set group, organization groups, and inherited
+	 *         organization groups, and site groups
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Group> getUserSites() throws PortalException, SystemException {
+		return getUserPlaces(null, QueryUtil.ALL_POS);
 	}
 
 	/**

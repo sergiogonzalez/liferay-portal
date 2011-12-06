@@ -158,13 +158,6 @@ public class UserImpl extends UserBaseImpl {
 		return emailAddress;
 	}
 
-	public String getDisplayURL(ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
-
-		return getDisplayURL(
-			themeDisplay.getPortalURL(), themeDisplay.getPathMain());
-	}
-
 	public String getDisplayURL(String portalURL, String mainPath)
 		throws PortalException, SystemException {
 
@@ -189,6 +182,13 @@ public class UserImpl extends UserBaseImpl {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public String getDisplayURL(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getDisplayURL(
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain());
 	}
 
 	public boolean getFemale() throws PortalException, SystemException {
@@ -260,16 +260,23 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	public List<Group> getMySites() throws PortalException, SystemException {
-		return getMySites(null, QueryUtil.ALL_POS);
+		return getMySites(null, false, QueryUtil.ALL_POS);
+	}
+
+	public List<Group> getMySites(boolean includeControlPanel, int max)
+		throws PortalException, SystemException {
+
+		return getMySites(null, includeControlPanel, max);
 	}
 
 	public List<Group> getMySites(int max)
 		throws PortalException, SystemException {
 
-		return getMySites(null, max);
+		return getMySites(null, false, max);
 	}
 
-	public List<Group> getMySites(String[] classNames, int max)
+	public List<Group> getMySites(
+			String[] classNames, boolean includeControlPanel, int max)
 		throws PortalException, SystemException {
 
 		ThreadLocalCache<List<Group>> threadLocalCache =
@@ -283,17 +290,27 @@ public class UserImpl extends UserBaseImpl {
 				key);
 		}
 
+		key = key.concat(StringPool.POUND).concat(
+			String.valueOf(includeControlPanel));
+
 		List<Group> myPlaces = threadLocalCache.get(key);
 
 		if (myPlaces != null) {
 			return myPlaces;
 		}
 
-		myPlaces = GroupServiceUtil.getUserPlaces(getUserId(), classNames, max);
+		myPlaces = GroupServiceUtil.getUserPlaces(
+			getUserId(), classNames, includeControlPanel, max);
 
 		threadLocalCache.put(key, myPlaces);
 
 		return myPlaces;
+	}
+
+	public List<Group> getMySites(String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getMySites(classNames, false, max);
 	}
 
 	public long[] getOrganizationIds() throws PortalException, SystemException {
@@ -441,6 +458,10 @@ public class UserImpl extends UserBaseImpl {
 		return TeamLocalServiceUtil.getUserTeams(getUserId());
 	}
 
+	public TimeZone getTimeZone() {
+		return _timeZone;
+	}
+
 	public long[] getUserGroupIds() throws SystemException {
 		List<UserGroup> userGroups = getUserGroups();
 
@@ -459,8 +480,9 @@ public class UserImpl extends UserBaseImpl {
 		return UserGroupLocalServiceUtil.getUserUserGroups(getUserId());
 	}
 
-	public TimeZone getTimeZone() {
-		return _timeZone;
+	public List<Website> getWebsites() throws SystemException {
+		return WebsiteLocalServiceUtil.getWebsites(
+			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
 	public boolean hasCompanyMx() throws PortalException, SystemException {
@@ -578,11 +600,6 @@ public class UserImpl extends UserBaseImpl {
 		_timeZone = TimeZoneUtil.getTimeZone(timeZoneId);
 
 		super.setTimeZoneId(timeZoneId);
-	}
-
-	public List<Website> getWebsites() throws SystemException {
-		return WebsiteLocalServiceUtil.getWebsites(
-			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
 	private Locale _locale;

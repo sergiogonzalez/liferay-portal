@@ -1122,9 +1122,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 
 	/**
 	* Sets the name of the permission propagator class of the portlet.
-	*
-	* @param pollerProcessorClass the name of the permission propagator class
-	of the portlet
 	*/
 	public void setPermissionPropagatorClass(
 		java.lang.String permissionPropagatorClass) {

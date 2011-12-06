@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
 
@@ -215,7 +216,9 @@ public class JSONWebServiceActionsManagerImpl
 			String jsonWebServiceActionConfigMethod =
 				jsonWebServiceActionConfig.getMethod();
 
-			if (method != null) {
+			if (PropsValues.JSONWS_WEB_SERVICE_STRICT_HTTP_METHOD &&
+				(method != null)) {
+
 				if ((jsonWebServiceActionConfigMethod != null) &&
 					!jsonWebServiceActionConfigMethod.equals(method)) {
 

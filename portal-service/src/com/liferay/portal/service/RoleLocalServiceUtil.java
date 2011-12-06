@@ -270,9 +270,9 @@ public class RoleLocalServiceUtil {
 	<code>null</code>)
 	* @param type the role's type (optionally <code>0</code>)
 	* @return the role
-	* @throws PortalException if the class name or the role name
-	were invalid, if the role is a duplicate, or if a user with the primary key could not be
-	found
+	* @throws PortalException if the class name or the role name were invalid,
+	if the role is a duplicate, or if a user with the primary key
+	could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Role addRole(long userId,
@@ -304,9 +304,9 @@ public class RoleLocalServiceUtil {
 	* @param classPK the primary key of the class for which the role is
 	created (optionally <code>0</code>)
 	* @return the role
-	* @throws PortalException if the class name or the role name
-	were invalid, if the role is a duplicate, or if a user with the primary key could not be
-	found
+	* @throws PortalException if the class name or the role name were invalid,
+	if the role is a duplicate, or if a user with the primary key
+	could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Role addRole(long userId,
@@ -327,8 +327,7 @@ public class RoleLocalServiceUtil {
 	*
 	* @param userId the primary key of the user
 	* @param roleIds the primary keys of the roles
-	* @throws PortalException if a user with the primary key could not be
-	found
+	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.UserPersistence#addRoles(
 	long, long[])
@@ -373,8 +372,7 @@ public class RoleLocalServiceUtil {
 	*
 	* <p>
 	* The method searches the system roles map first for default roles. If a
-	* role with the name is not found, then the method will query the
-	* database.
+	* role with the name is not found, then the method will query the database.
 	* </p>
 	*
 	* @param companyId the primary key of the company
@@ -450,8 +448,8 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the roles associated with the action ID in the company
-	* within the permission scope.
+	* Returns all the roles associated with the action ID in the company within
+	* the permission scope.
 	*
 	* @param companyId the primary key of the company
 	* @param name the resource name
@@ -476,15 +474,14 @@ public class RoleLocalServiceUtil {
 	*
 	* <p>
 	* The method searches the system roles map first for default roles. If a
-	* role with the name is not found, then the method will query the
-	* database.
+	* role with the name is not found, then the method will query the database.
 	* </p>
 	*
 	* @param companyId the primary key of the company
 	* @param name the role's name
 	* @return the role with the name
-	* @throws PortalException if a role with the name could not be found in
-	the company
+	* @throws PortalException if a role with the name could not be found in the
+	company
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Role getRole(long companyId,
@@ -696,9 +693,8 @@ public class RoleLocalServiceUtil {
 	search
 	* @return <code>true</code> if the user is associated with the regular
 	role; <code>false</code> otherwise
-	* @throws PortalException if a role with the name could not be found in
-	the company or if a default user for the company could not be
-	found
+	* @throws PortalException if a role with the name could not be found in the
+	company or if a default user for the company could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean hasUserRole(long userId, long companyId,
@@ -752,8 +748,8 @@ public class RoleLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @param name the role's name
 	* @return the role with the name in the company
-	* @throws PortalException if a role with the name could not be found in
-	the company
+	* @throws PortalException if a role with the name could not be found in the
+	company
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Role loadGetRole(long companyId,
@@ -773,8 +769,8 @@ public class RoleLocalServiceUtil {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
@@ -799,8 +795,8 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the roles that match the keywords,
-	* types, and params.
+	* Returns an ordered range of all the roles that match the keywords, types,
+	* and params.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -808,8 +804,8 @@ public class RoleLocalServiceUtil {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
@@ -849,14 +845,13 @@ public class RoleLocalServiceUtil {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
 	* @param name the role's name (optionally <code>null</code>)
-	* @param description the role's description (optionally
-	<code>null</code>)
+	* @param description the role's description (optionally <code>null</code>)
 	* @param types the role types (optionally <code>null</code>)
 	* @param start the lower bound of the range of the roles to return
 	* @param end the upper bound of the range of the roles to return (not
@@ -887,14 +882,13 @@ public class RoleLocalServiceUtil {
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
-	* full result set.
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param companyId the primary key of the company
 	* @param name the role's name (optionally <code>null</code>)
-	* @param description the role's description (optionally
-	<code>null</code>)
+	* @param description the role's description (optionally <code>null</code>)
 	* @param types the role types (optionally <code>null</code>)
 	* @param params the finder's parameters. Can specify values for
 	"permissionsResourceId" and "usersRoles" keys. For more
@@ -961,8 +955,7 @@ public class RoleLocalServiceUtil {
 	*
 	* @param companyId the primary key of the company
 	* @param name the role's name (optionally <code>null</code>)
-	* @param description the role's description (optionally
-	<code>null</code>)
+	* @param description the role's description (optionally <code>null</code>)
 	* @param types the role types (optionally <code>null</code>)
 	* @return the number of matching roles
 	* @throws SystemException if a system exception occurred
@@ -979,8 +972,7 @@ public class RoleLocalServiceUtil {
 	*
 	* @param companyId the primary key of the company
 	* @param name the role's name (optionally <code>null</code>)
-	* @param description the role's description (optionally
-	<code>null</code>)
+	* @param description the role's description (optionally <code>null</code>)
 	* @param types the role types (optionally <code>null</code>)
 	* @param params the finder parameters. Can specify values for
 	"permissionsResourceId" and "usersRoles" keys. For more
@@ -1019,9 +1011,8 @@ public class RoleLocalServiceUtil {
 	*
 	* @param userId the primary key of the user
 	* @param roleIds the primary keys of the roles
-	* @throws PortalException if a user with the primary key could not be
-	found or if a role with any one of the primary keys could not be
-	found
+	* @throws PortalException if a user with the primary key could not be found
+	or if a role with any one of the primary keys could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetUserRoles(long userId, long[] roleIds)

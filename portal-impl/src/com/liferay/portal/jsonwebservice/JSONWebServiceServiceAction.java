@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,11 +41,18 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 		_jsonWebServiceConfigurator.clean();
 
-		try {
-			_jsonWebServiceConfigurator.configure(classLoader);
+		if (PropsValues.JSON_WEB_SERVICE_ENABLED) {
+			try {
+				_jsonWebServiceConfigurator.configure(classLoader);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info("JSON web service is disabled");
+			}
 		}
 	}
 

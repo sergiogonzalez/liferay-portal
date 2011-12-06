@@ -14,11 +14,13 @@
 
 package com.liferay.portal.model;
 
+import java.io.Serializable;
+
 /**
  * @author Shuyang Zhou
  */
-public interface CacheModel<T> {
-	
+public interface CacheModel<T> extends Serializable {
+
 	public T toEntityModel();
-	
+
 }
