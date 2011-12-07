@@ -662,10 +662,13 @@ create table DLSync (
 	createDate DATE null,
 	modifiedDate DATE null,
 	fileId LONG,
+	fileUuid VARCHAR(75) null,
 	repositoryId LONG,
 	parentFolderId LONG,
+	name VARCHAR(255) null,
 	event VARCHAR(75) null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	version VARCHAR(75) null
 );
 
 create table EmailAddress (
@@ -1493,9 +1496,12 @@ create table Release_ (
 );
 
 create table Repository (
+	uuid_ VARCHAR(75) null,
 	repositoryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,
@@ -2026,6 +2032,8 @@ create table UserGroup (
 	parentUserGroupId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
+	publicLayoutSetPrototypeId LONG,
+	privateLayoutSetPrototypeId LONG,
 	addedByLDAPImport BOOLEAN
 );
 

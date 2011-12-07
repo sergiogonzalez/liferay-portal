@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 long groupId = ((Long)request.getAttribute("edit_pages.jsp-groupId")).longValue();
 long liveGroupId = ((Long)request.getAttribute("edit_pages.jsp-liveGroupId")).longValue();
@@ -27,8 +29,6 @@ long layoutId = ((Long)request.getAttribute("edit_pages.jsp-layoutId")).longValu
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
 PortletURL redirectURL = ((PortletURL)request.getAttribute("edit_pages.jsp-redirectURL"));
-
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 %>
@@ -89,12 +89,12 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 
 				</aui:select>
 
-				<aui:input id="addLayoutHidden" name="hidden" />
-
 				<c:if test="<%= (selLayout != null) && selLayout.isTypePortlet() %>">
 					<aui:input label="copy-parent" name="inheritFromParentLayoutId" type="checkbox" />
 				</c:if>
 			</div>
+
+			<aui:input id="addLayoutHidden" name="hidden" />
 		</aui:fieldset>
 
 		<aui:button-row>

@@ -652,9 +652,12 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.model.Repository">
+		<field name="uuid" type="String" />
 		<field name="repositoryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
@@ -877,6 +880,8 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="publicLayoutSetPrototypeId" type="long" />
+		<field name="privateLayoutSetPrototypeId" type="long" />
 		<field name="addedByLDAPImport" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.UserGroupGroupRole">
@@ -1452,10 +1457,15 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="fileId" type="long" />
+		<field name="fileUuid" type="String" />
 		<field name="repositoryId" type="long" />
 		<field name="parentFolderId" type="long" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="event" type="String" />
 		<field name="type" type="String" />
+		<field name="version" type="String" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
 		<field name="uuid" type="String" />

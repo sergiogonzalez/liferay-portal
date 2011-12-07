@@ -23,13 +23,15 @@ String displayActivityCounterName = PrefsParamUtil.getString(preferences, reques
 String chartType = PrefsParamUtil.getString(preferences, request, "chartType" + index);
 String dataRange = PrefsParamUtil.getString(preferences, request, "dataRange" + index);
 
-Collection<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
+List<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
 
 activityCounterNames.addAll(SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ASSET));
 
-activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS);
 activityCounterNames.add(SocialActivityCounterConstants.NAME_ASSET_ACTIVITIES);
+activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS);
 activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITIES);
+
+Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(locale));
 %>
 
 <div class="aui-field-row">

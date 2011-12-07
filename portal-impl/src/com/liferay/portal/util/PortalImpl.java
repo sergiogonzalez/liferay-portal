@@ -4685,6 +4685,10 @@ public class PortalImpl implements Portal {
 					!PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(),
 						themeDisplay.getPlid(), portlet.getPortletId(),
+						ActionKeys.ADD_TO_PAGE) &&
+					!PortletPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getPlid(), portlet.getPortletId(),
 						ActionKeys.CONFIGURATION)) {
 
 					showPortlet = false;
@@ -4712,6 +4716,8 @@ public class PortalImpl implements Portal {
 			}
 		}
 		else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
 			return StringPool.BLANK;
 		}
 	}

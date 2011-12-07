@@ -16,7 +16,7 @@ insert into DLFileVersion values (${dlFileVersion.fileVersionId}, ${dlFileVersio
 
 <#assign dlSync = dataFactory.addDLSync(dlFileEntry.companyId, dlFileEntry.fileEntryId, dlFileEntry.groupId, dlFileEntry.folderId, false)>
 
-insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, '${createDate}', '${createDate}', ${dlSync.fileId}, ${dlSync.repositoryId}, ${dlSync.parentFolderId}, '${dlSync.event}', '${dlSync.type}');
+insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, '${createDate}', '${createDate}', ${dlSync.fileId}, '${dlSync.fileUuid}', ${dlSync.repositoryId}, ${dlSync.parentFolderId}, '${dlSync.name}', '${dlSync.event}', '${dlSync.type}', '${dlSync.version}');
 
 <#assign assetEntry = dataFactory.addAssetEntry(dlFileEntry.groupId, dlFileEntry.userId, dataFactory.DLFileEntryClassName.classNameId, dlFileEntry.fileEntryId, true, "text/html", dlFileEntry.title)>
 

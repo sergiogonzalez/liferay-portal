@@ -585,7 +585,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
 
-		if (!searchQuery.clauses().isEmpty()) {
+		if (searchQuery.hasClauses()) {
 			fullQuery.add(searchQuery, BooleanClauseOccur.MUST);
 		}
 

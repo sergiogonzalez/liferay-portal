@@ -92,6 +92,7 @@
 			</c:choose>
 
 			<liferay-ui:error exception="<%= AuthException.class %>" message="authentication-failed" />
+			<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-login-because-the-maximum-number-of-users-has-been-reached" />
 			<liferay-ui:error exception="<%= CookieNotSupportedException.class %>" message="authentication-failed-please-enable-browser-cookies" />
 			<liferay-ui:error exception="<%= NoSuchUserException.class %>" message="authentication-failed" />
 			<liferay-ui:error exception="<%= PasswordExpiredException.class %>" message="your-password-has-expired" />
@@ -116,9 +117,13 @@
 				}
 				%>
 
-				<aui:input label="<%= loginLabel %>" name="login" type="text" value="<%= login %>" />
+				<aui:input label="<%= loginLabel %>" name="login" type="text" value="<%= login %>">
+					<aui:validator name="required" />
+				</aui:input>
 
-				<aui:input name="password" type="password" value="<%= password %>" />
+				<aui:input name="password" type="password" value="<%= password %>">
+					<aui:validator name="required" />
+				</aui:input>
 
 				<span id="<portlet:namespace />passwordCapsLockSpan" style="display: none;"><liferay-ui:message key="caps-lock-is-on" /></span>
 

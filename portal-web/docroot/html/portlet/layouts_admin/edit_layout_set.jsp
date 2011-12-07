@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group group = (Group)request.getAttribute("edit_pages.jsp-group");
@@ -32,8 +34,6 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 String rootNodeName = (String)request.getAttribute("edit_pages.jsp-rootNodeName");
 
 PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
-
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 int pagesCount = 0;
 

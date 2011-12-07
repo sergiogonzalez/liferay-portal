@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
@@ -1076,9 +1075,7 @@ public class PortletURLImpl
 			result = HtmlUtil.escape(result);
 		}
 
-		if (BrowserSnifferUtil.isIe(_request) &&
-			(result.length() > _URL_IE_MAXIMUM_LENGTH)) {
-
+		if (result.length() > _URL_MAXIMUM_LENGTH) {
 			result = shortenURL(result, 2);
 		}
 
@@ -1363,7 +1360,7 @@ public class PortletURLImpl
 		return sb.toString();
 	}
 
-	private static final long _URL_IE_MAXIMUM_LENGTH = 2083;
+	private static final long _URL_MAXIMUM_LENGTH = 2083;
 
 	private static Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
 

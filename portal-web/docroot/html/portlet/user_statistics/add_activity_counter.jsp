@@ -21,11 +21,13 @@ int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String
 
 String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + index);
 
-Collection<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
+List<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
 
 activityCounterNames.addAll(SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_CREATOR));
 
 activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS);
+
+Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(locale));
 %>
 
 <div class="aui-field-row query-row">

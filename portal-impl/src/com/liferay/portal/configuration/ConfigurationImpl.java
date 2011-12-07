@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.Writer;
 
 import java.lang.reflect.Field;
@@ -68,55 +70,7 @@ public class ConfigurationImpl
 	public ConfigurationImpl(
 		ClassLoader classLoader, String name, long companyId) {
 
-		try {
-			URL url = classLoader.getResource(
-				name + Conventions.PROPERTIES_EXTENSION);
-
-			if ((url != null) && url.getProtocol().equals("file")) {
-				String basePath = url.getPath();
-
-				int pos = basePath.lastIndexOf(
-					StringPool.SLASH + name + Conventions.PROPERTIES_EXTENSION);
-
-				if (pos != -1) {
-					basePath = basePath.substring(0, pos);
-				}
-
-				Properties properties = new Properties();
-
-				properties.load(url.openStream());
-
-				if (!properties.containsKey("base.path")) {
-					String fileName = StringUtil.replace(
-						url.getFile(), "%20", StringPool.SPACE);
-
-					File file = new File(fileName);
-
-					if (file.exists() && file.canWrite()) {
-						Writer writer = new FileWriter(file, true);
-
-						StringBundler sb = new StringBundler(4);
-
-						sb.append(StringPool.OS_EOL);
-						sb.append(StringPool.OS_EOL);
-						sb.append("base.path=");
-						sb.append(basePath);
-
-						writer.write(sb.toString());
-
-						writer.close();
-					}
-					else {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Unable to write " + file);
-						}
-					}
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		updateBasePath(classLoader, name);
 
 		String webId = null;
 
@@ -556,6 +510,77 @@ public class ConfigurationImpl
 			}
 
 			System.out.println(info);
+		}
+	}
+
+	protected void updateBasePath(ClassLoader classLoader, String name) {
+		InputStream inputStream = null;
+
+		try {
+			URL url = classLoader.getResource(
+				name + Conventions.PROPERTIES_EXTENSION);
+
+			if (url == null) {
+				return;
+			}
+
+			String protocol = url.getProtocol();
+
+			if (!protocol.equals("file")) {
+				return;
+			}
+
+			Properties properties = new Properties();
+
+			inputStream = url.openStream();
+
+			properties.load(inputStream);
+
+			if (properties.containsKey("base.path")) {
+				return;
+			}
+
+			String fileName = StringUtil.replace(
+				url.getFile(), "%20", StringPool.SPACE);
+
+			File file = new File(fileName);
+
+			if (!file.exists() || !file.canWrite()) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to write " + file);
+				}
+
+				return;
+			}
+
+			Writer writer = new FileWriter(file, true);
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(StringPool.OS_EOL);
+			sb.append(StringPool.OS_EOL);
+			sb.append("base.path=");
+
+			String basePath = url.getPath();
+
+			int pos = basePath.lastIndexOf(
+				StringPool.SLASH + name + Conventions.PROPERTIES_EXTENSION);
+
+			if (pos != -1) {
+				basePath = basePath.substring(0, pos);
+			}
+
+			sb.append(basePath);
+
+			writer.write(sb.toString());
+
+			writer.close();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

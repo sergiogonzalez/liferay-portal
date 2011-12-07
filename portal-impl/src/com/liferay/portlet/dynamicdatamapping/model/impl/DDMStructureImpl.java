@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.CacheField;
+import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -96,20 +97,28 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return _document;
 	}
 
-	public String getFieldDataType(String fieldName) {
+	public String getFieldDataType(String fieldName)
+		throws StructureFieldException {
+
 		return getFieldProperty(fieldName, "dataType");
 	}
 
-	public boolean getFieldDisplayChildLabelAsValue(String fieldName) {
+	public boolean getFieldDisplayChildLabelAsValue(String fieldName)
+		throws StructureFieldException {
+
 		return GetterUtil.getBoolean(
 			getFieldProperty(fieldName, "displayChildLabelAsValue"));
 	}
 
-	public String getFieldLabel(String fieldName, Locale locale) {
+	public String getFieldLabel(String fieldName, Locale locale)
+		throws StructureFieldException {
+
 		return getFieldLabel(fieldName, locale.getLanguage());
 	}
 
-	public String getFieldLabel(String fieldName, String locale) {
+	public String getFieldLabel(String fieldName, String locale)
+		throws StructureFieldException {
+
 		return GetterUtil.getString(
 			getFieldProperty(fieldName, "label", locale), fieldName);
 	}
@@ -120,12 +129,19 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return fieldsMap.keySet();
 	}
 
-	public String getFieldProperty(String fieldName, String property) {
+	public String getFieldProperty(String fieldName, String property)
+		throws StructureFieldException {
+
 		return getFieldProperty(fieldName, property, getDefaultLocale());
 	}
 
 	public String getFieldProperty(
-		String fieldName, String property, String locale) {
+			String fieldName, String property, String locale)
+		throws StructureFieldException {
+
+		if (!hasField(fieldName)) {
+			throw new StructureFieldException();
+		}
 
 		Map<String, Map<String, String>> fieldsMap = _getFieldsMap(locale);
 
@@ -134,7 +150,9 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return field.get(property);
 	}
 
-	public boolean getFieldRequired(String fieldName) {
+	public boolean getFieldRequired(String fieldName)
+		throws StructureFieldException {
+
 		return GetterUtil.getBoolean(getFieldProperty(fieldName, "required"));
 	}
 
@@ -185,7 +203,9 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return _getFieldsMap(locale);
 	}
 
-	public String getFieldType(String fieldName) {
+	public String getFieldType(String fieldName)
+		throws StructureFieldException {
+
 		return getFieldProperty(fieldName, "type");
 	}
 

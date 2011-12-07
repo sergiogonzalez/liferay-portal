@@ -78,8 +78,8 @@ public class AssetEntriesFacet extends MultiValueFacet {
 				BooleanQuery indexerBooleanQuery = indexer.getFacetQuery(
 					entryClassName, searchContext);
 
-				if ((indexerBooleanQuery == null ) ||
-					(indexerBooleanQuery.clauses().isEmpty())) {
+				if ((indexerBooleanQuery == null) ||
+					!indexerBooleanQuery.hasClauses()) {
 
 					continue;
 				}
@@ -111,7 +111,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 					}
 				}
 
-				if (!entityQuery.clauses().isEmpty()) {
+				if (entityQuery.hasClauses()) {
 					facetQuery.add(entityQuery, BooleanClauseOccur.SHOULD);
 				}
 			}
@@ -120,7 +120,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 			}
 		}
 
-		if (facetQuery.clauses().isEmpty()) {
+		if (!facetQuery.hasClauses()) {
 			return null;
 		}
 

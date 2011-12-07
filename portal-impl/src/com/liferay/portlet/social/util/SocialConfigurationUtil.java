@@ -31,12 +31,11 @@ import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivityProcessor;
+import com.liferay.util.UniqueList;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,12 +45,12 @@ import java.util.Set;
  */
 public class SocialConfigurationUtil {
 
-	public static Collection<String> getActivityCounterNames() {
+	public static List<String> getActivityCounterNames() {
 		return getActivityCounterNames(SocialActivityCounterConstants.TYPE_ALL);
 	}
 
-	public static Collection<String> getActivityCounterNames(int ownerType) {
-		Set<String> activityCounterNames = new HashSet<String>();
+	public static List<String> getActivityCounterNames(int ownerType) {
+		List<String> activityCounterNames = new UniqueList<String>();
 
 		for (Map<Integer, SocialActivityDefinition> activityDefinitions :
 				_activityDefinitions.values()) {

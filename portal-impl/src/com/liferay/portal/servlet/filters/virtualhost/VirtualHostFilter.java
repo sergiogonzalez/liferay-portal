@@ -70,7 +70,10 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
 
-			if (keyword.contains(StringPool.PERIOD)) {
+			if (keyword.contains(StringPool.PERIOD) ||
+				keyword.equals("_vti_") || keyword.equals("display_chart") ||
+				keyword.equals("software_catalog")) {
+
 				keyword = StringPool.SLASH + keyword;
 			}
 			else {
@@ -99,7 +102,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 		friendlyURL = friendlyURL.toLowerCase();
 
 		if (PortalInstances.isVirtualHostsIgnorePath(friendlyURL) ||
-			friendlyURL.startsWith(_PATH_VTI) ||
 			friendlyURL.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING_SLASH) ||
 			friendlyURL.startsWith(_PRIVATE_USER_SERVLET_MAPPING_SLASH) ||
 			friendlyURL.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING_SLASH)) {
@@ -306,8 +308,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 	}
 
 	private static final String _PATH_DOCUMENTS = "/documents/";
-
-	private static final String _PATH_VTI = "/_vti_";
 
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;

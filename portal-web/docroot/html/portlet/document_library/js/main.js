@@ -80,6 +80,8 @@ AUI().add(
 
 		var SRC_HISTORY = 2;
 
+		var TOUCH = A.UA.touch;
+
 		var VIEW_ADD_BREADCRUMB = 'viewBreadcrumb';
 
 		var VIEW_ADD_BUTTON = 'viewAddButton';
@@ -441,7 +443,13 @@ AUI().add(
 						var instance = this;
 
 						if (!Lang.isValue(page)) {
-							page = (paginator.get('page') - 1) || 0;
+							page = 0;
+
+							var curPage = paginator.get('page') - 1;
+
+							if (curPage > 0) {
+								page = curPage;
+							}
 						}
 
 						if (!Lang.isValue(rowsPerPage)) {
@@ -494,6 +502,25 @@ AUI().add(
 								}
 							]
 						);
+
+						if (TOUCH) {
+							instance._dragTask = A.debounce(
+								function(entryLink){
+									if (entryLink) {
+										entryLink.simulate('click');
+									}
+								},
+								A.DD.DDM.get('clickTimeThresh')
+							);
+
+							dd.after(
+								'afterMouseDown',
+								function(event){
+									instance._dragTask(event.target.get('node').one('.document-link'));
+								},
+								instance
+							);
+						}
 
 						instance._initDropTargets();
 
@@ -705,6 +732,10 @@ AUI().add(
 
 					_onDragStart: function(event) {
 						var instance = this;
+
+						if (instance._dragTask) {
+							instance._dragTask.cancel();
+						}
 
 						var target = event.target;
 

@@ -16,6 +16,7 @@ package com.liferay.portal.search.lucene;
 
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,6 +58,10 @@ public interface LuceneHelper {
 
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String value, boolean like);
+
+	public void addTerm(
+		BooleanQuery booleanQuery, String field, String value, boolean like,
+		BooleanClauseOccur booleanClauseOccur);
 
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String[] values, boolean like);

@@ -193,6 +193,7 @@
 		<exception>StorageFieldRequired</exception>
 		<exception>StructureDuplicateElement</exception>
 		<exception>StructureDuplicateStructureKey</exception>
+		<exception>StructureField</exception>
 		<exception>StructureName</exception>
 		<exception>StructureXsd</exception>
 		<exception>TemplateName</exception>

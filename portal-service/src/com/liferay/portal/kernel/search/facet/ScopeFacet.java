@@ -128,7 +128,7 @@ public class ScopeFacet extends MultiValueFacet {
 
 		searchContext.setGroupIds(groupIds);
 
-		if (!groupIdsQuery.clauses().isEmpty()) {
+		if (groupIdsQuery.hasClauses()) {
 			try {
 				facetQuery.add(groupIdsQuery, BooleanClauseOccur.MUST);
 			}
@@ -137,7 +137,7 @@ public class ScopeFacet extends MultiValueFacet {
 			}
 		}
 
-		if (!scopeGroupIdsQuery.clauses().isEmpty()) {
+		if (scopeGroupIdsQuery.hasClauses()) {
 			try {
 				facetQuery.add(scopeGroupIdsQuery, BooleanClauseOccur.MUST);
 			}

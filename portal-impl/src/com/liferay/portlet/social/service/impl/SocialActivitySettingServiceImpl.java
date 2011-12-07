@@ -41,11 +41,7 @@ public class SocialActivitySettingServiceImpl
 			long groupId, String className, int activityType)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupAdmin(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId);
 
 		return socialActivitySettingLocalService.getActivityDefinition(
 			groupId, className, activityType);
@@ -55,11 +51,7 @@ public class SocialActivitySettingServiceImpl
 			long groupId, String className)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupAdmin(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId);
 
 		return socialActivitySettingLocalService.getActivityDefinitions(
 			groupId, className);
@@ -67,6 +59,8 @@ public class SocialActivitySettingServiceImpl
 
 	public JSONArray getJSONActivityDefinitions(long groupId, String className)
 		throws PortalException, SystemException {
+
+		checkPermission(groupId);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -114,11 +108,7 @@ public class SocialActivitySettingServiceImpl
 			long groupId, String className, boolean enabled)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupAdmin(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId);
 
 		socialActivitySettingLocalService.updateActivitySetting(
 			groupId, className, enabled);
@@ -129,11 +119,7 @@ public class SocialActivitySettingServiceImpl
 			SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupAdmin(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId);
 
 		socialActivitySettingLocalService.updateActivitySetting(
 			groupId, className, activityType, activityCounterDefinition);
@@ -144,14 +130,20 @@ public class SocialActivitySettingServiceImpl
 			List<SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupAdmin(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId);
 
 		socialActivitySettingLocalService.updateActivitySettings(
 			groupId, className, activityType, activityCounterDefinitions);
+	}
+
+	protected void checkPermission(long groupId) throws PortalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isGroupAdmin(groupId) &&
+			!permissionChecker.isGroupOwner(groupId)) {
+
+			throw new PrincipalException();
+		}
 	}
 
 }

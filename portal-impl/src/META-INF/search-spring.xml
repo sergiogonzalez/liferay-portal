@@ -75,6 +75,12 @@
 			<bean class="com.liferay.portal.search.lucene.TermRangeQueryFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" class="com.liferay.portal.repository.search.RepositorySearchQueryBuilderImpl">
+		<property name="analyzer" ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil">
+		<property name="repositorySearchQueryBuilder" ref="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" />
+	</bean>
 
 	<!-- Generic search engine -->
 

@@ -242,10 +242,13 @@ create table DLSync (
 	createDate DATE null,
 	modifiedDate DATE null,
 	fileId LONG,
+	fileUuid VARCHAR(75) null,
 	repositoryId LONG,
 	parentFolderId LONG,
+	name VARCHAR(255) null,
 	event VARCHAR(75) null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	version VARCHAR(75) null
 );
 
 alter table Group_ add site BOOLEAN;
@@ -330,6 +333,11 @@ create table LayoutRevision (
 
 alter table LayoutSet add createDate DATE null;
 alter table LayoutSet add modifiedDate DATE null;
+alter table LayoutSet add layoutSetPrototypeUuid VARCHAR(75) null;
+alter table LayoutSet add layoutSetPrototypeLinkEnabled BOOLEAN null;
+alter table LayoutSet drop column layoutSetPrototypeId;
+
+drop index IX_5ABC2905 on LayoutSet;
 
 COMMIT_TRANSACTION;
 
@@ -453,9 +461,12 @@ alter table PollsVote add createDate DATE null;
 alter table PollsVote add modifiedDate DATE null;
 
 create table Repository (
+	uuid_ VARCHAR(75) null,
 	repositoryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,

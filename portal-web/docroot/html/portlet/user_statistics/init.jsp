@@ -20,7 +20,8 @@
 page import="com.liferay.portlet.social.model.SocialActivityCounterConstants" %><%@
 page import="com.liferay.portlet.social.model.impl.SocialActivityCounterImpl" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil" %><%@
-page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %>
+page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
+page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

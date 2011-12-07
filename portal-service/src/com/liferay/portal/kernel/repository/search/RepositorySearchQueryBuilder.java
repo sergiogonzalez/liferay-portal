@@ -12,24 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_1_0;
+package com.liferay.portal.kernel.repository.search;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 
 /**
- * @author Miguel Pastor
+ * @author Mika Koivisto
  */
-public class UpgradeLayoutSet extends UpgradeProcess {
+public interface RepositorySearchQueryBuilder {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		runSQL(
-			"alter table LayoutSet add layoutSetPrototypeLinkEnabled BOOLEAN " +
-				"null");
-		runSQL(
-			"alter table LayoutSet add layoutSetPrototypeUuid VARCHAR(75) " +
-				"null");
-		runSQL("alter table LayoutSet drop column layoutSetPrototypeId");
-	}
+	public BooleanQuery getFullQuery(SearchContext searchContext)
+		throws SearchException;
 
 }

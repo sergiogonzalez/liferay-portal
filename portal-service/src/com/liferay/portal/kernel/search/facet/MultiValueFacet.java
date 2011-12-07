@@ -94,7 +94,7 @@ public class MultiValueFacet extends BaseFacet {
 			}
 		}
 
-		if (facetQuery.clauses().isEmpty()) {
+		if (!facetQuery.hasClauses()) {
 			return null;
 		}
 

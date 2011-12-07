@@ -29,6 +29,7 @@ import java.util.Date;
 /**
  * @author Raymond Augé
  * @author Alexander Chow
+ * @author Marcellus Tavares
  */
 public class ExpandoColumnConstants {
 
@@ -90,6 +91,14 @@ public class ExpandoColumnConstants {
 
 	public static final String LONG_LABEL = "custom.field.long";
 
+	public static final int NUMBER = 17;
+
+	public static final int NUMBER_ARRAY = 18;
+
+	public static final String NUMBER_ARRAY_LABEL = "custom.field.number.array";
+
+	public static final String NUMBER_LABEL = "custom.field.number";
+
 	public static final String PROPERTY_DISPLAY_TYPE = "display-type";
 
 	public static final String PROPERTY_DISPLAY_TYPE_CHECKBOX = "checkbox";
@@ -131,8 +140,8 @@ public class ExpandoColumnConstants {
 
 	public static final int[] TYPES = new int[] {
 		BOOLEAN, BOOLEAN_ARRAY, DATE, DATE_ARRAY, DOUBLE, DOUBLE_ARRAY, FLOAT,
-		FLOAT_ARRAY, INTEGER, INTEGER_ARRAY, LONG, LONG_ARRAY, SHORT,
-		SHORT_ARRAY, STRING, STRING_ARRAY
+		FLOAT_ARRAY, INTEGER, INTEGER_ARRAY, LONG, LONG_ARRAY, NUMBER,
+		NUMBER_ARRAY, SHORT, SHORT_ARRAY, STRING, STRING_ARRAY
 	};
 
 	public static final String UNKNOWN_LABEL = "Unknown";
@@ -186,6 +195,12 @@ public class ExpandoColumnConstants {
 		else if (type == LONG_ARRAY) {
 			return new long[] {GetterUtil.getLong(value)};
 		}
+		else if (type == NUMBER) {
+			return GetterUtil.getNumber(value);
+		}
+		else if (type == NUMBER_ARRAY) {
+			return new Number[] {GetterUtil.getNumber(value)};
+		}
 		else if (type == SHORT) {
 			return GetterUtil.getShort(value);
 		}
@@ -235,6 +250,12 @@ public class ExpandoColumnConstants {
 		}
 		else if (type == LONG_ARRAY) {
 			return LONG_ARRAY_LABEL;
+		}
+		else if (type == NUMBER) {
+			return NUMBER_LABEL;
+		}
+		else if (type == NUMBER_ARRAY) {
+			return NUMBER_ARRAY_LABEL;
 		}
 		else if (type == SHORT) {
 			return SHORT_LABEL;

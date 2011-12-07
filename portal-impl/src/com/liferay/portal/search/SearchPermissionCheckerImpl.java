@@ -230,24 +230,36 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		List<Role> roles = ResourceActionsUtil.getRoles(
 			companyId, group, className, null);
 
+		long[] roleIdsArray = new long[roles.size()];
+
+		for (int i = 0; i < roleIdsArray.length; i++) {
+			Role role = roles.get(i);
+
+			roleIdsArray[i] = role.getRoleId();
+		}
+
+		boolean[] hasResourcePermissions =
+			ResourcePermissionLocalServiceUtil.hasResourcePermissions(
+				companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
+				classPK, roleIdsArray, ActionKeys.VIEW);
+
 		List<Long> roleIds = new ArrayList<Long>();
 		List<String> groupRoleIds = new ArrayList<String>();
 
-		for (Role role : roles) {
-			long roleId = role.getRoleId();
+		for (int i = 0; i < hasResourcePermissions.length; i++) {
+			if (!hasResourcePermissions[i]) {
+				continue;
+			}
 
-			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
-					companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-					classPK, roleId, ActionKeys.VIEW)) {
+			Role role = roles.get(i);
 
-				if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
-					(role.getType() == RoleConstants.TYPE_SITE)) {
+			if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
+				(role.getType() == RoleConstants.TYPE_SITE)) {
 
-					groupRoleIds.add(groupId + StringPool.DASH + roleId);
-				}
-				else {
-					roleIds.add(roleId);
-				}
+				groupRoleIds.add(groupId + StringPool.DASH + role.getRoleId());
+			}
+			else {
+				roleIds.add(role.getRoleId());
 			}
 		}
 
@@ -461,11 +473,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					userGroupRole.getRoleId());
 		}
 
-		if (!groupsQuery.clauses().isEmpty()) {
+		if (groupsQuery.hasClauses()) {
 			permissionQuery.add(groupsQuery, BooleanClauseOccur.SHOULD);
 		}
 
-		if (!rolesQuery.clauses().isEmpty()) {
+		if (rolesQuery.hasClauses()) {
 			permissionQuery.add(rolesQuery, BooleanClauseOccur.SHOULD);
 		}
 
@@ -561,11 +573,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					userGroupRole.getRoleId());
 		}
 
-		if (!groupsQuery.clauses().isEmpty()) {
+		if (groupsQuery.hasClauses()) {
 			permissionQuery.add(groupsQuery, BooleanClauseOccur.SHOULD);
 		}
 
-		if (!rolesQuery.clauses().isEmpty()) {
+		if (rolesQuery.hasClauses()) {
 			permissionQuery.add(rolesQuery, BooleanClauseOccur.SHOULD);
 		}
 

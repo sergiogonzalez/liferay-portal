@@ -724,6 +724,39 @@ public class ResourcePermissionLocalServiceImpl
 		return false;
 	}
 
+	public boolean[] hasResourcePermissions(
+			long companyId, String name, int scope, String primKey,
+			long[] roleIds, String actionId)
+		throws PortalException, SystemException {
+
+		ResourceAction resourceAction =
+			resourceActionLocalService.getResourceAction(name, actionId);
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_N_S_P_R(
+				companyId, name, scope, primKey, roleIds);
+
+		boolean[] hasResourcePermissions = new boolean[roleIds.length];
+
+		if (resourcePermissions.isEmpty()) {
+			return hasResourcePermissions;
+		}
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			if (hasActionId(resourcePermission, resourceAction)) {
+				long roleId = resourcePermission.getRoleId();
+
+				for (int i = 0; i < roleIds.length; i++) {
+					if (roleIds[i] == roleId) {
+						hasResourcePermissions[i] = true;
+					}
+				}
+			}
+		}
+
+		return hasResourcePermissions;
+	}
+
 	/**
 	 * Returns <code>true</code> if the role has permission at the scope to
 	 * perform the action on the resource.
