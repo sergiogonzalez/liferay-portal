@@ -22,6 +22,8 @@ AUI().add(
 
 		var CSS_DOCUMENT_DISPLAY_STYLE_SELECTED = '.document-display-style.selected';
 
+		var CSS_HIDDEN = 'aui-helper-hidden';
+
 		var CSS_RESULT_ROW = '.results-row';
 
 		var CSS_SELECTED = 'selected';
@@ -81,6 +83,10 @@ AUI().add(
 		var SRC_HISTORY = 2;
 
 		var TOUCH = A.UA.touch;
+
+		var SRC_SEARCH = 3;
+
+		var SRC_SEARCH_END = 4;
 
 		var VIEW_ADD_BREADCRUMB = 'viewBreadcrumb';
 
@@ -217,6 +223,8 @@ AUI().add(
 
 						instance._initToggleSelect();
 
+						instance._repositoriesData = {};
+
 						instance._restoreState();
 					},
 
@@ -260,13 +268,26 @@ AUI().add(
 
 						instance._documentLibraryContainer.loadingmask.show();
 
-						if (event.src !== SRC_HISTORY) {
+						var src = event.src;
+
+						if (src !== SRC_HISTORY) {
 							instance._addHistoryState(data);
 						}
 
-						var ioRequest = instance._getIORequest();
+						var ioRequest = A.io.request(
+							instance._config.mainUrl,
+							{
+								autoLoad: false
+							}
+						);
+
+						var sendIOResponse = A.bind(instance._sendIOResponse, instance, ioRequest);
+
+						ioRequest.after(['failure', 'success'], sendIOResponse);
 
 						ioRequest.set(STR_DATA, data);
+
+						instance._lastRequestData = data;
 
 						ioRequest.start();
 					},
@@ -334,9 +355,9 @@ AUI().add(
 						var requestParams = {};
 
 						requestParams[instance.ns(STRUTS_ACTION)] = config.strutsAction;
-						requestParams[instance.ns(STR_ENTRY_END)] = config.entryRowsPerPage || instance._entryPaginator.get('rowsPerPage');
+						requestParams[instance.ns(STR_ENTRY_END)] = config.entryRowsPerPage || instance._entryPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_ENTRY_START)] = 0;
-						requestParams[instance.ns(STR_FOLDER_END)] = config.folderRowsPerPage || instance._folderPaginator.get('rowsPerPage');
+						requestParams[instance.ns(STR_FOLDER_END)] = config.folderRowsPerPage || instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
 						requestParams[instance.ns('refreshEntries')] = dataRefreshEntries;
 						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
@@ -391,31 +412,6 @@ AUI().add(
 						}
 
 						return displayStyle;
-					},
-
-					_getIORequest: function() {
-						var instance = this;
-
-						var ioRequest = instance._ioRequest;
-
-						if (!ioRequest) {
-							var sendIOResponse = A.bind(instance._sendIOResponse, instance);
-
-							ioRequest = A.io.request(
-								instance._config.mainUrl,
-								{
-									after: {
-										success: sendIOResponse,
-										failure: sendIOResponse
-									},
-									autoLoad: false
-								}
-							);
-
-							instance._ioRequest = ioRequest;
-						}
-
-						return ioRequest;
 					},
 
 					_getMoveText: function(selectedItemsCount, targetAvailable) {
@@ -781,8 +777,8 @@ AUI().add(
 						var instance = this;
 
 						var startEndParams = instance._getResultsStartEnd(instance._entryPaginator);
-
-						var requestParams = instance._getIORequest().get(STR_DATA) || {};
+						
+						var requestParams = instance._lastRequestData || {};
 
 						var customParams = {};
 
@@ -808,7 +804,7 @@ AUI().add(
 
 						var startEndParams = instance._getResultsStartEnd(instance._folderPaginator);
 
-						var requestParams = instance._getIORequest().get(STR_DATA) || {};
+						var requestParams = instance._lastRequestData || {};
 
 						var customParams = {};
 
@@ -831,12 +827,25 @@ AUI().add(
 						var instance = this;
 
 						var paginatorData = event.paginator;
-
+						
 						if (paginatorData) {
-							var paginator = instance['_' + paginatorData.name];
+							if (event.src == SRC_SEARCH) {
+								var repositoryData = instance._repositoriesData[event.repositoryId] || {};
 
-							if (A.instanceOf(paginator, A.Paginator)) {
-								paginator.setState(paginatorData.state);
+								repositoryData.paginatorData = paginatorData;
+
+								var resultsContainer = instance.byId('repositorySearchResults' + event.repositoryId);
+
+								if (resultsContainer && !(resultsContainer.get('parentNode').hasClass(CSS_HIDDEN))) {
+									console.log('setting paginator data');
+									instance._setPaginatorData(paginatorData);
+								}
+								else {
+									console.log('not setting paginator data');
+								}
+							}
+							else {
+								instance._setPaginatorData(paginatorData);
 							}
 						}
 					},
@@ -994,6 +1003,16 @@ AUI().add(
 						}
 					},
 
+					_setPaginatorData: function(paginatorData) {
+						var instance = this;
+
+						var paginator = instance['_' + paginatorData.name];
+
+						if (A.instanceOf(paginator, A.Paginator)) {
+							paginator.setState(paginatorData.state);
+						}
+					},
+
 					_setParentFolderTitle: function(content) {
 						var instance = this;
 
@@ -1009,21 +1028,41 @@ AUI().add(
 					_setSearchResults: function(content) {
 						var instance = this;
 
-						var searchResults = instance.one('#searchResults', content);
+						var searchInfo = instance.one('#searchInfo', content);
+
+						var entriesContainer = instance._entriesContainer;
+
+						if (searchInfo) {
+							entriesContainer.plug(A.Plugin.ParseContent);
+
+							entriesContainer.setContent(searchInfo);
+						}
+
+						var searchResults = instance.one('.local-search-results', content);
 
 						if (searchResults) {
-							var entriesContainer = instance._entriesContainer;
+							var searchResultsContainer = instance.one('#' + instance.ns('searchResultsContainer'), content);
 
 							entriesContainer.plug(A.Plugin.ParseContent);
 
-							entriesContainer.setContent(searchResults);
+							entriesContainer.append(searchResultsContainer);
+						}
+
+						var repositorySearchResults = instance.one('.repository-search-results', content);
+
+						if (repositorySearchResults) {
+							var repositoryId = instance.one('#' + instance.ns('repositoryId'), content);
+
+							var repositorySearchResultsContainer = entriesContainer.one('#' + instance.ns('repositorySearchResultsContainer') + repositoryId.val());
+
+							repositorySearchResultsContainer.plug(A.Plugin.ParseContent);
+
+							repositorySearchResultsContainer.append(repositorySearchResults);
 						}
 					},
 
-					_sendIOResponse: function(event) {
+					_sendIOResponse: function(ioRequest, event) {
 						var instance = this;
-
-						var ioRequest = instance._getIORequest();
 
 						var data = ioRequest.get(STR_DATA);
 						var reponseData = ioRequest.get('responseData');

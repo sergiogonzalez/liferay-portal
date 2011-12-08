@@ -20,6 +20,8 @@
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+
+List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 %>
 
 <liferay-portlet:resourceURL var="searchURL">
@@ -60,8 +62,33 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 					'<portlet:namespace />searchFolderId': '<%= String.valueOf(folderId) %>',
 					'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
 					'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>
-				}
+				},
+				src: 3
 			}
 		);
+
+		<%
+		for (Folder mountFolder : mountFolders) {
+		%>
+
+			Liferay.fire(
+				'<portlet:namespace />dataRequest',
+				{
+					requestParams: {
+						'<portlet:namespace />struts_action': '/document_library/search',
+						'<portlet:namespace />repositoryId': '<%= String.valueOf(mountFolder.getRepositoryId()) %>',
+						'<portlet:namespace />folderId': '<%= String.valueOf(mountFolder.getFolderId()) %>',
+						'<portlet:namespace />searchFolderId': '<%= String.valueOf(mountFolder.getFolderId()) %>',
+						'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
+						'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>
+					},
+					src: 3
+				}
+			);
+
+		<%
+		}
+		%>
+
 	}
 </aui:script>
