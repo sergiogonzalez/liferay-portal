@@ -342,23 +342,25 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
-		long companyId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _blogsEntryLocalService.getCompanyEntries(companyId, status,
-			start, end);
+		long companyId, java.util.Date displayDate, int status, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getCompanyEntries(companyId,
+			displayDate, status, start, end);
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
-		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long companyId, java.util.Date displayDate, int status, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _blogsEntryLocalService.getCompanyEntries(companyId, status,
-			start, end, obc);
+		return _blogsEntryLocalService.getCompanyEntries(companyId,
+			displayDate, status, start, end, obc);
 	}
 
-	public int getCompanyEntriesCount(long companyId, int status)
+	public int getCompanyEntriesCount(long companyId,
+		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _blogsEntryLocalService.getCompanyEntriesCount(companyId, status);
+		return _blogsEntryLocalService.getCompanyEntriesCount(companyId,
+			displayDate, status);
 	}
 
 	public com.liferay.portlet.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
@@ -382,6 +384,21 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
+		long groupId, java.util.Date displayDate, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupEntries(groupId, displayDate,
+			status, start, end);
+	}
+
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
+		long groupId, java.util.Date displayDate, int status, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupEntries(groupId, displayDate,
+			status, start, end, obc);
+	}
+
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupEntries(groupId, status, start,
@@ -396,37 +413,46 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			end, obc);
 	}
 
+	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
+			displayDate, status);
+	}
+
 	public int getGroupEntriesCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupEntriesCount(groupId, status);
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
-		long companyId, long groupId, int status, int start, int end)
+		long companyId, long groupId, java.util.Date displayDate, int status,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupsEntries(companyId, groupId,
-			status, start, end);
+			displayDate, status, start, end);
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, int status, int start, int end)
+		long groupId, long userId, java.util.Date displayDate, int status,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupUserEntries(groupId, userId,
-			status, start, end);
+			displayDate, status, start, end);
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long userId, java.util.Date displayDate, int status,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupUserEntries(groupId, userId,
-			status, start, end, obc);
+			displayDate, status, start, end, obc);
 	}
 
-	public int getGroupUserEntriesCount(long groupId, long userId, int status)
+	public int getGroupUserEntriesCount(long groupId, long userId,
+		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupUserEntriesCount(groupId,
-			userId, status);
+			userId, displayDate, status);
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getNoAssetEntries()
@@ -435,16 +461,25 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
-		long organizationId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long organizationId, java.util.Date displayDate, int status, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getOrganizationEntries(organizationId,
-			status, start, end);
+			displayDate, status, start, end);
 	}
 
-	public int getOrganizationEntriesCount(long organizationId, int status)
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
+		long organizationId, java.util.Date displayDate, int status, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getOrganizationEntries(organizationId,
+			displayDate, status, start, end, obc);
+	}
+
+	public int getOrganizationEntriesCount(long organizationId,
+		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getOrganizationEntriesCount(organizationId,
-			status);
+			displayDate, status);
 	}
 
 	public void subscribe(long userId, long groupId)

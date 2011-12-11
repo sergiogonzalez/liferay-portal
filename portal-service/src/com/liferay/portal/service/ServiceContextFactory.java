@@ -195,6 +195,8 @@ public class ServiceContextFactory {
 		long[] assetCategoryIds = ArrayUtil.toArray(
 			assetCategoryIdsList.toArray(
 				new Long[assetCategoryIdsList.size()]));
+		boolean assetEntryVisible = ParamUtil.getBoolean(
+			request, "assetEntryVisible", true);
 		long[] assetLinkEntryIds = StringUtil.split(
 			ParamUtil.getString(
 				request, "assetLinkSearchContainerPrimaryKeys"), 0L);
@@ -202,6 +204,7 @@ public class ServiceContextFactory {
 			ParamUtil.getString(request, "assetTagNames"));
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetEntryVisible(assetEntryVisible);
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		serviceContext.setAssetTagNames(assetTagNames);
 
@@ -357,6 +360,8 @@ public class ServiceContextFactory {
 		long[] assetCategoryIds = ArrayUtil.toArray(
 			assetCategoryIdsList.toArray(
 				new Long[assetCategoryIdsList.size()]));
+		boolean assetEntryVisible = ParamUtil.getBoolean(
+			portletRequest, "assetEntryVisible", true);
 		long[] assetLinkEntryIds = StringUtil.split(
 			ParamUtil.getString(
 				portletRequest, "assetLinkSearchContainerPrimaryKeys"), 0L);
@@ -364,6 +369,7 @@ public class ServiceContextFactory {
 			ParamUtil.getString(portletRequest, "assetTagNames"));
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetEntryVisible(assetEntryVisible);
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		serviceContext.setAssetTagNames(assetTagNames);
 

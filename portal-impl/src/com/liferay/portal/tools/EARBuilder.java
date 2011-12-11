@@ -15,14 +15,13 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
@@ -85,7 +84,7 @@ public class EARBuilder {
 		}
 
 		if (contextRoot.equals("liferay-portal")) {
-			contextRoot = PropsUtil.get(PropsKeys.PORTAL_CTX);
+			contextRoot = PropsValues.PORTAL_CTX;
 
 			if (contextRoot.equals(StringPool.SLASH)) {
 				contextRoot = StringPool.BLANK;

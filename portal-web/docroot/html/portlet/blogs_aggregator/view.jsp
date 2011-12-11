@@ -27,14 +27,14 @@ List entries = null;
 
 if (selectionMethod.equals("users")) {
 	if (organizationId > 0) {
-		entries = BlogsEntryServiceUtil.getOrganizationEntries(organizationId, WorkflowConstants.STATUS_APPROVED, max);
+		entries = BlogsEntryServiceUtil.getOrganizationEntries(organizationId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
 	}
 	else {
-		entries = BlogsEntryServiceUtil.getGroupsEntries(company.getCompanyId(), scopeGroupId, WorkflowConstants.STATUS_APPROVED, max);
+		entries = BlogsEntryServiceUtil.getGroupsEntries(company.getCompanyId(), scopeGroupId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
 	}
 }
 else {
-	entries = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, WorkflowConstants.STATUS_APPROVED, max);
+	entries = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
 }
 
 int total = entries.size();

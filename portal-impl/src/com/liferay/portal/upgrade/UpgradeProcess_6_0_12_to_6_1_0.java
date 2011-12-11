@@ -21,6 +21,7 @@ import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradePermission;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradePortletPreferences;
+import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeQuartz;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeUserName;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAdminPortlets;
@@ -60,6 +61,7 @@ public class UpgradeProcess_6_0_12_to_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeNavigation.class);
 		upgrade(UpgradePermission.class);
 		upgrade(UpgradePortletPreferences.class);
+		upgrade(UpgradeQuartz.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWorkflow.class);
 		upgrade(UpgradeAsset.class);

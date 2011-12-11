@@ -21,6 +21,7 @@ page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManag
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.CharPool" %><%@
+page import="com.liferay.portal.kernel.util.ContextPathUtil" %><%@
 page import="com.liferay.portal.kernel.util.MethodParameter" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@

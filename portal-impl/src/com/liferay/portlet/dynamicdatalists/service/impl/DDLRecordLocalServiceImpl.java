@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -109,7 +108,7 @@ public class DDLRecordLocalServiceImpl
 
 		// Asset
 
-		Locale locale = ServiceContextUtil.getLocale(serviceContext);
+		Locale locale = serviceContext.getLocale();
 
 		updateAsset(
 			userId, record, recordVersion, serviceContext.getAssetCategoryIds(),

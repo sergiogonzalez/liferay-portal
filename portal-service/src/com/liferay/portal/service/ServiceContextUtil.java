@@ -16,11 +16,8 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.PortletPreferencesIds;
-
-import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 
@@ -76,10 +73,6 @@ public class ServiceContextUtil {
 		serviceContext.setWorkflowAction(jsonObject.getInt("workflowAction"));
 
 		return serviceContext;
-	}
-
-	public static Locale getLocale(ServiceContext serviceContext) {
-		return LocaleUtil.fromLanguageId(serviceContext.getLanguageId());
 	}
 
 	public static PortletPreferences getPortletPreferences(

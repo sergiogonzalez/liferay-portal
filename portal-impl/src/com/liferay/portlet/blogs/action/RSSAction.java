@@ -31,6 +31,8 @@ import com.liferay.util.RSSUtil;
 
 import java.io.OutputStream;
 
+import java.util.Date;
+
 import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -119,8 +121,8 @@ public class RSSAction extends PortletAction {
 			feedURL = StringPool.BLANK;
 
 			rss = BlogsEntryServiceUtil.getCompanyEntriesRSS(
-				companyId, status, max, type, version, displayStyle, feedURL,
-				entryURL, themeDisplay);
+				companyId, new Date(), status, max, type, version, displayStyle,
+				feedURL, entryURL, themeDisplay);
 		}
 		else if (groupId > 0) {
 			feedURL += "p_l_id=" + plid;
@@ -128,15 +130,15 @@ public class RSSAction extends PortletAction {
 			entryURL = feedURL;
 
 			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
-				groupId, status, max, type, version, displayStyle, feedURL,
-				entryURL, themeDisplay);
+				groupId, new Date(), status, max, type, version, displayStyle,
+				feedURL, entryURL, themeDisplay);
 		}
 		else if (organizationId > 0) {
 			feedURL = StringPool.BLANK;
 
 			rss = BlogsEntryServiceUtil.getOrganizationEntriesRSS(
-				organizationId, status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+				organizationId, new Date(), status, max, type, version,
+				displayStyle, feedURL, entryURL, themeDisplay);
 		}
 		else if (layout != null) {
 			groupId = themeDisplay.getScopeGroupId();
@@ -148,8 +150,8 @@ public class RSSAction extends PortletAction {
 			entryURL = feedURL;
 
 			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
-				groupId, status, max, type, version, displayStyle, feedURL,
-				entryURL, themeDisplay);
+				groupId, new Date(), status, max, type, version, displayStyle,
+				feedURL, entryURL, themeDisplay);
 		}
 
 		return rss.getBytes(StringPool.UTF8);

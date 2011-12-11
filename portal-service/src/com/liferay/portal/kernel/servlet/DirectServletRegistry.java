@@ -202,7 +202,7 @@ public class DirectServletRegistry {
 		file.setLastModified(System.currentTimeMillis());
 	}
 
-	private static boolean _DIRECT_SERVLET_CONTEXT_RELOAD =
+	private static final boolean _DIRECT_SERVLET_CONTEXT_RELOAD =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD));
 

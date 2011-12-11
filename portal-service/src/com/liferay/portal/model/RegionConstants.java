@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class RegionConstants {
 
-	public static final int DEFAULT_REGION_ID =
-		GetterUtil.getInteger(PropsUtil.get(PropsKeys.
-			SQL_DATA_COM_LIFERAY_PORTAL_MODEL_REGION_REGION_ID));
+	public static final int DEFAULT_REGION_ID = GetterUtil.getInteger(
+		PropsUtil.get(
+			PropsKeys.SQL_DATA_COM_LIFERAY_PORTAL_MODEL_REGION_REGION_ID));
 
 }

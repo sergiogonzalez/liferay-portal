@@ -231,11 +231,15 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			_viewPageURL.setParameter("title", pageTitle);
 
 			append(_viewPageURL.toString());
+
+			_viewPageURL.setParameter("title", _wikiPage.getTitle());
 		}
 		else if (_editPageURL != null) {
 			_editPageURL.setParameter("title", pageTitle);
 
 			append(_editPageURL.toString());
+
+			_editPageURL.setParameter("title", _wikiPage.getTitle());
 		}
 	}
 

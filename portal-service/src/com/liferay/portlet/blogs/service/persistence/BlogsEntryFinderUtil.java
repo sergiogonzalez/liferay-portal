@@ -37,26 +37,31 @@ public class BlogsEntryFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByGroupIds(
-		long companyId, long groupId, int status, int start, int end)
+		long companyId, long groupId, java.util.Date displayDate, int status,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByGroupIds(companyId, groupId, status, start, end);
+		return getFinder()
+				   .findByGroupIds(companyId, groupId, displayDate, status,
+			start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByOrganizationId(
 		long organizationId, java.util.Date displayDate, int status, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByOrganizationId(organizationId, displayDate, status,
-			start, end);
+			start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByOrganizationIds(
 		java.util.List<java.lang.Long> organizationIds,
-		java.util.Date displayDate, int status, int start, int end)
+		java.util.Date displayDate, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByOrganizationIds(organizationIds, displayDate, status,
-			start, end);
+			start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByNoAssets()

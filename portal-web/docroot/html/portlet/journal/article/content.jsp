@@ -532,7 +532,7 @@ if (Validator.isNotNull(content)) {
 							for (int i = 0; i < availableLocales.length ; i++) {
 					%>
 
-								<input name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(availableLocales[i]) %>" />
+								<input id= "<portlet:namespace />availableLocales<%= HtmlUtil.escapeAttribute(availableLocales[i]) %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(availableLocales[i]) %>" />
 
 					<%
 							}
@@ -541,7 +541,7 @@ if (Validator.isNotNull(content)) {
 						if (Validator.isNotNull(toLanguageId)) {
 					%>
 
-							<input name="<portlet:namespace />available_locales" type="hidden" value="<%= languageId %>" />
+							<input id="<portlet:namespace />availableLocales<%= languageId %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= languageId %>" />
 
 					<%
 						}
@@ -550,7 +550,7 @@ if (Validator.isNotNull(content)) {
 						contentDoc = SAXReaderUtil.createDocument(SAXReaderUtil.createElement("root"));
 					%>
 
-						<input name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(defaultLanguageId) %>" />
+						<input id="<portlet:namespace />availableLocales<%= HtmlUtil.escapeAttribute(defaultLanguageId) %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(defaultLanguageId) %>" />
 
 					<%
 					}
@@ -608,20 +608,24 @@ if (Validator.isNotNull(content)) {
 
 			versionNode.html(newVersion);
 
-			statusNode.removeClass('workflow-status-approved');
-			statusNode.addClass('workflow-status-draft');
-			statusNode.html('<%= LanguageUtil.get(pageContext, "draft") %>');
-
-			availableTranslationContainer.addClass('contains-translations');
-			availableTranslationsLinks.show();
-			translationsMessage.show();
-
 			var translationLink = availableTranslationContainer.one('.journal-article-translation-' + newLanguageId);
 
 			if (cmd == '<%= Constants.DELETE_TRANSLATION %>') {
-				translationLink.hide();
+				var availableLocales = A.one('#<portlet:namespace />availableLocales' + newLanguageId);
+
+				availableLocales.remove();
+
+				translationLink.remove();
 			}
 			else if (!translationLink) {
+				statusNode.removeClass('workflow-status-approved');
+				statusNode.addClass('workflow-status-draft');
+				statusNode.html('<%= LanguageUtil.get(pageContext, "draft") %>');
+
+				availableTranslationContainer.addClass('contains-translations');
+				availableTranslationsLinks.show();
+				translationsMessage.show();
+
 				var TPL_TRANSLATION = '<a class="lfr-token journal-article-translation-{newLanguageId}" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/language/{newLanguageId}.png" />{newLanguage}</a>';
 
 				translationLinkTpl = A.Lang.sub(

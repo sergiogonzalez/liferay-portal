@@ -9,7 +9,6 @@
 	<resource file="resource-actions/bookmarks.xml" />
 	<resource file="resource-actions/calendar.xml" />
 	<resource file="resource-actions/cms.xml" />
-	<resource file="resource-actions/communities.xml" />
 	<resource file="resource-actions/documentlibrary.xml" />
 	<resource file="resource-actions/dynamicdatalists.xml" />
 	<resource file="resource-actions/dynamicdatamapping.xml" />
@@ -20,6 +19,7 @@
 	<resource file="resource-actions/mobiledevicerules.xml" />
 	<resource file="resource-actions/polls.xml" />
 	<resource file="resource-actions/shopping.xml" />
+	<resource file="resource-actions/sites.xml" />
 	<resource file="resource-actions/social.xml" />
 	<resource file="resource-actions/softwarecatalog.xml" />
 	<resource file="resource-actions/wiki.xml" />

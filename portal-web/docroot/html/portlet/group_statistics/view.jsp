@@ -19,6 +19,11 @@
 <%
 for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 	String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
+
+	if (Validator.isNull(displayActivityCounterName)){
+		continue;
+	}
+
 	String chartType = PrefsParamUtil.getString(preferences, request, "chartType" + displayActivityCounterNameIndex, "area");
 	int chartWidth = PrefsParamUtil.getInteger(preferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
 	String dataRange = PrefsParamUtil.getString(preferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
@@ -34,10 +39,10 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 
 	if (chartType.equals("tag-cloud")) {
 		if (dataRange.equals("year")) {
-			assetTags = AssetTagLocalServiceUtil.getTags(scopeGroupId, displayActivityCounterName, SocialCounterPeriodUtil.getFirstActivityDayOfYear(), SocialCounterPeriodUtil.getEndPeriod());
+			assetTags = AssetTagLocalServiceUtil.getSocialActivityCounterPeriodTags(scopeGroupId, displayActivityCounterName, SocialCounterPeriodUtil.getFirstActivityDayOfYear(), SocialCounterPeriodUtil.getEndPeriod());
 		}
 		else {
-			assetTags = AssetTagLocalServiceUtil.getTags(scopeGroupId, displayActivityCounterName, 11, true);
+			assetTags = AssetTagLocalServiceUtil.getSocialActivityCounterOffsetTags(scopeGroupId, displayActivityCounterName, -12, 0);
 		}
 
 		title = LanguageUtil.format(pageContext, "tag-cloud-based-on-x", new Object[] {title});
@@ -47,20 +52,20 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 	else {
 		if (chartType.equals("pie")) {
 			if (dataRange.equals("year")) {
-				activityCounters = SocialActivityCounterLocalServiceUtil.getActivityCounterDistribution(scopeGroupId, displayActivityCounterName, SocialCounterPeriodUtil.getFirstActivityDayOfYear(), SocialCounterPeriodUtil.getEndPeriod());
+				activityCounters = SocialActivityCounterLocalServiceUtil.getPeriodActivityCounterDistribution(scopeGroupId, displayActivityCounterName, SocialCounterPeriodUtil.getFirstActivityDayOfYear(), SocialCounterPeriodUtil.getEndPeriod());
 			}
 			else {
-				activityCounters = SocialActivityCounterLocalServiceUtil.getActivityCounterDistribution(scopeGroupId, displayActivityCounterName, 11, true);
+				activityCounters = SocialActivityCounterLocalServiceUtil.getOffsetActivityCounterDistribution(scopeGroupId, displayActivityCounterName, -12, 0);
 			}
 
 			displayHeight = Math.max((activityCounters.size() + 1) * 18, displayHeight);
 		}
 		else {
 			if (dataRange.equals("year")) {
-				activityCounters = SocialActivityCounterLocalServiceUtil.getActivityCounters(scopeGroupId, displayActivityCounterName, SocialCounterPeriodUtil.getFirstActivityDayOfYear(), SocialCounterPeriodUtil.getEndPeriod());
+				activityCounters = SocialActivityCounterLocalServiceUtil.getPeriodActivityCounters(scopeGroupId, displayActivityCounterName, SocialCounterPeriodUtil.getFirstActivityDayOfYear(), SocialCounterPeriodUtil.getEndPeriod());
 			}
 			else {
-				activityCounters = SocialActivityCounterLocalServiceUtil.getActivityCounters(scopeGroupId, displayActivityCounterName, 11, true);
+				activityCounters = SocialActivityCounterLocalServiceUtil.getOffsetActivityCounters(scopeGroupId, displayActivityCounterName, -12, 0);
 			}
 		}
 

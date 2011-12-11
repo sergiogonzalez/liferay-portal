@@ -154,7 +154,11 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 						continue;
 					}
 
-					boolean isStaged = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
+					boolean staged = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
+
+					if (portletDataHandler.isAlwaysStaged()) {
+						staged = true;
+					}
 
 					String includedInEveryPublish = StringPool.BLANK;
 
@@ -163,7 +167,7 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 					}
 				%>
 
-					<aui:input inlineLabel="right" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) + includedInEveryPublish %>" name='<%= StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId() %>' type="checkbox" value="<%= isStaged %>" />
+					<aui:input disabled="<%= portletDataHandler.isAlwaysStaged() %>" inlineLabel="right" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) + includedInEveryPublish %>" name='<%= StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId() %>' type="checkbox" value="<%= staged %>" />
 
 				<%
 				}
