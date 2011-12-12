@@ -79,11 +79,14 @@ public class GetLayoutsAction extends JSONAction {
 
 			String name = layout.getName(themeDisplay.getLocale());
 
-			if (SitesUtil.isLayoutToBeUpdatedFromTemplate(layout)) {
-				Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(
-					layout);
+			if (SitesUtil.isLayoutToBeUpdatedFromSourcePrototype(layout)) {
+				Layout sourcePrototypeLayout =
+					LayoutTypePortletImpl.getSourcePrototypeLayout(layout);
 
-				name = templateLayout.getName(themeDisplay.getLocale());
+				if (sourcePrototypeLayout != null) {
+					name = sourcePrototypeLayout.getName(
+						themeDisplay.getLocale());
+				}
 			}
 
 			jsonObject.put("name", name);
@@ -98,6 +101,7 @@ public class GetLayoutsAction extends JSONAction {
 			}
 
 			jsonObject.put("type", layout.getType());
+			jsonObject.put("updateable", SitesUtil.isLayoutUpdateable(layout));
 			jsonObject.put("uuid", layout.getUuid());
 
 			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
@@ -122,9 +126,12 @@ public class GetLayoutsAction extends JSONAction {
 
 				LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
 
-				jsonObject.put(
-					"layoutBranchId", layoutBranch.getLayoutBranchId());
-				jsonObject.put("layoutBranchName", layoutBranch.getName());
+				if (!layoutBranch.isMaster()) {
+					jsonObject.put(
+						"layoutBranchId", layoutBranch.getLayoutBranchId());
+					jsonObject.put("layoutBranchName", layoutBranch.getName());
+				}
+
 				jsonObject.put(
 					"layoutRevisionId", layoutRevision.getLayoutRevisionId());
 				jsonObject.put("layoutSetBranchId", layoutSetBranchId);

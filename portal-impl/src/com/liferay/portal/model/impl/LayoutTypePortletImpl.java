@@ -93,7 +93,7 @@ public class LayoutTypePortletImpl
 		return PortletConstants.INSTANCE_SEPARATOR + instanceId;
 	}
 
-	public static Layout getTemplateLayout(Layout layout) {
+	public static Layout getSourcePrototypeLayout(Layout layout) {
 		if (Validator.isNull(layout.getUuid())) {
 			return null;
 		}
@@ -124,7 +124,7 @@ public class LayoutTypePortletImpl
 			}
 
 			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getTemplateLayoutUuid(), group.getGroupId());
+				layout.getSourcePrototypeLayoutUuid(), group.getGroupId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -141,7 +141,7 @@ public class LayoutTypePortletImpl
 				PortletKeys.NESTED_PORTLETS);
 		}
 
-		_templateLayout = getTemplateLayout(layout);
+		_sourcePrototypeLayout = getSourcePrototypeLayout(layout);
 	}
 
 	public void addModeAboutPortletId(String portletId) {
@@ -581,6 +581,10 @@ public class LayoutTypePortletImpl
 		return portlets;
 	}
 
+	public Layout getSourcePrototypeLayout() {
+		return _sourcePrototypeLayout;
+	}
+
 	public String getStateMax() {
 		return getTypeSettingsProperties().getProperty(
 			LayoutTypePortletConstants.STATE_MAX);
@@ -602,17 +606,13 @@ public class LayoutTypePortletImpl
 			LayoutTypePortletConstants.STATE_MIN);
 	}
 
-	public Layout getTemplateLayout() {
-		return _templateLayout;
-	}
-
 	public String getTemplateProperty(String key) {
-		if (_templateLayout == null) {
+		if (_sourcePrototypeLayout == null) {
 			return StringPool.BLANK;
 		}
 
 		UnicodeProperties typeSettingsProperties =
-			_templateLayout.getTypeSettingsProperties();
+			_sourcePrototypeLayout.getTypeSettingsProperties();
 
 		return typeSettingsProperties.getProperty(key);
 	}
@@ -757,7 +757,7 @@ public class LayoutTypePortletImpl
 	}
 
 	public boolean hasTemplate() {
-		if (_templateLayout != null) {
+		if (_sourcePrototypeLayout != null) {
 			return true;
 		}
 
@@ -835,8 +835,8 @@ public class LayoutTypePortletImpl
 
 			if (hasTemplate()) {
 				String propertiesModifiedDateString =
-					_templateLayout.getTypeSettingsProperties().getProperty(
-						_MODIFIED_DATE, _NULL_DATE);
+					_sourcePrototypeLayout.getTypeSettingsProperties().
+						getProperty(_MODIFIED_DATE, _NULL_DATE);
 
 				Date propertiesModifiedDate = dateFormat.parse(
 					propertiesModifiedDateString);
@@ -1405,7 +1405,7 @@ public class LayoutTypePortletImpl
 		Layout layout = getLayout();
 
 		if (hasTemplate()) {
-			layout = _templateLayout;
+			layout = _sourcePrototypeLayout;
 		}
 
 		String selector1 = StringPool.BLANK;
@@ -1713,7 +1713,7 @@ public class LayoutTypePortletImpl
 		PropsValues.INDEX_DATE_FORMAT_PATTERN);
 	private boolean _enablePortletLayoutListener = true;
 	private PortalPreferences _portalPreferences;
-	private Layout _templateLayout;
+	private Layout _sourcePrototypeLayout;
 	private boolean _updatePermission;
 
 }

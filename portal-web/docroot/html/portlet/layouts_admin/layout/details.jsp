@@ -21,7 +21,14 @@ Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
-boolean locked = GetterUtil.getBoolean(selLayout.getTypeSettingsProperty("locked"));
+boolean layoutUpdateable = SitesUtil.isLayoutUpdateable(selLayout);
+boolean layoutsUpdateable = SitesUtil.isLayoutsUpdateable(selLayout.getLayoutSet());
+
+boolean layoutUpdateableDisabled = false;
+
+if (!layoutsUpdateable) {
+	layoutUpdateableDisabled = true;
+}
 
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
@@ -103,7 +110,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	%>
 
 	<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT %>">
-		<liferay-ui:message arguments="<%= type %>" key="the-first-page-cannot-be-of-type-x" />
+		<liferay-ui:message arguments="<%= Validator.isNull(lte.getLayoutType()) ? type : lte.getLayoutType() %>" key="the-first-page-cannot-be-of-type-x" />
 	</c:if>
 
 	<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">
@@ -130,7 +137,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			<aui:input helpMessage="if-checked-this-page-wont-show-up-in-the-navigation-menu" name="hidden" />
 
 			<c:if test="<%= group.isLayoutSetPrototype() %>">
-				<aui:input helpMessage="if-checked-this-page-cannot-be-modified" name="locked" type="checkbox" value="<%= locked %>" />
+				<aui:input disabled="<%= layoutUpdateableDisabled %>" helpMessage="allow-site-administrators-to-modify-this-page-for-their-site-help" label="allow-site-administrators-to-modify-this-page-for-their-site" name="layoutUpdateable" type="checkbox" value="<%= layoutUpdateable %>" />
 			</c:if>
 		</c:when>
 		<c:otherwise>

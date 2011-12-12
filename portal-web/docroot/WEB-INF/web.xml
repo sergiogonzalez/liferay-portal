@@ -3,7 +3,7 @@
 <web-app id="Liferay_Portal" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<context-param>
 		<param-name>axis.servicesPath</param-name>
-		<param-value>/axis/</param-value>
+		<param-value>/api/axis/</param-value>
 	</context-param>
 	<context-param>
 		<param-name>contextClass</param-name>

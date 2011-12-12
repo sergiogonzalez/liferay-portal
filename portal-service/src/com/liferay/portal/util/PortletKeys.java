@@ -49,8 +49,6 @@ public class PortletKeys {
 
 	public static final String CHAT = "1_WAR_chatportlet";
 
-	public static final String COMMUNITIES = "29";
-
 	public static final String CONTROL_PANEL_MENU = "160";
 
 	public static final String CURRENCY_CONVERTER = "16";
@@ -78,6 +76,8 @@ public class PortletKeys {
 	public static final String FLAGS = "142";
 
 	public static final String GROUP_PAGES = "156";
+
+	public static final String GROUP_STATISTICS = "181";
 
 	public static final String IFRAME = "48";
 
@@ -124,7 +124,7 @@ public class PortletKeys {
 
 	public static final String MY_PAGES = "140";
 
-	public static final String MY_SITES = "49";
+	public static final String MY_SITES = "29";
 
 	public static final String MY_WORKFLOW_INSTANCES = "158";
 
@@ -191,6 +191,8 @@ public class PortletKeys {
 	public static final String SHOPPING = "34";
 
 	public static final String SITE_MEMBERSHIPS_ADMIN = "174";
+
+	public static final String SITE_REDIRECTOR = "49";
 
 	public static final String SITE_SETTINGS = "165";
 

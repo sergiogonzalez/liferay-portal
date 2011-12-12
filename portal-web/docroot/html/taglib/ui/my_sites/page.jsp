@@ -30,7 +30,7 @@ List<Group> mySites = user.getMySites(true, max);
 	<ul class="taglib-my-sites">
 
 		<%
-		PortletURL portletURL = new PortletURLImpl(request, PortletKeys.MY_SITES, plid, PortletRequest.ACTION_PHASE);
+		PortletURL portletURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
 
 		portletURL.setWindowState(WindowState.NORMAL);
 		portletURL.setPortletMode(PortletMode.VIEW);
@@ -46,7 +46,7 @@ List<Group> mySites = user.getMySites(true, max);
 			String privateAddPageHREF = null;
 
 			if (mySite.isRegularSite() && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT)) {
-				PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.MY_SITES, plid, PortletRequest.ACTION_PHASE);
+				PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
 
 				addPageURL.setWindowState(WindowState.NORMAL);
 				addPageURL.setPortletMode(PortletMode.VIEW);

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -484,7 +483,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		Locale locale = ServiceContextUtil.getLocale(serviceContext);
+		Locale locale = serviceContext.getLocale();
 
 		nameMap.put(locale, name);
 

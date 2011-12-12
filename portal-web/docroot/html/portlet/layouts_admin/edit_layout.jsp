@@ -77,8 +77,6 @@ if (layoutRevision != null) {
 	}
 }
 
-String layoutTemplateId = ParamUtil.getString(request, "layoutTemplateId", PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-
 String[] mainSections = PropsValues.LAYOUT_FORM_UPDATE;
 
 if (!group.isUser() && selLayout.isTypePortlet()) {
@@ -110,7 +108,6 @@ String[][] categorySections = {mainSections};
 	<aui:input name="selPlid" type="hidden" value="<%= selPlid %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutId %>" />
-	<aui:input name="layoutTemplateId" type="hidden" value="<%= layoutTemplateId %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<c:if test="<%= layoutRevision != null && !incomplete%>">
@@ -175,7 +172,7 @@ String[][] categorySections = {mainSections};
 				/>
 
 				<c:choose>
-					<c:when test="<%= SitesUtil.isLayoutLocked(selLayout) %>">
+					<c:when test="<%= !SitesUtil.isLayoutUpdateable(selLayout) %>">
 						<div class="portlet-msg-alert">
 							<liferay-ui:message key="this-page-is-locked-by-the-template" />
 						</div>
@@ -313,7 +310,7 @@ String[][] categorySections = {mainSections};
 				categoryNames="<%= _CATEGORY_NAMES %>"
 				categorySections="<%= categorySections %>"
 				jspPath="/html/portlet/layouts_admin/layout/"
-				showButtons="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) && !SitesUtil.isLayoutLocked(selLayout) %>"
+				showButtons="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) && SitesUtil.isLayoutUpdateable(selLayout) %>"
 			/>
 		</c:otherwise>
 	</c:choose>
@@ -329,22 +326,13 @@ String[][] categorySections = {mainSections};
 			action = action || '<%= Constants.UPDATE %>';
 
 			if (action == '<%= Constants.DELETE %>') {
-				<c:choose>
-					<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) || parentPlids.contains(selPlid) %>">
-						alert('<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-this-page-because-you-are-currently-accessing-this-page") %>');
+				if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
+					return false;
+				}
 
-						return false;
-					</c:when>
-					<c:otherwise>
-						if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
-							return false;
-						}
-
-						<c:if test="<%= layoutRevision == null || incomplete %>">
-							document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
-						</c:if>
-					</c:otherwise>
-				</c:choose>
+				<c:if test="<%= layoutRevision == null || incomplete %>">
+					document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
+				</c:if>
 			}
 			else {
 				document.<portlet:namespace />fm.<portlet:namespace />redirect.value += Liferay.Util.getHistoryParam('<portlet:namespace />');

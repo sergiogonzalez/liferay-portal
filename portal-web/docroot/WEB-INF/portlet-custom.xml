@@ -645,7 +645,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>49</portlet-name>
-		<display-name>My Sites</display-name>
+		<display-name>Site Redirector</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -2741,6 +2741,14 @@
 			</preference>
 			<preference>
 				<name>rankByParticipation</name>
+				<value>true</value>
+			</preference>
+			<preference>
+				<name>showHeaderText</name>
+				<value>true</value>
+			</preference>
+			<preference>
+				<name>showTotals</name>
 				<value>true</value>
 			</preference>
 		</portlet-preferences>

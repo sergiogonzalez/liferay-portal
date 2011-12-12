@@ -37,6 +37,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Staging {
 
+	public String buildRemoteURL(
+		String remoteAddress, int remotePort, boolean secureConnection,
+		long remoteGroupId, boolean privateLayout);
+
 	public void copyFromLive(PortletRequest PortletRequest) throws Exception;
 
 	public void copyFromLive(PortletRequest PortletRequest, Portlet portlet)
@@ -88,6 +92,12 @@ public interface Staging {
 			String remoteAddress, long remoteGroupId, int remotePort,
 			boolean secureConnection, ServiceContext serviceContext)
 		throws Exception;
+
+	public Group getLiveGroup(long groupId)
+		throws PortalException, SystemException;
+
+	public long getLiveGroupId(long groupId)
+		throws PortalException, SystemException;
 
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
 		throws Exception;

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -161,11 +162,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         normalized when accessed see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Must specify the replacement
 	 *         universally unique identifier and can specify the replacement
 	 *         create date, replacement modified date and the new expando bridge
-	 *         attributes.
+	 *         attributes. For layouts that belong to a layout set prototype, an
+	 *         attribute named 'layoutUpdateable' can be set to specify whether
+	 *         site administrators can modify this page within their site.
 	 * @return the layout
 	 * @throws PortalException if a group or user with the primary key could not
 	 *         be found, or if layout values were invalid
@@ -176,7 +178,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long parentLayoutId, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
-			String type, boolean hidden, String friendlyURL, boolean locked,
+			String type, boolean hidden, String friendlyURL,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -219,11 +221,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setFriendlyURL(friendlyURL);
 		layout.setPriority(priority);
 
-		if (locked) {
+		boolean layoutUpdateable = ParamUtil.getBoolean(
+			serviceContext, "layoutUpdateable", true);
+
+		if (!layoutUpdateable) {
 			UnicodeProperties typeSettingsProperties =
 				layout.getTypeSettingsProperties();
 
-			typeSettingsProperties.put("locked", String.valueOf(locked));
+			typeSettingsProperties.put(
+				"layoutUpdateable", String.valueOf(layoutUpdateable));
 
 			layout.setTypeSettingsProperties(typeSettingsProperties);
 		}
@@ -333,10 +339,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         normalized when accessed see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Must specify the universally
 	 *         unique identifier and can specify the create date and modified
-	 *         date.
+	 *         date. For layouts that belong to a layout set prototype, an
+	 *         attribute named 'layoutUpdateable' can be set to specify whether
+	 *         site administrators can modify this page within their site.
 	 * @return the layout
 	 * @throws PortalException if a group or user with the primary key could not
 	 *         be found
@@ -345,7 +352,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Layout addLayout(
 			long userId, long groupId, boolean privateLayout,
 			long parentLayoutId, String name, String title, String description,
-			String type, boolean hidden, String friendlyURL, boolean locked,
+			String type, boolean hidden, String friendlyURL,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -358,8 +365,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return addLayout(
 			userId, groupId, privateLayout, parentLayoutId, localeNamesMap,
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			type, hidden, friendlyURL, locked, serviceContext);
+			new HashMap<Locale, String>(), new HashMap<Locale, String>(), type,
+			hidden, friendlyURL, serviceContext);
 	}
 
 	/**
@@ -376,6 +383,26 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Layout layout, boolean updateLayoutSet,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		// First layout validation
+
+		if (layout.getParentLayoutId() ==
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+			List<Layout> rootLayouts = layoutPersistence.findByG_P_P(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 2);
+
+			if (rootLayouts.size() > 1) {
+				Layout firstLayout = rootLayouts.get(0);
+
+				if (firstLayout.getLayoutId() == layout.getLayoutId()) {
+					Layout secondLayout = rootLayouts.get(1);
+
+					validateFirstLayout(secondLayout.getType());
+				}
+			}
+		}
 
 		// Child layouts
 
@@ -728,6 +755,23 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	public Layout fetchFirstLayout(
+			long groupId, boolean privateLayout, long parentLayoutId)
+		throws SystemException {
+
+		Layout firstLayout = null;
+
+		try {
+			firstLayout = layoutPersistence.findByG_P_P_First(
+				groupId, privateLayout, parentLayoutId,
+				new LayoutPriorityComparator());
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		return firstLayout;
 	}
 
 	/**
@@ -1465,7 +1509,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         String)}.
 	 * @param  iconImage whether the icon image will be updated
 	 * @param  iconBytes the byte array of the layout's new icon image
-	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Can specify the replacement
 	 *         modified date and new expando bridge attributes.
 	 * @return the updated layout
@@ -1481,7 +1524,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			String type, boolean hidden, String friendlyURL, Boolean iconImage,
-			byte[] iconBytes, boolean locked, ServiceContext serviceContext)
+			byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout
@@ -1537,10 +1580,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			}
 		}
 
+		boolean layoutUpdateable = GetterUtil.getBoolean(
+			serviceContext.getAttribute("layoutUpdateable"), true);
+
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
-		typeSettingsProperties.put("locked", String.valueOf(locked));
+		typeSettingsProperties.put(
+			"layoutUpdateable", String.valueOf(layoutUpdateable));
 
 		layout.setTypeSettingsProperties(typeSettingsProperties);
 
@@ -2207,7 +2254,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(type) || !PortalUtil.isLayoutFirstPageable(type)) {
-			throw new LayoutTypeException(LayoutTypeException.FIRST_LAYOUT);
+			LayoutTypeException lte = new LayoutTypeException(
+				LayoutTypeException.FIRST_LAYOUT);
+
+			lte.setLayoutType(type);
+
+			throw lte;
 		}
 	}
 

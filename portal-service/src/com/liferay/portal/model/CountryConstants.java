@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class CountryConstants {
 
-	public static final int DEFAULT_COUNTRY_ID =
-		GetterUtil.getInteger(PropsUtil.get(PropsKeys.
-			SQL_DATA_COM_LIFERAY_PORTAL_MODEL_COUNTRY_COUNTRY_ID));
+	public static final int DEFAULT_COUNTRY_ID = GetterUtil.getInteger(
+		PropsUtil.get(
+			PropsKeys.SQL_DATA_COM_LIFERAY_PORTAL_MODEL_COUNTRY_COUNTRY_ID));
 
 }

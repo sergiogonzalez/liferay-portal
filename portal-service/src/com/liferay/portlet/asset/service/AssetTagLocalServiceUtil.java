@@ -339,6 +339,24 @@ public class AssetTagLocalServiceUtil {
 		return getService().getGroupTagsCount(groupId);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getSocialActivityCounterOffsetTags(
+		long groupId, java.lang.String socialActivityCounterName,
+		int startOffset, int endOffset)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getSocialActivityCounterOffsetTags(groupId,
+			socialActivityCounterName, startOffset, endOffset);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getSocialActivityCounterPeriodTags(
+		long groupId, java.lang.String socialActivityCounterName,
+		int startPeriod, int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getSocialActivityCounterPeriodTags(groupId,
+			socialActivityCounterName, startPeriod, endPeriod);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetTag getTag(long tagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -401,24 +419,6 @@ public class AssetTagLocalServiceUtil {
 		long groupId, long classNameId, java.lang.String name, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTags(groupId, classNameId, name, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long groupId, java.lang.String socialActivityCounterName, int offset,
-		boolean includeCurrentPeriod)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getTags(groupId, socialActivityCounterName, offset,
-			includeCurrentPeriod);
-	}
-
-	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long groupId, java.lang.String socialActivityCounterName,
-		int startPeriod, int endPeriod)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getTags(groupId, socialActivityCounterName, startPeriod,
-			endPeriod);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(

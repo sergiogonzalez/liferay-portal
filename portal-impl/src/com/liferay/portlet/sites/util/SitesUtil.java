@@ -20,12 +20,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -33,6 +36,7 @@ import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -42,6 +46,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutSettings;
@@ -190,6 +195,9 @@ public class SitesUtil {
 		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
 			serviceContext);
 
+		setLayoutSetPrototypeLinkEnabled(
+			parameterMap, targetLayoutSet, serviceContext);
+
 		if (!targetLayoutSet.isPrivateLayout()) {
 			parameterMap.put(
 				PortletDataHandlerKeys.PUBLIC_LAYOUT_PERMISSIONS,
@@ -304,8 +312,8 @@ public class SitesUtil {
 						layout.getUuid(), linkedLayoutSet.getGroupId());
 
 				if ((linkedLayout != null) &&
-					(isLayoutLocked(linkedLayout) ||
-					 isLayoutToBeUpdatedFromTemplate(linkedLayout))) {
+					(!isLayoutUpdateable(linkedLayout) ||
+					 isLayoutToBeUpdatedFromSourcePrototype(linkedLayout))) {
 
 					LayoutServiceUtil.deleteLayout(
 						linkedLayout.getPlid(), serviceContext);
@@ -316,7 +324,19 @@ public class SitesUtil {
 		LayoutServiceUtil.deleteLayout(
 			groupId, privateLayout, layoutId, serviceContext);
 
-		return new Object[] {group, oldFriendlyURL};
+		long newPlid = layout.getParentPlid();
+
+		if (newPlid <= 0) {
+			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+				layoutSet.getGroupId(), layoutSet.getPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (firstLayout != null) {
+				newPlid = firstLayout.getPlid();
+			}
+		}
+
+		return new Object[] {group, oldFriendlyURL, newPlid};
 	}
 
 	public static void deleteLayout(
@@ -365,7 +385,7 @@ public class SitesUtil {
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {Boolean.FALSE.toString()});
 		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_INHERITED,
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
@@ -417,94 +437,42 @@ public class SitesUtil {
 		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
 			serviceContext);
 
+		setLayoutSetPrototypeLinkEnabled(
+			parameterMap, layoutSet, serviceContext);
+
 		LayoutServiceUtil.importLayouts(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 			parameterMap, inputStream);
 	}
 
-	public static boolean isLayoutLocked(Layout layout) {
+	public static boolean isLayoutsUpdateable(LayoutSet layoutSet) {
+		if (!layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			return true;
+		}
+
 		try {
-			LayoutSet layoutSet = layout.getLayoutSet();
+			LayoutSetPrototype layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.
+					getLayoutSetPrototypeByUuid(
+						layoutSet.getLayoutSetPrototypeUuid());
 
-			if (layout.isLayoutPrototypeLinkEnabled() ||
-				layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			String layoutsUpdateable = layoutSetPrototype.getSettingsProperty(
+				"layoutsUpdateable");
 
-				LayoutTypePortletImpl layoutTypePortlet =
-					new LayoutTypePortletImpl(layout);
-
-				return isLayoutLocked(layoutTypePortlet);
+			if (Validator.isNotNull(layoutsUpdateable)) {
+				return GetterUtil.getBoolean(layoutsUpdateable, true);
 			}
 		}
 		catch (Exception e) {
-		}
-
-		return false;
-	}
-
-	public static boolean isLayoutLocked(LayoutTypePortlet layoutTypePortlet) {
-		Layout layout = layoutTypePortlet.getLayout();
-
-		try {
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			if (layout.isLayoutPrototypeLinkEnabled() ||
-				layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-
-				String locked = layoutTypePortlet.getTemplateProperty("locked");
-
-				if (Validator.isNotNull(locked)) {
-					return GetterUtil.getBoolean(locked);
-				}
-				else if (Validator.isNotNull(layout.getTemplateLayoutUuid())) {
-					return isLayoutSetLocked(layoutSet);
-				}
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
 			}
-		}
-		catch (Exception e) {
-		}
-
-		return false;
-	}
-
-	public static boolean isLayoutSetLocked(
-		Group group, boolean privateLayout) {
-
-		try {
-			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				group.getGroupId(), privateLayout);
-
-			return isLayoutSetLocked(layoutSet);
-		}
-		catch (Exception e) {
 		}
 
 		return true;
 	}
 
-	public static boolean isLayoutSetLocked(LayoutSet layoutSet) {
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			try {
-				LayoutSetPrototype layoutSetPrototype =
-					LayoutSetPrototypeLocalServiceUtil.
-						getLayoutSetPrototypeByUuid(
-							layoutSet.getLayoutSetPrototypeUuid());
-
-				String allowModifications =
-					layoutSetPrototype.getSettingsProperty(
-						"allowModifications");
-
-				if (Validator.isNotNull(allowModifications)) {
-					return !GetterUtil.getBoolean(allowModifications);
-				}
-			}
-			catch (Exception e) {
-			}
-		}
-
-		return false;
-	}
-
-	public static boolean isLayoutToBeUpdatedFromTemplate(Layout layout)
+	public static boolean isLayoutToBeUpdatedFromSourcePrototype(Layout layout)
 		throws Exception {
 
 		if (layout == null) {
@@ -517,7 +485,8 @@ public class SitesUtil {
 			return false;
 		}
 
-		Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(layout);
+		Layout sourcePrototypeLayout =
+			LayoutTypePortletImpl.getSourcePrototypeLayout(layout);
 
 		Date layoutModifiedDate = layout.getModifiedDate();
 
@@ -531,12 +500,12 @@ public class SitesUtil {
 		}
 
 		if ((lastCopyDate != null) &&
-			lastCopyDate.after(templateLayout.getModifiedDate())) {
+			lastCopyDate.after(sourcePrototypeLayout.getModifiedDate())) {
 
 			return false;
 		}
 
-		if (isLayoutLocked(layout)) {
+		if (!isLayoutUpdateable(layout)) {
 			return true;
 		}
 
@@ -549,5 +518,108 @@ public class SitesUtil {
 
 		return false;
 	}
+
+	public static boolean isLayoutUpdateable(Layout layout) {
+		try {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			if ((layout.isLayoutPrototypeLinkEnabled() ||
+				 layoutSet.isLayoutSetPrototypeLinkEnabled()) &&
+				Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
+
+				LayoutTypePortletImpl layoutTypePortlet =
+					new LayoutTypePortletImpl(layout);
+
+				return isLayoutUpdateable(layoutTypePortlet);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return true;
+	}
+
+	public static boolean isLayoutUpdateable(
+		LayoutTypePortlet layoutTypePortlet) {
+
+		Layout layout = layoutTypePortlet.getLayout();
+
+		try {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			if (layout.isLayoutPrototypeLinkEnabled() ||
+				layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+
+				boolean layoutsUpdateable = isLayoutsUpdateable(layoutSet);
+
+				if (!layoutsUpdateable) {
+					return false;
+				}
+
+				String layoutUpdateable = layoutTypePortlet.getTemplateProperty(
+					"layoutUpdateable");
+
+				return GetterUtil.getBoolean(layoutUpdateable, true);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return true;
+	}
+
+	protected static void setLayoutSetPrototypeLinkEnabled(
+		Map<String, String[]> parameterMap, LayoutSet targetLayoutSet,
+		ServiceContext serviceContext) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) ||
+			!PortalPermissionUtil.contains(
+				permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE)) {
+
+			return;
+		}
+
+		if (targetLayoutSet.isPrivateLayout()) {
+			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				serviceContext, "privateLayoutSetPrototypeLinkEnabled");
+
+			if (!privateLayoutSetPrototypeLinkEnabled) {
+				privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+					serviceContext, "layoutSetPrototypeLinkEnabled");
+			}
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+				new String[] {
+					String.valueOf(privateLayoutSetPrototypeLinkEnabled)
+				});
+		}
+		else {
+			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				serviceContext, "publicLayoutSetPrototypeLinkEnabled");
+
+			if (!publicLayoutSetPrototypeLinkEnabled) {
+				publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+					serviceContext, "layoutSetPrototypeLinkEnabled");
+			}
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+				new String[] {
+					String.valueOf(publicLayoutSetPrototypeLinkEnabled)
+				});
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(SitesUtil.class);
 
 }

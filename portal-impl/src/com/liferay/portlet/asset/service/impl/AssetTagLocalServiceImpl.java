@@ -256,6 +256,32 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		return assetTagPersistence.countByGroupId(groupId);
 	}
 
+	public List<AssetTag> getSocialActivityCounterOffsetTags(
+			long groupId, String socialActivityCounterName, int startOffset,
+			int endOffset)
+		throws SystemException {
+
+		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(startOffset);
+		int endPeriod = SocialCounterPeriodUtil.getEndPeriod(endOffset);
+
+		return getSocialActivityCounterPeriodTags(
+			groupId, socialActivityCounterName, startPeriod, endPeriod);
+	}
+
+	public List<AssetTag> getSocialActivityCounterPeriodTags(
+			long groupId, String socialActivityCounterName, int startPeriod,
+			int endPeriod)
+		throws SystemException {
+
+		int offset = SocialCounterPeriodUtil.getOffset(endPeriod);
+
+		int periodLength = SocialCounterPeriodUtil.getPeriodLength(offset);
+
+		return assetTagFinder.findByG_N_S_E(
+			groupId, socialActivityCounterName, startPeriod, endPeriod,
+			periodLength);
+	}
+
 	public AssetTag getTag(long tagId) throws PortalException, SystemException {
 		return assetTagPersistence.findByPrimaryKey(tagId);
 	}
@@ -336,31 +362,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		return assetTagFinder.findByG_C_N(
 			groupId, classNameId, name, start, end, null);
-	}
-
-	public List<AssetTag> getTags(
-			long groupId, String socialActivityCounterName, int offset,
-			boolean includeCurrentPeriod)
-		throws SystemException {
-
-		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(-offset);
-		int endPeriod = -1;
-
-		if (!includeCurrentPeriod) {
-			endPeriod = SocialCounterPeriodUtil.getStartPeriod() - 1;
-		}
-
-		return getTags(
-			groupId, socialActivityCounterName, startPeriod, endPeriod);
-	}
-
-	public List<AssetTag> getTags(
-			long groupId, String socialActivityCounterName, int startPeriod,
-			int endPeriod)
-		throws SystemException {
-
-		return assetTagFinder.findByG_N_S_E(
-			groupId, socialActivityCounterName, startPeriod, endPeriod);
 	}
 
 	@ThreadLocalCachable

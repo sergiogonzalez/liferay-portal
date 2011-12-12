@@ -67,9 +67,11 @@ else {
 					blogType = group.getDescriptiveName();// + " " + LanguageUtil.get(pageContext, "site");
 				}
 
-				int entryCount = BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(group.getGroupId(), user2.getUserId(), WorkflowConstants.STATUS_APPROVED);
+				Date now = new Date();
 
-				List entries = BlogsEntryLocalServiceUtil.getGroupUserEntries(group.getGroupId(), user2.getUserId(), WorkflowConstants.STATUS_APPROVED, 0, 1);
+				int entryCount = BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(group.getGroupId(), user2.getUserId(), now, WorkflowConstants.STATUS_APPROVED);
+
+				List entries = BlogsEntryLocalServiceUtil.getGroupUserEntries(group.getGroupId(), user2.getUserId(), now, WorkflowConstants.STATUS_APPROVED, 0, 1);
 
 				if (entries.size() == 1) {
 					BlogsEntry entry = (BlogsEntry)entries.get(0);

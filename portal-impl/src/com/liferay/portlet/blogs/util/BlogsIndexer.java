@@ -36,6 +36,7 @@ import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -166,7 +167,7 @@ public class BlogsIndexer extends BaseIndexer {
 
 	protected void reindexEntries(long companyId) throws Exception {
 		int count = BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-			companyId, WorkflowConstants.STATUS_APPROVED);
+			companyId, new Date(), WorkflowConstants.STATUS_APPROVED);
 
 		int pages = count / Indexer.DEFAULT_INTERVAL;
 
@@ -182,7 +183,8 @@ public class BlogsIndexer extends BaseIndexer {
 		throws Exception {
 
 		List<BlogsEntry> entries = BlogsEntryLocalServiceUtil.getCompanyEntries(
-			companyId, WorkflowConstants.STATUS_APPROVED, start, end);
+			companyId, new Date(), WorkflowConstants.STATUS_APPROVED, start,
+			end);
 
 		if (entries.isEmpty()) {
 			return;

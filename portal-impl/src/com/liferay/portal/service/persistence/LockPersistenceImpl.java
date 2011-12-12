@@ -123,6 +123,23 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			LockModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
 			new String[] { String.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_K_O = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
+			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_K_O",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			LockModelImpl.CLASSNAME_COLUMN_BITMASK |
+			LockModelImpl.KEY_COLUMN_BITMASK |
+			LockModelImpl.OWNER_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_K_O = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
+			LockModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K_O",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName()
+			});
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
@@ -144,6 +161,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K,
 			new Object[] { lock.getClassName(), lock.getKey() }, lock);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K_O,
+			new Object[] { lock.getClassName(), lock.getKey(), lock.getOwner() },
+			lock);
 
 		lock.resetOriginalValues();
 	}
@@ -219,6 +240,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	protected void clearUniqueFindersCache(Lock lock) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K,
 			new Object[] { lock.getClassName(), lock.getKey() });
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K_O,
+			new Object[] { lock.getClassName(), lock.getKey(), lock.getOwner() });
 	}
 
 	/**
@@ -394,6 +418,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K,
 				new Object[] { lock.getClassName(), lock.getKey() }, lock);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K_O,
+				new Object[] { lock.getClassName(), lock.getKey(), lock.getOwner() },
+				lock);
 		}
 		else {
 			if ((lockModelImpl.getColumnBitmask() &
@@ -409,6 +437,29 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K,
 					new Object[] { lock.getClassName(), lock.getKey() }, lock);
+			}
+
+			if ((lockModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_K_O.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						lockModelImpl.getOriginalClassName(),
+						
+						lockModelImpl.getOriginalKey(),
+						
+						lockModelImpl.getOriginalOwner()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K_O, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K_O, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K_O,
+					new Object[] {
+						lock.getClassName(),
+						
+					lock.getKey(),
+						
+					lock.getOwner()
+					}, lock);
 			}
 		}
 
@@ -1415,6 +1466,195 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	/**
+	 * Returns the lock where className = &#63; and key = &#63; and owner = &#63; or throws a {@link com.liferay.portal.NoSuchLockException} if it could not be found.
+	 *
+	 * @param className the class name
+	 * @param key the key
+	 * @param owner the owner
+	 * @return the matching lock
+	 * @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Lock findByC_K_O(String className, String key, String owner)
+		throws NoSuchLockException, SystemException {
+		Lock lock = fetchByC_K_O(className, key, owner);
+
+		if (lock == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("className=");
+			msg.append(className);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append(", owner=");
+			msg.append(owner);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchLockException(msg.toString());
+		}
+
+		return lock;
+	}
+
+	/**
+	 * Returns the lock where className = &#63; and key = &#63; and owner = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param className the class name
+	 * @param key the key
+	 * @param owner the owner
+	 * @return the matching lock, or <code>null</code> if a matching lock could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Lock fetchByC_K_O(String className, String key, String owner)
+		throws SystemException {
+		return fetchByC_K_O(className, key, owner, true);
+	}
+
+	/**
+	 * Returns the lock where className = &#63; and key = &#63; and owner = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param className the class name
+	 * @param key the key
+	 * @param owner the owner
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching lock, or <code>null</code> if a matching lock could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Lock fetchByC_K_O(String className, String key, String owner,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { className, key, owner };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_K_O,
+					finderArgs, this);
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_LOCK_WHERE);
+
+			if (className == null) {
+				query.append(_FINDER_COLUMN_C_K_O_CLASSNAME_1);
+			}
+			else {
+				if (className.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_O_CLASSNAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_O_CLASSNAME_2);
+				}
+			}
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_C_K_O_KEY_1);
+			}
+			else {
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_O_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_O_KEY_2);
+				}
+			}
+
+			if (owner == null) {
+				query.append(_FINDER_COLUMN_C_K_O_OWNER_1);
+			}
+			else {
+				if (owner.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_O_OWNER_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_O_OWNER_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (className != null) {
+					qPos.add(className);
+				}
+
+				if (key != null) {
+					qPos.add(key);
+				}
+
+				if (owner != null) {
+					qPos.add(owner);
+				}
+
+				List<Lock> list = q.list();
+
+				result = list;
+
+				Lock lock = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K_O,
+						finderArgs, list);
+				}
+				else {
+					lock = list.get(0);
+
+					cacheResult(lock);
+
+					if ((lock.getClassName() == null) ||
+							!lock.getClassName().equals(className) ||
+							(lock.getKey() == null) ||
+							!lock.getKey().equals(key) ||
+							(lock.getOwner() == null) ||
+							!lock.getOwner().equals(owner)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K_O,
+							finderArgs, lock);
+					}
+				}
+
+				return lock;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K_O,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (Lock)result;
+			}
+		}
+	}
+
+	/**
 	 * Returns all the locks.
 	 *
 	 * @return the locks
@@ -1563,6 +1803,21 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	public void removeByC_K(String className, String key)
 		throws NoSuchLockException, SystemException {
 		Lock lock = findByC_K(className, key);
+
+		remove(lock);
+	}
+
+	/**
+	 * Removes the lock where className = &#63; and key = &#63; and owner = &#63; from the database.
+	 *
+	 * @param className the class name
+	 * @param key the key
+	 * @param owner the owner
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByC_K_O(String className, String key, String owner)
+		throws NoSuchLockException, SystemException {
+		Lock lock = findByC_K_O(className, key, owner);
 
 		remove(lock);
 	}
@@ -1788,6 +2043,106 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	/**
+	 * Returns the number of locks where className = &#63; and key = &#63; and owner = &#63;.
+	 *
+	 * @param className the class name
+	 * @param key the key
+	 * @param owner the owner
+	 * @return the number of matching locks
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByC_K_O(String className, String key, String owner)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { className, key, owner };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_K_O,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LOCK_WHERE);
+
+			if (className == null) {
+				query.append(_FINDER_COLUMN_C_K_O_CLASSNAME_1);
+			}
+			else {
+				if (className.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_O_CLASSNAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_O_CLASSNAME_2);
+				}
+			}
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_C_K_O_KEY_1);
+			}
+			else {
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_O_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_O_KEY_2);
+				}
+			}
+
+			if (owner == null) {
+				query.append(_FINDER_COLUMN_C_K_O_OWNER_1);
+			}
+			else {
+				if (owner.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_O_OWNER_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_O_OWNER_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (className != null) {
+					qPos.add(className);
+				}
+
+				if (key != null) {
+					qPos.add(key);
+				}
+
+				if (owner != null) {
+					qPos.add(owner);
+				}
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_K_O,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of locks.
 	 *
 	 * @return the number of locks
@@ -2003,6 +2358,15 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "lock.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "lock.key = ?";
 	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock.key IS NULL OR lock.key = ?)";
+	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_1 = "lock.className IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_2 = "lock.className = ? AND ";
+	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_3 = "(lock.className IS NULL OR lock.className = ?) AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_1 = "lock.key IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_2 = "lock.key = ? AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_3 = "(lock.key IS NULL OR lock.key = ?) AND ";
+	private static final String _FINDER_COLUMN_C_K_O_OWNER_1 = "lock.owner IS NULL";
+	private static final String _FINDER_COLUMN_C_K_O_OWNER_2 = "lock.owner = ?";
+	private static final String _FINDER_COLUMN_C_K_O_OWNER_3 = "(lock.owner IS NULL OR lock.owner = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lock.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Lock exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Lock exists with the key {";

@@ -1,6 +1,6 @@
 <context-param>
 	<param-name>axis.servicesPath</param-name>
-	<param-value>/axis/</param-value>
+	<param-value>/api/axis/</param-value>
 </context-param>
 <filter>
 	<filter-name>Atom Servlet Filter</filter-name>

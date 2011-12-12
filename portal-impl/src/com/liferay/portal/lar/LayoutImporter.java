@@ -229,9 +229,9 @@ public class LayoutImporter {
 			parameterMap, PortletDataHandlerKeys.THEME);
 		boolean importThemeSettings = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
-		boolean layoutSetPrototypeInherited = MapUtil.getBoolean(
+		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
 			parameterMap,
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_INHERITED);
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED);
 		boolean publishToRemote = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PUBLISH_TO_REMOTE);
 		String layoutsImportMode = MapUtil.getString(
@@ -352,7 +352,7 @@ public class LayoutImporter {
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-			if (layoutSetPrototypeInherited) {
+			if (layoutSetPrototypeLinkEnabled) {
 				if (publishToRemote) {
 					importLayoutSetPrototype(
 						portletDataContext, user, layoutSetPrototypeUuid,
@@ -362,7 +362,7 @@ public class LayoutImporter {
 
 			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
-				layoutSetPrototypeInherited);
+				layoutSetPrototypeLinkEnabled);
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
@@ -841,7 +841,7 @@ public class LayoutImporter {
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-			existingLayout = LayoutUtil.fetchByG_P_TLU(
+			existingLayout = LayoutUtil.fetchByG_P_SPLU(
 				groupId, privateLayout, layout.getUuid());
 		}
 		else {
@@ -887,7 +887,7 @@ public class LayoutImporter {
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-				importedLayout.setTemplateLayoutUuid(layout.getUuid());
+				importedLayout.setSourcePrototypeLayoutUuid(layout.getUuid());
 			}
 			else {
 				importedLayout.setUuid(layout.getUuid());
@@ -1177,7 +1177,7 @@ public class LayoutImporter {
 					user.getUserId(), user.getCompanyId(),
 					layoutSetPrototype.getNameMap(),
 					layoutSetPrototype.getDescription(),
-					layoutSetPrototype.getActive(), true, true, serviceContext);
+					layoutSetPrototype.getActive(), true, serviceContext);
 		}
 
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(

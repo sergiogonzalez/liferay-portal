@@ -226,6 +226,13 @@ public class LockPersistenceTest extends BasePersistenceTestCase {
 				existingLockModelImpl.getOriginalClassName()));
 		assertTrue(Validator.equals(existingLockModelImpl.getKey(),
 				existingLockModelImpl.getOriginalKey()));
+
+		assertTrue(Validator.equals(existingLockModelImpl.getClassName(),
+				existingLockModelImpl.getOriginalClassName()));
+		assertTrue(Validator.equals(existingLockModelImpl.getKey(),
+				existingLockModelImpl.getOriginalKey()));
+		assertTrue(Validator.equals(existingLockModelImpl.getOwner(),
+				existingLockModelImpl.getOriginalOwner()));
 	}
 
 	protected Lock addLock() throws Exception {

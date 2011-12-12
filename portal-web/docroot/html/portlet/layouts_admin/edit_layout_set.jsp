@@ -126,7 +126,7 @@ String[][] categorySections = {mainSections};
 	</div>
 </c:if>
 
-<c:if test="<%= !SitesUtil.isLayoutSetLocked(selLayoutSet) %>">
+<c:if test="<%= SitesUtil.isLayoutsUpdateable(selLayoutSet) %>">
 	<aui:script use="aui-dialog,aui-toolbar">
 		var popup;
 		var exportPopup;
@@ -163,8 +163,8 @@ String[][] categorySections = {mainSections};
 						},
 					</c:if>
 
-					<c:if test="<%= (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
-						<liferay-portlet:actionURL plid="<%= selPlid %>" portletName="<%= PortletKeys.MY_SITES %>" var="viewPagesURL">
+					<c:if test="<%= (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.MY_SITES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
+						<liferay-portlet:actionURL plid="<%= selPlid %>" portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
 							<portlet:param name="struts_action" value="/my_sites/view" />
 							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 							<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -311,7 +311,7 @@ String[][] categorySections = {mainSections};
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		jspPath="/html/portlet/layouts_admin/layout_set/"
-		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.UPDATE) && !SitesUtil.isLayoutSetLocked(selLayoutSet) %>"
+		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.UPDATE) && SitesUtil.isLayoutsUpdateable(selLayoutSet) %>"
 	/>
 </aui:form>
 

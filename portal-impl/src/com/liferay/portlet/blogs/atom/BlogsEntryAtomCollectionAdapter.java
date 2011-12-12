@@ -127,14 +127,15 @@ public class BlogsEntryAtomCollectionAdapter
 			}
 
 			int count = BlogsEntryServiceUtil.getGroupEntriesCount(
-				groupId, status);
+				groupId, new Date(), status);
 
 			AtomPager atomPager = new AtomPager(page, max, count);
 
 			AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
 			return BlogsEntryServiceUtil.getGroupEntries(
-				groupId, status, atomPager.getStart(), atomPager.getEnd() + 1);
+				groupId, new Date(), status, atomPager.getStart(),
+				atomPager.getEnd() + 1);
 		}
 
 		long organizationId = atomRequestContext.getLongParameter(
@@ -142,14 +143,14 @@ public class BlogsEntryAtomCollectionAdapter
 
 		if (organizationId > 0) {
 			return BlogsEntryServiceUtil.getOrganizationEntries(
-				organizationId, status, max);
+				organizationId, new Date(), status, max);
 		}
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (companyId > 0) {
 			return BlogsEntryServiceUtil.getCompanyEntries(
-				companyId, status, max);
+				companyId, new Date(), status, max);
 		}
 
 		return Collections.emptyList();

@@ -23,8 +23,8 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 %>
 
 <c:choose>
-	<c:when test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
-		<c:if test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
+	<c:when test="<%= portletName.equals(PortletKeys.MY_SITES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
+		<c:if test="<%= portletName.equals(PortletKeys.MY_SITES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
 			<liferay-ui:header
 				backURL="<%= backURL %>"
 				localizeTitle="<%= false %>"
@@ -85,24 +85,33 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 		<aui:column columnWidth="25" cssClass="manage-sitemap">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
-
-					<%
-					long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-
-					if (layoutSetBranchId <= 0) {
-						layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, selLayoutSet.getLayoutSetId());
-					}
-
-					LayoutSetBranch layoutSetBranch = null;
-
-					if (layoutSetBranchId > 0) {
-						layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
-					}
-					%>
-
-					<c:if test="<%= (stagingGroup != null) && (layoutSetBranch != null) %>">
+					<c:if test="<%= stagingGroup != null %>">
 
 						<%
+						long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+
+						if (layoutSetBranchId <= 0) {
+							layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, selLayoutSet.getLayoutSetId());
+						}
+
+						LayoutSetBranch layoutSetBranch = null;
+
+						if (layoutSetBranchId > 0) {
+							try {
+								layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+							}
+							catch (NoSuchLayoutSetBranchException nslsbe) {
+							}
+						}
+
+						if (layoutSetBranch == null) {
+							try {
+								layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
+							}
+							catch (NoSuchLayoutSetBranchException nslsbe) {
+							}
+						}
+
 						List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 						%>
 
@@ -144,7 +153,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 									cssClass="layoutset-branch"
 									image="../dock/staging"
 									label="<%= true %>"
-									message='<%= (layoutSetBranches.size() == 1) ? "staging" : layoutSetBranch.getName() %>'
+									message='<%= (layoutSetBranch == null || (layoutSetBranches.size() == 1)) ? "staging" : layoutSetBranch.getName() %>'
 								/>
 							</c:otherwise>
 						</c:choose>

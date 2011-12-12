@@ -26,6 +26,9 @@ public class LayoutPriorityComparator extends OrderByComparator {
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
+	public LayoutPriorityComparator() {
+	}
+
 	public LayoutPriorityComparator(Layout layout, boolean lessThan) {
 		_layout = layout;
 		_lessThan = lessThan;
@@ -46,20 +49,22 @@ public class LayoutPriorityComparator extends OrderByComparator {
 			return -1;
 		}
 		else {
-			if (_layout.equals(layout1)) {
-				if (_lessThan) {
-					return 1;
+			if (_layout != null) {
+				if (_layout.equals(layout1)) {
+					if (_lessThan) {
+						return 1;
+					}
+					else {
+						return -1;
+					}
 				}
-				else {
-					return -1;
-				}
-			}
-			else if (_layout.equals(layout2)) {
-				if (_lessThan) {
-					return -1;
-				}
-				else {
-					return 1;
+				else if (_layout.equals(layout2)) {
+					if (_lessThan) {
+						return -1;
+					}
+					else {
+						return 1;
+					}
 				}
 			}
 
