@@ -37,6 +37,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class StagingUtil {
 
+	public static String buildRemoteURL(
+		String remoteAddress, int remotePort, boolean secureConnection,
+		long remoteGroupId, boolean privateLayout) {
+
+		return getStaging().buildRemoteURL(
+			remoteAddress, remotePort, secureConnection, remoteGroupId,
+			privateLayout);
+	}
+
 	public static void copyFromLive(PortletRequest PortletRequest)
 		throws Exception {
 
@@ -136,6 +145,18 @@ public class StagingUtil {
 			userId, scopeGroup, liveGroup, branchingPublic, branchingPrivate,
 			remoteAddress, remoteGroupId, remotePort, secureConnection,
 			serviceContext);
+	}
+
+	public static Group getLiveGroup(long groupId)
+		throws PortalException, SystemException {
+
+		return getStaging().getLiveGroup(groupId);
+	}
+
+	public static long getLiveGroupId(long groupId)
+		throws PortalException, SystemException {
+
+		return getStaging().getLiveGroupId(groupId);
 	}
 
 	public static List<Layout> getMissingParentLayouts(

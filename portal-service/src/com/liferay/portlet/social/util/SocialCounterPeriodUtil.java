@@ -14,13 +14,14 @@
 
 package com.liferay.portlet.social.util;
 
-import com.liferay.ibm.icu.util.Calendar;
-import com.liferay.ibm.icu.util.GregorianCalendar;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.util.PropsValues;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author Zsolt Berentey
@@ -100,6 +101,25 @@ public class SocialCounterPeriodUtil {
 		return getActivityDay(calendar);
 	}
 
+	public static int getOffset(int activityDay) {
+		if (_isMonthlyPeriod()) {
+			Calendar calendar = new GregorianCalendar();
+
+			Calendar calendar2 = new GregorianCalendar();
+
+			calendar2.setTimeInMillis(_BASE_TIME + activityDay * Time.DAY);
+
+			int monthDelta =
+				calendar.get(Calendar.MONTH) - calendar2.get(Calendar.MONTH);
+			int yearDelta =
+				calendar.get(Calendar.YEAR) - calendar2.get(Calendar.YEAR);
+
+			return -(yearDelta * 12 + monthDelta);
+		}
+
+		return -((getStartPeriod() - activityDay) / getPeriodLength());
+	}
+
 	public static int getPeriodLength() {
 		if (_isMonthlyPeriod()) {
 			if (_isWithinPeriod(_startPeriod, _endPeriod, getActivityDay())) {
@@ -123,12 +143,30 @@ public class SocialCounterPeriodUtil {
 			return _periodLength;
 		}
 
-		if (_periodLength == 0) {
+		if (_periodLength == -1) {
 			_periodLength = GetterUtil.getInteger(
-				PropsValues.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);
+				_SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);
 		}
 
 		return _periodLength;
+	}
+
+	public static int getPeriodLength(int offset) {
+		if (_isMonthlyPeriod()) {
+			Calendar calendar = new GregorianCalendar();
+
+			calendar.set(Calendar.DATE, 1);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+
+			calendar.add(Calendar.MONTH, offset);
+
+			return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		}
+
+		return getPeriodLength();
 	}
 
 	public static int getStartPeriod() {
@@ -187,7 +225,7 @@ public class SocialCounterPeriodUtil {
 	}
 
 	private static boolean _isMonthlyPeriod() {
-		if (PropsValues.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH.equals("month")) {
+		if (_SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH.equals("month")) {
 			return true;
 		}
 		else {
@@ -208,6 +246,9 @@ public class SocialCounterPeriodUtil {
 
 	private static final long _BASE_TIME =
 		new GregorianCalendar(2011, Calendar.JANUARY, 1).getTimeInMillis();
+
+	private static final String _SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH =
+		PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);
 
 	private static int _endPeriod;
 	private static int _periodLength = -1;

@@ -92,7 +92,7 @@ public class JspFactoryWrapper extends JspFactory {
 		_jspFactory.releasePageContext(pageContext);
 	}
 
-	private static boolean _DIRECT_SERVLET_CONTEXT_ENABLED =
+	private static final boolean _DIRECT_SERVLET_CONTEXT_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_ENABLED));
 

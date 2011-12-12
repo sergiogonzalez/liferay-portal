@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.service.impl;
 
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
@@ -31,6 +32,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 
@@ -70,15 +72,24 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 			throw new DuplicateVoteException();
 		}
 		else {
-			User user = userPersistence.findByPrimaryKey(userId);
+			String userName = null;
+
+			try {
+				User user = userPersistence.findByPrimaryKey(userId);
+
+				userName = user.getFullName();
+			}
+			catch (NoSuchUserException nsue) {
+				userName = serviceContext.translate("anonymous");
+			}
 
 			long voteId = counterLocalService.increment();
 
 			vote = pollsVotePersistence.create(voteId);
 
-			vote.setCompanyId(user.getCompanyId());
-			vote.setUserId(user.getUserId());
-			vote.setUserName(user.getFullName());
+			vote.setCompanyId(serviceContext.getCompanyId());
+			vote.setUserId(userId);
+			vote.setUserName(userName);
 			vote.setCreateDate(serviceContext.getCreateDate(now));
 			vote.setModifiedDate(serviceContext.getModifiedDate(now));
 			vote.setQuestionId(questionId);

@@ -16,10 +16,13 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutSetPrototypeUtil;
 
@@ -59,6 +62,15 @@ public class LayoutSetPrototypeLayoutListener
 			layoutSetPrototype.setModifiedDate(layout.getModifiedDate());
 
 			LayoutSetPrototypeUtil.update(layoutSetPrototype, false);
+
+			LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
+
+			UnicodeProperties settingsProperties =
+				layoutSet.getSettingsProperties();
+
+			settingsProperties.remove("merge-fail-count");
+
+			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

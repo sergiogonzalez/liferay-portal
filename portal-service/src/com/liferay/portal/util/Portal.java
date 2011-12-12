@@ -165,6 +165,10 @@ public interface Portal {
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException;
 
+	public void addPortletDefaultResource(
+			long companyId, Layout layout, Portlet portlet)
+		throws PortalException, SystemException;
+
 	/**
 	 * Adds the preserved parameters doAsGroupId and refererPlid to the URL,
 	 * optionally adding doAsUserId and doAsUserLanguageId as well.
@@ -756,15 +760,15 @@ public interface Portal {
 
 	public String getPortalURL(HttpServletRequest request, boolean secure);
 
+	public String getPortalURL(Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException;
+
 	public String getPortalURL(PortletRequest portletRequest);
 
 	public String getPortalURL(PortletRequest portletRequest, boolean secure);
 
 	public String getPortalURL(
 		String serverName, int serverPort, boolean secure);
-
-	public String getPortalURL(Layout layout, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException;
 
 	public String getPortalURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
@@ -799,6 +803,21 @@ public interface Portal {
 
 	public String getPortletId(PortletRequest portletRequest);
 
+	public String getPortletLongTitle(Portlet portlet, Locale locale);
+
+	public String getPortletLongTitle(
+		Portlet portlet, ServletContext servletContext, Locale locale);
+
+	public String getPortletLongTitle(Portlet portlet, String languageId);
+
+	public String getPortletLongTitle(Portlet portlet, User user);
+
+	public String getPortletLongTitle(String portletId, Locale locale);
+
+	public String getPortletLongTitle(String portletId, String languageId);
+
+	public String getPortletLongTitle(String portletId, User user);
+
 	public String getPortletNamespace(String portletId);
 
 	public String getPortletTitle(Portlet portlet, Locale locale);
@@ -831,6 +850,11 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	public long getScopeGroupId(HttpServletRequest request, String portletId)
+		throws PortalException, SystemException;
+
+	public long getScopeGroupId(
+			HttpServletRequest request, String portletId,
+			boolean checkStagingGroup)
 		throws PortalException, SystemException;
 
 	public long getScopeGroupId(Layout layout);

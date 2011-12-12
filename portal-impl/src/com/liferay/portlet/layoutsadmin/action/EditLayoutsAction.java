@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -140,6 +141,7 @@ public class EditLayoutsAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 			String closeRedirect = ParamUtil.getString(
 				actionRequest, "closeRedirect");
 
@@ -153,6 +155,8 @@ public class EditLayoutsAction extends PortletAction {
 				layout = (Layout)returnValue[0];
 				oldFriendlyURL = (String)returnValue[1];
 
+				redirect = updateCloseRedirect(
+					redirect, null, layout, oldFriendlyURL);
 				closeRedirect = updateCloseRedirect(
 					closeRedirect, null, layout, oldFriendlyURL);
 			}
@@ -162,6 +166,12 @@ public class EditLayoutsAction extends PortletAction {
 
 				Group group = (Group)returnValue[0];
 				oldFriendlyURL = (String)returnValue[1];
+				long newRefererPlid = (Long)returnValue[2];
+
+				redirect = updateCloseRedirect(
+					redirect, group, null, oldFriendlyURL);
+				redirect = HttpUtil.setParameter(
+					redirect, "refererPlid", newRefererPlid);
 
 				closeRedirect = updateCloseRedirect(
 					closeRedirect, group, null, oldFriendlyURL);
@@ -222,8 +232,6 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("update_layout_revision")) {
 				updateLayoutRevision(actionRequest);
 			}
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(closeRedirect)) {
 				SessionMessages.add(
@@ -780,7 +788,6 @@ public class EditLayoutsAction extends PortletAction {
 		boolean iconImage = ParamUtil.getBoolean(
 			uploadPortletRequest, "iconImage");
 		byte[] iconBytes = getIconBytes(uploadPortletRequest, "iconFileName");
-		boolean locked = ParamUtil.getBoolean(uploadPortletRequest, "locked");
 		long layoutPrototypeId = ParamUtil.getLong(
 			uploadPortletRequest, "layoutPrototypeId");
 
@@ -791,7 +798,8 @@ public class EditLayoutsAction extends PortletAction {
 			uploadPortletRequest, "copyLayoutId");
 
 		String layoutTemplateId = ParamUtil.getString(
-			uploadPortletRequest, "layoutTemplateId");
+			uploadPortletRequest, "layoutTemplateId",
+			PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
@@ -811,7 +819,7 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap,
-					parentLayout.getType(), hidden, friendlyURL, locked,
+					parentLayout.getType(), hidden, friendlyURL,
 					serviceContext);
 
 				LayoutServiceUtil.updateLayout(
@@ -836,7 +844,7 @@ public class EditLayoutsAction extends PortletAction {
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap,
 					layoutPrototypeLayout.getType(), hidden, friendlyURL,
-					locked, serviceContext);
+					serviceContext);
 
 				LayoutServiceUtil.updateLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),
@@ -858,7 +866,7 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap, type,
-					hidden, friendlyURL, locked, serviceContext);
+					hidden, friendlyURL, serviceContext);
 			}
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
@@ -876,7 +884,7 @@ public class EditLayoutsAction extends PortletAction {
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
 				type, hidden, friendlyURL, Boolean.valueOf(iconImage),
-				iconBytes, locked, serviceContext);
+				iconBytes, serviceContext);
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
 

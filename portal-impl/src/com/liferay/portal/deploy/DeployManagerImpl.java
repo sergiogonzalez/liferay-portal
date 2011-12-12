@@ -49,6 +49,18 @@ public class DeployManagerImpl implements DeployManager {
 		return DeployUtil.getAutoDeployDestDir();
 	}
 
+	public String getInstalledDir() throws Exception {
+		if (ServerDetector.isGlassfish()) {
+			File file = new File(
+				System.getProperty("catalina.home"), "applications");
+
+			return file.getAbsolutePath();
+		}
+		else {
+			return DeployUtil.getAutoDeployDestDir();
+		}
+	}
+
 	public PluginPackage getInstalledPluginPackage(String context) {
 		return PluginPackageUtil.getInstalledPluginPackage(context);
 	}

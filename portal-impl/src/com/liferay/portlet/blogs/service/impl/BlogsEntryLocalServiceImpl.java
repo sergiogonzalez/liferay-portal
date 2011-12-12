@@ -312,43 +312,44 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	public List<BlogsEntry> getCompanyEntries(
-			long companyId, int status, int start, int end)
+			long companyId, Date displayDate, int status, int start, int end)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByC_LtD(
-				companyId, new Date(), start, end);
+				companyId, displayDate, start, end);
 		}
 		else {
 			return blogsEntryPersistence.findByC_LtD_S(
-				companyId, new Date(), status, start, end);
+				companyId, displayDate, status, start, end);
 		}
 	}
 
 	public List<BlogsEntry> getCompanyEntries(
-			long companyId, int status, int start, int end,
+			long companyId, Date displayDate, int status, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByC_LtD(
-				companyId, new Date(), start, end, obc);
+				companyId, displayDate, start, end, obc);
 		}
 		else {
 			return blogsEntryPersistence.findByC_LtD_S(
-				companyId, new Date(), status, start, end, obc);
+				companyId, displayDate, status, start, end, obc);
 		}
 	}
 
-	public int getCompanyEntriesCount(long companyId, int status)
+	public int getCompanyEntriesCount(
+			long companyId, Date displayDate, int status)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.countByC_LtD(companyId, new Date());
+			return blogsEntryPersistence.countByC_LtD(companyId, displayDate);
 		}
 		else {
 			return blogsEntryPersistence.countByC_LtD_S(
-				companyId, new Date(), status);
+				companyId, displayDate, status);
 		}
 	}
 
@@ -376,16 +377,43 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	public List<BlogsEntry> getGroupEntries(
-			long groupId, int status, int start, int end)
+			long groupId, Date displayDate, int status, int start, int end)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_LtD(
-				groupId, new Date(), start, end);
+				groupId, displayDate, start, end);
 		}
 		else {
 			return blogsEntryPersistence.findByG_LtD_S(
-				groupId, new Date(), status, start, end);
+				groupId, displayDate, status, start, end);
+		}
+	}
+
+	public List<BlogsEntry> getGroupEntries(
+			long groupId, Date displayDate, int status, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.findByG_LtD(
+				groupId, displayDate, start, end, obc);
+		}
+		else {
+			return blogsEntryPersistence.findByG_LtD_S(
+				groupId, displayDate, status, start, end, obc);
+		}
+	}
+
+	public List<BlogsEntry> getGroupEntries(
+			long groupId, int status, int start, int end)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.findByGroupId(groupId, start, end);
+		}
+		else {
+			return blogsEntryPersistence.findByG_S(groupId, status, start, end);
 		}
 	}
 
@@ -394,12 +422,24 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.findByG_LtD(
-				groupId, new Date(), start, end, obc);
+			return blogsEntryPersistence.findByGroupId(
+				groupId, start, end, obc);
 		}
 		else {
-			return blogsEntryPersistence.findByG_LtD_S(
-				groupId, new Date(), status, start, end, obc);
+			return blogsEntryPersistence.findByG_S(
+				groupId, status, start, end, obc);
+		}
+	}
+
+	public int getGroupEntriesCount(long groupId, Date displayDate, int status)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.countByG_LtD(groupId, displayDate);
+		}
+		else {
+			return blogsEntryPersistence.countByG_LtD_S(
+				groupId, displayDate, status);
 		}
 	}
 
@@ -407,61 +447,63 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.countByG_LtD(groupId, new Date());
+			return blogsEntryPersistence.countByGroupId(groupId);
 		}
 		else {
-			return blogsEntryPersistence.countByG_LtD_S(
-				groupId, new Date(), status);
+			return blogsEntryPersistence.countByG_S(groupId, status);
 		}
 	}
 
 	public List<BlogsEntry> getGroupsEntries(
-			long companyId, long groupId, int status, int start, int end)
+			long companyId, long groupId, Date displayDate, int status,
+			int start, int end)
 		throws SystemException {
 
 		return blogsEntryFinder.findByGroupIds(
-			companyId, groupId, status, start, end);
+			companyId, groupId, displayDate, status, start, end);
 	}
 
 	public List<BlogsEntry> getGroupUserEntries(
-			long groupId, long userId, int status, int start, int end)
+			long groupId, long userId, Date displayDate, int status, int start,
+			int end)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_U_LtD(
-				groupId, userId, new Date(), start, end);
+				groupId, userId, displayDate, start, end);
 		}
 		else {
 			return blogsEntryPersistence.findByG_U_LtD_S(
-				groupId, userId, new Date(), status, start, end);
+				groupId, userId, displayDate, status, start, end);
 		}
 	}
 
 	public List<BlogsEntry> getGroupUserEntries(
-			long groupId, long userId, int status, int start, int end,
-			OrderByComparator obc)
+			long groupId, long userId, Date displayDate, int status, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_U_LtD(
-				groupId, userId, new Date(), start, end, obc);
+				groupId, userId, displayDate, start, end, obc);
 		}
 		else {
 			return blogsEntryPersistence.findByG_U_LtD_S(
-				groupId, userId, new Date(), status, start, end, obc);
+				groupId, userId, displayDate, status, start, end, obc);
 		}
 	}
 
-	public int getGroupUserEntriesCount(long groupId, long userId, int status)
+	public int getGroupUserEntriesCount(
+			long groupId, long userId, Date displayDate, int status)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.countByG_U_LtD(
-				groupId, userId, new Date());
+				groupId, userId, displayDate);
 		}
 		else {
 			return blogsEntryPersistence.countByG_U_LtD_S(
-				groupId, userId, new Date(), status);
+				groupId, userId, displayDate, status);
 		}
 	}
 
@@ -470,18 +512,29 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	public List<BlogsEntry> getOrganizationEntries(
-			long organizationId, int status, int start, int end)
+			long organizationId, Date displayDate, int status, int start,
+			int end)
 		throws SystemException {
 
 		return blogsEntryFinder.findByOrganizationId(
-			organizationId, new Date(), status, start, end);
+			organizationId, displayDate, status, start, end, null);
 	}
 
-	public int getOrganizationEntriesCount(long organizationId, int status)
+	public List<BlogsEntry> getOrganizationEntries(
+			long organizationId, Date displayDate, int status, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		return blogsEntryFinder.findByOrganizationId(
+			organizationId, displayDate, status, start, end, obc);
+	}
+
+	public int getOrganizationEntriesCount(
+			long organizationId, Date displayDate, int status)
 		throws SystemException {
 
 		return blogsEntryFinder.countByOrganizationId(
-			organizationId, new Date(), status);
+			organizationId, displayDate, status);
 	}
 
 	public void subscribe(long userId, long groupId)

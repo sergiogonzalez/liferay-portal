@@ -33,6 +33,8 @@ public interface JSONWebServiceActionMapping {
 
 	public String getPath();
 
+	public String getServletContextPath();
+
 	public String getSignature();
 
 }

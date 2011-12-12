@@ -16,8 +16,10 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.PortletPreferencesIds;
@@ -26,6 +28,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -69,6 +72,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setAddGroupPermissions(getAddGroupPermissions());
 		serviceContext.setAddGuestPermissions(getAddGuestPermissions());
 		serviceContext.setAssetCategoryIds(getAssetCategoryIds());
+		serviceContext.setAssetEntryVisible(isAssetEntryVisible());
 		serviceContext.setAssetLinkEntryIds(getAssetLinkEntryIds());
 		serviceContext.setAssetTagNames(getAssetTagNames());
 		serviceContext.setAttributes(getAttributes());
@@ -372,6 +376,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _layoutURL;
 	}
 
+	public Locale getLocale() {
+		return LocaleUtil.fromLanguageId(_languageId);
+	}
+
 	/**
 	 * Returns the date when an entity was modified if this service context is
 	 * being passed as a parameter to a method which updates an entity.
@@ -561,6 +569,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _workflowAction;
 	}
 
+	public boolean isAssetEntryVisible() {
+		return _assetEntryVisible;
+	}
+
 	/**
 	 * Returns <code>true</code> if this service context contains an add command
 	 * (i.e. has command value {@link
@@ -677,16 +689,20 @@ public class ServiceContext implements Cloneable, Serializable {
 		_assetCategoryIds = assetCategoryIds;
 	}
 
+	public void setAssetEntryVisible(boolean assetEntryVisible) {
+		_assetEntryVisible = assetEntryVisible;
+	}
+
 	/**
 	 * Sets an array of the primary keys of asset entries to be linked to an
 	 * asset entry if this service context is being passed as a parameter to a
 	 * method which manipulates the asset entry.
 	 *
-	 * @param _assetLinkEntryIds the primary keys of the asset entries to be
+	 * @param assetLinkEntryIds the primary keys of the asset entries to be
 	 *        linked to an asset entry
 	 */
-	public void setAssetLinkEntryIds(long[] _assetLinkEntryIds) {
-		this._assetLinkEntryIds = _assetLinkEntryIds;
+	public void setAssetLinkEntryIds(long[] assetLinkEntryIds) {
+		_assetLinkEntryIds = assetLinkEntryIds;
 	}
 
 	/**
@@ -1019,9 +1035,16 @@ public class ServiceContext implements Cloneable, Serializable {
 		_workflowAction = workflowAction;
 	}
 
+	public String translate(String pattern, Object... arguments) {
+		Locale locale = getLocale();
+
+		return LanguageUtil.format(locale, pattern, arguments);
+	}
+
 	private boolean _addGroupPermissions;
 	private boolean _addGuestPermissions;
 	private long[] _assetCategoryIds;
+	private boolean _assetEntryVisible = true;
 	private long[] _assetLinkEntryIds;
 	private String[] _assetTagNames;
 	private Map<String, Serializable> _attributes;

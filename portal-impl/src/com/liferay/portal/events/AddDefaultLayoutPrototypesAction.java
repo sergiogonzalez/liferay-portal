@@ -28,18 +28,13 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.HashMap;
@@ -97,7 +92,7 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 			layoutSet.isPrivateLayout(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			false, serviceContext);
+			serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -151,27 +146,21 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 
 		updateLayout(layout);
 
-		addResourcePermissions(layout, portletId, RoleConstants.GUEST);
-		addResourcePermissions(layout, portletId, RoleConstants.OWNER);
-		addResourcePermissions(layout, portletId, RoleConstants.SITE_MEMBER);
+		addResourcePermissions(layout, portletId);
+		addResourcePermissions(layout, portletId);
+		addResourcePermissions(layout, portletId);
 
 		return portletId;
 	}
 
-	protected void addResourcePermissions(
-			Layout layout, String portletId, String roleName)
+	protected void addResourcePermissions(Layout layout, String portletId)
 		throws Exception {
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-		String primaryKey = PortletPermissionUtil.getPrimaryKey(
-			layout.getPlid(), portletId);
-		Role role = RoleLocalServiceUtil.getRole(
-			layout.getCompanyId(), roleName);
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			layout.getCompanyId(), portletId);
 
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			layout.getCompanyId(), rootPortletId,
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			primaryKey, role.getRoleId(), new String[] {ActionKeys.VIEW});
+		PortalUtil.addPortletDefaultResource(
+			layout.getCompanyId(), layout, portlet);
 	}
 
 	protected void addWebContentPage(

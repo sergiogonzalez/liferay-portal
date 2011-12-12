@@ -343,6 +343,16 @@
 	}
 }
 
+.aui-tree-node-content {
+	.layout-branch-name {
+		color: #AAA;
+	}
+
+	.incomplete-layout {
+		color: #CCC;
+	}
+}
+
 .aui-tree-node-selected {
 	background: #eee;
 }
@@ -376,6 +386,10 @@
 
 .aui-tree-collapsed .aui-tree-icon {
 	background-image: url(@theme_image_path@/trees/page.png);
+}
+
+.lfr-page-locked .aui-tree-icon {
+	background-image: url(@theme_image_path@/trees/page_locked.png);
 }
 
 .export-dialog-tree .aui-field-input-choice {

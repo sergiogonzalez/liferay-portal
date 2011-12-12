@@ -33,6 +33,8 @@ public interface DeployManager {
 
 	public String getDeployDir() throws Exception;
 
+	public String getInstalledDir() throws Exception;
+
 	public PluginPackage getInstalledPluginPackage(String context);
 
 	public List<PluginPackage> getInstalledPluginPackages();

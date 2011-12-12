@@ -355,7 +355,7 @@ create index IX_705F5AA3 on Layout (groupId, privateLayout);
 create unique index IX_BC2C4231 on Layout (groupId, privateLayout, friendlyURL);
 create unique index IX_7162C27C on Layout (groupId, privateLayout, layoutId);
 create index IX_6DE88B06 on Layout (groupId, privateLayout, parentLayoutId);
-create index IX_D18D85F6 on Layout (groupId, privateLayout, templateLayoutUuid);
+create index IX_8CE8C0D9 on Layout (groupId, privateLayout, sourcePrototypeLayoutUuid);
 create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_);
 create index IX_23922F7D on Layout (iconImageId);
 create index IX_D0822724 on Layout (uuid_);
@@ -395,6 +395,7 @@ create index IX_C5D69B24 on LayoutSetPrototype (uuid_);
 create index IX_2932DD37 on ListType (type_);
 
 create index IX_228562AD on Lock_ (className, key_);
+create unique index IX_DD635956 on Lock_ (className, key_, owner);
 create index IX_E3F1286B on Lock_ (expirationDate);
 create index IX_13C5CD3A on Lock_ (uuid_);
 

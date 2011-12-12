@@ -70,6 +70,8 @@ if (layoutSetPrototypeId > 0) {
 	layoutSetPrototype = LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(layoutSetPrototypeId);
 }
 
+boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
+
 String[] mainSections = PropsValues.SITES_FORM_ADD_MAIN;
 String[] seoSections = PropsValues.SITES_FORM_ADD_SEO;
 String[] advancedSections = PropsValues.SITES_FORM_ADD_ADVANCED;
@@ -130,6 +132,7 @@ else if (layoutSetPrototype != null) {
 	request.setAttribute("site.stagingGroupId", new Long(stagingGroupId));
 	request.setAttribute("site.liveGroupTypeSettings", liveGroupTypeSettings);
 	request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
+	request.setAttribute("site.showPrototypes", String.valueOf(showPrototypes));
 	%>
 
 	<liferay-util:buffer var="htmlBottom">

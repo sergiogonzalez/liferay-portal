@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -127,7 +128,8 @@ public class BlogsEntryFinderImpl
 	}
 
 	public List<BlogsEntry> findByGroupIds(
-			long companyId, long groupId, int status, int start, int end)
+			long companyId, long groupId, Date displayDate, int status,
+			int start, int end)
 		throws SystemException {
 
 		Session session = null;
@@ -152,6 +154,7 @@ public class BlogsEntryFinderImpl
 			qPos.add(groupId);
 			qPos.add(groupId);
 			qPos.add(groupId);
+			qPos.add(displayDate);
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);
@@ -170,7 +173,7 @@ public class BlogsEntryFinderImpl
 
 	public List<BlogsEntry> findByOrganizationId(
 			long organizationId, Date displayDate, int status, int start,
-			int end)
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		List<Long> organizationIds = new ArrayList<Long>();
@@ -178,12 +181,12 @@ public class BlogsEntryFinderImpl
 		organizationIds.add(organizationId);
 
 		return findByOrganizationIds(
-			organizationIds, displayDate, status, start, end);
+			organizationIds, displayDate, status, start, end, obc);
 	}
 
 	public List<BlogsEntry> findByOrganizationIds(
 			List<Long> organizationIds, Date displayDate, int status,
-			int start, int end)
+			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		Timestamp displayDate_TS = CalendarUtil.getTimestamp(displayDate);
@@ -203,6 +206,7 @@ public class BlogsEntryFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$ORGANIZATION_ID$]",
 				getOrganizationIds(organizationIds));
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
 			SQLQuery q = session.createSQLQuery(sql);
 

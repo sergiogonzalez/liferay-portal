@@ -139,7 +139,8 @@ public class DeployUtil {
 			return;
 		}
 
-		if (!appServerType.equals(ServerDetector.JBOSS_ID) &&
+		if (!appServerType.equals(ServerDetector.GLASSFISH_ID) &&
+			!appServerType.equals(ServerDetector.JBOSS_ID) &&
 			!appServerType.equals(ServerDetector.JETTY_ID) &&
 			!appServerType.equals(ServerDetector.TOMCAT_ID)) {
 
@@ -150,19 +151,24 @@ public class DeployUtil {
 			return;
 		}
 
-		File webXml = new File(deployDir + "/WEB-INF/web.xml");
-
-		if (!webXml.exists()) {
-			return;
+		if (deployDir.isFile()) {
+			FileUtil.delete(deployDir);
 		}
+		else {
+			File webXml = new File(deployDir + "/WEB-INF/web.xml");
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Undeploy " + deployDir);
+			if (!webXml.exists()) {
+				return;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Undeploy " + deployDir);
+			}
+
+			FileUtil.delete(deployDir + "/WEB-INF/web.xml");
+
+			DeleteTask.deleteDirectory(deployDir);
 		}
-
-		FileUtil.delete(deployDir + "/WEB-INF/web.xml");
-
-		DeleteTask.deleteDirectory(deployDir);
 
 		if (appServerType.equals(ServerDetector.JETTY_ID)) {
 			FileUtil.delete(
