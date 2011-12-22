@@ -1031,10 +1031,22 @@ AUI().add(
 						var breadcrumb = instance.one('#breadcrumb', content);
 
 						if (breadcrumb) {
-							var breadcrumbContainer = instance.byId('breadcrumbContainer');
+                            var dlBreadcrumb = breadcrumb.one('.dlBreadcrumb');
 
-							breadcrumbContainer.setContent(breadcrumb);
-						}
+                            if (dlBreadcrumb) {
+                                var breadcrumbContainer = instance.byId('breadcrumbContainer');
+
+                                breadcrumbContainer.setContent(dlBreadcrumb);
+                            }
+
+                            var portalBreadcrumb = breadcrumb.one('.portalBreadcrumb ul');
+
+                            if (portalBreadcrumb) {
+                                var breadcrumbContainer = A.one('#breadcrumbs ul');
+
+                                breadcrumbContainer.setContent(portalBreadcrumb.html());
+                            }
+                        }
 					},
 
 					_setButtons: function(content) {
