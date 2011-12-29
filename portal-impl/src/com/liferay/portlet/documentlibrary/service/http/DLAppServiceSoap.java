@@ -382,6 +382,33 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* Returns the number of file entries and shortcuts in the folder.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param folderId the primary key of the folder
+	* @param mediaTypes allowed media types
+	* @param status the workflow status
+	* @return the number of file entries and shortcuts in the folder
+	* @throws PortalException if the folder ould not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getFileEntriesAndFileShortcutsCount(long repositoryId,
+		long folderId, java.lang.String[] mediaTypes, int status)
+		throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId,
+					folderId, mediaTypes, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the number of file entries in the folder.
 	*
 	* @param repositoryId the primary key of the file entry's repository

@@ -103,6 +103,15 @@ public class DLFolderFinderImpl
 		return doCountFE_ByG_F_S(groupId, folderId, status, true);
 	}
 
+	public int filterCountFE_FS_ByG_F_S(
+			long groupId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+			throws SystemException {
+
+		return doCountF_FE_FS_ByG_F_S(
+				groupId, folderId, status, mimeTypes, includeMountFolders, true);
+	}
+
 	public List<Object> filterFindF_FE_FS_ByG_F_S(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
