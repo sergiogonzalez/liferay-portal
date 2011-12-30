@@ -103,6 +103,16 @@ public class DLFolderFinderImpl
 		return doCountFE_ByG_F_S(groupId, folderId, status, true);
 	}
 
+	public int filterCountFE_FS_ByG_F_S(
+			long groupId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+			throws SystemException {
+
+		return doCountF_FE_FS_ByG_F_S(
+				groupId, folderId, status, mimeTypes,
+				includeMountFolders, true);
+	}
+
 	public List<Object> filterFindF_FE_FS_ByG_F_S(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
@@ -145,6 +155,16 @@ public class DLFolderFinderImpl
 			boolean includeMountFolders, boolean inlineSQLHelper)
 		throws SystemException {
 
+		return doCountF_FE_FS_ByG_F_S(groupId, folderId, status, mimeTypes,
+				includeMountFolders, inlineSQLHelper, false);
+	}
+
+	protected int doCountF_FE_FS_ByG_F_S(
+			long groupId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, boolean inlineSQLHelper,
+			boolean excludeFolders)
+		throws SystemException {
+
 		Session session = null;
 
 		try {
@@ -156,14 +176,16 @@ public class DLFolderFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_F_BY_G_M_F);
 
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DLFolder.class.getName(), "DLFolder.folderId",
-					groupId);
-			}
+			if (!excludeFolders) {
+				if (inlineSQLHelper) {
+					sql = InlineSQLHelperUtil.replacePermissionCheck(
+						sql, DLFolder.class.getName(), "DLFolder.folderId",
+						groupId);
+				}
 
-			sb.append(sql);
-			sb.append(") UNION ALL (");
+				sb.append(sql);
+				sb.append(") UNION ALL (");
+			}
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = CustomSQLUtil.get(COUNT_FE_BY_G_F);

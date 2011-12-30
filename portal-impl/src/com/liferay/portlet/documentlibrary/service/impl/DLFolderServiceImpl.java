@@ -129,6 +129,14 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return fileEntriesCount + fileShortcutsCount;
 	}
 
+	public int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes, int status)
+		throws SystemException {
+
+		return dlFolderFinder.filterCountFE_FS_ByG_F_S(
+			groupId, folderId, status, mimeTypes, false);
+	}
+
 	public DLFolder getFolder(long folderId)
 		throws PortalException, SystemException {
 
