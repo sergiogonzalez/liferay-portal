@@ -296,6 +296,14 @@ public class LiferayRepository
 			getGroupId(), toFolderId(folderId), status);
 	}
 
+	public int getFileEntriesAndFileShortcutsCount(long folderId,
+			String[] mimeTypes, int status)
+		throws SystemException {
+
+		return dlFolderService.getFileEntriesAndFileShortcutsCount(
+			getGroupId(), toFolderId(folderId), mimeTypes, status);
+	}
+
 	public int getFileEntriesCount(long folderId) throws SystemException {
 		return dlFileEntryService.getFileEntriesCount(
 			getGroupId(), toFolderId(folderId));
