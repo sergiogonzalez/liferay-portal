@@ -39,6 +39,11 @@ public abstract class DDMStorageLinkBaseImpl extends DDMStorageLinkModelImpl
 	 * Never modify or reference this class directly. All methods that expect a d d m storage link model instance should use the {@link DDMStorageLink} interface instead.
 	 */
 	public void persist() throws SystemException {
-		DDMStorageLinkLocalServiceUtil.updateDDMStorageLink(this);
+		if (this.isNew()) {
+			DDMStorageLinkLocalServiceUtil.addDDMStorageLink(this);
+		}
+		else {
+			DDMStorageLinkLocalServiceUtil.updateDDMStorageLink(this);
+		}
 	}
 }

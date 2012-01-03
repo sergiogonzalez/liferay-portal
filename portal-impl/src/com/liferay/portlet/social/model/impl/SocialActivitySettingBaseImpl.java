@@ -39,6 +39,11 @@ public abstract class SocialActivitySettingBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a social activity setting model instance should use the {@link SocialActivitySetting} interface instead.
 	 */
 	public void persist() throws SystemException {
-		SocialActivitySettingLocalServiceUtil.updateSocialActivitySetting(this);
+		if (this.isNew()) {
+			SocialActivitySettingLocalServiceUtil.addSocialActivitySetting(this);
+		}
+		else {
+			SocialActivitySettingLocalServiceUtil.updateSocialActivitySetting(this);
+		}
 	}
 }

@@ -38,6 +38,11 @@ public abstract class VirtualHostBaseImpl extends VirtualHostModelImpl
 	 * Never modify or reference this class directly. All methods that expect a virtual host model instance should use the {@link VirtualHost} interface instead.
 	 */
 	public void persist() throws SystemException {
-		VirtualHostLocalServiceUtil.updateVirtualHost(this);
+		if (this.isNew()) {
+			VirtualHostLocalServiceUtil.addVirtualHost(this);
+		}
+		else {
+			VirtualHostLocalServiceUtil.updateVirtualHost(this);
+		}
 	}
 }

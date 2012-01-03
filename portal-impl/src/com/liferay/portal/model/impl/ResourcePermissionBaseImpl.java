@@ -38,6 +38,11 @@ public abstract class ResourcePermissionBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a resource permission model instance should use the {@link ResourcePermission} interface instead.
 	 */
 	public void persist() throws SystemException {
-		ResourcePermissionLocalServiceUtil.updateResourcePermission(this);
+		if (this.isNew()) {
+			ResourcePermissionLocalServiceUtil.addResourcePermission(this);
+		}
+		else {
+			ResourcePermissionLocalServiceUtil.updateResourcePermission(this);
+		}
 	}
 }

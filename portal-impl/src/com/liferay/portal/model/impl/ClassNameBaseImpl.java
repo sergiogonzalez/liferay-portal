@@ -38,6 +38,11 @@ public abstract class ClassNameBaseImpl extends ClassNameModelImpl
 	 * Never modify or reference this class directly. All methods that expect a class name model instance should use the {@link ClassName} interface instead.
 	 */
 	public void persist() throws SystemException {
-		ClassNameLocalServiceUtil.updateClassName(this);
+		if (this.isNew()) {
+			ClassNameLocalServiceUtil.addClassName(this);
+		}
+		else {
+			ClassNameLocalServiceUtil.updateClassName(this);
+		}
 	}
 }

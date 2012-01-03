@@ -37,6 +37,11 @@ public abstract class PhoneBaseImpl extends PhoneModelImpl implements Phone {
 	 * Never modify or reference this class directly. All methods that expect a phone model instance should use the {@link Phone} interface instead.
 	 */
 	public void persist() throws SystemException {
-		PhoneLocalServiceUtil.updatePhone(this);
+		if (this.isNew()) {
+			PhoneLocalServiceUtil.addPhone(this);
+		}
+		else {
+			PhoneLocalServiceUtil.updatePhone(this);
+		}
 	}
 }

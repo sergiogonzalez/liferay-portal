@@ -39,6 +39,11 @@ public abstract class WikiNodeBaseImpl extends WikiNodeModelImpl
 	 * Never modify or reference this class directly. All methods that expect a wiki node model instance should use the {@link WikiNode} interface instead.
 	 */
 	public void persist() throws SystemException {
-		WikiNodeLocalServiceUtil.updateWikiNode(this);
+		if (this.isNew()) {
+			WikiNodeLocalServiceUtil.addWikiNode(this);
+		}
+		else {
+			WikiNodeLocalServiceUtil.updateWikiNode(this);
+		}
 	}
 }

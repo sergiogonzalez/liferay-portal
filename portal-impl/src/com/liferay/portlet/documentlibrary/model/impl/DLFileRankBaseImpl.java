@@ -39,6 +39,11 @@ public abstract class DLFileRankBaseImpl extends DLFileRankModelImpl
 	 * Never modify or reference this class directly. All methods that expect a document library file rank model instance should use the {@link DLFileRank} interface instead.
 	 */
 	public void persist() throws SystemException {
-		DLFileRankLocalServiceUtil.updateDLFileRank(this);
+		if (this.isNew()) {
+			DLFileRankLocalServiceUtil.addDLFileRank(this);
+		}
+		else {
+			DLFileRankLocalServiceUtil.updateDLFileRank(this);
+		}
 	}
 }

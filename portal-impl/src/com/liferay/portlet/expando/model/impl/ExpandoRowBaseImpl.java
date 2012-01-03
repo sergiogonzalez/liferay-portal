@@ -39,6 +39,11 @@ public abstract class ExpandoRowBaseImpl extends ExpandoRowModelImpl
 	 * Never modify or reference this class directly. All methods that expect a expando row model instance should use the {@link ExpandoRow} interface instead.
 	 */
 	public void persist() throws SystemException {
-		ExpandoRowLocalServiceUtil.updateExpandoRow(this);
+		if (this.isNew()) {
+			ExpandoRowLocalServiceUtil.addExpandoRow(this);
+		}
+		else {
+			ExpandoRowLocalServiceUtil.updateExpandoRow(this);
+		}
 	}
 }

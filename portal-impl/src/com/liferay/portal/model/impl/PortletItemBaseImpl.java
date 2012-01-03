@@ -38,6 +38,11 @@ public abstract class PortletItemBaseImpl extends PortletItemModelImpl
 	 * Never modify or reference this class directly. All methods that expect a portlet item model instance should use the {@link PortletItem} interface instead.
 	 */
 	public void persist() throws SystemException {
-		PortletItemLocalServiceUtil.updatePortletItem(this);
+		if (this.isNew()) {
+			PortletItemLocalServiceUtil.addPortletItem(this);
+		}
+		else {
+			PortletItemLocalServiceUtil.updatePortletItem(this);
+		}
 	}
 }

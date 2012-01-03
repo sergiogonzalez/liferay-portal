@@ -39,6 +39,11 @@ public abstract class ShoppingItemPriceBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a shopping item price model instance should use the {@link ShoppingItemPrice} interface instead.
 	 */
 	public void persist() throws SystemException {
-		ShoppingItemPriceLocalServiceUtil.updateShoppingItemPrice(this);
+		if (this.isNew()) {
+			ShoppingItemPriceLocalServiceUtil.addShoppingItemPrice(this);
+		}
+		else {
+			ShoppingItemPriceLocalServiceUtil.updateShoppingItemPrice(this);
+		}
 	}
 }

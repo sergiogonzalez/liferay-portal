@@ -38,6 +38,11 @@ public abstract class PasswordTrackerBaseImpl extends PasswordTrackerModelImpl
 	 * Never modify or reference this class directly. All methods that expect a password tracker model instance should use the {@link PasswordTracker} interface instead.
 	 */
 	public void persist() throws SystemException {
-		PasswordTrackerLocalServiceUtil.updatePasswordTracker(this);
+		if (this.isNew()) {
+			PasswordTrackerLocalServiceUtil.addPasswordTracker(this);
+		}
+		else {
+			PasswordTrackerLocalServiceUtil.updatePasswordTracker(this);
+		}
 	}
 }

@@ -79,6 +79,12 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
+			// LPS-23498
+
+			if (line.contains("JBREM00200: ")) {
+				continue;
+			}
+
 			System.out.println("\nException Line:\n\n" + line + "\n");
 
 			return false;

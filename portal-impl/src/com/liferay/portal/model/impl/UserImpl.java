@@ -54,6 +54,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ContactLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
@@ -368,17 +369,13 @@ public class UserImpl extends UserBaseImpl {
 	public int getPrivateLayoutsPageCount()
 		throws PortalException, SystemException {
 
-		Group group = getGroup();
-
-		return group.getPrivateLayoutsPageCount();
+		return LayoutLocalServiceUtil.getLayoutsCount(this, true);
 	}
 
 	public int getPublicLayoutsPageCount()
 		throws PortalException, SystemException {
 
-		Group group = getGroup();
-
-		return group.getPublicLayoutsPageCount();
+		return LayoutLocalServiceUtil.getLayoutsCount(this, false);
 	}
 
 	public Set<String> getReminderQueryQuestions()
@@ -547,21 +544,11 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	public boolean hasPrivateLayouts() throws PortalException, SystemException {
-		if (getPrivateLayoutsPageCount() > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return LayoutLocalServiceUtil.hasLayouts(this, true);
 	}
 
 	public boolean hasPublicLayouts() throws PortalException, SystemException {
-		if (getPublicLayoutsPageCount() > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return LayoutLocalServiceUtil.hasLayouts(this, false);
 	}
 
 	public boolean hasReminderQuery() {

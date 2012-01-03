@@ -39,6 +39,11 @@ public abstract class SCProductVersionBaseImpl extends SCProductVersionModelImpl
 	 * Never modify or reference this class directly. All methods that expect a s c product version model instance should use the {@link SCProductVersion} interface instead.
 	 */
 	public void persist() throws SystemException {
-		SCProductVersionLocalServiceUtil.updateSCProductVersion(this);
+		if (this.isNew()) {
+			SCProductVersionLocalServiceUtil.addSCProductVersion(this);
+		}
+		else {
+			SCProductVersionLocalServiceUtil.updateSCProductVersion(this);
+		}
 	}
 }

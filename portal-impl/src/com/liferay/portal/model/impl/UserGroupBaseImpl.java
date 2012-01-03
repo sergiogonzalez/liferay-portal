@@ -38,6 +38,11 @@ public abstract class UserGroupBaseImpl extends UserGroupModelImpl
 	 * Never modify or reference this class directly. All methods that expect a user group model instance should use the {@link UserGroup} interface instead.
 	 */
 	public void persist() throws SystemException {
-		UserGroupLocalServiceUtil.updateUserGroup(this);
+		if (this.isNew()) {
+			UserGroupLocalServiceUtil.addUserGroup(this);
+		}
+		else {
+			UserGroupLocalServiceUtil.updateUserGroup(this);
+		}
 	}
 }

@@ -39,6 +39,11 @@ public abstract class MDRRuleGroupInstanceBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a m d r rule group instance model instance should use the {@link MDRRuleGroupInstance} interface instead.
 	 */
 	public void persist() throws SystemException {
-		MDRRuleGroupInstanceLocalServiceUtil.updateMDRRuleGroupInstance(this);
+		if (this.isNew()) {
+			MDRRuleGroupInstanceLocalServiceUtil.addMDRRuleGroupInstance(this);
+		}
+		else {
+			MDRRuleGroupInstanceLocalServiceUtil.updateMDRRuleGroupInstance(this);
+		}
 	}
 }

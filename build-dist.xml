@@ -1091,6 +1091,7 @@ release was successful.</echo>
 		<replace file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/jonas.properties">
 			<replacefilter token="HSQL1" value="" />
 			<replacefilter token="jtm,db,resource,ejb3,jaxws,web,ear,depmonitor" value="jtm,resource,ejb3,jaxws,web,ear,validation,depmonitor" />
+			<replacefilter token="jonas.development    true" value="jonas.development    false" />
 		</replace>
 
 		<replace file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/tomcat6-server.xml">

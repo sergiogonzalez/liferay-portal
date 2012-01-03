@@ -38,6 +38,11 @@ public abstract class ClusterGroupBaseImpl extends ClusterGroupModelImpl
 	 * Never modify or reference this class directly. All methods that expect a cluster group model instance should use the {@link ClusterGroup} interface instead.
 	 */
 	public void persist() throws SystemException {
-		ClusterGroupLocalServiceUtil.updateClusterGroup(this);
+		if (this.isNew()) {
+			ClusterGroupLocalServiceUtil.addClusterGroup(this);
+		}
+		else {
+			ClusterGroupLocalServiceUtil.updateClusterGroup(this);
+		}
 	}
 }

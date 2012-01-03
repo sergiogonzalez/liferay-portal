@@ -39,6 +39,11 @@ public abstract class SocialActivityLimitBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a social activity limit model instance should use the {@link SocialActivityLimit} interface instead.
 	 */
 	public void persist() throws SystemException {
-		SocialActivityLimitLocalServiceUtil.updateSocialActivityLimit(this);
+		if (this.isNew()) {
+			SocialActivityLimitLocalServiceUtil.addSocialActivityLimit(this);
+		}
+		else {
+			SocialActivityLimitLocalServiceUtil.updateSocialActivityLimit(this);
+		}
 	}
 }

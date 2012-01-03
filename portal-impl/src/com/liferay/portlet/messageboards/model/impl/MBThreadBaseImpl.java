@@ -39,6 +39,11 @@ public abstract class MBThreadBaseImpl extends MBThreadModelImpl
 	 * Never modify or reference this class directly. All methods that expect a message boards thread model instance should use the {@link MBThread} interface instead.
 	 */
 	public void persist() throws SystemException {
-		MBThreadLocalServiceUtil.updateMBThread(this);
+		if (this.isNew()) {
+			MBThreadLocalServiceUtil.addMBThread(this);
+		}
+		else {
+			MBThreadLocalServiceUtil.updateMBThread(this);
+		}
 	}
 }

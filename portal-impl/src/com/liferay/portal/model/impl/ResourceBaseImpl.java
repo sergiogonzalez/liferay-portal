@@ -38,6 +38,11 @@ public abstract class ResourceBaseImpl extends ResourceModelImpl
 	 * Never modify or reference this class directly. All methods that expect a resource model instance should use the {@link Resource} interface instead.
 	 */
 	public void persist() throws SystemException {
-		ResourceLocalServiceUtil.updateResource(this);
+		if (this.isNew()) {
+			ResourceLocalServiceUtil.addResource(this);
+		}
+		else {
+			ResourceLocalServiceUtil.updateResource(this);
+		}
 	}
 }

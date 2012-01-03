@@ -38,6 +38,11 @@ public abstract class RepositoryEntryBaseImpl extends RepositoryEntryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a repository entry model instance should use the {@link RepositoryEntry} interface instead.
 	 */
 	public void persist() throws SystemException {
-		RepositoryEntryLocalServiceUtil.updateRepositoryEntry(this);
+		if (this.isNew()) {
+			RepositoryEntryLocalServiceUtil.addRepositoryEntry(this);
+		}
+		else {
+			RepositoryEntryLocalServiceUtil.updateRepositoryEntry(this);
+		}
 	}
 }

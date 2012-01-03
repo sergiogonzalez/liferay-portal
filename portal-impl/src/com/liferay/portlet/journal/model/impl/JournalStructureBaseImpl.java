@@ -39,6 +39,11 @@ public abstract class JournalStructureBaseImpl extends JournalStructureModelImpl
 	 * Never modify or reference this class directly. All methods that expect a journal structure model instance should use the {@link JournalStructure} interface instead.
 	 */
 	public void persist() throws SystemException {
-		JournalStructureLocalServiceUtil.updateJournalStructure(this);
+		if (this.isNew()) {
+			JournalStructureLocalServiceUtil.addJournalStructure(this);
+		}
+		else {
+			JournalStructureLocalServiceUtil.updateJournalStructure(this);
+		}
 	}
 }

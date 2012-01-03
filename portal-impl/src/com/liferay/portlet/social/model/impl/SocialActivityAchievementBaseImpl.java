@@ -40,6 +40,11 @@ public abstract class SocialActivityAchievementBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a social activity achievement model instance should use the {@link SocialActivityAchievement} interface instead.
 	 */
 	public void persist() throws SystemException {
-		SocialActivityAchievementLocalServiceUtil.updateSocialActivityAchievement(this);
+		if (this.isNew()) {
+			SocialActivityAchievementLocalServiceUtil.addSocialActivityAchievement(this);
+		}
+		else {
+			SocialActivityAchievementLocalServiceUtil.updateSocialActivityAchievement(this);
+		}
 	}
 }

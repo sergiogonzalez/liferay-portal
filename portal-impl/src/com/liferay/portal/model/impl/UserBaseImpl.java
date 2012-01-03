@@ -37,6 +37,11 @@ public abstract class UserBaseImpl extends UserModelImpl implements User {
 	 * Never modify or reference this class directly. All methods that expect a user model instance should use the {@link User} interface instead.
 	 */
 	public void persist() throws SystemException {
-		UserLocalServiceUtil.updateUser(this);
+		if (this.isNew()) {
+			UserLocalServiceUtil.addUser(this);
+		}
+		else {
+			UserLocalServiceUtil.updateUser(this);
+		}
 	}
 }

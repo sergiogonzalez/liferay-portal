@@ -39,6 +39,11 @@ public abstract class ExpandoTableBaseImpl extends ExpandoTableModelImpl
 	 * Never modify or reference this class directly. All methods that expect a expando table model instance should use the {@link ExpandoTable} interface instead.
 	 */
 	public void persist() throws SystemException {
-		ExpandoTableLocalServiceUtil.updateExpandoTable(this);
+		if (this.isNew()) {
+			ExpandoTableLocalServiceUtil.addExpandoTable(this);
+		}
+		else {
+			ExpandoTableLocalServiceUtil.updateExpandoTable(this);
+		}
 	}
 }

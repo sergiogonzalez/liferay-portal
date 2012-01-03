@@ -39,6 +39,11 @@ public abstract class JournalArticleBaseImpl extends JournalArticleModelImpl
 	 * Never modify or reference this class directly. All methods that expect a journal article model instance should use the {@link JournalArticle} interface instead.
 	 */
 	public void persist() throws SystemException {
-		JournalArticleLocalServiceUtil.updateJournalArticle(this);
+		if (this.isNew()) {
+			JournalArticleLocalServiceUtil.addJournalArticle(this);
+		}
+		else {
+			JournalArticleLocalServiceUtil.updateJournalArticle(this);
+		}
 	}
 }

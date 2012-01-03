@@ -736,6 +736,26 @@ public class DLAppServiceUtil {
 	}
 
 	/**
+	* Returns the number of file entries and shortcuts in the folder.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param folderId the primary key of the folder
+	* @param status the workflow status
+	* @param mimeTypes allowed media types
+	* @return the number of file entries and shortcuts in the folder
+	* @throws PortalException if the folder ould not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getFileEntriesAndFileShortcutsCount(long repositoryId,
+		long folderId, int status, java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFileEntriesAndFileShortcutsCount(repositoryId, folderId,
+			status, mimeTypes);
+	}
+
+	/**
 	* Returns the number of file entries in the folder.
 	*
 	* @param repositoryId the primary key of the file entry's repository
@@ -1509,6 +1529,26 @@ public class DLAppServiceUtil {
 		return getService()
 				   .getMountFolders(repositoryId, parentFolderId, start, end,
 			obc);
+	}
+
+	/**
+	* Returns the number of immediate subfolders of the parent folder that are
+	* used for mounting third-party repositories. This method is only supported
+	* by the Liferay repository.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param parentFolderId the primary key of the parent folder
+	* @return the number of folders of the parent folder that are used for
+	mounting third-party repositories
+	* @throws PortalException if the repository or parent folder could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getMountFoldersCount(long repositoryId,
+		long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMountFoldersCount(repositoryId, parentFolderId);
 	}
 
 	public static void getSubfolderIds(long repositoryId,

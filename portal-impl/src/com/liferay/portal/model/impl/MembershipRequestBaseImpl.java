@@ -38,6 +38,11 @@ public abstract class MembershipRequestBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a membership request model instance should use the {@link MembershipRequest} interface instead.
 	 */
 	public void persist() throws SystemException {
-		MembershipRequestLocalServiceUtil.updateMembershipRequest(this);
+		if (this.isNew()) {
+			MembershipRequestLocalServiceUtil.addMembershipRequest(this);
+		}
+		else {
+			MembershipRequestLocalServiceUtil.updateMembershipRequest(this);
+		}
 	}
 }

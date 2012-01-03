@@ -66759,6 +66759,63 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</throws>
 		</method>
 		<method>
+			<name>getGroupFileEntries</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>rootFolderId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>mimeTypes</name>
+				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>status</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>start</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>end</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>obc</name>
+				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>getGroupFileEntriesCount</name>
 			<comment><![CDATA[Returns the number of file entries in a group starting at the repository default parent folder that are stored within the Liferay repository. This method is primarily used to search for recently modified file entries. It can be limited to the file entries modified by a given user.]]></comment>
 			<param>
@@ -66815,6 +66872,48 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getGroupFileEntriesCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>rootFolderId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>mimeTypes</name>
+				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>status</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -66919,6 +67018,33 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</param>
 			<return>
 				<comment><![CDATA[the range of immediate subfolders of the parent folder that are used for mounting third-party repositories ordered by comparator <code>obc</code>]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if the repository or parent folder could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getMountFoldersCount</name>
+			<comment><![CDATA[Returns the number of immediate subfolders of the parent folder that are used for mounting third-party repositories. This method is only supported by the Liferay repository.]]></comment>
+			<param>
+				<name>repositoryId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the repository]]></comment>
+			</param>
+			<param>
+				<name>parentFolderId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the parent folder]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the number of folders of the parent folder that are used for mounting third-party repositories]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -67052,6 +67178,60 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</throws>
 			<see><![CDATA[#addTempFileEntry(long, long, String, String, File)]]></see>
 			<see><![CDATA[com.liferay.portal.kernel.util.TempFileUtil]]></see>
+		</method>
+		<method>
+			<name>lockFileEntry</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>lockFileEntry</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>owner</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>expirationTime</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>lockFolder</name>
@@ -67315,6 +67495,49 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<throws>
 				<name>SearchException</name>
 				<type>com.liferay.portal.kernel.search.SearchException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>unlockFileEntry</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>unlockFileEntry</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>lockUuid</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -67817,6 +68040,38 @@ This method takes two file names, the <code>sourceFileName</code> and the <code>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>verifyFileEntryLock</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>repositoryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>lockUuid</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>

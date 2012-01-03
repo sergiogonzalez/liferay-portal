@@ -39,6 +39,11 @@ public abstract class MBThreadFlagBaseImpl extends MBThreadFlagModelImpl
 	 * Never modify or reference this class directly. All methods that expect a message boards thread flag model instance should use the {@link MBThreadFlag} interface instead.
 	 */
 	public void persist() throws SystemException {
-		MBThreadFlagLocalServiceUtil.updateMBThreadFlag(this);
+		if (this.isNew()) {
+			MBThreadFlagLocalServiceUtil.addMBThreadFlag(this);
+		}
+		else {
+			MBThreadFlagLocalServiceUtil.updateMBThreadFlag(this);
+		}
 	}
 }

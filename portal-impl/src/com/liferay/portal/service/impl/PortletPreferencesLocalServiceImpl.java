@@ -156,6 +156,14 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	public List<PortletPreferences> getPortletPreferences(
+			int ownerType, long plid, String portletId)
+		throws SystemException {
+
+		return portletPreferencesPersistence.findByO_P_P(
+			ownerType, plid, portletId);
+	}
+
+	public List<PortletPreferences> getPortletPreferences(
 			long ownerId, int ownerType, long plid)
 		throws SystemException {
 
@@ -379,7 +387,7 @@ public class PortletPreferencesLocalServiceImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesLocalServiceImpl.class);
 
-	private static class PreferencesKey implements Serializable {
+	private class PreferencesKey implements Serializable {
 
 		public PreferencesKey(long plid, String portletId) {
 			_plid = plid;

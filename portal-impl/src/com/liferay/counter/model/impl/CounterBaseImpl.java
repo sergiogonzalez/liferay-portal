@@ -39,6 +39,11 @@ public abstract class CounterBaseImpl extends CounterModelImpl
 	 * Never modify or reference this class directly. All methods that expect a counter model instance should use the {@link Counter} interface instead.
 	 */
 	public void persist() throws SystemException {
-		CounterLocalServiceUtil.updateCounter(this);
+		if (this.isNew()) {
+			CounterLocalServiceUtil.addCounter(this);
+		}
+		else {
+			CounterLocalServiceUtil.updateCounter(this);
+		}
 	}
 }

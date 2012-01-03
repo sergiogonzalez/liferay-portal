@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -234,7 +235,10 @@ public class LayoutStagingHandler implements InvocationHandler {
 				serviceContext);
 		}
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+		if (!MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
 
 		layoutRevision = LayoutRevisionLocalServiceUtil.addLayoutRevision(
 			serviceContext.getUserId(), layoutSetBranchId,

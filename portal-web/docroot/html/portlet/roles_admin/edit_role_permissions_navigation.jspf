@@ -124,9 +124,15 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 			</optgroup>
 
 			<%
+			Set<String> hiddenPortletIds = Collections.emptySet();
+
 			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
-			Set<String> hiddenPortletIds = portletCategory.getCategory(PortletCategoryConstants.NAME_HIDDEN).getPortletIds();
+			PortletCategory hiddentPortletCategory = portletCategory.getCategory(PortletCategoryConstants.NAME_HIDDEN);
+
+			if (hiddentPortletCategory != null) {
+				hiddenPortletIds = hiddentPortletCategory.getPortletIds();
+			}
 			%>
 
 			<optgroup label="<liferay-ui:message key="site-applications" />">

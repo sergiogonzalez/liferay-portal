@@ -39,6 +39,11 @@ public abstract class AssetEntryBaseImpl extends AssetEntryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a asset entry model instance should use the {@link AssetEntry} interface instead.
 	 */
 	public void persist() throws SystemException {
-		AssetEntryLocalServiceUtil.updateAssetEntry(this);
+		if (this.isNew()) {
+			AssetEntryLocalServiceUtil.addAssetEntry(this);
+		}
+		else {
+			AssetEntryLocalServiceUtil.updateAssetEntry(this);
+		}
 	}
 }

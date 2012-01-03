@@ -39,6 +39,11 @@ public abstract class AnnouncementsDeliveryBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a announcements delivery model instance should use the {@link AnnouncementsDelivery} interface instead.
 	 */
 	public void persist() throws SystemException {
-		AnnouncementsDeliveryLocalServiceUtil.updateAnnouncementsDelivery(this);
+		if (this.isNew()) {
+			AnnouncementsDeliveryLocalServiceUtil.addAnnouncementsDelivery(this);
+		}
+		else {
+			AnnouncementsDeliveryLocalServiceUtil.updateAnnouncementsDelivery(this);
+		}
 	}
 }

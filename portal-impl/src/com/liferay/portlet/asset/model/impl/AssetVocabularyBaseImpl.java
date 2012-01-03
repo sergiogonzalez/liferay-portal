@@ -39,6 +39,11 @@ public abstract class AssetVocabularyBaseImpl extends AssetVocabularyModelImpl
 	 * Never modify or reference this class directly. All methods that expect a asset vocabulary model instance should use the {@link AssetVocabulary} interface instead.
 	 */
 	public void persist() throws SystemException {
-		AssetVocabularyLocalServiceUtil.updateAssetVocabulary(this);
+		if (this.isNew()) {
+			AssetVocabularyLocalServiceUtil.addAssetVocabulary(this);
+		}
+		else {
+			AssetVocabularyLocalServiceUtil.updateAssetVocabulary(this);
+		}
 	}
 }

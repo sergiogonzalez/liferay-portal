@@ -39,6 +39,11 @@ public abstract class RatingsStatsBaseImpl extends RatingsStatsModelImpl
 	 * Never modify or reference this class directly. All methods that expect a ratings stats model instance should use the {@link RatingsStats} interface instead.
 	 */
 	public void persist() throws SystemException {
-		RatingsStatsLocalServiceUtil.updateRatingsStats(this);
+		if (this.isNew()) {
+			RatingsStatsLocalServiceUtil.addRatingsStats(this);
+		}
+		else {
+			RatingsStatsLocalServiceUtil.updateRatingsStats(this);
+		}
 	}
 }

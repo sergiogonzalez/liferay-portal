@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,6 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.axis.AxisFault;
@@ -40,26 +42,43 @@ import org.apache.axis.transport.http.HTTPSender;
  */
 public class SimpleHTTPSender extends HTTPSender {
 
-	@Override
-	public void invoke(MessageContext ctx) throws AxisFault {
-		String url = ctx.getStrProp(MessageContext.TRANS_URL);
+	public SimpleHTTPSender() {
+		String regexp = SystemProperties.get(
+			SimpleHTTPSender.class.getName() + ".regexp.pattern");
 
-		if (_pattern.matcher(url).matches()) {
+		if (Validator.isNotNull(regexp)) {
+			_pattern = Pattern.compile(regexp);
+		}
+	}
+
+	@Override
+	public void invoke(MessageContext messageContext) throws AxisFault {
+		String url = messageContext.getStrProp(MessageContext.TRANS_URL);
+
+		Matcher matcher = null;
+
+		if (_pattern != null) {
+			matcher = _pattern.matcher(url);
+		}
+
+		if ((matcher != null) && matcher.matches()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("A match was found for " + url);
 			}
 
-			_invoke(ctx, url);
+			_invoke(messageContext, url);
 		}
 		else {
-			super.invoke(ctx);
+			super.invoke(messageContext);
 		}
 	}
 
-	private void _invoke(MessageContext ctx, String url) throws AxisFault {
+	private void _invoke(MessageContext messageContext, String url)
+		throws AxisFault {
+
 		try {
-			String userName = ctx.getUsername();
-			String password = ctx.getPassword();
+			String userName = messageContext.getUsername();
+			String password = messageContext.getPassword();
 
 			if ((userName != null) && (password != null)) {
 				Authenticator.setDefault(
@@ -68,10 +87,10 @@ public class SimpleHTTPSender extends HTTPSender {
 
 			URL urlObj = new URL(url);
 
-			URLConnection urlc = urlObj.openConnection();
+			URLConnection urlConnection = urlObj.openConnection();
 
-			_writeToConnection(urlc, ctx);
-			_readFromConnection(urlc, ctx);
+			_writeToConnection(urlConnection, messageContext);
+			_readFromConnection(urlConnection, messageContext);
 		}
 		catch (Exception e) {
 			throw AxisFault.makeFault(e);
@@ -81,54 +100,60 @@ public class SimpleHTTPSender extends HTTPSender {
 		}
 	}
 
-	private void _readFromConnection(URLConnection urlc, MessageContext ctx)
+	private void _readFromConnection(
+			URLConnection urlConnection, MessageContext messageContext)
 		throws Exception {
 
-		String contentType = urlc.getContentType();
-		String contentLocation = urlc.getHeaderField("Content-Location");
+		HttpURLConnection httpURLConnection = (HttpURLConnection)urlConnection;
 
-		InputStream is = ((HttpURLConnection)urlc).getErrorStream();
+		InputStream inputStream = httpURLConnection.getErrorStream();
 
-		if (is == null) {
-			is = urlc.getInputStream();
+		if (inputStream == null) {
+			inputStream = urlConnection.getInputStream();
 		}
 
-		is = new UnsyncBufferedInputStream(is, 8192);
+		inputStream = new UnsyncBufferedInputStream(inputStream, 8192);
 
-		Message response = new Message(is, false, contentType, contentLocation);
+		String contentType = urlConnection.getContentType();
+		String contentLocation = urlConnection.getHeaderField(
+			"Content-Location");
 
-		response.setMessageType(Message.RESPONSE);
+		Message message = new Message(
+			inputStream, false, contentType, contentLocation);
 
-		ctx.setResponseMessage(response);
+		message.setMessageType(Message.RESPONSE);
+
+		messageContext.setResponseMessage(message);
 	}
 
-	private void _writeToConnection(URLConnection urlc, MessageContext ctx)
+	private void _writeToConnection(
+			URLConnection urlConnection, MessageContext messageContext)
 		throws Exception {
 
-		urlc.setDoOutput(true);
+		urlConnection.setDoOutput(true);
 
-		Message request = ctx.getRequestMessage();
+		Message message = messageContext.getRequestMessage();
 
-		String contentType = request.getContentType(ctx.getSOAPConstants());
+		String contentType = message.getContentType(
+			messageContext.getSOAPConstants());
 
-		urlc.setRequestProperty("Content-Type", contentType);
+		urlConnection.setRequestProperty("Content-Type", contentType);
 
-		if (ctx.useSOAPAction()) {
-			urlc.setRequestProperty("SOAPAction", ctx.getSOAPActionURI());
+		if (messageContext.useSOAPAction()) {
+			urlConnection.setRequestProperty(
+				"SOAPAction", messageContext.getSOAPActionURI());
 		}
 
-		OutputStream os = new UnsyncBufferedOutputStream(
-			urlc.getOutputStream(), 8192);
+		OutputStream outputStream = new UnsyncBufferedOutputStream(
+			urlConnection.getOutputStream(), 8192);
 
-		request.writeTo(os);
+		message.writeTo(outputStream);
 
-		os.flush();
+		outputStream.flush();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SimpleHTTPSender.class);
 
-	private static Pattern _pattern = Pattern.compile(
-		SystemProperties.get(
-			SimpleHTTPSender.class.getName() + ".regexp.pattern"));
+	private Pattern _pattern;
 
 }

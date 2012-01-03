@@ -39,6 +39,11 @@ public abstract class JournalArticleResourceBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a journal article resource model instance should use the {@link JournalArticleResource} interface instead.
 	 */
 	public void persist() throws SystemException {
-		JournalArticleResourceLocalServiceUtil.updateJournalArticleResource(this);
+		if (this.isNew()) {
+			JournalArticleResourceLocalServiceUtil.addJournalArticleResource(this);
+		}
+		else {
+			JournalArticleResourceLocalServiceUtil.updateJournalArticleResource(this);
+		}
 	}
 }

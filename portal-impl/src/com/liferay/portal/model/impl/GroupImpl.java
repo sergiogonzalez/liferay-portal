@@ -245,20 +245,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	public int getPrivateLayoutsPageCount() {
 		try {
-			LayoutSet layoutSet = getPrivateLayoutSet();
-
-			int pageCount = layoutSet.getPageCount();
-
-			if (isUser()) {
-				List<UserGroup> userGroups =
-					UserGroupLocalServiceUtil.getUserUserGroups(getClassPK());
-
-				for (UserGroup userGroup : userGroups) {
-					pageCount += userGroup.getPrivateLayoutsPageCount();
-				}
-			}
-
-			return pageCount;
+			return LayoutLocalServiceUtil.getLayoutsCount(this, true);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -283,20 +270,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	public int getPublicLayoutsPageCount() {
 		try {
-			LayoutSet layoutSet = getPublicLayoutSet();
-
-			int pageCount = layoutSet.getPageCount();
-
-			if (isUser()) {
-				List<UserGroup> userGroups =
-					UserGroupLocalServiceUtil.getUserUserGroups(getClassPK());
-
-				for (UserGroup userGroup : userGroups) {
-					pageCount += userGroup.getPublicLayoutsPageCount();
-				}
-			}
-
-			return pageCount;
+			return LayoutLocalServiceUtil.getLayoutsCount(this, false);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

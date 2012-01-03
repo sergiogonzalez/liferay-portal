@@ -38,6 +38,11 @@ public abstract class PortalPreferencesBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a portal preferences model instance should use the {@link PortalPreferences} interface instead.
 	 */
 	public void persist() throws SystemException {
-		PortalPreferencesLocalServiceUtil.updatePortalPreferences(this);
+		if (this.isNew()) {
+			PortalPreferencesLocalServiceUtil.addPortalPreferences(this);
+		}
+		else {
+			PortalPreferencesLocalServiceUtil.updatePortalPreferences(this);
+		}
 	}
 }

@@ -38,6 +38,11 @@ public abstract class OrgLaborBaseImpl extends OrgLaborModelImpl
 	 * Never modify or reference this class directly. All methods that expect a org labor model instance should use the {@link OrgLabor} interface instead.
 	 */
 	public void persist() throws SystemException {
-		OrgLaborLocalServiceUtil.updateOrgLabor(this);
+		if (this.isNew()) {
+			OrgLaborLocalServiceUtil.addOrgLabor(this);
+		}
+		else {
+			OrgLaborLocalServiceUtil.updateOrgLabor(this);
+		}
 	}
 }

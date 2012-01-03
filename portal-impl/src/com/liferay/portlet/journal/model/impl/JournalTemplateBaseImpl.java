@@ -39,6 +39,11 @@ public abstract class JournalTemplateBaseImpl extends JournalTemplateModelImpl
 	 * Never modify or reference this class directly. All methods that expect a journal template model instance should use the {@link JournalTemplate} interface instead.
 	 */
 	public void persist() throws SystemException {
-		JournalTemplateLocalServiceUtil.updateJournalTemplate(this);
+		if (this.isNew()) {
+			JournalTemplateLocalServiceUtil.addJournalTemplate(this);
+		}
+		else {
+			JournalTemplateLocalServiceUtil.updateJournalTemplate(this);
+		}
 	}
 }

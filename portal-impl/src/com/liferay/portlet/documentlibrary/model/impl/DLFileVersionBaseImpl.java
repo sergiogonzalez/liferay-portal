@@ -39,6 +39,11 @@ public abstract class DLFileVersionBaseImpl extends DLFileVersionModelImpl
 	 * Never modify or reference this class directly. All methods that expect a document library file version model instance should use the {@link DLFileVersion} interface instead.
 	 */
 	public void persist() throws SystemException {
-		DLFileVersionLocalServiceUtil.updateDLFileVersion(this);
+		if (this.isNew()) {
+			DLFileVersionLocalServiceUtil.addDLFileVersion(this);
+		}
+		else {
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(this);
+		}
 	}
 }

@@ -38,6 +38,11 @@ public abstract class UserTrackerPathBaseImpl extends UserTrackerPathModelImpl
 	 * Never modify or reference this class directly. All methods that expect a user tracker path model instance should use the {@link UserTrackerPath} interface instead.
 	 */
 	public void persist() throws SystemException {
-		UserTrackerPathLocalServiceUtil.updateUserTrackerPath(this);
+		if (this.isNew()) {
+			UserTrackerPathLocalServiceUtil.addUserTrackerPath(this);
+		}
+		else {
+			UserTrackerPathLocalServiceUtil.updateUserTrackerPath(this);
+		}
 	}
 }

@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,6 +30,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.NoSuchActivityCounterException;
 import com.liferay.portlet.social.model.SocialAchievement;
@@ -44,12 +48,14 @@ import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Zsolt Berentey
+ * @author Shuyang Zhou
  */
 public class SocialActivityCounterLocalServiceImpl
 	extends SocialActivityCounterLocalServiceBaseImpl {
@@ -81,43 +87,49 @@ public class SocialActivityCounterLocalServiceImpl
 				continue;
 			}
 
-			activityCounter = fetchLatestActivityCounter(
-				groupId, classNameId, classPK, name, ownerType, false);
-
-			if (activityCounter == null) {
-				if (!lock.isNew()) {
-					continue;
+			if (lock.isNew()) {
+				try {
+					activityCounter =
+						socialActivityCounterLocalService.createActivityCounter(
+							groupId, classNameId, classPK, name, ownerType,
+							currentValue, totalValue);
+				}
+				finally {
+					lockLocalService.unlock(
+						SocialActivityCounter.class.getName(), lockKey, lockKey,
+						false);
 				}
 
-				Group group = groupPersistence.findByPrimaryKey(groupId);
-
-				long activityCounterId = counterLocalService.increment();
-
-				activityCounter = socialActivityCounterPersistence.create(
-					activityCounterId);
-
-				activityCounter.setGroupId(groupId);
-				activityCounter.setCompanyId(group.getCompanyId());
-				activityCounter.setClassNameId(classNameId);
-				activityCounter.setClassPK(classPK);
-				activityCounter.setName(name);
-				activityCounter.setOwnerType(ownerType);
-				activityCounter.setCurrentValue(currentValue);
-				activityCounter.setTotalValue(totalValue);
-				activityCounter.setStartPeriod(
-					SocialCounterPeriodUtil.getStartPeriod());
-				activityCounter.setEndPeriod(
-					SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
-
-				socialActivityCounterPersistence.update(activityCounter, false);
+				break;
 			}
 
-			if (lock.isNew()) {
+			Date createDate = lock.getCreateDate();
+
+			if ((System.currentTimeMillis() - createDate.getTime()) >=
+					PropsValues.SOCIAL_ACTIVITY_COUNTER_LOCK_TIMEOUT) {
+
 				lockLocalService.unlock(
-					SocialActivityCounter.class.getName(), lockKey);
-			}
+					SocialActivityCounter.class.getName(), lockKey,
+					lock.getOwner(), false);
 
-			break;
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Forcibly removed lock " + lock + ". See " +
+							PropsKeys.SOCIAL_ACTIVITY_COUNTER_LOCK_TIMEOUT);
+				}
+			}
+			else {
+				try {
+					Thread.sleep(
+						PropsValues.SOCIAL_ACTIVITY_COUNTER_LOCK_RETRY_DELAY);
+				}
+				catch (InterruptedException ie) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Interrupted while waiting to reacquire lock", ie);
+					}
+				}
+			}
 		}
 
 		return activityCounter;
@@ -192,6 +204,44 @@ public class SocialActivityCounterLocalServiceImpl
 				SocialActivityCounterConstants.TYPE_ASSET, 1,
 				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
 		}
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public SocialActivityCounter createActivityCounter(
+			long groupId, long classNameId, long classPK, String name,
+			int ownerType, int currentValue, int totalValue)
+		throws PortalException, SystemException {
+
+		SocialActivityCounter activityCounter = fetchLatestActivityCounter(
+			groupId, classNameId, classPK, name, ownerType, false);
+
+		if (activityCounter != null) {
+			return activityCounter;
+		}
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		long activityCounterId = counterLocalService.increment();
+
+		activityCounter = socialActivityCounterPersistence.create(
+			activityCounterId);
+
+		activityCounter.setGroupId(groupId);
+		activityCounter.setCompanyId(group.getCompanyId());
+		activityCounter.setClassNameId(classNameId);
+		activityCounter.setClassPK(classPK);
+		activityCounter.setName(name);
+		activityCounter.setOwnerType(ownerType);
+		activityCounter.setCurrentValue(currentValue);
+		activityCounter.setTotalValue(totalValue);
+		activityCounter.setStartPeriod(
+			SocialCounterPeriodUtil.getStartPeriod());
+		activityCounter.setEndPeriod(
+			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
+
+		socialActivityCounterPersistence.update(activityCounter, false);
+
+		return activityCounter;
 	}
 
 	public void deleteActivityCounters(AssetEntry assetEntry)

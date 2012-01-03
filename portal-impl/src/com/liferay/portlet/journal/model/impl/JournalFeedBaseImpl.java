@@ -39,6 +39,11 @@ public abstract class JournalFeedBaseImpl extends JournalFeedModelImpl
 	 * Never modify or reference this class directly. All methods that expect a journal feed model instance should use the {@link JournalFeed} interface instead.
 	 */
 	public void persist() throws SystemException {
-		JournalFeedLocalServiceUtil.updateJournalFeed(this);
+		if (this.isNew()) {
+			JournalFeedLocalServiceUtil.addJournalFeed(this);
+		}
+		else {
+			JournalFeedLocalServiceUtil.updateJournalFeed(this);
+		}
 	}
 }

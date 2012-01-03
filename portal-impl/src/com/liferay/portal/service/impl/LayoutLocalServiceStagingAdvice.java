@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
+import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -264,7 +265,10 @@ public class LayoutLocalServiceStagingAdvice
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+		if (!MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
 
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
@@ -313,7 +317,10 @@ public class LayoutLocalServiceStagingAdvice
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+		if (!MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
 
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),

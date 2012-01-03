@@ -38,6 +38,11 @@ public abstract class OrganizationBaseImpl extends OrganizationModelImpl
 	 * Never modify or reference this class directly. All methods that expect a organization model instance should use the {@link Organization} interface instead.
 	 */
 	public void persist() throws SystemException {
-		OrganizationLocalServiceUtil.updateOrganization(this);
+		if (this.isNew()) {
+			OrganizationLocalServiceUtil.addOrganization(this);
+		}
+		else {
+			OrganizationLocalServiceUtil.updateOrganization(this);
+		}
 	}
 }

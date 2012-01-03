@@ -39,6 +39,11 @@ public abstract class AnnouncementsFlagBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a announcements flag model instance should use the {@link AnnouncementsFlag} interface instead.
 	 */
 	public void persist() throws SystemException {
-		AnnouncementsFlagLocalServiceUtil.updateAnnouncementsFlag(this);
+		if (this.isNew()) {
+			AnnouncementsFlagLocalServiceUtil.addAnnouncementsFlag(this);
+		}
+		else {
+			AnnouncementsFlagLocalServiceUtil.updateAnnouncementsFlag(this);
+		}
 	}
 }

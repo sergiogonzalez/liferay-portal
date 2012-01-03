@@ -38,6 +38,11 @@ public abstract class LayoutSetBaseImpl extends LayoutSetModelImpl
 	 * Never modify or reference this class directly. All methods that expect a layout set model instance should use the {@link LayoutSet} interface instead.
 	 */
 	public void persist() throws SystemException {
-		LayoutSetLocalServiceUtil.updateLayoutSet(this);
+		if (this.isNew()) {
+			LayoutSetLocalServiceUtil.addLayoutSet(this);
+		}
+		else {
+			LayoutSetLocalServiceUtil.updateLayoutSet(this);
+		}
 	}
 }

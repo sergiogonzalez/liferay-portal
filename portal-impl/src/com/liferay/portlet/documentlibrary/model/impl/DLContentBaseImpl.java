@@ -39,6 +39,11 @@ public abstract class DLContentBaseImpl extends DLContentModelImpl
 	 * Never modify or reference this class directly. All methods that expect a document library content model instance should use the {@link DLContent} interface instead.
 	 */
 	public void persist() throws SystemException {
-		DLContentLocalServiceUtil.updateDLContent(this);
+		if (this.isNew()) {
+			DLContentLocalServiceUtil.addDLContent(this);
+		}
+		else {
+			DLContentLocalServiceUtil.updateDLContent(this);
+		}
 	}
 }

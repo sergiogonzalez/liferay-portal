@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.jmx;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
@@ -34,21 +34,23 @@ import javax.management.ObjectName;
 public class MBeanRegistry {
 
 	public void destroy() throws Exception {
-		for (ObjectName objectName : _objectNameCache.values()) {
-			try {
-				_mBeanServer.unregisterMBean(objectName);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to unregister MBean" +
-							objectName.getCanonicalName(),
-						e);
+		synchronized (_objectNameCache) {
+			for (ObjectName objectName : _objectNameCache.values()) {
+				try {
+					_mBeanServer.unregisterMBean(objectName);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to unregister MBean" +
+								objectName.getCanonicalName(),
+							e);
+					}
 				}
 			}
-		}
 
-		_objectNameCache.clear();
+			_objectNameCache.clear();
+		}
 	}
 
 	public ObjectName getObjectName(String objectNameCacheKey) {
@@ -63,8 +65,10 @@ public class MBeanRegistry {
 		ObjectInstance objectInstance = _mBeanServer.registerMBean(
 			object, objectName);
 
-		_objectNameCache.put(
-			objectNameCacheKey, objectInstance.getObjectName());
+		synchronized (_objectNameCache) {
+			_objectNameCache.put(
+				objectNameCacheKey, objectInstance.getObjectName());
+		}
 
 		return objectInstance;
 	}
@@ -91,15 +95,17 @@ public class MBeanRegistry {
 			String objectNameCacheKey, ObjectName defaultObjectName)
 		throws InstanceNotFoundException, MBeanRegistrationException {
 
-		ObjectName objectName = _objectNameCache.get(objectNameCacheKey);
+		synchronized (_objectNameCache) {
+			ObjectName objectName = _objectNameCache.get(objectNameCacheKey);
 
-		if (objectName == null) {
-			_mBeanServer.unregisterMBean(defaultObjectName);
-		}
-		else {
-			_objectNameCache.remove(objectNameCacheKey);
+			if (objectName == null) {
+				_mBeanServer.unregisterMBean(defaultObjectName);
+			}
+			else {
+				_objectNameCache.remove(objectNameCacheKey);
 
-			_mBeanServer.unregisterMBean(objectName);
+				_mBeanServer.unregisterMBean(objectName);
+			}
 		}
 	}
 
@@ -107,6 +113,6 @@ public class MBeanRegistry {
 
 	private MBeanServer _mBeanServer;
 	private Map<String, ObjectName> _objectNameCache =
-		new HashMap<String, ObjectName>();
+		new ConcurrentHashMap<String, ObjectName>();
 
 }

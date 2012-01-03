@@ -38,6 +38,11 @@ public abstract class LayoutSetPrototypeBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a layout set prototype model instance should use the {@link LayoutSetPrototype} interface instead.
 	 */
 	public void persist() throws SystemException {
-		LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(this);
+		if (this.isNew()) {
+			LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(this);
+		}
+		else {
+			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(this);
+		}
 	}
 }

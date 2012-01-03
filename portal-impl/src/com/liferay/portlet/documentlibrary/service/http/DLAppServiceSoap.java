@@ -382,6 +382,33 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* Returns the number of file entries and shortcuts in the folder.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param folderId the primary key of the folder
+	* @param status the workflow status
+	* @param mimeTypes allowed media types
+	* @return the number of file entries and shortcuts in the folder
+	* @throws PortalException if the folder ould not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getFileEntriesAndFileShortcutsCount(long repositoryId,
+		long folderId, int status, java.lang.String[] mimeTypes)
+		throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId,
+					folderId, status, mimeTypes);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the number of file entries in the folder.
 	*
 	* @param repositoryId the primary key of the file entry's repository
@@ -645,6 +672,34 @@ public class DLAppServiceSoap {
 		try {
 			int returnValue = DLAppServiceUtil.getGroupFileEntriesCount(groupId,
 					userId, rootFolderId, mimeTypes, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the number of immediate subfolders of the parent folder that are
+	* used for mounting third-party repositories. This method is only supported
+	* by the Liferay repository.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param parentFolderId the primary key of the parent folder
+	* @return the number of folders of the parent folder that are used for
+	mounting third-party repositories
+	* @throws PortalException if the repository or parent folder could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getMountFoldersCount(long repositoryId,
+		long parentFolderId) throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getMountFoldersCount(repositoryId,
+					parentFolderId);
 
 			return returnValue;
 		}

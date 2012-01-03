@@ -14,9 +14,15 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portal.util.PortletKeys;
+
+import java.util.Date;
 
 /**
  * @author Alexander Chow
@@ -33,6 +39,8 @@ public class PortletPreferencesListener
 	@Override
 	public void onAfterUpdate(PortletPreferences portletPreferences) {
 		clearCache(portletPreferences);
+
+		updateLayout(portletPreferences);
 	}
 
 	protected void clearCache(PortletPreferences portletPreferences) {
@@ -65,5 +73,31 @@ public class PortletPreferencesListener
 			CacheUtil.clearCache();
 		}
 	}
+
+	protected void updateLayout(PortletPreferences portletPreferences) {
+		try {
+			if ((portletPreferences.getOwnerType() ==
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
+				(portletPreferences.getPlid() > 0)) {
+
+				Layout layout = LayoutLocalServiceUtil.fetchLayout(
+					portletPreferences.getPlid());
+
+				if (layout == null) {
+					return;
+				}
+
+				layout.setModifiedDate(new Date());
+
+				LayoutLocalServiceUtil.updateLayout(layout, false);
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to update the layout's modified date", e);
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortletPreferencesListener.class);
 
 }

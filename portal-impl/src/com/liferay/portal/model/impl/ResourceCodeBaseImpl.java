@@ -38,6 +38,11 @@ public abstract class ResourceCodeBaseImpl extends ResourceCodeModelImpl
 	 * Never modify or reference this class directly. All methods that expect a resource code model instance should use the {@link ResourceCode} interface instead.
 	 */
 	public void persist() throws SystemException {
-		ResourceCodeLocalServiceUtil.updateResourceCode(this);
+		if (this.isNew()) {
+			ResourceCodeLocalServiceUtil.addResourceCode(this);
+		}
+		else {
+			ResourceCodeLocalServiceUtil.updateResourceCode(this);
+		}
 	}
 }

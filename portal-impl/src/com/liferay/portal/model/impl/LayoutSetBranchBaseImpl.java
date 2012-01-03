@@ -38,6 +38,11 @@ public abstract class LayoutSetBranchBaseImpl extends LayoutSetBranchModelImpl
 	 * Never modify or reference this class directly. All methods that expect a layout set branch model instance should use the {@link LayoutSetBranch} interface instead.
 	 */
 	public void persist() throws SystemException {
-		LayoutSetBranchLocalServiceUtil.updateLayoutSetBranch(this);
+		if (this.isNew()) {
+			LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(this);
+		}
+		else {
+			LayoutSetBranchLocalServiceUtil.updateLayoutSetBranch(this);
+		}
 	}
 }

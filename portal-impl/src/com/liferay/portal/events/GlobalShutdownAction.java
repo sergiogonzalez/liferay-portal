@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -173,6 +174,14 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		try {
 			LogFactoryUtil.setLogFactory(new Jdk14LogFactoryImpl());
+		}
+		catch (Exception e) {
+		}
+
+		// Scheduler engine
+
+		try {
+			SchedulerEngineUtil.shutdown();
 		}
 		catch (Exception e) {
 		}

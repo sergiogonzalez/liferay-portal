@@ -856,6 +856,20 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			preferencesKey, preferencesValue);
 	}
 
+	public int getLayoutsCount(com.liferay.portal.model.Group group,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.getLayoutsCount(group, privateLayout);
+	}
+
+	public int getLayoutsCount(com.liferay.portal.model.User user,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.getLayoutsCount(user, privateLayout);
+	}
+
 	/**
 	* Returns the primary key to use for the next layout.
 	*
@@ -894,6 +908,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		return _layoutLocalService.getScopeGroupLayouts(groupId, privateLayout);
 	}
 
+	public boolean hasLayouts(com.liferay.portal.model.Group group,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.hasLayouts(group, privateLayout);
+	}
+
 	/**
 	* Returns <code>true</code> if the group has any layouts;
 	* <code>false</code> otherwise.
@@ -910,6 +931,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.hasLayouts(groupId, privateLayout,
 			parentLayoutId);
+	}
+
+	public boolean hasLayouts(com.liferay.portal.model.User user,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.hasLayouts(user, privateLayout);
 	}
 
 	/**

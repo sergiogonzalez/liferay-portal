@@ -38,6 +38,11 @@ public abstract class PasswordPolicyRelBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a password policy rel model instance should use the {@link PasswordPolicyRel} interface instead.
 	 */
 	public void persist() throws SystemException {
-		PasswordPolicyRelLocalServiceUtil.updatePasswordPolicyRel(this);
+		if (this.isNew()) {
+			PasswordPolicyRelLocalServiceUtil.addPasswordPolicyRel(this);
+		}
+		else {
+			PasswordPolicyRelLocalServiceUtil.updatePasswordPolicyRel(this);
+		}
 	}
 }

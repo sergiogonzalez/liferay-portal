@@ -129,6 +129,8 @@ else {
 
 				<%
 				List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
+
+				boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
 				%>
 
 				<c:choose>
@@ -146,7 +148,7 @@ else {
 							);
 						},
 					</c:when>
-					<c:otherwise>
+					<c:when test="<%= workflowEnabled && !pendingLayoutRevisions.isEmpty() %>">
 
 						<%
 						String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
@@ -158,9 +160,10 @@ else {
 						}
 						%>
 
-						title: '<%= UnicodeLanguageUtil.get(pageContext, submitMessage) %>',
 						disabled: true,
-					</c:otherwise>
+						title: '<%= UnicodeLanguageUtil.get(pageContext, submitMessage) %>',
+
+					</c:when>
 				</c:choose>
 
 				<%
@@ -171,7 +174,7 @@ else {
 					label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
 				}
 				else {
-					if(WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName())) {
+					if (workflowEnabled) {
 						icon = "shuffle";
 						label = "submit-for-publication";
 					}

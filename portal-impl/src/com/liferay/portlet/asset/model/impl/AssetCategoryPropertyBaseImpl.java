@@ -39,6 +39,11 @@ public abstract class AssetCategoryPropertyBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a asset category property model instance should use the {@link AssetCategoryProperty} interface instead.
 	 */
 	public void persist() throws SystemException {
-		AssetCategoryPropertyLocalServiceUtil.updateAssetCategoryProperty(this);
+		if (this.isNew()) {
+			AssetCategoryPropertyLocalServiceUtil.addAssetCategoryProperty(this);
+		}
+		else {
+			AssetCategoryPropertyLocalServiceUtil.updateAssetCategoryProperty(this);
+		}
 	}
 }

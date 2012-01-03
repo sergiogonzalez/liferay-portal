@@ -39,6 +39,11 @@ public abstract class MDRActionBaseImpl extends MDRActionModelImpl
 	 * Never modify or reference this class directly. All methods that expect a m d r action model instance should use the {@link MDRAction} interface instead.
 	 */
 	public void persist() throws SystemException {
-		MDRActionLocalServiceUtil.updateMDRAction(this);
+		if (this.isNew()) {
+			MDRActionLocalServiceUtil.addMDRAction(this);
+		}
+		else {
+			MDRActionLocalServiceUtil.updateMDRAction(this);
+		}
 	}
 }

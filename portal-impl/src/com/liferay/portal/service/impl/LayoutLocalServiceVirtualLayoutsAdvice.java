@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -90,6 +92,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
 		if (methodName.equals("getLayout") &&
 			(Arrays.equals(parameterTypes, _TYPES_L) ||
 			 Arrays.equals(parameterTypes, _TYPES_L_B_L))) {
@@ -103,8 +107,17 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			Group group = layout.getGroup();
 			LayoutSet layoutSet = layout.getLayoutSet();
 
-			mergeLayoutProtypeLayout(group, layout);
-			mergeLayoutSetProtypeLayouts(group, layoutSet);
+			try {
+				MergeLayoutPrototypesThreadLocal.setInProgress(true);
+				WorkflowThreadLocal.setEnabled(false);
+
+				mergeLayoutProtypeLayout(group, layout);
+				mergeLayoutSetProtypeLayouts(group, layoutSet);
+			}
+			finally {
+				MergeLayoutPrototypesThreadLocal.setInProgress(false);
+				WorkflowThreadLocal.setEnabled(workflowEnabled);
+			}
 		}
 		else if (methodName.equals("getLayouts") &&
 				 (Arrays.equals(parameterTypes, _TYPES_L_B_L) ||
@@ -120,7 +133,16 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);
 
-				mergeLayoutSetProtypeLayouts(group, layoutSet);
+				try {
+					MergeLayoutPrototypesThreadLocal.setInProgress(true);
+					WorkflowThreadLocal.setEnabled(false);
+
+					mergeLayoutSetProtypeLayouts(group, layoutSet);
+				}
+				finally {
+					MergeLayoutPrototypesThreadLocal.setInProgress(false);
+					WorkflowThreadLocal.setEnabled(workflowEnabled);
+				}
 
 				if (!PropsValues.
 						USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE &&
@@ -205,6 +227,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_SETUP,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.THEME,
