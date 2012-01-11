@@ -545,12 +545,25 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 				long size = (Long)image[1];
 
-				addDLFileEntry(
-					uuid, imageId, groupId, companyId, userId,
-					userName, userId, userName, createDate, modifiedDate,
-					groupId, folderId, name, extension, mimeType, title,
-					description, StringPool.BLANK, "1.0", size, 0, smallImageId,
-					largeImageId, custom1ImageId, custom2ImageId);
+				try {
+					addDLFileEntry(
+						uuid, imageId, groupId, companyId, userId, userName,
+						userId, userName, createDate, modifiedDate, groupId,
+						folderId, name, extension, mimeType, title, description,
+						StringPool.BLANK, "1.0", size, 0, smallImageId,
+						largeImageId, custom1ImageId, custom2ImageId);
+				}
+				catch (Exception e) {
+					title = title.concat(StringPool.SPACE).concat(
+						String.valueOf(imageId));
+
+					addDLFileEntry(
+						uuid, imageId, groupId, companyId, userId, userName,
+						userId, userName, createDate, modifiedDate, groupId,
+						folderId, name, extension, mimeType, title, description,
+						StringPool.BLANK, "1.0", size, 0, smallImageId,
+						largeImageId, custom1ImageId, custom2ImageId);
+				}
 
 				addDLFileVersion(
 					increment(), groupId, companyId, userId, userName,
