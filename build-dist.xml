@@ -689,6 +689,8 @@ know what you are doing as it can cause loss of data.
 		<antcall target="zip-tcat" />
 		<antcall target="zip-tomcat" />
 
+		<ant antfile="build-maven.xml" target="zip-maven" inheritAll="false" />
+
 		<!--<antcall target="build-dist-sql-oracle" />-->
 
 		<ant dir="${lp.plugins.dir}" target="extract-plugins-sdk" inheritAll="false" />
@@ -1785,7 +1787,7 @@ sh startWebLogic.sh</echo>
 		<zip destfile="dist/liferay-portal-src-${lp.version}.zip">
 			<zipfileset
 				dir="${lp.source.dir}"
-				excludes="portal-web/test/**,portal-web/test-ant-templates/**"
+				excludes="portal-web/test/com/**,portal-web/test-ant-templates/**"
 				prefix="liferay-portal-src-${lp.version}"
 			/>
 		</zip>

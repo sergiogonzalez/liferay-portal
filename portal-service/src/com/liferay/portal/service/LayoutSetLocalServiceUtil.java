@@ -310,6 +310,16 @@ public class LayoutSetLocalServiceUtil {
 			layoutSetPrototypeLinkEnabled);
 	}
 
+	public static void updateLayoutSetPrototypeLinkEnabled(long groupId,
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateLayoutSetPrototypeLinkEnabled(groupId, privateLayout,
+			layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+	}
+
 	public static void updateLogo(long groupId, boolean privateLayout,
 		boolean logo, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -331,15 +341,6 @@ public class LayoutSetLocalServiceUtil {
 		getService().updateLogo(groupId, privateLayout, logo, is, cleanUpStream);
 	}
 
-	public static void updateLookAndFeel(long groupId,
-		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.updateLookAndFeel(groupId, themeId, colorSchemeId, css, wapTheme);
-	}
-
 	public static com.liferay.portal.model.LayoutSet updateLookAndFeel(
 		long groupId, boolean privateLayout, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
@@ -348,6 +349,15 @@ public class LayoutSetLocalServiceUtil {
 		return getService()
 				   .updateLookAndFeel(groupId, privateLayout, themeId,
 			colorSchemeId, css, wapTheme);
+	}
+
+	public static void updateLookAndFeel(long groupId,
+		java.lang.String themeId, java.lang.String colorSchemeId,
+		java.lang.String css, boolean wapTheme)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateLookAndFeel(groupId, themeId, colorSchemeId, css, wapTheme);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updatePageCount(

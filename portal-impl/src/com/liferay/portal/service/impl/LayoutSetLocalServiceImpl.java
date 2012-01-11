@@ -209,11 +209,34 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			boolean layoutSetPrototypeLinkEnabled)
 		throws PortalException, SystemException {
 
+		updateLayoutSetPrototypeLinkEnabled(
+			groupId, privateLayout, layoutSetPrototypeLinkEnabled, null);
+	}
+
+	public void updateLayoutSetPrototypeLinkEnabled(
+			long groupId, boolean privateLayout,
+			boolean layoutSetPrototypeLinkEnabled,
+			String layoutSetPrototypeUuid)
+		throws PortalException, SystemException {
+
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
+		if (Validator.isNull(layoutSetPrototypeUuid)) {
+			layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
+		}
+
+		if (Validator.isNull(layoutSetPrototypeUuid) &&
+			layoutSetPrototypeLinkEnabled) {
+
+			throw new IllegalStateException(
+				"Cannot set layoutSetPrototypeLinkEnabled to true when " +
+					"layoutSetPrototypeUuid is null");
+		}
+
 		layoutSet.setLayoutSetPrototypeLinkEnabled(
 			layoutSetPrototypeLinkEnabled);
+		layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 
 		layoutSetPersistence.update(layoutSet, false);
 	}
@@ -275,16 +298,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 	}
 
-	public void updateLookAndFeel(
-			long groupId, String themeId, String colorSchemeId, String css,
-			boolean wapTheme)
-		throws PortalException, SystemException {
-
-		updateLookAndFeel(
-			groupId, false, themeId, colorSchemeId, css, wapTheme);
-		updateLookAndFeel(groupId, true, themeId, colorSchemeId, css, wapTheme);
-	}
-
 	public LayoutSet updateLookAndFeel(
 			long groupId, boolean privateLayout, String themeId,
 			String colorSchemeId, String css, boolean wapTheme)
@@ -336,6 +349,16 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 
 		return layoutSet;
+	}
+
+	public void updateLookAndFeel(
+			long groupId, String themeId, String colorSchemeId, String css,
+			boolean wapTheme)
+		throws PortalException, SystemException {
+
+		updateLookAndFeel(
+			groupId, false, themeId, colorSchemeId, css, wapTheme);
+		updateLookAndFeel(groupId, true, themeId, colorSchemeId, css, wapTheme);
 	}
 
 	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
