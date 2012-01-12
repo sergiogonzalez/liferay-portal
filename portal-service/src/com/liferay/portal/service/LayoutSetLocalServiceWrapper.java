@@ -297,6 +297,15 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 			privateLayout, layoutSetPrototypeLinkEnabled);
 	}
 
+	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(groupId,
+			privateLayout, layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+	}
+
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -319,14 +328,6 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 			cleanUpStream);
 	}
 
-	public void updateLookAndFeel(long groupId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_layoutSetLocalService.updateLookAndFeel(groupId, themeId,
-			colorSchemeId, css, wapTheme);
-	}
-
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,
 		boolean privateLayout, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
@@ -334,6 +335,14 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutSetLocalService.updateLookAndFeel(groupId, privateLayout,
 			themeId, colorSchemeId, css, wapTheme);
+	}
+
+	public void updateLookAndFeel(long groupId, java.lang.String themeId,
+		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutSetLocalService.updateLookAndFeel(groupId, themeId,
+			colorSchemeId, css, wapTheme);
 	}
 
 	public com.liferay.portal.model.LayoutSet updatePageCount(long groupId,
