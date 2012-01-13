@@ -45,6 +45,8 @@ if (!selectableTree) {
 
 	var LAYOUT_URL = '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid={selPlid}" + StringPool.AMPERSAND + portletDisplay.getNamespace() + "historyKey={historyKey}" %>';
 
+	var nodeArray = [];
+
 	var TreeUtil = {
 		DEFAULT_PARENT_LAYOUT_ID: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
 		OPEN_NODES: '<%= SessionTreeJSClicks.getOpenNodes(request, treeId) %>'.split(','),
@@ -216,22 +218,45 @@ if (!selectableTree) {
 		}
 
 		<c:if test="<%= saveState %>">
-			, updateSessionTreeClick: function(id, open, treeId) {
-				var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_tree_js_click';
+		,
 
-				var data = {
-					nodeId: id,
-					openNode: open || false,
-					treeId: treeId
-				};
+		updateSessionTreeClick: function(id, open, treeId) {
+			var instance = this;
 
-				A.io.request(
-					sessionClickURL,
+			nodeArray.push({
+				nodeId: id,
+				openNode: open || false,
+				treeId: treeId
+			});
+
+			var ioRequest = instance._ioRequest;
+
+			if(!ioRequest){
+				ioRequest = A.io.request(themeDisplay.getPathMain() + '/portal/session_tree_js_click',
 					{
-						data: data
+						autoLoad: false,
+						on: 
+						{
+							complete: function(){
+								if(nodeArray.length){
+									ioRequest.set('data', nodeArray.shift());
+									ioRequest.start();
+								}
+							}
+						}
 					}
 				);
+
+				instance._ioRequest = ioRequest;
 			}
+
+			var transaction = ioRequest.get('transaction');
+
+			if((nodeArray.length && (!transaction || !transaction.isInProgress())){
+				ioRequest.set('data', nodeArray.shift());
+				ioRequest.start();
+			}
+		}
 		</c:if>
 	};
 
