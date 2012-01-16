@@ -36,7 +36,9 @@ public class BookmarksPermission {
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return permissionChecker.hasPermission(
-			groupId, "com.liferay.portlet.bookmarks", groupId, actionId);
+			groupId, _CLASS_NAME, groupId, actionId);
 	}
+
+	private static final String _CLASS_NAME = "com.liferay.portlet.bookmarks";
 
 }
