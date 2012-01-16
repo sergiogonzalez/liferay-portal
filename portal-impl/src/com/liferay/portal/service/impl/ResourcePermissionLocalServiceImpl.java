@@ -1034,6 +1034,16 @@ public class ResourcePermissionLocalServiceImpl
 			ResourcePermissionConstants.OPERATOR_SET);
 	}
 
+	public void setResourcePermissions(
+			long companyId, String name, int scope, String primKey, long roleId,
+			long ownerId, String[] actionIds)
+		throws PortalException, SystemException {
+
+		updateResourcePermission(
+			companyId, name, scope, primKey, roleId, ownerId, actionIds,
+			ResourcePermissionConstants.OPERATOR_SET);
+	}
+
 	/**
 	 * Updates the role's permissions at the scope, setting the actions that can
 	 * be performed on resources of the type. Existing actions are replaced.

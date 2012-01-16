@@ -864,6 +864,16 @@ public class ResourcePermissionLocalServiceUtil {
 			roleId, ownerId, actionIds);
 	}
 
+	public static void setResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long roleId, long ownerId, java.lang.String[] actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setResourcePermissions(companyId, name, scope, primKey, roleId,
+			ownerId, actionIds);
+	}
+
 	/**
 	* Updates the role's permissions at the scope, setting the actions that can
 	* be performed on resources of the type. Existing actions are replaced.
