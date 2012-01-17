@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1714,6 +1715,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if (!Validator.equals(uuid, journalArticle.getUuid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -2090,6 +2101,15 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 					finderArgs, this);
 		}
 
+		if (result instanceof JournalArticle) {
+			JournalArticle journalArticle = (JournalArticle)result;
+
+			if (!Validator.equals(uuid, journalArticle.getUuid()) ||
+					(groupId != journalArticle.getGroupId())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(4);
 
@@ -2242,6 +2262,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((resourcePrimKey != journalArticle.getResourcePrimKey())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2588,6 +2618,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3248,6 +3288,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((companyId != journalArticle.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -3595,6 +3645,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if (!Validator.equals(structureId,
+							journalArticle.getStructureId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3966,6 +4027,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if (!Validator.equals(templateId, journalArticle.getTemplateId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -4343,6 +4414,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((smallImageId != journalArticle.getSmallImageId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -4697,6 +4778,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((resourcePrimKey != journalArticle.getResourcePrimKey()) ||
+						(status != journalArticle.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -5069,6 +5161,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						!Validator.equals(articleId,
+							journalArticle.getArticleId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -5816,6 +5920,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						!Validator.equals(urlTitle, journalArticle.getUrlTitle())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -6561,6 +6676,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						!Validator.equals(structureId,
+							journalArticle.getStructureId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -7308,6 +7435,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						!Validator.equals(templateId,
+							journalArticle.getTemplateId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -8054,6 +8193,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						!Validator.equals(layoutUuid,
+							journalArticle.getLayoutUuid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -8799,6 +8950,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						(status != journalArticle.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -9496,6 +9658,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((companyId != journalArticle.getCompanyId()) ||
+						(version != journalArticle.getVersion())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -9867,6 +10040,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((companyId != journalArticle.getCompanyId()) ||
+						(status != journalArticle.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -10242,6 +10426,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						(classNameId != journalArticle.getClassNameId()) ||
+						(classPK != journalArticle.getClassPK())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -10979,6 +11175,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 					finderArgs, this);
 		}
 
+		if (result instanceof JournalArticle) {
+			JournalArticle journalArticle = (JournalArticle)result;
+
+			if ((groupId != journalArticle.getGroupId()) ||
+					(classNameId != journalArticle.getClassNameId()) ||
+					!Validator.equals(structureId,
+						journalArticle.getStructureId())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(5);
 
@@ -11142,6 +11349,19 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						(classNameId != journalArticle.getClassNameId()) ||
+						!Validator.equals(templateId,
+							journalArticle.getTemplateId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -11924,6 +12144,19 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						(classNameId != journalArticle.getClassNameId()) ||
+						!Validator.equals(layoutUuid,
+							journalArticle.getLayoutUuid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -12708,6 +12941,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 					finderArgs, this);
 		}
 
+		if (result instanceof JournalArticle) {
+			JournalArticle journalArticle = (JournalArticle)result;
+
+			if ((groupId != journalArticle.getGroupId()) ||
+					!Validator.equals(articleId, journalArticle.getArticleId()) ||
+					(version != journalArticle.getVersion())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(5);
 
@@ -12871,6 +13114,19 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						!Validator.equals(articleId,
+							journalArticle.getArticleId()) ||
+						(status != journalArticle.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -13291,6 +13547,19 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						!Validator.equals(articleId,
+							journalArticle.getArticleId()) ||
+						!ArrayUtil.contains(statuses, journalArticle.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = new StringBundler();
@@ -14018,6 +14287,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((groupId != journalArticle.getGroupId()) ||
+						!Validator.equals(urlTitle, journalArticle.getUrlTitle()) ||
+						(status != journalArticle.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -14799,6 +15080,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticle journalArticle : list) {
+				if ((companyId != journalArticle.getCompanyId()) ||
+						(version != journalArticle.getVersion()) ||
+						(status != journalArticle.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;

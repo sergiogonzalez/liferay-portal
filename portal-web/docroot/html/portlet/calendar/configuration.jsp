@@ -144,7 +144,7 @@ String editorContent = emailEventReminderBody;
 					for (String tabs1Name : tabs1NamesArray) {
 					%>
 
-					<aui:option label="<%= tabs1Name %>" selected="<%= tabs1Default.equals(tabs1Name) %>" />
+						<aui:option label="<%= tabs1Name %>" selected="<%= tabs1Default.equals(tabs1Name) %>" />
 
 					<%
 					}

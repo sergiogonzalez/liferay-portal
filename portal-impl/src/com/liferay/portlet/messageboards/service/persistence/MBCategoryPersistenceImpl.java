@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -711,6 +712,16 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		List<MBCategory> list = (List<MBCategory>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if (!Validator.equals(uuid, mbCategory.getUuid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -1087,6 +1098,15 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					finderArgs, this);
 		}
 
+		if (result instanceof MBCategory) {
+			MBCategory mbCategory = (MBCategory)result;
+
+			if (!Validator.equals(uuid, mbCategory.getUuid()) ||
+					(groupId != mbCategory.getGroupId())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(4);
 
@@ -1233,6 +1253,16 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		List<MBCategory> list = (List<MBCategory>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1892,6 +1922,16 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		List<MBCategory> list = (List<MBCategory>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((companyId != mbCategory.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -2246,6 +2286,17 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		List<MBCategory> list = (List<MBCategory>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+						(parentCategoryId != mbCategory.getParentCategoryId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2622,6 +2673,18 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		List<MBCategory> list = (List<MBCategory>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+						!ArrayUtil.contains(parentCategoryIds,
+							mbCategory.getParentCategoryId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = new StringBundler();

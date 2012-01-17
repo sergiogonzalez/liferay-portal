@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -892,6 +893,16 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if (!Validator.equals(uuid, calEvent.getUuid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -1268,6 +1279,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					finderArgs, this);
 		}
 
+		if (result instanceof CalEvent) {
+			CalEvent calEvent = (CalEvent)result;
+
+			if (!Validator.equals(uuid, calEvent.getUuid()) ||
+					(groupId != calEvent.getGroupId())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(4);
 
@@ -1415,6 +1435,16 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if ((companyId != calEvent.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1759,6 +1789,16 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if ((groupId != calEvent.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2417,6 +2457,16 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if ((remindBy != calEvent.getRemindBy())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -2770,6 +2820,17 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if ((groupId != calEvent.getGroupId()) ||
+						!Validator.equals(type, calEvent.getType())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3166,6 +3227,17 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if ((groupId != calEvent.getGroupId()) ||
+						!ArrayUtil.contains(types, calEvent.getType())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = new StringBundler();
@@ -3846,6 +3918,17 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if ((groupId != calEvent.getGroupId()) ||
+						(repeating != calEvent.getRepeating())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -4547,6 +4630,18 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if ((groupId != calEvent.getGroupId()) ||
+						!Validator.equals(type, calEvent.getType()) ||
+						(repeating != calEvent.getRepeating())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -4966,6 +5061,18 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CalEvent calEvent : list) {
+				if ((groupId != calEvent.getGroupId()) ||
+						!ArrayUtil.contains(types, calEvent.getType()) ||
+						(repeating != calEvent.getRepeating())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = new StringBundler();

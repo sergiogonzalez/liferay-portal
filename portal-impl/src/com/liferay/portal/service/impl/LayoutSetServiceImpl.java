@@ -21,6 +21,7 @@ import com.liferay.portal.model.Plugin;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
 
 import java.io.InputStream;
 
@@ -33,10 +34,11 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 	 * Updates the state of the layout set prototype link.
 	 *
 	 * <p>
-	 * Setting <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code>
-	 * and <code>layoutSetPrototypeUuid</code> to <code>null</code> when the
-	 * layout set prototype's current uuid is <code>null</code> will result in
-	 * an <code>IllegalStateException</code>.
+	 * <strong>Important:</strong> Setting
+	 * <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and
+	 * <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout
+	 * set prototype's current uuid is <code>null</code> will result in an
+	 * <code>IllegalStateException</code>.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
@@ -53,6 +55,15 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			boolean layoutSetPrototypeLinkEnabled,
 			String layoutSetPrototypeUuid)
 		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+
+		if (!layoutSetPrototypeLinkEnabled) {
+			PortalPermissionUtil.check(
+				getPermissionChecker(),
+				ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
+		}
 
 		layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(
 			groupId, privateLayout, layoutSetPrototypeLinkEnabled,

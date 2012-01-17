@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -716,6 +717,16 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		List<DLFileEntryType> list = (List<DLFileEntryType>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntryType dlFileEntryType : list) {
+				if (!Validator.equals(uuid, dlFileEntryType.getUuid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -1084,6 +1095,15 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 					finderArgs, this);
 		}
 
+		if (result instanceof DLFileEntryType) {
+			DLFileEntryType dlFileEntryType = (DLFileEntryType)result;
+
+			if (!Validator.equals(uuid, dlFileEntryType.getUuid()) ||
+					(groupId != dlFileEntryType.getGroupId())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(3);
 
@@ -1228,6 +1248,16 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 		List<DLFileEntryType> list = (List<DLFileEntryType>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntryType dlFileEntryType : list) {
+				if ((groupId != dlFileEntryType.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1573,6 +1603,16 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 		List<DLFileEntryType> list = (List<DLFileEntryType>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntryType dlFileEntryType : list) {
+				if (!ArrayUtil.contains(groupIds, dlFileEntryType.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = new StringBundler();
@@ -2139,6 +2179,15 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		if (retrieveFromCache) {
 			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_N,
 					finderArgs, this);
+		}
+
+		if (result instanceof DLFileEntryType) {
+			DLFileEntryType dlFileEntryType = (DLFileEntryType)result;
+
+			if ((groupId != dlFileEntryType.getGroupId()) ||
+					!Validator.equals(name, dlFileEntryType.getName())) {
+				result = null;
+			}
 		}
 
 		if (result == null) {
@@ -2932,6 +2981,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 
+	static {
+		FINDER_PATH_GET_DLFOLDERS.setCacheKeyGeneratorCacheName(null);
+	}
+
 	/**
 	 * Returns an ordered range of all the document library folders associated with the document library file entry type.
 	 *
@@ -3009,6 +3062,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			Long.class,
 			DLFileEntryTypeModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME,
 			"getDLFoldersSize", new String[] { Long.class.getName() });
+
+	static {
+		FINDER_PATH_GET_DLFOLDERS_SIZE.setCacheKeyGeneratorCacheName(null);
+	}
 
 	/**
 	 * Returns the number of document library folders associated with the document library file entry type.
@@ -3406,6 +3463,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 
+	static {
+		FINDER_PATH_GET_DDMSTRUCTURES.setCacheKeyGeneratorCacheName(null);
+	}
+
 	/**
 	 * Returns an ordered range of all the d d m structures associated with the document library file entry type.
 	 *
@@ -3483,6 +3544,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			Long.class,
 			DLFileEntryTypeModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DDMSTRUCTURES_NAME,
 			"getDDMStructuresSize", new String[] { Long.class.getName() });
+
+	static {
+		FINDER_PATH_GET_DDMSTRUCTURES_SIZE.setCacheKeyGeneratorCacheName(null);
+	}
 
 	/**
 	 * Returns the number of d d m structures associated with the document library file entry type.

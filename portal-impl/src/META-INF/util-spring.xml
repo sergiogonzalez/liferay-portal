@@ -72,6 +72,9 @@
 					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
 				</entry>
 				<entry key="com.liferay.portal.kernel.dao.orm.FinderCache">
+					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
+				</entry>
+				<entry key="com.liferay.portal.kernel.dao.orm.FinderCache#BaseModel">
 					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
 				</entry>
 				<entry key="com.liferay.portal.language.LanguageResources">

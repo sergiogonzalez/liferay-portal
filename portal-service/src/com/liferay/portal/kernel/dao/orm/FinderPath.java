@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.BaseModel;
 
 import java.io.Serializable;
 
@@ -52,6 +53,15 @@ public class FinderPath {
 		_params = params;
 		_columnBitmask = columnBitmask;
 
+		if (BaseModel.class.isAssignableFrom(_resultClass)) {
+			_cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				FinderCache.class.getName() + "#BaseModel");
+		}
+		else {
+			_cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				FinderCache.class.getName());
+		}
+
 		_initCacheKeyPrefix();
 		_initLocalCacheKeyPrefix();
 	}
@@ -68,11 +78,7 @@ public class FinderPath {
 			sb.append(StringUtil.toHexString(arg));
 		}
 
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				FinderCache.class.getName());
-
-		return cacheKeyGenerator.getCacheKey(sb);
+		return _cacheKeyGenerator.getCacheKey(sb);
 	}
 
 	public Serializable encodeLocalCacheKey(Object[] args) {
@@ -87,11 +93,7 @@ public class FinderPath {
 			sb.append(StringUtil.toHexString(arg));
 		}
 
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				FinderCache.class.getName());
-
-		return cacheKeyGenerator.getCacheKey(sb);
+		return _cacheKeyGenerator.getCacheKey(sb);
 	}
 
 	public String getCacheName() {
@@ -122,6 +124,13 @@ public class FinderPath {
 		return _finderCacheEnabled;
 	}
 
+	public void setCacheKeyGeneratorCacheName(
+		String cacheKeyGeneratorCacheName) {
+
+		_cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
+			cacheKeyGeneratorCacheName);
+	}
+
 	private void _initCacheKeyPrefix() {
 		StringBundler sb = new StringBundler(_params.length * 2 + 3);
 
@@ -147,6 +156,7 @@ public class FinderPath {
 
 	private static final String _PARAMS_SEPARATOR = "_P_";
 
+	private CacheKeyGenerator _cacheKeyGenerator;
 	private String _cacheKeyPrefix;
 	private String _cacheName;
 	private long _columnBitmask;

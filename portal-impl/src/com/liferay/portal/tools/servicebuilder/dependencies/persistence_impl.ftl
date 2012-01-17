@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -675,7 +676,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						if (
 							<#list finderColsList as finderCol>
 								<#if finderCol.isPrimitiveType()>
-									${entity.varName}.get${finderCol.methodName}() != ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
+									(${entity.varName}.get${finderCol.methodName}() != ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}())
 								<#else>
 									!Validator.equals(${entity.varName}.get${finderCol.methodName}(), ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}())
 								</#if>
@@ -685,7 +686,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 								</#if>
 							</#list>
 						) {
-
 							Object[] args = new Object[] {
 								<#list finderColsList as finderCol>
 									<#if finderCol.isPrimitiveType()>
@@ -1072,6 +1072,28 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 
 				List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (${entity.name} ${entity.varName} : list) {
+						if (
+							<#list finderColsList as finderCol>
+								<#if finderCol.isPrimitiveType(false)>
+									(${finderCol.name} != ${entity.varName}.get${finderCol.methodName}())
+								<#else>
+									!Validator.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
+								</#if>
+
+								<#if finderCol_has_next>
+									||
+								</#if>
+							</#list>
+						) {
+							list = null;
+
+							break;
+						}
+					}
+				}
 
 				if (list == null) {
 					<#include "persistence_impl_find_by_query.ftl">
@@ -1482,6 +1504,32 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 
 					List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
+
+					if ((list != null) && !list.isEmpty()) {
+						for (${entity.name} ${entity.varName} : list) {
+							if (
+								<#list finderColsList as finderCol>
+									<#if finderCol.hasArrayableOperator()>
+										!ArrayUtil.contains(${finderCol.names}, ${entity.varName}.get${finderCol.methodName}())
+									<#else>
+										<#if finderCol.isPrimitiveType(false)>
+											(${finderCol.name} != ${entity.varName}.get${finderCol.methodName}())
+										<#else>
+											!Validator.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
+										</#if>
+									</#if>
+
+									<#if finderCol_has_next>
+										||
+									</#if>
+								</#list>
+							) {
+								list = null;
+
+								break;
+							}
+						}
+					}
 
 					if (list == null) {
 						<#include "persistence_impl_find_by_arrayable_query.ftl">
@@ -2330,6 +2378,26 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, this);
 				}
 
+				if (result instanceof ${entity.name}) {
+					${entity.name} ${entity.varName} = (${entity.name})result;
+
+					if (
+						<#list finderColsList as finderCol>
+							<#if finderCol.isPrimitiveType(false)>
+								(${finderCol.name} != ${entity.varName}.get${finderCol.methodName}())
+							<#else>
+								!Validator.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
+							</#if>
+
+							<#if finderCol_has_next>
+								||
+							</#if>
+						</#list>
+					) {
+						result = null;
+					}
+				}
+
 				if (result == null) {
 					StringBundler query = new StringBundler(<#if entity.getOrder()??>${finderColsList?size + 2}<#else>${finderColsList?size + 1}</#if>);
 
@@ -2369,20 +2437,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							cacheResult(${entity.varName});
 
 							if (
+								<#list finderColsList as finderCol>
+									<#if finderCol.isPrimitiveType()>
+										(${entity.varName}.get${finderCol.methodName}() != ${finderCol.name})
+									<#else>
+										(${entity.varName}.get${finderCol.methodName}() == null) || !${entity.varName}.get${finderCol.methodName}().equals(${finderCol.name})
+									</#if>
 
-							<#list finderColsList as finderCol>
-								<#if finderCol.isPrimitiveType()>
-									(${entity.varName}.get${finderCol.methodName}() != ${finderCol.name})
-								<#else>
-									(${entity.varName}.get${finderCol.methodName}() == null) ||
-									!${entity.varName}.get${finderCol.methodName}().equals(${finderCol.name})
-								</#if>
-
-								<#if finderCol_has_next>
-									||
-								</#if>
-							</#list>
-
+									<#if finderCol_has_next>
+										||
+									</#if>
+								</#list>
 							) {
 								FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, ${entity.varName});
 							}
@@ -3079,6 +3144,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					.class.getName(), "java.lang.Integer", "java.lang.Integer", "com.liferay.portal.kernel.util.OrderByComparator"
 				});
 
+			static {
+				FINDER_PATH_GET_${tempEntity.names?upper_case}.setCacheKeyGeneratorCacheName(null);
+			}
+
 			/**
 			 * Returns an ordered range of all the ${tempEntity.humanNames} associated with the ${entity.humanName}.
 			 *
@@ -3172,6 +3241,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					.class.getName()
 				});
+
+			static {
+				FINDER_PATH_GET_${tempEntity.names?upper_case}_SIZE.setCacheKeyGeneratorCacheName(null);
+			}
 
 			/**
 			 * Returns the number of ${tempEntity.humanNames} associated with the ${entity.humanName}.

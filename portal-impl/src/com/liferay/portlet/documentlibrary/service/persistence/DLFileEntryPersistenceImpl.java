@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -999,6 +1000,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if (!Validator.equals(uuid, dlFileEntry.getUuid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -1375,6 +1386,15 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					finderArgs, this);
 		}
 
+		if (result instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)result;
+
+			if (!Validator.equals(uuid, dlFileEntry.getUuid()) ||
+					(groupId != dlFileEntry.getGroupId())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(4);
 
@@ -1521,6 +1541,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((groupId != dlFileEntry.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2180,6 +2210,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((companyId != dlFileEntry.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -2533,6 +2573,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((groupId != dlFileEntry.getGroupId()) ||
+						(userId != dlFileEntry.getUserId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3230,6 +3281,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((groupId != dlFileEntry.getGroupId()) ||
+						(folderId != dlFileEntry.getFolderId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -3603,6 +3665,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((groupId != dlFileEntry.getGroupId()) ||
+						!ArrayUtil.contains(folderIds, dlFileEntry.getFolderId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = new StringBundler();
@@ -4241,6 +4314,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((groupId != dlFileEntry.getGroupId()) ||
+						(userId != dlFileEntry.getUserId()) ||
+						(folderId != dlFileEntry.getFolderId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list == null) {
 			StringBundler query = null;
 
@@ -4637,6 +4722,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((groupId != dlFileEntry.getGroupId()) ||
+						(userId != dlFileEntry.getUserId()) ||
+						!ArrayUtil.contains(folderIds, dlFileEntry.getFolderId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = new StringBundler();
@@ -5314,6 +5411,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					finderArgs, this);
 		}
 
+		if (result instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)result;
+
+			if ((groupId != dlFileEntry.getGroupId()) ||
+					(folderId != dlFileEntry.getFolderId()) ||
+					!Validator.equals(name, dlFileEntry.getName())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(5);
 
@@ -5479,6 +5586,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					finderArgs, this);
 		}
 
+		if (result instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)result;
+
+			if ((groupId != dlFileEntry.getGroupId()) ||
+					(folderId != dlFileEntry.getFolderId()) ||
+					!Validator.equals(title, dlFileEntry.getTitle())) {
+				result = null;
+			}
+		}
+
 		if (result == null) {
 			StringBundler query = new StringBundler(5);
 
@@ -5642,6 +5759,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((groupId != dlFileEntry.getGroupId()) ||
+						(folderId != dlFileEntry.getFolderId()) ||
+						(fileEntryTypeId != dlFileEntry.getFileEntryTypeId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -6040,6 +6169,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntry dlFileEntry : list) {
+				if ((groupId != dlFileEntry.getGroupId()) ||
+						!ArrayUtil.contains(folderIds, dlFileEntry.getFolderId()) ||
+						(fileEntryTypeId != dlFileEntry.getFileEntryTypeId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list == null) {
 			StringBundler query = new StringBundler();
