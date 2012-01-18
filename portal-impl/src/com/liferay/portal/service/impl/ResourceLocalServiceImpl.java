@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.ResourceActionsException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,6 +42,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.PermissionsListFilter;
 import com.liferay.portal.security.permission.PermissionsListFilterFactory;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
@@ -406,9 +408,25 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		Role role = roleLocalService.getDefaultGroupRole(groupId);
 
-		resourcePermissionLocalService.setResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), role.getRoleId(), actionIds);
+		try {
+			long groupOwnerId = Long.parseLong(resource.getPrimKey());
+			Group group = GroupLocalServiceUtil.getGroup(groupOwnerId);
+
+			resourcePermissionLocalService.setOwnerResourcePermissions(
+				resource.getCompanyId(), resource.getName(),
+				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
+				groupOwnerId, actionIds);
+		}
+		catch (Exception e) {
+			if ((e instanceof NumberFormatException) ||
+				(e instanceof NoSuchGroupException)) {
+
+				resourcePermissionLocalService.setResourcePermissions(
+					resource.getCompanyId(), resource.getName(),
+					resource.getScope(), resource.getPrimKey(),
+					role.getRoleId(), actionIds);
+			}
+		}
 	}
 
 	protected void addGroupPermissions_6Blocks(
