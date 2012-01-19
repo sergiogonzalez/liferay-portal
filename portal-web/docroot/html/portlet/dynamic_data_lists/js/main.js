@@ -61,21 +61,20 @@ AUI.add(
 					_handleChooseEvent: function() {
 						var instance = this;
 
-						var portletURL = Liferay.PortletURL.createRenderURL();
-
-						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-						portletURL.setParameter('struts_action', '/journal/select_document_library');
-
-						portletURL.setPlid(themeDisplay.getPlid());
-
-						portletURL.setPortletId('15');
-
-						portletURL.setWindowState('pop_up');
+						var uri = Liferay.Util.addParams(
+							{
+								groupId: themeDisplay.getScopeGroupId(),
+								p_p_id: '15',
+								p_p_state: 'pop_up',
+								struts_action: '/journal/select_document_library'
+							},
+							themeDisplay.getURLControlPanel()
+						);
 
 						Liferay.Util.openWindow(
 							{
 								title: Liferay.Language.get('javax.portlet.title.20'),
-								uri: portletURL.toString()
+								uri: uri
 							}
 						);
 					},
@@ -466,7 +465,7 @@ AUI.add(
 									if (value !== STR_EMPTY) {
 										var fileData = SpreadSheet.Util.parseJSON(value);
 
-										if (fileData.recordId) {
+										if (fileData.classPK) {
 											label = fileData.name;
 										}
 									}
