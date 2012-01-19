@@ -319,6 +319,7 @@ else if (dlFileEntryType != null) {
 				</c:choose>
 
 				<%
+				Test
 				if (fileEntryTypeId > 0) {
 					try {
 						List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
