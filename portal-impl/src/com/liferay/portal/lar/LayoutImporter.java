@@ -1120,6 +1120,8 @@ public class LayoutImporter {
 
 		fixTypeSettings(importedLayout);
 
+		importedLayout.setIconImage(false);
+
 		if (layout.isIconImage()) {
 			String iconImagePath = layoutElement.elementText("icon-image-path");
 
@@ -1128,6 +1130,11 @@ public class LayoutImporter {
 
 			if ((iconBytes != null) && (iconBytes.length > 0)) {
 				importedLayout.setIconImage(true);
+
+				if (Validator.isNull(importedLayout.getIconImageId())) {
+					long iconImageId = CounterLocalServiceUtil.increment();
+					importedLayout.setIconImageId(iconImageId);
+				}
 
 				ImageLocalServiceUtil.updateImage(
 					importedLayout.getIconImageId(), iconBytes);
