@@ -274,6 +274,10 @@ public class ArrayUtil {
 	}
 
 	public static <T> T[] append(T[]... arrays) {
+		if (arrays.length == 0) {
+			return null;
+		}
+
 		int length = 0;
 
 		for (T[] array : arrays) {
