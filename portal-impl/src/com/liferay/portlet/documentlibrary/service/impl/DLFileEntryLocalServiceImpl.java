@@ -122,7 +122,7 @@ public class DLFileEntryLocalServiceImpl
 			user.getCompanyId(), folderId);
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
-		String extension = getExtension(title, sourceFileName);
+		String extension = FileUtil.getExtension(sourceFileName);
 		fileEntryTypeId = getFileEntryTypeId(
 			DLUtil.getGroupIds(groupId), folderId, fileEntryTypeId);
 		Date now = new Date();
@@ -918,7 +918,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		String extension = getExtension(title, sourceFileName);
+		String extension = FileUtil.getExtension(sourceFileName);
 
 		String extraSettings = StringPool.BLANK;
 
@@ -1302,14 +1302,6 @@ public class DLFileEntryLocalServiceImpl
 		Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
 
 		indexer.delete(dlFileEntry);
-	}
-
-	protected String getExtension(String title, String sourceFileName) {
-		if (Validator.isNull(sourceFileName)) {
-			sourceFileName = title;
-		}
-
-		return FileUtil.getExtension(sourceFileName);
 	}
 
 	protected Long getFileEntryTypeId(
