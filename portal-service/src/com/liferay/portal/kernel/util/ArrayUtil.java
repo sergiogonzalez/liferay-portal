@@ -274,13 +274,17 @@ public class ArrayUtil {
 	}
 
 	public static <T> T[] append(T[]... arrays) {
+		if (arrays.length == 0) {
+			return null;
+		}
+
 		int length = 0;
 
 		for (T[] array : arrays) {
 			length += array.length;
 		}
 
-		Class<?> arraysClass = arrays.getClass();
+		Class<?> arraysClass = arrays[0].getClass();
 
 		T[] newArray = (T[])Array.newInstance(
 			arraysClass.getComponentType(), length);
