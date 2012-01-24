@@ -1524,6 +1524,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
 
+		boolean update = GetterUtil.getBoolean(
+			(String)serviceContext.getAttribute("update"));
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 
@@ -1636,9 +1639,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						}
 					}
 				}
+			}
 
-				// Subscriptions
+			// Subscriptions
 
+			if (update || (oldStatus != WorkflowConstants.STATUS_APPROVED)) {
 				notifySubscribers(message, serviceContext);
 			}
 
