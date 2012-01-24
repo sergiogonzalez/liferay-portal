@@ -1639,14 +1639,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						}
 					}
 				}
+			}
 
-				// Subscriptions
+			// Subscriptions
 
+			if (update || (oldStatus != WorkflowConstants.STATUS_APPROVED)) {
 				notifySubscribers(message, serviceContext);
 			}
-			else if (update) {
-				notifySubscribers(message, serviceContext);
-			}
+
 			// Indexer
 
 			if (!message.isDiscussion()) {
