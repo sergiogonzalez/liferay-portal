@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+ <?xml version="1.0"?>
 
 <project name="portal-dist" basedir="." default="dist" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build.xml" />
