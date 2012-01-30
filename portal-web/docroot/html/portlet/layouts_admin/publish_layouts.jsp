@@ -108,24 +108,24 @@ try {
 catch (NoSuchLayoutException nsle) {
 }
 
-long[] selectedPlids = new long[0];
+long[] selectedLayoutIds = new long[0];
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout", tabs1.equals("private-pages"));
 
 if (selPlid > 0) {
-	selectedPlids = new long[] {selPlid};
+	selectedLayoutIds = new long[] {selLayout.getLayoutId()};
 }
 else {
 	treeKey = treeKey + privateLayout;
 
-	selectedPlids = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ','));
+	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ','));
 }
 
 List results = new ArrayList();
 
-for (int i = 0; i < selectedPlids.length; i++) {
+for (int i = 0; i < selectedLayoutIds.length; i++) {
 	try {
-		results.add(LayoutLocalServiceUtil.getLayout(selectedPlids[i]));
+		results.add(LayoutLocalServiceUtil.getLayout(selGroupId, privateLayout, selectedLayoutIds[i]));
 	}
 	catch (NoSuchLayoutException nsle) {
 	}
@@ -389,6 +389,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesPortletsPanel" persistState="<%= true %>" title="applications">
 						<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets.jspf" %>
+					</liferay-ui:panel>
+
+					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesAssetsPanel" persistState="<%= true %>" title="asset-types">
+						<%@ include file="/html/portlet/layouts_admin/publish_layouts_assets.jspf" %>
 					</liferay-ui:panel>
 
 					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesOptionsPanel" persistState="<%= true %>" title="other">

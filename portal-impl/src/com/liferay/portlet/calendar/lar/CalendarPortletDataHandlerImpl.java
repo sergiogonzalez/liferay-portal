@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerAsset;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -46,14 +47,14 @@ public class CalendarPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_events, _categories, _comments, _ratings, _tags
+			_events
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_events, _categories, _comments, _ratings, _tags
+			_events
 		};
 	}
 
@@ -287,13 +288,20 @@ public class CalendarPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _comments =
 		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
 
-	private static PortletDataHandlerBoolean _events =
-		new PortletDataHandlerBoolean(_NAMESPACE, "events", true, true);
+	private static PortletDataHandlerBoolean _events;
 
 	private static PortletDataHandlerBoolean _ratings =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
 
 	private static PortletDataHandlerBoolean _tags =
 		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
+
+	static {
+		_events = new PortletDataHandlerAsset(
+			_NAMESPACE, "events", true, true,
+			new PortletDataHandlerControl[] {
+				 _categories, _comments, _ratings, _tags
+			});
+	}
 
 }

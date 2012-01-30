@@ -123,6 +123,8 @@ public interface PropsKeys {
 
 	public static final String AUTH_LOGIN_PORTLET_NAME = "auth.login.portlet.name";
 
+	public static final String AUTH_LOGIN_PROMPT_ENABLED = "auth.login.prompt.enabled";
+
 	public static final String AUTH_LOGIN_SITE_URL = "auth.login.site.url";
 
 	public static final String AUTH_LOGIN_URL = "auth.login.url";
@@ -1549,7 +1551,7 @@ public interface PropsKeys {
 
 	public static final String PERMISSIONS_INLINE_SQL_CHECK_ENABLED = "permissions.inline.sql.check.enabled";
 
-	public static final String PERMISSIONS_LAYOUT_PUBLIC_CHECK_GUEST_ENABLED = "permissions.layout.check.guest.enabled";
+	public static final String PERMISSIONS_LAYOUT_PUBLIC_CHECK_GUEST_ENABLED = "permissions.layout.public.check.guest.enabled";
 
 	public static final String PERMISSIONS_LIST_FILTER = "permissions.list.filter";
 

@@ -33,6 +33,7 @@ page import="com.liferay.portal.RemoteOptionsException" %><%@
 page import="com.liferay.portal.RequiredLayoutException" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataException" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandler" %><%@
+page import="com.liferay.portal.kernel.lar.PortletDataHandlerAsset" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandlerBoolean" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandlerChoice" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandlerControl" %><%@

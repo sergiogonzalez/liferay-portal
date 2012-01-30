@@ -33,7 +33,7 @@ for (int i = 0; i < controls.length; i++) {
 
 				<aui:input disabled="<%= controls[i].isDisabled() %>" label="<%= controls[i].getControlName() %>" name="<%= control.getNamespacedControlName() %>" type="checkbox" value="<%= control.getDefaultState() %>" />
 
-				<c:if test="<%= children != null %>">
+				<c:if test="<%= (children != null) && !(controls[i] instanceof PortletDataHandlerAsset) %>">
 					<ul id="<portlet:namespace /><%= control.getNamespacedControlName() %>Controls">
 
 						<%

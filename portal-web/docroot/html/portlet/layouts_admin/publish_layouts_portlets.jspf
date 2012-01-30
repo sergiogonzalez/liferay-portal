@@ -67,6 +67,7 @@ for (Portlet alwaysExportablePortlet : alwaysExportablePortlets) {
 }
 
 portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(application, locale));
+request.setAttribute("publish_layouts.jsp-portletsList", portletsList);
 %>
 
 <div>

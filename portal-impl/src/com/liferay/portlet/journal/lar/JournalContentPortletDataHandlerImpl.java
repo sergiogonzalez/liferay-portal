@@ -72,15 +72,14 @@ public class JournalContentPortletDataHandlerImpl
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_selectedArticles, _embeddedAssets, _images, _comments, _ratings,
-			_tags
+			_selectedArticles, _embeddedAssets
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_selectedArticles, _images, _comments, _ratings, _tags
+			_selectedArticles
 		};
 	}
 
@@ -319,23 +318,11 @@ public class JournalContentPortletDataHandlerImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletDataHandlerImpl.class);
 
-	private static PortletDataHandlerBoolean _comments =
-		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
-
 	private static PortletDataHandlerBoolean _embeddedAssets =
 		new PortletDataHandlerBoolean(_NAMESPACE, "embedded-assets");
-
-	private static PortletDataHandlerBoolean _images =
-		new PortletDataHandlerBoolean(_NAMESPACE, "images");
-
-	private static PortletDataHandlerBoolean _ratings =
-		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
 
 	private static PortletDataHandlerBoolean _selectedArticles =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "selected-web-content", true, true);
-
-	private static PortletDataHandlerBoolean _tags =
-		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
 
 }

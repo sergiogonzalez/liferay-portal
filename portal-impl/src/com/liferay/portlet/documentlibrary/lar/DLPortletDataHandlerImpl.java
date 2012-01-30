@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerAsset;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.log.Log;
@@ -441,16 +442,14 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_repositories, _foldersAndDocuments, _shortcuts, _ranks,
-			_categories, _comments, _ratings, _tags
+			_repositories, _foldersAndDocuments, _shortcuts, _ranks
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_repositories, _foldersAndDocuments, _shortcuts, _ranks,
-			_categories, _comments, _ratings, _tags
+			_repositories, _foldersAndDocuments, _shortcuts, _ranks
 		};
 	}
 
@@ -1637,9 +1636,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _comments =
 		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
 
-	private static PortletDataHandlerBoolean _foldersAndDocuments =
-		new PortletDataHandlerBoolean(
-			_NAMESPACE, "folders-and-documents", true, true);
+	private static PortletDataHandlerBoolean _foldersAndDocuments;
 
 	private static PortletDataHandlerBoolean _ranks =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ranks");
@@ -1655,5 +1652,14 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static PortletDataHandlerBoolean _tags =
 		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
+
+	static {
+		 _foldersAndDocuments =
+			new PortletDataHandlerAsset(
+				_NAMESPACE, "folders-and-documents", true, true,
+				new PortletDataHandlerControl[] {
+					_categories, _comments, _ratings, _tags
+				});
+	}
 
 }
