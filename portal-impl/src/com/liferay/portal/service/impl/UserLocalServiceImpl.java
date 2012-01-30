@@ -25,6 +25,7 @@ import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.NoSuchContactException;
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchTicketException;
 import com.liferay.portal.NoSuchUserException;
@@ -5414,6 +5415,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					null))) {
 
 			throw new CompanyMaxUsersException();
+		}
+
+		for (long organizationId : organizationIds) {
+			Organization organization =
+				organizationPersistence.fetchByPrimaryKey(organizationId);
+
+			if (organization == null) {
+				throw new NoSuchOrganizationException();
+			}
 		}
 
 		if (!autoScreenName) {
