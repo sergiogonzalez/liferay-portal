@@ -653,6 +653,10 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		_blogsEntry.persist();
 	}
 
+	public boolean isVisible() {
+		return _blogsEntry.isVisible();
+	}
+
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
