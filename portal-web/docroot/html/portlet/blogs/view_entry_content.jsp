@@ -26,16 +26,26 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 <c:choose>
 	<c:when test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.VIEW) && (entry.isApproved() || (entry.getUserId() == user.getUserId()) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE)) %>">
-		<div class="entry <%= entry.isApproved() ? "" : "draft" %>">
+		<div class="entry <%= entry.isVisible() ? "" : "invisible" %>">
 			<div class="entry-content">
 
 				<%
 				String strutsAction = ParamUtil.getString(request, "struts_action");
 				%>
 
-				<c:if test="<%= !entry.isApproved() %>">
+				<c:if test="<%= !entry.isVisible() %>">
 					<h3>
-						<liferay-ui:message key='<%= entry.isPending() ? "pending-approval" : "draft" %>' />
+						<c:choose>
+							<c:when test="<%= entry.isPending() %>">
+								<aui:field-wrapper label="pending-approval" helpMessage="please-note-that-certain-functions-will-be-restricted-until-this-entry-is-not-visible" />
+							</c:when>
+							<c:when test="<%= entry.isDraft() %>">
+								<aui:field-wrapper label="draft" helpMessage="please-note-that-certain-functions-will-be-restricted-until-this-entry-is-not-visible" />
+							</c:when>
+							<c:when test="<%= entry.getDisplayDate().after(now) %>">
+								<aui:field-wrapper label="future-entry" helpMessage="please-note-that-certain-functions-will-be-restricted-until-this-entry-is-not-visible" />
+							</c:when>
+						</c:choose>
 					</h3>
 				</c:if>
 
@@ -174,7 +184,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</c:choose>
 			</div>
 
-			<div class="entry-footer">
+			<div class='<%= entry.isVisible() ? "entry-footer" : "entry-footer-thin" %>'>
 				<div class="entry-author">
 					<liferay-ui:message key="written-by" /> <%= HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), entry.getUserName())) %>
 				</div>
@@ -193,28 +203,33 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</span>
 					</c:if>
 
-					<c:if test="<%= enableComments %>">
-						<span class="comments">
+					<c:choose>
+						<c:when test="<%= enableComments && entry.isVisible() %>">
+							<span class="comments">
 
-							<%
-							long classNameId = PortalUtil.getClassNameId(BlogsEntry.class.getName());
+								<%
+									long classNameId = PortalUtil.getClassNameId(BlogsEntry.class.getName());
 
-							int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(classNameId, entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
-							%>
+									int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(classNameId, entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
+								%>
 
-							<c:choose>
-								<c:when test='<%= strutsAction.equals("/blogs/view_entry") %>'>
-									<%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' />
-								</c:when>
-								<c:otherwise>
-									<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></aui:a>
-								</c:otherwise>
-							</c:choose>
-						</span>
-					</c:if>
+								<c:choose>
+									<c:when test='<%= strutsAction.equals("/blogs/view_entry") %>'>
+										<%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' />
+									</c:when>
+									<c:otherwise>
+										<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></aui:a>
+									</c:otherwise>
+								</c:choose>
+							</span>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="comments-are-currently-disabled" />
+						</c:otherwise>
+					</c:choose>
 				</div>
 
-				<c:if test="<%= enableFlags %>">
+				<c:if test="<%= enableFlags && entry.isVisible() %>">
 					<liferay-ui:flags
 						className="<%= BlogsEntry.class.getName() %>"
 						classPK="<%= entry.getEntryId() %>"
@@ -250,7 +265,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</div>
 					</c:if>
 
-					<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("bottom") %>'>
+					<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("bottom") && entry.isVisible() %>'>
 						<liferay-ui:social-bookmarks
 							displayStyle="<%= socialBookmarksDisplayStyle %>"
 							target="_blank"
@@ -259,7 +274,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						/>
 					</c:if>
 
-					<c:if test="<%= enableRatings %>">
+					<c:if test="<%= enableRatings && entry.isVisible() %>">
 						<liferay-ui:ratings
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entry.getEntryId() %>"
