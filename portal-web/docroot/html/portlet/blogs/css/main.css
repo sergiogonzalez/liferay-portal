@@ -31,6 +31,10 @@
 		margin-bottom: 10px;
 	}
 
+	.entry-footer-thin {
+		height: 15px;
+	}
+
 	.entry-date {
 		background: url(@theme_image_path@/common/date.png) no-repeat 0 50%;
 		color: #999;
@@ -49,7 +53,7 @@
 		margin-bottom: 0.5em;
 	}
 
-	.entry.draft {
+	.entry.invisible {
 		background: #eee;
 		border: 1px solid #ccc;
 		color: #555;

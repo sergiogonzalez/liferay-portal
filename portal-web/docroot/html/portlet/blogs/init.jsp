@@ -81,6 +81,8 @@ boolean showSearch = true;
 boolean showEditEntryPermissions = true;
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+Date now = new Date();
 %>
 
 <%@ include file="/html/portlet/blogs/init-ext.jsp" %>
