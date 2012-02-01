@@ -1637,10 +1637,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					}
 				}
 
-				// Subscriptions
-
-				notifySubscribers(message, serviceContext);
 			}
+
+			// Subscriptions
+
+			notifySubscribers(message, serviceContext);
 
 			// Indexer
 
