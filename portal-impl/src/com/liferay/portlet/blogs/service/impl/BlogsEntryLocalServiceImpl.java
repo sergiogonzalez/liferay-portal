@@ -18,6 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.scheduler.CronTrigger;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -32,8 +38,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.messaging.BlogsStatsUpdateRequest;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
@@ -63,6 +71,7 @@ import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -83,6 +92,7 @@ import net.htmlparser.jericho.StartTag;
  * @author Thiago Moreira
  * @author Juan Fernández
  * @author Zsolt Berentey
+ * @author Mate Thurzo
  */
 public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
@@ -301,6 +311,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			entry.getCompanyId(), entry.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId());
+
+		// Delete scheduled jobs
+
+		unscheduleBlogsStatsUpdate(entry);
 	}
 
 	public void deleteEntry(long entryId)
@@ -353,15 +367,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	public BlogsEntry[] getEntriesPrevAndNext(long entryId)
+	public BlogsEntry[] getEntriesPrevAndNext(long userId, long entryId)
 		throws PortalException, SystemException {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		return blogsEntryPersistence.findByG_S_PrevAndNext(
-			entry.getEntryId(), entry.getGroupId(),
-			WorkflowConstants.STATUS_APPROVED,
-			new EntryDisplayDateComparator(true));
+		if (userId == entry.getUserId()) {
+			return blogsEntryPersistence.findByG_S_PrevAndNext(
+				entry.getEntryId(), entry.getGroupId(),
+				WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+		}
+		else {
+			return blogsEntryPersistence.findByG_LtD_S_PrevAndNext(
+				entry.getEntryId(), entry.getGroupId(), new Date(),
+				WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+		}
 	}
 
 	public BlogsEntry getEntry(long entryId)
@@ -382,11 +404,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_LtD(
-				groupId, displayDate, start, end);
+					groupId, displayDate, start, end);
 		}
 		else {
 			return blogsEntryPersistence.findByG_LtD_S(
-				groupId, displayDate, status, start, end);
+					groupId, displayDate, status, start, end);
 		}
 	}
 
@@ -439,7 +461,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 		else {
 			return blogsEntryPersistence.countByG_LtD_S(
-				groupId, displayDate, status);
+					groupId, displayDate, status);
 		}
 	}
 
@@ -470,11 +492,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_U_LtD(
-				groupId, userId, displayDate, start, end);
+					groupId, userId, displayDate, start, end);
 		}
 		else {
 			return blogsEntryPersistence.findByG_U_LtD_S(
-				groupId, userId, displayDate, status, start, end);
+					groupId, userId, displayDate, status, start, end);
 		}
 	}
 
@@ -485,11 +507,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_U_LtD(
-				groupId, userId, displayDate, start, end, obc);
+					groupId, userId, displayDate, start, end, obc);
 		}
 		else {
 			return blogsEntryPersistence.findByG_U_LtD_S(
-				groupId, userId, displayDate, status, start, end, obc);
+					groupId, userId, displayDate, status, start, end, obc);
 		}
 	}
 
@@ -499,11 +521,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.countByG_U_LtD(
-				groupId, userId, displayDate);
+					groupId, userId, displayDate);
 		}
 		else {
 			return blogsEntryPersistence.countByG_U_LtD_S(
-				groupId, userId, displayDate, status);
+					groupId, userId, displayDate, status);
 		}
 	}
 
@@ -535,6 +557,91 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		return blogsEntryFinder.countByOrganizationId(
 			organizationId, displayDate, status);
+	}
+
+	public boolean hasScheduledStatsUpdate(BlogsEntry blogsEntry)
+		throws PortalException, SystemException {
+
+		String schedulerGroupName = _schedulerGroupNamePrefix.concat(
+				String.valueOf(blogsEntry.getEntryId()));
+
+		List<SchedulerResponse> scheduledJobs =
+			SchedulerEngineUtil.getScheduledJobs(
+				schedulerGroupName, StorageType.PERSISTED);
+
+		if (Validator.isNull(scheduledJobs)) {
+			return false;
+		}
+		else if (scheduledJobs.isEmpty()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	public void notifySubscribers(
+			BlogsEntry entry, ServiceContext serviceContext)
+		throws SystemException {
+
+		if (Validator.isNull(entry) || Validator.isNull(serviceContext)) {
+			throw new SystemException(new IllegalArgumentException());
+		}
+
+		doNotifySubscribers(entry, serviceContext);
+	}
+
+	public void performPings(BlogsEntry entry, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String[] trackbacks = (String[])serviceContext.getAttribute(
+			"trackbacks");
+		Boolean pingOldTrackbacks = GetterUtil.getBoolean(
+			(String)serviceContext.getAttribute("pingOldTrackbacks"));
+
+		pingGoogle(entry, serviceContext);
+		pingPingback(entry, serviceContext);
+		pingTrackbacks(entry, trackbacks, pingOldTrackbacks, serviceContext);
+	}
+
+	public void scheduleBlogsStatsUpdate(
+			BlogsEntry blogsEntry,
+			Object messagePayload)
+		throws PortalException, SystemException {
+
+		try {
+			String schedulerGroupName = _schedulerGroupNamePrefix.concat(
+				String.valueOf(blogsEntry.getEntryId()));
+
+			Calendar startCal = Calendar.getInstance();
+			startCal.setTime(blogsEntry.getDisplayDate());
+			startCal.add(Calendar.SECOND, 10);
+
+			String cronText = SchedulerEngineUtil.getCronText(startCal, true);
+
+			String jobName = PortalUUIDUtil.generate();
+
+			Trigger trigger = new CronTrigger(
+				jobName, schedulerGroupName, startCal.getTime(), null,
+				cronText);
+
+			SchedulerEngineUtil.schedule(
+				trigger, StorageType.PERSISTED, StringPool.BLANK,
+				DestinationNames.BLOGS_STATS_UPDATE,
+				messagePayload, 0);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	public void unscheduleBlogsStatsUpdate(BlogsEntry blogsEntry)
+		throws PortalException, SystemException {
+
+		String schedulerGroupName = _schedulerGroupNamePrefix.concat(
+				String.valueOf(blogsEntry.getEntryId()));
+
+		SchedulerEngineUtil.delete(schedulerGroupName, StorageType.PERSISTED);
 	}
 
 	public void subscribe(long userId, long groupId)
@@ -722,62 +829,123 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
+		Date entryDisplayDate = entry.getDisplayDate();
 
-			// Statistics
+		boolean futureEntry = false;
 
-			blogsStatsUserLocalService.updateStatsUser(
-				entry.getGroupId(), user.getUserId(), entry.getDisplayDate());
+		if (hasScheduledStatsUpdate(entry)) {
+			unscheduleBlogsStatsUpdate(entry);
 
-			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+			futureEntry = true;
+		}
 
-				// Asset
+		if (entryDisplayDate.before(now)) {
+			if (status == WorkflowConstants.STATUS_APPROVED) {
 
-				assetEntryLocalService.updateVisible(
-					BlogsEntry.class.getName(), entryId, true);
+				// Statistics
 
-				// Social
+				blogsStatsUserLocalService.updateStatsUser(
+					entry.getGroupId(), user.getUserId(),
+					entry.getDisplayDate());
 
-				if (oldStatusByUserId == 0) {
-					socialActivityLocalService.addUniqueActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
-				}
-				else {
-					socialActivityLocalService.addActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+
+					// Asset
+
+					assetEntryLocalService.updateVisible(
+						BlogsEntry.class.getName(), entryId, true);
+
+					// Social
+
+					if (futureEntry || (oldStatusByUserId == 0)) {
+						socialActivityLocalService.addUniqueActivity(
+							user.getUserId(), entry.getGroupId(),
+							BlogsEntry.class.getName(), entryId,
+							BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
+					}
+					else {
+						socialActivityLocalService.addActivity(
+							user.getUserId(), entry.getGroupId(),
+							BlogsEntry.class.getName(), entryId,
+							BlogsActivityKeys.UPDATE_ENTRY,
+							StringPool.BLANK, 0);
+					}
+
+					// Indexer
+
+					indexer.reindex(entry);
+
+					// Subscriptions
+
+					notifySubscribers(entry, serviceContext);
+
+					// Ping
+
+					String[] trackbacks = (String[])serviceContext.getAttribute(
+						"trackbacks");
+					Boolean pingOldTrackbacks = GetterUtil.getBoolean(
+						(String)serviceContext.getAttribute(
+							"pingOldTrackbacks"));
+
+					pingGoogle(entry, serviceContext);
+					pingPingback(entry, serviceContext);
+					pingTrackbacks(
+						entry, trackbacks, pingOldTrackbacks, serviceContext);
 				}
 			}
-
-			// Indexer
-
-			indexer.reindex(entry);
-
-			// Subscriptions
-
-			notifySubscribers(entry, serviceContext);
-
-			// Ping
-
-			String[] trackbacks = (String[])serviceContext.getAttribute(
-				"trackbacks");
-			Boolean pingOldTrackbacks = GetterUtil.getBoolean(
-				(String)serviceContext.getAttribute("pingOldTrackbacks"));
-
-			pingGoogle(entry, serviceContext);
-			pingPingback(entry, serviceContext);
-			pingTrackbacks(
-				entry, trackbacks, pingOldTrackbacks, serviceContext);
 		}
-		else if (status != WorkflowConstants.STATUS_APPROVED) {
+		else if (!entryDisplayDate.before(now) &&
+				!entryDisplayDate.equals(now)) {
 
+			BlogsStatsUpdateRequest.Builder updateRequestBuilder;
+
+			if (status == WorkflowConstants.STATUS_APPROVED) {
+				updateRequestBuilder =
+					new BlogsStatsUpdateRequest.Builder(
+						entry.getGroupId(), entry.getUserId(),
+						entry.getEntryId());
+
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+
+					updateRequestBuilder =
+						updateRequestBuilder.assetEntryUpdateNeeded(
+							Boolean.TRUE)
+						.assetEntryVisibility(Boolean.TRUE);
+
+					updateRequestBuilder =
+						updateRequestBuilder.socialActivityUpdateNeeded(
+							Boolean.TRUE)
+						.socialActivityExtraData(StringPool.BLANK)
+						.socialActivityReceiverUserId(0);
+
+					if (oldStatusByUserId == 0) {
+						updateRequestBuilder =
+							updateRequestBuilder.socialActivityUniqueActivity(
+								Boolean.TRUE)
+							.socialActivityActivityKey(
+								BlogsActivityKeys.ADD_ENTRY);
+					}
+					else {
+						updateRequestBuilder =
+							updateRequestBuilder.socialActivityUniqueActivity(
+								Boolean.FALSE)
+							.socialActivityActivityKey(
+								BlogsActivityKeys.UPDATE_ENTRY);
+					}
+				}
+
+				updateRequestBuilder =
+					updateRequestBuilder.serviceContext(serviceContext);
+
+				scheduleBlogsStatsUpdate(entry, updateRequestBuilder.build());
+			}
+		}
+
+		if (status != WorkflowConstants.STATUS_APPROVED) {
 			// Asset
 
 			assetEntryLocalService.updateVisible(
-				BlogsEntry.class.getName(), entryId, false);
+					BlogsEntry.class.getName(), entryId, false);
 
 			// Indexer
 
@@ -819,7 +987,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return newUrlTitle;
 	}
 
-	protected void notifySubscribers(
+	protected void doNotifySubscribers(
 			BlogsEntry entry, ServiceContext serviceContext)
 		throws SystemException {
 
@@ -1148,5 +1316,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BlogsEntryLocalServiceImpl.class);
+
+	private static final String _schedulerGroupNamePrefix =
+		DestinationNames.BLOGS_STATS_UPDATE.concat(StringPool.SLASH);
 
 }
