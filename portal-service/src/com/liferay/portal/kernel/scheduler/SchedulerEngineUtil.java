@@ -140,13 +140,17 @@ public class SchedulerEngineUtil {
 
 			List<DayAndPosition> dayPos = new ArrayList<DayAndPosition>();
 
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.SUNDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.MONDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.TUESDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.WEDNESDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.THURSDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.FRIDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.SATURDAY);
+			_instance._addWeeklyDayPos(portletRequest, dayPos, Calendar.SUNDAY);
+			_instance._addWeeklyDayPos(portletRequest, dayPos, Calendar.MONDAY);
+			_instance._addWeeklyDayPos(
+				portletRequest, dayPos, Calendar.TUESDAY);
+			_instance._addWeeklyDayPos(
+				portletRequest, dayPos, Calendar.WEDNESDAY);
+			_instance._addWeeklyDayPos(
+				portletRequest, dayPos, Calendar.THURSDAY);
+			_instance._addWeeklyDayPos(portletRequest, dayPos, Calendar.FRIDAY);
+			_instance._addWeeklyDayPos(
+				portletRequest, dayPos, Calendar.SATURDAY);
 
 			if (dayPos.size() == 0) {
 				dayPos.add(new DayAndPosition(Calendar.MONDAY, 0));
@@ -474,14 +478,6 @@ public class SchedulerEngineUtil {
 		}
 	}
 
-	private static void addWeeklyDayPos(
-		PortletRequest portletRequest, List<DayAndPosition> list, int day) {
-
-		if (ParamUtil.getBoolean(portletRequest, "weeklyDayPos" + day)) {
-			list.add(new DayAndPosition(day, 0));
-		}
-	}
-
 	private void _addScriptingJob(
 			Trigger trigger, StorageType storageType, String description,
 			String language, String script, int exceptionsMaxSize)
@@ -495,6 +491,14 @@ public class SchedulerEngineUtil {
 		_schedule(
 			trigger, storageType, description,
 			DestinationNames.SCHEDULER_SCRIPTING, message, exceptionsMaxSize);
+	}
+
+	private void _addWeeklyDayPos(
+		PortletRequest portletRequest, List<DayAndPosition> list, int day) {
+
+		if (ParamUtil.getBoolean(portletRequest, "weeklyDayPos" + day)) {
+			list.add(new DayAndPosition(day, 0));
+		}
 	}
 
 	private void _delete(SchedulerEntry schedulerEntry, StorageType storageType)

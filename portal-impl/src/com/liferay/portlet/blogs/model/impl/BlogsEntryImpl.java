@@ -30,15 +30,6 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 	public BlogsEntryImpl() {
 	}
 
-	public boolean isVisible() {
-		if (this.isApproved() && getDisplayDate().before(new Date())) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	public String getSmallImageType() throws PortalException, SystemException {
 		if ((_smallImageType == null) && isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.getImage(
@@ -48,6 +39,19 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		}
 
 		return _smallImageType;
+	}
+
+	public boolean isVisible() {
+		Date displayDate = getDisplayDate();
+
+		Date now = new Date();
+
+		if (isApproved() && displayDate.before(now)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void setSmallImageType(String smallImageType) {

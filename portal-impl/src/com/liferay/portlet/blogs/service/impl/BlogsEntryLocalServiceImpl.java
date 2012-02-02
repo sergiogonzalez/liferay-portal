@@ -404,11 +404,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_LtD(
-					groupId, displayDate, start, end);
+				groupId, displayDate, start, end);
 		}
 		else {
 			return blogsEntryPersistence.findByG_LtD_S(
-					groupId, displayDate, status, start, end);
+				groupId, displayDate, status, start, end);
 		}
 	}
 
@@ -461,7 +461,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 		else {
 			return blogsEntryPersistence.countByG_LtD_S(
-					groupId, displayDate, status);
+				groupId, displayDate, status);
 		}
 	}
 
@@ -492,11 +492,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_U_LtD(
-					groupId, userId, displayDate, start, end);
+				groupId, userId, displayDate, start, end);
 		}
 		else {
 			return blogsEntryPersistence.findByG_U_LtD_S(
-					groupId, userId, displayDate, status, start, end);
+				groupId, userId, displayDate, status, start, end);
 		}
 	}
 
@@ -507,11 +507,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_U_LtD(
-					groupId, userId, displayDate, start, end, obc);
+				groupId, userId, displayDate, start, end, obc);
 		}
 		else {
 			return blogsEntryPersistence.findByG_U_LtD_S(
-					groupId, userId, displayDate, status, start, end, obc);
+				groupId, userId, displayDate, status, start, end, obc);
 		}
 	}
 
@@ -521,11 +521,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.countByG_U_LtD(
-					groupId, userId, displayDate);
+				groupId, userId, displayDate);
 		}
 		else {
 			return blogsEntryPersistence.countByG_U_LtD_S(
-					groupId, userId, displayDate, status);
+				groupId, userId, displayDate, status);
 		}
 	}
 
@@ -605,12 +605,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	public void scheduleBlogsStatsUpdate(
-			BlogsEntry blogsEntry,
-			Object messagePayload)
+			BlogsEntry blogsEntry, Object messagePayload)
 		throws PortalException, SystemException {
 
 		try {
-			String schedulerGroupName = _schedulerGroupNamePrefix.concat(
+			String groupName = _schedulerGroupNamePrefix.concat(
 				String.valueOf(blogsEntry.getEntryId()));
 
 			Calendar startCal = Calendar.getInstance();
@@ -622,26 +621,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			String jobName = PortalUUIDUtil.generate();
 
 			Trigger trigger = new CronTrigger(
-				jobName, schedulerGroupName, startCal.getTime(), null,
-				cronText);
+				jobName, groupName, startCal.getTime(), null, cronText);
 
 			SchedulerEngineUtil.schedule(
 				trigger, StorageType.PERSISTED, StringPool.BLANK,
-				DestinationNames.BLOGS_STATS_UPDATE,
-				messagePayload, 0);
+				DestinationNames.BLOGS_STATS_UPDATE, messagePayload, 0);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
-	}
-
-	public void unscheduleBlogsStatsUpdate(BlogsEntry blogsEntry)
-		throws PortalException, SystemException {
-
-		String schedulerGroupName = _schedulerGroupNamePrefix.concat(
-				String.valueOf(blogsEntry.getEntryId()));
-
-		SchedulerEngineUtil.delete(schedulerGroupName, StorageType.PERSISTED);
 	}
 
 	public void subscribe(long userId, long groupId)
@@ -649,6 +637,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionLocalService.addSubscription(
 			userId, groupId, BlogsEntry.class.getName(), groupId);
+	}
+
+	public void unscheduleBlogsStatsUpdate(BlogsEntry blogsEntry)
+		throws PortalException, SystemException {
+
+		String groupName = _schedulerGroupNamePrefix.concat(
+				String.valueOf(blogsEntry.getEntryId()));
+
+		SchedulerEngineUtil.delete(groupName, StorageType.PERSISTED);
 	}
 
 	public void unsubscribe(long userId, long groupId)
@@ -955,38 +952,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
-		throws SystemException {
-
-		String urlTitle = BlogsUtil.getUrlTitle(entryId, title);
-
-		String newUrlTitle = ModelHintsUtil.trimString(
-			BlogsEntry.class.getName(), "urlTitle", urlTitle);
-
-		for (int i = 1;; i++) {
-			BlogsEntry entry = blogsEntryPersistence.fetchByG_UT(
-				groupId, newUrlTitle);
-
-			if ((entry == null) || (entry.getEntryId() == entryId)) {
-				break;
-			}
-			else {
-				String suffix = StringPool.DASH + i;
-
-				String prefix = newUrlTitle;
-
-				if (newUrlTitle.length() > suffix.length()) {
-					prefix = newUrlTitle.substring(
-						0, newUrlTitle.length() - suffix.length());
-				}
-
-				newUrlTitle = prefix + suffix;
-			}
-		}
-
-		return newUrlTitle;
-	}
-
 	protected void doNotifySubscribers(
 			BlogsEntry entry, ServiceContext serviceContext)
 		throws SystemException {
@@ -1020,7 +985,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsUtil.getEmailEntryAddedEnabled(preferences)) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
+			BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
 		}
 		else {
 			return;
@@ -1071,6 +1036,38 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class.getName(), entry.getGroupId());
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
+		throws SystemException {
+
+		String urlTitle = BlogsUtil.getUrlTitle(entryId, title);
+
+		String newUrlTitle = ModelHintsUtil.trimString(
+			BlogsEntry.class.getName(), "urlTitle", urlTitle);
+
+		for (int i = 1;; i++) {
+			BlogsEntry entry = blogsEntryPersistence.fetchByG_UT(
+				groupId, newUrlTitle);
+
+			if ((entry == null) || (entry.getEntryId() == entryId)) {
+				break;
+			}
+			else {
+				String suffix = StringPool.DASH + i;
+
+				String prefix = newUrlTitle;
+
+				if (newUrlTitle.length() > suffix.length()) {
+					prefix = newUrlTitle.substring(
+						0, newUrlTitle.length() - suffix.length());
+				}
+
+				newUrlTitle = prefix + suffix;
+			}
+		}
+
+		return newUrlTitle;
 	}
 
 	protected void pingGoogle(BlogsEntry entry, ServiceContext serviceContext)
@@ -1314,10 +1311,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		BlogsEntryLocalServiceImpl.class);
-
 	private static final String _schedulerGroupNamePrefix =
 		DestinationNames.BLOGS_STATS_UPDATE.concat(StringPool.SLASH);
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BlogsEntryLocalServiceImpl.class);
 
 }
