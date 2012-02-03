@@ -715,9 +715,6 @@ public class EditFileEntryAction extends PortletAction {
 			FileEntry fileEntry = null;
 
 			if (cmd.equals(Constants.ADD)) {
-				if (Validator.isNull(title)) {
-					title = sourceFileName;
-				}
 
 				// Add file entry
 
