@@ -894,47 +894,36 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		else if (!entryDisplayDate.before(now) &&
 				!entryDisplayDate.equals(now)) {
 
-			BlogsStatsUpdateRequest.Builder updateRequestBuilder;
+			BlogsStatsUpdateRequest updateRequest;
 
 			if (status == WorkflowConstants.STATUS_APPROVED) {
-				updateRequestBuilder =
-					new BlogsStatsUpdateRequest.Builder(
-						entry.getGroupId(), entry.getUserId(),
-						entry.getEntryId());
+				updateRequest = new BlogsStatsUpdateRequest(
+					entry.getGroupId(), entry.getUserId(), entry.getEntryId());
 
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-
-					updateRequestBuilder =
-						updateRequestBuilder.assetEntryUpdateNeeded(
-							Boolean.TRUE)
-						.assetEntryVisibility(Boolean.TRUE);
-
-					updateRequestBuilder =
-						updateRequestBuilder.socialActivityUpdateNeeded(
-							Boolean.TRUE)
-						.socialActivityExtraData(StringPool.BLANK)
-						.socialActivityReceiverUserId(0);
+					updateRequest.setAssetEntryUpdateNeeded(Boolean.TRUE);
+					updateRequest.setAssetEntryVisibility(Boolean.TRUE);
+					updateRequest.setSocialActivityUpdateNeeded(Boolean.TRUE);
+					updateRequest.setSocialActivityExtraData(StringPool.BLANK);
+					updateRequest.setSocialActivityReceiverUserId(0);
 
 					if (oldStatusByUserId == 0) {
-						updateRequestBuilder =
-							updateRequestBuilder.socialActivityUniqueActivity(
-								Boolean.TRUE)
-							.socialActivityActivityKey(
-								BlogsActivityKeys.ADD_ENTRY);
+						updateRequest.setSocialActivityUniqueActivity(
+							Boolean.TRUE);
+						updateRequest.setSocialActivityActivityKey(
+							BlogsActivityKeys.ADD_ENTRY);
 					}
 					else {
-						updateRequestBuilder =
-							updateRequestBuilder.socialActivityUniqueActivity(
-								Boolean.FALSE)
-							.socialActivityActivityKey(
-								BlogsActivityKeys.UPDATE_ENTRY);
+						updateRequest.setSocialActivityUniqueActivity(
+							Boolean.FALSE);
+						updateRequest.setSocialActivityActivityKey(
+							BlogsActivityKeys.UPDATE_ENTRY);
 					}
 				}
 
-				updateRequestBuilder =
-					updateRequestBuilder.serviceContext(serviceContext);
+				updateRequest.setServiceContext(serviceContext);
 
-				scheduleBlogsStatsUpdate(entry, updateRequestBuilder.build());
+				scheduleBlogsStatsUpdate(entry, updateRequest);
 			}
 		}
 

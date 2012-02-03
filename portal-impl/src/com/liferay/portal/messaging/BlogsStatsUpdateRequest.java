@@ -26,6 +26,12 @@ public class BlogsStatsUpdateRequest implements Serializable {
 	public BlogsStatsUpdateRequest() {
 	}
 
+	public BlogsStatsUpdateRequest(long groupId, long userId, long entryId) {
+		_groupId = groupId;
+		_userId = userId;
+		_entryId = entryId;
+	}
+
 	public boolean getAssetEntryVisibility() {
 		return _assetEntryVisibility;
 	}
@@ -104,6 +110,12 @@ public class BlogsStatsUpdateRequest implements Serializable {
 		_socialActivityReceiverUserId = socialActivityReceiverUserId;
 	}
 
+	public void setSocialActivityUniqueActivity(
+		boolean socialActivityUniqueActivity) {
+
+		_socialActivityUniqueActivity = socialActivityUniqueActivity;
+	}
+
 	public void setSocialActivityUpdateNeeded(
 		boolean socialActivityUpdateNeeded) {
 
@@ -112,97 +124,6 @@ public class BlogsStatsUpdateRequest implements Serializable {
 
 	public void setUserId(long userId) {
 		_userId = userId;
-	}
-
-	private BlogsStatsUpdateRequest(
-			boolean assetEntryUpdateNeeded, boolean assetEntryVisibility,
-			long entryId, long groupId, ServiceContext serviceContext,
-			int socialActivityActivityKey, String socialActivityExtraData,
-			long socialActivityReceiverUserId,
-			boolean socialActivityUniqueActivity,
-			boolean socialActivityUpdateNeeded, long userId) {
-
-		_assetEntryUpdateNeeded = assetEntryUpdateNeeded;
-		_assetEntryVisibility = assetEntryVisibility;
-		_entryId = entryId;
-		_groupId = groupId;
-		_serviceContext = serviceContext;
-		_socialActivityActivityKey = socialActivityActivityKey;
-		_socialActivityExtraData = socialActivityExtraData;
-		_socialActivityReceiverUserId = socialActivityReceiverUserId;
-		_socialActivityUniqueActivity = socialActivityUniqueActivity;
-		_socialActivityUpdateNeeded = socialActivityUpdateNeeded;
-		_userId = userId;
-	}
-
-	public static class Builder {
-
-		public Builder(long groupId, long userId, long entryId) {
-			_groupId = groupId;
-			_userId = userId;
-			_entryId = entryId;
-		}
-
-		public Builder assetEntryUpdateNeeded(boolean value) {
-			_assetEntryUpdateNeeded = value;
-			return this;
-		}
-
-		public Builder assetEntryVisibility(boolean value) {
-			_assetEntryVisibility = value;
-			return this;
-		}
-
-		public Builder serviceContext(ServiceContext value) {
-			_serviceContext = value;
-			return this;
-		}
-
-		public Builder socialActivityActivityKey(int value) {
-			_socialActivityActivityKey = value;
-			return this;
-		}
-
-		public Builder socialActivityExtraData(String value) {
-			_socialActivityExtraData = value;
-			return this;
-		}
-
-		public Builder socialActivityReceiverUserId(long value) {
-			_socialActivityReceiverUserId = value;
-			return this;
-		}
-
-		public Builder socialActivityUniqueActivity(boolean value) {
-			_socialActivityUniqueActivity = value;
-			return this;
-		}
-
-		public Builder socialActivityUpdateNeeded(boolean value) {
-			_socialActivityUpdateNeeded = value;
-			return this;
-		}
-
-		public BlogsStatsUpdateRequest build() {
-			return new BlogsStatsUpdateRequest(
-				_assetEntryUpdateNeeded, _assetEntryVisibility, _entryId,
-				_groupId, _serviceContext, _socialActivityActivityKey,
-				_socialActivityExtraData, _socialActivityReceiverUserId,
-				_socialActivityUniqueActivity, _socialActivityUpdateNeeded,
-				_userId);
-		}
-
-		private boolean _assetEntryUpdateNeeded;
-		private boolean _assetEntryVisibility;
-		private long _entryId;
-		private long _groupId;
-		private ServiceContext _serviceContext;
-		private int _socialActivityActivityKey;
-		private String _socialActivityExtraData;
-		private long _socialActivityReceiverUserId;
-		private boolean _socialActivityUniqueActivity;
-		private boolean _socialActivityUpdateNeeded;
-		private long _userId;
 	}
 
 	private boolean _assetEntryUpdateNeeded;
