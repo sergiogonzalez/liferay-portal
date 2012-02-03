@@ -122,7 +122,7 @@ public class LayoutSetStagingHandler implements InvocationHandler {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if (!serviceContext.isSignedIn()) {
+		if ((serviceContext == null) || !serviceContext.isSignedIn()) {
 			return null;
 		}
 
@@ -137,8 +137,7 @@ public class LayoutSetStagingHandler implements InvocationHandler {
 
 	private Object _toEscapedModel() {
 		return ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
-			new Class[] {Layout.class},
+			PortalClassLoaderUtil.getClassLoader(), new Class[] {Layout.class},
 			new LayoutSetStagingHandler(_layoutSet.toEscapedModel()));
 	}
 

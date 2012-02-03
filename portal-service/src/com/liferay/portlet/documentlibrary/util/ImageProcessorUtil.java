@@ -47,19 +47,16 @@ public class ImageProcessorUtil {
 	}
 
 	public static InputStream getThumbnailAsStream(
-			FileVersion fileVersion, int thumbnailIndex)
+			FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getImageProcessor().getThumbnailAsStream(
-			fileVersion, thumbnailIndex);
+		return getImageProcessor().getThumbnailAsStream(fileVersion, index);
 	}
 
-	public static long getThumbnailFileSize(
-			FileVersion fileVersion, int thumbnailIndex)
+	public static long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getImageProcessor().getThumbnailFileSize(
-			fileVersion, thumbnailIndex);
+		return getImageProcessor().getThumbnailFileSize(fileVersion, index);
 	}
 
 	public static boolean hasImages(FileVersion fileVersion) {
@@ -80,8 +77,8 @@ public class ImageProcessorUtil {
 
 	public static void storeThumbnail(
 			long companyId, long groupId, long fileEntryId, long fileVersionId,
-			long custom1ImageId, long custom2ImageId,
-			InputStream is, String type)
+			long custom1ImageId, long custom2ImageId, InputStream is,
+			String type)
 		throws Exception {
 
 		getImageProcessor().storeThumbnail(

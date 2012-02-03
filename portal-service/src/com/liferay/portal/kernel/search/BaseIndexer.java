@@ -389,8 +389,8 @@ public abstract class BaseIndexer implements Indexer {
 	 *             String, boolean)}
 	 */
 	protected void addLocalizedSearchTerm(
-			BooleanQuery searchQuery, SearchContext searchContext,
-			String field, boolean like)
+			BooleanQuery searchQuery, SearchContext searchContext, String field,
+			boolean like)
 		throws Exception {
 
 		addSearchLocalizedTerm(searchQuery, searchContext, field, like);
@@ -556,9 +556,8 @@ public abstract class BaseIndexer implements Indexer {
 			String keywords)
 		throws Exception {
 
-		ExpandoBridge expandoBridge =
-			ExpandoBridgeFactoryUtil.getExpandoBridge(
-				searchContext.getCompanyId(), getClassName(searchContext));
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			searchContext.getCompanyId(), getClassName(searchContext));
 
 		Set<String> attributeNames = SetUtil.fromEnumeration(
 			expandoBridge.getAttributeNames());
@@ -613,8 +612,8 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected void addSearchLocalizedTerm(
-			BooleanQuery searchQuery, SearchContext searchContext,
-			String field, boolean like)
+			BooleanQuery searchQuery, SearchContext searchContext, String field,
+			boolean like)
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, field, like);
@@ -625,8 +624,8 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected void addSearchTerm(
-			BooleanQuery searchQuery, SearchContext searchContext,
-			String field, boolean like)
+			BooleanQuery searchQuery, SearchContext searchContext, String field,
+			boolean like)
 		throws Exception {
 
 		if (Validator.isNull(field)) {

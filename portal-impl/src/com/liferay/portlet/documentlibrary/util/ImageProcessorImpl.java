@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 
@@ -62,6 +64,15 @@ public class ImageProcessorImpl
 		deleteFiles(fileVersion, type);
 	}
 
+	public void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		exportThumbnails(
+			portletDataContext, fileEntry, fileEntryElement, "image");
+	}
+
 	public void generateImages(FileVersion fileVersion) {
 		_instance._generateImages(fileVersion);
 	}
@@ -70,18 +81,16 @@ public class ImageProcessorImpl
 		return _instance._imageMimeTypes;
 	}
 
-	public InputStream getThumbnailAsStream(
-			FileVersion fileVersion, int thumbnailIndex)
+	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return _instance.doGetThumbnailAsStream(fileVersion, thumbnailIndex);
+		return _instance.doGetThumbnailAsStream(fileVersion, index);
 	}
 
-	public long getThumbnailFileSize(
-			FileVersion fileVersion, int thumbnailIndex)
+	public long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return _instance.doGetThumbnailFileSize(fileVersion, thumbnailIndex);
+		return _instance.doGetThumbnailFileSize(fileVersion, index);
 	}
 
 	public boolean hasImages(FileVersion fileVersion) {
@@ -105,6 +114,16 @@ public class ImageProcessorImpl
 		return hasImages;
 	}
 
+	public void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		importThumbnails(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
+			"image");
+	}
+
 	public boolean isImageSupported(FileVersion fileVersion) {
 		return _instance.isSupported(fileVersion);
 	}
@@ -123,8 +142,8 @@ public class ImageProcessorImpl
 
 	public void storeThumbnail(
 			long companyId, long groupId, long fileEntryId, long fileVersionId,
-			long custom1ImageId, long custom2ImageId,
-			InputStream is, String type)
+			long custom1ImageId, long custom2ImageId, InputStream is,
+			String type)
 		throws Exception {
 
 		_instance._storeThumbnail(

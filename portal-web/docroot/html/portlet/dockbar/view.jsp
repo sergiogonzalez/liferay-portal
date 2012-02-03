@@ -71,19 +71,35 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 												<ul>
 
 													<%
+													Set<String> runtimePortletIds = (Set<String>)request.getAttribute(WebKeys.RUNTIME_PORTLET_IDS);
+
 													int j = 0;
 
 													for (int i = 0; i < portlets.size(); i++) {
 														Portlet portlet = portlets.get(i);
 
 														boolean portletInstanceable = portlet.isInstanceable();
+
 														boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
+
+														if (runtimePortletIds != null) {
+															for (String runtimePortletId : runtimePortletIds) {
+																String portletId = portlet.getPortletId();
+
+																if (runtimePortletId.equals(portletId) ||
+																	runtimePortletId.startsWith(portletId.concat(PortletConstants.INSTANCE_SEPARATOR))) {
+
+																	portletUsed = true;
+																}
+															}
+														}
+
 														boolean portletLocked = (!portletInstanceable && portletUsed);
 
-													if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
-														continue;
-													}
-												%>
+														if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
+															continue;
+														}
+													%>
 
 														<li class="<%= (j == 0) ? "first" : "" %>">
 															<a class="app-shortcut <c:if test="<%= portletLocked %>">lfr-portlet-used</c:if> <c:if test="<%= portletInstanceable %>">lfr-instanceable</c:if>" data-portlet-id="<%= portlet.getPortletId() %>" href="javascript:;" <c:if test="<%= portletLocked %>">tabIndex="-1"</c:if>>

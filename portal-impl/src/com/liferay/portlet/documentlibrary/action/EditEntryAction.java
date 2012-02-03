@@ -229,8 +229,11 @@ public class EditEntryAction extends PortletAction {
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		for (long fileEntryId : fileEntryIds) {
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId);
+			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
 		}
 	}
 

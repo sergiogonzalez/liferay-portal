@@ -106,11 +106,8 @@ public abstract class DefaultPreviewableProcessor
 		return new String[] { getPreviewType() };
 	}
 
-	protected String getThumbnailFilePath(
-		FileVersion fileVersion, int thumbnailIndex) {
-
-		return getThumbnailFilePath(
-			fileVersion, getThumbnailType(), thumbnailIndex);
+	protected String getThumbnailFilePath(FileVersion fileVersion, int index) {
+		return getThumbnailFilePath(fileVersion, getThumbnailType(), index);
 	}
 
 	protected File getThumbnailTempFile(String id) {
