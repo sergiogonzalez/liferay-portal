@@ -233,9 +233,17 @@ public class LayoutImporter {
 			parameterMap, PortletDataHandlerKeys.LOGO);
 		boolean importLayoutSetSettings = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
+
 		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
 			parameterMap,
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED, true);
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isLayoutSetPrototype()) {
+			layoutSetPrototypeLinkEnabled = false;
+		}
+
 		boolean publishToRemote = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PUBLISH_TO_REMOTE);
 		String layoutsImportMode = MapUtil.getString(
@@ -477,7 +485,7 @@ public class LayoutImporter {
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
 					layoutSetPrototypeUuid);
 
-			Group group = layoutSetPrototype.getGroup();
+			Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
 
 			for (Layout layout : previousLayouts) {
 				String sourcePrototypeLayoutUuid =
@@ -488,7 +496,8 @@ public class LayoutImporter {
 				}
 
 				Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G(
-					sourcePrototypeLayoutUuid, group.getGroupId());
+					sourcePrototypeLayoutUuid,
+					layoutSetPrototypeGroup.getGroupId());
 
 				if (sourcePrototypeLayout == null) {
 					LayoutLocalServiceUtil.deleteLayout(
