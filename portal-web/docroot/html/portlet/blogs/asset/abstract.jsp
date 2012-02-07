@@ -48,4 +48,4 @@ if (Validator.isNull(summary)) {
 }
 %>
 
-<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getContent()), abstractLength) %>
+<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), abstractLength) %>
