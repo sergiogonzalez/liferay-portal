@@ -38,6 +38,8 @@ public class UpgradeBlogs extends UpgradeProcess {
 
 		try {
 			runSQL("alter_column_type BlogsEntry smallImageURL STRING null");
+			runSQL(
+				"alter_column_type BlogsEntry description STRING null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(
