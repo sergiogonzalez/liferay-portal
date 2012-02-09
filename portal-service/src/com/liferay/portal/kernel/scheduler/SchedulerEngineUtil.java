@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.RecurrenceSerializer;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -31,11 +34,14 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,6 +66,13 @@ public class SchedulerEngineUtil {
 		_instance._addScriptingJob(
 			trigger, storageType, description, language, script,
 			exceptionsMaxSize);
+	}
+
+	public static void auditSchedulerJobs(
+			Message message, TriggerState triggerState)
+		throws SchedulerException {
+
+		_instance._auditSchedulerJobs(message, triggerState);
 	}
 
 	public static void delete(
@@ -362,6 +375,27 @@ public class SchedulerEngineUtil {
 
 		if (ParamUtil.getBoolean(portletRequest, "weeklyDayPos" + day)) {
 			list.add(new DayAndPosition(day, 0));
+		}
+	}
+
+	private void _auditSchedulerJobs(Message message, TriggerState triggerState)
+		throws SchedulerException {
+
+		try {
+			AuditMessage auditMessage = new AuditMessage(
+				SchedulerEngine.AUDIT_ACTION, CompanyConstants.SYSTEM, 0,
+				StringPool.BLANK, SchedulerEngine.class.getName(), "0",
+				triggerState.toString(), new Date(),
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(message)));
+
+			auditMessage.setServerName(InetAddressUtil.getLocalHostName());
+			auditMessage.setServerPort(PortalUtil.getPortalPort(false));
+
+			AuditRouterUtil.route(auditMessage);
+		}
+		catch (Exception e) {
+			throw new SchedulerException(e);
 		}
 	}
 
