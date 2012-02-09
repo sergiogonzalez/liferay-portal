@@ -134,6 +134,21 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return value.booleanValue();
 	}
 
+	public boolean isGroupMember(
+			PermissionChecker permissionChecker, Group group)
+		throws Exception {
+
+		for (Role role : _roles) {
+			String name = role.getName();
+
+			if (name.equals(RoleConstants.SITE_MEMBER)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isGroupOwner(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
