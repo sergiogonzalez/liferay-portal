@@ -595,8 +595,10 @@ if (Validator.isNotNull(content)) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />postProcessTranslation',
-		function(cmd, newVersion, newLanguageId, newLanguage) {
+		function(formDate, cmd, newVersion, newLanguageId, newLanguage) {
 			var A = AUI();
+
+			document.<portlet:namespace />fm1.<portlet:namespace />formDate.value = formDate;
 
 			var availableTranslationContainer = A.one('#<portlet:namespace />availableTranslationContainer');
 			var availableTranslationsLinks = A.one('#<portlet:namespace />availableTranslationsLinks');

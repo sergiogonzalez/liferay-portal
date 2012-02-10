@@ -663,7 +663,8 @@ public class ServicePreAction extends Action {
 			request.setAttribute(WebKeys.LAYOUT, layout);
 			request.setAttribute(WebKeys.LAYOUTS, layouts);
 
-			if (layout.isPrivateLayout() ||
+			if ((layout.isPrivateLayout() &&
+				 !PropsValues.PERMISSIONS_LAYOUT_PRIVATE_CHECK_GUEST_ENABLED) ||
 				!PropsValues.PERMISSIONS_LAYOUT_PUBLIC_CHECK_GUEST_ENABLED) {
 
 				permissionChecker.setCheckGuest(false);

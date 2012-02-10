@@ -967,6 +967,13 @@ public class BaseDeployer implements Deployer {
 		sb.append(displayName);
 		sb.append("</display-name>");
 
+		if (webXmlVersion < 2.4) {
+			sb.append("<context-param>");
+			sb.append("<param-name>liferay-invoker-enabled</param-name>");
+			sb.append("<param-value>false</param-value>");
+			sb.append("</context-param>");
+		}
+
 		sb.append("<listener>");
 		sb.append("<listener-class>");
 		sb.append("com.liferay.portal.kernel.servlet.");
@@ -1101,9 +1108,18 @@ public class BaseDeployer implements Deployer {
 			sb.append("</jsp-config>");
 		}
 
-		sb.append(getSessionFiltersContent());
-
 		return sb.toString();
+	}
+
+	public String getExtraFiltersContent(double webXmlVersion, File srcFile)
+		throws Exception {
+
+		if (webXmlVersion > 2.3) {
+			return getSessionFiltersContent();
+		}
+		else {
+			return StringPool.BLANK;
+		}
 	}
 
 	public String getIgnoreFiltersContent(File srcFile) throws Exception {
@@ -1708,17 +1724,9 @@ public class BaseDeployer implements Deployer {
 		}
 	}
 
-	public String updateLiferayWebXml(File srcFile, String webXmlContent)
+	public String updateLiferayWebXml(
+			double webXmlVersion, File srcFile, String webXmlContent)
 		throws Exception {
-
-		webXmlContent = WebXMLBuilder.organizeWebXML(webXmlContent);
-
-		int x = webXmlContent.indexOf("<filter>");
-		int y = webXmlContent.lastIndexOf("</filter-mapping>");
-
-		if ((x == -1) || (y == -1)) {
-			return webXmlContent;
-		}
 
 		boolean liferayWebXmlEnabled = true;
 
@@ -1729,11 +1737,41 @@ public class BaseDeployer implements Deployer {
 				properties.getProperty("liferay-web-xml-enabled"), true);
 		}
 
-		if (!liferayWebXmlEnabled) {
+		webXmlContent = WebXMLBuilder.organizeWebXML(webXmlContent);
+
+		int x = webXmlContent.indexOf("<filter>");
+		int y = webXmlContent.lastIndexOf("</filter-mapping>");
+
+		String webXmlFiltersContent = StringPool.BLANK;
+
+		if ((x == -1) || (y == -1)) {
+			x = webXmlContent.lastIndexOf("</display-name>") + 15;
+			y = x;
+		}
+		else {
+			if (liferayWebXmlEnabled && webXmlVersion > 2.3) {
+				webXmlFiltersContent = webXmlContent.substring(x, y + 17);
+
+				y = y + 17;
+			}
+			else {
+				x = y + 17;
+				y = y + 17;
+			}
+		}
+
+		if (webXmlVersion < 2.4) {
+			webXmlContent =
+				webXmlContent.substring(0, x) +
+					getExtraFiltersContent(webXmlVersion, srcFile) +
+						webXmlContent.substring(y);
+
 			return webXmlContent;
 		}
 
-		String filterContent = webXmlContent.substring(x, y + 17);
+		String filtersContent =
+			webXmlFiltersContent +
+				getExtraFiltersContent(webXmlVersion, srcFile);
 
 		String liferayWebXmlContent = FileUtil.read(
 			DeployUtil.getResourcePath("web.xml"));
@@ -1741,7 +1779,7 @@ public class BaseDeployer implements Deployer {
 		int z = liferayWebXmlContent.indexOf("</web-app>");
 
 		liferayWebXmlContent =
-			liferayWebXmlContent.substring(0, z) + filterContent +
+			liferayWebXmlContent.substring(0, z) + filtersContent +
 				liferayWebXmlContent.substring(z);
 
 		liferayWebXmlContent = WebXMLBuilder.organizeWebXML(
@@ -1752,7 +1790,7 @@ public class BaseDeployer implements Deployer {
 
 		webXmlContent =
 			webXmlContent.substring(0, x) + getInvokerFilterContent() +
-				webXmlContent.substring(y + 17);
+				webXmlContent.substring(y);
 
 		return webXmlContent;
 	}
@@ -1802,9 +1840,7 @@ public class BaseDeployer implements Deployer {
 
 		// Update liferay-web.xml
 
-		if (webXmlVersion > 2.3) {
-			newContent = updateLiferayWebXml(srcFile, newContent);
-		}
+		newContent = updateLiferayWebXml(webXmlVersion, srcFile, newContent);
 
 		// Update web.xml
 
