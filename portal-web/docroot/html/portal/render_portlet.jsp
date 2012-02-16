@@ -313,7 +313,7 @@ if (portlet.isStatic()) {
 
 // Portlets in a layout linked to a layout prototype cannot be moved
 
-if (Validator.isNotNull(layout.getLayoutPrototypeUuid()) && layout.getLayoutPrototypeLinkEnabled()) {
+if (Validator.isNotNull(layout.getLayoutPrototypeUuid()) && layout.isLayoutPrototypeLinkEnabled()) {
 	showCloseIcon = false;
 	showConfigurationIcon = false;
 	showMoveIcon = false;

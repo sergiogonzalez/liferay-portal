@@ -68,6 +68,24 @@ public class TranslationToXHTMLTests extends AbstractWikiParserTests {
 		Assert.assertEquals("<h3>Level 3</h3>", translate("heading-7.creole"));
 	}
 
+	public void testParseCorrectlyNoWikiBlockWitBraces() {
+		Assert.assertEquals(
+			"<pre>{\nfoo\n}\n</pre>", translate("nowikiblock-7.creole"));
+	}
+
+	public void testParseCorrectlyNoWikiBlockWitMultipleAndText() {
+		Assert.assertEquals(
+			"<pre>public interface Foo {\nvoid foo();\n}\n</pre><p>Outside " +
+				"preserve </p>",
+			translate("nowikiblock-9.creole"));
+	}
+
+	public void testParseCorrectlyNoWikiBlockWitMultipleBraces() {
+		Assert.assertEquals(
+			"<pre>public interface Foo {\nvoid foo();\n}\n</pre>",
+			translate("nowikiblock-8.creole"));
+	}
+
 	public void testParseCorrectlyOneEmptyFirstHeadingBlock() {
 		Assert.assertEquals("<h1>  </h1>", translate("heading-2.creole"));
 	}
@@ -102,6 +120,12 @@ public class TranslationToXHTMLTests extends AbstractWikiParserTests {
 		Assert.assertEquals(
 			"<pre>This is a non \\empty\\ block</pre>",
 			translate("nowikiblock-4.creole"));
+	}
+
+	public void testParseCorrectlyOneNonEmptyNoWikiBlockWitBraces() {
+		Assert.assertEquals(
+			"<p>Preserving </p><pre>.lfr-helper{span}</pre>",
+			translate("nowikiblock-6.creole"));
 	}
 
 	public void testParseCorrectlyOneNonEmptyNoWikiBlockWitMultipleLines() {
