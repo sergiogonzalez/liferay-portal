@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
@@ -11,21 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portalweb.portal.permissions.webcontent.assertactions.controlpanel;
+<%@ include file="/html/taglib/init.jsp" %>
 
-import com.liferay.portalweb.portal.BaseTestSuite;
+<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
+page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@
+page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.util.AssetUtil" %>
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-/**
- * @author Brian Wing Shun Chan
- */
-public class ControlPanelTests extends BaseTestSuite {
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		return testSuite;
-	}
-}
+<portlet:defineObjects />
