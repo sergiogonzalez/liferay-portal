@@ -1639,7 +1639,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Subscriptions
 
-			notifySubscribers(message, serviceContext);
+			notifySubscribers(message, oldStatus, serviceContext);
 
 			// Indexer
 
@@ -1825,7 +1825,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			MBMessage message, ServiceContext serviceContext)
+			MBMessage message, int oldStatus, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();
@@ -1863,11 +1863,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		boolean update = GetterUtil.getBoolean(
 			(String)serviceContext.getAttribute("update"));
 
-		if (!update && MBUtil.getEmailMessageAddedEnabled(preferences)) {
+		if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+			update = false;
 		}
-		else if (update && MBUtil.getEmailMessageUpdatedEnabled(preferences)) {
-		}
-		else {
+
+		if ((!update && !MBUtil.getEmailMessageAddedEnabled(preferences)) ||
+			(update && !MBUtil.getEmailMessageUpdatedEnabled(preferences))) {
+
 			return;
 		}
 

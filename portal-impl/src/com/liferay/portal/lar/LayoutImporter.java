@@ -974,7 +974,7 @@ public class LayoutImporter {
 				importedLayout.setLayoutPrototypeUuid(
 					layout.getLayoutPrototypeUuid());
 				importedLayout.setLayoutPrototypeLinkEnabled(
-					layout.getLayoutPrototypeLinkEnabled());
+					layout.isLayoutPrototypeLinkEnabled());
 				importedLayout.setSourcePrototypeLayoutUuid(
 					layout.getSourcePrototypeLayoutUuid());
 			}
