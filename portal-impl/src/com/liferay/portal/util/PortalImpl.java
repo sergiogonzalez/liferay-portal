@@ -5391,10 +5391,43 @@ public class PortalImpl implements Portal {
 		if (Validator.isNotNull(redirect) && (oldPath != null) &&
 			!oldPath.equals(newPath)) {
 
-			redirect = StringUtil.replace(redirect, oldPath, newPath);
-			redirect = StringUtil.replace(
-				redirect, HttpUtil.encodeURL(oldPath),
-				HttpUtil.encodeURL(newPath));
+			String queryString = HttpUtil.getQueryString(redirect);
+
+			String redirectParam = HttpUtil.getParameter(
+				redirect, "redirect", false);
+
+			if (Validator.isNotNull(redirectParam)) {
+				String newRedirectParam = StringUtil.replace(
+					redirectParam, HttpUtil.encodeURL(oldPath),
+					HttpUtil.encodeURL(newPath));
+
+				queryString = StringUtil.replace(
+					queryString, redirectParam, newRedirectParam);
+			}
+
+			String redirectPath = HttpUtil.getPath(redirect);
+
+			int pos = redirect.indexOf(redirectPath);
+
+			String prefix = redirect.substring(0, pos);
+
+			pos = redirectPath.lastIndexOf(oldPath);
+
+			if (pos != -1) {
+				prefix += redirectPath.substring(0, pos);
+
+				String suffix = redirectPath.substring(
+					pos + oldPath.length(), redirectPath.length());
+
+				redirect = prefix + newPath + suffix;
+			}
+			else {
+				redirect = prefix + redirectPath;
+			}
+
+			if (Validator.isNotNull(queryString)) {
+				redirect += StringPool.QUESTION + queryString;
+			}
 		}
 
 		return redirect;
