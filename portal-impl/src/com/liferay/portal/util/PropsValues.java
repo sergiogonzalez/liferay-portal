@@ -884,10 +884,6 @@ public class PropsValues {
 
 	public static final boolean LUCENE_REPLICATE_WRITE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LUCENE_REPLICATE_WRITE));
 
-	public static final boolean LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED));
-
-	public static final int LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL));
-
 	public static final String LUCENE_STORE_TYPE = PropsUtil.get(PropsKeys.LUCENE_STORE_TYPE);
 
 	public static final boolean LUCENE_STORE_TYPE_FILE_FORCE_MMAP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LUCENE_STORE_TYPE_FILE_FORCE_MMAP));

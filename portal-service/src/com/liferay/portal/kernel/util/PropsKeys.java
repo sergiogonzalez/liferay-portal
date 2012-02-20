@@ -1245,12 +1245,6 @@ public interface PropsKeys {
 
 	public static final String LUCENE_REPLICATE_WRITE = "lucene.replicate.write";
 
-	public static final String LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED = "lucene.store.jdbc.auto.clean.up.enabled";
-
-	public static final String LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL = "lucene.store.jdbc.auto.clean.up.interval";
-
-	public static final String LUCENE_STORE_JDBC_DIALECT = "lucene.store.jdbc.dialect.";
-
 	public static final String LUCENE_STORE_TYPE = "lucene.store.type";
 
 	public static final String LUCENE_STORE_TYPE_FILE_FORCE_MMAP = "lucene.store.type.file.force.mmap";
