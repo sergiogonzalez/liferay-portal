@@ -292,7 +292,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			BlogsEntry.class);
 
 		indexer.delete(entry);
 
@@ -720,7 +721,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		blogsEntryPersistence.update(entry, false);
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			BlogsEntry.class);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 

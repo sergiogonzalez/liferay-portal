@@ -92,7 +92,8 @@ public class OrganizationLocalServiceImpl
 
 		groupPersistence.addOrganizations(groupId, organizationIds);
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
 
 		indexer.reindex(organizationIds);
 
@@ -214,7 +215,7 @@ public class OrganizationLocalServiceImpl
 		// Indexer
 
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				Organization.class);
 
 			indexer.reindex(organization);
@@ -418,7 +419,8 @@ public class OrganizationLocalServiceImpl
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
 
 		indexer.delete(organization);
 	}
@@ -1334,7 +1336,7 @@ public class OrganizationLocalServiceImpl
 			searchContext.setSorts(new Sort[] {sort});
 			searchContext.setStart(start);
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				Organization.class);
 
 			return indexer.search(searchContext);
@@ -1449,7 +1451,8 @@ public class OrganizationLocalServiceImpl
 
 		groupPersistence.setOrganizations(groupId, organizationIds);
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
 
 		indexer.reindex(organizationIds);
 
@@ -1469,7 +1472,8 @@ public class OrganizationLocalServiceImpl
 
 		groupPersistence.removeOrganizations(groupId, organizationIds);
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
 
 		indexer.reindex(organizationIds);
 
@@ -1622,7 +1626,8 @@ public class OrganizationLocalServiceImpl
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
 
 		if (oldParentOrganizationId != parentOrganizationId) {
 			long[] organizationIds = getReindexOrganizationIds(organization);

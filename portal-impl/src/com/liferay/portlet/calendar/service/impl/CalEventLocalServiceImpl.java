@@ -248,7 +248,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(CalEvent.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CalEvent.class);
 
 		indexer.reindex(event);
 
@@ -394,7 +395,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(CalEvent.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CalEvent.class);
 
 		indexer.delete(event);
 
@@ -824,7 +826,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(CalEvent.class);
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CalEvent.class);
 
 		indexer.reindex(event);
 

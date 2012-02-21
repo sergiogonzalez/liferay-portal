@@ -355,10 +355,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					}
 				}
 
-				serviceContext.setUuid(fileEntry.getUuid());
-
 				serviceContext.setAttribute(
 					"fileVersionUuid", fileVersion.getUuid());
+				serviceContext.setUuid(fileEntry.getUuid());
 
 				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 					userId, portletDataContext.getScopeGroupId(), folderId,
