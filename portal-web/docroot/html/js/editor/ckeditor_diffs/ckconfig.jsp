@@ -57,6 +57,10 @@ CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
 
 CKEDITOR.config.entities = false;
 
+CKEDITOR.config.extraPlugins = 'video';
+
+CKEDITOR.config.filebrowserVideoBrowseUrl = CKEDITOR.config.filebrowserBrowseUrl;
+
 CKEDITOR.config.height = 265;
 
 CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
@@ -95,7 +99,7 @@ CKEDITOR.config.toolbar_liferay = [
 	'/',
 	['Source'],
 	['Link', 'Unlink', 'Anchor'],
-	['Image', 'Flash', 'Table', '-', 'Smiley', 'SpecialChar']
+	['Image', 'Video', 'Flash', 'Table', '-', 'Smiley', 'SpecialChar']
 ];
 
 CKEDITOR.config.toolbar_liferayArticle = [
@@ -110,5 +114,5 @@ CKEDITOR.config.toolbar_liferayArticle = [
 	'/',
 	['Source'],
 	['Link', 'Unlink', 'Anchor'],
-	['Image', 'Flash', 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
+	['Image', 'Video', 'Flash', 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
 ];
