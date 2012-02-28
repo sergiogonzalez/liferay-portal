@@ -196,7 +196,7 @@ public class LayoutBranchLocalServiceImpl
 					LayoutBranchNameException.DUPLICATE);
 			}
 		}
-		catch (NoSuchLayoutBranchException nsbe) {
+		catch (NoSuchLayoutBranchException nslbe) {
 		}
 	}
 

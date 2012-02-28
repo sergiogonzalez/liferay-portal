@@ -42,6 +42,8 @@ import com.liferay.portal.util.InitUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -87,6 +89,10 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.blogs.entry.comment.count"));
 		int maxBlogsEntryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.blogs.entry.count"));
+		int maxDDLRecordCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.ddl.record.count"));
+		int maxDDLRecordSetCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.ddl.record.set.count"));
 		int maxDLFileEntryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.dl.file.entry.count"));
 		int maxDLFileEntrySize = GetterUtil.getInteger(
@@ -122,22 +128,24 @@ public class SampleSQLBuilder {
 
 		new SampleSQLBuilder(
 			arguments, baseDir, outputDir, outputMerge, dbType,
-			maxBlogsEntryCommentCount, maxBlogsEntryCount, maxDLFileEntryCount,
-			maxDLFileEntrySize, maxDLFolderCount, maxDLFolderDepth,
-			maxGroupCount, maxJournalArticleCount, maxJournalArticleSize,
-			maxMBCategoryCount, maxMBMessageCount, maxMBThreadCount,
-			maxUserCount, maxUserToGroupCount, maxWikiNodeCount,
-			maxWikiPageCommentCount, maxWikiPageCount, securityEnabled);
+			maxBlogsEntryCommentCount, maxBlogsEntryCount, maxDDLRecordCount,
+			maxDDLRecordSetCount, maxDLFileEntryCount, maxDLFileEntrySize,
+			maxDLFolderCount, maxDLFolderDepth, maxGroupCount,
+			maxJournalArticleCount, maxJournalArticleSize, maxMBCategoryCount,
+			maxMBMessageCount, maxMBThreadCount, maxUserCount,
+			maxUserToGroupCount, maxWikiNodeCount, maxWikiPageCommentCount,
+			maxWikiPageCount, securityEnabled);
 	}
 
 	public SampleSQLBuilder(
 		Map<String, String> arguments, String baseDir, String outputDir,
 		boolean outputMerge, String dbType, int maxBlogsEntryCommentCount,
-		int maxBlogsEntryCount, int maxDLFileEntryCount, int maxDLFileEntrySize,
-		int maxDLFolderCount, int maxDLFolderDepth, int maxGroupCount,
-		int maxJournalArticleCount, int maxJournalArticleSize,
-		int maxMBCategoryCount, int maxMBMessageCount, int maxMBThreadCount,
-		int maxUserCount, int maxUserToGroupCount, int maxWikiNodeCount,
+		int maxBlogsEntryCount, int maxDDLRecordCount, int maxDDLRecordSetCount,
+		int maxDLFileEntryCount, int maxDLFileEntrySize, int maxDLFolderCount,
+		int maxDLFolderDepth, int maxGroupCount, int maxJournalArticleCount,
+		int maxJournalArticleSize, int maxMBCategoryCount,
+		int maxMBMessageCount, int maxMBThreadCount, int maxUserCount,
+		int maxUserToGroupCount, int maxWikiNodeCount,
 		int maxWikiPageCommentCount, int maxWikiPageCount,
 		boolean securityEnabled) {
 
@@ -147,6 +155,8 @@ public class SampleSQLBuilder {
 			_dbType = dbType;
 			_maxBlogsEntryCommentCount = maxBlogsEntryCommentCount;
 			_maxBlogsEntryCount = maxBlogsEntryCount;
+			_maxDDLRecordCount = maxDDLRecordCount;
+			_maxDDLRecordSetCount = maxDDLRecordSetCount;
 			_maxDLFileEntryCount = maxDLFileEntryCount;
 			_maxDLFileEntrySize = maxDLFileEntrySize;
 			_maxDLFolderCount = maxDLFolderCount;
@@ -258,6 +268,27 @@ public class SampleSQLBuilder {
 		put(context, "blogsEntry", blogsEntry);
 
 		processTemplate(_tplBlogsEntry, context);
+	}
+
+	public void insertDDLRecord(DDLRecord ddlRecord, DDLRecordSet ddlRecordSet)
+		throws Exception {
+
+		Map<String, Object> context = getContext();
+
+		put(context, "ddlRecord", ddlRecord);
+		put(context, "ddlRecordSet", ddlRecordSet);
+
+		processTemplate(_tplDDLRecord, context);
+	}
+
+	public void insertDDLRecordSet(DDMStructure ddmStructure)
+		throws Exception {
+
+		Map<String, Object> context = getContext();
+
+		put(context, "ddmStructure", ddmStructure);
+
+		processTemplate(_tplDLFolders, context);
 	}
 
 	public void insertDLFileEntry(
@@ -514,6 +545,8 @@ public class SampleSQLBuilder {
 				_writerBlogsCSV = getWriter("blogs.csv");
 				_writerCompanyCSV = getWriter("company.csv");
 				_writerDocumentLibraryCSV = getWriter("document_library.csv");
+				_writerDynamicDataListsCSV = getWriter(
+					"dynamic_data_lists.csv");
 				_writerLayoutCSV = getWriter("layout.csv");
 				_writerMessageBoardsCSV = getWriter("message_boards.csv");
 				_writerRepositoryCSV = getWriter("repository.csv");
@@ -527,6 +560,7 @@ public class SampleSQLBuilder {
 				_writerBlogsCSV.close();
 				_writerCompanyCSV.close();
 				_writerDocumentLibraryCSV.close();
+				_writerDynamicDataListsCSV.close();
 				_writerLayoutCSV.close();
 				_writerMessageBoardsCSV.close();
 				_writerRepositoryCSV.close();
@@ -557,6 +591,8 @@ public class SampleSQLBuilder {
 		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);
+		put(context, "maxDDLRecordCount", _maxDDLRecordCount);
+		put(context, "maxDDLRecordSetCount", _maxDDLRecordSetCount);
 		put(context, "maxDLFileEntryCount", _maxDLFileEntryCount);
 		put(context, "maxDLFolderCount", _maxDLFolderCount);
 		put(context, "maxDLFolderDepth", _maxDLFolderDepth);
@@ -577,6 +613,7 @@ public class SampleSQLBuilder {
 		put(context, "writerBlogsCSV", _writerBlogsCSV);
 		put(context, "writerCompanyCSV", _writerCompanyCSV);
 		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);
+		put(context, "writerDynamicDataListsCSV", _writerDynamicDataListsCSV);
 		put(context, "writerLayoutCSV", _writerLayoutCSV);
 		put(context, "writerMessageBoardsCSV", _writerMessageBoardsCSV);
 		put(context, "writerRepositoryCSV", _writerRepositoryCSV);
@@ -710,6 +747,8 @@ public class SampleSQLBuilder {
 		new ConcurrentHashMap<String, Writer>();
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;
+	private int _maxDDLRecordCount;
+	private int _maxDDLRecordSetCount;
 	private int _maxDLFileEntryCount;
 	private int _maxDLFileEntrySize;
 	private int _maxDLFolderCount;
@@ -735,6 +774,7 @@ public class SampleSQLBuilder {
 	private SimpleCounter _socialActivityCounter;
 	private File _tempDir;
 	private String _tplBlogsEntry = _TPL_ROOT + "blogs_entry.ftl";
+	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
 	private String _tplDLFolder = _TPL_ROOT + "dl_folder.ftl";
 	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
@@ -752,6 +792,7 @@ public class SampleSQLBuilder {
 	private Writer _writerBlogsCSV;
 	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;
+	private Writer _writerDynamicDataListsCSV;
 	private Writer _writerLayoutCSV;
 	private Writer _writerMessageBoardsCSV;
 	private Writer _writerRepositoryCSV;

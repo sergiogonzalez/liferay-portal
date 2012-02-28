@@ -272,7 +272,7 @@ public class EditArticleAction extends PortletAction {
 		try {
 			ActionUtil.getArticle(renderRequest);
 		}
-		catch (NoSuchArticleException nsse) {
+		catch (NoSuchArticleException nsae) {
 
 			// Let this slide because the user can manually input a article id
 			// for a new article that does not yet exist.
@@ -821,7 +821,7 @@ public class EditArticleAction extends PortletAction {
 
 		JournalContentSearchLocalServiceUtil.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			portletResource, articleId);
+			portletResource, articleId, true);
 	}
 
 }

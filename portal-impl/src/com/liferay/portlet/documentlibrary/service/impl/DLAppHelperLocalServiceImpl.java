@@ -168,6 +168,12 @@ public class DLAppHelperLocalServiceImpl
 	public void deleteFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId());
+
 		// File previews
 
 		DLProcessorRegistryUtil.cleanUp(fileEntry);

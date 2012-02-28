@@ -336,7 +336,8 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getUserLayoutSetBranch(long, long, boolean, long, long)}
+	 * @deprecated {@link #getUserLayoutSetBranch(long, long, boolean, long,
+	 *             long)}
 	 */
 	public LayoutSetBranch getUserLayoutSetBranch(
 			long userId, long groupId, boolean privateLayout,
@@ -524,7 +525,7 @@ public class LayoutSetBranchLocalServiceImpl
 					LayoutSetBranchNameException.DUPLICATE);
 			}
 		}
-		catch (NoSuchLayoutSetBranchException nsbe) {
+		catch (NoSuchLayoutSetBranchException nslsbe) {
 		}
 
 		if (master) {
@@ -539,7 +540,7 @@ public class LayoutSetBranchLocalServiceImpl
 						LayoutSetBranchNameException.MASTER);
 				}
 			}
-			catch (NoSuchLayoutSetBranchException nsbe) {
+			catch (NoSuchLayoutSetBranchException nslsbe) {
 			}
 		}
 	}
