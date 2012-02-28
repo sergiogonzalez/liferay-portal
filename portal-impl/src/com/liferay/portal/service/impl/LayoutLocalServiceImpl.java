@@ -440,6 +440,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			layout.getCompanyId(), Layout.class.getName(), layout.getPlid());
+
 		// Ratings
 
 		ratingsStatsLocalService.deleteStats(
@@ -1418,8 +1423,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			importLayouts(userId, groupId, privateLayout, parameterMap, file);
 		}
-		catch (IOException e) {
-			throw new SystemException(e);
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
 		}
 	}
 
@@ -1492,8 +1497,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			importPortletInfo(
 				userId, plid, groupId, portletId, parameterMap, file);
 		}
-		catch (IOException e) {
-			throw new SystemException(e);
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
 		}
 	}
 
