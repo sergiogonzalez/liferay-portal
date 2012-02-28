@@ -265,6 +265,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		imageLocalService.deleteImage(entry.getSmallImageId());
 
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			entry.getCompanyId(), BlogsEntry.class.getName(),
+			entry.getEntryId());
+
 		// Statistics
 
 		blogsStatsUserLocalService.updateStatsUser(

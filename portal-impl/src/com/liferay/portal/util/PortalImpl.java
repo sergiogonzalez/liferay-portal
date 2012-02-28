@@ -1174,7 +1174,7 @@ public class PortalImpl implements Portal {
 				companyId, PropsKeys.CDN_HOST_HTTPS,
 				PropsValues.CDN_HOST_HTTPS);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		if ((cdnHostHttps == null) || cdnHostHttps.startsWith("${")) {
@@ -4537,7 +4537,7 @@ public class PortalImpl implements Portal {
 				companyId, PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED,
 				PropsValues.CDN_DYNAMIC_RESOURCES_ENABLED);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return PropsValues.CDN_DYNAMIC_RESOURCES_ENABLED;
