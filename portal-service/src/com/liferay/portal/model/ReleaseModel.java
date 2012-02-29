@@ -164,6 +164,20 @@ public interface ReleaseModel extends BaseModel<Release> {
 	public void setVerified(boolean verified);
 
 	/**
+	 * Returns the state of this release.
+	 *
+	 * @return the state of this release
+	 */
+	public int getState();
+
+	/**
+	 * Sets the state of this release.
+	 *
+	 * @param state the state of this release
+	 */
+	public void setState(int state);
+
+	/**
 	 * Returns the test string of this release.
 	 *
 	 * @return the test string of this release

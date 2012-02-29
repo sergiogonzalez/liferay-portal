@@ -1504,6 +1504,7 @@ create table Release_ (
 	buildNumber INTEGER,
 	buildDate DATE null,
 	verified BOOLEAN,
+	state_ INTEGER,
 	testString VARCHAR(1024) null
 );
 

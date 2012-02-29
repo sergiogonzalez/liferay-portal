@@ -78,11 +78,13 @@ public interface WorkflowInstanceLinkLocalService
 	* Deletes the workflow instance link from the database. Also notifies the appropriate model listeners.
 	*
 	* @param workflowInstanceLink the workflow instance link
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteWorkflowInstanceLink(
 		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.

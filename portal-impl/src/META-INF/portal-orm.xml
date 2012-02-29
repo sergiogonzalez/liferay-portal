@@ -823,6 +823,9 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="verified" />
+			<basic name="state">
+				<column name="STATE_" />
+			</basic>
 			<basic name="testString" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

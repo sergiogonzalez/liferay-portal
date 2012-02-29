@@ -104,6 +104,7 @@ short
 single
 size
 start
+state
 static
 strictfp
 super

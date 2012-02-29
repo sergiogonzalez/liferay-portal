@@ -265,6 +265,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		imageLocalService.deleteImage(entry.getSmallImageId());
 
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			entry.getCompanyId(), BlogsEntry.class.getName(),
+			entry.getEntryId());
+
 		// Statistics
 
 		blogsStatsUserLocalService.updateStatsUser(
@@ -888,6 +894,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttributes(
+			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
 			"[$BLOGS_ENTRY_URL$]", entryURL);
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setFrom(fromAddress, fromName);

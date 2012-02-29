@@ -317,10 +317,12 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	 * Deletes the workflow instance link from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param workflowInstanceLink the workflow instance link
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteWorkflowInstanceLink(
-		WorkflowInstanceLink workflowInstanceLink) throws SystemException {
+		WorkflowInstanceLink workflowInstanceLink)
+		throws PortalException, SystemException {
 		workflowInstanceLinkPersistence.remove(workflowInstanceLink);
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());

@@ -661,6 +661,7 @@
 		<field name="buildNumber" type="int" />
 		<field name="buildDate" type="Date" />
 		<field name="verified" type="boolean" />
+		<field name="state" type="int" />
 		<field name="testString" type="String">
 			<hint name="max-length">1024</hint>
 		</field>

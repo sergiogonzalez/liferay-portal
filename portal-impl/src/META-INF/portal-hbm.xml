@@ -758,6 +758,7 @@
 		<property name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="buildDate" type="org.hibernate.type.TimestampType" />
 		<property name="verified" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="state" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="state_" />
 		<property name="testString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.RepositoryImpl" table="Repository">

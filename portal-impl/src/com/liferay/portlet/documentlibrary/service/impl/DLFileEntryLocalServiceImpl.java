@@ -528,7 +528,7 @@ public class DLFileEntryLocalServiceImpl
 
 				fieldsMap.put(ddmStructure.getStructureKey(), fields);
 			}
-			catch (NoSuchFileEntryMetadataException nsfme) {
+			catch (NoSuchFileEntryMetadataException nsfeme) {
 			}
 		}
 
