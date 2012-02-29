@@ -1291,7 +1291,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				throw new DuplicateRoleException();
 			}
 		}
-		catch (NoSuchRoleException nsge) {
+		catch (NoSuchRoleException nsre) {
 		}
 	}
 

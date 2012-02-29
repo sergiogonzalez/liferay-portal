@@ -383,6 +383,11 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			event.getCompanyId(), CalEvent.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, event.getEventId());
 
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			event.getCompanyId(), CalEvent.class.getName(), event.getEventId());
+
 		// Asset
 
 		assetEntryLocalService.deleteEntry(
@@ -1194,6 +1199,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			PortletPreferences preferences =
 				portletPreferencesLocalService.getPreferences(
 					event.getCompanyId(), ownerId, ownerType, plid, portletId);
+
+			if (!CalUtil.getEmailEventReminderEnabled(preferences)) {
+				return;
+			}
 
 			Company company = companyPersistence.findByPrimaryKey(
 				user.getCompanyId());

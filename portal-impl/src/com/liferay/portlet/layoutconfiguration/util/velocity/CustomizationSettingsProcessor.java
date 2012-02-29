@@ -143,7 +143,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		try {
 			_inputTagClass = Class.forName("com.liferay.taglib.aui.InputTag");
 		}
-		catch (ClassNotFoundException e) {
+		catch (ClassNotFoundException cnfe) {
 		}
 	}
 

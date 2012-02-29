@@ -471,8 +471,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (content.indexOf("\\n") != -1) {
 			content = StringUtil.replace(
-				content,
-				new String[] {"\\n", "\\r"},
+				content, new String[] {"\\n", "\\r"},
 				new String[] {"\n", "\r"});
 
 			article.setContent(content);
@@ -635,6 +634,12 @@ public class JournalArticleLocalServiceImpl
 			article.getGroupId(), article.getArticleId());
 
 		if (articlesCount == 1) {
+
+			// Subscriptions
+
+			subscriptionLocalService.deleteSubscriptions(
+				article.getCompanyId(), JournalArticle.class.getName(),
+				article.getResourcePrimKey());
 
 			// Ratings
 

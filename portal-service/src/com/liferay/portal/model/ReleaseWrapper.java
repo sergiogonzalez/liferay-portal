@@ -190,6 +190,24 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	/**
+	* Returns the state of this release.
+	*
+	* @return the state of this release
+	*/
+	public int getState() {
+		return _release.getState();
+	}
+
+	/**
+	* Sets the state of this release.
+	*
+	* @param state the state of this release
+	*/
+	public void setState(int state) {
+		_release.setState(state);
+	}
+
+	/**
 	* Returns the test string of this release.
 	*
 	* @return the test string of this release

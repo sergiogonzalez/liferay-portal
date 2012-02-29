@@ -81,6 +81,8 @@ public class ReleasePersistenceTest extends BasePersistenceTestCase {
 
 		newRelease.setVerified(randomBoolean());
 
+		newRelease.setState(nextInt());
+
 		newRelease.setTestString(randomString());
 
 		_persistence.update(newRelease, false);
@@ -99,6 +101,7 @@ public class ReleasePersistenceTest extends BasePersistenceTestCase {
 		assertEquals(Time.getShortTimestamp(existingRelease.getBuildDate()),
 			Time.getShortTimestamp(newRelease.getBuildDate()));
 		assertEquals(existingRelease.getVerified(), newRelease.getVerified());
+		assertEquals(existingRelease.getState(), newRelease.getState());
 		assertEquals(existingRelease.getTestString(), newRelease.getTestString());
 	}
 
@@ -237,6 +240,8 @@ public class ReleasePersistenceTest extends BasePersistenceTestCase {
 		release.setBuildDate(nextDate());
 
 		release.setVerified(randomBoolean());
+
+		release.setState(nextInt());
 
 		release.setTestString(randomString());
 

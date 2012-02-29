@@ -1485,6 +1485,7 @@
 		<column name="buildNumber" type="int" />
 		<column name="buildDate" type="Date" />
 		<column name="verified" type="boolean" />
+		<column name="state" type="int" />
 		<column name="testString" type="String" />
 
 		<!-- Finder methods -->

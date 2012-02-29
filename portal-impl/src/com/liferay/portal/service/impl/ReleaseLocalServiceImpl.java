@@ -130,6 +130,17 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 					_log.debug("Build number " + buildNumber);
 				}
 
+				DB db = DBFactoryUtil.getDB();
+
+				try {
+					db.runSQL("alter table Release_ add state_ INTEGER");
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e.getMessage());
+					}
+				}
+
 				testSupportsStringCaseSensitiveQuery();
 
 				return buildNumber;

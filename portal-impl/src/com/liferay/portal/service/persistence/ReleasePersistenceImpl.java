@@ -346,6 +346,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		releaseImpl.setBuildNumber(release.getBuildNumber());
 		releaseImpl.setBuildDate(release.getBuildDate());
 		releaseImpl.setVerified(release.isVerified());
+		releaseImpl.setState(release.getState());
 		releaseImpl.setTestString(release.getTestString());
 
 		return releaseImpl;

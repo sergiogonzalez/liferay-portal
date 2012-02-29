@@ -33,7 +33,7 @@ import java.util.Date;
 public class ReleaseCacheModel implements CacheModel<Release>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{releaseId=");
 		sb.append(releaseId);
@@ -49,6 +49,8 @@ public class ReleaseCacheModel implements CacheModel<Release>, Serializable {
 		sb.append(buildDate);
 		sb.append(", verified=");
 		sb.append(verified);
+		sb.append(", state=");
+		sb.append(state);
 		sb.append(", testString=");
 		sb.append(testString);
 		sb.append("}");
@@ -92,6 +94,7 @@ public class ReleaseCacheModel implements CacheModel<Release>, Serializable {
 		}
 
 		releaseImpl.setVerified(verified);
+		releaseImpl.setState(state);
 
 		if (testString == null) {
 			releaseImpl.setTestString(StringPool.BLANK);
@@ -112,5 +115,6 @@ public class ReleaseCacheModel implements CacheModel<Release>, Serializable {
 	public int buildNumber;
 	public long buildDate;
 	public boolean verified;
+	public int state;
 	public String testString;
 }
