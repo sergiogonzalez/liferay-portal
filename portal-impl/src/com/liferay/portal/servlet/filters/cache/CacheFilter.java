@@ -114,7 +114,7 @@ public class CacheFilter extends BasePortalFilter {
 				WebKeys.CURRENT_COMPLETE_URL);
 
 			if (url.indexOf(StringPool.QUESTION) > -1) {
-				sb.append(url.substring(url.indexOf(StringPool.QUESTION)+1));
+				sb.append(url.substring(url.indexOf(StringPool.QUESTION) + 1));
 			}
 		}
 
