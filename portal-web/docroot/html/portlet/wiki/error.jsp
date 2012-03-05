@@ -28,7 +28,7 @@
 
 	<%
 	String nodeId = ParamUtil.getString(request, "nodeId");
-	String title = HtmlUtil.escape(ParamUtil.getString(request, "title"));
+	String title = ParamUtil.getString(request, "title");
 
 	WikiNode node = null;
 
@@ -67,7 +67,7 @@
 			<%
 			WikiPage draftPage = WikiPageLocalServiceUtil.getDraftPage(node.getNodeId(), title);
 
-			boolean editableDraft = true;
+			boolean editableDraft = false;
 
 			if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || (draftPage.getUserId() == user.getUserId())) {
 				editableDraft = true;
@@ -97,9 +97,9 @@
 			</div>
 
 			<div>
-				<input onclick="location.href = '<%= searchURL.toString() %>'" type="button" value="<%= LanguageUtil.format(pageContext, "search-for-x", title) %>" />
+				<input onclick="location.href = '<%= searchURL.toString() %>'" type="button" value="<%= LanguageUtil.format(pageContext, "search-for-x", HtmlUtil.escapeAttribute(title)) %>" />
 
-				<input onclick="location.href = '<%= editPageURL.toString() %>'" type="button" value="<%= LanguageUtil.format(pageContext, "create-page-x", title) %>" />
+				<input onclick="location.href = '<%= editPageURL.toString() %>'" type="button" value="<%= LanguageUtil.format(pageContext, "create-page-x", HtmlUtil.escapeAttribute(title)) %>" />
 			</div>
 		</c:otherwise>
 	</c:choose>

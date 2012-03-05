@@ -188,11 +188,16 @@ Liferay = window.Liferay || {};
 					config.sync = true;
 				}
 
-				A.io.request(instance.actionUrl, config);
+				A.use(
+					'aui-io-request',
+					function(A) {
+						A.io.request(instance.actionUrl, config);
 
-				if (xHR) {
-					return eval('(' + xHR.responseText + ')');
-				}
+						if (xHR) {
+							return eval('(' + xHR.responseText + ')');
+						}
+					}
+				);
 			},
 
 			getParameters: function(options) {
