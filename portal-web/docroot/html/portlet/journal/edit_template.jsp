@@ -150,7 +150,7 @@ if (template == null) {
 						<aui:input name="autoTemplateId" type="hidden" value="<%= true %>" />
 					</c:when>
 					<c:otherwise>
-						<aui:input cssClass="lfr-input-text-container" label="id" name="newTemplateId" field="templateId" fieldParam="newTemplateId" value="<%= newTemplateId %>" />
+						<aui:input cssClass="lfr-input-text-container" field="templateId" fieldParam="newTemplateId" label="id" name="newTemplateId" value="<%= newTemplateId %>" />
 
 						<aui:input label="autogenerate-id" name="autoTemplateId" type="checkbox" />
 					</c:otherwise>
@@ -193,7 +193,7 @@ if (template == null) {
 						<portlet:param name="structureId" value="<%= structureId %>" />
 					</portlet:renderURL>
 
-					<aui:a href="<%= editStructureURL %>" label="<%= HtmlUtil.escape(structureName) %>" id="structureName" />
+					<aui:a href="<%= editStructureURL %>" id="structureName" label="<%= HtmlUtil.escape(structureName) %>" />
 				</c:when>
 				<c:otherwise>
 					<aui:a href="" id="structureName" />

@@ -114,7 +114,7 @@ userTracker = userTracker.toEscapedModel();
 								}
 							%>
 
-								<tr class="<%= className %>" style="font-size: xx-small;" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';">
+								<tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';" style="font-size: xx-small;">
 									<td class="lfr-top">
 										<%= StringUtil.replace(userTrackerPath.getPath(), "&", "& ") %>
 									</td>
@@ -166,7 +166,7 @@ userTracker = userTracker.toEscapedModel();
 										}
 							%>
 
-										<tr class="<%= className %>" style="font-size: xx-small;" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';">
+										<tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';" style="font-size: xx-small;">
 											<td class="lfr-top">
 												<%= attrName %>
 											</td>

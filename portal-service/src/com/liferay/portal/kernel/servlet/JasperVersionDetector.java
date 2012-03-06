@@ -66,12 +66,55 @@ public class JasperVersionDetector {
 
 			Attributes attributes = manifest.getMainAttributes();
 
-			_jasperVersion = GetterUtil.getString(
-				attributes.getValue("Specification-Version"));
+			if (attributes.containsKey(Attributes.Name.SPECIFICATION_VERSION)) {
+				_jasperVersion = GetterUtil.getString(
+					attributes.getValue(Attributes.Name.SPECIFICATION_VERSION));
+
+				if (_isValidJasperVersion(_jasperVersion)) {
+					return;
+				}
+			}
+
+			if (attributes.containsKey(
+					Attributes.Name.IMPLEMENTATION_VERSION)) {
+
+				_jasperVersion = GetterUtil.getString(
+					attributes.get(Attributes.Name.IMPLEMENTATION_VERSION));
+
+				if (_isValidJasperVersion(_jasperVersion)) {
+					return;
+				}
+			}
+
+			Attributes.Name bundleVersionAttrName = new Attributes.Name(
+				"Bundle-Version");
+
+			if (attributes.containsKey(bundleVersionAttrName)) {
+				_jasperVersion = GetterUtil.getString(
+					attributes.get(bundleVersionAttrName));
+
+				if (_isValidJasperVersion(_jasperVersion)) {
+					return;
+				}
+
+				_jasperVersion = StringPool.BLANK;
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	private boolean _isValidJasperVersion(String jasperVersion) {
+		if ((jasperVersion == null) || (jasperVersion.length() == 0)) {
+			return false;
+		}
+
+		if (!Character.isDigit(jasperVersion.charAt(0))) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
