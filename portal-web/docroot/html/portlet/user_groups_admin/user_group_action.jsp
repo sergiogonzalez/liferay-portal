@@ -41,10 +41,10 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	</c:if>
 
 	<%
-	boolean showPermissionsButton = UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.PERMISSIONS);
+	boolean hasPermissionsPermission = UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.PERMISSIONS);
 	%>
 
-	<c:if test="<%= showPermissionsButton %>">
+	<c:if test="<%= hasPermissionsPermission %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= UserGroup.class.getName() %>"
 			modelResourceDescription="<%= userGroup.getName() %>"
@@ -58,7 +58,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= showPermissionsButton %>">
+	<c:if test="<%= hasPermissionsPermission %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Group.class.getName() %>"
 			modelResourceDescription='<%= LanguageUtil.format(pageContext, "site-for-user-group-x", userGroup.getName()) %>'

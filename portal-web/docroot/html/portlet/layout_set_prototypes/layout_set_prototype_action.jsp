@@ -56,7 +56,7 @@ Group group = layoutSetPrototype.getGroup();
 		/>
 
 		<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-			<liferay-portlet:actionURL var="viewPagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
+			<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
 				<portlet:param name="struts_action" value="/my_sites/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />

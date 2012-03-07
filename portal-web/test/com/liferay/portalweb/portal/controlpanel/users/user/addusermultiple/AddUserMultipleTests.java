@@ -15,6 +15,10 @@
 package com.liferay.portalweb.portal.controlpanel.users.user.addusermultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser3Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -40,7 +40,7 @@ if (displayTerms.getGroupId() == 0) {
 
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(chooseCallback) && MDRPermissionUtil.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.VIEW) %>">
-				<aui:select name="<%= displayTerms.GROUP_ID %>" label="scope">
+				<aui:select label="scope" name="<%= displayTerms.GROUP_ID %>">
 					<aui:option label="global" selected="<%= displayTerms.getGroupId() == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
 
 					<%

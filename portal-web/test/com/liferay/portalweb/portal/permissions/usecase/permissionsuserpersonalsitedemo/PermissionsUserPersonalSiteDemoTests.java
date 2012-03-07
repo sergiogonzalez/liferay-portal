@@ -15,7 +15,14 @@
 package com.liferay.portalweb.portal.permissions.usecase.permissionsuserpersonalsitedemo;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,7 +44,7 @@ public class PermissionsUserPersonalSiteDemoTests extends BaseTestSuite {
 		testSuite.addTestSuite(DeletePermissionsUserBlogsPermissionsUPSTest.class);
 		testSuite.addTestSuite(DeletePermissionsUserBlogsSubscribeUPSTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AddUserPasswordTest.class);
+		testSuite.addTestSuite(EditUserPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_ViewOffPermissionsBlogsUSPTest.class);

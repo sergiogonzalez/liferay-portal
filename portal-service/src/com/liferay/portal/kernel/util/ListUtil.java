@@ -180,6 +180,9 @@ public class ListUtil {
 		return fromArray(StringUtil.splitLines(s));
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static <E> boolean remove(List<E> list, E element) {
 		Iterator<E> itr = list.iterator();
 

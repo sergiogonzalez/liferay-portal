@@ -15,6 +15,10 @@
 package com.liferay.portalweb.portal.permissions.usecase;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.permissions.usecase.permissionsgroupcompanydemo.PermissionsGroupCompanyDemoTests;
+import com.liferay.portalweb.portal.permissions.usecase.permissionsindividualscopedemo.PermissionsIndividualScopeDemoTests;
+import com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo.PermissionsScopedRegularRoleDemoTests;
+import com.liferay.portalweb.portal.permissions.usecase.permissionssiteleveldemo.PermissionsSiteLevelDemoTests;
 import com.liferay.portalweb.portal.permissions.usecase.permissionsteamdemo.PermissionsTeamDemoTests;
 import com.liferay.portalweb.portal.permissions.usecase.permissionsuserpersonalsitedemo.PermissionsUserPersonalSiteDemoTests;
 
@@ -29,6 +33,10 @@ public class UseCaseTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(PermissionsGroupCompanyDemoTests.suite());
+		testSuite.addTest(PermissionsIndividualScopeDemoTests.suite());
+		testSuite.addTest(PermissionsScopedRegularRoleDemoTests.suite());
+		testSuite.addTest(PermissionsSiteLevelDemoTests.suite());
 		testSuite.addTest(PermissionsTeamDemoTests.suite());
 		testSuite.addTest(PermissionsUserPersonalSiteDemoTests.suite());
 
