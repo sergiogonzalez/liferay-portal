@@ -24,7 +24,7 @@
 		</c:when>
 	</c:choose>
 
-	<liferay-ui:panel-container id="export-dialog-tree-panel-container" extended="<%= true %>" persistState="<%= true %>">
+	<liferay-ui:panel-container extended="<%= true %>" id="export-dialog-tree-panel-container" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" cssClass="export-group-panel" id="pagesPanel" persistState="<%= true %>" title="pages">
 			<ul class="lfr-tree lfr-component">
 				<li class="tree-item">
@@ -115,8 +115,8 @@
 														monthValue="<%= yesterday.get(Calendar.MONTH) %>"
 														yearParam="startDateYear"
 														yearValue="<%= yesterday.get(Calendar.YEAR) %>"
-														yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
 														yearRangeEnd="<%= yesterday.get(Calendar.YEAR) %>"
+														yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
 													/>
 
 													&nbsp;
@@ -127,9 +127,9 @@
 														disabled="<%= false %>"
 														hourParam='<%= "startDateHour" %>'
 														hourValue="<%= yesterday.get(Calendar.HOUR) %>"
+														minuteInterval="<%= 1 %>"
 														minuteParam='<%= "startDateMinute" %>'
 														minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
-														minuteInterval="<%= 1 %>"
 													/>
 												</aui:field-wrapper>
 											</li>
@@ -145,8 +145,8 @@
 														monthValue="<%= today.get(Calendar.MONTH) %>"
 														yearParam="endDateYear"
 														yearValue="<%= today.get(Calendar.YEAR) %>"
-														yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
 														yearRangeEnd="<%= today.get(Calendar.YEAR) %>"
+														yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
 													/>
 
 													&nbsp;
@@ -157,9 +157,9 @@
 														disabled="<%= false %>"
 														hourParam='<%= "endDateHour" %>'
 														hourValue="<%= today.get(Calendar.HOUR) %>"
+														minuteInterval="<%= 1 %>"
 														minuteParam='<%= "endDateMinute" %>'
 														minuteValue="<%= today.get(Calendar.MINUTE) %>"
-														minuteInterval="<%= 1 %>"
 													/>
 												</aui:field-wrapper>
 											</li>

@@ -162,7 +162,7 @@ int tabIndex = 1;
 						<portlet:param name="parentStructureId" value="<%= parentStructureId %>" />
 					</portlet:renderURL>
 
-					<aui:a href="<%= parentStructureURL %>" label="<%= parentStructureName %>" id="parentStructureName" />
+					<aui:a href="<%= parentStructureURL %>" id="parentStructureName" label="<%= parentStructureName %>" />
 				</c:when>
 				<c:otherwise>
 					<aui:a href="" id="parentStructureName" />

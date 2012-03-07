@@ -73,7 +73,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 		<li class="tree-item">
 			<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= false %>" />
 		</li>
-		<li id="<portlet:namespace />deleteDataOption" class="tree-item" <%= (!selGroup.isStagingGroup() || !localPublishing) ? "style=\"display: none;\"" : "" %>>
+		<li class="tree-item" id="<portlet:namespace />deleteDataOption" <%= (!selGroup.isStagingGroup() || !localPublishing) ? "style=\"display: none;\"" : "" %>>
 			<aui:input helpMessage="delete-portlet-data-help" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 		</li>
 		<li class="tree-item">
@@ -110,8 +110,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 										monthValue="<%= yesterday.get(Calendar.MONTH) %>"
 										yearParam="startDateYear"
 										yearValue="<%= yesterday.get(Calendar.YEAR) %>"
-										yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
 										yearRangeEnd="<%= yesterday.get(Calendar.YEAR) %>"
+										yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
 									/>
 
 									&nbsp;
@@ -122,9 +122,9 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 										disabled="<%= false %>"
 										hourParam='<%= "startDateHour" %>'
 										hourValue="<%= yesterday.get(Calendar.HOUR) %>"
+										minuteInterval="<%= 1 %>"
 										minuteParam='<%= "startDateMinute" %>'
 										minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
-										minuteInterval="<%= 1 %>"
 									/>
 								</aui:field-wrapper>
 							</li>
@@ -140,8 +140,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 										monthValue="<%= today.get(Calendar.MONTH) %>"
 										yearParam="endDateYear"
 										yearValue="<%= today.get(Calendar.YEAR) %>"
-										yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
 										yearRangeEnd="<%= today.get(Calendar.YEAR) %>"
+										yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
 									/>
 
 									&nbsp;
@@ -152,9 +152,9 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 										disabled="<%= false %>"
 										hourParam='<%= "endDateHour" %>'
 										hourValue="<%= today.get(Calendar.HOUR) %>"
+										minuteInterval="<%= 1 %>"
 										minuteParam='<%= "endDateMinute" %>'
 										minuteValue="<%= today.get(Calendar.MINUTE) %>"
-										minuteInterval="<%= 1 %>"
 									/>
 								</aui:field-wrapper>
 							</li>

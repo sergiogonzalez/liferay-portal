@@ -145,7 +145,7 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 				<liferay-ui:message key="hidden" />
 			</td>
 			<td>
-				<liferay-ui:input-checkbox param="hidden" defaultValue="<%= hidden %>" />
+				<liferay-ui:input-checkbox defaultValue="<%= hidden %>" param="hidden" />
 			</td>
 		</tr>
 
@@ -155,7 +155,7 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 					<liferay-ui:message key="copy-parent" />
 				</td>
 				<td>
-					<liferay-ui:input-checkbox param="inheritFromParentLayoutId" defaultValue="false" />
+					<liferay-ui:input-checkbox defaultValue="false" param="inheritFromParentLayoutId" />
 				</td>
 			</tr>
 		</c:if>
@@ -274,7 +274,7 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 				<liferay-ui:message arguments="<%= company.getGroup().getDescriptiveName(locale) %>" key="merge-x-public-pages" />
 			</td>
 			<td>
-				<liferay-ui:input-checkbox param="mergeGuestPublicPages" defaultValue="<%= mergeGuestPublicPages %>" />
+				<liferay-ui:input-checkbox defaultValue="<%= mergeGuestPublicPages %>" param="mergeGuestPublicPages" />
 			</td>
 		</tr>
 		</table>

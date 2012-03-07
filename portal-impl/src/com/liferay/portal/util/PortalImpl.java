@@ -1526,7 +1526,7 @@ public class PortalImpl implements Portal {
 
 			Date date = cal.getTime();
 
-			/*if (timeZone != null &&
+			/*if ((timeZone != null) &&
 				cal.before(CalendarFactoryUtil.getCalendar(timeZone))) {
 
 				throw pe;
@@ -3979,7 +3979,7 @@ public class PortalImpl implements Portal {
 		if (x != -1) {
 			int y = url.lastIndexOf(CharPool.SLASH);
 
-			if (x + 1 == y) {
+			if ((x + 1) == y) {
 				sb.append(StringPool.SLASH);
 			}
 		}

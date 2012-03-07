@@ -44,8 +44,8 @@ boolean splitThread = false;
 	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 
 	<liferay-ui:header
-		title="message"
 		backURL="<%= redirect %>"
+		title="message"
 	/>
 
 	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
@@ -72,7 +72,7 @@ boolean splitThread = false;
 
 			<aui:a href="<%= viewCategoryURL %>" id="categoryName"><%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(pageContext, "message-boards-home") %></aui:a>
 
-			<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="selectCategoryURL">
+			<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/message_boards/select_category" />
 				<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" />
 			</portlet:renderURL>

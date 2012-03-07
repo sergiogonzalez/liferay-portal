@@ -102,11 +102,9 @@
 	</target>
 
 	<target name="rebuild-mysql">
-		<antcall target="rebuild-database">
-			<param name="executable" value="${mysql.executable}" />
-			<param name="arg.line" value="${mysql.arg.line}" />
-			<param name="log" value="${mysql.log}" />
-		</antcall>
+		<exec executable="${mysql.executable}" input="${mysql.input}" output="log/${mysql.log}">
+			<arg line="${mysql.arg.line}" />
+		</exec>
 	</target>
 
 	<target name="rebuild-oracle">

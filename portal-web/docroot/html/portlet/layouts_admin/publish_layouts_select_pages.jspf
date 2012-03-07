@@ -112,7 +112,7 @@ for (int i = 0; i < results.size(); i++) {
 <c:choose>
 	<c:when test="<%= !results.isEmpty() %>">
 		<div id="<portlet:namespace />pane">
-			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
+			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 		</div>
 	</c:when>
 	<c:otherwise>
