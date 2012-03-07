@@ -37,67 +37,67 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class HttpImplTest extends PowerMockito {
 
 	@Test
-	public void addBooleanParameter() {
+	public void testAddBooleanParameter() {
 		_addParameter("http://foo.com", "p", String.valueOf(Boolean.TRUE));
 	}
 
 	@Test
-	public void addDoubleParameter() {
+	public void testAddDoubleParameter() {
 		_addParameter("http://foo.com", "p", String.valueOf(111.1D));
 	}
 
 	@Test
-	public void addIntParameter() {
+	public void testAddIntParameter() {
 		_addParameter("http://foo.com", "p", String.valueOf(1));
 	}
 
 	@Test
-	public void addLongParameter() {
+	public void testAddLongParameter() {
 		_addParameter("http://foo.com", "p", String.valueOf(111111L));
 	}
 
 	@Test
-	public void addShortParameter() {
+	public void testAddShortParameter() {
 		_addParameter("http://foo.com", "p", String.valueOf((short)1));
 	}
 
 	@Test
-	public void addStringParameter() {
+	public void testAddStringParameter() {
 		_addParameter("http://foo.com", "p", new String("foo"));
 	}
 
 	@Test
-	public void decodeMultipleCharacterEncodedPath() {
+	public void testDecodeMultipleCharacterEncodedPath() {
 		Assert.assertEquals(
 			"http://foo?p=$param",
 			_httpImpl.decodePath("http://foo%3Fp%3D%24param"));
 	}
 
 	@Test
-	public void decodeNoCharacterEncodedPath() {
+	public void testDecodeNoCharacterEncodedPath() {
 		Assert.assertEquals("http://foo", _httpImpl.decodePath("http://foo"));
 	}
 
 	@Test
-	public void decodeSingleCharacterEncodedPath() {
+	public void testDecodeSingleCharacterEncodedPath() {
 		Assert.assertEquals(
 			"http://foo#anchor", _httpImpl.decodePath("http://foo%23anchor"));
 	}
 
 	@Test
-	public void encodeMultipleCharacterEncodedPath() {
+	public void testEncodeMultipleCharacterEncodedPath() {
 		Assert.assertEquals(
 			"http%3A//foo%3Fp%3D%24param",
 			_httpImpl.encodePath("http://foo?p=$param"));
 	}
 
 	@Test
-	public void encodeNoCharacterEncodedPath() {
+	public void testEncodeNoCharacterEncodedPath() {
 		Assert.assertEquals("http%3A//foo", _httpImpl.encodePath("http://foo"));
 	}
 
 	@Test
-	public void encodeSingleCharacterEncodedPath() {
+	public void testEncodeSingleCharacterEncodedPath() {
 		Assert.assertEquals(
 			"http%3A//foo%23anchor", _httpImpl.encodePath("http://foo#anchor"));
 	}

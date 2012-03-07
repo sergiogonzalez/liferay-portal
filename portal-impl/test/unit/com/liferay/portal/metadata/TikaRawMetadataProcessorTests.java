@@ -50,7 +50,7 @@ import org.xml.sax.ContentHandler;
 public class TikaRawMetadataProcessorTests extends PowerMockito {
 
 	@Test
-	public void extractMetadataFromInputStream() {
+	public void testExtractMetadataFromInputStream() {
 		mockStatic(PrefsPropsUtil.class);
 
 		try {

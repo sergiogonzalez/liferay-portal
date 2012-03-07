@@ -60,12 +60,12 @@ if (MathUtil.isEven(count.getValue())) {
 			</c:if>
 
 			<td>
-				<input id="<portlet:namespace />structure_el<%= count.getValue() %>_name" tabindex="<%= tabIndex.getValue() %>" type="text" size="20" value="<%= elName %>" />
+				<input id="<portlet:namespace />structure_el<%= count.getValue() %>_name" size="20" tabindex="<%= tabIndex.getValue() %>" type="text" value="<%= elName %>" />
 			</td>
 			<td>
 				<c:choose>
 					<c:when test='<%= parentElType.equals("list") || parentElType.equals("multi-list") %>'>
-						<input id="<portlet:namespace />structure_el<%= count.getValue() %>_type" tabindex="<%= tabIndex.getValue() %>" type="text" size="20" value="<%= elType %>" />
+						<input id="<portlet:namespace />structure_el<%= count.getValue() %>_type" size="20" tabindex="<%= tabIndex.getValue() %>" type="text" value="<%= elType %>" />
 					</c:when>
 					<c:otherwise>
 						<aui:column>
