@@ -113,8 +113,7 @@ public class CacheFilter extends BasePortalFilter {
 				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
 
 			if (queryString == null) {
-				String url = (String)request.getAttribute(
-					WebKeys.CURRENT_COMPLETE_URL);
+				String url = PortalUtil.getCurrentCompleteURL(request);
 
 				int pos = url.indexOf(StringPool.QUESTION);
 
