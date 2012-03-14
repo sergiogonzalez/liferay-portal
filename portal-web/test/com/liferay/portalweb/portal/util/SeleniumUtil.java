@@ -14,13 +14,25 @@
 
 package com.liferay.portalweb.portal.util;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portalweb.portal.util.TestPropsValues;
+import com.liferay.portalweb.portal.util.liferayselenium.ChromeWebDriverImpl;
+import com.liferay.portalweb.portal.util.liferayselenium.DefaultSeleniumImpl;
+import com.liferay.portalweb.portal.util.liferayselenium.FirefoxWebDriverImpl;
+import com.liferay.portalweb.portal.util.liferayselenium.InternetExplorerWebDriverImpl;
+import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+
+import com.thoughtworks.selenium.Selenium;
+
+import java.io.File;
+
+import org.openqa.selenium.WebDriver;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumUtil {
+public class SeleniumUtil extends TestPropsValues {
 
 	public static LiferaySelenium getSelenium() {
 		return _instance._getSelenium();
@@ -55,17 +67,36 @@ public class SeleniumUtil {
 	}
 
 	private void _startSelenium() {
-		String seleniumHost = TestPropsValues.SELENIUM_HOST;
-		int seleniumPort = TestPropsValues.SELENIUM_PORT;
-		String browserType = TestPropsValues.BROWSER_TYPE;
-		String portalURL = TestPropsValues.PORTAL_URL;
+		File file = new File(StringPool.PERIOD);
 
-		_selenium = new LiferayDefaultSelenium(
-			seleniumHost, seleniumPort, browserType, portalURL);
+		String absolutePath = file.getAbsolutePath();
 
-		_selenium.start();
+		String projectDir = absolutePath.substring(
+			0, absolutePath.length() - 1);
 
-		_selenium.setContext(this.getClass().getName());
+		if (SELENIUM_IMPLEMENTATION.equals(Selenium.class.getName())) {
+			_selenium = new DefaultSeleniumImpl(projectDir, PORTAL_URL);
+
+			Class<?> clazz = getClass();
+
+			_selenium.setContext(clazz.getName());
+		}
+		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
+			if (BROWSER_TYPE.contains("chrome")) {
+				_selenium = new ChromeWebDriverImpl(projectDir, PORTAL_URL);
+			}
+			else if (BROWSER_TYPE.contains("firefox")) {
+				_selenium = new FirefoxWebDriverImpl(projectDir, PORTAL_URL);
+			}
+			else if (BROWSER_TYPE.contains("iexplore")) {
+				_selenium = new InternetExplorerWebDriverImpl(
+					projectDir, PORTAL_URL);
+			}
+			else {
+				throw new RuntimeException(
+					"Invalid browser type " + BROWSER_TYPE);
+			}
+		}
 	}
 
 	private void _stopSelenium() {

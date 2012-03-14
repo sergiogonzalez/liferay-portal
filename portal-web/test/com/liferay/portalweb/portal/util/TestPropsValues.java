@@ -49,6 +49,9 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final String SELENIUM_HOST = TestPropsUtil.get(
 		"selenium.host");
 
+	public static final String SELENIUM_IMPLEMENTATION = TestPropsUtil.get(
+		"selenium.implementation");
+
 	public static final int SELENIUM_PORT = GetterUtil.getInteger(
 		TestPropsUtil.get("selenium.port"));
 
