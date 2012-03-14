@@ -86,6 +86,8 @@ public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
 
 		newJournalArticle.setModifiedDate(nextDate());
 
+		newJournalArticle.setFolderId(nextLong());
+
 		newJournalArticle.setClassNameId(nextLong());
 
 		newJournalArticle.setClassPK(nextLong());
@@ -155,6 +157,8 @@ public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
 		assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getModifiedDate()),
 			Time.getShortTimestamp(newJournalArticle.getModifiedDate()));
+		assertEquals(existingJournalArticle.getFolderId(),
+			newJournalArticle.getFolderId());
 		assertEquals(existingJournalArticle.getClassNameId(),
 			newJournalArticle.getClassNameId());
 		assertEquals(existingJournalArticle.getClassPK(),
@@ -362,6 +366,8 @@ public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
 		journalArticle.setCreateDate(nextDate());
 
 		journalArticle.setModifiedDate(nextDate());
+
+		journalArticle.setFolderId(nextLong());
 
 		journalArticle.setClassNameId(nextLong());
 
