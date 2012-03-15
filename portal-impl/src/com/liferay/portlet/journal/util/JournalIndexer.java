@@ -42,6 +42,7 @@ import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 
@@ -163,7 +164,6 @@ public class JournalIndexer extends BaseIndexer {
 
 		document.addUID(
 			PORTLET_ID, article.getGroupId(), article.getArticleId());
-
 		document.addLocalizedText(
 			Field.DESCRIPTION, article.getDescriptionMap());
 		document.addLocalizedText(Field.TITLE, article.getTitleMap());
@@ -178,29 +178,7 @@ public class JournalIndexer extends BaseIndexer {
 
 		JournalStructure structure = null;
 
-		if (Validator.isNull(article.getStructureId())) {
-			Locale defaultLocale = LocaleUtil.getDefault();
-
-			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-			String[] languageIds = getLanguageIds(
-				defaultLanguageId, article.getContent());
-
-			for (String languageId : languageIds) {
-				String content = extractContent(
-					article.getContentByLocale(languageId));
-
-				if (languageId.equals(defaultLanguageId)) {
-					document.addText(Field.CONTENT, content);
-				}
-
-				document.addText(
-					Field.CONTENT.concat(StringPool.UNDERLINE).concat(
-						languageId),
-					content);
-			}
-		}
-		else {
+		if (Validator.isNotNull(article.getStructureId())) {
 			try {
 				structure = JournalStructureLocalServiceUtil.getStructure(
 					article.getGroupId(), article.getStructureId());
@@ -218,7 +196,30 @@ public class JournalIndexer extends BaseIndexer {
 			}
 		}
 
-		processStructure(structure, document, article.getContent());
+		String processedContent =
+			processStructure(structure, document, article.getContent());
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		String[] languageIds = getLanguageIds(defaultLanguageId, processedContent);
+
+		for (String languageId : languageIds) {
+			String content = JournalArticleImpl.getContentByLocale(
+				processedContent, article.isTemplateDriven(), languageId);
+
+			content = extractContent(content);
+
+			if (languageId.equals(defaultLanguageId)) {
+				document.addText(Field.CONTENT, content);
+			}
+
+			document.addText(
+				Field.CONTENT.concat(StringPool.UNDERLINE).concat(
+					languageId),
+				content);
+		}
 
 		return document;
 	}
@@ -342,10 +343,6 @@ public class JournalIndexer extends BaseIndexer {
 	protected void indexField(
 		Document document, Element element, String elType, String elIndexType) {
 
-		if (Validator.isNull(elIndexType)) {
-			return;
-		}
-
 		com.liferay.portal.kernel.xml.Document structureDocument =
 			element.getDocument();
 
@@ -442,14 +439,19 @@ public class JournalIndexer extends BaseIndexer {
 			}
 
 			if (Validator.isNotNull(elType)) {
-				indexField(document, element, elType, elIndexType);
+				if(Validator.isNotNull(elIndexType)) {
+					indexField(document, element, elType, elIndexType);
+				}
+				else {
+					rootElement.remove(element);
+				}
 			}
 
 			queue.addAll(element.elements());
 		}
 	}
 
-	protected void processStructure(
+	protected String processStructure(
 		JournalStructure structure, Document document, String content) {
 
 		try {
@@ -465,10 +467,14 @@ public class JournalIndexer extends BaseIndexer {
 			Element rootElement = contentDocument.getRootElement();
 
 			processStructure(structureDocument, document, rootElement);
+
+			content = contentDocument.asXML();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		return content;
 	}
 
 	protected void reindexArticles(long companyId) throws Exception {
