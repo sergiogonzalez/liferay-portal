@@ -1209,12 +1209,6 @@ public class JournalArticleLocalServiceImpl
 			groupId, start, end, obc);
 	}
 
-	public List<JournalArticle> getArticles(long groupId, String articleId)
-		throws SystemException {
-
-		return journalArticlePersistence.findByG_A(groupId, articleId);
-	}
-
 	public List<JournalArticle> getArticles(long groupId, long folderId)
 		throws SystemException {
 
@@ -1236,6 +1230,12 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticlePersistence.findByG_F(
 			groupId, folderId, start, end, orderByComparator);
+	}
+
+	public List<JournalArticle> getArticles(long groupId, String articleId)
+		throws SystemException {
+
+		return journalArticlePersistence.findByG_A(groupId, articleId);
 	}
 
 	public List<JournalArticle> getArticlesBySmallImageId(long smallImageId)
