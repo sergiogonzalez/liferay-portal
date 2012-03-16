@@ -952,6 +952,7 @@ Liferay.Service.registerClass(
 		deleteFolder: true,
 		getFolder: true,
 		getFolders: true,
+		getFoldersAndJournalArticlesCount: true,
 		getFoldersCount: true,
 		getSubfolderIds: true,
 		updateFolder: true
