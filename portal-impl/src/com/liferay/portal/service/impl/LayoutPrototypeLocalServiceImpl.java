@@ -14,15 +14,19 @@
 
 package com.liferay.portal.service.impl;
 
+
+import com.liferay.portal.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutPrototypeLocalServiceBaseImpl;
 
@@ -33,6 +37,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Vilmos Papp
  */
 public class LayoutPrototypeLocalServiceImpl
 	extends LayoutPrototypeLocalServiceBaseImpl {
@@ -91,7 +96,15 @@ public class LayoutPrototypeLocalServiceImpl
 			LayoutPrototype layoutPrototype)
 		throws PortalException, SystemException {
 
-		// Group
+		int layoutsByLayoutPrototypeCount =
+			LayoutLocalServiceUtil.countLayoutsByLayoutPrototypeUuid(
+				layoutPrototype.getUuid());
+
+		if (layoutsByLayoutPrototypeCount > 0) {
+			throw new RequiredLayoutPrototypeException();
+		}
+
+				// Group
 
 		Group group = layoutPrototype.getGroup();
 
