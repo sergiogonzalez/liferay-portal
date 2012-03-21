@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.templateparser;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -163,12 +165,22 @@ public abstract class BaseTemplateParser implements TemplateParser {
 			_tokens.get("company_group_id"));
 		String templateId = _tokens.get("template_id");
 
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(getCompanyId());
+		sb.append(StringPool.POUND);
+
 		if (companyGroupId > 0) {
-			return getCompanyId() + companyGroupId + templateId;
+			sb.append(companyGroupId);
 		}
 		else {
-			return getCompanyId() + getGroupId() + templateId;
+			sb.append(getGroupId());
 		}
+
+		sb.append(StringPool.POUND);
+		sb.append(templateId);
+
+		return sb.toString();
 	}
 
 	protected abstract List<TemplateNode> getTemplateNodes(Element element)
