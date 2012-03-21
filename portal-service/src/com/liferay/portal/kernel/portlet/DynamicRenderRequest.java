@@ -28,6 +28,9 @@ import javax.portlet.filter.RenderRequestWrapper;
 
 /**
  * @author Brian Wing Shun Chan
+ * @see    DynamicActionRequest
+ * @see    DynamicEventRequest
+ * @see    DynamicResourceRequest
  */
 public class DynamicRenderRequest extends RenderRequestWrapper {
 
