@@ -71,16 +71,13 @@ public class EditLayoutPrototypeAction extends PortletAction {
 				setForward(actionRequest, "portlet.layout_prototypes.error");
 			}
 			else if (e instanceof RequiredLayoutPrototypeException) {
-
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
-				if (cmd.equals(Constants.DELETE)) {
-					String redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
+				String redirect = PortalUtil.escapeRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
 
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
-					}
+				if (Validator.isNotNull(redirect)) {
+					actionResponse.sendRedirect(redirect);
 				}
 			}
 			else {

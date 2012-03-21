@@ -982,7 +982,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @return the count of matching layouts
 	 * @throws SystemException if a system exception occured
 	 */
-	public int countLayoutsByLayoutPrototypeUuid(String uuid) 
+	public int countLayoutsByLayoutPrototypeUuid(String uuid)
 		throws SystemException {
 
 		return layoutPersistence.countByLayoutsByLayoutPrototypeUuid(uuid);

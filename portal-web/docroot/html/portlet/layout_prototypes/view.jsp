@@ -23,6 +23,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layout_prototypes/view");
 %>
+
 <liferay-ui:error exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
 
 <liferay-util:include page="/html/portlet/layout_prototypes/toolbar.jsp">
