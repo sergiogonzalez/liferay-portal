@@ -25,6 +25,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 /**
@@ -131,7 +132,23 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void clickAt(String locator, String coordString) {
-		throw new UnsupportedOperationException();
+		Actions actions = new Actions(this);
+
+		WebElement webElement = getWebElement(locator);
+
+		if (coordString.contains(",")) {
+			String[] coords = coordString.split(",");
+
+			int x = GetterUtil.getInteger(coords[0]);
+			int y = GetterUtil.getInteger(coords[1]);
+
+			actions.moveToElement(webElement, x, y);
+
+			actions.click();
+		}
+		else {
+			webElement.click();
+		}
 	}
 
 	@Override

@@ -104,6 +104,7 @@ import javax.portlet.PortletException;
  * @author Raymond Augé
  * @author Jorge Ferrer
  * @author Bruno Farache
+ * @author Vilmos Papp
  */
 public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
@@ -973,6 +974,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return layoutPersistence.findByIconImageId(iconImageId);
+	}
+
+	/**
+	 * Returns all layouts belonging to the layout prototype
+	 * @param  uuid of the layout prototype
+	 * @return the count of matching layouts
+	 * @throws SystemException if a system exception occured
+	 */
+	public int countLayoutsByLayoutPrototypeUuid(String uuid)
+		throws SystemException {
+
+		return layoutPersistence.countByLayoutsByLayoutPrototypeUuid(uuid);
 	}
 
 	/**
