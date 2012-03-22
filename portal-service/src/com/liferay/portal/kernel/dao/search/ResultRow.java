@@ -43,6 +43,13 @@ public class ResultRow {
 	}
 
 	public ResultRow(Object obj, String primaryKey, int pos, boolean bold) {
+		this(String.valueOf(pos + 1), obj, primaryKey, pos, bold);
+	}
+
+	public ResultRow(
+		String rowId, Object obj, String primaryKey, int pos, boolean bold) {
+
+		_rowId = rowId;
 		_obj = obj;
 		_primaryKey = primaryKey;
 		_pos = pos;
@@ -362,6 +369,10 @@ public class ResultRow {
 		return _primaryKey;
 	}
 
+	public String getRowId() {
+		return _rowId;
+	}
+
 	public boolean isBold() {
 		return _bold;
 	}
@@ -414,6 +425,10 @@ public class ResultRow {
 		_restricted = restricted;
 	}
 
+	public void setRowId(String rowId) {
+		_rowId = rowId;
+	}
+
 	public void setSkip(boolean skip) {
 		_skip = skip;
 	}
@@ -427,6 +442,7 @@ public class ResultRow {
 	private int _pos;
 	private String _primaryKey;
 	private boolean _restricted;
+	private String _rowId;
 	private List<SearchEntry> _searchEntries;
 	private boolean _skip;
 

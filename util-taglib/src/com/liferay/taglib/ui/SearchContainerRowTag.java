@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
@@ -115,6 +117,7 @@ public class SearchContainerRowTag<R>
 			_keyProperty = null;
 			_modelVar = DEFAULT_MODEL_VAR;
 			_orderableHeaders = null;
+			_rowIdProperty = null;
 			_rowVar = DEFAULT_ROW_VAR;
 			_stringKey = false;
 		}
@@ -250,6 +253,10 @@ public class SearchContainerRowTag<R>
 		_resultRow = row;
 	}
 
+	public void setRowIdProperty(String rowIdProperty) {
+		_rowIdProperty = rowIdProperty;
+	}
+
 	public void setRowVar(String rowVar) {
 		_rowVar = rowVar;
 	}
@@ -278,24 +285,40 @@ public class SearchContainerRowTag<R>
 			}
 		}
 
-		if (Validator.isNull(_keyProperty)) {
-			String primaryKey = String.valueOf(model);
+		String primaryKey = null;
 
-			_resultRow = new ResultRow(model, primaryKey, _rowIndex, _bold);
+		if (Validator.isNull(_keyProperty)) {
+			primaryKey = String.valueOf(model);
 		}
 		else if (isStringKey()) {
-			String primaryKey = BeanPropertiesUtil.getString(
-				model, _keyProperty);
-
-			_resultRow = new ResultRow(model, primaryKey, _rowIndex, _bold);
+			primaryKey = BeanPropertiesUtil.getString(model, _keyProperty);
 		}
 		else {
-			Object primaryKey = BeanPropertiesUtil.getObject(
+			Object primaryKeyObj = BeanPropertiesUtil.getObject(
 				model, _keyProperty);
 
-			_resultRow = new ResultRow(
-				model, String.valueOf(primaryKey), _rowIndex, _bold);
+			primaryKey = String.valueOf(primaryKeyObj);
 		}
+
+		String rowId = null;
+
+		if (Validator.isNull(_rowIdProperty)) {
+			rowId = String.valueOf(_rowIndex + 1);
+		}
+		else {
+			Object rowIdObj = BeanPropertiesUtil.getObject(
+				model, _rowIdProperty);
+
+			if (Validator.isNull(rowIdObj)) {
+				rowId = String.valueOf(_rowIndex + 1);
+			}
+			else {
+				rowId = FriendlyURLNormalizerUtil.normalize(
+					String.valueOf(rowIdObj), new char[] {CharPool.SLASH});
+			}
+		}
+
+		_resultRow = new ResultRow(rowId, model, primaryKey, _rowIndex, _bold);
 
 		pageContext.setAttribute(_indexVar, _rowIndex);
 		pageContext.setAttribute(_modelVar, model);
@@ -314,6 +337,7 @@ public class SearchContainerRowTag<R>
 	private ResultRow _resultRow;
 	private List<ResultRow> _resultRows;
 	private List<R> _results;
+	private String _rowIdProperty;
 	private int _rowIndex;
 	private String _rowVar = DEFAULT_ROW_VAR;
 	private boolean _stringKey;

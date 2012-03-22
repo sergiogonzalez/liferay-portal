@@ -15,31 +15,34 @@
 package com.liferay.portal.webdav;
 
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
+import com.liferay.portal.test.TestContext;
+import com.liferay.portal.webdav.WebDAVServlet;
 import com.liferay.portal.webdav.methods.Method;
 
 import javax.servlet.http.HttpServletResponse;
 
-import junit.extensions.TestSetup;
-
-import junit.framework.Test;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-/**
- * @author Alexander Chow
- */
-public class WebDAVTestSetup extends TestSetup {
+import org.junit.Assert;
 
-	public WebDAVTestSetup(Test test) {
-		super(test);
+/**
+ * @author Miguel Pastor
+ */
+public class WebDAVEnviornmentConfigTestListener
+	extends EnvironmentExecutionTestListener {
+
+	@Override
+	public void runAfterClass(TestContext testContext) {
+		_baseWebDAVTestCase.service(Method.DELETE, "", null, null);
+
+		super.runAfterClass(testContext);
 	}
 
 	@Override
-	public void setUp() {
-		ServiceTestUtil.initServices();
-		ServiceTestUtil.initPermissions();
+	public void runBeforeClass(TestContext testContext) {
+		super.runBeforeClass(testContext);
 
 		Logger logger = Logger.getLogger(WebDAVServlet.class);
 
@@ -56,15 +59,8 @@ public class WebDAVTestSetup extends TestSetup {
 
 			statusCode = BaseWebDAVTestCase.getStatusCode(tuple);
 
-			assertEquals(HttpServletResponse.SC_CREATED, statusCode);
+			Assert.assertEquals(HttpServletResponse.SC_CREATED, statusCode);
 		}
-	}
-
-	@Override
-	public void tearDown() {
-		_baseWebDAVTestCase.service(Method.DELETE, "", null, null);
-
-		ServiceTestUtil.destroyServices();
 	}
 
 	private BaseWebDAVTestCase _baseWebDAVTestCase = new BaseWebDAVTestCase();

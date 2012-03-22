@@ -12,16 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.cache.key;
+package com.liferay.portal.service.persistence;
+
+import com.liferay.portal.test.AbstractExecutionTestListener;
+import com.liferay.portal.test.TestContext;
+import com.liferay.portal.util.PropsValues;
 
 /**
- * @author Shuyang Zhou
+ * @author Miguel Pastor
  */
-public class JavaMD5CacheKeyGeneratorTest extends BaseCacheKeyGeneratorTest {
+public class PersistenceExecutionTestListener
+	extends AbstractExecutionTestListener {
 
 	@Override
-	public void setUp() throws Exception {
-		cacheKeyGenerator = new JavaMD5CacheKeyGenerator();
+	public void runAfterClass(TestContext testContext) {
+		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
+	}
+
+	@Override
+	public void runBeforeClass(TestContext testContext) {
+		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
 	}
 
 }

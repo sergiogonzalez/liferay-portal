@@ -15,7 +15,7 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -180,7 +180,7 @@ import org.junit.runner.RunWith;
  *
  * @author Alexander Chow
  */
-@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 

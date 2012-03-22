@@ -88,6 +88,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 		escapedModel="<%= true %>"
 		keyProperty="userId"
 		modelVar="user2"
+		rowIdProperty="screenName"
 	>
 		<liferay-ui:search-container-row-parameter
 			name="group"

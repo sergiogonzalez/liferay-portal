@@ -104,6 +104,7 @@ userGroupRoles.addAll(organizationRoles);
 		className="com.liferay.portal.model.Group"
 		keyProperty="groupId"
 		modelVar="group"
+		rowIdProperty="friendlyURL"
 	>
 
 		<%

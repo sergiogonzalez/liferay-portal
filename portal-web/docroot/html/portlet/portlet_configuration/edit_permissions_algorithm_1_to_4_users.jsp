@@ -80,6 +80,7 @@ int userIdsPos = ParamUtil.getInteger(request, "userIdsPos");
 				escapedModel="<%= true %>"
 				keyProperty="userId"
 				modelVar="user2"
+				rowIdProperty="screenName"
 			>
 				<liferay-ui:search-container-column-text
 					name="name"

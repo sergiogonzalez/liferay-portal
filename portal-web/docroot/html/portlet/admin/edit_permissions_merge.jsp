@@ -94,6 +94,7 @@ List<Group> groups = new ArrayList<Group>(mvp.keySet());
 		escapedModel="<%= true %>"
 		keyProperty="groupId"
 		modelVar="group"
+		rowIdProperty="friendlyURL"
 	>
 
 		<%

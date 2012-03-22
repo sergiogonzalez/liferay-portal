@@ -45,6 +45,7 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 		escapedModel="<%= true %>"
 		keyProperty="groupId"
 		modelVar="group"
+		rowIdProperty="friendlyURL"
 	>
 		<liferay-ui:search-container-column-text
 			name="name"

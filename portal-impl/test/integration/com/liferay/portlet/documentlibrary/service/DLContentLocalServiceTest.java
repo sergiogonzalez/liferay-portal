@@ -16,7 +16,8 @@ package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.AssertUtils;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.model.DLContent;
@@ -35,7 +36,7 @@ import org.junit.runner.RunWith;
  * @author Tina Tian
  * @author Shuyang Zhou
  */
-@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLContentLocalServiceTest {
 
@@ -379,7 +380,7 @@ public class DLContentLocalServiceTest {
 			expectedDLContent.getPath(), actualDLContent.getPath());
 		Assert.assertEquals(
 			expectedDLContent.getVersion(), actualDLContent.getVersion());
-		Assert.assertEquals(
+		AssertUtils.assertEquals(
 			expectedDLContent.getData(), actualDLContent.getData());
 		Assert.assertEquals(
 			expectedDLContent.getSize(), actualDLContent.getSize());

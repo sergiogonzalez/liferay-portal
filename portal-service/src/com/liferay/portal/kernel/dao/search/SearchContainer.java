@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -21,6 +23,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +150,8 @@ public class SearchContainer<R> {
 			_headerNames = new ArrayList<String>(headerNames.size());
 
 			_headerNames.addAll(headerNames);
+
+			_buildNormalizedHeaderNames(_headerNames);
 		}
 
 		_emptyResultsMessage = emptyResultsMessage;
@@ -195,6 +201,32 @@ public class SearchContainer<R> {
 	}
 
 	public String getId() {
+		if (Validator.isNotNull(_id)) {
+			return _id;
+		}
+
+		String id = null;
+
+		if (Validator.isNotNull(_className)) {
+			String simpleClassName = _className;
+
+			int pos = simpleClassName.lastIndexOf(StringPool.PERIOD);
+
+			if (pos != -1) {
+				simpleClassName = simpleClassName.substring(pos + 1);
+			}
+
+			String variableCasingSimpleClassName = TextFormatter.format(
+				simpleClassName, TextFormatter.I);
+
+			id = TextFormatter.formatPlural(variableCasingSimpleClassName);
+		}
+		else {
+			id = DeterminateKeyGenerator.generate("taglib_search_container");
+		}
+
+		_id = id.concat("SearchContainer");
+
 		return _id;
 	}
 
@@ -207,6 +239,10 @@ public class SearchContainer<R> {
 	 */
 	public int getMaxPages() {
 		return _maxPages;
+	}
+
+	public List<String> getNormalizedHeaderNames() {
+		return _normalizedHeaderNames;
 	}
 
 	public Map<String, String> getOrderableHeaders() {
@@ -309,6 +345,8 @@ public class SearchContainer<R> {
 
 	public void setHeaderNames(List<String> headerNames) {
 		_headerNames = headerNames;
+
+		_buildNormalizedHeaderNames(headerNames);
 	}
 
 	public void setHover(boolean hover) {
@@ -380,6 +418,15 @@ public class SearchContainer<R> {
 		_calculateStartAndEnd();
 	}
 
+	private void _buildNormalizedHeaderNames(List<String> headerNames) {
+		_normalizedHeaderNames = new ArrayList<String>(headerNames.size());
+
+		for (String headerName: headerNames) {
+			_normalizedHeaderNames.add(
+				FriendlyURLNormalizerUtil.normalize(headerName));
+		}
+	}
+
 	private void _calculateStartAndEnd() {
 		_start = (_cur - 1) * _delta;
 		_end = _start + _delta;
@@ -410,6 +457,7 @@ public class SearchContainer<R> {
 	 */
 	private int _maxPages = DEFAULT_MAX_PAGES;
 
+	private List<String> _normalizedHeaderNames;
 	private Map<String, String> _orderableHeaders;
 	private String _orderByCol;
 	private String _orderByColParam = DEFAULT_ORDER_BY_COL_PARAM;

@@ -24,34 +24,12 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 
 String id = searchContainer.getId();
 
-if (Validator.isNull(id)) {
-	id = searchContainer.getClassName();
-
-	if (Validator.isNotNull(id)) {
-		String simpleClassName = id;
-
-		int pos = id.lastIndexOf(StringPool.PERIOD);
-
-		if (pos != -1) {
-			simpleClassName = id.substring(pos + 1);
-		}
-
-		String variableCasingSimpleClassName = TextFormatter.format(simpleClassName, TextFormatter.I);
-
-		id = TextFormatter.formatPlural(variableCasingSimpleClassName);
-	}
-	else {
-		id = PortalUtil.generateRandomKey(request, "taglib_search_container");
-	}
-
-	id = id.concat("SearchContainer");
-}
-
 int start = searchContainer.getStart();
 int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
 List resultRows = searchContainer.getResultRows();
 List<String> headerNames = searchContainer.getHeaderNames();
+List<String> normalizedHeaderNames = searchContainer.getNormalizedHeaderNames();
 Map orderableHeaders = searchContainer.getOrderableHeaders();
 String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
 RowChecker rowChecker = searchContainer.getRowChecker();
@@ -63,6 +41,8 @@ if (end > total) {
 if (rowChecker != null) {
 	if (headerNames != null) {
 		headerNames.add(0, rowChecker.getAllRowsCheckBox());
+
+		normalizedHeaderNames.add(0, "rowChecker");
 	}
 }
 
@@ -90,7 +70,7 @@ int sortColumnIndex = -1;
 <div class="lfr-search-container <%= resultRows.isEmpty() ? "aui-helper-hidden" : StringPool.BLANK %>">
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > 10) && paginate %>">
 		<div class="taglib-search-iterator-page-iterator-top">
-			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= type %>" />
+			<liferay-ui:search-paginator id='<%= id + "PageIteratorTop" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
 		</div>
 	</c:if>
 
@@ -103,6 +83,16 @@ int sortColumnIndex = -1;
 			<%
 			for (int i = 0; i < headerNames.size(); i++) {
 				String headerName = headerNames.get(i);
+
+				String normalizedHeaderName = null;
+
+				if (i < normalizedHeaderNames.size()) {
+					normalizedHeaderName = normalizedHeaderNames.get(i);
+				}
+
+				if (Validator.isNull(normalizedHeaderName)) {
+					normalizedHeaderName = String.valueOf(i +1);
+				}
 
 				String orderKey = null;
 				String orderByType = null;
@@ -148,7 +138,7 @@ int sortColumnIndex = -1;
 				}
 			%>
 
-				<th class="col-<%= i + 1 %> <%= cssClass %>" id="<%= namespace + id %>_col-<%= i + 1 %>"
+				<th class="col-<%= i + 1 %> col-<%= normalizedHeaderName %> <%= cssClass %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>"
 
 					<%--
 
@@ -286,6 +276,8 @@ int sortColumnIndex = -1;
 				row.addSearchEntry(0, textSearchEntry);
 			}
 
+			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
+
 			Map<String, Object> data = row.getData();
 		%>
 
@@ -294,6 +286,16 @@ int sortColumnIndex = -1;
 			<%
 			for (int j = 0; j < entries.size(); j++) {
 				SearchEntry entry = (SearchEntry)entries.get(j);
+
+				String normalizedHeaderName = null;
+
+				if (j < normalizedHeaderNames.size()) {
+					normalizedHeaderName = normalizedHeaderNames.get(j);
+				}
+
+				if (Validator.isNull(normalizedHeaderName)) {
+					normalizedHeaderName = String.valueOf(j + 1);
+				}
 
 				entry.setIndex(j);
 
@@ -316,10 +318,12 @@ int sortColumnIndex = -1;
 				}
 			%>
 
-				<td class="align-<%= entry.getAlign() %> col-<%= j + 1 %><%= row.isBold() ? " taglib-search-iterator-highlighted" : "" %> <%= columnClassName %> valign-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>"
+				<td class="align-<%= entry.getAlign() %> col-<%= j + 1 %><%= row.isBold() ? " taglib-search-iterator-highlighted" : "" %> col-<%= normalizedHeaderName %> <%= columnClassName %> valign-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>"
 					<c:if test="<%= (headerNames != null) && (headerNames.size() >= (j + 1)) %>">
-						headers="<%= namespace + id %>_col-<%= (j + 1) %>"
+						headers="<%= namespace + id %>_col-<%= normalizedHeaderName %>"
 					</c:if>
+
+					id="<%= namespace + id %>_col-<%= normalizedHeaderName %>_row-<%= row.getRowId() %>"
 				>
 
 					<%
@@ -343,7 +347,7 @@ int sortColumnIndex = -1;
 
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_BOTTOM && paginate %>">
 		<div class="taglib-search-iterator-page-iterator-bottom">
-			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= type %>" />
+			<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
 		</div>
 	</c:if>
 </div>

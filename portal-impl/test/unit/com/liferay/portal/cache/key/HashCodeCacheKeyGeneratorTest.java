@@ -12,25 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.test;
-
-import com.liferay.portal.service.ServiceTestUtil;
+package com.liferay.portal.cache.key;
 
 /**
- * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class EnvironmentConfigTestListener
-	extends AbstractExecutionTestListener {
+public class HashCodeCacheKeyGeneratorTest
+	extends BaseCacheKeyGeneratorTestCase {
 
 	@Override
-	public void runAfterClass(TestContext testContext) {
-		ServiceTestUtil.destroyServices();
-	}
-
-	@Override
-	public void runBeforeClass(TestContext testContext) {
-		ServiceTestUtil.initServices();
-		ServiceTestUtil.initPermissions();
+	public void setUp() throws Exception {
+		cacheKeyGenerator = new HashCodeCacheKeyGenerator();
 	}
 
 }

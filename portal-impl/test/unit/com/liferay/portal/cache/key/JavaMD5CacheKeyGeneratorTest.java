@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.store;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+package com.liferay.portal.cache.key;
 
 /**
- * @author Tina Tian
+ * @author Shuyang Zhou
  */
-public class StoreTestSuite extends TestSuite {
+public class JavaMD5CacheKeyGeneratorTest
+	extends BaseCacheKeyGeneratorTestCase {
 
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTestSuite(DBStoreTest.class);
-
-		return testSuite;
+	@Override
+	public void setUp() throws Exception {
+		cacheKeyGenerator = new JavaMD5CacheKeyGenerator();
 	}
 
 }

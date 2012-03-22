@@ -14,9 +14,14 @@
 
 package com.liferay.portal.webdav;
 
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.webdav.methods.Method;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * <p>
@@ -26,8 +31,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Alexander Chow
  */
+@ExecutionTestListeners(listeners = {WebDAVEnviornmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 
+	@Test
 	public void test02CopyInit() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
@@ -37,12 +45,14 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 			service(Method.MKCOL, "copycoll", null, null));
 	}
 
+	@Test
 	public void test03CopySimple() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			serviceCopyOrMove(Method.COPY, "copysrc", "copydest", false));
 	}
 
+	@Test
 	public void test04CopyOverwrite() {
 		assertCode(
 			HttpServletResponse.SC_PRECONDITION_FAILED,
@@ -55,12 +65,14 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 			serviceCopyOrMove(Method.COPY, "copysrc", "copycoll", true));
 	}
 
+	@Test
 	public void test05NoDestColl() {
 		assertCode(
 			HttpServletResponse.SC_CONFLICT,
 			serviceCopyOrMove(Method.COPY, "copysrc", "nonesuch/foo", false));
 	}
 
+	@Test
 	public void test06CopyCleanup() {
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("copysrc"));
 		assertCode(
@@ -69,6 +81,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 			HttpServletResponse.SC_NO_CONTENT, serviceDelete("copycoll"));
 	}
 
+	@Test
 	public void test07CopyColl() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
@@ -111,6 +124,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("ccdest2"));
 	}
 
+	@Test
 	public void test08CopyShallow() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
@@ -126,6 +140,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("ccdest"));
 	}
 
+	@Test
 	public void test09Move() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
@@ -152,6 +167,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 			HttpServletResponse.SC_NO_CONTENT, serviceDelete("movecoll"));
 	}
 
+	@Test
 	public void test10MoveColl() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
@@ -203,6 +219,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 				Method.MOVE, "mvdest2", null, "mvnoncoll", -1, true));
 	}
 
+	@Test
 	public void test11MoveCleanup() {
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("mvdest"));
 		assertCode(HttpServletResponse.SC_NOT_FOUND, serviceDelete("mvdest2"));

@@ -24,8 +24,7 @@ import org.junit.runners.model.Statement;
 /**
  * @author Miguel Pastor
  */
-public class LiferayIntegrationJUnitTestRunner
-	extends BlockJUnit4ClassRunner {
+public class LiferayIntegrationJUnitTestRunner extends BlockJUnit4ClassRunner {
 
 	public LiferayIntegrationJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
