@@ -44,7 +44,7 @@ public interface JournalArticleService {
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleServiceUtil} to access the journal article remote service. Add custom service methods to {@link com.liferay.portlet.journal.service.impl.JournalArticleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.journal.model.JournalArticle addArticle(
-		long groupId, long classNameId, long classPK,
+		long groupId, long folderId, long classNameId, long classPK,
 		java.lang.String articleId, boolean autoArticleId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -64,7 +64,7 @@ public interface JournalArticleService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.journal.model.JournalArticle addArticle(
-		long groupId, long classNameId, long classPK,
+		long groupId, long folderId, long classNameId, long classPK,
 		java.lang.String articleId, boolean autoArticleId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -163,6 +163,12 @@ public interface JournalArticleService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByFolderId(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByLayoutUuid(
 		long groupId, java.lang.String layoutUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -173,10 +179,19 @@ public interface JournalArticleService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesCountByFolderId(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalArticle getDisplayArticleByUrlTitle(
 		long groupId, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersArticlesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
@@ -277,7 +292,8 @@ public interface JournalArticleService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long userId, long groupId, java.lang.String articleId, double version,
+		long userId, long groupId, long folderId, java.lang.String articleId,
+		double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String layoutUuid,
@@ -286,7 +302,8 @@ public interface JournalArticleService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long groupId, java.lang.String articleId, double version,
+		long groupId, long folderId, java.lang.String articleId,
+		double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
@@ -305,8 +322,8 @@ public interface JournalArticleService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long groupId, java.lang.String articleId, double version,
-		java.lang.String content,
+		long groupId, long folderId, java.lang.String articleId,
+		double version, java.lang.String content,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

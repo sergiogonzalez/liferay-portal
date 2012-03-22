@@ -41,6 +41,29 @@
 				(type_ = ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				[$FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.status = ?) AND
+				[$FOLDER_ID$]
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT
@@ -154,6 +177,52 @@
 				)
 			ORDER BY
 				feedId ASC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countF_ByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				JournalFolder
+			WHERE
+				(JournalFolder.groupId = ?) AND
+				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countJA_ByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				[$JOURNAL_ARTICLE_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
+		<![CDATA[
+			SELECT
+				DISTINCT folderId AS modelFolderId, JournalFolder.createDate as createDate, JournalFolder.modifiedDate as modifiedDate, JournalFolder.name AS title, 1 AS modelFolder, 0 AS articleId, 0 AS version
+			FROM
+				JournalFolder
+			WHERE
+				(JournalFolder.groupId = ?) AND
+				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findJA_ByG_F">
+		<![CDATA[
+			SELECT
+				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.createDate as createDate, JournalArticle.modifiedDate as modifiedDate, JournalArticle.title AS title, 0 AS modelFolder, JournalArticle.articleId as articleId, MAX(JournalArticle.version) AS version
+			FROM
+				JournalArticle
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				[$JOURNAL_ARTICLE_FOLDER_ID$]
+			GROUP BY
+				articleId
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalStructureFinder.countByC_G_S_N_D">
