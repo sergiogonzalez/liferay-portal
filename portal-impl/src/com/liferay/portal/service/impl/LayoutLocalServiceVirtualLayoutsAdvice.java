@@ -35,6 +35,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -123,16 +124,21 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 					WorkflowThreadLocal.setEnabled(workflowEnabled);
 				}
 
+				Object returnValue = methodInvocation.proceed();
+
 				if (!PropsValues.
 						USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE &&
 					group.isUser() &&
 					(parentLayoutId ==
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
 
-					Object returnValue = methodInvocation.proceed();
-
 					return addUserGroupLayouts(
-						group, layoutSet, (List<Layout>)returnValue);
+						group, layoutSet, (List<Layout>)returnValue,
+						parentLayoutId);
+				}
+				else {
+					return addChildrenUserGroupLayouts(
+						group, (List<Layout>)returnValue);
 				}
 			}
 			catch (Exception e) {
@@ -145,8 +151,25 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		return methodInvocation.proceed();
 	}
 
+	protected List<Layout> addChildrenUserGroupLayouts(
+		Group group, List<Layout> layouts) {
+
+		layouts = ListUtil.copy(layouts);
+
+		List<Layout> childrenLayouts = new ArrayList<Layout>();
+
+		for (Layout userGroupLayout : layouts) {
+			Layout virtualLayout = new VirtualLayout(userGroupLayout, group);
+
+			childrenLayouts.add(virtualLayout);
+		}
+
+		return childrenLayouts;
+	}
+
 	protected List<Layout> addUserGroupLayouts(
-			Group group, LayoutSet layoutSet, List<Layout> layouts)
+			Group group, LayoutSet layoutSet, List<Layout> layouts,
+			long parentLayoutId)
 		throws Exception {
 
 		layouts = ListUtil.copy(layouts);
@@ -158,7 +181,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			Group userGroupGroup = userGroup.getGroup();
 
 			List<Layout> userGroupLayouts = LayoutLocalServiceUtil.getLayouts(
-				userGroupGroup.getGroupId(), layoutSet.isPrivateLayout());
+				userGroupGroup.getGroupId(), layoutSet.isPrivateLayout(),
+				parentLayoutId);
 
 			for (Layout userGroupLayout : userGroupLayouts) {
 				Layout virtualLayout = new VirtualLayout(
