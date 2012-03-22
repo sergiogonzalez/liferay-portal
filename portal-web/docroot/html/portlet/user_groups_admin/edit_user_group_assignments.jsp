@@ -92,6 +92,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 			escapedModel="<%= true %>"
 			keyProperty="userId"
 			modelVar="user2"
+			rowIdProperty="screenName"
 		>
 			<liferay-ui:search-container-column-text
 				name="name"

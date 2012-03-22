@@ -171,6 +171,7 @@
 		escapedModel="<%= true %>"
 		keyProperty="userId"
 		modelVar="user2"
+		rowIdProperty="screenName"
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_user" />

@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.webdav;
+package com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp;
+
+import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -20,16 +22,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebDAVTestSuite extends TestSuite {
-
+public class AddBlogsEntryCPTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
+		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 
-		testSuite.addTestSuite(WebDAVLitmusBasicTest.class);
-		testSuite.addTestSuite(WebDAVLitmusCopyMoveTest.class);
-		testSuite.addTestSuite(WebDAVOSXTest.class);
-
-		return new WebDAVTestSetup(testSuite);
+		return testSuite;
 	}
-
 }

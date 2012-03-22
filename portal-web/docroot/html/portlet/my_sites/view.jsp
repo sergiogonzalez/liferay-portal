@@ -101,6 +101,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			escapedModel="<%= true %>"
 			keyProperty="groupId"
 			modelVar="group"
+			rowIdProperty="friendlyURL"
 		>
 
 			<%

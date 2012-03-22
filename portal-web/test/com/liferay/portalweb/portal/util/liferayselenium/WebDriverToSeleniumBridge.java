@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import com.thoughtworks.selenium.Selenium;
@@ -25,6 +26,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 /**
@@ -131,12 +133,28 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void clickAt(String locator, String coordString) {
-		throw new UnsupportedOperationException();
+		Actions actions = new Actions(this);
+
+		WebElement webElement = getWebElement(locator);
+
+		if (coordString.contains(",")) {
+			String[] coords = coordString.split(",");
+
+			int x = GetterUtil.getInteger(coords[0]);
+			int y = GetterUtil.getInteger(coords[1]);
+
+			actions.moveToElement(webElement, x, y);
+
+			actions.click();
+		}
+		else {
+			webElement.click();
+		}
 	}
 
 	@Override
 	public void close() {
-		throw new UnsupportedOperationException();
+		super.close();
 	}
 
 	public void contextMenu(String locator) {
@@ -172,7 +190,15 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void doubleClick(String locator) {
-		throw new UnsupportedOperationException();
+		Actions actions = new Actions(this);
+
+		WebElement webElement = getWebElement(locator);
+
+		actions.doubleClick(webElement);
+
+		actions.build();
+
+		actions.perform();
 	}
 
 	public void doubleClickAt(String locator, String coordString) {
@@ -187,7 +213,19 @@ public class WebDriverToSeleniumBridge
 		String locatorOfObjectToBeDragged,
 		String locatorOfDragDestinationObject) {
 
-		throw new UnsupportedOperationException();
+		Actions actions = new Actions(this);
+
+		WebElement objectToBeDraggedWebElement = getWebElement(
+			locatorOfObjectToBeDragged);
+		WebElement dragDestinationObjectWebElement = getWebElement(
+			locatorOfDragDestinationObject);
+
+		actions.dragAndDrop(
+			objectToBeDraggedWebElement, dragDestinationObjectWebElement);
+
+		actions.build();
+
+		actions.perform();
 	}
 
 	public void dragdrop(String locator, String movementsString) {
@@ -203,7 +241,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getAlert() {
-		throw new UnsupportedOperationException();
+		WebDriver.TargetLocator targetLocator = switchTo();
+
+		Alert alert = targetLocator.alert();
+
+		return alert.getText();
 	}
 
 	public String[] getAllButtons() {
@@ -231,7 +273,15 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getAttribute(String attributeLocator) {
-		throw new UnsupportedOperationException();
+		int pos = attributeLocator.lastIndexOf(CharPool.AT);
+
+		String locator = attributeLocator.substring(0, pos - 1);
+
+		WebElement webElement = getWebElement(locator);
+
+		String attribute = attributeLocator.substring(pos);
+
+		return webElement.getAttribute(attribute);
 	}
 
 	public String[] getAttributeFromAllWindows(String attributeName) {

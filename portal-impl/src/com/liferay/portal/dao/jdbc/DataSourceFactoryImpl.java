@@ -405,7 +405,9 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			Class.forName(driverClassName);
 		}
 		catch (ClassNotFoundException cnfe) {
-			if (!ServerDetector.isTomcat()) {
+			if (!ServerDetector.isGeronimo() && !ServerDetector.isJetty() &&
+				!ServerDetector.isTomcat()) {
+
 				throw cnfe;
 			}
 

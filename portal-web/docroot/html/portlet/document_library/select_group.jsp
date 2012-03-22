@@ -58,6 +58,7 @@
 			escapedModel="<%= true %>"
 			keyProperty="groupId"
 			modelVar="group"
+			rowIdProperty="friendlyURL"
 		>
 
 			<%

@@ -73,6 +73,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 		escapedModel="<%= true %>"
 		keyProperty="userId"
 		modelVar="user2"
+		rowIdProperty="screenName"
 	>
 		<liferay-ui:search-container-column-text
 			name="name"
