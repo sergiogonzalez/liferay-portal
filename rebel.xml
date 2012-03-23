@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com ">http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
+
+	<classpath>
+		<dir name="/Users/sgonzalez/proyectos/liferay/git/out/production/portal-impl" />
+		<dir name="/Users/sgonzalez/proyectos/liferay/git/out/production/portal-service" />
+		<dir name="/Users/sgonzalez/proyectos/liferay/git/out/production/util-bridges" />
+		<dir name="/Users/sgonzalez/proyectos/liferay/git/out/production/util-java" />
+		<dir name="/Users/sgonzalez/proyectos/liferay/git/out/production/util-taglib" />
+	</classpath>
+	<web>
+		<link target="/WEB-INF">
+			<dir name="/Users/sgonzalez/proyectos/liferay/git/out/artifacts/liferay_exploded" />
+		</link>
+	</web>
+</application>

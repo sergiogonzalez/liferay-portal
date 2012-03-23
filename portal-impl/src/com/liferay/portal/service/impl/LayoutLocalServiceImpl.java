@@ -104,6 +104,7 @@ import javax.portlet.PortletException;
  * @author Raymond Augé
  * @author Jorge Ferrer
  * @author Bruno Farache
+ * @author Vilmos Papp
  */
 public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
@@ -1109,6 +1110,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		return layoutReferences.toArray(
 			new LayoutReference[layoutReferences.size()]);
+	}
+
+	public int getLayoutsByLayoutPrototypeUuidCount(String layoutPrototypeUuid)
+		throws SystemException {
+
+		return layoutPersistence.countByLayoutPrototypeUuid(
+			layoutPrototypeUuid);
 	}
 
 	public int getLayoutsCount(Group group, boolean privateLayout)

@@ -508,6 +508,9 @@
 		<finder name="IconImageId" return-type="Layout">
 			<finder-column name="iconImageId" />
 		</finder>
+		<finder name="LayoutPrototypeUuid" return-type="Collection">
+			<finder-column name="layoutPrototypeUuid" />
+		</finder>
 		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
@@ -2628,6 +2631,7 @@
 		<exception>RemoteExport</exception>
 		<exception>RequiredGroup</exception>
 		<exception>RequiredLayout</exception>
+		<exception>RequiredLayoutPrototype</exception>
 		<exception>RequiredLayoutSetBranch</exception>
 		<exception>RequiredLayoutSetPrototype</exception>
 		<exception>RequiredOrganization</exception>

@@ -859,6 +859,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			preferencesKey, preferencesValue);
 	}
 
+	public int getLayoutsByLayoutPrototypeUuidCount(
+		java.lang.String layoutPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.getLayoutsByLayoutPrototypeUuidCount(layoutPrototypeUuid);
+	}
+
 	public int getLayoutsCount(com.liferay.portal.model.Group group,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
