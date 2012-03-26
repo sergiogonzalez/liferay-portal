@@ -49,10 +49,6 @@ if (Validator.isNotNull(target)) {
 			<%
 			LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
-			if (filterManageableOrganizations) {
-				organizationParams.put("organizationsTree", user.getOrganizations());
-			}
-
 			if (searchTerms.isAdvancedSearch()) {
 				results = OrganizationLocalServiceUtil.search(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 			}
