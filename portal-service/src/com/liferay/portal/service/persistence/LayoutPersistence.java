@@ -546,6 +546,111 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the layouts where layoutPrototypeUuid = &#63;.
+	*
+	* @param layoutPrototypeUuid the layout prototype uuid
+	* @return the matching layouts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
+		java.lang.String layoutPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the layouts where layoutPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutPrototypeUuid the layout prototype uuid
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @return the range of matching layouts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
+		java.lang.String layoutPrototypeUuid, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the layouts where layoutPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutPrototypeUuid the layout prototype uuid
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layouts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
+		java.lang.String layoutPrototypeUuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first layout in the ordered set where layoutPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutPrototypeUuid the layout prototype uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout
+	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Layout findByLayoutPrototypeUuid_First(
+		java.lang.String layoutPrototypeUuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last layout in the ordered set where layoutPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutPrototypeUuid the layout prototype uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout
+	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Layout findByLayoutPrototypeUuid_Last(
+		java.lang.String layoutPrototypeUuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the layouts before and after the current layout in the ordered set where layoutPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param plid the primary key of the current layout
+	* @param layoutPrototypeUuid the layout prototype uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout
+	* @throws com.liferay.portal.NoSuchLayoutException if a layout with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Layout[] findByLayoutPrototypeUuid_PrevAndNext(
+		long plid, java.lang.String layoutPrototypeUuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the layouts where groupId = &#63; and privateLayout = &#63;.
 	*
 	* @param groupId the group ID
@@ -1287,9 +1392,11 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portal.model.Layout removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -1315,11 +1422,22 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* Removes the layout where iconImageId = &#63; from the database.
 	*
 	* @param iconImageId the icon image ID
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByIconImageId(long iconImageId)
+	public com.liferay.portal.model.Layout removeByIconImageId(long iconImageId)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the layouts where layoutPrototypeUuid = &#63; from the database.
+	*
+	* @param layoutPrototypeUuid the layout prototype uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByLayoutPrototypeUuid(
+		java.lang.String layoutPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Removes all the layouts where groupId = &#63; and privateLayout = &#63; from the database.
@@ -1337,9 +1455,11 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @param layoutId the layout ID
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P_L(long groupId, boolean privateLayout, long layoutId)
+	public com.liferay.portal.model.Layout removeByG_P_L(long groupId,
+		boolean privateLayout, long layoutId)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -1361,10 +1481,11 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @param friendlyURL the friendly u r l
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL)
+	public com.liferay.portal.model.Layout removeByG_P_F(long groupId,
+		boolean privateLayout, java.lang.String friendlyURL)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -1386,10 +1507,11 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P_SPLU(long groupId, boolean privateLayout,
-		java.lang.String sourcePrototypeLayoutUuid)
+	public com.liferay.portal.model.Layout removeByG_P_SPLU(long groupId,
+		boolean privateLayout, java.lang.String sourcePrototypeLayoutUuid)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -1460,6 +1582,16 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByIconImageId(long iconImageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of layouts where layoutPrototypeUuid = &#63;.
+	*
+	* @param layoutPrototypeUuid the layout prototype uuid
+	* @return the number of matching layouts
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLayoutPrototypeUuid(java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

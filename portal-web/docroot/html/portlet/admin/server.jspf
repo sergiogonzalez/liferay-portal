@@ -550,6 +550,23 @@ numberFormat.setMinimumIntegerDigits(2);
 							<aui:input label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED) %>" />
 
 							<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= PDFProcessorUtil.getGlobalSearchPath() %>" />
+
+							<aui:fieldset label="resource-limits">
+
+								<%
+								Properties resourceLimitsProperties = PDFProcessorUtil.getResourceLimitsProperties();
+
+								for (String label : _IMAGEMAGICK_RESOURCE_LIMIT_LABELS) {
+									String name = "imageMagickLimit" + StringUtil.upperCaseFirstLetter(label);
+								%>
+
+									<aui:input cssClass="lfr-input-text-container" label="<%= label %>" name="<%= name %>" type="text" value="<%= resourceLimitsProperties.getProperty(label) %>" />
+
+								<%
+								}
+								%>
+
+							</aui:fieldset>
 						</liferay-ui:panel>
 
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminOpenOfficeConversionPanel" persistState="<%= true %>" title="enabling-openoffice-integration-provides-document-conversion-functionality">
@@ -798,6 +815,8 @@ numberFormat.setMinimumIntegerDigits(2);
 </c:choose>
 
 <%!
+private static final String[] _IMAGEMAGICK_RESOURCE_LIMIT_LABELS= {"area", "disk", "file", "map", "memory", "thread", "time"};
+
 private JFreeChart _getChart(String title, MeterPlot plot) {
 	JFreeChart chart = new JFreeChart(title, new Font(null, Font.PLAIN, 13), plot, true);
 

@@ -1183,13 +1183,14 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	 *
 	 * @param actionId the action ID
 	 * @param resourceId the resource ID
+	 * @return the permission that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByA_R(String actionId, long resourceId)
+	public Permission removeByA_R(String actionId, long resourceId)
 		throws NoSuchPermissionException, SystemException {
 		Permission permission = findByA_R(actionId, resourceId);
 
-		remove(permission);
+		return remove(permission);
 	}
 
 	/**

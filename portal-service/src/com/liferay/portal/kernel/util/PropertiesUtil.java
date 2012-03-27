@@ -101,7 +101,7 @@ public class PropertiesUtil {
 	public static Properties getProperties(
 		Properties properties, String prefix, boolean removePrefix) {
 
-		Properties subProperties = new Properties();
+		Properties newProperties = new Properties();
 
 		Enumeration<String> enu =
 			(Enumeration<String>)properties.propertyNames();
@@ -116,11 +116,11 @@ public class PropertiesUtil {
 					key = key.substring(prefix.length());
 				}
 
-				subProperties.setProperty(key, value);
+				newProperties.setProperty(key, value);
 			}
 		}
 
-		return subProperties;
+		return newProperties;
 	}
 
 	public static String list(Map<String, String> map) {

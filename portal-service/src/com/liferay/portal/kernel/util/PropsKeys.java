@@ -500,6 +500,8 @@ public interface PropsKeys {
 	public static final String DEFAULT_WAP_COLOR_SCHEME_ID = "default.wap.color.scheme.id";
 
 	public static final String DEFAULT_WAP_THEME_ID = "default.wap.theme.id";
+	
+	public static final String DEFINITIONS_PATH = "definitions.path";
 
 	public static final String DIRECT_SERVLET_CONTEXT_ENABLED = "direct.servlet.context.enabled";
 
@@ -794,6 +796,8 @@ public interface PropsKeys {
 	public static final String IMAGEMAGICK_ENABLED = "imagemagick.enabled";
 
 	public static final String IMAGEMAGICK_GLOBAL_SEARCH_PATH = "imagemagick.global.search.path";
+
+	public static final String IMAGEMAGICK_RESOURCE_LIMIT = "imagemagick.resource.limit.";
 
 	public static final String INDEX_DATE_FORMAT_PATTERN = "index.date.format.pattern";
 
@@ -1876,6 +1880,10 @@ public interface PropsKeys {
 	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
+
+	public static final String SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY = "sites.sitemap.default.change.frequency";
+
+	public static final String SITES_SITEMAP_DEFAULT_PRIORITY = "sites.sitemap.default.priority";
 
 	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = "social.activity.contribution.increments";
 

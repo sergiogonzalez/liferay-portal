@@ -419,9 +419,13 @@ public class SearchContainer<R> {
 	}
 
 	private void _buildNormalizedHeaderNames(List<String> headerNames) {
+		if (headerNames == null) {
+			return;
+		}
+
 		_normalizedHeaderNames = new ArrayList<String>(headerNames.size());
 
-		for (String headerName: headerNames) {
+		for (String headerName : headerNames) {
 			_normalizedHeaderNames.add(
 				FriendlyURLNormalizerUtil.normalize(headerName));
 		}

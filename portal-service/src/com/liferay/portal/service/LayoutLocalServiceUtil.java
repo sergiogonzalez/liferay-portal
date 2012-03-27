@@ -875,6 +875,13 @@ public class LayoutLocalServiceUtil {
 			preferencesValue);
 	}
 
+	public static int getLayoutsByLayoutPrototypeUuidCount(
+		java.lang.String layoutPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getLayoutsByLayoutPrototypeUuidCount(layoutPrototypeUuid);
+	}
+
 	public static int getLayoutsCount(com.liferay.portal.model.Group group,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -2584,9 +2584,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#list finderColsList as finderCol>
 			 * @param ${finderCol.name} the ${finderCol.humanName}
 			</#list>
+			 * @return the ${entity.humanName} that was removed
 			 * @throws SystemException if a system exception occurred
 			 */
-			public void removeBy${finder.name}(
+			public ${entity.name} removeBy${finder.name}(
 
 			<#list finderColsList as finderCol>
 				${finderCol.type} ${finderCol.name}
@@ -2609,7 +2610,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				);
 
-				remove(${entity.varName});
+				return remove(${entity.varName});
 			}
 		</#if>
 	</#list>

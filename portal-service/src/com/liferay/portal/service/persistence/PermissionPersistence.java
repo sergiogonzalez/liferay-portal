@@ -299,9 +299,11 @@ public interface PermissionPersistence extends BasePersistence<Permission> {
 	*
 	* @param actionId the action ID
 	* @param resourceId the resource ID
+	* @return the permission that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByA_R(java.lang.String actionId, long resourceId)
+	public com.liferay.portal.model.Permission removeByA_R(
+		java.lang.String actionId, long resourceId)
 		throws com.liferay.portal.NoSuchPermissionException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -16,6 +16,8 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -289,11 +291,19 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getBodyText() {
-		throw new UnsupportedOperationException();
+		WebElement webElement = findElement(By.tagName("body"));
+
+		return webElement.getText();
 	}
 
 	public String getConfirmation() {
-		throw new UnsupportedOperationException();
+		WebDriver.TargetLocator targetLocator = switchTo();
+
+		Alert alert = targetLocator.alert();
+
+		acceptConfirmation();
+
+		return alert.getText();
 	}
 
 	public String getCookie() {
@@ -341,11 +351,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getHtmlSource() {
-		throw new UnsupportedOperationException();
+		return getPageSource();
 	}
 
 	public String getLocation() {
-		throw new UnsupportedOperationException();
+		return getCurrentUrl();
 	}
 
 	public String getLog() {
@@ -377,11 +387,26 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getSelectedLabel(String selectLocator) {
-		throw new UnsupportedOperationException();
+		WebElement selectLocatorWebElement = getWebElement(selectLocator);
+
+		Select select = new Select(selectLocatorWebElement);
+
+		WebElement firstSelectedOptionWebElement =
+			select.getFirstSelectedOption();
+
+		return firstSelectedOptionWebElement.getText();
 	}
 
 	public String[] getSelectedLabels(String selectLocator) {
-		throw new UnsupportedOperationException();
+		WebElement selectLocatorWebElement = getWebElement(selectLocator);
+
+		Select select = new Select(selectLocatorWebElement);
+
+		List<WebElement> allSelectedOptionsWebElements =
+			select.getAllSelectedOptions();
+
+		return StringUtil.split(
+			ListUtil.toString(allSelectedOptionsWebElements, "text"));
 	}
 
 	public String getSelectedValue(String selectLocator) {
@@ -405,16 +430,20 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getText(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.getText();
 	}
 
 	@Override
 	public String getTitle() {
-		throw new UnsupportedOperationException();
+		return super.getTitle();
 	}
 
 	public String getValue(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.getAttribute("value");
 	}
 
 	public boolean getWhetherThisFrameMatchFrameExpression(
@@ -450,7 +479,9 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isChecked(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.isSelected();
 	}
 
 	public boolean isConfirmationPresent() {
@@ -466,7 +497,9 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isElementPresent(String locator) {
-		throw new UnsupportedOperationException();
+		List<WebElement> webElements = getWebElements(locator);
+
+		return !webElements.isEmpty();
 	}
 
 	public boolean isOrdered(String locator1, String locator2) {
@@ -482,11 +515,17 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isTextPresent(String pattern) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = findElement(By.tagName("body"));
+
+		String text = webElement.getText();
+
+		return text.contains(pattern);
 	}
 
 	public boolean isVisible(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.isDisplayed();
 	}
 
 	public void keyDown(String locator, String keySequence) {

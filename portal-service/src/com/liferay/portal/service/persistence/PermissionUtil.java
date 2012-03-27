@@ -420,12 +420,14 @@ public class PermissionUtil {
 	*
 	* @param actionId the action ID
 	* @param resourceId the resource ID
+	* @return the permission that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByA_R(java.lang.String actionId, long resourceId)
+	public static com.liferay.portal.model.Permission removeByA_R(
+		java.lang.String actionId, long resourceId)
 		throws com.liferay.portal.NoSuchPermissionException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByA_R(actionId, resourceId);
+		return getPersistence().removeByA_R(actionId, resourceId);
 	}
 
 	/**

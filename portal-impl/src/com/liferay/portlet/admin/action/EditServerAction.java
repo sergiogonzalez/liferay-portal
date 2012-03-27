@@ -483,6 +483,20 @@ public class EditServerAction extends PortletAction {
 		preferences.setValue(
 			PropsKeys.XUGGLER_ENABLED, String.valueOf(xugglerEnabled));
 
+		Enumeration<String> enu = actionRequest.getParameterNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.startsWith("imageMagickLimit")) {
+				String key = name.substring(16, name.length()).toLowerCase();
+				String value = ParamUtil.getString(actionRequest, name);
+
+				preferences.setValue(
+					PropsKeys.IMAGEMAGICK_RESOURCE_LIMIT + key, value);
+			}
+		}
+
 		preferences.store();
 
 		PDFProcessorUtil.reset();

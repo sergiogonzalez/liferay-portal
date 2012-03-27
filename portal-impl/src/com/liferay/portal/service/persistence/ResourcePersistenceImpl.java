@@ -1138,13 +1138,14 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	 *
 	 * @param codeId the code ID
 	 * @param primKey the prim key
+	 * @return the resource that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_P(long codeId, String primKey)
+	public Resource removeByC_P(long codeId, String primKey)
 		throws NoSuchResourceException, SystemException {
 		Resource resource = findByC_P(codeId, primKey);
 
-		remove(resource);
+		return remove(resource);
 	}
 
 	/**

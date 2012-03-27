@@ -289,7 +289,7 @@ int sortColumnIndex = -1;
 
 				String normalizedHeaderName = null;
 
-				if (j < normalizedHeaderNames.size()) {
+				if ((normalizedHeaderNames != null) && (j < normalizedHeaderNames.size())) {
 					normalizedHeaderName = normalizedHeaderNames.get(j);
 				}
 
@@ -339,6 +339,7 @@ int sortColumnIndex = -1;
 			</tr>
 
 		<%
+			request.removeAttribute("liferay-ui:search-container-row:rowId");
 		}
 		%>
 

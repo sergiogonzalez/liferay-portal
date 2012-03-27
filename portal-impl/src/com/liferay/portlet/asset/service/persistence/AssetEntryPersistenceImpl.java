@@ -2642,13 +2642,14 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param classUuid the class uuid
+	 * @return the asset entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_CU(long groupId, String classUuid)
+	public AssetEntry removeByG_CU(long groupId, String classUuid)
 		throws NoSuchEntryException, SystemException {
 		AssetEntry assetEntry = findByG_CU(groupId, classUuid);
 
-		remove(assetEntry);
+		return remove(assetEntry);
 	}
 
 	/**
@@ -2656,13 +2657,14 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the asset entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C(long classNameId, long classPK)
+	public AssetEntry removeByC_C(long classNameId, long classPK)
 		throws NoSuchEntryException, SystemException {
 		AssetEntry assetEntry = findByC_C(classNameId, classPK);
 
-		remove(assetEntry);
+		return remove(assetEntry);
 	}
 
 	/**

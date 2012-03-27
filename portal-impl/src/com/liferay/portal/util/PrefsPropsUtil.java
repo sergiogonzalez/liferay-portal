@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.util.ContentUtil;
 
+import java.util.Enumeration;
+import java.util.Properties;
+
 import javax.portlet.PortletPreferences;
 
 /**
@@ -246,6 +249,39 @@ public class PrefsPropsUtil {
 
 		return PortalPreferencesLocalServiceUtil.getPreferences(
 			companyId, ownerId, ownerType);
+	}
+
+	public static Properties getProperties(
+		PortletPreferences preferences, long companyId, String prefix,
+		boolean removePrefix) {
+
+		Properties newProperties = new Properties();
+
+		Enumeration<String> enu = preferences.getNames();
+
+		while (enu.hasMoreElements()) {
+			String key = enu.nextElement();
+
+			if (key.startsWith(prefix)) {
+				String value = preferences.getValue(key, StringPool.BLANK);
+
+				if (removePrefix) {
+					key = key.substring(prefix.length());
+				}
+
+				newProperties.setProperty(key, value);
+			}
+		}
+
+		return newProperties;
+	}
+
+	public static Properties getProperties(String prefix, boolean removePrefix)
+		throws SystemException {
+
+		PortletPreferences preferences = getPreferences();
+
+		return getProperties(preferences, 0, prefix, removePrefix);
 	}
 
 	public static short getShort(long companyId, String name)

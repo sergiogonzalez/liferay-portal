@@ -2706,13 +2706,14 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the document library file version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DLFileVersion removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileVersionException, SystemException {
 		DLFileVersion dlFileVersion = findByUUID_G(uuid, groupId);
 
-		remove(dlFileVersion);
+		return remove(dlFileVersion);
 	}
 
 	/**
@@ -2732,13 +2733,14 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
+	 * @return the document library file version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByF_V(long fileEntryId, String version)
+	public DLFileVersion removeByF_V(long fileEntryId, String version)
 		throws NoSuchFileVersionException, SystemException {
 		DLFileVersion dlFileVersion = findByF_V(fileEntryId, version);
 
-		remove(dlFileVersion);
+		return remove(dlFileVersion);
 	}
 
 	/**

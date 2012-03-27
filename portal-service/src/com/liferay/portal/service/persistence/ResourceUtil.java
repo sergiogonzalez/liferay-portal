@@ -415,12 +415,14 @@ public class ResourceUtil {
 	*
 	* @param codeId the code ID
 	* @param primKey the prim key
+	* @return the resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_P(long codeId, java.lang.String primKey)
+	public static com.liferay.portal.model.Resource removeByC_P(long codeId,
+		java.lang.String primKey)
 		throws com.liferay.portal.NoSuchResourceException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_P(codeId, primKey);
+		return getPersistence().removeByC_P(codeId, primKey);
 	}
 
 	/**
