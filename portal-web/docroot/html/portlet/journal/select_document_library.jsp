@@ -21,7 +21,11 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, "selectedGroupId");
+
+if (groupId == 0) {
+	groupId = ParamUtil.getLong(request, "groupId");
+}
 
 long repositoryId = groupId;
 
@@ -41,6 +45,21 @@ if (folder != null) {
 %>
 
 <aui:form method="post" name="fm">
+	<liferay-ui:header
+		title="Scope"
+	/>
+	<aui:select inlineField="true" label="" name="selectedGroupId" showEmptyOption="<%= false %>">
+		<c:if test="<%= themeDisplay.getCompanyGroupId() != scopeGroupId %>">
+			<aui:option label="global" selected="<%= groupId == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
+		</c:if>
+
+		<aui:option label="<%= themeDisplay.getScopeGroupName() %>" selected="<%= groupId == scopeGroupId %>" value="<%= scopeGroupId %>" />
+	</aui:select>
+
+	<aui:button type="submit" value="select" />
+
+	<br />
+
 	<liferay-ui:header
 		title="folders"
 	/>
