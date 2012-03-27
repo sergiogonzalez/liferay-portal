@@ -78,8 +78,9 @@ public class GetLayoutsAction extends JSONAction {
 			jsonObject.put("hasChildren", layout.hasChildren());
 
 			if (layout instanceof VirtualLayout) {
-				jsonObject.put(
-					"groupId", ((VirtualLayout)layout).getSourceGroupId());
+				VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+				jsonObject.put("groupId", virtualLayout.getSourceGroupId());
 			}
 			else {
 				jsonObject.put("groupId", layout.getGroupId());
