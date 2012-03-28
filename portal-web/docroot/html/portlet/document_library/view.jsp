@@ -96,6 +96,20 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				</div>
 			</div>
 
+			<%
+			boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));
+
+			String cssClass = "show-sync-message-icon-container";
+
+			if (showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
+				cssClass = "show-sync-message-icon-container aui-helper-hidden";
+			}
+			%>
+
+			<div class="<%= cssClass %>" id="<portlet:namespace />showSyncMessageIconContainer">
+				<img alt="<%= LanguageUtil.get(pageContext, "show-liferay-sync-tip") %>" class="show-sync-message" id="<portlet:namespace />showSyncMessageIcon" src="<%= themeDisplay.getPathThemeImages() + "/common/liferay_sync.png" %>" title="<%= LanguageUtil.get(pageContext, "liferay-sync") %>" />
+			</div>
+
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 				<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
 			</div>
@@ -112,6 +126,22 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				<aui:input name="folderIds" type="hidden" />
 				<aui:input name="fileEntryIds" type="hidden" />
 				<aui:input name="fileShortcutIds" type="hidden" />
+
+				<%
+				cssClass = StringPool.BLANK;
+
+				if (!showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
+					cssClass = "aui-helper-hidden";
+				}
+				%>
+
+				<div class="<%= cssClass %>" id="<portlet:namespace />syncNotification">
+					<div class="lfr-message-info sync-notification" id="<portlet:namespace />syncNotificationContent">
+						<a href="http://www.liferay.com/products/liferay-sync" target="_blank">
+							<liferay-ui:message key="access-these-files-offline-using-liferay-sync" />
+						</a>
+					</div>
+				</div>
 
 				<div class="document-container" id="<portlet:namespace />documentContainer">
 					<liferay-util:include page="/html/portlet/document_library/view_entries.jsp" />

@@ -602,8 +602,15 @@
 		}
 	}
 
+	.show-sync-message-icon-container {
+		position: relative;
+	}
+
 	.show-sync-message {
-		float: right;
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		z-index: 1;
 	}
 
 	.lfr-list-view-content {
