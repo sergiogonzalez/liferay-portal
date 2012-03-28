@@ -597,6 +597,11 @@ public class JournalArticleFinderImpl
 					sql, "(version = ?) [$AND_OR_CONNECTOR$]", "");
 			}
 
+			if (folderId < 0) {
+				sql = StringUtil.replace(
+					sql, "(folderId = ?) AND", "");
+			}
+
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(title)", StringPool.LIKE, false, titles);
 			sql = CustomSQLUtil.replaceKeywords(
@@ -650,7 +655,10 @@ public class JournalArticleFinderImpl
 				qPos.add(groupId);
 			}
 
-			qPos.add(folderId);
+			if (folderId >= 0) {
+				qPos.add(folderId);
+			}
+
 			qPos.add(classNameId);
 			qPos.add(articleIds, 2);
 
@@ -805,6 +813,11 @@ public class JournalArticleFinderImpl
 					sql, "(version = ?) [$AND_OR_CONNECTOR$]", "");
 			}
 
+			if (folderId < 0) {
+				sql = StringUtil.replace(
+					sql, "(folderId = ?) AND", "");
+			}
+
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(title)", StringPool.LIKE, false, titles);
 			sql = CustomSQLUtil.replaceKeywords(
@@ -860,7 +873,10 @@ public class JournalArticleFinderImpl
 				qPos.add(groupId);
 			}
 
-			qPos.add(folderId);
+			if (folderId >= 0) {
+				qPos.add(folderId);
+			}
+
 			qPos.add(classNameId);
 			qPos.add(articleIds, 2);
 
