@@ -598,8 +598,7 @@ public class JournalArticleFinderImpl
 			}
 
 			if (folderId < 0) {
-				sql = StringUtil.replace(
-					sql, "(folderId = ?) AND", "");
+				sql = StringUtil.replace(sql, "(folderId = ?) AND", "");
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -814,8 +813,7 @@ public class JournalArticleFinderImpl
 			}
 
 			if (folderId < 0) {
-				sql = StringUtil.replace(
-					sql, "(folderId = ?) AND", "");
+				sql = StringUtil.replace(sql, "(folderId = ?) AND", "");
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
