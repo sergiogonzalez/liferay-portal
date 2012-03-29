@@ -919,9 +919,12 @@ Liferay.Service.registerClass(
 		getArticle: true,
 		getArticleByUrlTitle: true,
 		getArticlesByArticleId: true,
+		getArticlesByFolderId: true,
 		getArticlesByLayoutUuid: true,
 		getArticlesCountByArticleId: true,
+		getArticlesCountByFolderId: true,
 		getDisplayArticleByUrlTitle: true,
+		getFoldersArticlesCount: true,
 		getLatestArticle: true,
 		removeArticleLocale: true,
 		search: true,
@@ -940,6 +943,22 @@ Liferay.Service.registerClass(
 		deleteFeed: true,
 		getFeed: true,
 		updateFeed: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.Journal, "JournalFolder",
+	{
+		addFolder: true,
+		deleteFolder: true,
+		getFolder: true,
+		getFolders: true,
+		getFoldersAndArticlesCount: true,
+		getFoldersArticlesCount: true,
+		getFoldersCount: true,
+		getSubfolderIds: true,
+		moveFolder: true,
+		updateFolder: true
 	}
 );
 
