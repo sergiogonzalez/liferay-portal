@@ -187,10 +187,12 @@ import com.liferay.util.UniqueList;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 import java.lang.reflect.Method;
 
 import java.net.InetAddress;
+import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
@@ -2090,6 +2092,13 @@ public class PortalImpl implements Portal {
 			long groupId, String mainPath, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException {
+
+		try {
+			friendlyURL = URLDecoder.decode(friendlyURL, StringPool.UTF8);
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new SystemException(uee);
+		}
 
 		String articleUrlTitle = friendlyURL.substring(
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
