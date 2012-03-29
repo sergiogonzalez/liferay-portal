@@ -43,11 +43,6 @@ pageContext.setAttribute("portletURL", portletURL);
 		LinkedHashMap groupParams = new LinkedHashMap();
 
 		groupParams.put("site", Boolean.TRUE);
-
-		if (!permissionChecker.isCompanyAdmin()) {
-			groupParams.put("usersGroups", new Long(user.getUserId()));
-			//groupParams.put("active", Boolean.TRUE);
-		}
 		%>
 
 		<liferay-ui:search-container-results

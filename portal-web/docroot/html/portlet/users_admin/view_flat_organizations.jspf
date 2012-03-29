@@ -25,9 +25,6 @@ if (filterManageableOrganizations) {
 	if (userOrganizations.isEmpty()) {
 		showList = false;
 	}
-	else {
-		organizationParams.put("organizationsTree", userOrganizations);
-	}
 }
 %>
 

@@ -78,7 +78,7 @@ portletURL.setParameter("organizationId", String.valueOf(organization.getOrganiz
 		if (tabs2.equals("current")) {
 			userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
 		}
-		else if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT && !permissionChecker.isCompanyAdmin()) {
+		else if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT) {
 			userParams.put("usersOrgsTree", user.getOrganizations());
 		}
 		%>
