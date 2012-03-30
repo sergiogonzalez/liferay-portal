@@ -389,7 +389,7 @@ public interface PropsKeys {
 
 	public static final String COMPANY_SECURITY_STRANGERS_WITH_MX = "company.security.strangers.with.mx";
 
-	public static final String COMPANY_SETTINGS_FORM_AUTHENTICATION_SECTIONS = "company.settings.form.authentication.sections";
+	public static final String COMPANY_SETTINGS_FORM_AUTHENTICATION = "company.settings.form.authentication";
 
 	public static final String COMPANY_SETTINGS_FORM_CONFIGURATION = "company.settings.form.configuration";
 
@@ -1232,6 +1232,10 @@ public interface PropsKeys {
 	public static final String LOGIN_EVENTS_POST = "login.events.post";
 
 	public static final String LOGIN_EVENTS_PRE = "login.events.pre";
+
+	public static final String LOGIN_FORM_NAVIGATION_POST = "login.form.navigation.post";
+
+	public static final String LOGIN_FORM_NAVIGATION_PRE = "login.form.navigation.pre";
 
 	public static final String LOGOUT_EVENTS_POST = "logout.events.post";
 
