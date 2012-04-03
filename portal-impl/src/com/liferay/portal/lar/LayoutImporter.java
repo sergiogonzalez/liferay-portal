@@ -18,7 +18,9 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
+import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -58,6 +61,7 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTemplate;
@@ -76,6 +80,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
@@ -244,8 +249,8 @@ public class LayoutImporter {
 			layoutSetPrototypeLinkEnabled = false;
 		}
 
-		boolean publishToRemote = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PUBLISH_TO_REMOTE);
+		//boolean publishToRemote = MapUtil.getBoolean(
+		//	parameterMap, PortletDataHandlerKeys.PUBLISH_TO_REMOTE);
 		String layoutsImportMode = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID);
@@ -350,6 +355,14 @@ public class LayoutImporter {
 				"Invalid type of LAR file (" + larType + ")");
 		}
 
+		// Layout prototypes validity
+
+		Element layoutsElement = rootElement.element("layouts");
+
+		List<Element> layoutElements = layoutsElement.elements("layout");
+
+		validateLayoutPrototypes(layoutsElement, layoutElements);
+
 		// Group id
 
 		long sourceGroupId = GetterUtil.getLong(
@@ -389,8 +402,6 @@ public class LayoutImporter {
 			}
 		}
 
-		Element layoutsElement = rootElement.element("layouts");
-
 		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
 			"layout-set-prototype-uuid");
 
@@ -398,14 +409,6 @@ public class LayoutImporter {
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-			if (layoutSetPrototypeLinkEnabled) {
-				if (publishToRemote) {
-					importLayoutSetPrototype(
-						portletDataContext, user, layoutSetPrototypeUuid,
-						serviceContext);
-				}
-			}
-
 			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);
@@ -547,8 +550,6 @@ public class LayoutImporter {
 		Map<Long, Layout> newLayoutsMap =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class);
-
-		List<Element> layoutElements = layoutsElement.elements("layout");
 
 		if (_log.isDebugEnabled()) {
 			if (layoutElements.size() > 0) {
@@ -1466,6 +1467,57 @@ public class LayoutImporter {
 		}
 		catch (IOException ioe) {
 			layout.setTypeSettings(newTypeSettings);
+		}
+	}
+
+	protected void validateLayoutPrototypes(
+			Element layoutsElement, List<Element> layoutElements)
+		throws Exception {
+
+		List<Tuple> missingLayoutPrototypes = new ArrayList<Tuple>();
+
+		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
+			"layout-set-prototype-uuid");
+
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+			try {
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
+					layoutSetPrototypeUuid);
+			}
+			catch (NoSuchLayoutSetPrototypeException nlspe) {
+				String layoutSetPrototypeName = layoutsElement.attributeValue(
+					"layout-set-prototype-name");
+
+				missingLayoutPrototypes.add(
+					new Tuple(
+						LayoutSetPrototype.class.getName(),
+						layoutSetPrototypeUuid, layoutSetPrototypeName));
+			}
+		}
+
+		for (Element layoutElement : layoutElements) {
+			String layoutPrototypeUuid = GetterUtil.getString(
+				layoutElement.attributeValue("layout-prototype-uuid"));
+
+			if (Validator.isNotNull(layoutPrototypeUuid)) {
+				try {
+					LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
+						layoutPrototypeUuid);
+				}
+				catch (NoSuchLayoutPrototypeException nslpe) {
+					String layoutPrototypeName = GetterUtil.getString(
+						layoutElement.attributeValue("layout-prototype-name"));
+
+					missingLayoutPrototypes.add(
+						new Tuple(
+							LayoutPrototype.class.getName(),
+							layoutPrototypeUuid, layoutPrototypeName));
+				}
+			}
+		}
+
+		if (!missingLayoutPrototypes.isEmpty()) {
+			throw new LayoutPrototypeException(missingLayoutPrototypes);
 		}
 	}
 

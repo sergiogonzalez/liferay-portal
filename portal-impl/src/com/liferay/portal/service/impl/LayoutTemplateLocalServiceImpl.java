@@ -43,7 +43,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,11 +160,8 @@ public class LayoutTemplateLocalServiceImpl
 				_portalCustom.size() + _warCustom.size() +
 					_themesCustom.size());
 
-		Iterator<Map.Entry<String, LayoutTemplate>> itr =
-			_portalCustom.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, LayoutTemplate> entry = itr.next();
+		for (Map.Entry<String, LayoutTemplate> entry :
+				_portalCustom.entrySet()) {
 
 			String layoutTemplateId = entry.getKey();
 			LayoutTemplate layoutTemplate = entry.getValue();
@@ -189,11 +185,7 @@ public class LayoutTemplateLocalServiceImpl
 			}
 		}
 
-		itr = _warCustom.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, LayoutTemplate> entry = itr.next();
-
+		for (Map.Entry<String, LayoutTemplate> entry : _warCustom.entrySet()) {
 			String layoutTemplateId = entry.getKey();
 
 			if (!_portalCustom.containsKey(layoutTemplateId) &&
@@ -203,10 +195,8 @@ public class LayoutTemplateLocalServiceImpl
 			}
 		}
 
-		itr = _themesCustom.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, LayoutTemplate> entry = itr.next();
+		for (Map.Entry<String, LayoutTemplate> entry :
+				_themesCustom.entrySet()) {
 
 			String layoutTemplateId = entry.getKey();
 
@@ -281,11 +271,8 @@ public class LayoutTemplateLocalServiceImpl
 						servletContextName, servletContext, xmls[i],
 						pluginPackage);
 
-				Iterator<ObjectValuePair<String, Boolean>> itr =
-					curLayoutTemplateIds.iterator();
-
-				while (itr.hasNext()) {
-					ObjectValuePair<String, Boolean> ovp = itr.next();
+				for (ObjectValuePair<String, Boolean> ovp :
+						curLayoutTemplateIds) {
 
 					if (!layoutTemplateIds.contains(ovp)) {
 						layoutTemplateIds.add(ovp);
@@ -303,8 +290,8 @@ public class LayoutTemplateLocalServiceImpl
 	public void readLayoutTemplate(
 		String servletContextName, ServletContext servletContext,
 		Set<ObjectValuePair<String, Boolean>> layoutTemplateIds,
-		com.liferay.portal.kernel.xml.Element el, boolean standard,
-		String themeId, PluginPackage pluginPackage) {
+		Element element, boolean standard, String themeId,
+		PluginPackage pluginPackage) {
 
 		Map<String, LayoutTemplate> layoutTemplates = null;
 
@@ -333,13 +320,12 @@ public class LayoutTemplateLocalServiceImpl
 			}
 		}
 
-		Iterator<com.liferay.portal.kernel.xml.Element> itr = el.elements(
-			"layout-template").iterator();
+		List<Element> layoutTemplateElements = element.elements(
+						"layout-template");
 
-		while (itr.hasNext()) {
-			com.liferay.portal.kernel.xml.Element layoutTemplate = itr.next();
-
-			String layoutTemplateId = layoutTemplate.attributeValue("id");
+		for (Element layoutTemplateElement : layoutTemplateElements) {
+			String layoutTemplateId = layoutTemplateElement.attributeValue(
+				"id");
 
 			if (layoutTemplateIds != null) {
 				ObjectValuePair<String, Boolean> ovp =
@@ -371,16 +357,16 @@ public class LayoutTemplateLocalServiceImpl
 			layoutTemplateModel.setStandard(standard);
 			layoutTemplateModel.setThemeId(themeId);
 			layoutTemplateModel.setName(GetterUtil.getString(
-				layoutTemplate.attributeValue("name"),
+				layoutTemplateElement.attributeValue("name"),
 				layoutTemplateModel.getName()));
 			layoutTemplateModel.setTemplatePath(GetterUtil.getString(
-				layoutTemplate.elementText("template-path"),
+				layoutTemplateElement.elementText("template-path"),
 				layoutTemplateModel.getTemplatePath()));
 			layoutTemplateModel.setWapTemplatePath(GetterUtil.getString(
-				layoutTemplate.elementText("wap-template-path"),
+				layoutTemplateElement.elementText("wap-template-path"),
 				layoutTemplateModel.getWapTemplatePath()));
 			layoutTemplateModel.setThumbnailPath(GetterUtil.getString(
-				layoutTemplate.elementText("thumbnail-path"),
+				layoutTemplateElement.elementText("thumbnail-path"),
 				layoutTemplateModel.getThumbnailPath()));
 
 			String content = null;
@@ -452,18 +438,14 @@ public class LayoutTemplateLocalServiceImpl
 				}
 			}
 
-			com.liferay.portal.kernel.xml.Element rolesEl =
-				layoutTemplate.element("roles");
+			Element rolesElement = layoutTemplateElement.element("roles");
 
-			if (rolesEl != null) {
-				Iterator<com.liferay.portal.kernel.xml.Element> itr2 =
-					rolesEl.elements("role-name").iterator();
+			if (rolesElement != null) {
+				List<Element> roleNameElements = rolesElement.elements(
+					"role-name");
 
-				while (itr2.hasNext()) {
-					com.liferay.portal.kernel.xml.Element roleNameEl =
-						itr2.next();
-
-					pluginSetting.addRole(roleNameEl.getText());
+				for (Element roleNameElement : roleNameElements) {
+					pluginSetting.addRole(roleNameElement.getText());
 				}
 			}
 
@@ -585,24 +567,24 @@ public class LayoutTemplateLocalServiceImpl
 			return layoutTemplateIds;
 		}
 
-		Document doc = SAXReaderUtil.read(xml, true);
+		Document document = SAXReaderUtil.read(xml, true);
 
-		Element root = doc.getRootElement();
+		Element rootElement = document.getRootElement();
 
-		Element standardEl = root.element("standard");
+		Element standardElement = rootElement.element("standard");
 
-		if (standardEl != null) {
+		if (standardElement != null) {
 			readLayoutTemplate(
 				servletContextName, servletContext, layoutTemplateIds,
-				standardEl, true, null, pluginPackage);
+				standardElement, true, null, pluginPackage);
 		}
 
-		Element customEl = root.element("custom");
+		Element customElement = rootElement.element("custom");
 
-		if (customEl != null) {
+		if (customElement != null) {
 			readLayoutTemplate(
-				servletContextName, servletContext, layoutTemplateIds, customEl,
-				false, null, pluginPackage);
+				servletContextName, servletContext, layoutTemplateIds,
+				customElement, false, null, pluginPackage);
 		}
 
 		return layoutTemplateIds;

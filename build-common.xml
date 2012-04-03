@@ -509,8 +509,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
 					<jvmarg value="-XX:MaxPermSize=256m" />
-					<jvmarg value="-Duser.timezone=GMT" />
 					<jvmarg value="-Dexternal-properties=${test.properties}" />
+					<jvmarg value="-Duser.timezone=GMT" />
 					<classpath location="test-coverage" />
 					<classpath refid="test.classpath" />
 					<formatter type="brief" usefile="false" />
@@ -526,8 +526,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
 					<jvmarg value="-XX:MaxPermSize=256m" />
-					<jvmarg value="-Duser.timezone=GMT" />
 					<jvmarg value="-Dexternal-properties=${test.properties}" />
+					<jvmarg value="-Duser.timezone=GMT" />
 					<classpath location="test-coverage" />
 					<classpath refid="test.classpath" />
 					<formatter type="brief" usefile="false" />
@@ -593,14 +593,17 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
 					<jvmarg value="-XX:MaxPermSize=256m" />
-					<jvmarg value="-Duser.timezone=GMT" />
 					<jvmarg value="-Dexternal-properties=${test.properties}" />
+					<jvmarg value="-Djava.net.preferIPv4Stack=true" />
+					<jvmarg value="-Duser.timezone=GMT" />
 					<classpath location="test-coverage" />
 					<classpath refid="test.classpath" />
 					<formatter type="brief" usefile="false" />
 					<formatter type="xml" />
 					<batchtest todir="test-results/${test.type}">
 						<fileset dir="test-classes/${test.type}" includes="**/${class}.class">
+							<exclude name="**/DLAppServiceHttpTest.class" />
+							<exclude name="**/DLAppServiceSoapTest.class" />
 							<exclude name="**/UserServiceHttpTest.class" />
 							<exclude name="**/UserServiceSoapTest.class" />
 						</fileset>

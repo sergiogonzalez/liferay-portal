@@ -39,7 +39,6 @@ import com.liferay.util.xml.descriptor.FacesXMLDescriptor;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -207,18 +206,16 @@ public class PortletDeployer extends BaseDeployer {
 
 		// Add wrappers for portlets
 
-		Document doc = SAXReaderUtil.read(portletXML);
+		Document document = SAXReaderUtil.read(portletXML);
 
-		Element root = doc.getRootElement();
+		Element rootElement = document.getRootElement();
 
-		Iterator<Element> itr1 = root.elements("portlet").iterator();
+		List<Element> portletElements = rootElement.elements("portlet");
 
-		while (itr1.hasNext()) {
-			Element portlet = itr1.next();
-
+		for (Element portletElement : portletElements) {
 			String portletName = PortalUtil.getJsSafePortletId(
-				portlet.elementText("portlet-name"));
-			String portletClass = portlet.elementText("portlet-class");
+				portletElement.elementText("portlet-name"));
+			String portletClass = portletElement.elementText("portlet-class");
 
 			String servletName = portletName + " Servlet";
 
@@ -250,26 +247,26 @@ public class PortletDeployer extends BaseDeployer {
 
 		// Make sure there is a company id specified
 
-		doc = SAXReaderUtil.read(webXML);
+		document = SAXReaderUtil.read(webXML);
 
-		root = doc.getRootElement();
+		rootElement = document.getRootElement();
 
 		// Remove deprecated references to SharedServletWrapper
 
-		itr1 = root.elements("servlet").iterator();
+		List<Element> servletElements = rootElement.elements("servlet");
 
-		while (itr1.hasNext()) {
-			Element servlet = itr1.next();
-
-			String icon = servlet.elementText("icon");
-			String servletName = servlet.elementText("servlet-name");
-			String displayName = servlet.elementText("display-name");
-			String description = servlet.elementText("description");
-			String servletClass = servlet.elementText("servlet-class");
-			List<Element> initParams = servlet.elements("init-param");
-			String loadOnStartup = servlet.elementText("load-on-startup");
-			String runAs = servlet.elementText("run-as");
-			List<Element> securityRoleRefs = servlet.elements(
+		for (Element servletElement : servletElements) {
+			String icon = servletElement.elementText("icon");
+			String servletName = servletElement.elementText("servlet-name");
+			String displayName = servletElement.elementText("display-name");
+			String description = servletElement.elementText("description");
+			String servletClass = servletElement.elementText("servlet-class");
+			List<Element> initParamElements = servletElement.elements(
+				"init-param");
+			String loadOnStartup = servletElement.elementText(
+				"load-on-startup");
+			String runAs = servletElement.elementText("run-as");
+			List<Element> securityRoleRefElements = servletElement.elements(
 				"security-role-ref");
 
 			if ((servletClass != null) &&
@@ -302,13 +299,11 @@ public class PortletDeployer extends BaseDeployer {
 					sb.append("</description>");
 				}
 
-				Iterator<Element> itr2 = initParams.iterator();
-
-				while (itr2.hasNext()) {
-					Element initParam = itr2.next();
-
-					String paramName = initParam.elementText("param-name");
-					String paramValue = initParam.elementText("param-value");
+				for (Element initParamElement : initParamElements) {
+					String paramName = initParamElement.elementText(
+						"param-name");
+					String paramValue = initParamElement.elementText(
+						"param-value");
 
 					if ((paramName != null) &&
 						paramName.equals("servlet-class")) {
@@ -319,14 +314,13 @@ public class PortletDeployer extends BaseDeployer {
 					}
 				}
 
-				itr2 = initParams.iterator();
-
-				while (itr2.hasNext()) {
-					Element initParam = itr2.next();
-
-					String paramName = initParam.elementText("param-name");
-					String paramValue = initParam.elementText("param-value");
-					String paramDesc = initParam.elementText("description");
+				for (Element initParamElement : initParamElements) {
+					String paramName = initParamElement.elementText(
+						"param-name");
+					String paramValue = initParamElement.elementText(
+						"param-value");
+					String paramDesc = initParamElement.elementText(
+						"description");
 
 					if ((paramName != null) &&
 						!paramName.equals("servlet-class")) {
@@ -364,14 +358,13 @@ public class PortletDeployer extends BaseDeployer {
 					sb.append("</run-as>");
 				}
 
-				itr2 = securityRoleRefs.iterator();
-
-				while (itr2.hasNext()) {
-					Element roleRef = itr2.next();
-
-					String roleDesc = roleRef.elementText("description");
-					String roleName = roleRef.elementText("role-name");
-					String roleLink = roleRef.elementText("role-link");
+				for (Element securityRoleRefElement : securityRoleRefElements) {
+					String roleDesc = securityRoleRefElement.elementText(
+						"description");
+					String roleName = securityRoleRefElement.elementText(
+						"role-name");
+					String roleLink = securityRoleRefElement.elementText(
+						"role-link");
 
 					sb.append("<security-role-ref>");
 
@@ -413,18 +406,14 @@ public class PortletDeployer extends BaseDeployer {
 
 		// portlet.xml
 
-		Document doc = SAXReaderUtil.read(portletXML, true);
+		Document document = SAXReaderUtil.read(portletXML, true);
 
-		Element root = doc.getRootElement();
+		Element rootElement = document.getRootElement();
 
-		List<Element> elements = root.elements("portlet");
+		List<Element> portletElements = rootElement.elements("portlet");
 
-		Iterator<Element> itr = elements.iterator();
-
-		while (itr.hasNext()) {
-			Element portlet = itr.next();
-
-			String portletClass = portlet.elementText("portlet-class");
+		for (Element portletElement : portletElements) {
+			String portletClass = portletElement.elementText("portlet-class");
 
 			if (portletClass.equals(JSF_MYFACES)) {
 				_myFacesPortlet = true;
@@ -440,47 +429,49 @@ public class PortletDeployer extends BaseDeployer {
 
 		// faces-config.xml
 
-		doc = SAXReaderUtil.read(facesXML, true);
+		document = SAXReaderUtil.read(facesXML, true);
 
-		root = doc.getRootElement();
+		rootElement = document.getRootElement();
 
-		Element factoryEl = root.element("factory");
+		Element factoryElement = rootElement.element("factory");
 
-		Element renderKitFactoryEl = null;
-		Element facesContextFactoryEl = null;
+		Element renderKitFactoryElement = null;
+		Element facesContextFactoryElement = null;
 
-		if (factoryEl == null) {
-			factoryEl = root.addElement("factory");
+		if (factoryElement == null) {
+			factoryElement = rootElement.addElement("factory");
 		}
 
-		renderKitFactoryEl = factoryEl.element("render-kit-factory");
-		facesContextFactoryEl = factoryEl.element("faces-context-factory");
+		renderKitFactoryElement = factoryElement.element("render-kit-factory");
+		facesContextFactoryElement = factoryElement.element(
+			"faces-context-factory");
 
 		if (appServerType.equals("orion") && _sunFacesPortlet &&
-			(renderKitFactoryEl == null)) {
+			(renderKitFactoryElement == null)) {
 
-			renderKitFactoryEl = factoryEl.addElement("render-kit-factory");
+			renderKitFactoryElement = factoryElement.addElement(
+				"render-kit-factory");
 
-			renderKitFactoryEl.addText(LIFERAY_RENDER_KIT_FACTORY);
+			renderKitFactoryElement.addText(LIFERAY_RENDER_KIT_FACTORY);
 		}
-		else if (_myFacesPortlet && (facesContextFactoryEl == null)) {
-			facesContextFactoryEl = factoryEl.addElement(
+		else if (_myFacesPortlet && (facesContextFactoryElement == null)) {
+			facesContextFactoryElement = factoryElement.addElement(
 				"faces-context-factory");
 
-			facesContextFactoryEl.addText(MYFACES_CONTEXT_FACTORY);
+			facesContextFactoryElement.addText(MYFACES_CONTEXT_FACTORY);
 		}
 
 		if (!appServerType.equals("orion") && _sunFacesPortlet) {
-			factoryEl.detach();
+			factoryElement.detach();
 		}
 
-		XMLMerger merger = new XMLMerger(new FacesXMLDescriptor());
+		XMLMerger xmlMerger = new XMLMerger(new FacesXMLDescriptor());
 
-		DocumentImpl docImpl = (DocumentImpl)doc;
+		DocumentImpl documentImpl = (DocumentImpl)document;
 
-		merger.organizeXML(docImpl.getWrappedDocument());
+		xmlMerger.organizeXML(documentImpl.getWrappedDocument());
 
-		FileUtil.write(facesXML, doc.formattedString(), true);
+		FileUtil.write(facesXML, document.formattedString(), true);
 	}
 
 	@Override

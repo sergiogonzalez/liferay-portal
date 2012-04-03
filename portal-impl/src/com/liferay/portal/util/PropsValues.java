@@ -316,7 +316,7 @@ public class PropsValues {
 
 	public static final boolean COMPANY_SECURITY_STRANGERS_WITH_MX = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX));
 
-	public static String[] COMPANY_SETTINGS_FORM_AUTHENTICATION_SECTIONS = PropsUtil.getArray(PropsKeys.COMPANY_SETTINGS_FORM_AUTHENTICATION_SECTIONS);
+	public static String[] COMPANY_SETTINGS_FORM_AUTHENTICATION = PropsUtil.getArray(PropsKeys.COMPANY_SETTINGS_FORM_AUTHENTICATION);
 
 	public static String[] COMPANY_SETTINGS_FORM_CONFIGURATION = PropsUtil.getArray(PropsKeys.COMPANY_SETTINGS_FORM_CONFIGURATION);
 
@@ -868,6 +868,10 @@ public class PropsValues {
 
 	public static final String[] LOGIN_EVENTS_PRE = PropsUtil.getArray(PropsKeys.LOGIN_EVENTS_PRE);
 
+	public static String[] LOGIN_FORM_NAVIGATION_POST = PropsUtil.getArray(PropsKeys.LOGIN_FORM_NAVIGATION_POST);
+
+	public static String[] LOGIN_FORM_NAVIGATION_PRE = PropsUtil.getArray(PropsKeys.LOGIN_FORM_NAVIGATION_PRE);
+
 	public static final String[] LOGOUT_EVENTS_POST = PropsUtil.getArray(PropsKeys.LOGOUT_EVENTS_POST);
 
 	public static final String[] LOGOUT_EVENTS_PRE = PropsUtil.getArray(PropsKeys.LOGOUT_EVENTS_PRE);
@@ -1090,7 +1094,51 @@ public class PropsValues {
 
 	public static final String[] OSGI_SYSTEM_PACKAGES_EXTRA = PropsUtil.getArray(PropsKeys.OSGI_SYSTEM_PACKAGES_EXTRA);
 
+	public static final boolean PASSWORDS_DEFAULT_POLICY_ALLOW_DICTIONARY_WORDS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_ALLOW_DICTIONARY_WORDS));
+
+	public static final boolean PASSWORDS_DEFAULT_POLICY_CHANGE_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_CHANGE_REQUIRED));
+
+	public static final boolean PASSWORDS_DEFAULT_POLICY_CHANGEABLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_CHANGEABLE));
+
+	public static final boolean PASSWORDS_DEFAULT_POLICY_CHECK_SYNTAX = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_CHECK_SYNTAX));
+
+	public static final boolean PASSWORDS_DEFAULT_POLICY_EXPIREABLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_EXPIREABLE));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_GRACE_LIMIT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_GRACE_LIMIT));
+
+	public static final boolean PASSWORDS_DEFAULT_POLICY_HISTORY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_HISTORY));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_HISTORY_COUNT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_HISTORY_COUNT));
+
+	public static final boolean PASSWORDS_DEFAULT_POLICY_LOCKOUT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_LOCKOUT));
+
+	public static final long PASSWORDS_DEFAULT_POLICY_LOCKOUT_DURATION = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_LOCKOUT_DURATION));
+
+	public static final long PASSWORDS_DEFAULT_POLICY_MAX_AGE = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MAX_AGE));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_MAX_FAILURE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MAX_FAILURE));
+
+	public static final long PASSWORDS_DEFAULT_POLICY_MIN_AGE = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_AGE));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_MIN_ALPHANUMERIC = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_ALPHANUMERIC));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_MIN_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_MIN_LOWERCASE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LOWERCASE));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_MIN_NUMBERS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_NUMBERS));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_MIN_SYMBOLS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_SYMBOLS));
+
+	public static final int PASSWORDS_DEFAULT_POLICY_MIN_UPPERCASE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_UPPERCASE));
+
 	public static final String PASSWORDS_DEFAULT_POLICY_NAME = PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_NAME);
+
+	public static final long PASSWORDS_DEFAULT_POLICY_RESET_FAILURE_COUNT = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_RESET_FAILURE_COUNT));
+
+	public static final long PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE));
+
+	public static final long PASSWORDS_DEFAULT_POLICY_WARNING_TIME = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_WARNING_TIME));
 
 	public static final String PASSWORDS_DIGEST_ENCODING = PropsUtil.get(PropsKeys.PASSWORDS_DIGEST_ENCODING);
 

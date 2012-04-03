@@ -29,7 +29,7 @@ import com.liferay.portal.util.PortletKeys;
 
 import java.io.IOException;
 
-import java.util.Iterator;
+import java.util.Map;
 
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
@@ -139,25 +139,22 @@ public class PortletPreferencesServiceImpl
 		throws SystemException {
 
 		try {
-			Iterator<String> itr =
-				targetPreferences.getMap().keySet().iterator();
+			Map<String, String[]> targetPreferencesMap =
+				targetPreferences.getMap();
 
-			while (itr.hasNext()) {
+			for (String key : targetPreferencesMap.keySet()) {
 				try {
-					String key = itr.next();
-
 					targetPreferences.reset(key);
 				}
 				catch (ReadOnlyException roe) {
 				}
 			}
 
-			itr = sourcePreferences.getMap().keySet().iterator();
+			Map<String, String[]> sourcePreferencesMap =
+				sourcePreferences.getMap();
 
-			while (itr.hasNext()) {
+			for (String key : sourcePreferencesMap.keySet()) {
 				try {
-					String key = itr.next();
-
 					targetPreferences.setValues(
 						key, sourcePreferences.getValues(key, new String[0]));
 				}

@@ -95,11 +95,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map.Entry;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
@@ -264,12 +262,7 @@ public class StagingImpl implements Staging {
 		else {
 			List<Layout> layouts = new ArrayList<Layout>();
 
-			Iterator<Map.Entry<Long, Boolean>> itr1 =
-				layoutIdMap.entrySet().iterator();
-
-			while (itr1.hasNext()) {
-				Entry<Long, Boolean> entry = itr1.next();
-
+			for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 				long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 				boolean includeChildren = entry.getValue();
 
@@ -279,23 +272,17 @@ public class StagingImpl implements Staging {
 					layouts.add(layout);
 				}
 
-				Iterator<Layout> itr2 = getMissingParentLayouts(
-					layout, sourceGroupId).iterator();
+				List<Layout> parentLayouts = getMissingParentLayouts(
+					layout, sourceGroupId);
 
-				while (itr2.hasNext()) {
-					Layout parentLayout = itr2.next();
-
+				for (Layout parentLayout : parentLayouts) {
 					if (!layouts.contains(parentLayout)) {
 						layouts.add(parentLayout);
 					}
 				}
 
 				if (includeChildren) {
-					itr2 = layout.getAllChildren().iterator();
-
-					while (itr2.hasNext()) {
-						Layout childLayout = itr2.next();
-
+					for (Layout childLayout : layout.getAllChildren()) {
 						if (!layouts.contains(childLayout)) {
 							layouts.add(childLayout);
 						}
@@ -303,13 +290,7 @@ public class StagingImpl implements Staging {
 				}
 			}
 
-			long[] layoutIds = new long[layouts.size()];
-
-			for (int i = 0; i < layouts.size(); i++) {
-				Layout curLayout = layouts.get(i);
-
-				layoutIds[i] = curLayout.getLayoutId();
-			}
+			long[] layoutIds = getLayoutIds(layouts);
 
 			if (layoutIds.length <= 0) {
 				throw new RemoteExportException(
@@ -925,15 +906,7 @@ public class StagingImpl implements Staging {
 			layouts.addAll(layout.getAllChildren());
 		}
 
-		Iterator<Layout> itr = layouts.iterator();
-
-		long[] layoutIds = new long[layouts.size()];
-
-		for (int i = 0; itr.hasNext(); i++) {
-			Layout curLayout = itr.next();
-
-			layoutIds[i] = curLayout.getLayoutId();
-		}
+		long[] layoutIds = getLayoutIds(layouts);
 
 		publishLayouts(
 			userId, layout.getGroupId(), liveGroupId, layout.isPrivateLayout(),
@@ -971,12 +944,7 @@ public class StagingImpl implements Staging {
 
 		List<Layout> layouts = new ArrayList<Layout>();
 
-		Iterator<Map.Entry<Long, Boolean>> itr1 =
-			layoutIdMap.entrySet().iterator();
-
-		while (itr1.hasNext()) {
-			Entry<Long, Boolean> entry = itr1.next();
-
+		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 			boolean includeChildren = entry.getValue();
 
@@ -986,23 +954,17 @@ public class StagingImpl implements Staging {
 				layouts.add(layout);
 			}
 
-			Iterator<Layout> itr2 = getMissingParentLayouts(
-				layout, targetGroupId).iterator();
+			List<Layout> parentLayouts = getMissingParentLayouts(
+				layout, targetGroupId);
 
-			while (itr2.hasNext()) {
-				Layout parentLayout = itr2.next();
-
+			for (Layout parentLayout : parentLayouts) {
 				if (!layouts.contains(parentLayout)) {
 					layouts.add(parentLayout);
 				}
 			}
 
 			if (includeChildren) {
-				itr2 = layout.getAllChildren().iterator();
-
-				while (itr2.hasNext()) {
-					Layout childLayout = itr2.next();
-
+				for (Layout childLayout : layout.getAllChildren()) {
 					if (!layouts.contains(childLayout)) {
 						layouts.add(childLayout);
 					}
@@ -1010,13 +972,7 @@ public class StagingImpl implements Staging {
 			}
 		}
 
-		long[] layoutIds = new long[layouts.size()];
-
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout curLayout = layouts.get(i);
-
-			layoutIds[i] = curLayout.getLayoutId();
-		}
+		long[] layoutIds = getLayoutIds(layouts);
 
 		publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
@@ -1506,6 +1462,18 @@ public class StagingImpl implements Staging {
 		return ParamUtil.getInteger(
 			portletRequest, param,
 			GetterUtil.getInteger(group.getTypeSettingsProperty(param)));
+	}
+
+	protected long[] getLayoutIds(List<Layout> layouts) {
+		long[] layoutIds = new long[layouts.size()];
+
+		for (int i = 0; i < layouts.size(); i++) {
+			Layout layout = layouts.get(i);
+
+			layoutIds[i] = layout.getLayoutId();
+		}
+
+		return layoutIds;
 	}
 
 	protected long getLong(

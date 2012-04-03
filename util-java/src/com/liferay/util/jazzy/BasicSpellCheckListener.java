@@ -19,7 +19,6 @@ import com.swabunga.spell.event.SpellCheckEvent;
 import com.swabunga.spell.event.SpellCheckListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -40,11 +39,7 @@ public class BasicSpellCheckListener implements SpellCheckListener {
 	public void spellingError(SpellCheckEvent event) {
 		List<String> suggestions = new ArrayList<String>();
 
-		Iterator<Word> itr = event.getSuggestions().iterator();
-
-		while (itr.hasNext()) {
-			Word word = itr.next();
-
+		for (Word word : (List<Word>)event.getSuggestions()) {
 			suggestions.add(word.getWord());
 		}
 

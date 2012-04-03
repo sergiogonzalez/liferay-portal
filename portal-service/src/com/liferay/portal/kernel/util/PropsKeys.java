@@ -389,7 +389,7 @@ public interface PropsKeys {
 
 	public static final String COMPANY_SECURITY_STRANGERS_WITH_MX = "company.security.strangers.with.mx";
 
-	public static final String COMPANY_SETTINGS_FORM_AUTHENTICATION_SECTIONS = "company.settings.form.authentication.sections";
+	public static final String COMPANY_SETTINGS_FORM_AUTHENTICATION = "company.settings.form.authentication";
 
 	public static final String COMPANY_SETTINGS_FORM_CONFIGURATION = "company.settings.form.configuration";
 
@@ -1233,6 +1233,10 @@ public interface PropsKeys {
 
 	public static final String LOGIN_EVENTS_PRE = "login.events.pre";
 
+	public static final String LOGIN_FORM_NAVIGATION_POST = "login.form.navigation.post";
+
+	public static final String LOGIN_FORM_NAVIGATION_PRE = "login.form.navigation.pre";
+
 	public static final String LOGOUT_EVENTS_POST = "logout.events.post";
 
 	public static final String LOGOUT_EVENTS_PRE = "logout.events.pre";
@@ -1527,7 +1531,51 @@ public interface PropsKeys {
 
 	public static final String OSGI_SYSTEM_PACKAGES_EXTRA = "osgi.system.packages.extra";
 
+	public static final String PASSWORDS_DEFAULT_POLICY_ALLOW_DICTIONARY_WORDS = "passwords.default.policy.allow.dictionary.words";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_CHANGE_REQUIRED = "passwords.default.policy.change.required";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_CHANGEABLE = "passwords.default.policy.changeable";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_CHECK_SYNTAX = "passwords.default.policy.check.syntax";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_EXPIREABLE = "passwords.default.policy.expireable";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_GRACE_LIMIT = "passwords.default.policy.grace.limit";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_HISTORY = "passwords.default.policy.history";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_HISTORY_COUNT = "passwords.default.policy.history.count";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_LOCKOUT = "passwords.default.policy.lockout";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_LOCKOUT_DURATION = "passwords.default.policy.lockout.duration";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MAX_AGE = "passwords.default.policy.max.age";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MAX_FAILURE = "passwords.default.policy.max.failure";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MIN_AGE = "passwords.default.policy.min.age";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MIN_ALPHANUMERIC = "passwords.default.policy.alphanumeric";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MIN_LENGTH = "passwords.default.policy.min.length";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MIN_LOWERCASE = "passwords.default.policy.min.lowercase";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MIN_NUMBERS = "passwords.default.policy.min.numbers";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MIN_SYMBOLS = "passwords.default.policy.min.symbols";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_MIN_UPPERCASE = "passwords.default.policy.min.uppercase";
+
 	public static final String PASSWORDS_DEFAULT_POLICY_NAME = "passwords.default.policy.name";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_RESET_FAILURE_COUNT = "passwords.default.policy.reset.failure.count";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE = "passwords.default.policy.reset.ticket.max.age";
+
+	public static final String PASSWORDS_DEFAULT_POLICY_WARNING_TIME = "passwords.default.policy.warning.time";
 
 	public static final String PASSWORDS_DIGEST_ENCODING = "passwords.digest.encoding";
 

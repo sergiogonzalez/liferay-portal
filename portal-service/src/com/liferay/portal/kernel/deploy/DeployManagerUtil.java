@@ -59,6 +59,10 @@ public class DeployManagerUtil {
 		return getDeployManager().isDeployed(context);
 	}
 
+	public static PluginPackage readPluginPackage(File file) {
+		return getDeployManager().readPluginPackage(file);
+	}
+
 	public static void redeploy(String context) throws Exception {
 		getDeployManager().redeploy(context);
 	}

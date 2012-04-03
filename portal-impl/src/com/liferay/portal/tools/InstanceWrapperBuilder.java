@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -32,7 +33,6 @@ import com.thoughtworks.qdox.model.TypeVariable;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,20 +85,25 @@ public class InstanceWrapperBuilder {
 
 		JavaMethod[] javaMethods = javaClass.getMethods();
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		// Package
 
-		sb.append("package " + javaClass.getPackage().getName() + ";");
+		sb.append("package ");
+		sb.append(javaClass.getPackage().getName());
+		sb.append(";");
 
 		// Class declaration
 
-		sb.append("public class " + javaClass.getName() + "_IW {");
+		sb.append("public class ");
+		sb.append(javaClass.getName());
+		sb.append("_IW {");
 
 		// Methods
 
-		sb.append(
-			"public static " + javaClass.getName() + "_IW getInstance() {");
+		sb.append("public static ");
+		sb.append(javaClass.getName());
+		sb.append("_IW getInstance() {");
 		sb.append("return _instance;");
 		sb.append("}\n");
 
@@ -141,9 +146,10 @@ public class InstanceWrapperBuilder {
 				sb.append("> ");
 			}
 
-			sb.append(
-				_getTypeGenericsName(
-					javaMethod.getReturns()) + " " + methodName + "(");
+			sb.append(_getTypeGenericsName(javaMethod.getReturns()));
+			sb.append(" ");
+			sb.append(methodName);
+			sb.append("(");
 
 			JavaParameter[] javaParameters = javaMethod.getParameters();
 
@@ -156,7 +162,8 @@ public class InstanceWrapperBuilder {
 					sb.append("...");
 				}
 
-				sb.append(" " + javaParameter.getName());
+				sb.append(" ");
+				sb.append(javaParameter.getName());
 
 				if ((i + 1) != javaParameters.length) {
 					sb.append(", ");
@@ -178,15 +185,12 @@ public class InstanceWrapperBuilder {
 			if (newExceptions.size() > 0) {
 				sb.append(" throws ");
 
-				Iterator<String> itr = newExceptions.iterator();
-
-				while (itr.hasNext()) {
-					sb.append(itr.next());
-
-					if (itr.hasNext()) {
-						sb.append(", ");
-					}
+				for (String newException : newExceptions) {
+					sb.append(newException);
+					sb.append(", ");
 				}
+
+				sb.setIndex(sb.index() - 1);
 			}
 
 			sb.append("{\n");
@@ -213,14 +217,18 @@ public class InstanceWrapperBuilder {
 
 		// Private constructor
 
-		sb.append("private " + javaClass.getName() + "_IW() {");
+		sb.append("private ");
+		sb.append(javaClass.getName());
+		sb.append("_IW() {");
 		sb.append("}");
 
 		// Fields
 
-		sb.append(
-			"private static " + javaClass.getName() + "_IW _instance = new " +
-				javaClass.getName() + "_IW();");
+		sb.append("private static ");
+		sb.append(javaClass.getName());
+		sb.append("_IW _instance = new ");
+		sb.append(javaClass.getName());
+		sb.append("_IW();");
 
 		// Class close brace
 
@@ -260,13 +268,18 @@ public class InstanceWrapperBuilder {
 	}
 
 	private String _getTypeGenericsName(Type type) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(type.getValue());
-
 		Type[] actualTypeArguments = type.getActualTypeArguments();
 
-		if (actualTypeArguments != null) {
+		if (actualTypeArguments == null) {
+			String value = type.getValue();
+
+			return value.concat(_getDimensions(type));
+		}
+		else {
+			StringBundler sb = new StringBundler(
+				actualTypeArguments.length * 2 + 3);
+
+			sb.append(type.getValue());
 			sb.append("<");
 
 			for (int i = 0; i < actualTypeArguments.length; i++) {
@@ -278,11 +291,10 @@ public class InstanceWrapperBuilder {
 			}
 
 			sb.append(">");
+			sb.append(_getDimensions(type));
+
+			return sb.toString();
 		}
-
-		sb.append(_getDimensions(type));
-
-		return sb.toString();
 	}
 
 }

@@ -41,6 +41,8 @@ public interface DeployManager {
 
 	public boolean isDeployed(String context);
 
+	public PluginPackage readPluginPackage(File file);
+
 	public void redeploy(String context) throws Exception;
 
 	public void undeploy(String context) throws Exception;

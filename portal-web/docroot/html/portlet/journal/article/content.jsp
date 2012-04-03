@@ -232,7 +232,7 @@ if (Validator.isNotNull(content)) {
 									</span>
 
 									<c:if test="<%= classNameId == 0 %>">
-										<c:if test="<%= ((structure != null) && JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE)) %>">
+										<c:if test="<%= (structure == null) || JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
 											<liferay-ui:icon id="editStructureLink" image="edit" url="javascript:;" />
 										</c:if>
 
@@ -979,11 +979,9 @@ private Map<String, String> _getMetaData(Element xsdElement, String elName) {
 private List<Element> _getSiblings(Element element, String name) {
 	List<Element> elements = new ArrayList<Element>();
 
-	Iterator<Element> itr = element.elements().iterator();
+	List<Element> curElements = element.elements();
 
-	while (itr.hasNext()) {
-		Element curElement = itr.next();
-
+	for (Element curElement : curElements) {
 		if (name.equals(curElement.attributeValue("name", StringPool.BLANK))) {
 			elements.add(curElement);
 		}

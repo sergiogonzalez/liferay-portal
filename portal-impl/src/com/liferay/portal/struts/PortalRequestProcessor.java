@@ -71,8 +71,6 @@ import java.io.IOException;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.Map;
 import java.util.Set;
 
@@ -347,12 +345,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		PortletURLImpl portletURL = new PortletURLImpl(
 			request, portletId, plid, PortletRequest.RENDER_PHASE);
 
-		Iterator<Map.Entry<String, String[]>> itr =
-			request.getParameterMap().entrySet().iterator();
+		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		while (itr.hasNext()) {
-			Entry<String, String[]> entry = itr.next();
-
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String key = entry.getKey();
 
 			if (key.startsWith(namespace)) {

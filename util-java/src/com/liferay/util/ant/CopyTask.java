@@ -49,19 +49,20 @@ public class CopyTask {
 
 		fileSet.setDir(source);
 
-		if (Validator.isNotNull(includes)) {
-			fileSet.setIncludes(includes);
-		}
-
 		if (Validator.isNotNull(excludes)) {
 			fileSet.setExcludes(excludes);
 		}
 
-		copy.setProject(AntUtil.getProject());
+		if (Validator.isNotNull(includes)) {
+			fileSet.setIncludes(includes);
+		}
+
 		copy.addFileset(fileSet);
-		copy.setTodir(destination);
+
 		copy.setOverwrite(overwrite);
 		copy.setPreserveLastModified(preserveLastModified);
+		copy.setProject(AntUtil.getProject());
+		copy.setTodir(destination);
 
 		copy.execute();
 	}

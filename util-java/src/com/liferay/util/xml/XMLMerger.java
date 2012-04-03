@@ -18,9 +18,7 @@ import com.liferay.util.xml.descriptor.XMLDescriptor;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -40,59 +38,53 @@ public class XMLMerger {
 		return new XMLElementComparator(_descriptor);
 	}
 
-	public Document merge(Document masterDoc, Document slaveDoc) {
-		Document mergedDoc = (Document)masterDoc.clone();
+	public Document merge(Document masterDocument, Document slaveDocument) {
+		Document mergedDocument = (Document)masterDocument.clone();
 
-		Element root1 = mergedDoc.getRootElement();
-		Element root2 = slaveDoc.getRootElement();
+		Element mergedRootElement = mergedDocument.getRootElement();
+		Element slaveRootElement = slaveDocument.getRootElement();
 
-		List<Element> children = root2.elements();
+		for (Element slaveElement :
+				(List<Element>)slaveRootElement.elements()) {
 
-		for (Element el2 : children) {
-			Element el2Clone = (Element)el2.clone();
+			Element clonedSlaveElement = (Element)slaveElement.clone();
 
-			el2Clone.detach();
+			clonedSlaveElement.detach();
 
-			root1.add(el2Clone);
+			mergedRootElement.add(clonedSlaveElement);
 		}
 
-		organizeXML(mergedDoc);
+		organizeXML(mergedDocument);
 
-		return mergedDoc;
+		return mergedDocument;
 	}
 
-	public void organizeXML(Document doc) {
-		Element root = doc.getRootElement();
+	public void organizeXML(Document document) {
+		Element rootElement = document.getRootElement();
 
-		_orderChildren(root, _descriptor.getRootChildrenOrder());
-		_mergeDuplicateElements(root, getElementComparator());
+		_orderChildren(rootElement, _descriptor.getRootChildrenOrder());
+		_mergeDuplicateElements(rootElement, getElementComparator());
 	}
 
 	private void _addChildren(
-		Element first, Collection<Element> childrenToJoin) {
+		Element firstElement, Collection<Element> childElements) {
 
-		Collection<Element> clones = new Vector<Element>();
+		List<Element> elements = firstElement.elements();
 
-		Iterator<Element> itr = childrenToJoin.iterator();
-
-		while (itr.hasNext()) {
-			clones.add((Element)itr.next().clone());
+		for (Element childElement : childElements) {
+			elements.add((Element)childElement.clone());
 		}
 
-		first.elements().addAll(clones);
-
-		_orderChildren(first, _descriptor.getChildrenOrder(first));
+		_orderChildren(
+			firstElement, _descriptor.getChildrenOrder(firstElement));
 	}
 
 	private boolean _containsObjectEqualTo(
-		Element example, List<Element> list, ElementComparator comparator) {
+		Element element, List<Element> elements,
+		ElementComparator elementComparator) {
 
-		Iterator<Element> itr = list.iterator();
-
-		while (itr.hasNext()) {
-			Element candidate = itr.next();
-
-			if (comparator.compare(example, candidate) == 0) {
+		for (Element curElement : elements) {
+			if (elementComparator.compare(element, curElement) == 0) {
 				return true;
 			}
 		}
@@ -101,65 +93,62 @@ public class XMLMerger {
 	}
 
 	private Element _findObjectEqualTo(
-		Element example, List<Element> list, ElementComparator comparator) {
+		Element element, List<Element> elements,
+		ElementComparator elementComparator) {
 
-		Iterator<Element> itr = list.iterator();
-
-		while (itr.hasNext()) {
-			Element candidate = itr.next();
-
-			if (comparator.compare(example, candidate) == 0) {
-				return candidate;
+		for (Element curElement : elements) {
+			if (elementComparator.compare(element, curElement) == 0) {
+				return curElement;
 			}
 		}
 
-		return example;
+		return element;
 	}
 
 	private void _mergeDuplicateElements(
-		Element el, ElementComparator comparator) {
+		Element element, ElementComparator elementComparator) {
 
-		if (el.elements().size() > 0) {
-			List<Element> children = el.elements();
+		List<Element> childElements = element.elements();
 
-			List<Element> originals = new ArrayList<Element>();
-			List<Element> duplicates = new ArrayList<Element>();
+		if (childElements.isEmpty()) {
+			return;
+		}
 
-			for (int i = 0; i < children.size(); i++) {
-				Element child = children.get(i);
+		List<Element> originalElements = new ArrayList<Element>();
+		List<Element> duplicateElements = new ArrayList<Element>();
 
-				if (_containsObjectEqualTo(child, originals, comparator)) {
-					if (_descriptor.canJoinChildren(child)) {
-						Element first = _findObjectEqualTo(
-							child, originals, comparator);
+		for (int i = 0; i < childElements.size(); i++) {
+			Element childElement = childElements.get(i);
 
-						Collection<Element> childrenToJoin = child.elements();
+			if (_containsObjectEqualTo(
+					childElement, originalElements, elementComparator)) {
 
-						_addChildren(first, childrenToJoin);
-					}
+				if (_descriptor.canJoinChildren(childElement)) {
+					Element firstElement = _findObjectEqualTo(
+						childElement, originalElements, elementComparator);
 
-					duplicates.add(child);
+					_addChildren(firstElement, childElement.elements());
 				}
-				else {
-					originals.add(child);
-				}
+
+				duplicateElements.add(childElement);
 			}
-
-			for (Element duplicate : duplicates) {
-				duplicate.detach();
+			else {
+				originalElements.add(childElement);
 			}
+		}
 
-			Iterator<Element> itr = originals.iterator();
+		for (Element duplicateElement : duplicateElements) {
+			duplicateElement.detach();
+		}
 
-			while (itr.hasNext()) {
-				Element child = itr.next();
-
-				_mergeDuplicateElements(child, comparator);
-			}
+		for (Element childElement : originalElements) {
+			_mergeDuplicateElements(childElement, elementComparator);
 		}
 	}
 
-	private void _orderChildren(Element parent, String[] orderedChildrenNames) {
+	private void _orderChildren(
+		Element parentElement, String[] orderedChildrenNames) {
+
 		if (orderedChildrenNames == null) {
 			return;
 		}
@@ -167,13 +156,13 @@ public class XMLMerger {
 		List<Element> elements = new ArrayList<Element>();
 
 		for (int i = 0; i < orderedChildrenNames.length; i++) {
-			elements.addAll(parent.elements(orderedChildrenNames[i]));
+			elements.addAll(parentElement.elements(orderedChildrenNames[i]));
 		}
 
-		for (Element el : elements) {
-			el.detach();
+		for (Element element : elements) {
+			element.detach();
 
-			parent.add(el);
+			parentElement.add(element);
 		}
 	}
 

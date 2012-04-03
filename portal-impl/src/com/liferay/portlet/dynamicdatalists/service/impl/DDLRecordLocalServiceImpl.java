@@ -19,12 +19,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.CompanyConstants;
@@ -165,6 +170,13 @@ public class DDLRecordLocalServiceImpl
 				DDLRecord.class.getName(), recordVersion.getPrimaryKey());
 		}
 
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DDLRecord.class);
+
+		indexer.delete(record);
+
 		// Document library
 
 		try {
@@ -200,6 +212,19 @@ public class DDLRecordLocalServiceImpl
 
 	public DDLRecord fetchRecord(long recordId) throws SystemException {
 		return ddlRecordPersistence.fetchByPrimaryKey(recordId);
+	}
+
+	public List<DDLRecord> getCompanyRecords(
+			long companyId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddlRecordPersistence.findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	public int getCompanyRecordsCount(long companyId) throws SystemException {
+		return ddlRecordPersistence.countByCompanyId(companyId);
 	}
 
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
@@ -298,6 +323,18 @@ public class DDLRecordLocalServiceImpl
 		updateRecord(
 			userId, recordId, true, recordVersion.getDisplayIndex(), fields,
 			false, serviceContext);
+	}
+
+	public Hits search(SearchContext searchContext) throws SystemException {
+		try {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				DDLRecord.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	public void updateAsset(
@@ -466,7 +503,9 @@ public class DDLRecordLocalServiceImpl
 			}
 		}
 		else {
-			if (record.getVersion().equals(recordVersion.getVersion())) {
+			if (Validator.equals(
+					record.getVersion(), recordVersion.getVersion())) {
+
 				String newVersion = DDLRecordConstants.VERSION_DEFAULT;
 
 				List<DDLRecordVersion> approvedRecordVersions =
@@ -482,6 +521,27 @@ public class DDLRecordLocalServiceImpl
 
 				ddlRecordPersistence.update(record, false);
 			}
+
+			// Indexer
+
+			if (Validator.equals(
+					recordVersion.getVersion(),
+					DDLRecordConstants.VERSION_DEFAULT)) {
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					DDLRecord.class);
+
+				indexer.delete(record);
+			}
+		}
+
+		// Indexer
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				DDLRecord.class);
+
+			indexer.reindex(record);
 		}
 
 		return record;

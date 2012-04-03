@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.Reader;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.incava.util.diff.Diff;
@@ -86,11 +85,7 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 
 		List<Difference> differences = diff.diff();
 
-		Iterator<Difference> itr = differences.iterator();
-
-		while (itr.hasNext()) {
-			Difference difference = itr.next();
-
+		for (Difference difference : differences) {
 			if (difference.getAddedEnd() == Difference.NONE) {
 
 				// Lines were deleted from source only.
@@ -440,28 +435,25 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 
 		List<Difference> differences = diff.diff();
 
-		Iterator<Difference> itr = differences.iterator();
-
 		int deletedChars = 0;
 		int addedChars = 0;
 
 		// The following while loop will calculate how many characters of
 		// the source line need to be changed to be equals to the target line.
 
-		while (itr.hasNext() && !aligned) {
-			Difference difference = itr.next();
+		if (!aligned) {
+			for (Difference difference : differences) {
+				if (difference.getDeletedEnd() != Difference.NONE) {
+					deletedChars +=
+						(difference.getDeletedEnd() -
+							difference.getDeletedStart() + 1);
+				}
 
-			if (difference.getDeletedEnd() != Difference.NONE) {
-				deletedChars =
-					deletedChars +
-					(difference.getDeletedEnd() -
-						difference.getDeletedStart() + 1);
-			}
-
-			if (difference.getAddedEnd() != Difference.NONE) {
-				addedChars =
-					addedChars +
-					(difference.getAddedEnd() - difference.getAddedStart() + 1);
+				if (difference.getAddedEnd() != Difference.NONE) {
+					addedChars +=
+						(difference.getAddedEnd() - difference.getAddedStart() +
+							1);
+				}
 			}
 		}
 
@@ -474,16 +466,12 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 			return false;
 		}
 
-		itr = differences.iterator();
-
 		boolean sourceChanged = false;
 		boolean targetChanged = false;
 
 		// Iterate over Differences between chars of these lines.
 
-		while (itr.hasNext()) {
-			Difference difference = itr.next();
-
+		for (Difference difference : differences) {
 			if (difference.getAddedEnd() == Difference.NONE) {
 
 				// Chars were deleted from source only.
@@ -554,12 +542,12 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 	}
 
 	private static List<String> _toList(String line) {
-		String[] stringArray = line.split(StringPool.BLANK);
+		String[] lineParts = line.split(StringPool.BLANK);
 
 		List<String> result = new ArrayList<String>();
 
-		for (int i = 1; i < stringArray.length; i++) {
-			result.add(stringArray[i]);
+		for (int i = 1; i < lineParts.length; i++) {
+			result.add(lineParts[i]);
 		}
 
 		return result;
@@ -572,10 +560,8 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 
 		StringBundler sb = new StringBundler(line.size());
 
-		Iterator<String> itr = line.iterator();
-
-		while (itr.hasNext()) {
-			sb.append(itr.next());
+		for (String linePart : line) {
+			sb.append(linePart);
 		}
 
 		return sb.toString();

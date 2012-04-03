@@ -38,6 +38,8 @@ import org.jgroups.JChannel;
  */
 public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
+	public static final int MAX_CHANNEL_COUNT = Priority.values().length;
+
 	@Override
 	public void destroy() {
 		if (!PropsValues.CLUSTER_LINK_ENABLED) {
@@ -105,7 +107,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			jChannel.send(jGroupsAddress, null, message);
 		}
 		catch (ChannelException ce) {
-			_log.error("Unable to send unicast message:" + message, ce);
+			_log.error("Unable to send unicast message " + message, ce);
 		}
 	}
 
@@ -117,7 +119,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 	protected JChannel getChannel(Priority priority) {
 		int channelIndex =
-			priority.ordinal() * _channelCount / _MAX_CHANNEL_COUNT;
+			priority.ordinal() * _channelCount / MAX_CHANNEL_COUNT;
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -135,9 +137,9 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 		_channelCount = transportProperties.size();
 
-		if ((_channelCount <= 0) || (_channelCount > _MAX_CHANNEL_COUNT)) {
+		if ((_channelCount <= 0) || (_channelCount > MAX_CHANNEL_COUNT)) {
 			throw new IllegalArgumentException(
-				"Channel count must be between 1 and " + _MAX_CHANNEL_COUNT);
+				"Channel count must be between 1 and " + MAX_CHANNEL_COUNT);
 		}
 
 		_localTransportAddresses = new ArrayList<org.jgroups.Address>(
@@ -170,8 +172,6 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 	private static final String _LIFERAY_TRANSPORT_CHANNEL =
 		"LIFERAY-TRANSPORT-CHANNEL-";
-
-	private static final int _MAX_CHANNEL_COUNT = Priority.values().length;
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterLinkImpl.class);
 

@@ -36,7 +36,6 @@ if (group.isStagingGroup()) {
 long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-long[] layoutIds = ParamUtil.getLongValues(request, "layoutIds");
 
 String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
@@ -94,6 +93,36 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 			<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
 			<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 
+			<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
+
+				<%
+				LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
+				%>
+
+				<liferay-ui:message key="the-lar-file-could-not-be-imported-because-it-requires-layout-templates-or-layout-set-templates-that-could-not-be-found.-please-import-the-following-templates-manually-with-the-advanced-options" />
+
+				<ul>
+
+					<%
+					List<Tuple> missingLayoutPrototypes = lpe.getMissingLayoutPrototypes();
+
+					for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
+						String layoutPrototypeClassName = (String)missingLayoutPrototype.getObject(0);
+						String layoutPrototypeUuid = (String)missingLayoutPrototype.getObject(1);
+						String layoutPrototypeName = (String)missingLayoutPrototype.getObject(2);
+					%>
+
+						<li>
+							<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= layoutPrototypeName %></strong> (<%= layoutPrototypeUuid %>)
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</liferay-ui:error>
+
 			<c:choose>
 				<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">
 					<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>
@@ -127,7 +156,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 	</aui:script>
 </c:if>
 
-<aui:script use="aui-base,aui-loading-mask,selector-css3">
+<aui:script use="aui-base,aui-loading-mask,json-stringify">
 	var form = A.one('#<portlet:namespace />fm1');
 
 	form.on(
@@ -137,11 +166,44 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
+					var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
+
+					if (layoutsExportTreeOutput) {
+						var treeView = layoutsExportTreeOutput.getData('treeInstance');
+
+						var layoutIds = [];
+
+						var regexLayoutId = /layoutId_(\d+)/;
+
+						treeView.eachChildren(
+							function(item, index, collection) {
+								if (item.isChecked()) {
+									var match = regexLayoutId.exec(item.get('id'));
+
+									if (match) {
+										layoutIds.push(
+											{
+												includeChildren: !item.hasChildNodes(),
+												layoutId: match[1]
+											}
+										);
+									}
+								}
+							},
+							true
+						);
+
+						var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
+
+						if (layoutIdsInput) {
+							layoutIdsInput.val(A.JSON.stringify(layoutIds));
+						}
+					}
+
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-						<portlet:param name="layoutIds" value="<%= StringUtil.merge(layoutIds) %>" />
 					</portlet:actionURL>
 
 					submitForm(form, '<%= exportPagesURL + "&etag=0" %>', false);
