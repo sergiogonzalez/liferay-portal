@@ -56,6 +56,7 @@ public class PortletDisplay implements Serializable {
 		_modeHelp = master.isModeHelp();
 		_modePreview = master.isModePreview();
 		_modePrint = master.isModePrint();
+		_modeView = master.isModeView();
 		_namespace = master.getNamespace();
 		_portletName = master.getPortletName();
 		_portletSetup = master.getPortletSetup();
@@ -116,6 +117,7 @@ public class PortletDisplay implements Serializable {
 		slave.setModeHelp(_modeHelp);
 		slave.setModePreview(_modePreview);
 		slave.setModePrint(_modePrint);
+		slave.setModeView(_modeView);
 		slave.setNamespace(_namespace);
 		slave.setPortletName(_portletName);
 		slave.setPortletSetup(_portletSetup);
@@ -331,6 +333,10 @@ public class PortletDisplay implements Serializable {
 
 	public boolean isModePrint() {
 		return _modePrint;
+	}
+
+	public boolean isModeView() {
+		return _modeView;
 	}
 
 	public boolean isRestoreCurrentView() {
@@ -564,6 +570,10 @@ public class PortletDisplay implements Serializable {
 		_modePrint = modePrint;
 	}
 
+	public void setModeView(boolean modeView) {
+		_modeView = modeView;
+	}
+
 	public void setNamespace(String namespace) {
 		_namespace = namespace;
 	}
@@ -771,6 +781,7 @@ public class PortletDisplay implements Serializable {
 	private boolean _modeHelp;
 	private boolean _modePreview;
 	private boolean _modePrint;
+	private boolean _modeView;
 	private String _namespace = StringPool.BLANK;
 	private String _portletName = StringPool.BLANK;
 	private PortletPreferences _portletSetup;

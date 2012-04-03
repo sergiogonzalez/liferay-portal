@@ -705,8 +705,6 @@ know what you are doing as it can cause loss of data.
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
 
-		<antcall target="rename-dist-files" />
-
 		<if>
 			<isset property="dist.username" />
 			<then>
@@ -742,77 +740,6 @@ release was successful.</echo>
 				<exec dir="${app.server.tomcat.bin.dir}" executable="shutdown.bat" resolveexecutable="true" />
 			</sequential>
 		</parallel>
-	</target>
-
-	<target name="rename-dist-files">
- 		<antcall target="rename-dist-plugin-files" />
-		<antcall target="rename-dist-portal-files" />
-	</target>
-
-	<target name="rename-dist-plugin-files">
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<for param="dist.plugin.file">
-			<path>
-				<fileset
-					dir="${lp.plugins.dir}/dist"
-				/>
-			</path>
-			<sequential>
-				<antelope:stringutil string="@{dist.plugin.file}" property="dist.plugin.file.endindex">
-					<antelope:lastindexof string="." />
-				</antelope:stringutil>
-
-				<antelope:stringutil string="@{dist.plugin.file}" property="dist.plugin.file.prefix">
-					<antelope:substring beginindex="0" endindex="${dist.plugin.file.endindex}" />
-				</antelope:stringutil>
-
-				<antelope:stringutil string="@{dist.plugin.file}" property="dist.plugin.file.suffix">
-					<antelope:substring beginindex="${dist.plugin.file.endindex}" />
-				</antelope:stringutil>
-
-				<move
-					file="@{dist.plugin.file}"
-					tofile="${dist.plugin.file.prefix}-${tstamp.value}${dist.plugin.file.suffix}"
-					overwrite="true"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="rename-dist-portal-files">
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<for param="dist.portal.file">
-			<path>
-				<fileset
-					dir="dist"
-				/>
-			</path>
-			<sequential>
-				<antelope:stringutil string="@{dist.portal.file}" property="dist.portal.file.endindex">
-					<antelope:lastindexof string="." />
-				</antelope:stringutil>
-
-				<antelope:stringutil string="@{dist.portal.file}" property="dist.portal.file.prefix">
-					<antelope:substring beginindex="0" endindex="${dist.portal.file.endindex}" />
-				</antelope:stringutil>
-
-				<antelope:stringutil string="@{dist.portal.file}" property="dist.portal.file.suffix">
-					<antelope:substring beginindex="${dist.portal.file.endindex}" />
-				</antelope:stringutil>
-
-				<move
-					file="@{dist.portal.file}"
-					tofile="${dist.portal.file.prefix}-${tstamp.value}${dist.portal.file.suffix}"
-					overwrite="true"
-				/>
-			</sequential>
-		</for>
 	</target>
 
 	<target name="unzip-geronimo">

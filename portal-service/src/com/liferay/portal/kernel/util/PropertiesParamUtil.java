@@ -345,6 +345,7 @@ public class PropertiesParamUtil {
 			if (param.startsWith(prefix) && !param.endsWith("--Checkbox")) {
 				String key = param.substring(
 					prefix.length(), param.length() - 2);
+
 				String value = request.getParameter(param);
 
 				properties.setProperty(key, value);
@@ -363,7 +364,10 @@ public class PropertiesParamUtil {
 			if (param.startsWith(prefix) && !param.endsWith("--Checkbox")) {
 				String key = param.substring(
 					prefix.length(), param.length() - 2);
-				String value = portletRequest.getParameter(param);
+
+				String[] values = portletRequest.getParameterValues(param);
+
+				String value = StringUtil.merge(values);
 
 				properties.setProperty(key, value);
 			}

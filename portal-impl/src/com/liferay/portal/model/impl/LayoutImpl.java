@@ -133,11 +133,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	public List<Layout> getAllChildren() throws SystemException {
 		List<Layout> layouts = new ArrayList<Layout>();
 
-		Iterator<Layout> itr = getChildren().iterator();
-
-		while (itr.hasNext()) {
-			Layout layout = itr.next();
-
+		for (Layout layout : getChildren()) {
 			layouts.add(layout);
 			layouts.addAll(layout.getAllChildren());
 		}

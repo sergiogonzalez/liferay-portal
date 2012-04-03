@@ -63,7 +63,7 @@ public class ShoppingOrderFinderImpl
 			String sql = CustomSQLUtil.get(COUNT_BY_G_C_U_N_PPPS);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(sql, USER_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
 			if (Validator.isNull(ppPaymentStatus)) {
@@ -143,7 +143,7 @@ public class ShoppingOrderFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_G_C_U_N_PPPS);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(sql, USER_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
 			if (Validator.isNull(ppPaymentStatus)) {
@@ -196,6 +196,6 @@ public class ShoppingOrderFinderImpl
 		}
 	}
 
-	protected static final String USER_ID_SQL = "(userId = ?) AND";
+	private static final String _USER_ID_SQL = "(userId = ?) AND";
 
 }

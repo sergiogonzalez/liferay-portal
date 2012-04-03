@@ -25,7 +25,6 @@ import com.liferay.portal.util.InitUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -48,13 +47,13 @@ public class WSDDMerger {
 
 		File sourceFile = new File(source);
 
-		Document doc = SAXReaderUtil.read(sourceFile);
+		Document document = SAXReaderUtil.read(sourceFile);
 
-		Element root = doc.getRootElement();
+		Element rootElement = document.getRootElement();
 
-		List<Element> sourceServices = root.elements("service");
+		List<Element> sourceServiceElements = rootElement.elements("service");
 
-		if (sourceServices.size() == 0) {
+		if (sourceServiceElements.isEmpty()) {
 			return;
 		}
 
@@ -62,43 +61,37 @@ public class WSDDMerger {
 
 		File destinationFile = new File(destination);
 
-		doc = SAXReaderUtil.read(destinationFile);
+		document = SAXReaderUtil.read(destinationFile);
 
-		root = doc.getRootElement();
+		rootElement = document.getRootElement();
 
 		Map<String, Element> servicesMap = new TreeMap<String, Element>();
 
-		Iterator<Element> itr = root.elements("service").iterator();
+		List<Element> serviceElements = rootElement.elements("service");
 
-		while (itr.hasNext()) {
-			Element service = itr.next();
+		for (Element serviceElement : serviceElements) {
+			String name = serviceElement.attributeValue("name");
 
-			String name = service.attributeValue("name");
+			servicesMap.put(name, serviceElement);
 
-			servicesMap.put(name, service);
-
-			service.detach();
+			serviceElement.detach();
 		}
 
-		itr = sourceServices.iterator();
+		for (Element serviceElement : sourceServiceElements) {
+			String name = serviceElement.attributeValue("name");
 
-		while (itr.hasNext()) {
-			Element service = itr.next();
+			servicesMap.put(name, serviceElement);
 
-			String name = service.attributeValue("name");
-
-			servicesMap.put(name, service);
-
-			service.detach();
+			serviceElement.detach();
 		}
 
 		for (Map.Entry<String, Element> entry : servicesMap.entrySet()) {
-			Element service = entry.getValue();
+			Element serviceElement = entry.getValue();
 
-			root.add(service);
+			rootElement.add(serviceElement);
 		}
 
-		String content = doc.formattedString();
+		String content = document.formattedString();
 
 		content = StringUtil.replace(content, "\"/>", "\" />");
 

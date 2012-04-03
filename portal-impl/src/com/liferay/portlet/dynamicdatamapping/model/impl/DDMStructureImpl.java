@@ -31,7 +31,6 @@ import com.liferay.portal.model.CacheField;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -275,10 +274,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 			List<Node> nodes = xPathSelector.selectNodes(getDocument());
 
-			Iterator<Node> itr = nodes.iterator();
-
-			while (itr.hasNext()) {
-				Element element = (Element)itr.next();
+			for (Node node : nodes) {
+				Element element = (Element)node;
 
 				String name = element.attributeValue("name");
 

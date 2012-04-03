@@ -174,6 +174,19 @@ public class PrefsPropsUtil_IW {
 		return PrefsPropsUtil.getPreferences(companyId);
 	}
 
+	public java.util.Properties getProperties(
+		javax.portlet.PortletPreferences preferences, long companyId,
+		java.lang.String prefix, boolean removePrefix) {
+		return PrefsPropsUtil.getProperties(preferences, companyId, prefix,
+			removePrefix);
+	}
+
+	public java.util.Properties getProperties(java.lang.String prefix,
+		boolean removePrefix)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return PrefsPropsUtil.getProperties(prefix, removePrefix);
+	}
+
 	public short getShort(long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return PrefsPropsUtil.getShort(companyId, name);

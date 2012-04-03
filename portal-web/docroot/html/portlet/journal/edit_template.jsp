@@ -39,6 +39,7 @@ String newTemplateId = ParamUtil.getString(request, "newTemplateId");
 
 String structureId = BeanParamUtil.getString(template, request, "structureId");
 
+long structureGroupId = 0;
 String structureName = StringPool.BLANK;
 
 if (Validator.isNotNull(structureId)) {
@@ -59,6 +60,7 @@ if (Validator.isNotNull(structureId)) {
 	}
 
 	if (structure != null) {
+		structureGroupId = structure.getGroupId();
 		structureName = structure.getName(locale);
 	}
 }
@@ -189,7 +191,7 @@ if (template == null) {
 					<portlet:renderURL var="editStructureURL">
 						<portlet:param name="struts_action" value="/journal/edit_structure" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(structureGroupId) %>" />
 						<portlet:param name="structureId" value="<%= structureId %>" />
 					</portlet:renderURL>
 

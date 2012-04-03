@@ -21,12 +21,12 @@
 <h3><liferay-ui:message key="authentication" /></h3>
 
 <liferay-ui:tabs
-	names="<%= StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION_SECTIONS) %>"
+	names="<%= StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) %>"
 	refresh="<%= false %>"
 >
 
 	<%
-	for (String section : PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION_SECTIONS) {
+	for (String section : PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) {
 	%>
 
 		<liferay-ui:section>

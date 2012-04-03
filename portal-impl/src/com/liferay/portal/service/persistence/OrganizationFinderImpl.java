@@ -215,11 +215,12 @@ public class OrganizationFinderImpl
 				sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
 
 			if (regionId == null) {
-				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
 			}
 
 			if (countryId == null) {
-				sql = StringUtil.replace(sql, COUNTRY_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(
+					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
 			}
 
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
@@ -457,11 +458,11 @@ public class OrganizationFinderImpl
 			parentOrganizationIdComparator);
 
 		if (regionId == null) {
-			sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
+			sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
 		}
 
 		if (countryId == null) {
-			sql = StringUtil.replace(sql, COUNTRY_ID_SQL, StringPool.BLANK);
+			sql = StringUtil.replace(sql, _COUNTRY_ID_SQL, StringPool.BLANK);
 		}
 
 		sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
@@ -585,11 +586,12 @@ public class OrganizationFinderImpl
 			String sql = sb.toString();
 
 			if (regionId == null) {
-				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
 			}
 
 			if (countryId == null) {
-				sql = StringUtil.replace(sql, COUNTRY_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(
+					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
 			}
 
 			sql = StringUtil.replace(
@@ -612,11 +614,12 @@ public class OrganizationFinderImpl
 			sql = sb.toString();
 
 			if (regionId == null) {
-				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
 			}
 
 			if (countryId == null) {
-				sql = StringUtil.replace(sql, COUNTRY_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(
+					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
 			}
 
 			sql = StringUtil.replace(
@@ -650,11 +653,12 @@ public class OrganizationFinderImpl
 				sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
 
 			if (regionId == null) {
-				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
 			}
 
 			if (countryId == null) {
-				sql = StringUtil.replace(sql, COUNTRY_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(
+					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -743,11 +747,12 @@ public class OrganizationFinderImpl
 			String sql = sb.toString();
 
 			if (regionId == null) {
-				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
 			}
 
 			if (countryId == null) {
-				sql = StringUtil.replace(sql, COUNTRY_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(
+					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
 			}
 
 			sql = StringUtil.replace(
@@ -770,11 +775,12 @@ public class OrganizationFinderImpl
 			sql = sb.toString();
 
 			if (regionId == null) {
-				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
 			}
 
 			if (countryId == null) {
-				sql = StringUtil.replace(sql, COUNTRY_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(
+					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
 			}
 
 			sql = StringUtil.replace(
@@ -809,11 +815,12 @@ public class OrganizationFinderImpl
 				sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
 
 			if (regionId == null) {
-				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
 			}
 
 			if (countryId == null) {
-				sql = StringUtil.replace(sql, COUNTRY_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(
+					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
 			}
 
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
@@ -886,11 +893,7 @@ public class OrganizationFinderImpl
 
 		StringBundler sb = new StringBundler(params.size());
 
-		Iterator<Map.Entry<String, Object>> itr = params.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, Object> entry = itr.next();
-
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
 			if (key.equals("expandoAttributes")) {
@@ -950,11 +953,7 @@ public class OrganizationFinderImpl
 
 		StringBundler sb = new StringBundler(params.size());
 
-		Iterator<Map.Entry<String, Object>> itr = params.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, Object> entry = itr.next();
-
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
 			if (key.equals("expandoAttributes")) {
@@ -1131,11 +1130,11 @@ public class OrganizationFinderImpl
 		}
 	}
 
-	protected static final String COUNTRY_ID_SQL =
+	private static final String _COUNTRY_ID_SQL =
 		"((Organization_.countryId = ?) OR (Address.countryId = ?)) " +
 			"[$AND_OR_CONNECTOR$]";
 
-	protected static final String REGION_ID_SQL =
+	private static final String _REGION_ID_SQL =
 		"((Organization_.regionId = ?) OR (Address.regionId = ?)) " +
 			"[$AND_OR_CONNECTOR$]";
 

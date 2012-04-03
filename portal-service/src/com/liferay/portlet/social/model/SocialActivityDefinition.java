@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -61,6 +62,43 @@ public class SocialActivityDefinition implements Serializable {
 		activityDefinition.setModelName(_modelName);
 
 		return activityDefinition;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialActivityDefinition)) {
+			return false;
+		}
+
+		SocialActivityDefinition activityDefinition =
+			(SocialActivityDefinition)obj;
+
+		if ((activityDefinition != null) &&
+			Validator.equals(
+				_achievements, activityDefinition.getAchievements()) &&
+			Validator.equals(
+				_activityCounterDefinitions,
+				activityDefinition._activityCounterDefinitions) &&
+			Validator.equals(
+				_activityProcessor,
+				activityDefinition.getActivityProcessor()) &&
+			Validator.equals(
+				_activityType, activityDefinition.getActivityType()) &&
+			Validator.equals(_enabled, activityDefinition.isEnabled()) &&
+			Validator.equals(
+				_languageKey, activityDefinition.getLanguageKey()) &&
+			Validator.equals(
+				_logActivity, activityDefinition.isLogActivity()) &&
+			Validator.equals(_modelName, activityDefinition.getModelName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public List<SocialAchievement> getAchievements() {

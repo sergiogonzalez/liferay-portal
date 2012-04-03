@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.plugin.PluginPackageUtil;
+import com.liferay.portal.tools.deploy.PortletDeployer;
 
 import java.io.File;
 
@@ -73,6 +74,10 @@ public class DeployManagerImpl implements DeployManager {
 		return PluginPackageUtil.isInstalled(context);
 	}
 
+	public PluginPackage readPluginPackage(File file) {
+		return _portletDeployer.readPluginPackage(file);
+	}
+
 	public void redeploy(String context) throws Exception {
 		if (ServerDetector.isJetty()) {
 			DeployUtil.redeployJetty(context);
@@ -91,5 +96,7 @@ public class DeployManagerImpl implements DeployManager {
 
 		DeployUtil.undeploy(ServerDetector.getServerId(), deployDir);
 	}
+
+	private PortletDeployer _portletDeployer = new PortletDeployer();
 
 }

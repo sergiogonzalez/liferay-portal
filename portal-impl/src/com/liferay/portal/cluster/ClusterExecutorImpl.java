@@ -102,7 +102,7 @@ public class ClusterExecutorImpl
 		PortalExecutorManagerUtil.shutdown(
 			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL, true);
 
-		_controlChannel.close();
+		_controlJChannel.close();
 	}
 
 	public FutureClusterResponses execute(ClusterRequest clusterRequest)
@@ -188,7 +188,7 @@ public class ClusterExecutorImpl
 			return Collections.emptyList();
 		}
 
-		return getAddresses(_controlChannel);
+		return getAddresses(_controlJChannel);
 	}
 
 	public List<ClusterNode> getClusterNodes() {
@@ -225,7 +225,7 @@ public class ClusterExecutorImpl
 
 		PortalUtil.addPortalPortEventListener(this);
 
-		_localAddress = new AddressImpl(_controlChannel.getLocalAddress());
+		_localAddress = new AddressImpl(_controlJChannel.getLocalAddress());
 
 		try {
 			initLocalClusterNode();
@@ -239,7 +239,7 @@ public class ClusterExecutorImpl
 		sendNotifyRequest();
 
 		ClusterRequestReceiver clusterRequestReceiver =
-			(ClusterRequestReceiver)_controlChannel.getReceiver();
+			(ClusterRequestReceiver)_controlJChannel.getReceiver();
 
 		clusterRequestReceiver.openLatch();
 	}
@@ -249,7 +249,7 @@ public class ClusterExecutorImpl
 			return false;
 		}
 
-		List<Address> addresses = getAddresses(_controlChannel);
+		List<Address> addresses = getAddresses(_controlJChannel);
 
 		return addresses.contains(address);
 	}
@@ -283,7 +283,7 @@ public class ClusterExecutorImpl
 			ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
 				ClusterMessageType.UPDATE, _localClusterNode);
 
-			_controlChannel.send(null, null, clusterRequest);
+			_controlJChannel.send(null, null, clusterRequest);
 		}
 		catch (Exception e) {
 			_log.error("Unable to determine configure node port", e);
@@ -325,7 +325,7 @@ public class ClusterExecutorImpl
 	}
 
 	protected JChannel getControlChannel() {
-		return _controlChannel;
+		return _controlJChannel;
 	}
 
 	protected FutureClusterResponses getExecutionResults(String uuid) {
@@ -344,7 +344,7 @@ public class ClusterExecutorImpl
 			new ClusterRequestReceiver(this);
 
 		try {
-			_controlChannel = createJChannel(
+			_controlJChannel = createJChannel(
 				controlProperty, clusterRequestReceiver, _DEFAULT_CLUSTER_NAME);
 		}
 		catch (ChannelException ce) {
@@ -430,7 +430,7 @@ public class ClusterExecutorImpl
 		List<Address> addresses = null;
 
 		if (isMulticast) {
-			addresses = getAddresses(_controlChannel);
+			addresses = getAddresses(_controlJChannel);
 		}
 		else {
 			addresses = new ArrayList<Address>();
@@ -496,7 +496,7 @@ public class ClusterExecutorImpl
 		throws SystemException {
 
 		try {
-			_controlChannel.send(null, null, clusterRequest);
+			_controlJChannel.send(null, null, clusterRequest);
 		}
 		catch (ChannelException ce) {
 			_log.error(
@@ -511,7 +511,7 @@ public class ClusterExecutorImpl
 			ClusterMessageType.NOTIFY, _localClusterNode);
 
 		try {
-			_controlChannel.send(null, null, clusterRequest);
+			_controlJChannel.send(null, null, clusterRequest);
 		}
 		catch (ChannelException ce) {
 			_log.error("Unable to send multicast message", ce);
@@ -527,7 +527,7 @@ public class ClusterExecutorImpl
 				(org.jgroups.Address)address.getRealAddress();
 
 			try {
-				_controlChannel.send(jGroupsAddress, null, clusterRequest);
+				_controlJChannel.send(jGroupsAddress, null, clusterRequest);
 			}
 			catch (ChannelException ce) {
 				_log.error(
@@ -547,7 +547,7 @@ public class ClusterExecutorImpl
 		new CopyOnWriteArrayList<ClusterEventListener>();
 	private Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<String, Address>();
-	private JChannel _controlChannel;
+	private JChannel _controlJChannel;
 	private ExecutorService _executorService;
 	private Map<String, FutureClusterResponses> _futureClusterResponses =
 		new WeakValueConcurrentHashMap<String, FutureClusterResponses>();

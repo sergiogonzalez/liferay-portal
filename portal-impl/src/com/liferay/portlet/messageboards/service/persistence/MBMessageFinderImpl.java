@@ -203,6 +203,10 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_S);
 
+			if (userId <= 0) {
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
 			if ((categoryIds == null) || (categoryIds.length == 0)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
@@ -234,7 +238,10 @@ public class MBMessageFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(userId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);
@@ -342,6 +349,10 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_S);
 
+			if (userId <= 0) {
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
 			if ((categoryIds == null) || (categoryIds.length == 0)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
@@ -373,7 +384,10 @@ public class MBMessageFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(userId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);
@@ -448,5 +462,8 @@ public class MBMessageFinderImpl
 			closeSession(session);
 		}
 	}
+
+	private static final String _USER_ID_SQL =
+		"AND (currentMessage.userId = ?)";
 
 }
