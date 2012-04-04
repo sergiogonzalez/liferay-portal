@@ -5104,6 +5104,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 						parameterMap);
 				}
 
+				try {
+					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+						user = userPersistence.findByC_EA(companyId, login);
+					}
+					else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+						user = userPersistence.findByC_SN(companyId, login);
+					}
+					else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+						user = userPersistence.findByC_U(
+							companyId, GetterUtil.getLong(login));
+					}
+				}
+				catch (NoSuchUserException nsue) {
+					return Authenticator.DNE;
+				}
+
 				// Let LDAP handle max failure event
 
 				if (!LDAPSettingsUtil.isPasswordPolicyEnabled(
