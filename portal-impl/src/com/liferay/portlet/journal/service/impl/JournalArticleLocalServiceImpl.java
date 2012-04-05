@@ -755,7 +755,6 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
-
 			List<JournalArticle> articles = journalArticlePersistence.findByG_A(
 				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new ArticleVersionComparator(true));
