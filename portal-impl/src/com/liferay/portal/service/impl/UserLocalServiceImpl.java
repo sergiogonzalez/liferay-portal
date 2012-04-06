@@ -5105,16 +5105,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 
 				try {
-					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-						user = userPersistence.findByC_EA(companyId, login);
-					}
-					else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-						user = userPersistence.findByC_SN(companyId, login);
-					}
-					else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-						user = userPersistence.findByC_U(
-							companyId, GetterUtil.getLong(login));
-					}
+					user = userPersistence.findByPrimaryKey(user.getUserId());
 				}
 				catch (NoSuchUserException nsue) {
 					return Authenticator.DNE;
