@@ -26,6 +26,7 @@ import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.struts.JSONAction;
@@ -75,6 +76,16 @@ public class GetLayoutsAction extends JSONAction {
 			jsonObject.put("contentDisplayPage", layout.isContentDisplayPage());
 			jsonObject.put("friendlyURL", layout.getFriendlyURL());
 			jsonObject.put("hasChildren", layout.hasChildren());
+
+			if (layout instanceof VirtualLayout) {
+				VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+				jsonObject.put("groupId", virtualLayout.getSourceGroupId());
+			}
+			else {
+				jsonObject.put("groupId", layout.getGroupId());
+			}
+
 			jsonObject.put("layoutId", layout.getLayoutId());
 			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
 			jsonObject.put("parentLayoutId", layout.getParentLayoutId());
