@@ -49,7 +49,7 @@ portletURL.setParameter("callback", callback);
 		%>
 
 		<liferay-ui:search-form
-			page="/html/portlet/asset_browser/asset_search.jsp"
+			page="/html/portlet/asset_publisher/asset_search.jsp"
 			searchContainer="<%= searchContainer %>"
 		/>
 
