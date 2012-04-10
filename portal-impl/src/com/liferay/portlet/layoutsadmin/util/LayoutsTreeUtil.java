@@ -27,6 +27,7 @@ import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -115,6 +116,14 @@ public class LayoutsTreeUtil {
 			jsonObject.put("type", layout.getType());
 			jsonObject.put("updateable", SitesUtil.isLayoutUpdateable(layout));
 			jsonObject.put("uuid", layout.getUuid());
+
+			if (layout instanceof VirtualLayout) {
+				jsonObject.put(
+					"groupId", ((VirtualLayout)layout).getSourceGroupId());
+			}
+			else {
+				jsonObject.put("groupId", layout.getGroupId());
+			}
 
 			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
 				layout);
