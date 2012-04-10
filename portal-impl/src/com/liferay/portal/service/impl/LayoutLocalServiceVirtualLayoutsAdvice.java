@@ -137,8 +137,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 						parentLayoutId);
 				}
 				else {
-					return addChildrenUserGroupLayouts(
-						group, (List<Layout>)returnValue);
+					return addChildUserGroupLayouts(
+						group, (List<Layout>) returnValue);
 				}
 			}
 			catch (Exception e) {
@@ -151,22 +151,21 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		return methodInvocation.proceed();
 	}
 
-	protected List<Layout> addChildrenUserGroupLayouts(
-		Group group, List<Layout> layouts) {
+	protected List<Layout> addChildUserGroupLayouts(
+			Group group, List<Layout> layouts) {
 
 		layouts = ListUtil.copy(layouts);
 
-		List<Layout> childrenLayouts = new ArrayList<Layout>();
+		List<Layout> childLayouts = new ArrayList<Layout>();
 
 		for (Layout userGroupLayout : layouts) {
 			Layout virtualLayout = new VirtualLayout(userGroupLayout, group);
 
-			childrenLayouts.add(virtualLayout);
+			childLayouts.add(virtualLayout);
 		}
 
-		return childrenLayouts;
+		return childLayouts;
 	}
-
 
 	protected List<Layout> addUserGroupLayouts(
 			Group group, LayoutSet layoutSet, List<Layout> layouts,

@@ -118,8 +118,9 @@ public class LayoutsTreeUtil {
 			jsonObject.put("uuid", layout.getUuid());
 
 			if (layout instanceof VirtualLayout) {
-				jsonObject.put(
-					"groupId", ((VirtualLayout)layout).getSourceGroupId());
+				VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+				jsonObject.put("groupId", virtualLayout.getSourceGroupId());
 			}
 			else {
 				jsonObject.put("groupId", layout.getGroupId());
