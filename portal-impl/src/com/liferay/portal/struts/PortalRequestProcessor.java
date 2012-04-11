@@ -440,7 +440,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 		lastPathSB.append(portalURL);
 		lastPathSB.append(lastPath.getContextPath());
-		lastPathSB.append(lastPath.getPath());
+		lastPathSB.append(HttpUtil.encodePath(lastPath.getPath()));
 		lastPathSB.append(HttpUtil.parameterMapToString(parameterMap));
 
 		return lastPathSB.toString();
