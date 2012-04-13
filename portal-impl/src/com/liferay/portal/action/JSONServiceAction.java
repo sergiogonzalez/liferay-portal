@@ -511,7 +511,7 @@ public class JSONServiceAction extends JSONAction {
 
 		jsonSerializer.exclude("*.class");
 
-		return jsonSerializer.serialize(returnObj);
+		return jsonSerializer.serializeDeep(returnObj);
 	}
 
 	protected String[] getStringArrayFromJSON(
