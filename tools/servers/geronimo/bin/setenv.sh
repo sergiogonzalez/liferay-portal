@@ -1,1 +1,1 @@
-JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF8 -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=512m"
+GERONIMO_OPTS="$GERONIMO_OPTS -Dfile.encoding=UTF8 -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=512m"
