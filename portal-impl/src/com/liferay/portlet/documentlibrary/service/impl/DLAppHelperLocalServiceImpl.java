@@ -43,6 +43,8 @@ import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -211,6 +213,25 @@ public class DLAppHelperLocalServiceImpl
 
 		ratingsStatsLocalService.deleteStats(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		// Trash
+
+		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
+			return;
+		}
+
+		try {
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			FileVersion fileVersion = new LiferayFileVersion(
+				dlFileEntry.getLatestFileVersion(true));
+
+			trashEntryLocalService.deleteEntry(
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId());
+		}
+		catch (com.liferay.portlet.trash.NoSuchEntryException nsee) {
+		}
 	}
 
 	public void deleteFolder(Folder folder)
@@ -284,6 +305,51 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		// File entry
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		FileVersion fileVersion = new LiferayFileVersion(
+			dlFileEntry.getLatestFileVersion(true));
+
+		int oldStatus = fileVersion.getStatus();
+
+		// File version
+
+		dlFileEntryLocalService.updateStatus(
+			userId, fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_IN_TRASH,
+			new HashMap<String, Serializable>(), new ServiceContext());
+
+		// Social
+
+		socialActivityLocalService.addActivity(
+			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId(),
+			SocialActivityConstants.TYPE_MOVE_TO_TRASH, StringPool.BLANK, 0);
+
+		// Trash
+
+		trashEntryLocalService.addTrashEntry(
+			fileEntry.getCompanyId(), fileEntry.getGroupId(),
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
+			oldStatus, null);
+
+		// Workflow
+
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+				fileVersion.getCompanyId(), fileVersion.getGroupId(),
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId());
+		}
+
+		return fileEntry;
+	}
+
 	public void moveFolder(Folder folder)
 		throws PortalException, SystemException {
 
@@ -292,6 +358,41 @@ public class DLAppHelperLocalServiceImpl
 			folder.getFolderId(), folder.getParentFolderId(), folder.getName(),
 			folder.getDescription(), DLSyncConstants.EVENT_UPDATE, "-1");
 		}
+	}
+
+	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		// File entry
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		FileVersion fileVersion = new LiferayFileVersion(
+			dlFileEntry.getLatestFileVersion(true));
+
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		// File version
+
+		dlFileEntryLocalService.updateStatus(
+			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
+			new HashMap<String, Serializable>(), new ServiceContext());
+
+		// Social
+
+		socialActivityCounterLocalService.enableActivityCounters(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		socialActivityLocalService.addActivity(
+			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId(),
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
+			0);
+
+		// Trash
+
+		trashEntryLocalService.deleteTrashEntry(trashEntry.getEntryId());
 	}
 
 	public AssetEntry updateAsset(
@@ -441,10 +542,11 @@ public class DLAppHelperLocalServiceImpl
 
 	public void updateStatus(
 			long userId, FileEntry fileEntry, FileVersion latestFileVersion,
-			int status, Map<String, Serializable> workflowContext)
+			int oldStatus, int newStatus,
+			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
+		if (newStatus == WorkflowConstants.STATUS_APPROVED) {
 
 			// Asset
 
@@ -537,17 +639,25 @@ public class DLAppHelperLocalServiceImpl
 				activityType = DLActivityKeys.ADD_FILE_ENTRY;
 			}
 
-			socialActivityLocalService.addUniqueActivity(
-				latestFileVersion.getStatusByUserId(), fileEntry.getGroupId(),
-				latestFileVersion.getCreateDate(),
-				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
-				activityType, StringPool.BLANK, 0);
+			if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
+				socialActivityLocalService.addUniqueActivity(
+					latestFileVersion.getStatusByUserId(),
+					fileEntry.getGroupId(), latestFileVersion.getCreateDate(),
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId(), activityType, StringPool.BLANK,
+					0);
+			}
 		}
 		else {
 
 			// Asset
 
-			if (Validator.isNull(fileEntry.getVersion())) {
+			if (newStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				assetEntryLocalService.moveEntryToTrash(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId());
+			}
+			else if (Validator.isNull(fileEntry.getVersion())) {
 				assetEntryLocalService.updateVisible(
 					DLFileEntryConstants.getClassName(),
 					fileEntry.getFileEntryId(), false);

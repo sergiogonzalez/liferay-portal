@@ -770,7 +770,7 @@ public class BaseDeployer implements Deployer {
 		// after the prefix, or 3.) the recommended deployment context as
 		// specified in liferay-plugin-package.properties, or 4.) the file name.
 
-		if ((specifiedContext != null) &&
+		if (Validator.isNull(specifiedContext) &&
 			srcFile.getName().startsWith(DEPLOY_TO_PREFIX)) {
 
 			displayName = srcFile.getName().substring(
@@ -1844,15 +1844,11 @@ public class BaseDeployer implements Deployer {
 		String extraContent = getExtraContent(
 			webXmlVersion, srcFile, displayName);
 
-		int pos = content.indexOf("<listener>");
-
-		if (pos == -1) {
-			pos = content.indexOf("</web-app>");
-		}
+		int pos = content.indexOf("</web-app>");
 
 		String newContent =
-			content.substring(0, pos) + pluginContextListenerContent +
-				extraContent + content.substring(pos);
+			content.substring(0, pos) + extraContent +
+				pluginContextListenerContent + content.substring(pos);
 
 		// Replace old package names
 

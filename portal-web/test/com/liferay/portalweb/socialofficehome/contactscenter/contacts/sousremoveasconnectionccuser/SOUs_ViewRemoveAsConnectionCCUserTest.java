@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewRemoveAsConnectionCCUserTest extends BaseTestCase {
 	public void testSOUs_ViewRemoveAsConnectionCCUser()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1/");
+		selenium.open("/user/socialoffice01/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -102,7 +102,7 @@ public class SOUs_ViewRemoveAsConnectionCCUserTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div[3]"));
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
 			selenium.getText(
-				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span"));
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertFalse(selenium.isVisible(
 				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
 	}

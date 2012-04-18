@@ -14,4 +14,21 @@ drop table ResourceCode;
 
 drop table Roles_Permissions;
 
+alter table SocialActivityCounter add active_ BOOLEAN;
+
+COMMIT_TRANSACTION;
+
+update SocialActivityCounter set active_ = TRUE;
+
+create table TrashEntry (
+	entryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	createDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	typeSettings TEXT null,
+	status INTEGER
+);
+
 drop table Users_Permissions;

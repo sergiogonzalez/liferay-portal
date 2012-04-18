@@ -234,13 +234,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 						currentThread.setContextClassLoader(portalClassLoader);
 					}
 
-					Locale[] locales = LanguageUtil.getAvailableLocales();
-
-					for (Locale locale : locales) {
-						String ${column.name} = ${column.name}Map.get(locale);
-
-						set${column.methodName}(${column.name}, locale, defaultLocale);
-					}
+					set${column.methodName}(LocalizationUtil.updateLocalization(${column.name}Map, get${column.methodName}(), "${column.methodName}", LocaleUtil.toLanguageId(defaultLocale)));
 				}
 				finally {
 					if (contextClassLoader != portalClassLoader) {

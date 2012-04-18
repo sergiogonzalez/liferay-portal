@@ -27,7 +27,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/user/joebloggs/home1/");
+				selenium.open("/user/joebloggs/so/dashboard/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -47,7 +47,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Home"),
+				assertEquals(RuntimeVariables.replace("Dashboard"),
 					selenium.getText(
 						"//li[contains(@class, 'selected')]/a/span"));
 
@@ -109,7 +109,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Open Site1 Name"),
 					selenium.getText("//div[@class='community-title']"));
-				selenium.open("/user/joebloggs/home1/");
+				selenium.open("/user/joebloggs/so/dashboard/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -129,7 +129,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Home"),
+				assertEquals(RuntimeVariables.replace("Dashboard"),
 					selenium.getText(
 						"//li[contains(@class, 'selected')]/a/span"));
 
@@ -227,7 +227,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Private Site2 Name"),
 					selenium.getText("//div[@class='community-title']"));
-				selenium.open("/user/joebloggs/home1/");
+				selenium.open("/user/joebloggs/so/dashboard/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -247,7 +247,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Home"),
+				assertEquals(RuntimeVariables.replace("Dashboard"),
 					selenium.getText(
 						"//li[contains(@class, 'selected')]/a/span"));
 

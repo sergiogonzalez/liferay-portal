@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -166,7 +167,17 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public boolean isCommitted() {
-		return _committed;
+		if (_committed) {
+			return true;
+		}
+
+		ServletResponse servletResponse = getResponse();
+
+		if (servletResponse.isCommitted()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

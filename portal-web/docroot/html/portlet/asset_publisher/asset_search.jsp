@@ -34,13 +34,14 @@ AssetDisplayTerms displayTerms = (AssetDisplayTerms)searchContainer.getDisplayTe
 
 		<aui:input name="<%= displayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
 
-		<aui:select label="my-sites" name="<%= displayTerms.GROUP_ID %>" showEmptyOption="<%= true %>">
+		<aui:select label="my-sites" name="<%= displayTerms.GROUP_ID %>">
 
 			<%
 			for (long groupId : groupIds) {
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
 			%>
 
-				<aui:option label='<%= (themeDisplay.getCompanyGroupId() == groupId) ? "global" : themeDisplay.getScopeGroupName() %>' selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
+				<aui:option label='<%= group.getDescriptiveName(locale) %>' selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
 
 			<%
 			}

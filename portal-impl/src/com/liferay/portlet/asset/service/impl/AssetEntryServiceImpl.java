@@ -172,8 +172,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		filteredEntryQuery.setAllCategoryIds(
 			filterCategoryIds(entryQuery.getAllCategoryIds()));
-		filteredEntryQuery.setAllTagIds(
-			filterTagIds(entryQuery.getAllTagIds()));
+		filteredEntryQuery.setAllTagIdsArray(
+			filterTagIdsArray(entryQuery.getAllTagIdsArray()));
 		filteredEntryQuery.setAnyCategoryIds(
 			filterCategoryIds(entryQuery.getAnyCategoryIds()));
 		filteredEntryQuery.setAnyTagIds(
@@ -302,6 +302,33 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		return ArrayUtil.toArray(
 			viewableTagIds.toArray(new Long[viewableTagIds.size()]));
+	}
+
+	protected long[][] filterTagIdsArray(long[][] tagIdsArray)
+		throws PortalException, SystemException {
+
+		List<long[]> viewableTagIdsArray = new ArrayList<long[]>();
+
+		for (int i = 0; i< tagIdsArray.length; i++) {
+			long tagIds[] = tagIdsArray[i];
+
+			List<Long> viewableTagIds = new ArrayList<Long>();
+
+			for (long tagId : tagIds) {
+				if (AssetTagPermission.contains(
+						getPermissionChecker(), tagId, ActionKeys.VIEW)) {
+
+					viewableTagIds.add(tagId);
+				}
+			}
+
+			viewableTagIdsArray.add(
+				ArrayUtil.toArray(
+					viewableTagIds.toArray(new Long[viewableTagIds.size()])));
+		}
+
+		return viewableTagIdsArray.toArray(
+			new long[viewableTagIdsArray.size()][]);
 	}
 
 	protected boolean hasEntryQueryResults(

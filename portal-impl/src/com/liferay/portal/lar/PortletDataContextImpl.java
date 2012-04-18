@@ -783,7 +783,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _startDate;
 	}
 
-	public long getUserId(String userUuid) throws SystemException {
+	public long getUserId(String userUuid) {
 		return _userIdStrategy.getUserId(userUuid);
 	}
 

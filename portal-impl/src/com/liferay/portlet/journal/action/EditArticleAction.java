@@ -503,9 +503,6 @@ public class EditArticleAction extends PortletAction {
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(uploadPortletRequest, Constants.CMD);
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
@@ -719,18 +716,9 @@ public class EditArticleAction extends PortletAction {
 			}
 			else {
 				if (curArticle.isTemplateDriven()) {
-					JournalStructure structure = null;
-
-					try {
-						structure =
-							JournalStructureLocalServiceUtil.getStructure(
-								groupId, structureId);
-					}
-					catch (NoSuchStructureException nsse) {
-						structure =
-							JournalStructureLocalServiceUtil.getStructure(
-								themeDisplay.getCompanyGroupId(), structureId);
-					}
+					JournalStructure structure =
+						JournalStructureLocalServiceUtil.getStructure(
+							groupId, structureId, true);
 
 					content = JournalUtil.mergeArticleContent(
 						curArticle.getContent(), content, true);

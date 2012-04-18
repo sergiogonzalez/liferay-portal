@@ -44,7 +44,7 @@
 
 		var moduleList = {
 			'asset-categories-selector': ['aui-tree', 'liferay-asset-tags-selector'],
-			'asset-tags-selector': ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource'],
+			'asset-tags-selector': ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-form-textfield', 'aui-io-request', 'aui-live-search', 'aui-template', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource'],
 			'auto-fields': ['aui-base', 'aui-data-set', 'aui-io-request', 'aui-parse-content', 'sortable', 'base', 'liferay-undo-manager'],
 			'dockbar': ['aui-node', 'event-touch'],
 			'dockbar-underlay': ['aui-button-item', 'aui-io-plugin', 'aui-overlay-manager'],
@@ -70,9 +70,9 @@
 			'navigation-touch': ['event-touch', 'liferay-navigation'],
 			'navigation-interaction': ['node-focusmanager', 'plugin'],
 			'notice': ['aui-base'],
-			'panel': ['aui-base', 'aui-io-request'],
+			'panel': ['aui-base', 'liferay-store'],
 			'panel-floating': ['aui-paginator', 'liferay-panel'],
-			'message': ['aui-base', 'aui-io-request'],
+			'message': ['aui-base', 'liferay-store'],
 			'poller': ['aui-base', 'io', 'json'],
 			'portlet-base': ['aui-base'],
 			'portlet-url': ['aui-base', 'aui-io-request', 'querystring-stringify-simple'],
@@ -83,6 +83,7 @@
 			'staging': ['aui-dialog', 'aui-io-plugin'],
 			'staging-branch': ['liferay-staging'],
 			'staging-version': ['aui-button-item', 'liferay-staging'],
+			'store': ['aui-io-request'],
 			'token-list': ['aui-base', 'aui-template'],
 			'translation-manager': ['aui-base'],
 			'undo-manager': ['aui-data-set', 'base'],

@@ -17,15 +17,14 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.portal.ExpiredLockException;
 import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -102,8 +101,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, int status, int start, int end)
 		throws SystemException {
 
-		return dlFolderFinder.filterFindFE_FS_ByG_F_S(
-			groupId, folderId, status, start, end);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return dlFolderFinder.filterFindFE_FS_ByG_F(
+			groupId, folderId, queryDefinition);
 	}
 
 	public int getFileEntriesAndFileShortcutsCount(
@@ -112,16 +114,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		int fileEntriesCount = 0;
 
-		if ((status == WorkflowConstants.STATUS_ANY) &&
-			!InlineSQLHelperUtil.isEnabled(groupId)) {
+		QueryDefinition queryDefinition = new QueryDefinition(status);
 
-			fileEntriesCount = dlFileEntryPersistence.countByG_F(
-				groupId, folderId);
-		}
-		else {
-			fileEntriesCount = dlFolderFinder.filterCountFE_ByG_F_S(
-				groupId, folderId, status);
-		}
+		fileEntriesCount = dlFolderFinder.filterCountFE_ByG_F(
+			groupId, folderId, queryDefinition);
 
 		int fileShortcutsCount = dlFileShortcutPersistence.filterCountByG_F_S(
 			groupId, folderId, 0);
@@ -133,8 +129,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, int status, String[] mimeTypes)
 		throws SystemException {
 
-		return dlFolderFinder.filterCountFE_FS_ByG_F_S_M(
-			groupId, folderId, status, mimeTypes);
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return dlFolderFinder.filterCountFE_FS_ByG_F_M(
+			groupId, folderId, mimeTypes, queryDefinition);
 	}
 
 	public DLFolder getFolder(long folderId)
@@ -199,9 +197,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return dlFolderFinder.filterFindF_FE_FS_ByG_F_S_M_M(
-			groupId, folderId, status, null, includeMountFolders, start, end,
-			obc);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return dlFolderFinder.filterFindF_FE_FS_ByG_F_M_M(
+			groupId, folderId, null, includeMountFolders, queryDefinition);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcuts(
@@ -209,8 +209,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			boolean includeMountFolders)
 		throws SystemException {
 
-		return dlFolderFinder.filterCountF_FE_FS_ByG_F_S_M_M(
-			groupId, folderId, status, mimeTypes, includeMountFolders);
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -219,9 +221,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return dlFolderFinder.filterFindF_FE_FS_ByG_F_S_M_M(
-			groupId, folderId, status, mimeTypes, includeMountFolders, start,
-			end, obc);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return dlFolderFinder.filterFindF_FE_FS_ByG_F_M_M(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -229,8 +233,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			boolean includeMountFolders)
 		throws SystemException {
 
-		return dlFolderFinder.filterCountF_FE_FS_ByG_F_S_M_M(
-			groupId, folderId, status, null, includeMountFolders);
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
+			groupId, folderId, null, includeMountFolders, queryDefinition);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -238,8 +244,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			boolean includeMountFolders)
 		throws SystemException {
 
-		return dlFolderFinder.filterCountF_FE_FS_ByG_F_S_M_M(
-			groupId, folderId, status, mimeTypes, includeMountFolders);
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
@@ -390,10 +398,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 	}
 
-	public Lock refreshFolderLock(String lockUuid, long expirationTime)
+	public Lock refreshFolderLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		return lockLocalService.refresh(lockUuid, expirationTime);
+		return lockLocalService.refresh(lockUuid, companyId, expirationTime);
 	}
 
 	public void unlockFolder(long groupId, long folderId, String lockUuid)

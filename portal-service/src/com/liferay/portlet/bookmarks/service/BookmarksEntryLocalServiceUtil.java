@@ -297,17 +297,18 @@ public class BookmarksEntryLocalServiceUtil {
 		getService().deleteEntries(groupId, folderId);
 	}
 
-	public static void deleteEntry(
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry deleteEntry(
 		com.liferay.portlet.bookmarks.model.BookmarksEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteEntry(entry);
+		return getService().deleteEntry(entry);
 	}
 
-	public static void deleteEntry(long entryId)
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry deleteEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteEntry(entryId);
+		return getService().deleteEntry(entryId);
 	}
 
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> getEntries(

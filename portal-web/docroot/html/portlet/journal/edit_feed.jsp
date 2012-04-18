@@ -34,20 +34,11 @@ String structureName = StringPool.BLANK;
 
 if (Validator.isNotNull(structureId)) {
 	try {
-		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
+		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
 
 		structureName = structure.getName(locale);
 	}
-	catch (NoSuchStructureException nsse1) {
-		if (groupId != themeDisplay.getCompanyGroupId()) {
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
-
-				structureName = structure.getName(locale);
-			}
-			catch (NoSuchStructureException nsse2) {
-			}
-		}
+	catch (NoSuchStructureException nsse) {
 	}
 }
 
@@ -64,40 +55,22 @@ if ((structure == null) && Validator.isNotNull(templateId)) {
 	JournalTemplate template = null;
 
 	try {
-		template = JournalTemplateLocalServiceUtil.getTemplate(groupId, templateId);
+		template = JournalTemplateLocalServiceUtil.getTemplate(groupId, templateId, true);
 	}
-	catch (NoSuchTemplateException nste1) {
-		if (groupId != themeDisplay.getCompanyGroupId()) {
-			try {
-				template = JournalTemplateLocalServiceUtil.getTemplate(themeDisplay.getCompanyGroupId(), templateId);
-			}
-			catch (NoSuchTemplateException nste2) {
-			}
-		}
+	catch (NoSuchTemplateException nste) {
 	}
 
 	if (template != null) {
 		structureId = template.getStructureId();
 
 		try {
-			structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
+			structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
 
 			structureName = structure.getName(locale);
 
 			templates = JournalTemplateLocalServiceUtil.getStructureTemplates(groupId, structureId);
 		}
-		catch (NoSuchStructureException nsse1) {
-			if (groupId != themeDisplay.getCompanyGroupId()) {
-				try {
-					structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
-
-					structureName = structure.getName(locale);
-
-					templates = JournalTemplateLocalServiceUtil.getStructureTemplates(themeDisplay.getCompanyGroupId(), structureId);
-				}
-				catch (NoSuchStructureException nsse2) {
-				}
-			}
+		catch (NoSuchStructureException nsse) {
 		}
 	}
 }

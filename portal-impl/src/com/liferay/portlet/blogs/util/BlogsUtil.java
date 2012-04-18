@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.util.ContentUtil;
 
 import java.util.Locale;
@@ -182,12 +184,15 @@ public class BlogsUtil {
 		if (Validator.isNull(title) || Validator.isNumber(title) ||
 			title.equals("rss")) {
 
-			return String.valueOf(entryId);
+			title = String.valueOf(entryId);
 		}
 		else {
-			return FriendlyURLNormalizerUtil.normalize(
+			title = FriendlyURLNormalizerUtil.normalize(
 				title, _URL_TITLE_REPLACE_CHARS);
 		}
+
+		return ModelHintsUtil.trimString(
+			BlogsEntry.class.getName(), "urlTitle", title);
 	}
 
 	private static final char[] _URL_TITLE_REPLACE_CHARS = new char[] {

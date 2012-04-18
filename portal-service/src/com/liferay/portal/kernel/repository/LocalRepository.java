@@ -19,13 +19,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
-
-import java.util.List;
 
 /**
  * @author Alexander Chow
@@ -57,20 +54,6 @@ public interface LocalRepository {
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException;
 
-	public List<FileEntry> getFileEntries(
-			long folderId, int start, int end, OrderByComparator obc)
-		throws SystemException;
-
-	public List<Object> getFileEntriesAndFileShortcuts(
-			long folderId, int status, int start, int end)
-		throws SystemException;
-
-	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
-		throws SystemException;
-
-	public int getFileEntriesCount(long folderId)
-		throws SystemException;
-
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException;
 
@@ -88,43 +71,6 @@ public interface LocalRepository {
 
 	public Folder getFolder(long parentFolderId, String title)
 		throws PortalException, SystemException;
-
-	public List<Folder> getFolders(
-			long parentFolderId, boolean includeMountfolders, int start,
-			int end, OrderByComparator obc)
-		throws PortalException, SystemException;
-
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long folderId, int status, boolean includeMountFolders, int start,
-			int end, OrderByComparator obc)
-		throws SystemException;
-
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders, int start, int end,
-			OrderByComparator obc)
-		throws PortalException, SystemException;
-
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long folderId, int status, boolean includeMountFolders)
-		throws SystemException;
-
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders)
-		throws PortalException, SystemException;
-
-	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
-		throws PortalException, SystemException;
-
-	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)
-		throws SystemException;
-
-	public List<Folder> getMountFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
-		throws SystemException;
-
-	public int getMountFoldersCount(long parentFolderId) throws SystemException;
 
 	public long getRepositoryId();
 

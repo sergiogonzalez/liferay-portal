@@ -611,6 +611,8 @@ public class PortalLDAPUtil {
 
 		LdapContext ldapContext = getContext(ldapServerId, companyId);
 
+		NamingEnumeration<SearchResult> enu = null;
+
 		try {
 			if (ldapContext == null) {
 				return false;
@@ -630,7 +632,7 @@ public class PortalLDAPUtil {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			NamingEnumeration<SearchResult> enu = ldapContext.search(
+			enu = ldapContext.search(
 				groupDN, filter.toString(), searchControls);
 
 			if (enu.hasMoreElements()) {
@@ -646,6 +648,10 @@ public class PortalLDAPUtil {
 			}
 		}
 		finally {
+			if (enu != null) {
+				enu.close();
+			}
+
 			if (ldapContext != null) {
 				ldapContext.close();
 			}
@@ -659,6 +665,8 @@ public class PortalLDAPUtil {
 		throws Exception {
 
 		LdapContext ldapContext = getContext(ldapServerId, companyId);
+
+		NamingEnumeration<SearchResult> enu = null;
 
 		try {
 			if (ldapContext == null) {
@@ -679,8 +687,7 @@ public class PortalLDAPUtil {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			NamingEnumeration<SearchResult> enu = ldapContext.search(
-				userDN, filter.toString(), searchControls);
+			enu = ldapContext.search(userDN, filter.toString(), searchControls);
 
 			if (enu.hasMoreElements()) {
 				return true;
@@ -695,6 +702,10 @@ public class PortalLDAPUtil {
 			}
 		}
 		finally {
+			if (enu != null) {
+				enu.close();
+			}
+
 			if (ldapContext != null) {
 				ldapContext.close();
 			}
@@ -712,6 +723,8 @@ public class PortalLDAPUtil {
 		SearchControls searchControls = new SearchControls(
 			SearchControls.SUBTREE_SCOPE, maxResults, 0, attributeIds, false,
 			false);
+
+		NamingEnumeration<SearchResult> enu = null;
 
 		try {
 			if (cookie != null) {
@@ -731,31 +744,33 @@ public class PortalLDAPUtil {
 						});
 				}
 
-				NamingEnumeration<SearchResult> enu = ldapContext.search(
-					baseDN, filter, searchControls);
+				enu = ldapContext.search(baseDN, filter, searchControls);
 
 				while (enu.hasMoreElements()) {
 					searchResults.add(enu.nextElement());
 				}
 
-				enu.close();
-
 				return _getCookie(ldapContext.getResponseControls());
 			}
 		}
 		catch (OperationNotSupportedException onse) {
+			if (enu != null) {
+				enu.close();
+			}
+
 			ldapContext.setRequestControls(null);
 
-			NamingEnumeration<SearchResult> enu = ldapContext.search(
-				baseDN, filter, searchControls);
+			enu = ldapContext.search(baseDN, filter, searchControls);
 
 			while (enu.hasMoreElements()) {
 				searchResults.add(enu.nextElement());
 			}
-
-			enu.close();
 		}
 		finally {
+			if (enu != null) {
+				enu.close();
+			}
+
 			ldapContext.setRequestControls(null);
 		}
 

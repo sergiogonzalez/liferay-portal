@@ -357,10 +357,11 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			guestPermissions);
 	}
 
-	public void deleteDiscussionMessage(long messageId)
+	public com.liferay.portlet.messageboards.model.MBMessage deleteDiscussionMessage(
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageLocalService.deleteDiscussionMessage(messageId);
+		return _mbMessageLocalService.deleteDiscussionMessage(messageId);
 	}
 
 	public void deleteDiscussionMessages(java.lang.String className,
@@ -370,17 +371,18 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
 	}
 
-	public void deleteMessage(long messageId)
+	public com.liferay.portlet.messageboards.model.MBMessage deleteMessage(
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageLocalService.deleteMessage(messageId);
+		return _mbMessageLocalService.deleteMessage(messageId);
 	}
 
-	public void deleteMessage(
+	public com.liferay.portlet.messageboards.model.MBMessage deleteMessage(
 		com.liferay.portlet.messageboards.model.MBMessage message)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageLocalService.deleteMessage(message);
+		return _mbMessageLocalService.deleteMessage(message);
 	}
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(

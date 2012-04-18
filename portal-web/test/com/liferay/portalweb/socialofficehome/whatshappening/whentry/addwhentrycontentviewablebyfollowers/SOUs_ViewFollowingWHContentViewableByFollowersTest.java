@@ -24,15 +24,15 @@ public class SOUs_ViewFollowingWHContentViewableByFollowersTest
 	extends BaseTestCase {
 	public void testSOUs_ViewFollowingWHContentViewableByFollowers()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1");
+		selenium.open("/user/socialoffice01/so/dashboard");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='_2_WAR_microblogsportlet_highlighterContent']"));
+				"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.clickAt("//div[@id='_2_WAR_microblogsportlet_highlighterContent']",
+		selenium.clickAt("//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]",
 			RuntimeVariables.replace("Update your status..."));
 		assertEquals(RuntimeVariables.replace("Following"),
 			selenium.getText("link=Following"));

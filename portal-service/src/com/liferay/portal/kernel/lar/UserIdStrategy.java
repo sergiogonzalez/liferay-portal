@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.lar;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 /**
  * @author Bruno Farache
  */
@@ -26,6 +24,6 @@ public interface UserIdStrategy {
 
 	public static final String CURRENT_USER_ID = "CURRENT_USER_ID";
 
-	public long getUserId(String userUuid) throws SystemException;
+	public long getUserId(String userUuid);
 
 }

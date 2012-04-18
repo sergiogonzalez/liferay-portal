@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -44,6 +46,7 @@ import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.model.SocialActivityProcessor;
 import com.liferay.portlet.social.service.SocialActivityCounterLocalService;
 import com.liferay.portlet.social.service.base.SocialActivityCounterLocalServiceBaseImpl;
+import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinderUtil;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
@@ -308,6 +311,7 @@ public class SocialActivityCounterLocalServiceImpl
 		activityCounter.setTotalValue(totalValue);
 		activityCounter.setStartPeriod(startPeriod);
 		activityCounter.setEndPeriod(endPeriod);
+		activityCounter.setActive(true);
 
 		socialActivityCounterPersistence.update(activityCounter, false);
 
@@ -321,69 +325,128 @@ public class SocialActivityCounterLocalServiceImpl
 			return;
 		}
 
-		SocialActivityCounter latestContributionActivityCounter =
-			fetchLatestActivityCounter(
-				assetEntry.getGroupId(),
-				PortalUtil.getClassNameId(User.class.getName()),
-				assetEntry.getUserId(),
-				SocialActivityCounterConstants.NAME_CONTRIBUTION,
-				SocialActivityCounterConstants.TYPE_CREATOR);
+		adjustUserContribution(assetEntry, false);
 
-		SocialActivityCounter latestPopularityActivityCounter =
-			fetchLatestActivityCounter(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassPK(),
-				SocialActivityCounterConstants.NAME_POPULARITY,
-				SocialActivityCounterConstants.TYPE_ASSET);
-
-		if ((latestContributionActivityCounter != null) &&
-			(latestPopularityActivityCounter != null)) {
-
-			int startPeriod = SocialCounterPeriodUtil.getStartPeriod();
-
-			if (latestContributionActivityCounter.getStartPeriod() !=
-					startPeriod) {
-
-				latestContributionActivityCounter = addActivityCounter(
-					latestContributionActivityCounter.getGroupId(),
-					latestContributionActivityCounter.getClassNameId(),
-					latestContributionActivityCounter.getClassPK(),
-					latestContributionActivityCounter.getName(),
-					latestContributionActivityCounter.getOwnerType(), 0,
-					latestContributionActivityCounter.getTotalValue(),
-					SocialCounterPeriodUtil.getStartPeriod(),
-					SocialActivityCounterConstants.END_PERIOD_UNDEFINED,
-					latestContributionActivityCounter.getActivityCounterId(),
-					SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
-			}
-
-			if (latestPopularityActivityCounter.getStartPeriod() ==
-					startPeriod) {
-
-				latestContributionActivityCounter.setCurrentValue(
-					latestContributionActivityCounter.getCurrentValue() -
-						latestPopularityActivityCounter.getCurrentValue());
-			}
-
-			latestContributionActivityCounter.setTotalValue(
-				latestContributionActivityCounter.getTotalValue() -
-					latestPopularityActivityCounter.getTotalValue());
-
-			socialActivityCounterPersistence.update(
-				latestContributionActivityCounter, false);
-		}
-
-		deleteActivityCounters(
+		socialActivityCounterPersistence.removeByC_C(
 			assetEntry.getClassNameId(), assetEntry.getClassPK());
 
 		socialActivityLimitPersistence.removeByC_C(
 			assetEntry.getClassNameId(), assetEntry.getClassPK());
+
+		socialActivitySettingPersistence.removeByG_C(
+			assetEntry.getGroupId(), assetEntry.getClassNameId());
+
+		clearFinderCache();
 	}
 
 	public void deleteActivityCounters(long classNameId, long classPK)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		socialActivityCounterPersistence.removeByC_C(classNameId, classPK);
+		String className = PortalUtil.getClassName(classNameId);
+
+		if (!className.equals(User.class.getName())) {
+			AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+				className, classPK);
+
+			deleteActivityCounters(assetEntry);
+		}
+		else {
+			socialActivityCounterPersistence.removeByC_C(classNameId, classPK);
+
+			socialActivityLimitPersistence.removeByUserId(classPK);
+		}
+
+		clearFinderCache();
+	}
+
+	public void deleteActivityCounters(String className, long classPK)
+		throws PortalException, SystemException {
+
+		if (!className.equals(User.class.getName())) {
+			AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+				className, classPK);
+
+			deleteActivityCounters(assetEntry);
+		}
+		else {
+			long classNameId = PortalUtil.getClassNameId(className);
+
+			socialActivityCounterPersistence.removeByC_C(classNameId, classPK);
+
+			socialActivityLimitPersistence.removeByUserId(classPK);
+		}
+
+		clearFinderCache();
+	}
+
+	public void disableActivityCounters(long classNameId, long classPK)
+		throws PortalException, SystemException {
+
+		String className = PortalUtil.getClassName(classNameId);
+
+		disableActivityCounters(className, classPK);
+	}
+
+	public void disableActivityCounters(String className, long classPK)
+		throws PortalException, SystemException {
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			className, classPK);
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		List<SocialActivityCounter> activityCounters =
+			socialActivityCounterPersistence.findByC_C(
+				assetEntry.getClassNameId(), classPK);
+
+		adjustUserContribution(assetEntry, false);
+
+		for (SocialActivityCounter activityCounter : activityCounters) {
+			if (activityCounter.isActive()) {
+				activityCounter.setActive(false);
+
+				socialActivityCounterPersistence.update(activityCounter, false);
+			}
+		}
+
+		clearFinderCache();
+	}
+
+	public void enableActivityCounters(long classNameId, long classPK)
+		throws PortalException, SystemException {
+
+		String className = PortalUtil.getClassName(classNameId);
+
+		enableActivityCounters(className, classPK);
+	}
+
+	public void enableActivityCounters(String className, long classPK)
+		throws PortalException, SystemException {
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			className, classPK);
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		List<SocialActivityCounter> activityCounters =
+			socialActivityCounterPersistence.findByC_C(
+				assetEntry.getClassNameId(), classPK);
+
+		adjustUserContribution(assetEntry, true);
+
+		for (SocialActivityCounter activityCounter : activityCounters) {
+			if (!activityCounter.isActive()) {
+				activityCounter.setActive(true);
+
+				socialActivityCounterPersistence.update(activityCounter, false);
+			}
+		}
+
+		clearFinderCache();
 	}
 
 	public SocialActivityCounter fetchActivityCounterByEndPeriod(
@@ -560,6 +623,76 @@ public class SocialActivityCounterLocalServiceImpl
 		return true;
 	}
 
+	protected void adjustUserContribution(AssetEntry assetEntry, boolean enable)
+		throws PortalException, SystemException {
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		SocialActivityCounter latestPopularityActivityCounter =
+			fetchLatestActivityCounter(
+				assetEntry.getGroupId(), assetEntry.getClassNameId(),
+				assetEntry.getClassPK(),
+				SocialActivityCounterConstants.NAME_POPULARITY,
+				SocialActivityCounterConstants.TYPE_ASSET);
+
+		if ((latestPopularityActivityCounter == null) ||
+			(enable && latestPopularityActivityCounter.isActive()) ||
+			(!enable && !latestPopularityActivityCounter.isActive())) {
+
+			return;
+		}
+
+		int factor = -1;
+
+		if (enable) {
+			factor = 1;
+		}
+
+		SocialActivityCounter latestContributionActivityCounter =
+			fetchLatestActivityCounter(
+				assetEntry.getGroupId(),
+				PortalUtil.getClassNameId(User.class.getName()),
+				assetEntry.getUserId(),
+				SocialActivityCounterConstants.NAME_CONTRIBUTION,
+				SocialActivityCounterConstants.TYPE_CREATOR);
+
+		if (latestContributionActivityCounter == null) {
+			return;
+		}
+
+		int startPeriod = SocialCounterPeriodUtil.getStartPeriod();
+
+		if (latestContributionActivityCounter.getStartPeriod() != startPeriod) {
+			latestContributionActivityCounter = addActivityCounter(
+				latestContributionActivityCounter.getGroupId(),
+				latestContributionActivityCounter.getClassNameId(),
+				latestContributionActivityCounter.getClassPK(),
+				latestContributionActivityCounter.getName(),
+				latestContributionActivityCounter.getOwnerType(), 0,
+				latestContributionActivityCounter.getTotalValue(),
+				SocialCounterPeriodUtil.getStartPeriod(),
+				SocialActivityCounterConstants.END_PERIOD_UNDEFINED,
+				latestContributionActivityCounter.getActivityCounterId(),
+				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
+		}
+
+		if (latestPopularityActivityCounter.getStartPeriod() == startPeriod) {
+			latestContributionActivityCounter.setCurrentValue(
+				latestContributionActivityCounter.getCurrentValue() +
+					(latestPopularityActivityCounter.getCurrentValue() *
+						factor));
+		}
+
+		latestContributionActivityCounter.setTotalValue(
+			latestContributionActivityCounter.getTotalValue() +
+				(latestPopularityActivityCounter.getTotalValue() * factor));
+
+		socialActivityCounterPersistence.update(
+			latestContributionActivityCounter, false);
+	}
+
 	protected boolean checkActivityLimit(
 			User user, SocialActivity activity,
 			SocialActivityCounterDefinition activityCounterDefinition)
@@ -618,6 +751,13 @@ public class SocialActivityCounterLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	protected void clearFinderCache() {
+		PortalCache portalCache = MultiVMPoolUtil.getCache(
+			SocialActivityCounterFinder.class.getName());
+
+		portalCache.removeAll();
 	}
 
 	protected String getLockKey(

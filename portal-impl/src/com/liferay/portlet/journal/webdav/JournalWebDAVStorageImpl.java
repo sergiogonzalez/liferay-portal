@@ -111,7 +111,8 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					try {
 						JournalStructure journalStructure =
 							JournalStructureLocalServiceUtil.getStructure(
-								webDavRequest.getGroupId(), journalTypeId);
+								webDavRequest.getGroupId(), journalTypeId,
+								true);
 
 						return toResource(
 							webDavRequest, journalStructure, false);
@@ -124,7 +125,8 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					try {
 						JournalTemplate journalTemplate =
 							JournalTemplateLocalServiceUtil.getTemplate(
-								webDavRequest.getGroupId(), journalTypeId);
+								webDavRequest.getGroupId(), journalTypeId,
+								true);
 
 						return toResource(
 							webDavRequest, journalTemplate, false);

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.sites.util;
 
+import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -422,6 +423,11 @@ public class SitesUtil {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
+		if (group.isGuest() && (layoutSet.getPageCount() == 1)) {
+			throw new RequiredLayoutException(
+				RequiredLayoutException.AT_LEAST_ONE);
+		}
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			request);
 
@@ -480,8 +486,9 @@ public class SitesUtil {
 
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.
-					getLayoutSetPrototypeByUuid(
-						layoutSet.getLayoutSetPrototypeUuid());
+					getLayoutSetPrototypeByUuidAndCompanyId(
+						layoutSet.getLayoutSetPrototypeUuid(),
+						layout.getCompanyId());
 
 			Group group = layoutSetPrototype.getGroup();
 
@@ -596,7 +603,8 @@ public class SitesUtil {
 
 			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
 					layoutSet.getLayoutSetPrototypeUuid(),
-					layout.getSourcePrototypeLayoutUuid())) {
+					layout.getSourcePrototypeLayoutUuid(),
+					layout.getCompanyId())) {
 
 				return false;
 			}
@@ -645,8 +653,9 @@ public class SitesUtil {
 		try {
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.
-					getLayoutSetPrototypeByUuid(
-						layoutSet.getLayoutSetPrototypeUuid());
+					getLayoutSetPrototypeByUuidAndCompanyId(
+						layoutSet.getLayoutSetPrototypeUuid(),
+						layoutSet.getCompanyId());
 
 			String layoutsUpdateable = layoutSetPrototype.getSettingsProperty(
 				"layoutsUpdateable");
@@ -755,8 +764,9 @@ public class SitesUtil {
 			typeSettingsProperties.getProperty("last-merge-time"));
 
 		LayoutPrototype layoutPrototype =
-			LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
-				layout.getLayoutPrototypeUuid());
+			LayoutPrototypeLocalServiceUtil.
+				getLayoutPrototypeByUuidAndCompanyId(
+					layout.getLayoutPrototypeUuid(), layout.getCompanyId());
 
 		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
 
@@ -853,8 +863,10 @@ public class SitesUtil {
 			settingsProperties.getProperty("last-merge-time"));
 
 		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
-				layoutSet.getLayoutSetPrototypeUuid());
+			LayoutSetPrototypeLocalServiceUtil.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getGroupId());
 
 		Date modifiedDate = layoutSetPrototype.getModifiedDate();
 
@@ -1228,6 +1240,8 @@ public class SitesUtil {
 		LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
 			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
 			layoutSetPrototypeUuid);
+
+		LayoutLocalServiceUtil.updatePriorities(groupId, privateLayout);
 	}
 
 	private static final String _TEMP_DIR =

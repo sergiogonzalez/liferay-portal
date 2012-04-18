@@ -1513,6 +1513,14 @@
 
 	<definition name="portlet.staging_bar.view_layout_set_branches" path="/portlet/staging_bar/view_layout_set_branches.jsp" />
 
+	<!-- Trash -->
+
+	<definition name="portlet.trash" extends="portlet" />
+
+	<definition name="portlet.trash.view" extends="portlet.trash">
+		<put name="portlet_content" value="/portlet/trash/view.jsp" />
+	</definition>
+
 	<!-- Update Manager -->
 
 	<definition name="portlet.update_manager" extends="portlet" />

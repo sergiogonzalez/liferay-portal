@@ -153,16 +153,33 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 				</c:if>
 
 				<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
-					<portlet:actionURL var="deleteURL">
-						<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
-						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-					</portlet:actionURL>
+					<c:choose>
+						<c:when test="<%= fileEntry.getModel() instanceof DLFileEntry %>">
+							<portlet:actionURL var="deleteURL">
+								<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_TO_TRASH %>" />
+								<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
+								<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+							</portlet:actionURL>
 
-					<liferay-ui:icon-delete
-						url="<%= deleteURL %>"
-					/>
+							<liferay-ui:icon-delete
+								trash="<%= true %>"
+								url="<%= deleteURL %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<portlet:actionURL var="deleteURL">
+								<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+								<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
+								<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+							</portlet:actionURL>
+
+							<liferay-ui:icon-delete
+								url="<%= deleteURL %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 			</c:when>
 			<c:otherwise>
@@ -236,6 +253,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete
+						trash="<%= true %>"
 						url="<%= deleteShortcutURL %>"
 					/>
 				</c:if>

@@ -1626,15 +1626,33 @@ public class UserLocalServiceUtil {
 	*
 	* @param uuid the user's universally unique identifier
 	* @return the user with the universally unique identifier
-	* @throws PortalException if a user with the universally unique identifier
-	could not be found
+	* @throws PortalException if a user with the universally unique
+	identifier could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated {@link #getUserByUuidAndCompanyId(String, long)}
 	*/
 	public static com.liferay.portal.model.User getUserByUuid(
 		java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserByUuid(uuid);
+	}
+
+	/**
+	* Returns the user with the universally unique identifier.
+	*
+	* @param uuid the user's universally unique identifier
+	* @param companyId the primary key of the user's company
+	* @return the user with the universally unique identifier
+	* @throws PortalException if a user with the universally unique identifier
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.User getUserByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

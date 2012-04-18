@@ -27,7 +27,7 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/user/joebloggs/home1/");
+				selenium.open("/user/joebloggs/so/dashboard/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -47,7 +47,7 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Home"),
+				assertEquals(RuntimeVariables.replace("Dashboard"),
 					selenium.getText(
 						"//li[contains(@class, 'selected')]/a/span"));
 				assertEquals(RuntimeVariables.replace("Sites"),
@@ -101,7 +101,7 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 					selenium.getText("//nav/ul/li[6]/a/span"));
 				assertEquals(RuntimeVariables.replace("Members"),
 					selenium.getText("//nav/ul/li[7]/a/span"));
-				selenium.open("/user/joebloggs/home1/");
+				selenium.open("/user/joebloggs/so/dashboard/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -121,7 +121,7 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Home"),
+				assertEquals(RuntimeVariables.replace("Dashboard"),
 					selenium.getText(
 						"//li[contains(@class, 'selected')]/a/span"));
 

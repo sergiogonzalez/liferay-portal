@@ -700,9 +700,9 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
-	<target name="build-service-portlet-test">
+	<target name="build-service-portlet-trash">
 		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/test/service.xml" />
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/trash/service.xml" />
 		</antcall>
 	</target>
 
@@ -731,6 +731,7 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-service-portlet-shopping" />
 		<antcall target="build-service-portlet-social" />
 		<antcall target="build-service-portlet-softwarecatalog" />
+		<antcall target="build-service-portlet-trash" />
 		<antcall target="build-service-portlet-wiki" />
 	</target>
 
@@ -970,9 +971,9 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
-	<target name="build-wsdd-portlet-test">
+	<target name="build-wsdd-portlet-trash">
 		<antcall target="build-wsdd">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/test/service.xml" />
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/trash/service.xml" />
 		</antcall>
 	</target>
 
@@ -1001,6 +1002,7 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-wsdd-portlet-shopping" />
 		<antcall target="build-wsdd-portlet-social" />
 		<antcall target="build-wsdd-portlet-softwarecatalog" />
+		<antcall target="build-wsdd-portlet-trash" />
 		<antcall target="build-wsdd-portlet-wiki" />
 	</target>
 

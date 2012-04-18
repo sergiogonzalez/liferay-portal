@@ -165,6 +165,7 @@
 		<column name="graceValue" type="int" />
 		<column name="startPeriod" type="int" />
 		<column name="endPeriod" type="int" />
+		<column name="active" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -227,6 +228,9 @@
 
 		<!-- Finder methods -->
 
+        <finder name="UserId" return-type="Collection">
+            <finder-column name="userId" />
+        </finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -267,6 +271,10 @@
 
 		<!-- Finder methods -->
 
+        <finder name="G_C" return-type="Collection">
+            <finder-column name="groupId" />
+            <finder-column name="classNameId" />
+        </finder>
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="activityType" />

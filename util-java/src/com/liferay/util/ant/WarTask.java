@@ -31,10 +31,18 @@ public class WarTask {
 
 		War war = new War();
 
-		war.setProject(project);
 		war.setBasedir(baseDir);
 		war.setDestFile(destination);
 		war.setExcludes(excludes);
+
+		File manifestFile = new File(
+			baseDir.getAbsolutePath() + "/META-INF/MANIFEST.MF");
+
+		if (manifestFile.exists()) {
+			war.setManifest(manifestFile);
+		}
+
+		war.setProject(project);
 		war.setWebxml(webxml);
 
 		war.execute();

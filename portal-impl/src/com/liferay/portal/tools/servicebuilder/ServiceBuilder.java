@@ -4640,6 +4640,43 @@ public class ServiceBuilder {
 		List<Element> finderElements = entityElement.elements("finder");
 
 		if (uuid) {
+			if (columnList.contains(new EntityColumn("companyId"))) {
+				Element finderElement = SAXReaderUtil.createElement("finder");
+
+				finderElement.addAttribute("name", "Uuid_C");
+				finderElement.addAttribute("return-type", "Collection");
+
+				Element finderColumnElement = finderElement.addElement(
+					"finder-column");
+
+				finderColumnElement.addAttribute("name", "uuid");
+
+				finderColumnElement = finderElement.addElement("finder-column");
+
+				finderColumnElement.addAttribute("name", "companyId");
+
+				finderElements.add(0, finderElement);
+			}
+
+			if (columnList.contains(new EntityColumn("groupId"))) {
+				Element finderElement = SAXReaderUtil.createElement("finder");
+
+				finderElement.addAttribute("name", "UUID_G");
+				finderElement.addAttribute("return-type", ejbName);
+				finderElement.addAttribute("unique", "true");
+
+				Element finderColumnElement = finderElement.addElement(
+					"finder-column");
+
+				finderColumnElement.addAttribute("name", "uuid");
+
+				finderColumnElement = finderElement.addElement("finder-column");
+
+				finderColumnElement.addAttribute("name", "groupId");
+
+				finderElements.add(0, finderElement);
+			}
+
 			Element finderElement = SAXReaderUtil.createElement("finder");
 
 			finderElement.addAttribute("name", "Uuid");
@@ -4651,24 +4688,6 @@ public class ServiceBuilder {
 			finderColumnElement.addAttribute("name", "uuid");
 
 			finderElements.add(0, finderElement);
-
-			if (columnList.contains(new EntityColumn("groupId"))) {
-				finderElement = SAXReaderUtil.createElement("finder");
-
-				finderElement.addAttribute("name", "UUID_G");
-				finderElement.addAttribute("return-type", ejbName);
-				finderElement.addAttribute("unique", "true");
-
-				finderColumnElement = finderElement.addElement("finder-column");
-
-				finderColumnElement.addAttribute("name", "uuid");
-
-				finderColumnElement = finderElement.addElement("finder-column");
-
-				finderColumnElement.addAttribute("name", "groupId");
-
-				finderElements.add(1, finderElement);
-			}
 		}
 
 		if (permissionedModel) {

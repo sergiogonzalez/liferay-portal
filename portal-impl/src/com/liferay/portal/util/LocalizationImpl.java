@@ -570,6 +570,29 @@ public class LocalizationImpl implements Localization {
 		preferences.setValues(getPreferencesKey(key, languageId), values);
 	}
 
+	public String updateLocalization(
+		Map<Locale, String> localizationMap, String xml, String key,
+		String defaultLanguageId) {
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String value = localizationMap.get(locale);
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			if (Validator.isNotNull(value)) {
+				xml = updateLocalization(
+					xml, key, value, languageId, defaultLanguageId);
+			}
+			else {
+				xml = removeLocalization(xml, key, languageId);
+			}
+		}
+
+		return xml;
+	}
+
 	public String updateLocalization(String xml, String key, String value) {
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());

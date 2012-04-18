@@ -523,6 +523,10 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
+		<action path="/document_library/restore_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.document_library.view" path="portlet.document_library.view" />
+		</action>
+
 		<action path="/document_library/search" type="com.liferay.portlet.documentlibrary.action.SearchAction">
 			<forward name="portlet.document_library.view" path="portlet.document_library.view" />
 		</action>
@@ -1823,6 +1827,16 @@
 		<action path="/staging_bar/view_layout_revisions" forward="portlet.staging_bar.view_layout_revisions" />
 
 		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
+
+		<!-- Trash -->
+
+		<action path="/trash/edit_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.view" path="portlet.trash.view" />
+		</action>
+
+		<action path="/trash/view" forward="portlet.trash.view" />
+
+		<action path="/trash/view_content" forward="portlet.asset_publisher.view_content" />
 
 		<!-- Update Manager -->
 

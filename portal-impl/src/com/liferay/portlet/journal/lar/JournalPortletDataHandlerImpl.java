@@ -58,7 +58,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchStructureException;
-import com.liferay.portlet.journal.NoSuchTemplateException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleImage;
@@ -166,20 +165,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		articleElement.addAttribute(
 			"article-resource-uuid", article.getArticleResourceUuid());
 
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			article.getCompanyId());
-
 		if (Validator.isNotNull(article.getStructureId())) {
-			JournalStructure structure = null;
-
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(
-					article.getGroupId(), article.getStructureId());
-			}
-			catch (NoSuchStructureException nsse) {
-				structure = JournalStructureLocalServiceUtil.getStructure(
-					companyGroup.getGroupId(), article.getStructureId());
-			}
+			JournalStructure structure =
+				JournalStructureLocalServiceUtil.getStructure(
+					article.getGroupId(), article.getStructureId(), true);
 
 			articleElement.addAttribute("structure-uuid", structure.getUuid());
 
@@ -187,16 +176,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		if (Validator.isNotNull(article.getTemplateId())) {
-			JournalTemplate template = null;
-
-			try {
-				template = JournalTemplateLocalServiceUtil.getTemplate(
-					article.getGroupId(), article.getTemplateId());
-			}
-			catch (NoSuchTemplateException nste) {
-				template = JournalTemplateLocalServiceUtil.getTemplate(
-					companyGroup.getGroupId(), article.getTemplateId());
-			}
+			JournalTemplate template =
+				JournalTemplateLocalServiceUtil.getTemplate(
+					article.getGroupId(), article.getTemplateId(), true);
 
 			articleElement.addAttribute("template-uuid", template.getUuid());
 
@@ -1780,7 +1762,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			try {
 				JournalStructure parentStructure =
 					JournalStructureLocalServiceUtil.getStructure(
-						structure.getGroupId(), parentStructureId);
+						structure.getGroupId(), parentStructureId, true);
 
 				structureElement.addAttribute(
 					"parent-structure-uuid", parentStructure.getUuid());

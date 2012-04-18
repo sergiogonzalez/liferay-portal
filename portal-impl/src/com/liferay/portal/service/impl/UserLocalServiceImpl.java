@@ -2607,16 +2607,40 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Returns the user with the universally unique identifier.
 	 *
-	 * @param  uuid the user's universally unique identifier
-	 * @return the user with the universally unique identifier
-	 * @throws PortalException if a user with the universally unique identifier
-	 *         could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @param      uuid the user's universally unique identifier
+	 * @return     the user with the universally unique identifier
+	 * @throws     PortalException if a user with the universally unique
+	 *             identifier could not be found
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #getUserByUuidAndCompanyId(String, long)}
 	 */
 	public User getUserByUuid(String uuid)
 		throws PortalException, SystemException {
 
 		List<User> users = userPersistence.findByUuid(uuid);
+
+		if (users.isEmpty()) {
+			throw new NoSuchUserException();
+		}
+		else {
+			return users.get(0);
+		}
+	}
+
+	/**
+	 * Returns the user with the universally unique identifier.
+	 *
+	 * @param  uuid the user's universally unique identifier
+	 * @param  companyId the primary key of the user's company
+	 * @return the user with the universally unique identifier
+	 * @throws PortalException if a user with the universally unique identifier
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User getUserByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException, SystemException {
+
+		List<User> users = userPersistence.findByUuid_C(uuid, companyId);
 
 		if (users.isEmpty()) {
 			throw new NoSuchUserException();
@@ -5157,6 +5181,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					AuthPipeline.onFailureByUserId(
 						PropsKeys.AUTH_FAILURE, companyId, userId, headerMap,
 						parameterMap);
+				}
+
+				try {
+					user = userPersistence.findByPrimaryKey(user.getUserId());
+				}
+				catch (NoSuchUserException nsue) {
+					return Authenticator.DNE;
 				}
 
 				// Let LDAP handle max failure event

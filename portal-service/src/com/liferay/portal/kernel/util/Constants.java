@@ -55,6 +55,8 @@ public interface Constants {
 
 	public static final String EDIT = "edit";
 
+	public static final String EMPTY_TRASH = "empty_trash";
+
 	public static final String EXPIRE = "expire";
 
 	public static final String EXPORT = "export";
@@ -72,6 +74,8 @@ public interface Constants {
 	public static final String MERGE = "merge";
 
 	public static final String MOVE = "move";
+
+	public static final String MOVE_TO_TRASH = "move_to_trash";
 
 	public static final String PREVIEW = "preview";
 

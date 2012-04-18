@@ -95,7 +95,10 @@ public class EditEntryAction extends PortletAction {
 				oldUrlTitle = ((String)returnValue[1]);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest);
+				deleteEntries(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteEntries(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribe(actionRequest);
@@ -248,18 +251,28 @@ public class EditEntryAction extends PortletAction {
 			getForward(renderRequest, "portlet.blogs.edit_entry"));
 	}
 
-	protected void deleteEntries(ActionRequest actionRequest) throws Exception {
+	protected void deleteEntries(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		long[] deleteEntryIds = null;
+
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		if (entryId > 0) {
-			BlogsEntryServiceUtil.deleteEntry(entryId);
+			deleteEntryIds = new long[] {entryId};
 		}
 		else {
-			long[] deleteEntryIds = StringUtil.split(
+			deleteEntryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
+		}
 
-			for (int i = 0; i < deleteEntryIds.length; i++) {
-				BlogsEntryServiceUtil.deleteEntry(deleteEntryIds[i]);
+		for (long deleteEntryId : deleteEntryIds) {
+			if (moveToTrash) {
+				BlogsEntryServiceUtil.moveEntryToTrash(deleteEntryId);
+			}
+			else {
+				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
 			}
 		}
 	}

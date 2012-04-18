@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -51,7 +50,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -180,40 +178,6 @@ public class LiferayLocalRepository
 		dlFolderLocalService.deleteFolder(folderId);
 	}
 
-	public List<FileEntry> getFileEntries(
-			long folderId, int start, int end, OrderByComparator obc)
-		throws SystemException {
-
-		List<DLFileEntry> dlFileEntries =
-			dlFileEntryLocalService.getFileEntries(
-				getGroupId(), toFolderId(folderId), start, end, obc);
-
-		return toFileEntries(dlFileEntries);
-	}
-
-	public List<Object> getFileEntriesAndFileShortcuts(
-			long folderId, int status, int start, int end)
-		throws SystemException {
-
-		List<Object> dlFileEntriesAndFileShortcuts =
-			dlFolderLocalService.getFileEntriesAndFileShortcuts(
-				getGroupId(), toFolderId(folderId), status, start, end);
-
-		return toFileEntriesAndFolders(dlFileEntriesAndFileShortcuts);
-	}
-
-	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
-		throws SystemException {
-
-		return dlFolderLocalService.getFileEntriesAndFileShortcutsCount(
-			getGroupId(), toFolderId(folderId), status);
-	}
-
-	public int getFileEntriesCount(long folderId) throws SystemException {
-		return dlFileEntryLocalService.getFileEntriesCount(
-			getGroupId(), toFolderId(folderId));
-	}
-
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -266,97 +230,6 @@ public class LiferayLocalRepository
 			getGroupId(), toFolderId(parentFolderId), title);
 
 		return new LiferayFolder(dlFolder);
-	}
-
-	public List<Folder> getFolders(
-			long parentFolderId, boolean includeMountfolders, int start,
-			int end, OrderByComparator obc)
-		throws SystemException {
-
-		List<DLFolder> dlFolders = dlFolderLocalService.getFolders(
-			getGroupId(), toFolderId(parentFolderId), includeMountfolders,
-			start, end, obc);
-
-		return toFolders(dlFolders);
-	}
-
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long folderId, int status, boolean includeMountFolders, int start,
-			int end, OrderByComparator obc)
-		throws SystemException {
-
-		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =
-			dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
-				getGroupId(), toFolderId(folderId), status, includeMountFolders,
-				start, end, obc);
-
-		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
-	}
-
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
-
-		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =
-			dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
-				getGroupId(), toFolderId(folderId), status, mimeTypes,
-				includeMountFolders, start, end, obc);
-
-		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
-	}
-
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long folderId, int status, boolean includeMountFolders)
-		throws SystemException {
-
-		return dlFolderLocalService.
-			getFoldersAndFileEntriesAndFileShortcutsCount(
-				getGroupId(), toFolderId(folderId), status,
-				includeMountFolders);
-	}
-
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders)
-		throws SystemException {
-
-		return dlFolderLocalService.
-			getFoldersAndFileEntriesAndFileShortcutsCount(
-				getGroupId(), toFolderId(folderId), status, mimeTypes,
-				includeMountFolders);
-	}
-
-	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
-		throws SystemException {
-
-		return dlFolderLocalService.getFoldersCount(
-			getGroupId(), toFolderId(parentFolderId), includeMountfolders);
-	}
-
-	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)
-		throws SystemException {
-
-		return dlFolderLocalService.getFoldersFileEntriesCount(
-			getGroupId(), toFolderIds(folderIds), status);
-	}
-
-	public List<Folder> getMountFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
-		throws SystemException {
-
-		List<DLFolder> dlFolders = dlFolderLocalService.getMountFolders(
-			getGroupId(), toFolderId(parentFolderId), start, end, obc);
-
-		return toFolders(dlFolders);
-	}
-
-	public int getMountFoldersCount(long parentFolderId)
-		throws SystemException {
-
-		return dlFolderLocalService.getMountFoldersCount(
-			getGroupId(), toFolderId(parentFolderId));
 	}
 
 	public FileEntry moveFileEntry(

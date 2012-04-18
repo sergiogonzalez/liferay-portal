@@ -58,6 +58,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
@@ -107,7 +108,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		if (fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+		if ((fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED ) &&
+			(fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH)) {
+
 			return;
 		}
 
@@ -365,6 +368,13 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					titleWithExtension, fileEntry.getMimeType(),
 					fileEntry.getTitle(), fileEntry.getDescription(), null, is,
 					fileEntry.getSize(), serviceContext);
+
+				if (fileVersion.getStatus() ==
+						WorkflowConstants.STATUS_IN_TRASH) {
+
+					importedFileEntry = DLAppServiceUtil.moveFileEntryToTrash(
+						importedFileEntry.getFileEntryId());
+				}
 			}
 			else {
 				FileVersion latestExistingFileVersion =

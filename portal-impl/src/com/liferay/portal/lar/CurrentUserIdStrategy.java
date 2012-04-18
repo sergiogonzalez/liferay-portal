@@ -14,13 +14,10 @@
 
 package com.liferay.portal.lar;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.persistence.UserUtil;
-
-import java.util.List;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * @author Bruno Farache
@@ -31,20 +28,20 @@ public class CurrentUserIdStrategy implements UserIdStrategy {
 		_user = user;
 	}
 
-	public long getUserId(String userUuid) throws SystemException {
+	public long getUserId(String userUuid) {
 		if (Validator.isNull(userUuid)) {
 			return _user.getUserId();
 		}
 
-		List<User> users = UserUtil.findByUuid(userUuid);
+		try {
+			User user = UserLocalServiceUtil.getUserByUuidAndCompanyId(
+				userUuid, _user.getCompanyId());
 
-		for (User user : users) {
-			if (user.getCompanyId() == _user.getCompanyId()) {
-				return user.getUserId();
-			}
+			return user.getUserId();
 		}
-
-		return _user.getUserId();
+		catch (Exception e) {
+			return _user.getUserId();
+		}
 	}
 
 	private User _user;

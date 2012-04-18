@@ -14,14 +14,18 @@
 
 package com.liferay.portlet.layoutconfiguration.util.xml;
 
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,13 +60,13 @@ public class PortletLogic extends RuntimeLogic {
 
 	@Override
 	public String processXML(String xml) throws Exception {
-		Document doc = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.read(xml);
 
-		Element root = doc.getRootElement();
+		Element rootElement = document.getRootElement();
 
-		String rootPortletId = root.attributeValue("name");
-		String instanceId = root.attributeValue("instance");
-		String queryString = root.attributeValue("queryString");
+		String rootPortletId = rootElement.attributeValue("name");
+		String instanceId = rootElement.attributeValue("instance");
+		String queryString = rootElement.attributeValue("queryString");
 
 		String portletId = rootPortletId;
 
@@ -76,8 +80,13 @@ public class PortletLogic extends RuntimeLogic {
 		HttpServletRequest request = DynamicServletRequest.addQueryString(
 			_request, queryString);
 
-		RuntimePortletUtil.processPortlet(
-			request, stringServletResponse, portletId);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletId);
+
+		PortletContainerUtil.render(request, stringServletResponse, portlet);
 
 		return stringServletResponse.getString();
 	}

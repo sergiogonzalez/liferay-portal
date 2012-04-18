@@ -142,14 +142,17 @@ public class AssetPublisherUtil {
 		String assetEntryXml = _getAssetEntryXml(
 			assetEntryType, assetEntry.getClassUuid());
 
-		if (assetEntryOrder > -1) {
-			assetEntryXmls[assetEntryOrder] = assetEntryXml;
-		}
-		else {
-			assetEntryXmls = ArrayUtil.append(assetEntryXmls, assetEntryXml);
-		}
+		if (!ArrayUtil.contains(assetEntryXmls, assetEntryXml)) {
+			if (assetEntryOrder > -1) {
+				assetEntryXmls[assetEntryOrder] = assetEntryXml;
+			}
+			else {
+				assetEntryXmls = ArrayUtil.append(
+					assetEntryXmls, assetEntryXml);
+			}
 
-		portletPreferences.setValues("assetEntryXml", assetEntryXmls);
+			portletPreferences.setValues("assetEntryXml", assetEntryXmls);
+		}
 	}
 
 	public static void addUserAttributes(
@@ -263,22 +266,36 @@ public class AssetPublisherUtil {
 			}
 		}
 
-		long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
-			scopeGroupIds, allAssetTagNames);
+		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
+
+		for (String assetTagName : allAssetTagNames) {
+			long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+				scopeGroupIds, assetTagName);
+
+			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
+		}
+
+		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
+
 		long[] anyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
 			scopeGroupIds, anyAssetTagNames);
-		long[] notAllAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
-			scopeGroupIds, notAllAssetTagNames);
+
+		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
+
+		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
+
+		for (String assetTagName : notAllAssetTagNames) {
+			long[] notAllAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+				scopeGroupIds, assetTagName);
+
+			assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
+		}
+
+		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
+
 		long[] notAnyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
 			scopeGroupIds, notAnyAssetTagNames);
 
-		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
-		assetEntryQuery.setAllTagIds(allAssetTagIds);
-		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
-		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
-		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
-		assetEntryQuery.setNotAllTagIds(notAllAssetTagIds);
-		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
 
 		return assetEntryQuery;

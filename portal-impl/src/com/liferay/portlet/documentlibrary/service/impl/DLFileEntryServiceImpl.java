@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -265,9 +266,11 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		folderIds.add(folderId);
 
-		return dlFileEntryFinder.findByG_U_F_M_S(
-			groupId, 0, folderIds, mimeTypes, WorkflowConstants.STATUS_ANY,
-			start, end, obc);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_IN_TRASH, true, start, end, obc);
+
+		return dlFileEntryFinder.findByG_U_F_M(
+			groupId, 0, folderIds, mimeTypes, queryDefinition);
 	}
 
 	public int getFileEntriesCount(long groupId, long folderId)
@@ -292,8 +295,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		folderIds.add(folderId);
 
-		return dlFileEntryFinder.countByG_U_F_M_S(
-			groupId, 0, folderIds, mimeTypes, WorkflowConstants.STATUS_ANY);
+		return dlFileEntryFinder.countByG_U_F_M(
+			groupId, 0, folderIds, mimeTypes,
+			new QueryDefinition(WorkflowConstants.STATUS_ANY));
 	}
 
 	public DLFileEntry getFileEntry(long fileEntryId)
@@ -343,16 +347,18 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long groupId, List<Long> folderIds, int status)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
 		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
-			return dlFileEntryFinder.filterCountByG_F_S(
-				groupId, folderIds, status);
+			return dlFileEntryFinder.filterCountByG_F(
+				groupId, folderIds, queryDefinition);
 		}
 		else {
 			int start = 0;
 			int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
 
-			int filesCount = dlFileEntryFinder.filterCountByG_F_S(
-				groupId, folderIds.subList(start, end), status);
+			int filesCount = dlFileEntryFinder.filterCountByG_F(
+				groupId, folderIds.subList(start, end), queryDefinition);
 
 			folderIds.subList(start, end).clear();
 
@@ -396,8 +402,11 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		List<Long> folderIdsList = ListUtil.toList(folderIds);
 
-		return dlFileEntryFinder.findByG_U_F_M_S(
-			groupId, userId, folderIdsList, mimeTypes, status, start, end, obc);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return dlFileEntryFinder.findByG_U_F_M(
+			groupId, userId, folderIdsList, mimeTypes, queryDefinition);
 	}
 
 	public int getGroupFileEntriesCount(
@@ -431,8 +440,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		List<Long> folderIdsList = ListUtil.toList(folderIds);
 
-		return dlFileEntryFinder.countByG_U_F_M_S(
-			groupId, userId, folderIdsList, mimeTypes, status);
+		return dlFileEntryFinder.countByG_U_F_M(
+			groupId, userId, folderIdsList, mimeTypes,
+			new QueryDefinition(status));
 	}
 
 	public boolean hasFileEntryLock(long fileEntryId)
@@ -498,13 +508,13 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryLocalService.moveFileEntry(
 			getUserId(), fileEntryId, newFolderId, serviceContext);
-
 	}
 
-	public Lock refreshFileEntryLock(String lockUuid, long expirationTime)
+	public Lock refreshFileEntryLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		return lockLocalService.refresh(lockUuid, expirationTime);
+		return lockLocalService.refresh(lockUuid, companyId, expirationTime);
 	}
 
 	public void revertFileEntry(

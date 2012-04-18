@@ -89,7 +89,7 @@ boolean filterManageableGroups = true;
 
 boolean filterManageableOrganizations = true;
 
-if (permissionChecker.hasPermission(0, Organization.class.getName(), String.valueOf(company.getCompanyId()), ActionKeys.VIEW)) {
+if (permissionChecker.hasPermission(0, Organization.class.getName(), company.getCompanyId(), ActionKeys.VIEW)) {
 	filterManageableOrganizations = false;
 }
 

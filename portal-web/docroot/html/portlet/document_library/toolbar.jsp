@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
+<%
+Folder folder = (Folder)request.getAttribute("view.jsp-folder");
+%>
+
 <c:if test="<%= !user.isDefaultUser() %>">
 	<aui:input cssClass="select-documents aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
 </c:if>
@@ -73,14 +77,31 @@
 		/>
 	</c:if>
 
-	<%
-	String taglibUrl = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.DELETE + "'});";
-	%>
+	<c:choose>
+		<c:when test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
 
-	<liferay-ui:icon-delete
-		confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
-		url="<%= taglibUrl %>"
-	/>
+			<%
+			String taglibUrl = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.MOVE_TO_TRASH + "'});";
+			%>
+
+			<liferay-ui:icon-delete
+				confirmation="are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin"
+				trash="<%= true %>"
+				url="<%= taglibUrl %>"
+			/>
+		</c:when>
+		<c:otherwise>
+
+			<%
+			String taglibUrl = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.DELETE + "'});";
+			%>
+
+			<liferay-ui:icon-delete
+				confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
+				url="<%= taglibUrl %>"
+			/>
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:icon-menu>
 
 <span class="add-button" id="<portlet:namespace />addButtonContainer">

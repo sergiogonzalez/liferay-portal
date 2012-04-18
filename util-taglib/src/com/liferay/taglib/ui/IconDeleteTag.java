@@ -32,6 +32,10 @@ public class IconDeleteTag extends IconTag {
 		_confirmation = confirmation;
 	}
 
+	public void setTrash(boolean trash) {
+		_trash = trash;
+	}
+
 	@Override
 	protected String getPage() {
 		if (FileAvailabilityUtil.isAvailable(getServletContext(), _PAGE)) {
@@ -39,6 +43,10 @@ public class IconDeleteTag extends IconTag {
 		}
 
 		setImage("delete");
+
+		if (_trash) {
+			setMessage("move-to-the-recycle-bin");
+		}
 
 		String url = getUrl();
 
@@ -73,9 +81,14 @@ public class IconDeleteTag extends IconTag {
 			sb.append(UnicodeLanguageUtil.get(pageContext, _confirmation));
 		}
 		else {
-			sb.append(
-				UnicodeLanguageUtil.get(
-					pageContext, "are-you-sure-you-want-to-delete-this"));
+			String confirmation = "are-you-sure-you-want-to-delete-this";
+
+			if (_trash) {
+				confirmation =
+					"are-you-sure-you-want-to-move-this-to-the-recycle-bin";
+			}
+
+			sb.append(UnicodeLanguageUtil.get(pageContext, confirmation));
 		}
 
 		sb.append("')) { ");
@@ -92,5 +105,6 @@ public class IconDeleteTag extends IconTag {
 	private static final String _PAGE = "/html/taglib/ui/icon_delete/page.jsp";
 
 	private String _confirmation;
+	private boolean _trash;
 
 }

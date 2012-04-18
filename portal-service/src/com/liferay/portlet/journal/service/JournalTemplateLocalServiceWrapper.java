@@ -397,6 +397,15 @@ public class JournalTemplateLocalServiceWrapper
 		return _journalTemplateLocalService.getTemplate(groupId, templateId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalTemplate getTemplate(
+		long groupId, java.lang.String templateId,
+		boolean includeGlobalTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalTemplateLocalService.getTemplate(groupId, templateId,
+			includeGlobalTemplates);
+	}
+
 	public com.liferay.portlet.journal.model.JournalTemplate getTemplateBySmallImageId(
 		long smallImageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

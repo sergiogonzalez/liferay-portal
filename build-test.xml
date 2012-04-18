@@ -9,13 +9,13 @@
 	<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/test.properties" />
 
-	<propertycopy name="db.host" from="db.${db.type}.host" silent="true" />
 	<propertycopy name="db.device.name" from="db.${db.type}.device.name" silent="true" />
 	<propertycopy name="db.driver" from="db.${db.type}.driver" silent="true" />
+	<propertycopy name="db.host" from="db.${db.type}.host" silent="true" />
+	<propertycopy name="db.password" from="db.${db.type}.password" silent="true" />
 	<propertycopy name="db.schema" from="db.${db.type}.schema" silent="true" />
 	<propertycopy name="db.url" from="db.${db.type}.url" silent="true" />
 	<propertycopy name="db.username" from="db.${db.type}.username" silent="true" />
-	<propertycopy name="db.password" from="db.${db.type}.password" silent="true" />
 
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
@@ -276,7 +276,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="8" />
+		<property name="build-test-ant-scripts.version" value="1" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1661,6 +1661,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-blogs-entry-increment-view-counter" />
+			<param name="test.ant.script.properties" value="asset.entry.increment.view.counter.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsEntryIncrementViewCounterTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="properties-blogs-entry-previous-next" />
 			<param name="test.ant.script.properties" value="blogs.entry.previous.and.next.navigation.enabled=false" />
 			<param name="test.ant.script.suite" value="PropertiesBlogsEntryPreviousNextTestSuite" />
@@ -1676,6 +1682,12 @@
 			<param name="test.ant.script.command" value="properties-blogs-publish-to-live-by-default" />
 			<param name="test.ant.script.properties" value="blogs.publish.to.live.by.default=true" />
 			<param name="test.ant.script.suite" value="PropertiesBlogsPublishToLiveByDefaultTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-blogs-tag-suggestions" />
+			<param name="test.ant.script.properties" value="asset.tag.suggestions.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsTagSuggestionsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -1703,9 +1715,39 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-anonymous-posting" />
+			<param name="test.ant.script.properties" value="message.boards.anonymous.posting.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsAnonymousPostingTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="properties-message-boards-mail-integration" />
 			<param name="test.ant.script.properties" value="pop.server.notifications.enabled=true$${line.separator}pop.server.notifications.interval=1$${line.separator}pop.server.subdomain=" />
 			<param name="test.ant.script.suite" value="PropertiesMessageBoardsMailIntegrationTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-pingback" />
+			<param name="test.ant.script.properties" value="message.boards.pingback.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsPingbackTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-publish-to-live-by-default" />
+			<param name="test.ant.script.properties" value="Message.boards.publish.to.live.by.default=true" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsPublishToLiveByDefaultTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-subscribe-by-default" />
+			<param name="test.ant.script.properties" value="message.boards.subscribe.by.default=false" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsSubscribeByDefaultTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-thread-previous-next" />
+			<param name="test.ant.script.properties" value="message.boards.thread.previous.and.next.navigation.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsThreadPreviousNextTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -1878,6 +1920,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="social-office-users" />
+			<param name="test.ant.script.social.office" value="true" />
+			<param name="test.ant.script.suite" value="SocialOfficeUsersTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="staging-community-asset-publisher" />
 			<param name="test.ant.script.suite" value="StagingCommunityAssetPublisherTestSuite" />
 		</antcall>
@@ -2040,6 +2088,10 @@
 	<target name="clean-up-logs">
 		<delete file="log" />
 		<delete file="portal-web/test-ant-scripts/log" />
+	</target>
+
+	<target name="clean-up-plugins">
+		<delete dir="${lp.plugins.dir}/dist" />
 	</target>
 
 	<target name="clean-up-vms">
@@ -3732,6 +3784,10 @@ file.
 	</target>
 
 	<target name="test">
+		<antcall target="clean-up-bundles" />
+
+		<antcall target="clean-up-plugins" />
+
 		<antcall target="prepare-mysql" />
 
 		<antcall target="rebuild-database" inheritAll="false">
@@ -3748,6 +3804,7 @@ file.
 
 		<!--<ant dir="util-java" target="test" inheritAll="false" />-->
 
+		<ant antfile="build-test-plugins.xml" target="test-build-plugins-release" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-create" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-service-builder" inheritAll="false" />
 	</target>

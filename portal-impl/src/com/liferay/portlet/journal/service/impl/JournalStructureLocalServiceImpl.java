@@ -377,6 +377,13 @@ public class JournalStructureLocalServiceImpl
 	public JournalStructure getStructure(long groupId, String structureId)
 		throws PortalException, SystemException {
 
+		return getStructure(groupId, structureId, false);
+	}
+
+	public JournalStructure getStructure(
+			long groupId, String structureId, boolean includeGlobalStructures)
+		throws PortalException, SystemException {
+
 		structureId = structureId.trim().toUpperCase();
 
 		if (groupId == 0) {
@@ -388,18 +395,35 @@ public class JournalStructureLocalServiceImpl
 			List<JournalStructure> structures =
 				journalStructurePersistence.findByStructureId(structureId);
 
-			if (structures.size() == 0) {
-				throw new NoSuchStructureException(
-					"No JournalStructure exists with the structure id " +
-						structureId);
-			}
-			else {
+			if (!structures.isEmpty()) {
 				return structures.get(0);
 			}
+
+			throw new NoSuchStructureException(
+				"No JournalStructure exists with the structure id " +
+					structureId);
 		}
-		else {
-			return journalStructurePersistence.findByG_S(groupId, structureId);
+
+		JournalStructure structure = journalStructurePersistence.fetchByG_S(
+			groupId, structureId);
+
+		if (structure != null) {
+			return structure;
 		}
+
+		if (!includeGlobalStructures) {
+			throw new NoSuchStructureException(
+				"No JournalStructure exists with the structure id " +
+					structureId);
+		}
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		return journalStructurePersistence.findByG_S(
+			companyGroup.getGroupId(), structureId);
 	}
 
 	public List<JournalStructure> getStructures() throws SystemException {

@@ -87,6 +87,7 @@ public class LiferayTemplateLoader implements TemplateLoader {
 
 		return liferayTemplateSource.getReader(encoding);
 	}
+
 	public void setTemplateLoaders(
 		String[] freeMarkerTemplateLoaderClassNames) {
 

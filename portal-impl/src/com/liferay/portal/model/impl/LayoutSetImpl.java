@@ -64,8 +64,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 
 		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
-				layoutSetPrototypeUuid);
+			LayoutSetPrototypeLocalServiceUtil.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSetPrototypeUuid, getCompanyId());
 
 		return layoutSetPrototype.getLayoutSetPrototypeId();
 	}

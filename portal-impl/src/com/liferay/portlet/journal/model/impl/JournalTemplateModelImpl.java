@@ -17,7 +17,6 @@ package com.liferay.portlet.journal.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -104,11 +103,12 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalTemplate"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long SMALLIMAGEID_COLUMN_BITMASK = 2L;
-	public static long STRUCTUREID_COLUMN_BITMASK = 4L;
-	public static long TEMPLATEID_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long SMALLIMAGEID_COLUMN_BITMASK = 4L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 8L;
+	public static long TEMPLATEID_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -246,7 +246,19 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -427,13 +439,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 			return;
 		}
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			String name = nameMap.get(locale);
-
-			setName(name, locale, defaultLocale);
-		}
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -520,13 +527,9 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 			return;
 		}
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			String description = descriptionMap.get(locale);
-
-			setDescription(description, locale, defaultLocale);
-		}
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -727,6 +730,10 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 		journalTemplateModelImpl._originalGroupId = journalTemplateModelImpl._groupId;
 
 		journalTemplateModelImpl._setOriginalGroupId = false;
+
+		journalTemplateModelImpl._originalCompanyId = journalTemplateModelImpl._companyId;
+
+		journalTemplateModelImpl._setOriginalCompanyId = false;
 
 		journalTemplateModelImpl._originalTemplateId = journalTemplateModelImpl._templateId;
 
@@ -991,6 +998,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -815,12 +816,15 @@ public class JournalUtil {
 		if (Validator.isNull(title) || Validator.isNumber(title) ||
 			title.equals("rss")) {
 
-			return String.valueOf(id);
+			title = String.valueOf(id);
 		}
 		else {
-			return FriendlyURLNormalizerUtil.normalize(
+			title = FriendlyURLNormalizerUtil.normalize(
 				title, _URL_TITLE_REPLACE_CHARS);
 		}
+
+		return ModelHintsUtil.trimString(
+			JournalArticle.class.getName(), "urlTitle", title);
 	}
 
 	public static String mergeArticleContent(

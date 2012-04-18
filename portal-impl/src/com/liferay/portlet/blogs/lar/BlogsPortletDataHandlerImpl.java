@@ -201,7 +201,9 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 
-		if (entry.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+		if ((entry.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			(entry.getStatus() != WorkflowConstants.STATUS_IN_TRASH)) {
+
 			return;
 		}
 
@@ -329,7 +331,9 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			entryElement, entry, _NAMESPACE);
 
-		if (status != WorkflowConstants.STATUS_APPROVED) {
+		if ((status != WorkflowConstants.STATUS_APPROVED) &&
+			(status != WorkflowConstants.STATUS_IN_TRASH)) {
+
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
@@ -366,6 +370,12 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 						entry.isSmallImage(), entry.getSmallImageURL(),
 						smallImageFileName, smallImageInputStream,
 						serviceContext);
+
+					if (status == WorkflowConstants.STATUS_IN_TRASH) {
+						importedEntry =
+							BlogsEntryLocalServiceUtil.moveEntryToTrash(
+								userId, importedEntry);
+					}
 				}
 				else {
 					importedEntry = BlogsEntryLocalServiceUtil.updateEntry(

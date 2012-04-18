@@ -27,7 +27,7 @@ public class SOUs_SearchSitesSiteTypePrivateTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/user/socialoffice01/home1/");
+				selenium.open("/user/socialoffice01/so/dashboard/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -47,7 +47,7 @@ public class SOUs_SearchSitesSiteTypePrivateTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Home"),
+				assertEquals(RuntimeVariables.replace("Dashboard"),
 					selenium.getText(
 						"//li[contains(@class, 'selected')]/a/span"));
 				assertEquals(RuntimeVariables.replace("Sites"),
