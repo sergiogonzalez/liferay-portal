@@ -44,6 +44,7 @@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermis
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageType" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
 
 <%
@@ -51,6 +52,7 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String chooseCallback = ParamUtil.getString(request, "chooseCallback");
 String ddmResource = ParamUtil.getString(request, "ddmResource");
+String ddmResourceActionId = ParamUtil.getString(request, "ddmResourceActionId");
 String saveCallback = ParamUtil.getString(request, "saveCallback");
 String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields");
 String scopeStorageType = ParamUtil.getString(request, "scopeStorageType");
@@ -62,7 +64,7 @@ boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
 boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
-long classNameId = PortalUtil.getClassNameId(scopeStructureType);
+long scopeClassNameId = PortalUtil.getClassNameId(scopeStructureType);
 
 String storageTypeValue = StringPool.BLANK;
 

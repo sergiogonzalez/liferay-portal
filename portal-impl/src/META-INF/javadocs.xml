@@ -3096,6 +3096,143 @@ through {@link com.liferay.portal.service.CompanyService}.]]></comment>
 		<comment><![CDATA[]]></comment>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
+			<name>addContact</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>emailAddress</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>firstName</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>middleName</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>lastName</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>prefixId</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>suffixId</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>male</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>birthdayMonth</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>birthdayDay</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>birthdayYear</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>smsSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>aimSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>facebookSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>icqSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>jabberSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>msnSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>mySpaceSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>skypeSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>twitterSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>ymSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>jobTitle</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>deleteContact</name>
 			<comment><![CDATA[]]></comment>
 			<param>
@@ -3126,6 +3263,211 @@ through {@link com.liferay.portal.service.CompanyService}.]]></comment>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getContacts</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>start</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>end</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>orderByComparator</name>
+				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getContactsCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>updateContact</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>contactId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>emailAddress</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>firstName</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>middleName</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>lastName</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>prefixId</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>suffixId</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>male</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>birthdayMonth</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>birthdayDay</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>birthdayYear</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>smsSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>aimSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>facebookSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>icqSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>jabberSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>msnSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>mySpaceSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>skypeSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>twitterSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>ymSn</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>jobTitle</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>validate</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -8652,33 +8994,6 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<name>hasLayoutSetPrototypeLayout</name>
 			<comment><![CDATA[]]></comment>
 			<param>
-				<name>layoutSetPrototypeId</name>
-				<type>long</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>layoutUuid</name>
-				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>hasLayoutSetPrototypeLayout</name>
-			<comment><![CDATA[]]></comment>
-			<param>
 				<name>layoutSetPrototypeUuid</name>
 				<type>java.lang.String</type>
 				<comment><![CDATA[]]></comment>
@@ -8686,6 +9001,11 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>layoutUuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -9328,6 +9648,30 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</throws>
 		</method>
 		<method>
+			<name>updatePriorities</name>
+			<comment><![CDATA[Updates the priorities of the layouts.]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the group]]></comment>
+			</param>
+			<param>
+				<name>privateLayout</name>
+				<type>boolean</type>
+				<comment><![CDATA[whether the layout is private to the group]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if a matching layout could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>updatePriority</name>
 			<comment><![CDATA[Updates the priority of the layout.]]></comment>
 			<param>
@@ -9910,6 +10254,34 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>uuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<deprecated><![CDATA[{@link #getLayoutPrototypeByUuidAndCompanyId(String, long)}]]></deprecated>
+		</method>
+		<method>
+			<name>getLayoutPrototypeByUuidAndCompanyId</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>uuid</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -13890,6 +14262,34 @@ This method can disable the layout set prototype's link by setting <code>layoutS
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link getLayoutSetPrototypeByUuidAndCompanyId(String, long)}]]></deprecated>
+		</method>
+		<method>
+			<name>getLayoutSetPrototypeByUuidAndCompanyId</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>uuid</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>search</name>
@@ -14929,11 +15329,16 @@ This method can disable the layout set prototype's link by setting <code>layoutS
 			</throws>
 		</method>
 		<method>
-			<name>getLockByUuid</name>
+			<name>getLockByUuidAndCompanyId</name>
 			<comment><![CDATA[]]></comment>
 			<param>
 				<name>uuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -15217,6 +15622,11 @@ This method can disable the layout set prototype's link by setting <code>layoutS
 			<param>
 				<name>uuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -37319,6 +37729,34 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getUserByUuidAndCompanyId(String, long)}]]></deprecated>
+		</method>
+		<method>
+			<name>getUserByUuidAndCompanyId</name>
+			<comment><![CDATA[Returns the user with the universally unique identifier.]]></comment>
+			<param>
+				<name>uuid</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[the user's universally unique identifier]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the user's company]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the user with the universally unique identifier]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if a user with the universally unique identifier could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getUserGroupUsers</name>
@@ -40248,6 +40686,11 @@ user's primary key
 				<type>java.lang.String</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
@@ -40260,6 +40703,11 @@ user's primary key
 			<param>
 				<name>uuids</name>
 				<type>java.util.Collection</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
@@ -40414,6 +40862,11 @@ user's primary key
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
 				<name>archive</name>
 				<type>boolean</type>
 				<comment><![CDATA[]]></comment>
@@ -40433,6 +40886,11 @@ user's primary key
 			<param>
 				<name>uuids</name>
 				<type>java.util.Collection</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -47649,13 +48107,13 @@ This method handles the creation and bookkeeping of the user including its resou
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>keywords</name>
+				<name>name</name>
 				<type>java.lang.String</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>vocabularyId</name>
-				<type>long</type>
+				<name>vocabularyIds</name>
+				<type>long[]</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -47666,11 +48124,6 @@ This method handles the creation and bookkeeping of the user including its resou
 			<param>
 				<name>end</name>
 				<type>int</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>obc</name>
-				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -48133,6 +48586,28 @@ This method handles the creation and bookkeeping of the user including its resou
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>toJSONArray</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>categories</name>
+				<type>java.util.List</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -48631,6 +49106,68 @@ This method handles the creation and bookkeeping of the user including its resou
 			<return>
 				<comment><![CDATA[]]></comment>
 			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>moveEntryToTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>entry</name>
+				<type>com.liferay.portlet.asset.model.AssetEntry</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>moveEntryToTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>entryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>moveEntryToTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
@@ -49679,6 +50216,28 @@ This method handles the creation and bookkeeping of the user including its resou
 			</throws>
 		</method>
 		<method>
+			<name>filterTagIdsArray</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>tagIdsArray</name>
+				<type>long[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>hasEntryQueryResults</name>
 			<comment><![CDATA[]]></comment>
 			<param>
@@ -50368,6 +50927,33 @@ If no link exists with a given link entry ID, a new link is created associating 
 			<param>
 				<name>names</name>
 				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getTagIds</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupIds</name>
+				<type>long[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>name</name>
+				<type>java.lang.String</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -53358,6 +53944,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getCompanyEntries(long, Date, QueryDefinition)}]]></deprecated>
 		</method>
 		<method>
 			<name>getCompanyEntries</name>
@@ -53400,6 +53987,34 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getCompanyEntries(long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getCompanyEntries</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getCompanyEntriesCount</name>
@@ -53417,6 +54032,34 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>status</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<deprecated><![CDATA[{@link #getCompanyEntriesCount(long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getCompanyEntriesCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -53535,6 +54178,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getGroupEntries(long, Date, QueryDefinition)}]]></deprecated>
 		</method>
 		<method>
 			<name>getGroupEntries</name>
@@ -53577,6 +54221,34 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getGroupEntries(long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getGroupEntries</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getGroupEntries</name>
@@ -53609,6 +54281,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getGroupEntries(long, QueryDefinition)}]]></deprecated>
 		</method>
 		<method>
 			<name>getGroupEntries</name>
@@ -53646,6 +54319,29 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getGroupEntries(long, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getGroupEntries</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getGroupEntriesCount</name>
@@ -53673,6 +54369,34 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getGroupEntriesCount(long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getGroupEntriesCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getGroupEntriesCount</name>
@@ -53685,6 +54409,29 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>status</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<deprecated><![CDATA[{@link #getGroupEntriesCount(long, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getGroupEntriesCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -53737,6 +54484,39 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getGroupsEntries(long, long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getGroupsEntries</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getGroupUserEntries</name>
@@ -53779,6 +54559,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getGroupUserEntries(long, long, Date, QueryDefinition)}]]></deprecated>
 		</method>
 		<method>
 			<name>getGroupUserEntries</name>
@@ -53826,6 +54607,39 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getGroupUserEntries(long, long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getGroupUserEntries</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getGroupUserEntriesCount</name>
@@ -53848,6 +54662,39 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>status</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<deprecated><![CDATA[{@link #getGroupUserEntriesCount(long, long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getGroupUserEntriesCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -53907,6 +54754,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getOrganizationEntries(long, Date, QueryDefinition)}]]></deprecated>
 		</method>
 		<method>
 			<name>getOrganizationEntries</name>
@@ -53949,6 +54797,34 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getOrganizationEntries(long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getOrganizationEntries</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>organizationId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getOrganizationEntriesCount</name>
@@ -53971,6 +54847,136 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<return>
 				<comment><![CDATA[]]></comment>
 			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<deprecated><![CDATA[{@link #getOrganizationEntriesCount(long, Date, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getOrganizationEntriesCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>organizationId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>displayDate</name>
+				<type>java.util.Date</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>moveEntriesToTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>moveEntryToTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>entry</name>
+				<type>com.liferay.portlet.blogs.model.BlogsEntry</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>moveEntryToTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>entryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>restoreEntryFromTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>entryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
@@ -54241,6 +55247,33 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<name>getUniqueUrlTitle</name>
 			<comment><![CDATA[]]></comment>
 			<param>
+				<name>entry</name>
+				<type>com.liferay.portlet.blogs.model.BlogsEntry</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>title</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>serviceContext</name>
+				<type>com.liferay.portal.service.ServiceContext</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getUniqueUrlTitle</name>
+			<comment><![CDATA[]]></comment>
+			<param>
 				<name>entryId</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
@@ -54263,6 +55296,18 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+		</method>
+		<method>
+			<name>isMatchesServiceContextUrlTitle</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>urlTitle</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>notifySubscribers</name>
@@ -55094,6 +56139,44 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</throws>
 		</method>
 		<method>
+			<name>moveEntryToTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>entryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>restoreEntryFromTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>entryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>subscribe</name>
 			<comment><![CDATA[]]></comment>
 			<param>
@@ -55789,6 +56872,9 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portlet.bookmarks.model.BookmarksEntry</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -55808,6 +56894,9 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -57548,6 +58637,9 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>com.liferay.portlet.calendar.model.CalEvent</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -57567,6 +58659,9 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -59445,11 +60540,62 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</throws>
 		</method>
 		<method>
+			<name>moveFileEntryToTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>fileEntry</name>
+				<type>com.liferay.portal.kernel.repository.model.FileEntry</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>moveFolder</name>
 			<comment><![CDATA[]]></comment>
 			<param>
 				<name>folder</name>
 				<type>com.liferay.portal.kernel.repository.model.Folder</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>restoreFileEntryFromTrash</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>fileEntry</name>
+				<type>com.liferay.portal.kernel.repository.model.FileEntry</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
@@ -59658,7 +60804,12 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>status</name>
+				<name>oldStatus</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>newStatus</name>
 				<type>int</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -60214,225 +61365,6 @@ This method takes two file names, the <code>sourceFileName</code> and the <code>
 			</throws>
 		</method>
 		<method>
-			<name>getFileEntries</name>
-			<comment><![CDATA[Returns the file entries in the folder.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the file entry's repository]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the file entry's folder]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the file entries in the folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFileEntries</name>
-			<comment><![CDATA[Returns a range of all the file entries in the folder.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the file entry's repository]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the file entry's folder]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of file entries in the folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFileEntries</name>
-			<comment><![CDATA[Returns an ordered range of all the file entries in the folder.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the file entry's repository]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the file entry's folder]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<param>
-				<name>obc</name>
-				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
-				<comment><![CDATA[the comparator to order the file entries (optionally <code>null</code>)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of file entries in the folder ordered by comparator <code>obc</code>]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFileEntriesAndFileShortcuts</name>
-			<comment><![CDATA[Returns a range of all the file entries and shortcuts in the folder.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the repository]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder]]></comment>
-			</param>
-			<param>
-				<name>status</name>
-				<type>int</type>
-				<comment><![CDATA[the workflow status]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of file entries and shortcuts in the folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFileEntriesAndFileShortcutsCount</name>
-			<comment><![CDATA[Returns the number of file entries and shortcuts in the folder.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the repository]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder]]></comment>
-			</param>
-			<param>
-				<name>status</name>
-				<type>int</type>
-				<comment><![CDATA[the workflow status]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the number of file entries and shortcuts in the folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFileEntriesCount</name>
-			<comment><![CDATA[Returns the number of file entries in the folder.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the file entry's repository]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the file entry's folder]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the number of file entries in the folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
 			<name>getFileEntry</name>
 			<comment><![CDATA[Returns the file entry with the primary key.]]></comment>
 			<param>
@@ -60634,532 +61566,6 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</throws>
 		</method>
 		<method>
-			<name>getFolders</name>
-			<comment><![CDATA[Returns all immediate subfolders of the parent folder.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the immediate subfolders of the parent folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFolders</name>
-			<comment><![CDATA[Returns all immediate subfolders of the parent folder, optionally including mount folders for third-party repositories.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<param>
-				<name>includeMountFolders</name>
-				<type>boolean</type>
-				<comment><![CDATA[whether to include mount folders for third-party repositories]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the immediate subfolders of the parent folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFolders</name>
-			<comment><![CDATA[Returns a range of all the immediate subfolders of the parent folder, optionally including mount folders for third-party repositories.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<param>
-				<name>includeMountFolders</name>
-				<type>boolean</type>
-				<comment><![CDATA[whether to include mount folders for third-party repositories]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of immediate subfolders of the parent folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFolders</name>
-			<comment><![CDATA[Returns an ordered range of all the immediate subfolders of the parent folder.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<param>
-				<name>includeMountFolders</name>
-				<type>boolean</type>
-				<comment><![CDATA[whether to include mount folders for third-party repositories]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<param>
-				<name>obc</name>
-				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
-				<comment><![CDATA[the comparator to order the folders (optionally <code>null</code>)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of immediate subfolders of the parent folder ordered by comparator <code>obc</code>]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFolders</name>
-			<comment><![CDATA[Returns a range of all the immediate subfolders of the parent folder.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of immediate subfolders of the parent folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFolders</name>
-			<comment><![CDATA[Returns an ordered range of all the immediate subfolders of the parent folder.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<param>
-				<name>obc</name>
-				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
-				<comment><![CDATA[the comparator to order the folders (optionally <code>null</code>)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of immediate subfolders of the parent folder ordered by comparator <code>obc</code>]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFoldersAndFileEntriesAndFileShortcuts</name>
-			<comment><![CDATA[Returns an ordered range of all the immediate subfolders, file entries, and file shortcuts in the parent folder.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the repository]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the parent folder]]></comment>
-			</param>
-			<param>
-				<name>status</name>
-				<type>int</type>
-				<comment><![CDATA[the workflow status]]></comment>
-			</param>
-			<param>
-				<name>includeMountFolders</name>
-				<type>boolean</type>
-				<comment><![CDATA[whether to include mount folders for third-party repositories]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<param>
-				<name>obc</name>
-				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
-				<comment><![CDATA[the comparator to order the results (optionally <code>null</code>)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of immediate subfolders, file entries, and file shortcuts in the parent folder ordered by comparator <code>obc</code>]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFoldersAndFileEntriesAndFileShortcuts</name>
-			<comment><![CDATA[]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>status</name>
-				<type>int</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>mimeTypes</name>
-				<type>java.lang.String[]</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>includeMountFolders</name>
-				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>obc</name>
-				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFoldersAndFileEntriesAndFileShortcutsCount</name>
-			<comment><![CDATA[Returns the number of immediate subfolders, file entries, and file shortcuts in the parent folder.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the repository]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the parent folder]]></comment>
-			</param>
-			<param>
-				<name>status</name>
-				<type>int</type>
-				<comment><![CDATA[the workflow status]]></comment>
-			</param>
-			<param>
-				<name>includeMountFolders</name>
-				<type>boolean</type>
-				<comment><![CDATA[whether to include mount folders for third-party repositories]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the number of immediate subfolders, file entries, and file shortcuts in the parent folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFoldersAndFileEntriesAndFileShortcutsCount</name>
-			<comment><![CDATA[]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>folderId</name>
-				<type>long</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>status</name>
-				<type>int</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>mimeTypes</name>
-				<type>java.lang.String[]</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>includeMountFolders</name>
-				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFoldersCount</name>
-			<comment><![CDATA[Returns the number of immediate subfolders of the parent folder.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the number of immediate subfolders of the parent folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFoldersCount</name>
-			<comment><![CDATA[Returns the number of immediate subfolders of the parent folder, optionally including mount folders for third-party repositories.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<param>
-				<name>includeMountFolders</name>
-				<type>boolean</type>
-				<comment><![CDATA[whether to include mount folders for third-party repositories]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the number of immediate subfolders of the parent folder]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFoldersFileEntriesCount</name>
-			<comment><![CDATA[Returns the number of immediate subfolders and file entries across the folders.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the repository]]></comment>
-			</param>
-			<param>
-				<name>folderIds</name>
-				<type>java.util.List</type>
-				<comment><![CDATA[the primary keys of folders from which to count immediate subfolders and file entries]]></comment>
-			</param>
-			<param>
-				<name>status</name>
-				<type>int</type>
-				<comment><![CDATA[the workflow status]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the number of immediate subfolders and file entries across the folders]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the repository could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
 			<name>getMountFolder</name>
 			<comment><![CDATA[Returns the mount folder of the repository with the primary key. This method is only supported by the Liferay repository.]]></comment>
 			<param>
@@ -61174,147 +61580,6 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
 				<comment><![CDATA[if the repository or mount folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getMountFolders</name>
-			<comment><![CDATA[Returns all immediate subfolders of the parent folder that are used for mounting third-party repositories. This method is only supported by the Liferay repository.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the immediate subfolders of the parent folder that are used for mounting third-party repositories]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the repository or parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getMountFolders</name>
-			<comment><![CDATA[Returns a range of all the immediate subfolders of the parent folder that are used for mounting third-party repositories. This method is only supported by the Liferay repository.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the parent folder]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of immediate subfolders of the parent folder that are used for mounting third-party repositories]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the repository or parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getMountFolders</name>
-			<comment><![CDATA[Returns an ordered range of all the immediate subfolders of the parent folder that are used for mounting third-party repositories. This method is only supported by the Liferay repository.
-
-<p>
-Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-</p>]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the folder's parent folder]]></comment>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-				<comment><![CDATA[the lower bound of the range of results]]></comment>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-				<comment><![CDATA[the upper bound of the range of results (not inclusive)]]></comment>
-			</param>
-			<param>
-				<name>obc</name>
-				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
-				<comment><![CDATA[the comparator to order the folders (optionally <code>null</code>)]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the range of immediate subfolders of the parent folder that are used for mounting third-party repositories ordered by comparator <code>obc</code>]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the repository or parent folder could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getMountFoldersCount</name>
-			<comment><![CDATA[Returns the number of immediate subfolders of the parent folder that are used for mounting third-party repositories. This method is only supported by the Liferay repository.]]></comment>
-			<param>
-				<name>repositoryId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the repository]]></comment>
-			</param>
-			<param>
-				<name>parentFolderId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the parent folder]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the number of folders of the parent folder that are used for mounting third-party repositories]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if the repository or parent folder could not be found]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
@@ -64637,6 +64902,28 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</throws>
 		</method>
 		<method>
+			<name>moveFileEntryToTrash</name>
+			<comment><![CDATA[Moves the file entry with the primary key to the trash portlet.]]></comment>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the file entry]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if the file entry could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>moveFolder</name>
 			<comment><![CDATA[Moves the folder to the new parent folder with the primary key.]]></comment>
 			<param>
@@ -64677,6 +64964,11 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<comment><![CDATA[the lock's universally unique identifier]]></comment>
 			</param>
 			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the file entry's company]]></comment>
+			</param>
+			<param>
 				<name>expirationTime</name>
 				<type>long</type>
 				<comment><![CDATA[the time in milliseconds before the lock expires. If the value is <code>0</code>, the default expiration time will be used from <code>portal.properties>.]]></comment>
@@ -64704,6 +64996,11 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<comment><![CDATA[the lock's universally unique identifier]]></comment>
 			</param>
 			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the file entry's company]]></comment>
+			</param>
+			<param>
 				<name>expirationTime</name>
 				<type>long</type>
 				<comment><![CDATA[the time in milliseconds before the lock expires. If the value is <code>0</code>, the default expiration time will be used from <code>portal.properties>.]]></comment>
@@ -64715,6 +65012,25 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
 				<comment><![CDATA[if the folder or lock could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>restoreFileEntryFromTrash</name>
+			<comment><![CDATA[Moves the file entry with the primary key to the trash portlet.]]></comment>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the file entry]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if the file entry could not be found]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
@@ -66073,6 +66389,7 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<author><![CDATA[Harry Mark]]></author>
 		<author><![CDATA[Alexander Chow]]></author>
+		<author><![CDATA[Manuel de la Peña]]></author>
 		<method>
 			<name>addFileEntry</name>
 			<comment><![CDATA[]]></comment>
@@ -66546,10 +66863,35 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<name>deleteFileEntry</name>
 			<comment><![CDATA[]]></comment>
 			<param>
+				<name>dlFileEntry</name>
+				<type>com.liferay.portlet.documentlibrary.model.DLFileEntry</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>deleteFileEntry</name>
+			<comment><![CDATA[]]></comment>
+			<param>
 				<name>fileEntryId</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -66574,6 +66916,9 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -66662,6 +67007,48 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			</throws>
 		</method>
 		<method>
+			<name>getFile</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>version</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>incrementCounter</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>increment</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>getFileAsStream</name>
 			<comment><![CDATA[]]></comment>
 			<param>
@@ -66714,6 +67101,48 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<param>
 				<name>incrementCounter</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getFileAsStream</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>fileEntryId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>version</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>incrementCounter</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>increment</name>
+				<type>int</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -67189,6 +67618,30 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>incrementViewCounter</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>dlFileEntry</name>
+				<type>com.liferay.portlet.documentlibrary.model.DLFileEntry</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>incrementCounter</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>increment</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
@@ -67760,25 +68213,6 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>java.lang.String[]</type>
 				<comment><![CDATA[]]></comment>
 			</param>
-		</method>
-		<method>
-			<name>deleteFileEntry</name>
-			<comment><![CDATA[]]></comment>
-			<param>
-				<name>dlFileEntry</name>
-				<type>com.liferay.portlet.documentlibrary.model.DLFileEntry</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
 		</method>
 		<method>
 			<name>getFileEntryTypeId</name>
@@ -69582,6 +70016,11 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<param>
 				<name>lockUuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -71853,6 +72292,34 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getFileEntriesAndFileShortcuts</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>folderId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getFileEntriesAndFileShortcutsCount</name>
@@ -71870,6 +72337,34 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<param>
 				<name>status</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<deprecated><![CDATA[{@link #getFileEntriesAndFileShortcutsCount(long, long, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getFileEntriesAndFileShortcutsCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>folderId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -72131,6 +72626,7 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getFoldersAndFileEntriesAndFileShortcuts(long, long, boolean, QueryDefinition)}]]></deprecated>
 		</method>
 		<method>
 			<name>getFoldersAndFileEntriesAndFileShortcuts</name>
@@ -72183,6 +72679,44 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getFoldersAndFileEntriesAndFileShortcuts(long, long, boolean, QueryDefinition)}]]></deprecated>
+		</method>
+		<method>
+			<name>getFoldersAndFileEntriesAndFileShortcuts</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>folderId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>mimeTypes</name>
+				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>includeMountFolders</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>getFoldersAndFileEntriesAndFileShortcutsCount</name>
@@ -72215,6 +72749,7 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+			<deprecated><![CDATA[{@link #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, QueryDefinition)]]></deprecated>
 		</method>
 		<method>
 			<name>getFoldersAndFileEntriesAndFileShortcutsCount</name>
@@ -72242,6 +72777,44 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<param>
 				<name>includeMountFolders</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<deprecated><![CDATA[{@link #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, QueryDefinition)]]></deprecated>
+		</method>
+		<method>
+			<name>getFoldersAndFileEntriesAndFileShortcutsCount</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>folderId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>mimeTypes</name>
+				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>includeMountFolders</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>queryDefinition</name>
+				<type>com.liferay.portal.kernel.dao.orm.QueryDefinition</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -72291,33 +72864,6 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<param>
 				<name>includeMountfolders</name>
 				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getFoldersFileEntriesCount</name>
-			<comment><![CDATA[]]></comment>
-			<param>
-				<name>groupId</name>
-				<type>long</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>folderIds</name>
-				<type>java.util.List</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>status</name>
-				<type>int</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -73796,6 +74342,11 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<param>
 				<name>lockUuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -78790,7 +79341,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -78910,12 +79466,17 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>newStructureId</name>
+				<name>oldClassPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>newClassPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79026,7 +79587,7 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<name>getTemplates</name>
 			<comment><![CDATA[]]></comment>
 			<param>
-				<name>structureId</name>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79043,7 +79604,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<name>getTemplates</name>
 			<comment><![CDATA[]]></comment>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79065,7 +79631,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<name>getTemplates</name>
 			<comment><![CDATA[]]></comment>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79102,7 +79673,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79159,7 +79735,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79231,7 +79812,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79273,7 +79859,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79423,7 +80014,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79480,12 +80076,17 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<name>copyTemplates</name>
 			<comment><![CDATA[]]></comment>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>newStructureId</name>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>newClassPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79558,7 +80159,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<name>getTemplates</name>
 			<comment><![CDATA[]]></comment>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79595,7 +80201,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79652,7 +80263,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79724,7 +80340,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -79766,7 +80387,12 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>structureId</name>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -91502,6 +92128,38 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<name>getUniqueUrlTitle</name>
 			<comment><![CDATA[]]></comment>
 			<param>
+				<name>article</name>
+				<type>com.liferay.portlet.journal.model.JournalArticle</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>title</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>serviceContext</name>
+				<type>com.liferay.portal.service.ServiceContext</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getUniqueUrlTitle</name>
+			<comment><![CDATA[]]></comment>
+			<param>
 				<name>id</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
@@ -91534,6 +92192,50 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+		</method>
+		<method>
+			<name>hasModifiedLatestApprovedVersion</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>articleId</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>version</name>
+				<type>double</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>isMatchesServiceContextUrlTitle</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>urlTitle</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>notifySubscribers</name>
@@ -95972,6 +96674,38 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			</throws>
 		</method>
 		<method>
+			<name>getStructure</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>structureId</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>includeGlobalStructures</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>getStructures</name>
 			<comment><![CDATA[]]></comment>
 			<return>
@@ -97305,6 +98039,38 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			<param>
 				<name>templateId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getTemplate</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>templateId</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>includeGlobalTemplates</name>
+				<type>boolean</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -101199,6 +101965,9 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -101242,6 +102011,9 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -101261,6 +102033,9 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portlet.messageboards.model.MBMessage</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -115110,6 +115885,131 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>deleteActivityCounters</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>disableActivityCounters</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>disableActivityCounters</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>enableActivityCounters</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>classNameId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>enableActivityCounters</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
@@ -115470,6 +116370,30 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 			</return>
 		</method>
 		<method>
+			<name>adjustUserContribution</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>assetEntry</name>
+				<type>com.liferay.portlet.asset.model.AssetEntry</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>enable</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>checkActivityLimit</name>
 			<comment><![CDATA[]]></comment>
 			<param>
@@ -115500,6 +116424,10 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
+		</method>
+		<method>
+			<name>clearFinderCache</name>
+			<comment><![CDATA[]]></comment>
 		</method>
 		<method>
 			<name>getLockKey</name>
@@ -116078,6 +117006,11 @@ This method removes all activities where the user is either the actor or the rec
 				<type>long</type>
 				<comment><![CDATA[the primary key of the user]]></comment>
 			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
@@ -119638,6 +120571,9 @@ If the status is updated to {@link com.liferay.portlet.social.model.SocialReques
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -119657,6 +120593,9 @@ If the status is updated to {@link com.liferay.portlet.social.model.SocialReques
 				<type>com.liferay.portlet.softwarecatalog.model.SCProductEntry</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -121124,6 +122063,306 @@ If the status is updated to {@link com.liferay.portlet.social.model.SocialReques
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
 				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+	</javadoc>
+	<javadoc>
+		<name>TrashEntryLocalServiceImpl</name>
+		<type>com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl</type>
+		<comment><![CDATA[The trash local service is responsible for accessing, creating, modifying and deleting trash entries in the Recycle Bin.]]></comment>
+		<author><![CDATA[Zsolt Berentey]]></author>
+		<method>
+			<name>addTrashEntry</name>
+			<comment><![CDATA[Moves an entry to trash.]]></comment>
+			<param>
+				<name>companyId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the entry's company]]></comment>
+			</param>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the entry's group]]></comment>
+			</param>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[the class name of the entity]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the entity]]></comment>
+			</param>
+			<param>
+				<name>status</name>
+				<type>int</type>
+				<comment><![CDATA[the status of the entityy prior to being moved to trash]]></comment>
+			</param>
+			<param>
+				<name>typeSettingsProperties</name>
+				<type>com.liferay.portal.kernel.util.UnicodeProperties</type>
+				<comment><![CDATA[the type settings properties]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the trashEntry]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>deleteEntry</name>
+			<comment><![CDATA[Deletes the trash entry with the entity class name and primary key.]]></comment>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[the class name of entity]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the entry]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if the user did not have permission to delete the entry]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>fetchEntry</name>
+			<comment><![CDATA[Returns the trash entry with the primary key.]]></comment>
+			<param>
+				<name>entryId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the entry]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the trash entry with the primary key]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>fetchEntry</name>
+			<comment><![CDATA[Returns the trash entry with the entity class name and primary key.]]></comment>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[the class name of the entity]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the entity]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the trash entry with the entity class name and primary key]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getEntries</name>
+			<comment><![CDATA[Returns the trash entries with the matching group ID.]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the group]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the trash entries with the group ID]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getEntries</name>
+			<comment><![CDATA[Returns a range of all the trash entries matching the group ID.]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the group]]></comment>
+			</param>
+			<param>
+				<name>start</name>
+				<type>int</type>
+				<comment><![CDATA[the lower bound of the range of trash entries to return]]></comment>
+			</param>
+			<param>
+				<name>end</name>
+				<type>int</type>
+				<comment><![CDATA[the upper bound of the range of trash entries to return (not inclusive)]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the range of matching trash entries]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getEntriesCount</name>
+			<comment><![CDATA[Returns the number of trash entries with the group ID.]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the group]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the number of matching trash entries]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getEntry</name>
+			<comment><![CDATA[Returns the trash entry with the primary key.]]></comment>
+			<param>
+				<name>entryId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the trash entry]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the trash entry with the primary key]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if a portal exception occurred]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getEntry</name>
+			<comment><![CDATA[Returns the entry with the entity class name and primary key.]]></comment>
+			<param>
+				<name>className</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[the class name of the entity]]></comment>
+			</param>
+			<param>
+				<name>classPK</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the entity]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the trash entry with the entity class name and primary key]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if a trash entry with the primary key could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+	</javadoc>
+	<javadoc>
+		<name>TrashEntryServiceImpl</name>
+		<type>com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl</type>
+		<comment><![CDATA[The trash entry remote service is responsible for returning trash entries. For more information on trash entries services and TrashEntry, see {@link com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl}.]]></comment>
+		<author><![CDATA[Julio Camarero]]></author>
+		<method>
+			<name>deleteEntries</name>
+			<comment><![CDATA[Deletes the trash entries with the matching group ID considering permissions.]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the group]]></comment>
+			</param>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+			<throws>
+				<name>PrincipalException</name>
+				<type>com.liferay.portal.security.auth.PrincipalException</type>
+				<comment><![CDATA[if a principal exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getEntries</name>
+			<comment><![CDATA[Returns the trash entries with the matching group ID.]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the group]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the matching trash entries]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+			<throws>
+				<name>PrincipalException</name>
+				<type>com.liferay.portal.security.auth.PrincipalException</type>
+				<comment><![CDATA[if a principal exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getEntries</name>
+			<comment><![CDATA[Returns a range of all the trash entries matching the group ID.]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[the primary key of the group]]></comment>
+			</param>
+			<param>
+				<name>start</name>
+				<type>int</type>
+				<comment><![CDATA[the lower bound of the range of trash entries to return]]></comment>
+			</param>
+			<param>
+				<name>end</name>
+				<type>int</type>
+				<comment><![CDATA[the upper bound of the range of trash entries to return (not inclusive)]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[the range of matching trash entries]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+			<throws>
+				<name>PrincipalException</name>
+				<type>com.liferay.portal.security.auth.PrincipalException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 		</method>
 	</javadoc>

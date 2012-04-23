@@ -503,7 +503,8 @@ create table DDMTemplate (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	structureId LONG,
+	classNameId LONG,
+	classPK LONG,
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(75) null,
@@ -780,6 +781,7 @@ create table JournalArticle (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	folderId LONG,
 	classNameId LONG,
 	classPK LONG,
 	articleId VARCHAR(75) null,
@@ -857,6 +859,20 @@ create table JournalFeed (
 	contentField VARCHAR(75) null,
 	feedType VARCHAR(75) null,
 	feedVersion DOUBLE
+);
+
+create table JournalFolder (
+	uuid_ VARCHAR(75) null,
+	folderId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	parentFolderId LONG,
+	name VARCHAR(100) null,
+	description STRING null
 );
 
 create table JournalStructure (
@@ -1874,7 +1890,8 @@ create table SocialActivityCounter (
 	totalValue INTEGER,
 	graceValue INTEGER,
 	startPeriod INTEGER,
-	endPeriod INTEGER
+	endPeriod INTEGER,
+	active_ BOOLEAN
 );
 
 create table SocialActivityLimit (
@@ -1959,6 +1976,17 @@ create table Ticket (
 	type_ INTEGER,
 	extraInfo TEXT null,
 	expirationDate DATE null
+);
+
+create table TrashEntry (
+	entryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	createDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	typeSettings TEXT null,
+	status INTEGER
 );
 
 create table User_ (

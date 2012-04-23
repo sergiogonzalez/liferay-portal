@@ -55,6 +55,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Sergio González
+ * @author Manuel de la Peña
  */
 public class EditEntryAction extends PortletAction {
 
@@ -67,10 +68,7 @@ public class EditEntryAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
+			if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
 				cancelCheckedOutEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.CHECKIN)) {
@@ -79,8 +77,14 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.CHECKOUT)) {
 				checkOutEntries(actionRequest);
 			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteEntries(actionRequest, false);
+			}
 			else if (cmd.equals(Constants.MOVE)) {
 				moveEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteEntries(actionRequest, true);
 			}
 
 			WindowState windowState = actionRequest.getWindowState();
@@ -237,7 +241,10 @@ public class EditEntryAction extends PortletAction {
 		}
 	}
 
-	protected void deleteEntries(ActionRequest actionRequest) throws Exception {
+	protected void deleteEntries(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
 		long[] deleteFolderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
@@ -258,7 +265,12 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 		for (long deleteFileEntryId : deleteFileEntryIds) {
-			DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
+			if (moveToTrash) {
+				DLAppServiceUtil.moveFileEntryToTrash(deleteFileEntryId);
+			}
+			else {
+				DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
+			}
 		}
 	}
 

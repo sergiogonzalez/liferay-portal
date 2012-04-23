@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.plugins.googlemaps.GoogleMapsTests;
+import com.liferay.portalweb.plugins.googlemaps.GoogleMapsTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;
@@ -29,7 +29,7 @@ public class PluginsGoogleMapsTestSuite extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(GoogleMapsTests.suite());
+		testSuite.addTest(GoogleMapsTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 
