@@ -34,7 +34,7 @@ if (themeDisplay.isFacebook() || themeDisplay.isStatePopUp() || themeDisplay.isW
 		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
 	}
 
-	RuntimePortletUtil.processTemplate(pageContext, ppid, velocityTemplateId, velocityTemplateContent);
+	RuntimePageUtil.processTemplate(pageContext, ppid, velocityTemplateId, velocityTemplateContent);
 }
 else {
 	String themeId = theme.getThemeId();
@@ -53,14 +53,8 @@ else {
 
 	String velocityTemplateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + layoutTypePortlet.getLayoutTemplateId();
 	String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
-%>
 
-	<c:if test="<%= PropsValues.TAGS_COMPILER_ENABLED %>">
-		<liferay-portlet:runtime portletName="<%= PortletKeys.TAGS_COMPILER %>" />
-	</c:if>
-
-<%
-	RuntimePortletUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
+	RuntimePageUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
 }
 %>
 

@@ -293,17 +293,18 @@ public class BookmarksEntryLocalServiceWrapper
 		_bookmarksEntryLocalService.deleteEntries(groupId, folderId);
 	}
 
-	public void deleteEntry(
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry deleteEntry(
 		com.liferay.portlet.bookmarks.model.BookmarksEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksEntryLocalService.deleteEntry(entry);
+		return _bookmarksEntryLocalService.deleteEntry(entry);
 	}
 
-	public void deleteEntry(long entryId)
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry deleteEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksEntryLocalService.deleteEntry(entryId);
+		return _bookmarksEntryLocalService.deleteEntry(entryId);
 	}
 
 	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> getEntries(

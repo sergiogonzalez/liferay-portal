@@ -14,19 +14,21 @@
 
 package com.liferay.portlet.layoutconfiguration.util.velocity;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.util.comparator.PortletRenderWeightComparator;
-import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -43,14 +45,22 @@ import javax.servlet.http.HttpServletResponse;
 public class TemplateProcessor implements ColumnProcessor {
 
 	public TemplateProcessor(
-		HttpServletRequest request, HttpServletResponse response,
-		String portletId) {
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId)
+		throws SystemException {
 
 		_request = request;
 		_response = response;
-		_portletId = portletId;
 		_portletsMap = new TreeMap<Portlet, Object[]>(
 			new PortletRenderWeightComparator());
+
+		if (Validator.isNotNull(portletId)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+
+			_portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletId);
+		}
 	}
 
 	public Map<Portlet, Object[]> getPortletsMap() {
@@ -127,30 +137,32 @@ public class TemplateProcessor implements ColumnProcessor {
 		for (int i = 0; i < portlets.size(); i++) {
 			Portlet portlet = portlets.get(i);
 
-			Integer columnPos = new Integer(i);
-			Integer columnCount = new Integer(portlets.size());
-			String path = null;
+			if (parallelRenderEnable && (portlet.getRenderWeight() < 1)) {
+				String path = "/html/portal/load_render_portlet.jsp";
 
-			if (parallelRenderEnable) {
-				path = "/html/portal/load_render_portlet.jsp";
+				StringServletResponse stringServletResponse =
+					new StringServletResponse(_response);
 
-				if (portlet.getRenderWeight() >= 1) {
-					_portletsMap.put(
-						portlet,
-						new Object[] {
-							columnId, columnPos, columnCount
-						});
-				}
+				HttpServletRequest request =
+					PortletContainerUtil.setupOptionalRenderParameters(
+						_request, path, null, null, null);
+
+				PortletContainerUtil.render(
+					request, stringServletResponse, portlet);
+
+				sb.append(stringServletResponse.getString());
 			}
+			else {
+				Integer columnPos = new Integer(i);
+				Integer columnCount = new Integer(portlets.size());
 
-			StringServletResponse stringServletResponse =
-				new StringServletResponse(_response);
+				_portletsMap.put(
+					portlet, new Object[] {columnId, columnPos, columnCount});
 
-			RuntimePortletUtil.processPortlet(
-				_request, stringServletResponse, portlet, columnId, columnPos,
-				columnCount, path);
-
-			sb.append(stringServletResponse.getString());
+				sb.append("[$TEMPLATE_PORTLET_");
+				sb.append(portlet.getPortletId());
+				sb.append("$]");
+			}
 		}
 
 		sb.append("</div>");
@@ -162,8 +174,7 @@ public class TemplateProcessor implements ColumnProcessor {
 		StringServletResponse stringServletResponse =
 			new StringServletResponse(_response);
 
-		RuntimePortletUtil.processPortlet(
-			_request, stringServletResponse, _portletId);
+		PortletContainerUtil.render(_request, stringServletResponse, _portlet);
 
 		return stringServletResponse.getString();
 	}
@@ -176,8 +187,8 @@ public class TemplateProcessor implements ColumnProcessor {
 			StringServletResponse stringServletResponse =
 				new StringServletResponse(_response);
 
-			RuntimePortletUtil.processPortlet(
-				_request, stringServletResponse, _portletId);
+			PortletContainerUtil.render(
+				_request, stringServletResponse, _portlet);
 
 			return stringServletResponse.getString();
 		}
@@ -188,7 +199,7 @@ public class TemplateProcessor implements ColumnProcessor {
 
 	private static Log _log = LogFactoryUtil.getLog(TemplateProcessor.class);
 
-	private String _portletId;
+	private Portlet _portlet;
 	private Map<Portlet, Object[]> _portletsMap;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.service.ResourceService;
+import com.liferay.portal.service.persistence.ResourcePersistence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ import org.springframework.context.ApplicationContext;
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
  */
+@SuppressWarnings("deprecation")
 public class BeanLocatorImpl implements BeanLocator {
 
 	public static final String VELOCITY_SUFFIX = ".velocity";
@@ -77,6 +80,27 @@ public class BeanLocatorImpl implements BeanLocator {
 			return doLocate(name);
 		}
 		catch (Exception e) {
+			Object bean = _deprecatedBeans.get(name);
+
+			if (bean != null) {
+				return bean;
+			}
+
+			if (name.equals(ResourcePersistence.class.getName())) {
+				bean = new ResourcePersistence() {};
+
+				_deprecatedBeans.put(name, bean);
+
+				return bean;
+			}
+			else if (name.equals(ResourceService.class.getName())) {
+				bean = new ResourceService() {};
+
+				_deprecatedBeans.put(name, bean);
+
+				return bean;
+			}
+
 			throw new BeanLocatorException(e);
 		}
 	}
@@ -129,6 +153,8 @@ public class BeanLocatorImpl implements BeanLocator {
 
 	private ApplicationContext _applicationContext;
 	private ClassLoader _classLoader;
+	private Map<String, Object> _deprecatedBeans =
+		new ConcurrentHashMap<String, Object>();
 	private Map<String, Object> _velocityBeans =
 		new ConcurrentHashMap<String, Object>();
 

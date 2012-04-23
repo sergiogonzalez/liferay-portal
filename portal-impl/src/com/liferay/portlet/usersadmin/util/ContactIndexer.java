@@ -108,9 +108,9 @@ public class ContactIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		Contact user = (Contact)obj;
+		Contact contact = (Contact)obj;
 
-		deleteDocument(user.getCompanyId(), user.getContactId());
+		deleteDocument(contact.getCompanyId(), contact.getContactId());
 	}
 
 	@Override
@@ -178,8 +178,10 @@ public class ContactIndexer extends BaseIndexer {
 
 		Document document = getDocument(contact);
 
-		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), contact.getCompanyId(), document);
+		if (document != null) {
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), contact.getCompanyId(), document);
+		}
 	}
 
 	@Override

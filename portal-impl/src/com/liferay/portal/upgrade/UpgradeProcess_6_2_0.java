@@ -16,11 +16,13 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeDynamicDataMapping;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeUser;
 
 /**
  * @author Raymond Augé
+ * @author Juan Fernández
  */
 public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 
@@ -32,6 +34,7 @@ public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeSchema.class);
+		upgrade(UpgradeDynamicDataMapping.class);
 		upgrade(UpgradeUser.class);
 	}
 

@@ -23,12 +23,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMicroblogsContent150CharacterTest extends BaseTestCase {
 	public void testViewMicroblogsContent150Character()
 		throws Exception {
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='_2_WAR_microblogsportlet_autocompleteContent']"));
+				"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));
 		assertEquals(RuntimeVariables.replace(
 				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15"),
 			selenium.getText("//div[@class='content']"));

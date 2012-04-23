@@ -276,11 +276,12 @@ public interface SCProductEntryLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteProductEntry(long productEntryId)
+	public com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
+		long productEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteProductEntry(
+	public com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

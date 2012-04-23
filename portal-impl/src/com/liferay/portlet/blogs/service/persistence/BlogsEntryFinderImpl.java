@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,18 +57,21 @@ public class BlogsEntryFinderImpl
 		BlogsEntryFinder.class.getName() + ".findByNoAssets";
 
 	public int countByOrganizationId(
-			long organizationId, Date displayDate, int status)
+			long organizationId, Date displayDate,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
 		List<Long> organizationIds = new ArrayList<Long>();
 
 		organizationIds.add(organizationId);
 
-		return countByOrganizationIds(organizationIds, displayDate, status);
+		return countByOrganizationIds(
+			organizationIds, displayDate, queryDefinition);
 	}
 
 	public int countByOrganizationIds(
-			List<Long> organizationIds, Date displayDate, int status)
+			List<Long> organizationIds, Date displayDate,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
 		Timestamp displayDate_TS = CalendarUtil.getTimestamp(displayDate);
@@ -80,9 +83,15 @@ public class BlogsEntryFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_ORGANIZATION_IDS);
 
-			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (BlogsEntry.status = ?)");
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				if (queryDefinition.isExcludeStatus()) {
+					sql = CustomSQLUtil.appendCriteria(
+						sql, "AND (BlogsEntry.status != ?)");
+				}
+				else {
+					sql = CustomSQLUtil.appendCriteria(
+						sql, "AND (BlogsEntry.status = ?)");
+				}
 			}
 
 			sql = StringUtil.replace(
@@ -103,8 +112,8 @@ public class BlogsEntryFinderImpl
 
 			qPos.add(displayDate_TS);
 
-			if (status != WorkflowConstants.STATUS_ANY) {
-				qPos.add(status);
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
 			}
 
 			Iterator<Long> itr = q.iterate();
@@ -128,8 +137,8 @@ public class BlogsEntryFinderImpl
 	}
 
 	public List<BlogsEntry> findByGroupIds(
-			long companyId, long groupId, Date displayDate, int status,
-			int start, int end)
+			long companyId, long groupId, Date displayDate,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
 		Session session = null;
@@ -139,9 +148,15 @@ public class BlogsEntryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_GROUP_IDS);
 
-			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (BlogsEntry.status = ?)");
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				if (queryDefinition.isExcludeStatus()) {
+					sql = CustomSQLUtil.appendCriteria(
+						sql, "AND (BlogsEntry.status != ?)");
+				}
+				else {
+					sql = CustomSQLUtil.appendCriteria(
+						sql, "AND (BlogsEntry.status = ?)");
+				}
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -156,12 +171,13 @@ public class BlogsEntryFinderImpl
 			qPos.add(groupId);
 			qPos.add(displayDate);
 
-			if (status != WorkflowConstants.STATUS_ANY) {
-				qPos.add(status);
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
 			}
 
 			return (List<BlogsEntry>)QueryUtil.list(
-				q, getDialect(), start, end);
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -172,8 +188,8 @@ public class BlogsEntryFinderImpl
 	}
 
 	public List<BlogsEntry> findByOrganizationId(
-			long organizationId, Date displayDate, int status, int start,
-			int end, OrderByComparator obc)
+			long organizationId, Date displayDate,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
 		List<Long> organizationIds = new ArrayList<Long>();
@@ -181,12 +197,12 @@ public class BlogsEntryFinderImpl
 		organizationIds.add(organizationId);
 
 		return findByOrganizationIds(
-			organizationIds, displayDate, status, start, end, obc);
+			organizationIds, displayDate, queryDefinition);
 	}
 
 	public List<BlogsEntry> findByOrganizationIds(
-			List<Long> organizationIds, Date displayDate, int status, int start,
-			int end, OrderByComparator obc)
+			List<Long> organizationIds, Date displayDate,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
 		Timestamp displayDate_TS = CalendarUtil.getTimestamp(displayDate);
@@ -198,15 +214,22 @@ public class BlogsEntryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_ORGANIZATION_IDS);
 
-			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (BlogsEntry.status = ?)");
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				if (queryDefinition.isExcludeStatus()) {
+					sql = CustomSQLUtil.appendCriteria(
+						sql, "AND (BlogsEntry.status != ?)");
+				}
+				else {
+					sql = CustomSQLUtil.appendCriteria(
+						sql, "AND (BlogsEntry.status = ?)");
+				}
 			}
 
 			sql = StringUtil.replace(
 				sql, "[$ORGANIZATION_ID$]",
 				getOrganizationIds(organizationIds));
-			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+			sql = CustomSQLUtil.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -222,12 +245,13 @@ public class BlogsEntryFinderImpl
 
 			qPos.add(displayDate_TS);
 
-			if (status != WorkflowConstants.STATUS_ANY) {
-				qPos.add(status);
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
 			}
 
 			return (List<BlogsEntry>)QueryUtil.list(
-				q, getDialect(), start, end);
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
