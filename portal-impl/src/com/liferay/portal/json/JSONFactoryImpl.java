@@ -163,7 +163,9 @@ public class JSONFactoryImpl implements JSONFactory {
 
 	public Object looseDeserialize(String json) {
 		try {
-			return createJSONDeserializer().deserialize(json);
+			JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
+
+			return jsonDeserializer.deserialize(json);
 		}
 		catch (Exception e) {
 			 _log.error(e, e);
@@ -173,7 +175,36 @@ public class JSONFactoryImpl implements JSONFactory {
 	}
 
 	public <T> T looseDeserialize(String json, Class<T> clazz) {
-		return (T) createJSONDeserializer().use(null, clazz).deserialize(json);
+		JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
+
+		jsonDeserializer.use(null, clazz);
+
+		return (T)jsonDeserializer.deserialize(json);
+	}
+
+	public Object looseDeserializeSafe(String json) {
+		try {
+			JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
+
+			jsonDeserializer.safeMode(true);
+
+			return jsonDeserializer.deserialize(json);
+		}
+		catch (Exception e) {
+			 _log.error(e, e);
+
+			throw new IllegalStateException("Unable to deserialize object", e);
+		}
+	}
+
+	public <T> T looseDeserializeSafe(String json, Class<T> clazz) {
+		JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
+
+		jsonDeserializer.safeMode(true);
+
+		jsonDeserializer.use(null, clazz);
+
+		return (T)jsonDeserializer.deserialize(json);
 	}
 
 	public String looseSerialize(Object object) {

@@ -33,7 +33,6 @@ import com.liferay.portlet.shopping.CouponMinimumOrderException;
 import com.liferay.portlet.shopping.CouponNameException;
 import com.liferay.portlet.shopping.CouponStartDateException;
 import com.liferay.portlet.shopping.DuplicateCouponCodeException;
-import com.liferay.portlet.shopping.NoSuchCouponException;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
 import com.liferay.portlet.shopping.model.ShoppingCoupon;
 import com.liferay.portlet.shopping.model.ShoppingItem;
@@ -234,14 +233,13 @@ public class ShoppingCouponLocalServiceImpl
 		String code = PwdGenerator.getPassword(
 			PwdGenerator.KEY1 + PwdGenerator.KEY2, 8);
 
-		try {
-			shoppingCouponPersistence.findByCode(code);
+		ShoppingCoupon coupon = shoppingCouponPersistence.fetchByCode(code);
 
-			return getCode();
+		if (coupon != null) {
+			return coupon.getCode();
 		}
-		catch (NoSuchCouponException nsce) {
-			return code;
-		}
+
+		return code;
 	}
 
 	protected void validate(

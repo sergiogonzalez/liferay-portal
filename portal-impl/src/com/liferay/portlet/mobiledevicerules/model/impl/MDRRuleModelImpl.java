@@ -17,7 +17,6 @@ package com.liferay.portlet.mobiledevicerules.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -97,9 +96,10 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.mobiledevicerules.model.MDRRule"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long RULEGROUPID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long RULEGROUPID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -231,7 +231,19 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -385,13 +397,8 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 			return;
 		}
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			String name = nameMap.get(locale);
-
-			setName(name, locale, defaultLocale);
-		}
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -478,13 +485,9 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 			return;
 		}
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			String description = descriptionMap.get(locale);
-
-			setDescription(description, locale, defaultLocale);
-		}
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -621,6 +624,10 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		mdrRuleModelImpl._originalGroupId = mdrRuleModelImpl._groupId;
 
 		mdrRuleModelImpl._setOriginalGroupId = false;
+
+		mdrRuleModelImpl._originalCompanyId = mdrRuleModelImpl._companyId;
+
+		mdrRuleModelImpl._setOriginalCompanyId = false;
 
 		mdrRuleModelImpl._originalRuleGroupId = mdrRuleModelImpl._ruleGroupId;
 
@@ -823,6 +830,8 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
