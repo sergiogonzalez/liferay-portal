@@ -81,9 +81,9 @@ boolean expired = true;
 
 				String content = articleDisplay.getContent();
 
-				content = RuntimePortletUtil.processXML(request, content, portletLogic);
-				content = RuntimePortletUtil.processXML(request, content, actionURLLogic);
-				content = RuntimePortletUtil.processXML(request, content, renderURLLogic);
+				content = RuntimePageUtil.processXML(request, content, portletLogic);
+				content = RuntimePageUtil.processXML(request, content, actionURLLogic);
+				content = RuntimePageUtil.processXML(request, content, renderURLLogic);
 
 				if (themeDisplay.isStateExclusive()) {
 					out.print(content);
@@ -293,12 +293,7 @@ catch (NoSuchArticleException nsae) {
 JournalTemplate template = null;
 
 if ((articleDisplay != null) && Validator.isNotNull(articleDisplay.getTemplateId())) {
-	try {
-		template = JournalTemplateLocalServiceUtil.getTemplate(articleDisplay.getGroupId(), articleDisplay.getTemplateId());
-	}
-	catch (NoSuchTemplateException nste) {
-		template = JournalTemplateLocalServiceUtil.getTemplate(themeDisplay.getCompanyGroupId(), articleDisplay.getTemplateId());
-	}
+	template = JournalTemplateLocalServiceUtil.getTemplate(articleDisplay.getGroupId(), articleDisplay.getTemplateId(), true);
 }
 
 boolean showEditArticleIcon = (latestArticle != null) && JournalArticlePermission.contains(permissionChecker, latestArticle.getGroupId(), latestArticle.getArticleId(), ActionKeys.UPDATE);

@@ -33,7 +33,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle addArticle(
-		long groupId, long classNameId, long classPK,
+		long groupId, long folderId, long classNameId, long classPK,
 		java.lang.String articleId, boolean autoArticleId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -51,10 +51,10 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.addArticle(groupId, classNameId, classPK,
-			articleId, autoArticleId, titleMap, descriptionMap, content, type,
-			structureId, templateId, layoutUuid, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
+		return _journalArticleService.addArticle(groupId, folderId,
+			classNameId, classPK, articleId, autoArticleId, titleMap,
+			descriptionMap, content, type, structureId, templateId, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -64,7 +64,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle addArticle(
-		long groupId, long classNameId, long classPK,
+		long groupId, long folderId, long classNameId, long classPK,
 		java.lang.String articleId, boolean autoArticleId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -80,10 +80,10 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.addArticle(groupId, classNameId, classPK,
-			articleId, autoArticleId, titleMap, descriptionMap, content, type,
-			structureId, templateId, layoutUuid, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
+		return _journalArticleService.addArticle(groupId, folderId,
+			classNameId, classPK, articleId, autoArticleId, titleMap,
+			descriptionMap, content, type, structureId, templateId, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -190,6 +190,20 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			languageId, themeDisplay);
 	}
 
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticles(groupId, folderId);
+	}
+
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticles(groupId, folderId, start,
+			end, obc);
+	}
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByArticleId(
 		long groupId, java.lang.String articleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -205,6 +219,11 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			layoutUuid);
 	}
 
+	public int getArticlesCount(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticlesCount(groupId, folderId);
+	}
+
 	public int getArticlesCountByArticleId(long groupId,
 		java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -218,6 +237,13 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.getDisplayArticleByUrlTitle(groupId,
 			urlTitle);
+	}
+
+	public int getFoldersAndArticlesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getFoldersAndArticlesCount(groupId,
+			folderIds);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
@@ -259,20 +285,20 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long companyId, long groupId, long classNameId,
+		long companyId, long groupId, long folderId, long classNameId,
 		java.lang.String keywords, java.lang.Double version,
 		java.lang.String type, java.lang.String structureId,
 		java.lang.String templateId, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.search(companyId, groupId, classNameId,
-			keywords, version, type, structureId, templateId, displayDateGT,
-			displayDateLT, status, reviewDate, start, end, obc);
+		return _journalArticleService.search(companyId, groupId, folderId,
+			classNameId, keywords, version, type, structureId, templateId,
+			displayDateGT, displayDateLT, status, reviewDate, start, end, obc);
 	}
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long companyId, long groupId, long classNameId,
+		long companyId, long groupId, long folderId, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
@@ -281,14 +307,14 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		java.util.Date reviewDate, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.search(companyId, groupId, classNameId,
-			articleId, version, title, description, content, type, structureId,
-			templateId, displayDateGT, displayDateLT, status, reviewDate,
-			andOperator, start, end, obc);
+		return _journalArticleService.search(companyId, groupId, folderId,
+			classNameId, articleId, version, title, description, content, type,
+			structureId, templateId, displayDateGT, displayDateLT, status,
+			reviewDate, andOperator, start, end, obc);
 	}
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long companyId, long groupId, long classNameId,
+		long companyId, long groupId, long folderId, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
@@ -297,46 +323,46 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		java.util.Date reviewDate, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.search(companyId, groupId, classNameId,
-			articleId, version, title, description, content, type,
+		return _journalArticleService.search(companyId, groupId, folderId,
+			classNameId, articleId, version, title, description, content, type,
 			structureIds, templateIds, displayDateGT, displayDateLT, status,
 			reviewDate, andOperator, start, end, obc);
 	}
 
-	public int searchCount(long companyId, long groupId, long classNameId,
-		java.lang.String keywords, java.lang.Double version,
+	public int searchCount(long companyId, long groupId, long folderId,
+		long classNameId, java.lang.String keywords, java.lang.Double version,
 		java.lang.String type, java.lang.String structureId,
 		java.lang.String templateId, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.searchCount(companyId, groupId,
+		return _journalArticleService.searchCount(companyId, groupId, folderId,
 			classNameId, keywords, version, type, structureId, templateId,
 			displayDateGT, displayDateLT, status, reviewDate);
 	}
 
-	public int searchCount(long companyId, long groupId, long classNameId,
-		java.lang.String articleId, java.lang.Double version,
+	public int searchCount(long companyId, long groupId, long folderId,
+		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
 		java.lang.String structureId, java.lang.String templateId,
 		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.searchCount(companyId, groupId,
+		return _journalArticleService.searchCount(companyId, groupId, folderId,
 			classNameId, articleId, version, title, description, content, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate, andOperator);
 	}
 
-	public int searchCount(long companyId, long groupId, long classNameId,
-		java.lang.String articleId, java.lang.Double version,
+	public int searchCount(long companyId, long groupId, long folderId,
+		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
 		java.lang.String[] structureIds, java.lang.String[] templateIds,
 		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.searchCount(companyId, groupId,
+		return _journalArticleService.searchCount(companyId, groupId, folderId,
 			classNameId, articleId, version, title, description, content, type,
 			structureIds, templateIds, displayDateGT, displayDateLT, status,
 			reviewDate, andOperator);
@@ -355,20 +381,22 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long userId, long groupId, java.lang.String articleId, double version,
+		long userId, long groupId, long folderId, java.lang.String articleId,
+		double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String layoutUuid,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.updateArticle(userId, groupId, articleId,
-			version, titleMap, descriptionMap, content, layoutUuid,
+		return _journalArticleService.updateArticle(userId, groupId, folderId,
+			articleId, version, titleMap, descriptionMap, content, layoutUuid,
 			serviceContext);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long groupId, java.lang.String articleId, double version,
+		long groupId, long folderId, java.lang.String articleId,
+		double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
@@ -385,25 +413,26 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.updateArticle(groupId, articleId,
-			version, titleMap, descriptionMap, content, type, structureId,
-			templateId, layoutUuid, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, indexable, smallImage,
-			smallImageURL, smallFile, images, articleURL, serviceContext);
+		return _journalArticleService.updateArticle(groupId, folderId,
+			articleId, version, titleMap, descriptionMap, content, type,
+			structureId, templateId, layoutUuid, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageURL, smallFile, images, articleURL,
+			serviceContext);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long groupId, java.lang.String articleId, double version,
-		java.lang.String content,
+		long groupId, long folderId, java.lang.String articleId,
+		double version, java.lang.String content,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.updateArticle(groupId, articleId,
-			version, content, serviceContext);
+		return _journalArticleService.updateArticle(groupId, folderId,
+			articleId, version, content, serviceContext);
 	}
 
 	/**

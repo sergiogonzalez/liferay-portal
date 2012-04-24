@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewAddAsConnectionProfileUserTest extends BaseTestCase {
 	public void testViewAddAsConnectionProfileUser() throws Exception {
-		selenium.open("/web/joebloggs/profile/");
+		selenium.open("/web/joebloggs/so/profile/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -51,7 +51,7 @@ public class ViewAddAsConnectionProfileUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("xPath=(//div[@class='lfr-contact-name']/a)[1]"));
 		assertFalse(selenium.isTextPresent("Joe Bloggs has no contacts."));
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

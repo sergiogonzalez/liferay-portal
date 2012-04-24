@@ -2158,7 +2158,8 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="structureId" />
+			<basic name="classNameId" />
+			<basic name="classPK" />
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="type">
@@ -2169,6 +2170,7 @@
 			</basic>
 			<basic name="language" />
 			<basic name="script" />
+			<transient name="className" />
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />
 			<transient name="nameCurrentLanguageId" />
@@ -2254,6 +2256,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="folderId" />
 			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="articleId" />
@@ -2372,6 +2375,30 @@
 			<basic name="contentField" />
 			<basic name="feedType" />
 			<basic name="feedVersion" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.journal.model.impl.JournalFolderModelImpl">
+		<attributes>
+			<id name="folderId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="parentFolderId" />
+			<basic name="name" />
+			<basic name="description" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
@@ -3164,6 +3191,9 @@
 			<basic name="graceValue" />
 			<basic name="startPeriod" />
 			<basic name="endPeriod" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
 			<transient name="className" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -3344,6 +3374,23 @@
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.trash.model.impl.TrashEntryModelImpl">
+		<attributes>
+			<id name="entryId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="classNameId" />
+			<basic name="classPK" />
+			<basic name="typeSettings" />
+			<basic name="status" />
+			<transient name="className" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl">
@@ -3652,6 +3699,7 @@
 			<transient name="supportedLocales" />
 			<transient name="system" />
 			<transient name="timestamp" />
+			<transient name="trashHandlerClasses" />
 			<transient name="undeployedPortlet" />
 			<transient name="unlinkedRoles" />
 			<transient name="useDefaultTemplate" />
@@ -3992,6 +4040,10 @@
 		<table name="JournalFeed" />
 		<attributes />
 	</entity>
+	<entity class="com.liferay.portlet.journal.model.impl.JournalFolderImpl" name="JournalFolder">
+		<table name="JournalFolder" />
+		<attributes />
+	</entity>
 	<entity class="com.liferay.portlet.journal.model.impl.JournalStructureImpl" name="JournalStructure">
 		<table name="JournalStructure" />
 		<attributes />
@@ -4163,6 +4215,12 @@
 	<entity class="com.liferay.portlet.softwarecatalog.model.impl.SCProductVersionImpl" name="SCProductVersion">
 		<table name="SCProductVersion" />
 		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.trash.model.impl.TrashEntryImpl" name="TrashEntry">
+		<table name="TrashEntry" />
+		<attributes>
+			<transient name="typeSettingsProperties" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiNodeImpl" name="WikiNode">
 		<table name="WikiNode" />

@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.engine.creole;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
@@ -84,24 +85,26 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	@Test
 	public void testParseCorrectlyNoWikiBlockWitBraces() {
 		Assert.assertEquals(
-			"<pre>{" + _EOL + "foo" + _EOL + "}" + _EOL + "</pre>",
-			translate("nowikiblock-7.creole"));
+			"<pre>{" + _NEW_LINE + "foo" + _NEW_LINE + "}" + _NEW_LINE +
+				"</pre>",
+			toUnix(translate("nowikiblock-7.creole")));
 	}
 
 	@Test
 	public void testParseCorrectlyNoWikiBlockWitMultipleAndText() {
+
 		Assert.assertEquals(
-			"<pre>public interface Foo {" + _EOL + "void foo();" + _EOL + "}" +
-				_EOL + "</pre><p>Outside preserve </p>",
-			translate("nowikiblock-9.creole"));
+			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
+				_NEW_LINE + "}" + _NEW_LINE + "</pre><p>Outside preserve </p>",
+			toUnix(translate("nowikiblock-9.creole")));
 	}
 
 	@Test
 	public void testParseCorrectlyNoWikiBlockWitMultipleBraces() {
 		Assert.assertEquals(
-			"<pre>public interface Foo {" + _EOL + "void foo();" + _EOL + "}" +
-				_EOL + "</pre>",
-			translate("nowikiblock-8.creole"));
+			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
+				_NEW_LINE + "}" + _NEW_LINE + "</pre>",
+			toUnix(translate("nowikiblock-8.creole")));
 	}
 
 	@Test
@@ -158,8 +161,8 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	@Test
 	public void testParseCorrectlyOneNonEmptyNoWikiBlockWitMultipleLines() {
 		Assert.assertEquals(
-			"<pre>Multiple" + _EOL + "lines</pre>",
-			translate("nowikiblock-5.creole"));
+			"<pre>Multiple" + _NEW_LINE + "lines</pre>",
+			toUnix(translate("nowikiblock-5.creole")));
 	}
 
 	@Test
@@ -412,7 +415,7 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	}
 
 	@Test
-	public void testParseTableMultipleRowsAndCOlumns() {
+	public void testParseTableMultipleRowsAndColumns() {
 		Assert.assertEquals(
 			"<table><tr><th>H1</th><th>H2</th><th>H3</th><th>H4</th></tr>" +
 				"<tr><td>C1</td><td>C2</td><td>C3</td><td>C4</td></tr><tr>" +
@@ -443,11 +446,16 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 			translate("nowikiblock-1.creole"));
 	}
 
+	protected String toUnix(String text) {
+		return StringUtil.replace(
+			text, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
 	protected String translate(String fileName) {
 		return _xhtmlTranslationVisitor.translate(getWikiPageNode(fileName));
 	}
 
-	private static final String _EOL = StringPool.OS_EOL;
+	private static final String _NEW_LINE = StringPool.NEW_LINE;
 
 	private XhtmlTranslationVisitor _xhtmlTranslationVisitor =
 		new XhtmlTranslationVisitor();
