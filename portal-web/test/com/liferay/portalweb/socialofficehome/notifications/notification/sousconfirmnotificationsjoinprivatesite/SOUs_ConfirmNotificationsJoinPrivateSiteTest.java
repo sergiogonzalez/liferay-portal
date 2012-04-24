@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ConfirmNotificationsJoinPrivateSiteTest extends BaseTestCase {
 	public void testSOUs_ConfirmNotificationsJoinPrivateSite()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1/");
+		selenium.open("/user/socialoffice01/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -96,7 +96,7 @@ public class SOUs_ConfirmNotificationsJoinPrivateSiteTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='notification-count']"));
-		selenium.open("/user/socialoffice01/home1/");
+		selenium.open("/user/socialoffice01/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -116,7 +116,7 @@ public class SOUs_ConfirmNotificationsJoinPrivateSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
+		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));

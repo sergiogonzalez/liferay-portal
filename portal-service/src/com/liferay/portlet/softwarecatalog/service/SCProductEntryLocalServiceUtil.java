@@ -324,17 +324,18 @@ public class SCProductEntryLocalServiceUtil {
 		getService().deleteProductEntries(groupId);
 	}
 
-	public static void deleteProductEntry(long productEntryId)
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
+		long productEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteProductEntry(productEntryId);
+		return getService().deleteProductEntry(productEntryId);
 	}
 
-	public static void deleteProductEntry(
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteProductEntry(productEntry);
+		return getService().deleteProductEntry(productEntry);
 	}
 
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getCompanyProductEntries(

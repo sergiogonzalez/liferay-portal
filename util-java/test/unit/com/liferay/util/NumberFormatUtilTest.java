@@ -14,8 +14,6 @@
 
 package com.liferay.util;
 
-import com.liferay.util.NumberFormatUtil;
-
 import java.text.NumberFormat;
 
 import java.util.Locale;

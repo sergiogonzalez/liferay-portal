@@ -55,6 +55,8 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 
+long folderId = ParamUtil.getLong(request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
 long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 long classPK = BeanParamUtil.getLong(article, request, "classPK");
 
@@ -70,18 +72,11 @@ long structureGroupId = groupId;
 
 if (Validator.isNotNull(structureId)) {
 	try {
-		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
-	}
-	catch (NoSuchStructureException nsse1) {
-		if (groupId != themeDisplay.getCompanyGroupId()) {
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
+		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
 
-				structureGroupId = structure.getGroupId();
-			}
-			catch (NoSuchStructureException nsse2) {
-			}
-		}
+		structureGroupId = structure.getGroupId();
+	}
+	catch (NoSuchStructureException nsse) {
 	}
 }
 
@@ -155,6 +150,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
 	<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 	<aui:input name="articleId" type="hidden" value="<%= articleId %>" />

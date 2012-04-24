@@ -11,6 +11,7 @@ _sass_cache_*.css
 /*.ipr
 /*.iws
 /*.patch
+/*.sublime-*
 /.checkstyle
 /.idea
 /.settings
@@ -23,6 +24,7 @@ _sass_cache_*.css
 /build.*.properties
 /dist
 /out
+/rebel.xml
 /release.*.properties
 /svn-revision
 /test.*.properties

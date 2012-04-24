@@ -396,7 +396,6 @@ Liferay.Service.registerClass(
 		deletePortrait: true,
 		deleteRoleUser: true,
 		deleteUser: true,
-		getDefaultUserId: true,
 		getGroupUserIds: true,
 		getOrganizationUserIds: true,
 		getRoleUserIds: true,
@@ -606,6 +605,8 @@ Liferay.Service.registerClass(
 		getGroupEntriesCount: true,
 		getGroupsEntries: true,
 		getOrganizationEntries: true,
+		moveEntryToTrash: true,
+		restoreEntryFromTrash: true,
 		subscribe: true,
 		unsubscribe: true
 	}
@@ -693,9 +694,11 @@ Liferay.Service.registerClass(
 		lockFileEntry: true,
 		lockFolder: true,
 		moveFileEntry: true,
+		moveFileEntryToTrash: true,
 		moveFolder: true,
 		refreshFileEntryLock: true,
 		refreshFolderLock: true,
+		restoreFileEntryFromTrash: true,
 		revertFileEntry: true,
 		search: true,
 		unlockFileEntry: true,
@@ -899,10 +902,13 @@ Liferay.Service.registerClass(
 		expireArticle: true,
 		getArticle: true,
 		getArticleByUrlTitle: true,
+		getArticles: true,
 		getArticlesByArticleId: true,
 		getArticlesByLayoutUuid: true,
+		getArticlesCount: true,
 		getArticlesCountByArticleId: true,
 		getDisplayArticleByUrlTitle: true,
+		getFoldersAndArticlesCount: true,
 		getLatestArticle: true,
 		removeArticleLocale: true,
 		search: true,
@@ -921,6 +927,21 @@ Liferay.Service.registerClass(
 		deleteFeed: true,
 		getFeed: true,
 		updateFeed: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.Journal, "JournalFolder",
+	{
+		addFolder: true,
+		deleteFolder: true,
+		getFolder: true,
+		getFolders: true,
+		getFoldersAndArticlesCount: true,
+		getFoldersCount: true,
+		getSubfolderIds: true,
+		moveFolder: true,
+		updateFolder: true
 	}
 );
 
@@ -1237,5 +1258,15 @@ Liferay.Service.registerClass(
 		subscribePage: true,
 		unsubscribePage: true,
 		updatePage: true
+	}
+);
+
+Liferay.Service.register("Liferay.Service.Trash", "com.liferay.portlet.trash.service");
+
+Liferay.Service.registerClass(
+	Liferay.Service.Trash, "TrashEntry",
+	{
+		deleteEntries: true,
+		getEntries: true
 	}
 );

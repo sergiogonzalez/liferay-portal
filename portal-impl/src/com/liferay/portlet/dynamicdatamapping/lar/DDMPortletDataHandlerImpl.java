@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -33,7 +32,6 @@ import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUt
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -191,13 +189,6 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
-		Map<Long, Long> structureIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
-
-		long structureId = MapUtil.getLong(
-			structureIds, template.getStructureId(), template.getStructureId());
-
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			templateElement, template, _NAMESPACE);
 
@@ -211,7 +202,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 				serviceContext.setUuid(template.getUuid());
 
 				importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-					userId, portletDataContext.getScopeGroupId(), structureId,
+					userId, portletDataContext.getScopeGroupId(),
+					template.getClassNameId(), template.getClassPK(),
 					template.getNameMap(), template.getDescriptionMap(),
 					template.getType(), template.getMode(),
 					template.getLanguage(), template.getScript(),
@@ -227,7 +219,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 		else {
 			importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-				userId, portletDataContext.getScopeGroupId(), structureId,
+				userId, portletDataContext.getScopeGroupId(),
+				template.getClassNameId(), template.getClassPK(),
 				template.getNameMap(), template.getDescriptionMap(),
 				template.getType(), template.getMode(), template.getLanguage(),
 				template.getScript(), serviceContext);
