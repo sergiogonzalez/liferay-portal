@@ -154,6 +154,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String JOURNAL_FEED = "JOURNAL_FEED";
 
+	public static final String JOURNAL_FOLDER = "JOURNAL_FOLDER";
+
 	public static final String JOURNAL_RECENT_ARTICLES = "JOURNAL_RECENT_ARTICLES";
 
 	public static final String JOURNAL_RECENT_STRUCTURES = "JOURNAL_RECENT_STRUCTURES";
@@ -407,8 +409,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String SUBJECT = "SUBJECT";
 
 	public static final String TAB_INDEX = "TAB_INDEX";
-
-	public static final String TAGS_COMPILER_ENTRIES = "TAGS_COMPILER_ENTRIES";
 
 	public static final String TAGS_LAYOUT_ENTRIES = "TAGS_LAYOUT_ENTRIES";
 

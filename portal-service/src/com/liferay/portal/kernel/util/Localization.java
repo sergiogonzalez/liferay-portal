@@ -323,6 +323,22 @@ public interface Localization {
 		throws Exception;
 
 	/**
+	 * Updates the localized string for all the available languages in the
+	 * localizations XML for the map of locales and localized strings and
+	 * changes the default language. Stores the localized strings as characters
+	 * in the XML.
+	 *
+	 * @param  localizationMap the locales and localized strings
+	 * @param  xml the localizations XML
+	 * @param  key the name of the localized string, such as &quot;Title&quot;
+	 * @param  defaultLanguageId the ID of the default language
+	 * @return the updated localizations XML
+	 */
+	public String updateLocalization(
+		Map<Locale, String> localizationMap, String xml, String key,
+		String defaultLanguageId);
+
+	/**
 	 * Updates the localized string for the system default language in the
 	 * localizations XML. Stores the localized strings as characters in the XML.
 	 *

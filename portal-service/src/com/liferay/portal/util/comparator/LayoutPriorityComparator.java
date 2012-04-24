@@ -40,6 +40,8 @@ public class LayoutPriorityComparator extends OrderByComparator {
 	public LayoutPriorityComparator(Layout layout, boolean lessThan) {
 		_layout = layout;
 		_lessThan = lessThan;
+
+		_ascending = true;
 	}
 
 	@Override

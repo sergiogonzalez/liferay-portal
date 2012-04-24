@@ -607,6 +607,11 @@ public class LuceneHelperImpl implements LuceneHelper {
 				indexAccessor = new IndexAccessorImpl(companyId);
 
 				if (isLoadIndexFromClusterEnabled()) {
+					indexAccessor = new SynchronizedIndexAccessorImpl(
+						indexAccessor);
+				}
+
+				if (isLoadIndexFromClusterEnabled()) {
 					try {
 						_loadIndexFromCluster(
 							indexAccessor,
@@ -872,6 +877,12 @@ public class LuceneHelperImpl implements LuceneHelper {
 				return;
 			}
 
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Start loading lucene index files from cluster node " +
+						bootupAddress);
+			}
+
 			InputStream inputStream = null;
 
 			try {
@@ -879,6 +890,10 @@ public class LuceneHelperImpl implements LuceneHelper {
 					_companyId, bootupAddress);
 
 				_indexAccessor.loadIndex(inputStream);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Lucene index files loaded successfully");
+				}
 			}
 			catch (Exception e) {
 				_log.error("Unable to load index for company " + _companyId, e);

@@ -263,7 +263,7 @@ public class LanguageImpl implements Language {
 		Object argument) {
 
 		return format(
-		portletConfig, locale, pattern, new Object[] {argument}, true);
+			portletConfig, locale, pattern, new Object[] {argument}, true);
 	}
 
 	public String format(

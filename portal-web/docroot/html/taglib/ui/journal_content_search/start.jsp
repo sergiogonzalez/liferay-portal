@@ -17,6 +17,10 @@
 <%@ include file="/html/taglib/ui/journal_content_search/init.jsp" %>
 
 <%
+boolean showListed = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:journal-content-search:showListed"));
+String targetPortletId = (String)request.getAttribute("liferay-ui:journal-content-search:targetPortletId");
+String type = (String)request.getAttribute("liferay-ui:journal-content-search:type");
+
 String defaultKeywords = LanguageUtil.get(pageContext, "search") + "...";
 String unicodeDefaultKeywords = UnicodeFormatter.toString(defaultKeywords);
 
@@ -37,6 +41,15 @@ portletURL.setWindowState(WindowState.MAXIMIZED);
 portletURL.setPortletMode(PortletMode.VIEW);
 
 portletURL.setParameter("struts_action", "/journal_content_search/search");
+portletURL.setParameter("showListed", String.valueOf(showListed));
+
+if (Validator.isNotNull(targetPortletId)) {
+	portletURL.setParameter("targetPortletId", targetPortletId);
+}
+
+if (Validator.isNotNull(type)) {
+	portletURL.setParameter("type", type);
+}
 %>
 
 <form action="<%= HtmlUtil.escape(portletURL.toString()) %>" class="aui-form" method="post" name="<%= namespace %>fm" onSubmit="submitForm(this); return false;">

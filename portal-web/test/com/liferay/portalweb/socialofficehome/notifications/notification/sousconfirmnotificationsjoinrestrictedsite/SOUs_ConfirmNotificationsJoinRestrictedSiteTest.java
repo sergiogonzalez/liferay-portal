@@ -24,7 +24,7 @@ public class SOUs_ConfirmNotificationsJoinRestrictedSiteTest
 	extends BaseTestCase {
 	public void testSOUs_ConfirmNotificationsJoinRestrictedSite()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1/");
+		selenium.open("/user/socialoffice01/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -97,7 +97,7 @@ public class SOUs_ConfirmNotificationsJoinRestrictedSiteTest
 
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='notification-count']"));
-		selenium.open("/user/socialoffice01/home1/");
+		selenium.open("/user/socialoffice01/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -117,7 +117,7 @@ public class SOUs_ConfirmNotificationsJoinRestrictedSiteTest
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
+		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));

@@ -16,8 +16,8 @@ package com.liferay.portlet.bookmarks.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -46,6 +46,7 @@ import java.util.List;
 public class BookmarksEntryLocalServiceImpl
 	extends BookmarksEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksEntry addEntry(
 			long userId, long groupId, long folderId, String name, String url,
 			String description, ServiceContext serviceContext)
@@ -99,13 +100,6 @@ public class BookmarksEntryLocalServiceImpl
 			userId, groupId, BookmarksEntry.class.getName(), entryId,
 			BookmarksActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BookmarksEntry.class);
-
-		indexer.reindex(entry);
-
 		return entry;
 	}
 
@@ -116,11 +110,12 @@ public class BookmarksEntryLocalServiceImpl
 			groupId, folderId);
 
 		for (BookmarksEntry entry : entries) {
-			deleteEntry(entry);
+			bookmarksEntryLocalService.deleteEntry(entry);
 		}
 	}
 
-	public void deleteEntry(BookmarksEntry entry)
+	@Indexable(type = IndexableType.DELETE)
+	public BookmarksEntry deleteEntry(BookmarksEntry entry)
 		throws PortalException, SystemException {
 
 		// Entry
@@ -142,21 +137,17 @@ public class BookmarksEntryLocalServiceImpl
 		expandoValueLocalService.deleteValues(
 			BookmarksEntry.class.getName(), entry.getEntryId());
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BookmarksEntry.class);
-
-		indexer.delete(entry);
+		return entry;
 	}
 
-	public void deleteEntry(long entryId)
+	@Indexable(type = IndexableType.DELETE)
+	public BookmarksEntry deleteEntry(long entryId)
 		throws PortalException, SystemException {
 
 		BookmarksEntry entry = bookmarksEntryPersistence.findByPrimaryKey(
 			entryId);
 
-		deleteEntry(entry);
+		return deleteEntry(entry);
 	}
 
 	public List<BookmarksEntry> getEntries(
@@ -272,6 +263,7 @@ public class BookmarksEntryLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksEntry updateEntry(
 			long userId, long entryId, long groupId, long folderId, String name,
 			String url, String description, ServiceContext serviceContext)
@@ -309,13 +301,6 @@ public class BookmarksEntryLocalServiceImpl
 		socialActivityLocalService.addActivity(
 			userId, entry.getGroupId(), BookmarksEntry.class.getName(), entryId,
 			BookmarksActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BookmarksEntry.class);
-
-		indexer.reindex(entry);
 
 		return entry;
 	}

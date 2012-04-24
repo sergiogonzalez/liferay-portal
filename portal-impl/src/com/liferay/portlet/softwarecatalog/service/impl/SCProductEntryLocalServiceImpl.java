@@ -17,8 +17,8 @@ package com.liferay.portlet.softwarecatalog.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.plugin.Version;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,6 +63,7 @@ import java.util.Properties;
 public class SCProductEntryLocalServiceImpl
 	extends SCProductEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry addProductEntry(
 			long userId, String name, String type, String tags,
 			String shortDescription, String longDescription, String pageURL,
@@ -139,13 +140,6 @@ public class SCProductEntryLocalServiceImpl
 				WorkflowConstants.ACTION_PUBLISH);
 		}
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			SCProductEntry.class);
-
-		indexer.reindex(productEntry);
-
 		return productEntry;
 	}
 
@@ -204,20 +198,22 @@ public class SCProductEntryLocalServiceImpl
 			scProductEntryPersistence.findByGroupId(groupId);
 
 		for (SCProductEntry productEntry : productEntries) {
-			deleteProductEntry(productEntry);
+			scProductEntryLocalService.deleteProductEntry(productEntry);
 		}
 	}
 
-	public void deleteProductEntry(long productEntryId)
+	@Indexable(type = IndexableType.DELETE)
+	public SCProductEntry deleteProductEntry(long productEntryId)
 		throws PortalException, SystemException {
 
 		SCProductEntry productEntry =
 			scProductEntryPersistence.findByPrimaryKey(productEntryId);
 
-		deleteProductEntry(productEntry);
+		return deleteProductEntry(productEntry);
 	}
 
-	public void deleteProductEntry(SCProductEntry productEntry)
+	@Indexable(type = IndexableType.DELETE)
+	public SCProductEntry deleteProductEntry(SCProductEntry productEntry)
 		throws PortalException, SystemException {
 
 		// Product entry
@@ -257,12 +253,7 @@ public class SCProductEntryLocalServiceImpl
 		ratingsStatsLocalService.deleteStats(
 			SCProductEntry.class.getName(), productEntry.getProductEntryId());
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			SCProductEntry.class);
-
-		indexer.delete(productEntry);
+		return productEntry;
 	}
 
 	public List<SCProductEntry> getCompanyProductEntries(
@@ -398,6 +389,7 @@ public class SCProductEntryLocalServiceImpl
 		return doc.asXML();
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry updateProductEntry(
 			long productEntryId, String name, String type, String tags,
 			String shortDescription, String longDescription, String pageURL,
@@ -445,13 +437,6 @@ public class SCProductEntryLocalServiceImpl
 		else {
 			saveProductScreenshots(productEntry, thumbnails, fullImages);
 		}
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			SCProductEntry.class);
-
-		indexer.reindex(productEntry);
 
 		return productEntry;
 	}
