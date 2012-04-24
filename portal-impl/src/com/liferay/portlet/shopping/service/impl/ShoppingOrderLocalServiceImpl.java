@@ -38,7 +38,6 @@ import com.liferay.portlet.shopping.CCNameException;
 import com.liferay.portlet.shopping.CCNumberException;
 import com.liferay.portlet.shopping.CCTypeException;
 import com.liferay.portlet.shopping.CartMinOrderException;
-import com.liferay.portlet.shopping.NoSuchOrderException;
 import com.liferay.portlet.shopping.ShippingCityException;
 import com.liferay.portlet.shopping.ShippingCountryException;
 import com.liferay.portlet.shopping.ShippingEmailAddressException;
@@ -648,14 +647,13 @@ public class ShoppingOrderLocalServiceImpl
 		String number = PwdGenerator.getPassword(
 			PwdGenerator.KEY1 + PwdGenerator.KEY2, 12);
 
-		try {
-			shoppingOrderPersistence.findByNumber(number);
+		ShoppingOrder order = shoppingOrderPersistence.fetchByNumber(number);
 
-			return getNumber();
+		if (order != null) {
+			return order.getNumber();
 		}
-		catch (NoSuchOrderException nsoe) {
-			return number;
-		}
+
+		return number;
 	}
 
 	protected void validate(

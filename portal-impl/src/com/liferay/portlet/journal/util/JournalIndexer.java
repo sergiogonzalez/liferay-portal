@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -214,6 +212,7 @@ public class JournalIndexer extends BaseIndexer {
 
 		document.addLocalizedText(
 			Field.DESCRIPTION, article.getDescriptionMap());
+		document.addKeyword(Field.FOLDER_ID, article.getFolderId());
 		document.addLocalizedText(Field.TITLE, article.getTitleMap());
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
@@ -229,18 +228,9 @@ public class JournalIndexer extends BaseIndexer {
 		if (Validator.isNotNull(article.getStructureId())) {
 			try {
 				structure = JournalStructureLocalServiceUtil.getStructure(
-					article.getGroupId(), article.getStructureId());
+					article.getGroupId(), article.getStructureId(), true);
 			}
-			catch (NoSuchStructureException nsse1) {
-				Group group = GroupLocalServiceUtil.getCompanyGroup(
-					article.getCompanyId());
-
-				try {
-					structure = JournalStructureLocalServiceUtil.getStructure(
-						group.getGroupId(), article.getStructureId());
-				}
-				catch (NoSuchStructureException nsse2) {
-				}
+			catch (NoSuchStructureException nsse) {
 			}
 		}
 

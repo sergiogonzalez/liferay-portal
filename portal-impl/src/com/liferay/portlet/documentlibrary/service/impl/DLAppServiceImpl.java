@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
@@ -43,6 +45,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
@@ -1948,6 +1951,33 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Moves the file entry with the primary key to the trash portlet.
+	 *
+	 * @param  fileEntryId the primary key of the file entry
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public FileEntry moveFileEntryToTrash(long fileEntryId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
+
+		return dlAppHelperLocalService.moveFileEntryToTrash(
+			getUserId(), fileEntry);
+	}
+
+	/**
 	 * Moves the folder to the new parent folder with the primary key.
 	 *
 	 * @param  folderId the primary key of the folder
@@ -1987,6 +2017,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * WebDAV.
 	 *
 	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  companyId the primary key of the file entry's company
 	 * @param  expirationTime the time in milliseconds before the lock expires.
 	 *         If the value is <code>0</code>, the default expiration time will
 	 *         be used from <code>portal.properties>.
@@ -1994,16 +2025,19 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if the file entry or lock could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Lock refreshFileEntryLock(String lockUuid, long expirationTime)
+	public Lock refreshFileEntryLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		Lock lock = lockLocalService.getLockByUuid(lockUuid);
+		Lock lock = lockLocalService.getLockByUuidAndCompanyId(
+			lockUuid, companyId);
 
 		long fileEntryId = GetterUtil.getLong(lock.getKey());
 
 		Repository repository = getRepository(0, fileEntryId, 0);
 
-		return repository.refreshFileEntryLock(lockUuid, expirationTime);
+		return repository.refreshFileEntryLock(
+			lockUuid, companyId, expirationTime);
 	}
 
 	/**
@@ -2011,6 +2045,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * WebDAV.
 	 *
 	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  companyId the primary key of the file entry's company
 	 * @param  expirationTime the time in milliseconds before the lock expires.
 	 *         If the value is <code>0</code>, the default expiration time will
 	 *         be used from <code>portal.properties>.
@@ -2018,16 +2053,46 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if the folder or lock could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Lock refreshFolderLock(String lockUuid, long expirationTime)
+	public Lock refreshFolderLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		Lock lock = lockLocalService.getLockByUuid(lockUuid);
+		Lock lock = lockLocalService.getLockByUuidAndCompanyId(
+			lockUuid, companyId);
 
 		long folderId = GetterUtil.getLong(lock.getKey());
 
 		Repository repository = getRepository(0, folderId, 0);
 
-		return repository.refreshFolderLock(lockUuid, expirationTime);
+		return repository.refreshFolderLock(
+			lockUuid, companyId, expirationTime);
+	}
+
+	/**
+	 * Moves the file entry with the primary key to the trash portlet.
+	 *
+	 * @param  fileEntryId the primary key of the file entry
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void restoreFileEntryFromTrash(long fileEntryId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntry, ActionKeys.UPDATE);
+
+		dlAppHelperLocalService.restoreFileEntryFromTrash(
+			getUserId(), fileEntry);
 	}
 
 	/**

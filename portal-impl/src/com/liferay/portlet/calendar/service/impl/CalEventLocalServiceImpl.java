@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
@@ -126,6 +126,7 @@ import net.fortuna.ical4j.model.property.Version;
  */
 public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent addEvent(
 			long userId, String title, String description, String location,
 			int startDateMonth, int startDateDay, int startDateYear,
@@ -246,13 +247,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			userId, groupId, CalEvent.class.getName(), eventId,
 			CalendarActivityKeys.ADD_EVENT, StringPool.BLANK, 0);
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CalEvent.class);
-
-		indexer.reindex(event);
-
 		// Pool
 
 		CalEventLocalUtil.clearEventsPool(event.getGroupId());
@@ -308,7 +302,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			User user = userPersistence.fetchByPrimaryKey(event.getUserId());
 
 			if (user == null) {
-				deleteEvent(event);
+				calEventLocalService.deleteEvent(event);
 
 				continue;
 			}
@@ -370,7 +364,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
-	public void deleteEvent(CalEvent event)
+	@Indexable(type = IndexableType.DELETE)
+	public CalEvent deleteEvent(CalEvent event)
 		throws PortalException, SystemException {
 
 		// Event
@@ -398,24 +393,22 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		expandoValueLocalService.deleteValues(
 			CalEvent.class.getName(), event.getEventId());
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CalEvent.class);
-
-		indexer.delete(event);
-
 		// Pool
 
 		CalEventLocalUtil.clearEventsPool(event.getGroupId());
+
+		return event;
 	}
 
-	public void deleteEvent(long eventId)
+	@Indexable(type = IndexableType.DELETE)
+	public CalEvent deleteEvent(long eventId)
 		throws PortalException, SystemException {
 
 		CalEvent event = calEventPersistence.findByPrimaryKey(eventId);
 
 		deleteEvent(event);
+
+		return event;
 	}
 
 	public void deleteEvents(long groupId)
@@ -424,7 +417,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		List<CalEvent> events = calEventPersistence.findByGroupId(groupId);
 
 		for (CalEvent event : events) {
-			deleteEvent(event);
+			calEventLocalService.deleteEvent(event);
 		}
 	}
 
@@ -724,6 +717,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent updateEvent(
 			long userId, long eventId, String title, String description,
 			String location, int startDateMonth, int startDateDay,
@@ -818,13 +812,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		socialActivityLocalService.addActivity(
 			userId, event.getGroupId(), CalEvent.class.getName(), eventId,
 			CalendarActivityKeys.UPDATE_EVENT, StringPool.BLANK, 0);
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CalEvent.class);
-
-		indexer.reindex(event);
 
 		// Pool
 
@@ -1142,7 +1129,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		if (existingEvent == null) {
 			serviceContext.setUuid(uuid);
 
-			addEvent(
+			calEventLocalService.addEvent(
 				userId, title, description, location, startDateMonth,
 				startDateDay, startDateYear, startDateHour, startDateMinute,
 				endDateMonth, endDateDay, endDateYear, durationHour,
@@ -1151,7 +1138,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				serviceContext);
 		}
 		else {
-			updateEvent(
+			calEventLocalService.updateEvent(
 				userId, existingEvent.getEventId(), title, description,
 				location, startDateMonth, startDateDay, startDateYear,
 				startDateHour, startDateMinute, endDateMonth, endDateDay,

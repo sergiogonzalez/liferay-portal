@@ -817,6 +817,18 @@
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalFeedService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFeedService" />
 	</bean>
+	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
+		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
+	</bean>
+	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
+		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
+	</bean>
+	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
+		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
+	</bean>
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalStructureService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalStructureService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalStructureService" />
@@ -1092,6 +1104,18 @@
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCProductVersionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCProductVersionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCProductVersionService" />
+	</bean>
+	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
+		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
+	</bean>
+	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
+		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
+	</bean>
+	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
+		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
 	</bean>
 	<bean name="/com_liferay_portlet_wiki_service_spring_WikiNodeService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.wiki.service.WikiNodeService" />
