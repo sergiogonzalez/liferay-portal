@@ -48,6 +48,7 @@ import com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler;
 import com.liferay.portlet.messageboards.util.MBIndexer;
 import com.liferay.portlet.messageboards.workflow.MBDiscussionWorkflowHandler;
 import com.liferay.portlet.messageboards.workflow.MBMessageWorkflowHandler;
+import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.UserIndexer;
 import com.liferay.util.PwdGenerator;
 
@@ -168,6 +169,7 @@ public class ServiceTestUtil {
 
 		// Indexers
 
+		IndexerRegistryUtil.register(new ContactIndexer());
 		IndexerRegistryUtil.register(new UserIndexer());
 		IndexerRegistryUtil.register(new BookmarksIndexer());
 		IndexerRegistryUtil.register(new DLIndexer());
