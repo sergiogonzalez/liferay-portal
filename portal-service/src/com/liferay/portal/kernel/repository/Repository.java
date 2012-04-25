@@ -85,6 +85,9 @@ public interface Repository {
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException, SystemException;
 
+	public void deleteFileVersion(long fileEntryId, String version)
+		throws PortalException, SystemException;
+
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException;
 
@@ -229,10 +232,12 @@ public interface Repository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
-	public Lock refreshFileEntryLock(String lockUuid, long expirationTime)
+	public Lock refreshFileEntryLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException;
 
-	public Lock refreshFolderLock(String lockUuid, long expirationTime)
+	public Lock refreshFolderLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException;
 
 	public void revertFileEntry(

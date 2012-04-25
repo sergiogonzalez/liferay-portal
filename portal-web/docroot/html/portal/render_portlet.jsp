@@ -27,9 +27,9 @@ String instanceId = portlet.getInstanceId();
 
 String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(plid, portletId);
 
-String columnId = (String)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID);
-Integer columnPos = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS);
-Integer columnCount = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT);
+String columnId = GetterUtil.getString(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID));
+int columnPos = GetterUtil.getInteger(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS));
+int columnCount = GetterUtil.getInteger(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT));
 Boolean renderPortletResource = (Boolean)request.getAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
 
 boolean allowAddPortletDefaultResource = PortalUtil.isAllowAddPortletDefaultResource(request, portlet);
@@ -50,23 +50,6 @@ boolean modeEditGuest = layoutTypePortlet.hasModeEditGuestPortletId(portletId);
 boolean modeHelp = layoutTypePortlet.hasModeHelpPortletId(portletId);
 boolean modePreview = layoutTypePortlet.hasModePreviewPortletId(portletId);
 boolean modePrint = layoutTypePortlet.hasModePrintPortletId(portletId);
-
-InvokerPortlet invokerPortlet = null;
-
-try {
-	if (portlet.isReady()) {
-		invokerPortlet = PortletInstanceFactoryUtil.create(portlet, application);
-	}
-}
-/*catch (UnavailableException ue) {
-	ue.printStackTrace();
-}*/
-catch (PortletException pe) {
-	pe.printStackTrace();
-}
-catch (RuntimeException re) {
-	re.printStackTrace();
-}
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
@@ -139,6 +122,23 @@ if (portlet.isUndeployedPortlet()) {
 }
 else if (allowAddPortletDefaultResource) {
 	access = PortletPermissionUtil.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroupId(), layout, portlet, portletMode);
+}
+
+InvokerPortlet invokerPortlet = null;
+
+try {
+	if (portlet.isReady() && access) {
+		invokerPortlet = PortletInstanceFactoryUtil.create(portlet, application);
+	}
+}
+/*catch (UnavailableException ue) {
+	ue.printStackTrace();
+}*/
+catch (PortletException pe) {
+	pe.printStackTrace();
+}
+catch (RuntimeException re) {
+	re.printStackTrace();
 }
 
 HttpServletRequest originalRequest = PortalUtil.getOriginalServletRequest(request);
@@ -353,8 +353,8 @@ portletDisplay.setAccess(access);
 portletDisplay.setActive(portlet.isActive());
 
 portletDisplay.setColumnId(columnId);
-portletDisplay.setColumnPos(columnPos.intValue());
-portletDisplay.setColumnCount(columnCount.intValue());
+portletDisplay.setColumnPos(columnPos);
+portletDisplay.setColumnCount(columnCount);
 
 portletDisplay.setStateExclusive(themeDisplay.isStateExclusive());
 portletDisplay.setStateMax(stateMax);
@@ -736,7 +736,7 @@ if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPort
 boolean portletException = false;
 Boolean portletVisibility = null;
 
-if (portlet.isActive() && portlet.isReady() && access && supportsMimeType) {
+if (portlet.isActive() && portlet.isReady() && access && supportsMimeType && (invokerPortlet != null)) {
 	try {
 		invokerPortlet.render(renderRequestImpl, renderResponseImpl);
 
@@ -832,8 +832,6 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 	<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
 		<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
-
-		<div class="portlet-body">
 </c:if>
 
 <c:choose>
@@ -853,10 +851,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 			useDefaultTemplate = useDefaultTemplateObj.booleanValue();
 		}
 
-		if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
-			if (!access || portletException) {
-				PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
+		PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
 
+		if (portletReqProcessor != null) {
+			if (!access || portletException) {
 				ActionMapping actionMapping = portletReqProcessor.processMapping(request, response, (String)portlet.getInitParams().get("view-action"));
 
 				ComponentDefinition definition = null;
@@ -933,6 +931,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 				portletContent = "/portal/portlet_not_ready.jsp";
 			}
 
+			if (!access) {
+				portletContent = "/portal/portlet_access_denied.jsp";
+			}
+
 			if (portletException) {
 				portletContent = "/portal/portlet_error.jsp";
 			}
@@ -987,19 +989,18 @@ else {
 %>
 
 <c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isWapTheme() %>">
-			<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
-				Liferay.Portlet.onLoad(
-					{
-						canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
-						columnPos: <%= columnPos %>,
-						isStatic: '<%= staticVar %>',
-						namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
-						portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
-						refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
-					}
-				);
-			</aui:script>
-		</div>
+		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
+			Liferay.Portlet.onLoad(
+				{
+					canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
+					columnPos: <%= columnPos %>,
+					isStatic: '<%= staticVar %>',
+					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
+					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
+					refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
+				}
+			);
+		</aui:script>
 	</div>
 </c:if>
 

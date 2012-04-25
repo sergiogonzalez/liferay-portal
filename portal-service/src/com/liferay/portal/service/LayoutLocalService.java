@@ -870,14 +870,9 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasLayoutSetPrototypeLayout(long layoutSetPrototypeId,
-		java.lang.String layoutUuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayoutSetPrototypeLayout(
-		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid)
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
+		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -1220,6 +1215,18 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 	*/
 	public com.liferay.portal.model.Layout updateParentLayoutId(long plid,
 		long parentPlid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Updates the priorities of the layouts.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @throws PortalException if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public void updatePriorities(long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

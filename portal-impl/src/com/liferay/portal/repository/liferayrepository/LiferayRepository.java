@@ -234,6 +234,12 @@ public class LiferayRepository
 			getGroupId(), toFolderId(folderId), title);
 	}
 
+	public void deleteFileVersion(long fileEntryId, String version)
+		throws PortalException, SystemException {
+
+		dlFileEntryService.deleteFileVersion(fileEntryId, version);
+	}
+
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -577,17 +583,20 @@ public class LiferayRepository
 		return new LiferayFolder(dlFolder);
 	}
 
-	public Lock refreshFileEntryLock(String lockUuid, long expirationTime)
+	public Lock refreshFileEntryLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
 		return dlFileEntryService.refreshFileEntryLock(
-			lockUuid, expirationTime);
+			lockUuid, companyId, expirationTime);
 	}
 
-	public Lock refreshFolderLock(String lockUuid, long expirationTime)
+	public Lock refreshFolderLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		return dlFolderService.refreshFolderLock(lockUuid, expirationTime);
+		return dlFolderService.refreshFolderLock(
+			lockUuid, companyId, expirationTime);
 	}
 
 	public void revertFileEntry(

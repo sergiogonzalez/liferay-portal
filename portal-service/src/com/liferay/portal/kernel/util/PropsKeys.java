@@ -215,6 +215,8 @@ public interface PropsKeys {
 
 	public static final String BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = "blogs.entry.previous.and.next.navigation.enabled";
 
+	public static final String BLOGS_ENTRY_URL_TITLE_REGEXP = "blogs.entry.url.title.regexp";
+
 	public static final String BLOGS_IMAGE_EXTENSIONS = "blogs.image.extensions";
 
 	public static final String BLOGS_IMAGE_SMALL_MAX_SIZE = "blogs.image.small.max.size";
@@ -529,9 +531,15 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_DRAFTS_ENABLED = "dl.file.entry.drafts.enabled";
 
+	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO = "dl.file.entry.preview.audio.";
+
+	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_BIT_RATE = "dl.file.entry.preview.audio.bit.rate";
+
 	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS = "dl.file.entry.preview.audio.containers";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES = "dl.file.entry.preview.audio.mime.types";
+
+	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_SAMPLE_RATE = "dl.file.entry.preview.audio.sample.rate";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH = "dl.file.entry.preview.document.depth";
 
@@ -895,6 +903,8 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_ARTICLE_CUSTOM_TOKENS = "journal.article.custom.tokens";
 
+	public static final String JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS = "journal.article.expire.all.versions";
+
 	public static final String JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID = "journal.article.force.autogenerate.id";
 
 	public static final String JOURNAL_ARTICLE_FORM_ADD = "journal.article.form.add";
@@ -906,6 +916,8 @@ public interface PropsKeys {
 	public static final String JOURNAL_ARTICLE_TOKEN_PAGE_BREAK = "journal.article.token.page.break";
 
 	public static final String JOURNAL_ARTICLE_TYPES = "journal.article.types";
+
+	public static final String JOURNAL_ARTICLE_URL_TITLE_REGEXP = "journal.article.url.title.regexp";
 
 	public static final String JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED = "journal.article.view.permission.check.enabled";
 
@@ -2048,6 +2060,8 @@ public interface PropsKeys {
 	public static final String TRANSLATIONS_DISABLED = "translations.disabled";
 
 	public static final String TRANSLATOR_DEFAULT_LANGUAGES = "translator.default.languages";
+
+	public static final String TRASH_SEARCH_LIMIT = "trash.search.limit";
 
 	public static final String UPGRADE_PROCESSES = "upgrade.processes";
 

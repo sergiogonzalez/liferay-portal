@@ -403,12 +403,6 @@ public class JSONServiceAction extends JSONAction {
 			return LocalizationUtil.deserialize(jsonObject);
 		}
 		else {
-			try {
-				return JSONFactoryUtil.looseDeserialize(value);
-			}
-			catch (Exception e) {
-			}
-
 			_log.error(
 				"Unsupported parameter type for class " + clazz + ", method " +
 					methodName + ", parameter " + parameter + ", and type " +
@@ -423,11 +417,11 @@ public class JSONServiceAction extends JSONAction {
 			String[] parameterTypes)
 		throws Exception {
 
-		String parameterNames = StringUtil.merge(parameters);
+		String parameterTypesNames = StringUtil.merge(parameterTypes);
 
 		String key =
 			clazz.getName() + "_METHOD_NAME_" + methodName + "_PARAMETERS_" +
-				parameterNames;
+				parameterTypesNames;
 
 		Object[] methodAndParameterTypes = _methodCache.get(key);
 
@@ -471,7 +465,7 @@ public class JSONServiceAction extends JSONAction {
 						_log.error(
 							"Obscure method name for class " + clazz +
 								", method " + methodName + ", and parameters " +
-									parameterNames);
+									parameterTypesNames);
 
 						return null;
 					}
@@ -495,7 +489,7 @@ public class JSONServiceAction extends JSONAction {
 		else {
 			_log.error(
 				"No method found for class " + clazz + ", method " +
-					methodName + ", and parameters " + parameterNames);
+					methodName + ", and parameters " + parameterTypesNames);
 
 			return null;
 		}

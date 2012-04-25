@@ -133,10 +133,21 @@ public class LayoutPrototypeLocalServiceImpl
 		return deleteLayoutPrototype(layoutPrototype);
 	}
 
+	/**
+	 * @deprecated {@link #getLayoutPrototypeByUuidAndCompanyId(String, long)}
+	 */
 	public LayoutPrototype getLayoutPrototypeByUuid(String uuid)
 		throws PortalException, SystemException {
 
 		return layoutPrototypePersistence.findByUuid_First(uuid, null);
+	}
+
+	public LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException, SystemException {
+
+		return layoutPrototypePersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	public List<LayoutPrototype> search(

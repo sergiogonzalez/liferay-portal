@@ -401,7 +401,9 @@ public class SocialActivityLocalServiceImpl
 	 * @param  userId the primary key of the user
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteUserActivities(long userId) throws SystemException {
+	public void deleteUserActivities(long userId)
+		throws PortalException, SystemException {
+
 		List<SocialActivity> activities =
 			socialActivityPersistence.findByUserId(
 				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

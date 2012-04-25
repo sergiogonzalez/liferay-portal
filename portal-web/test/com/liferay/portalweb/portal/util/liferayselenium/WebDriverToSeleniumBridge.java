@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 import com.thoughtworks.selenium.Selenium;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
@@ -119,7 +120,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void check(String locator) {
-		click(locator);
+		WebElement webElement = getWebElement(locator);
+
+		if (!webElement.isSelected()) {
+			webElement.click();
+		}
 	}
 
 	public void chooseCancelOnNextConfirmation() {
@@ -670,11 +675,38 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void select(String selectLocator, String optionLocator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		if (optionLocator.startsWith("index=")) {
+			select.selectByIndex(
+				GetterUtil.getInteger(optionLocator.substring(6)));
+		}
+		else if (optionLocator.startsWith("label=")) {
+			select.selectByVisibleText(optionLocator.substring(6));
+		}
+		else if (optionLocator.startsWith("value=")) {
+			select.selectByValue(optionLocator.substring(6));
+		}
+		else {
+			select.selectByVisibleText(optionLocator);
+		}
 	}
 
 	public void selectFrame(String locator) {
-		throw new UnsupportedOperationException();
+		if (locator.equals("relative=top")) {
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.defaultContent();
+		}
+		else {
+			WebElement webElement = getWebElement(locator);
+
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.frame(webElement);
+		}
 	}
 
 	public void selectPopUp(String windowID) {
@@ -682,7 +714,30 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void selectWindow(String windowID) {
-		throw new UnsupportedOperationException();
+		Set<String> windowHandles = getWindowHandles();
+
+		if (!windowHandles.isEmpty()) {
+			String title = windowID;
+
+			if (title.startsWith("title=")) {
+				title = title.substring(6);
+			}
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (title.equals(getTitle())) {
+					return;
+				}
+			}
+		}
+		else if (windowID.equals("null")) {
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.defaultContent();
+		}
 	}
 
 	public void setBrowserLogLevel(String logLevel) {
@@ -759,15 +814,29 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void type(String locator, String value) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		if (webElement.isEnabled()) {
+			webElement.clear();
+
+			webElement.sendKeys(value);
+		}
 	}
 
 	public void typeKeys(String locator, String value) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		if (webElement.isEnabled()) {
+			webElement.sendKeys(value);
+		}
 	}
 
 	public void uncheck(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		if (webElement.isSelected()) {
+			webElement.click();
+		}
 	}
 
 	public void useXpathLibrary(String libraryName) {

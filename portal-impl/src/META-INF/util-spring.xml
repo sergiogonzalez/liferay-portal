@@ -136,6 +136,11 @@
 			<bean class="com.liferay.portal.deploy.DeployManagerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.deploy.hot.HotDeployUtil" class="com.liferay.portal.kernel.deploy.hot.HotDeployUtil">
+		<property name="hotDeploy">
+			<bean class="com.liferay.portal.deploy.hot.HotDeployImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.facebook.FacebookConnectUtil" class="com.liferay.portal.kernel.facebook.FacebookConnectUtil">
 		<property name="facebookConnect">
 			<bean class="com.liferay.portal.facebook.FacebookConnectImpl" />
@@ -146,17 +151,14 @@
 			<bean class="com.liferay.portal.format.PhoneNumberFormatImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.freemarker.FreeMarkerEngine" class="com.liferay.portal.freemarker.FreeMarkerEngineImpl" />
-	<bean id="com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil" class="com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil">
-		<property name="freeMarkerEngine" ref="com.liferay.portal.kernel.freemarker.FreeMarkerEngine" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.freemarker.FreeMarkerVariables" class="com.liferay.portal.freemarker.FreeMarkerVariablesImpl" />
-	<bean id="com.liferay.portal.kernel.freemarker.FreeMarkerVariablesUtil" class="com.liferay.portal.kernel.freemarker.FreeMarkerVariablesUtil">
-		<property name="freeMarkerVariables" ref="com.liferay.portal.kernel.freemarker.FreeMarkerVariables" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.googleapps.GoogleAppsFactoryUtil" class="com.liferay.portal.kernel.googleapps.GoogleAppsFactoryUtil">
 		<property name="googleAppsFactory">
 			<bean class="com.liferay.portal.googleapps.GoogleAppsFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.image.ImageMagickUtil" class="com.liferay.portal.kernel.image.ImageMagickUtil">
+		<property name="imageMagick">
+			<bean class="com.liferay.portal.image.ImageMagickImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.image.ImageToolUtil" class="com.liferay.portal.kernel.image.ImageToolUtil">
@@ -225,6 +227,11 @@
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
+		<property name="portletContainer">
+			<bean class="com.liferay.portlet.PortletContainerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.sanitizer.SanitizerUtil" class="com.liferay.portal.kernel.sanitizer.SanitizerUtil">
 		<property name="sanitizer">
 			<bean class="com.liferay.portal.sanitizer.SanitizerImpl" />
@@ -258,6 +265,27 @@
 	<bean id="com.liferay.portal.kernel.staging.permission.StagingPermissionUtil" class="com.liferay.portal.kernel.staging.permission.StagingPermissionUtil">
 		<property name="stagingPermission">
 			<bean class="com.liferay.portal.staging.permission.StagingPermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.template.TemplateManagerUtil" class="com.liferay.portal.kernel.template.TemplateManagerUtil">
+		<property name="templateManagers">
+			<list>
+				<bean class="com.liferay.portal.freemarker.FreeMarkerManager">
+					<property name="templateContextHelper">
+						<bean class="com.liferay.portal.freemarker.FreeMarkerTemplateContextHelper" />
+					</property>
+				</bean>
+				<bean class="com.liferay.portal.velocity.VelocityManager">
+					<property name="templateContextHelper">
+						<bean class="com.liferay.portal.velocity.VelocityTemplateContextHelper" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" class="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil">
+		<property name="trashHandlerRegistry">
+			<bean class="com.liferay.portal.trash.TrashHandlerRegistryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil" class="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil">
@@ -354,14 +382,6 @@
 	<bean id="com.liferay.portal.kernel.uuid.PortalUUIDUtil" class="com.liferay.portal.kernel.uuid.PortalUUIDUtil">
 		<property name="portalUUID" ref="com.liferay.portal.kernel.uuid.PortalUUID" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.velocity.VelocityEngine" class="com.liferay.portal.velocity.VelocityEngineImpl" />
-	<bean id="com.liferay.portal.kernel.velocity.VelocityEngineUtil" class="com.liferay.portal.kernel.velocity.VelocityEngineUtil">
-		<property name="velocityEngine" ref="com.liferay.portal.kernel.velocity.VelocityEngine" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.velocity.VelocityVariables" class="com.liferay.portal.velocity.VelocityVariablesImpl" />
-	<bean id="com.liferay.portal.kernel.velocity.VelocityVariablesUtil" class="com.liferay.portal.kernel.velocity.VelocityVariablesUtil">
-		<property name="velocityVariables" ref="com.liferay.portal.kernel.velocity.VelocityVariables" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.webcache.WebCachePoolUtil" class="com.liferay.portal.kernel.webcache.WebCachePoolUtil">
 		<property name="webCachePool">
 			<bean class="com.liferay.portal.webcache.WebCachePoolImpl">
@@ -397,6 +417,10 @@
 	</bean>
 	<bean id="com.liferay.portal.language.LanguageResources" class="com.liferay.portal.language.LanguageResources">
 		<property name="config" value="content.Language,content.Language-ext" />
+	</bean>
+	<bean id="com.liferay.portal.license.util.LicenseManager" class="com.liferay.portal.license.util.DefaultLicenseManagerImpl" />
+	<bean id="com.liferay.portal.license.util.LicenseManagerUtil" class="com.liferay.portal.license.util.LicenseManagerUtil">
+		<property name="licenseManager" ref="com.liferay.portal.license.util.LicenseManager" />
 	</bean>
 	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
 		<property name="modelHints">
@@ -566,6 +590,10 @@
 			<bean class="com.liferay.portal.asset.AssetRendererFactoryRegistryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperImpl" />
+	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil">
+		<property name="assetPublisherHelper" ref="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" />
+	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
@@ -670,6 +698,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil">
+		<property name="DDMTemplateHelper">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMUtil">
 		<property name="DDM">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMImpl" />
@@ -704,9 +737,9 @@
 	<bean id="com.liferay.portlet.journalcontent.util.JournalContentUtil" class="com.liferay.portlet.journalcontent.util.JournalContentUtil">
 		<property name="journalContent" ref="com.liferay.portlet.journalcontent.util.JournalContent" />
 	</bean>
-	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePortlet" class="com.liferay.portlet.layoutconfiguration.util.RuntimePortletImpl" />
-	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil" class="com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil">
-		<property name="runtimePortlet" ref="com.liferay.portlet.layoutconfiguration.util.RuntimePortlet" />
+	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePage" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageImpl" />
+	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePagetUtil" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil">
+		<property name="runtimePage" ref="com.liferay.portlet.layoutconfiguration.util.RuntimePage" />
 	</bean>
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">

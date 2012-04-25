@@ -360,6 +360,42 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	public void moveEntryToTrash(AssetEntry entry)
+		throws PortalException, SystemException {
+
+		// Entry
+
+		entry.setVisible(false);
+
+		assetEntryPersistence.update(entry, false);
+
+		// Social
+
+		socialActivityCounterLocalService.disableActivityCounters(
+			entry.getClassNameId(), entry.getClassPK());
+	}
+
+	public void moveEntryToTrash(long entryId)
+		throws PortalException, SystemException {
+
+		AssetEntry entry = assetEntryPersistence.findByPrimaryKey(entryId);
+
+		moveEntryToTrash(entry);
+	}
+
+	public void moveEntryToTrash(String className, long classPK)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		AssetEntry entry = assetEntryPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (entry != null) {
+			moveEntryToTrash(entry);
+		}
+	}
+
 	public void reindex(List<AssetEntry> entries) throws PortalException {
 		for (AssetEntry entry : entries) {
 			String className = PortalUtil.getClassName(entry.getClassNameId());
@@ -590,7 +626,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setClassNameId(classNameId);
 			entry.setClassPK(classPK);
 			entry.setClassUuid(classUuid);
-			entry.setClassTypeId(classTypeId);
 			entry.setVisible(visible);
 			entry.setPublishDate(publishDate);
 			entry.setExpirationDate(expirationDate);
@@ -604,6 +639,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		entry.setGroupId(groupId);
 		entry.setModifiedDate(now);
+		entry.setClassTypeId(classTypeId);
 		entry.setVisible(visible);
 		entry.setStartDate(startDate);
 		entry.setEndDate(endDate);

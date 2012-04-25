@@ -559,6 +559,28 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the organizations associated with the user. If includeNonUser
+	* is <code>true</code>, the result includes those organizations that are
+	* not directly associated to the user but he is an owner or an
+	* administrator of the organization.
+	*
+	* @param userId the primary key of the user
+	* @param includeIndirectlyAssociated whether to includes organizations
+	that are indirectly associated to the user because he is an owner
+	or an administrator of the organization
+	* @return the organizations associated with the user
+	* @throws PortalException if a user with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
+		long userId, boolean includeIndirectlyAssociated)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserOrganizations(userId, includeIndirectlyAssociated);
+	}
+
+	/**
 	* Returns a range of all the organizations associated with the user.
 	*
 	* <p>
