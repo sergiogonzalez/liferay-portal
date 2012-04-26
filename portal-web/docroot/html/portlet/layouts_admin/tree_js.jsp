@@ -30,7 +30,7 @@ boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true)
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
 
-String modules = "aui-io-request,aui-tree-view,dataschema-xml,datatype-xml";
+String modules = "aui-io-request,aui-tree-view,dataschema-xml,datatype-xml,liferay-store";
 
 if (!selectableTree) {
 	modules += ",liferay-history-manager";
@@ -52,6 +52,7 @@ if (!selectableTree) {
 		%>
 
 		OPEN_NODES: '<%= openNodes %>'.split(','),
+		PREFIX_GROUP_ID: '_groupId_',
 		PREFIX_LAYOUT: '_layout_',
 		PREFIX_LAYOUT_ID: '_layoutId_',
 		PREFIX_PLID: '_plid_',
@@ -93,10 +94,12 @@ if (!selectableTree) {
 					rootNode.expand();
 				</c:when>
 			</c:choose>
+
+			treeInstance.eachChildren(TreeUtil.restoreSelectedNode, true);
 		},
 
-		createListItemId: function(layoutId, plid) {
-			return '<%= HtmlUtil.escape(treeId) %>' + TreeUtil.PREFIX_LAYOUT_ID + layoutId + TreeUtil.PREFIX_PLID + plid;
+		createListItemId: function(groupId, layoutId, plid) {
+			return '<%= HtmlUtil.escape(treeId) %>' + TreeUtil.PREFIX_LAYOUT_ID + layoutId + TreeUtil.PREFIX_PLID + plid + TreeUtil.PREFIX_GROUP_ID + groupId;
 		},
 
 		createLinkId: function(friendlyURL) {
@@ -123,6 +126,10 @@ if (!selectableTree) {
 			);
 
 			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + href + '" id="' + data.id + '" title="' + data.title + '">' + data.label + '</a>';
+		},
+
+		extractGroupId: function(node) {
+			return node.get('id').match(/groupId_(\d+)/)[1];
 		},
 
 		extractLayoutId: function(node) {
@@ -166,7 +173,7 @@ if (!selectableTree) {
 						children: TreeUtil.formatJSONResults(node.children),
 						draggable: node.updateable,
 						expanded: (node.children && (node.children.length > 0)),
-						id: TreeUtil.createListItemId(node.layoutId, node.plid),
+						id: TreeUtil.createListItemId(node.groupId, node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
 					};
 
@@ -218,12 +225,7 @@ if (!selectableTree) {
 		restoreNodeState: function(node) {
 			var instance = this;
 
-			var id = node.get('id');
 			var plid = TreeUtil.extractPlid(node);
-
-			if (plid == '<%= selPlid %>') {
-				node.select();
-			}
 
 			if (A.Array.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
 				if (node.check) {
@@ -234,6 +236,17 @@ if (!selectableTree) {
 			}
 
 			A.Array.each(node.get('children'), TreeUtil.restoreNodeState);
+		},
+
+		restoreSelectedNode: function(node) {
+			var plid = TreeUtil.extractPlid(node);
+
+			if (plid == '<%= selPlid %>') {
+				node.select();
+			}
+			else {
+				node.unselect();
+			}
 		},
 
 		updateLayout: function(data) {
@@ -291,7 +304,7 @@ if (!selectableTree) {
 			updateSessionTreeOpenedState: function(treeId, nodeId, state) {
 				var data = {
 					nodeId: nodeId,
-					openNode: state,
+					openNode: state
 				};
 
 				TreeUtil.updateSessionTreeClick(treeId, data);
@@ -300,7 +313,7 @@ if (!selectableTree) {
 	};
 
 	var getLayoutsURL = themeDisplay.getPathMain() + '/layouts_admin/get_layouts';
-	var rootId = TreeUtil.createListItemId(TreeUtil.DEFAULT_PARENT_LAYOUT_ID, 0);
+	var rootId = TreeUtil.createListItemId(<%= groupId %>, TreeUtil.DEFAULT_PARENT_LAYOUT_ID, 0);
 	var rootLabel = '<%= HtmlUtil.escapeJS(rootNodeName) %>';
 	var treeElId = '<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output';
 
@@ -329,16 +342,7 @@ if (!selectableTree) {
 						TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, event.newVal);
 					},
 					expandedChange: function(event) {
-						var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_click';
-
-						A.io.request(
-							sessionClickURL,
-							{
-								data: {
-									'<%= HtmlUtil.escape(treeId) %>RootNode': event.newVal
-								}
-							}
-						);
+						Liferay.Store('<%= HtmlUtil.escape(treeId) %>RootNode', event.newVal);
 					}
 				},
 			</c:if>
@@ -384,10 +388,11 @@ if (!selectableTree) {
 			io: {
 				cfg: {
 					data: function(node) {
+						var groupId = TreeUtil.extractGroupId(node);
 						var parentLayoutId = TreeUtil.extractLayoutId(node);
 
 						return {
-							groupId: <%= groupId %>,
+							groupId: groupId,
 							incomplete: <%= incomplete %>,
 							privateLayout: <%= privateLayout %>,
 							parentLayoutId: parentLayoutId,
@@ -440,13 +445,7 @@ if (!selectableTree) {
 		treeview.on(
 			'append',
 			function(event) {
-				var node = event.tree.node;
-
-				var plid = TreeUtil.extractPlid(node);
-
-				if (plid == '<%= selPlid %>') {
-					node.select();
-				}
+				TreeUtil.restoreSelectedNode(event.tree.node);
 			}
 		);
 	</c:if>

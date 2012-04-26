@@ -200,32 +200,14 @@ else {
 searchContainer.setResults(results);
 searchContainer.setTotal(total);
 
-request.setAttribute("view_entries.jsp-total", String.valueOf(total));
+request.setAttribute("view.jsp-total", String.valueOf(total));
 %>
 
 <c:if test="<%= results.isEmpty() %>">
-	<div class="portlet-msg-info">
+	<div class="entries-empty portlet-msg-info">
 		<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
 	</div>
 </c:if>
-
-<%
-boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));
-
-String cssClass = StringPool.BLANK;
-
-if (results.isEmpty() || !showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
-	cssClass = "aui-helper-hidden";
-}
-%>
-
-<div class="<%= cssClass %>" id="<portlet:namespace />syncNotification">
-	<div class="lfr-message-info sync-notification" id="<portlet:namespace />syncNotificationContent">
-		<a href="http://www.liferay.com/products/liferay-sync" target="_blank">
-			<liferay-ui:message key="access-these-files-offline-using-liferay-sync" />
-		</a>
-	</div>
-</div>
 
 <%
 for (int i = 0; i < results.size(); i++) {
@@ -245,7 +227,7 @@ for (int i = 0; i < results.size(); i++) {
 							PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 							tempRowURL.setParameter("struts_action", "/document_library/view_file_entry");
-							tempRowURL.setParameter("redirect", currentURL);
+							tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 							tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 							request.setAttribute("view_entries.jsp-fileEntry", fileEntry);
@@ -283,7 +265,7 @@ for (int i = 0; i < results.size(); i++) {
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-						rowURL.setParameter("redirect", currentURL);
+						rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 						rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 						%>
 
@@ -318,57 +300,57 @@ for (int i = 0; i < results.size(); i++) {
 					</liferay-util:buffer>
 
 					<%
-					List resultRows = searchContainer.getResultRows();
+						List resultRows = searchContainer.getResultRows();
 
-					ResultRow row = null;
+											ResultRow row = null;
 
-					if (fileShortcut == null) {
-						row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
-					}
-					else {
-						row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
-					}
+											if (fileShortcut == null) {
+												row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
+											}
+											else {
+												row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
+											}
 
-					row.setClassName("document-display-style");
+											row.setClassName("document-display-style");
 
-					Map<String, Object> data = new HashMap<String, Object>();
+											Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("draggable", DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE));
-					data.put("title", fileEntry.getTitle());
+											data.put("draggable", DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE));
+											data.put("title", fileEntry.getTitle());
 
-					row.setData(data);
+											row.setData(data);
 
-					for (String columnName : entryColumns) {
-						if (columnName.equals("action")) {
-							row.addJSP("/html/portlet/document_library/file_entry_action.jsp");
-						}
+											for (String columnName : entryColumns) {
+												if (columnName.equals("action")) {
+													row.addJSP("/html/portlet/document_library/file_entry_action.jsp");
+												}
 
-						if (columnName.equals("create-date")) {
-							row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
-						}
+												if (columnName.equals("create-date")) {
+													row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
+												}
 
-						if (columnName.equals("downloads")) {
-							row.addText(String.valueOf(fileEntry.getReadCount()));
-						}
+												if (columnName.equals("downloads")) {
+													row.addText(String.valueOf(fileEntry.getReadCount()));
+												}
 
-						if (columnName.equals("modified-date")) {
-							row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
-						}
+												if (columnName.equals("modified-date")) {
+													row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
+												}
 
-						if (columnName.equals("name")) {
-							TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
+												if (columnName.equals("name")) {
+													TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
 
-							folderTitleSearchEntry.setName(fileEntryTitle);
+													folderTitleSearchEntry.setName(fileEntryTitle);
 
-							row.addSearchEntry(folderTitleSearchEntry);
-						}
+													row.addSearchEntry(folderTitleSearchEntry);
+												}
 
-						if (columnName.equals("size")) {
-							row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
-						}
-					}
+												if (columnName.equals("size")) {
+													row.addText(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+												}
+											}
 
-					resultRows.add(row);
+											resultRows.add(row);
 					%>
 
 				</c:otherwise>

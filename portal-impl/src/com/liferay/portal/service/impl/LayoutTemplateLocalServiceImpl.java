@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -26,8 +30,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.velocity.VelocityContext;
-import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -456,19 +458,33 @@ public class LayoutTemplateLocalServiceImpl
 	public void uninstallLayoutTemplate(
 		String layoutTemplateId, boolean standard) {
 
-		if (standard) {
-			VelocityEngineUtil.flushTemplate(
-				"null" + LayoutTemplateConstants.STANDARD_SEPARATOR +
-					layoutTemplateId);
+		String templateId = null;
 
-			_warStandard.remove(layoutTemplateId);
+		try {
+			if (standard) {
+				templateId =
+					"null" + LayoutTemplateConstants.STANDARD_SEPARATOR +
+						layoutTemplateId;
+
+				TemplateManagerUtil.clearCache(
+					TemplateManager.VELOCITY, templateId);
+
+				_warStandard.remove(layoutTemplateId);
+			}
+			else {
+				templateId =
+					"null" + LayoutTemplateConstants.CUSTOM_SEPARATOR +
+						layoutTemplateId;
+
+				TemplateManagerUtil.clearCache(
+					TemplateManager.VELOCITY, templateId);
+
+				_warCustom.remove(layoutTemplateId);
+			}
 		}
-		else {
-			VelocityEngineUtil.flushTemplate(
-				"null" + LayoutTemplateConstants.CUSTOM_SEPARATOR +
-					layoutTemplateId);
-
-			_warCustom.remove(layoutTemplateId);
+		catch (Exception e) {
+			_log.error(
+				"Unable to uninstall layout template " + layoutTemplateId, e);
 		}
 	}
 
@@ -481,9 +497,20 @@ public class LayoutTemplateLocalServiceImpl
 
 			LayoutTemplate layoutTemplate = entry.getValue();
 
-			VelocityEngineUtil.flushTemplate(
+			String templateId =
 				themeId + LayoutTemplateConstants.STANDARD_SEPARATOR +
-					layoutTemplate.getLayoutTemplateId());
+					layoutTemplate.getLayoutTemplateId();
+
+			try {
+				TemplateManagerUtil.clearCache(
+					TemplateManager.VELOCITY, templateId);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to uninstall layout template " +
+						layoutTemplate.getLayoutTemplateId(),
+					e);
+			}
 		}
 
 		_themesStandard.clear();
@@ -495,9 +522,20 @@ public class LayoutTemplateLocalServiceImpl
 
 			LayoutTemplate layoutTemplate = entry.getValue();
 
-			VelocityEngineUtil.flushTemplate(
+			String templateId =
 				themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR +
-					layoutTemplate.getLayoutTemplateId());
+					layoutTemplate.getLayoutTemplateId();
+
+			try {
+				TemplateManagerUtil.clearCache(
+					TemplateManager.VELOCITY, templateId);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to uninstall layout template " +
+						layoutTemplate.getLayoutTemplateId(),
+					e);
+			}
 		}
 
 		_themesCustom.clear();
@@ -509,14 +547,13 @@ public class LayoutTemplateLocalServiceImpl
 		try {
 			InitColumnProcessor processor = new InitColumnProcessor();
 
-			VelocityContext velocityContext =
-				VelocityEngineUtil.getStandardToolsContext();
+			Template template = TemplateManagerUtil.getTemplate(
+				TemplateManager.VELOCITY, velocityTemplateId,
+				velocityTemplateContent, TemplateContextType.STANDARD);
 
-			velocityContext.put("processor", processor);
+			template.put("processor", processor);
 
-			VelocityEngineUtil.mergeTemplate(
-				velocityTemplateId, velocityTemplateContent, velocityContext,
-				new DummyWriter());
+			template.processTemplate(new DummyWriter());
 
 			return ListUtil.sort(processor.getColumns());
 		}

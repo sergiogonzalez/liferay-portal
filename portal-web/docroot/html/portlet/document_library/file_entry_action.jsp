@@ -98,7 +98,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 					<liferay-ui:icon
 						image="download"
-						message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileEntry.getSize(), locale) + "k)" %>'
+						message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
 						url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
 					/>
 				</c:if>
@@ -153,28 +153,45 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 				</c:if>
 
 				<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
-					<portlet:actionURL var="deleteURL">
-						<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
-						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-					</portlet:actionURL>
+					<c:choose>
+						<c:when test="<%= fileEntry.getModel() instanceof DLFileEntry %>">
+							<portlet:actionURL var="deleteURL">
+								<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_TO_TRASH %>" />
+								<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
+								<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+							</portlet:actionURL>
 
-					<liferay-ui:icon-delete
-						url="<%= deleteURL %>"
-					/>
+							<liferay-ui:icon-delete
+								trash="<%= true %>"
+								url="<%= deleteURL %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<portlet:actionURL var="deleteURL">
+								<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+								<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
+								<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+							</portlet:actionURL>
+
+							<liferay-ui:icon-delete
+								url="<%= deleteURL %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 			</c:when>
 			<c:otherwise>
 
 				<%
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
+					fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 				%>
 
 				<c:if test="<%= DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.VIEW) %>">
 					<liferay-ui:icon
 						image="download"
-						message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileEntry.getSize(), locale) + "k)" %>'
+						message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
 						url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileShortcut.getFileShortcutId() %>'
 					/>
 				</c:if>
@@ -236,6 +253,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete
+						trash="<%= true %>"
 						url="<%= deleteShortcutURL %>"
 					/>
 				</c:if>

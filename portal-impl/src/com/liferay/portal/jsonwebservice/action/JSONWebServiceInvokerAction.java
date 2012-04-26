@@ -63,7 +63,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	public Object invoke() throws Exception {
-		Object command = JSONFactoryUtil.looseDeserialize(_command);
+		Object command = JSONFactoryUtil.looseDeserializeSafe(_command);
 
 		List<Object> list = null;
 

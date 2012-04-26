@@ -194,7 +194,7 @@ public interface PortletDataContext extends Serializable {
 
 	public long getUserId(String userUuid) throws SystemException;
 
-	public UserIdStrategy getUserIdStrategy() throws SystemException;
+	public UserIdStrategy getUserIdStrategy();
 
 	public List<String> getZipEntries();
 
