@@ -97,9 +97,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				actionMethodName = actionMethod.getName();
 			}
 
-			checkMethodPublicAccess(
-				request, actionMethodName,
-				PropsValues.JSONWS_WEB_SERVICE_PUBLIC_METHODS);
+//			checkMethodPublicAccess(
+//				request, actionMethodName,
+//				PropsValues.JSONWS_WEB_SERVICE_PUBLIC_METHODS);
 
 			Object returnObj = jsonWebServiceAction.invoke();
 

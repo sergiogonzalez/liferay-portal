@@ -10,7 +10,7 @@ insert into JournalArticleResource values ('${portalUUIDUtil.generate()}', ${jou
 
 <#assign journalArticleContent = "<?xml version=\"1.0\"?><root available-locales=\"en_US\" default-locale=\"en_US\"><static-content language-id=\"en_US\">&lt;p&gt;" + journalArticle.content + "&lt;/p&gt;</static-content></root>">
 
-insert into JournalArticle values ('${portalUUIDUtil.generate()}', ${journalArticle.id}, ${journalArticle.resourcePrimKey}, ${journalArticle.groupId}, ${journalArticle.companyId}, ${defaultUserId}, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 0, '${journalArticleResource.articleId}', 1, '${journalArticleTitle}', 'test journal article', '', '${journalArticleContent}', 'general', '', '', '', CURRENT_TIMESTAMP, null, null, 1, 0, 0, '', 0, 0, '', CURRENT_TIMESTAMP);
+insert into JournalArticle values ('${portalUUIDUtil.generate()}', ${journalArticle.id}, ${journalArticle.resourcePrimKey}, ${journalArticle.groupId}, ${journalArticle.companyId}, ${defaultUserId}, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 0, 0, '${journalArticleResource.articleId}', 1, '${journalArticleTitle}', 'test journal article', '', '${journalArticleContent}', 'general', '', '', '', CURRENT_TIMESTAMP, null, null, 1, 0, 0, '', 0, 0, '', CURRENT_TIMESTAMP);
 
 ${sampleSQLBuilder.insertResourcePermission("com.liferay.portlet.journal.model.JournalArticle", stringUtil.valueOf(journalArticleResource.resourcePrimKey))}
 

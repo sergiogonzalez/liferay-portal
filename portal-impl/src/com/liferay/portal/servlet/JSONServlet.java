@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.PortalSecurityManager;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -59,6 +60,8 @@ public class JSONServlet extends HttpServlet {
 
 		try {
 			resolveRemoteUser(request);
+
+			PortalSecurityManager.getInstance().setRemoteAccess();
 
 			if (_portletClassLoader == null) {
 				_jsonAction.execute(null, null, request, response);

@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletContextProvider;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -194,6 +196,12 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		if (atomCollectionAdapters != null) {
 			AtomCollectionAdapterRegistryUtil.unregister(
 				atomCollectionAdapters);
+		}
+
+		List<TrashHandler> trashHandlers = portlet.getTrashHandlerInstances();
+
+		if (trashHandlers != null) {
+			TrashHandlerRegistryUtil.unregister(trashHandlers);
 		}
 
 		List<WorkflowHandler> workflowHandlers =

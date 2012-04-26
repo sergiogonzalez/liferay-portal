@@ -490,21 +490,6 @@ public class UserServiceUtil {
 	}
 
 	/**
-	* Returns the primary key of the default user for the company.
-	*
-	* @param companyId the primary key of the company
-	* @return the primary key of the default user for the company
-	* @throws PortalException if a default user for the company could not be
-	found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static long getDefaultUserId(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getDefaultUserId(companyId);
-	}
-
-	/**
 	* Returns the primary keys of all the users belonging to the group.
 	*
 	* @param groupId the primary key of the group
@@ -642,7 +627,8 @@ public class UserServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean hasGroupUser(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().hasGroupUser(groupId, userId);
 	}
 
@@ -656,7 +642,8 @@ public class UserServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean hasRoleUser(long roleId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().hasRoleUser(roleId, userId);
 	}
 

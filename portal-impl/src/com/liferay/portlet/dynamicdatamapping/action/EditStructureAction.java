@@ -163,9 +163,9 @@ public class EditStructureAction extends PortletAction {
 	protected void deleteStructure(ActionRequest actionRequest)
 		throws Exception {
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		DDMStructureServiceUtil.deleteStructure(structureId);
+		DDMStructureServiceUtil.deleteStructure(classPK);
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -193,8 +193,14 @@ public class EditStructureAction extends PortletAction {
 		portletURL.setParameter("redirect", redirect, false);
 		portletURL.setParameter(
 			"groupId", String.valueOf(structure.getGroupId()), false);
+
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
 		portletURL.setParameter(
-			"structureId", String.valueOf(structure.getStructureId()), false);
+			"classNameId", String.valueOf(classNameId), false);
+
+		portletURL.setParameter(
+			"classPK", String.valueOf(structure.getStructureId()), false);
 		portletURL.setParameter("availableFields", availableFields, false);
 		portletURL.setParameter("saveCallback", saveCallback, false);
 
@@ -206,10 +212,11 @@ public class EditStructureAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long scopeClassNameId = ParamUtil.getLong(
+			actionRequest, "scopeClassNameId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -224,13 +231,13 @@ public class EditStructureAction extends PortletAction {
 
 		if (cmd.equals(Constants.ADD)) {
 			structure = DDMStructureServiceUtil.addStructure(
-				groupId, classNameId, null, nameMap, descriptionMap, xsd,
+				groupId, scopeClassNameId, null, nameMap, descriptionMap, xsd,
 				storageType, DDMStructureConstants.TYPE_DEFAULT,
 				serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			structure = DDMStructureServiceUtil.updateStructure(
-				structureId, nameMap, descriptionMap, xsd, serviceContext);
+				classPK, nameMap, descriptionMap, xsd, serviceContext);
 		}
 
 		return structure;

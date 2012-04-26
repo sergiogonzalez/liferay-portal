@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -163,7 +164,9 @@ public class JSONFactoryImpl implements JSONFactory {
 
 	public Object looseDeserialize(String json) {
 		try {
-			return createJSONDeserializer().deserialize(json);
+			JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
+
+			return jsonDeserializer.deserialize(json);
 		}
 		catch (Exception e) {
 			 _log.error(e, e);
@@ -173,7 +176,23 @@ public class JSONFactoryImpl implements JSONFactory {
 	}
 
 	public <T> T looseDeserialize(String json, Class<T> clazz) {
-		return (T) createJSONDeserializer().use(null, clazz).deserialize(json);
+		JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
+
+		jsonDeserializer = jsonDeserializer.use(null, clazz);
+
+		return (T)jsonDeserializer.deserialize(json);
+	}
+
+	public Object looseDeserializeSafe(String json) {
+		json = _removeTypeFromJSONString(json);
+
+		return looseDeserialize(json);
+	}
+
+	public <T> T looseDeserializeSafe(String json, Class<T> clazz) {
+		json = _removeTypeFromJSONString(json);
+
+		return looseDeserialize(json, clazz);
 	}
 
 	public String looseSerialize(Object object) {
@@ -248,6 +267,19 @@ public class JSONFactoryImpl implements JSONFactory {
 		jsonObject.put("exception", message);
 
 		return jsonObject.toString();
+	}
+
+	private String _removeTypeFromJSONString(String jsonString) {
+
+		// Removes type from JSON string so that Flexjson will not create any
+		// objects
+
+		jsonString = StringUtil.replace(
+			jsonString,
+			new String[] {"\"class\"", "'class'"},
+			new String[] {"\"~class\"", "\"~class\""});
+
+		return jsonString;
 	}
 
 	private static final String _NULL_JSON = "{}";

@@ -70,14 +70,14 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 		if (is == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Could not find " + source);
+				_log.debug("Unable to find " + source);
 			}
 
 			throw new ResourceNotFoundException(source);
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Successfully got " + source);
+			_log.debug("Successfully found " + source);
 		}
 
 		return is;
