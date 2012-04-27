@@ -681,8 +681,8 @@ public abstract class BaseDB implements DB {
 			String sql =
 				"drop index " + indexNameUpperCase + " on " + tableName;
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(sql);
+			if (_log.isInfoEnabled()) {
+				_log.info(sql);
 			}
 
 			runSQL(con, sql);

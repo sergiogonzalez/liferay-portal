@@ -209,11 +209,14 @@ public class DBUpgrader {
 
 		// Update indexes
 
-		if (PropsValues.VERIFY_DROP_UNUSED_INDEXES) {
+		if (PropsValues.VERIFY_DATABASE_INDEXES_ON_STARTUP) {
 			StartupHelperUtil.setDropIndexes(true);
-		}
 
-		StartupHelperUtil.updateIndexes();
+			StartupHelperUtil.updateIndexes();
+		}
+		else if (StartupHelperUtil.isUpgraded()) {
+			StartupHelperUtil.updateIndexes();
+		}
 
 		// Update release
 
