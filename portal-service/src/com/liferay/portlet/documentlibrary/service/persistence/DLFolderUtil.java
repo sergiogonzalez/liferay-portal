@@ -2063,10 +2063,10 @@ public class DLFolderUtil {
 		return _persistence;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setPersistence(DLFolderPersistence persistence) {
-		_persistence = persistence;
-
-		ReferenceRegistry.registerReference(DLFolderUtil.class, "_persistence");
 	}
 
 	private static DLFolderPersistence _persistence;

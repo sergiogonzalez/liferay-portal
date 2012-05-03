@@ -145,12 +145,11 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] getTemplates(
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode) throws RemoteException {
+		long groupId, long classNameId, long classPK) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(classNameId, classPK, type,
-					mode);
+				DDMTemplateServiceUtil.getTemplates(groupId, classNameId,
+					classPK);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -162,11 +161,12 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] getTemplates(
-		long groupId, long classNameId, long classPK) throws RemoteException {
+		long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(groupId, classNameId,
-					classPK);
+				DDMTemplateServiceUtil.getTemplates(classNameId, classPK, type,
+					mode);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
