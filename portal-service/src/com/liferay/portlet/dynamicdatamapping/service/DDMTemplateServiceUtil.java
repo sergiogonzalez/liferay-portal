@@ -37,6 +37,25 @@ public class DDMTemplateServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
 		long groupId, long classNameId, long classPK,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -75,16 +94,16 @@ public class DDMTemplateServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTemplates(groupId, classNameId, classPK);
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
 		long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTemplates(classNameId, classPK, type, mode);
-	}
-
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTemplates(groupId, classNameId, classPK);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
@@ -156,14 +175,10 @@ public class DDMTemplateServiceUtil {
 		return _service;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setService(DDMTemplateService service) {
-		MethodCache.remove(DDMTemplateService.class);
-
-		_service = service;
-
-		ReferenceRegistry.registerReference(DDMTemplateServiceUtil.class,
-			"_service");
-		MethodCache.remove(DDMTemplateService.class);
 	}
 
 	private static DDMTemplateService _service;

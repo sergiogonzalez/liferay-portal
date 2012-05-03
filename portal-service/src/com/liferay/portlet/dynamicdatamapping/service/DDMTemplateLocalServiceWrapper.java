@@ -84,6 +84,10 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		return _ddmTemplateLocalService.deleteDDMTemplate(ddmTemplate);
 	}
 
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _ddmTemplateLocalService.dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -350,6 +354,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateLocalService.getTemplates(groupId, classNameId,
+			classPK);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
 		long classNameId, long classPK, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.getTemplates(classNameId, classPK, type);
@@ -361,13 +372,6 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.getTemplates(classNameId, classPK,
 			type, mode);
-	}
-
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateLocalService.getTemplates(groupId, classNameId,
-			classPK);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(

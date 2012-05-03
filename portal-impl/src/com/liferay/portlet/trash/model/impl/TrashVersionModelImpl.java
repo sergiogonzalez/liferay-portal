@@ -34,6 +34,9 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The base model implementation for the TrashVersion service. Represents a row in the &quot;TrashVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -105,6 +108,52 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	public String getModelClassName() {
 		return TrashVersion.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("versionId", getVersionId());
+		attributes.put("entryId", getEntryId());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
+		attributes.put("status", getStatus());
+
+		return attributes;
+	}
+
+	@Override
+	public void setModelAttributes(Map<String, Object> attributes) {
+		Long versionId = (Long)attributes.get("versionId");
+
+		if (versionId != null) {
+			setVersionId(versionId);
+		}
+
+		Long entryId = (Long)attributes.get("entryId");
+
+		if (entryId != null) {
+			setEntryId(entryId);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
 	}
 
 	public long getVersionId() {

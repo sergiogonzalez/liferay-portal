@@ -84,6 +84,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		return _trashEntryLocalService.deleteTrashEntry(trashEntry);
 	}
 
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _trashEntryLocalService.dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -264,18 +268,22 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param groupId the primary key of the entry's group
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
-	* @param status the status of the entityy prior to being moved to trash
+	* @param status the status of the entity prior to being moved to trash
+	* @param versions the primary keys and statuses of any of the entry's
+	versions (e.g., {@link
+	com.liferay.portlet.documentlibrary.model.DLFileVerison})
 	* @param typeSettingsProperties the type settings properties
 	* @return the trashEntry
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
-		long companyId, long groupId, java.lang.String className, long classPK,
+		long userId, long groupId, java.lang.String className, long classPK,
 		int status,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> versions,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _trashEntryLocalService.addTrashEntry(companyId, groupId,
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntryLocalService.addTrashEntry(userId, groupId,
 			className, classPK, status, versions, typeSettingsProperties);
 	}
 
@@ -393,10 +401,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	}
 
 	/**
-	* Returns the trash versions associated with the trash entry.
+	* Returns all the trash versions associated with the trash entry.
 	*
 	* @param entryId the primary key of the trash entry
-	* @return the trash versions associated with the trash entry
+	* @return all the trash versions associated with the trash entry
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(

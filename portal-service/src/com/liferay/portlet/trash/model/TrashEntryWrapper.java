@@ -16,6 +16,10 @@ package com.liferay.portlet.trash.model;
 
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>
  * This class is a wrapper for {@link TrashEntry}.
@@ -36,6 +40,85 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 
 	public String getModelClassName() {
 		return TrashEntry.class.getName();
+	}
+
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("entryId", getEntryId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
+		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("status", getStatus());
+		attributes.put("deletedByUserId", getDeletedByUserId());
+		attributes.put("deletedByUserName", getDeletedByUserName());
+
+		return attributes;
+	}
+
+	public void setModelAttributes(Map<String, Object> attributes) {
+		Long entryId = (Long)attributes.get("entryId");
+
+		if (entryId != null) {
+			setEntryId(entryId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long deletedByUserId = (Long)attributes.get("deletedByUserId");
+
+		if (deletedByUserId != null) {
+			setDeletedByUserId(deletedByUserId);
+		}
+
+		String deletedByUserName = (String)attributes.get("deletedByUserName");
+
+		if (deletedByUserName != null) {
+			setDeletedByUserName(deletedByUserName);
+		}
 	}
 
 	/**
@@ -211,6 +294,62 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	*/
 	public void setStatus(int status) {
 		_trashEntry.setStatus(status);
+	}
+
+	/**
+	* Returns the deleted by user ID of this trash entry.
+	*
+	* @return the deleted by user ID of this trash entry
+	*/
+	public long getDeletedByUserId() {
+		return _trashEntry.getDeletedByUserId();
+	}
+
+	/**
+	* Sets the deleted by user ID of this trash entry.
+	*
+	* @param deletedByUserId the deleted by user ID of this trash entry
+	*/
+	public void setDeletedByUserId(long deletedByUserId) {
+		_trashEntry.setDeletedByUserId(deletedByUserId);
+	}
+
+	/**
+	* Returns the deleted by user uuid of this trash entry.
+	*
+	* @return the deleted by user uuid of this trash entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getDeletedByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntry.getDeletedByUserUuid();
+	}
+
+	/**
+	* Sets the deleted by user uuid of this trash entry.
+	*
+	* @param deletedByUserUuid the deleted by user uuid of this trash entry
+	*/
+	public void setDeletedByUserUuid(java.lang.String deletedByUserUuid) {
+		_trashEntry.setDeletedByUserUuid(deletedByUserUuid);
+	}
+
+	/**
+	* Returns the deleted by user name of this trash entry.
+	*
+	* @return the deleted by user name of this trash entry
+	*/
+	public java.lang.String getDeletedByUserName() {
+		return _trashEntry.getDeletedByUserName();
+	}
+
+	/**
+	* Sets the deleted by user name of this trash entry.
+	*
+	* @param deletedByUserName the deleted by user name of this trash entry
+	*/
+	public void setDeletedByUserName(java.lang.String deletedByUserName) {
+		_trashEntry.setDeletedByUserName(deletedByUserName);
 	}
 
 	public boolean isNew() {
