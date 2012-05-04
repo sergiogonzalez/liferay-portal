@@ -90,6 +90,10 @@ public class SocialActivityLimitLocalServiceUtil {
 		return getService().deleteSocialActivityLimit(socialActivityLimit);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -295,14 +299,10 @@ public class SocialActivityLimitLocalServiceUtil {
 		return _service;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setService(SocialActivityLimitLocalService service) {
-		MethodCache.remove(SocialActivityLimitLocalService.class);
-
-		_service = service;
-
-		ReferenceRegistry.registerReference(SocialActivityLimitLocalServiceUtil.class,
-			"_service");
-		MethodCache.remove(SocialActivityLimitLocalService.class);
 	}
 
 	private static SocialActivityLimitLocalService _service;

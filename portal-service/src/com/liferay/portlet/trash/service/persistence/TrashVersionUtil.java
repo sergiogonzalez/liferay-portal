@@ -414,11 +414,10 @@ public class TrashVersionUtil {
 		return _persistence;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setPersistence(TrashVersionPersistence persistence) {
-		_persistence = persistence;
-
-		ReferenceRegistry.registerReference(TrashVersionUtil.class,
-			"_persistence");
 	}
 
 	private static TrashVersionPersistence _persistence;

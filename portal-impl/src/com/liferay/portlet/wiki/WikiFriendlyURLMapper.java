@@ -74,7 +74,7 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 	}
 
 	private static final String[] _ESCAPED_CHARS = new String[] {
-		"[$PLUS$]", "[$QUESTION$]", "[$SLASH$]"
+		"<PLUS>", "<QUESTION>", "<SLASH>"
 	};
 
 	private static final String[] _UNESCAPED_CHARS = new String[] {

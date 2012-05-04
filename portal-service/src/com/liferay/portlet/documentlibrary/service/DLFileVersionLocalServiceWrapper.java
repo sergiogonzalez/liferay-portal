@@ -85,6 +85,10 @@ public class DLFileVersionLocalServiceWrapper
 		return _dlFileVersionLocalService.deleteDLFileVersion(dlFileVersion);
 	}
 
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _dlFileVersionLocalService.dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

@@ -1547,7 +1547,7 @@ public class HookHotDeployListener
 		}
 
 		for (String key : _PROPS_VALUES_OBSOLETE) {
-			if (_log.isInfoEnabled()) {
+			if (_log.isInfoEnabled() && portalProperties.contains(key)) {
 				_log.info("Portal property \"" + key + "\" is obsolete");
 			}
 		}

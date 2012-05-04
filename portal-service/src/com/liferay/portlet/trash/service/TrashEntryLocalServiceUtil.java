@@ -90,6 +90,10 @@ public class TrashEntryLocalServiceUtil {
 		return getService().deleteTrashEntry(trashEntry);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -270,7 +274,10 @@ public class TrashEntryLocalServiceUtil {
 	* @param groupId the primary key of the entry's group
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
-	* @param status the status of the entityy prior to being moved to trash
+	* @param status the status of the entity prior to being moved to trash
+	* @param versions the primary keys and statuses of any of the entry's
+	versions (e.g., {@link
+	com.liferay.portlet.documentlibrary.model.DLFileVerison})
 	* @param typeSettingsProperties the type settings properties
 	* @return the trashEntry
 	* @throws SystemException if a system exception occurred
@@ -402,10 +409,10 @@ public class TrashEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the trash versions associated with the trash entry.
+	* Returns all the trash versions associated with the trash entry.
 	*
 	* @param entryId the primary key of the trash entry
-	* @return the trash versions associated with the trash entry
+	* @return all the trash versions associated with the trash entry
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
@@ -426,14 +433,10 @@ public class TrashEntryLocalServiceUtil {
 		return _service;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setService(TrashEntryLocalService service) {
-		MethodCache.remove(TrashEntryLocalService.class);
-
-		_service = service;
-
-		ReferenceRegistry.registerReference(TrashEntryLocalServiceUtil.class,
-			"_service");
-		MethodCache.remove(TrashEntryLocalService.class);
 	}
 
 	private static TrashEntryLocalService _service;
