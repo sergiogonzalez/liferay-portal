@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory;
 import com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler;
+import com.liferay.portlet.blogs.util.BlogsIndexer;
 import com.liferay.portlet.blogs.workflow.BlogsEntryWorkflowHandler;
 import com.liferay.portlet.bookmarks.util.BookmarksIndexer;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
@@ -147,6 +149,16 @@ public class ServiceTestUtil {
 		FileUtil.delete(PropsValues.LIFERAY_HOME + "/data");
 	}
 
+	public static SearchContext getSearchContext() throws Exception {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(TestPropsValues.getCompanyId());
+		searchContext.setGroupIds(new long[] {TestPropsValues.getGroupId()});
+		searchContext.setUserId(TestPropsValues.getUserId());
+
+		return searchContext;
+	}
+
 	public static ServiceContext getServiceContext() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -200,6 +212,7 @@ public class ServiceTestUtil {
 
 		// Indexers
 
+		IndexerRegistryUtil.register(new BlogsIndexer());
 		IndexerRegistryUtil.register(new ContactIndexer());
 		IndexerRegistryUtil.register(new UserIndexer());
 		IndexerRegistryUtil.register(new BookmarksIndexer());

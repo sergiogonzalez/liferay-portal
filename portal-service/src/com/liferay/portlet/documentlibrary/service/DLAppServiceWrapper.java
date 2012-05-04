@@ -32,6 +32,24 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier() {
+		return _dlAppService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlAppService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Adds a file entry and associated metadata. It is created based on a byte
 	* array.
 	*

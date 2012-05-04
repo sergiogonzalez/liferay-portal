@@ -1529,11 +1529,10 @@ public class DLFileEntryTypeUtil {
 		return _persistence;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setPersistence(DLFileEntryTypePersistence persistence) {
-		_persistence = persistence;
-
-		ReferenceRegistry.registerReference(DLFileEntryTypeUtil.class,
-			"_persistence");
 	}
 
 	private static DLFileEntryTypePersistence _persistence;

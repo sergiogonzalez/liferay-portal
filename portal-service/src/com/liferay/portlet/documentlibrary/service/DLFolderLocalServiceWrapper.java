@@ -84,6 +84,10 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.deleteDLFolder(dlFolder);
 	}
 
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _dlFolderLocalService.dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
