@@ -322,9 +322,11 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			if (existingFileEntry == null) {
+				String originalTitle = fileEntry.getTitle();
+
 				FileEntry existingTitleFileEntry = FileEntryUtil.fetchByR_F_T(
 					portletDataContext.getScopeGroupId(), folderId,
-					fileEntry.getTitle());
+					originalTitle);
 
 				if (existingTitleFileEntry != null) {
 					if (portletDataContext.
@@ -334,7 +336,6 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 							existingTitleFileEntry.getFileEntryId());
 					}
 					else {
-						String originalTitle = fileEntry.getTitle();
 						String dotExtension = StringPool.PERIOD + extension;
 
 						if (originalTitle.endsWith(dotExtension)) {
@@ -344,11 +345,11 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 						}
 
 						for (int i = 1;; i++) {
-							titleWithExtension =
-								originalTitle + StringPool.SPACE + i +
-									dotExtension;
+							originalTitle =
+								originalTitle + StringPool.SPACE + i;
+							titleWithExtension = originalTitle + dotExtension;
 
-							existingTitleFileEntry = FileEntryUtil.findByR_F_T(
+							existingTitleFileEntry = FileEntryUtil.fetchByR_F_T(
 								portletDataContext.getScopeGroupId(), folderId,
 								titleWithExtension);
 
@@ -366,7 +367,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 					userId, portletDataContext.getScopeGroupId(), folderId,
 					titleWithExtension, fileEntry.getMimeType(),
-					fileEntry.getTitle(), fileEntry.getDescription(), null, is,
+					originalTitle, fileEntry.getDescription(), null, is,
 					fileEntry.getSize(), serviceContext);
 
 				if (fileVersion.getStatus() ==
