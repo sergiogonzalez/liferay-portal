@@ -723,10 +723,10 @@ public class TrashEntryUtil {
 		return _persistence;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setPersistence(TrashEntryPersistence persistence) {
-		_persistence = persistence;
-
-		ReferenceRegistry.registerReference(TrashEntryUtil.class, "_persistence");
 	}
 
 	private static TrashEntryPersistence _persistence;

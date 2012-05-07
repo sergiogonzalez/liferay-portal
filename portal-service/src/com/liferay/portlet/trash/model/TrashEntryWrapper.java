@@ -16,6 +16,10 @@ package com.liferay.portlet.trash.model;
 
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>
  * This class is a wrapper for {@link TrashEntry}.
@@ -36,6 +40,71 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 
 	public String getModelClassName() {
 		return TrashEntry.class.getName();
+	}
+
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("entryId", getEntryId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
+		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("status", getStatus());
+
+		return attributes;
+	}
+
+	public void setModelAttributes(Map<String, Object> attributes) {
+		Long entryId = (Long)attributes.get("entryId");
+
+		if (entryId != null) {
+			setEntryId(entryId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
 	}
 
 	/**

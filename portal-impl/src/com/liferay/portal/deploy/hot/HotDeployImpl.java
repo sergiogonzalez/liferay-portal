@@ -54,8 +54,8 @@ import javax.servlet.ServletContextListener;
 public class HotDeployImpl implements HotDeploy {
 
 	public HotDeployImpl() {
-		if (_log.isInfoEnabled()) {
-			_log.info("Initializing hot deploy manager " + this.hashCode());
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initializing hot deploy manager " + this.hashCode());
 		}
 
 		_dependentHotDeployEvents = new ArrayList<HotDeployEvent>();

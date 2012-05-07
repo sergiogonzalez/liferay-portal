@@ -92,6 +92,10 @@ public class OrganizationLocalServiceUtil {
 		return getService().deleteOrganization(organization);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -1290,14 +1294,10 @@ public class OrganizationLocalServiceUtil {
 		return _service;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setService(OrganizationLocalService service) {
-		MethodCache.remove(OrganizationLocalService.class);
-
-		_service = service;
-
-		ReferenceRegistry.registerReference(OrganizationLocalServiceUtil.class,
-			"_service");
-		MethodCache.remove(OrganizationLocalService.class);
 	}
 
 	private static OrganizationLocalService _service;

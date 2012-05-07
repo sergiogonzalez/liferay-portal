@@ -16,6 +16,9 @@ package com.liferay.portlet.trash.model;
 
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>
  * This class is a wrapper for {@link TrashVersion}.
@@ -37,6 +40,50 @@ public class TrashVersionWrapper implements TrashVersion,
 
 	public String getModelClassName() {
 		return TrashVersion.class.getName();
+	}
+
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("versionId", getVersionId());
+		attributes.put("entryId", getEntryId());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
+		attributes.put("status", getStatus());
+
+		return attributes;
+	}
+
+	public void setModelAttributes(Map<String, Object> attributes) {
+		Long versionId = (Long)attributes.get("versionId");
+
+		if (versionId != null) {
+			setVersionId(versionId);
+		}
+
+		Long entryId = (Long)attributes.get("entryId");
+
+		if (entryId != null) {
+			setEntryId(entryId);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
 	}
 
 	/**

@@ -708,6 +708,21 @@ public class DLFileEntryLocalServiceImpl
 						dlFileVersionLocalService.getLatestFileVersion(
 							dlFileEntry.getFileEntryId(), true);
 
+					dlFileEntry.setVersionUserId(
+						dlLatestFileVersion.getUserId());
+					dlFileEntry.setVersionUserName(
+						dlLatestFileVersion.getUserName());
+					dlFileEntry.setModifiedDate(
+						dlLatestFileVersion.getCreateDate());
+					dlFileEntry.setExtension(
+						dlLatestFileVersion.getExtension());
+					dlFileEntry.setTitle(dlLatestFileVersion.getTitle());
+					dlFileEntry.setDescription(
+						dlLatestFileVersion.getDescription());
+					dlFileEntry.setExtraSettings(
+						dlLatestFileVersion.getExtraSettings());
+					dlFileEntry.setFileEntryTypeId(
+						dlLatestFileVersion.getFileEntryTypeId());
 					dlFileEntry.setVersion(dlLatestFileVersion.getVersion());
 					dlFileEntry.setSize(dlLatestFileVersion.getSize());
 
@@ -1288,7 +1303,8 @@ public class DLFileEntryLocalServiceImpl
 			// Indexer
 
 			if (dlFileVersion.getVersion().equals(
-					DLFileEntryConstants.VERSION_DEFAULT)) {
+					DLFileEntryConstants.VERSION_DEFAULT) ||
+				(status == WorkflowConstants.STATUS_IN_TRASH)) {
 
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					DLFileEntry.class);
@@ -1335,7 +1351,9 @@ public class DLFileEntryLocalServiceImpl
 
 		// Indexer
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
+		if ((status == WorkflowConstants.STATUS_APPROVED) ||
+			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) {
+
 			reindex(dlFileEntry);
 		}
 
