@@ -117,6 +117,8 @@ public class ScriptTag extends BaseScriptTag {
 		boolean positionInline = isPositionInLine();
 
 		try {
+			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+
 			StringBundler bodyContentSB = getBodyContentAsStringBundler();
 
 			String use = getUse();
@@ -126,7 +128,7 @@ public class ScriptTag extends BaseScriptTag {
 
 				request.setAttribute(ScriptTag.class.getName(), scriptData);
 
-				scriptData.append(bodyContentSB, use);
+				scriptData.append(portletId, bodyContentSB, use);
 
 				String page = getPage();
 
@@ -149,7 +151,7 @@ public class ScriptTag extends BaseScriptTag {
 					request.setAttribute(WebKeys.AUI_SCRIPT_DATA, scriptData);
 				}
 
-				scriptData.append(bodyContentSB, use);
+				scriptData.append(portletId, bodyContentSB, use);
 			}
 
 			return EVAL_PAGE;

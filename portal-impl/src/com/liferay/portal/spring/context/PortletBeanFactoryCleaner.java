@@ -43,7 +43,7 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 	public static void readBeans() {
 		if (_beanFactory == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("BeanFactory is null");
+				_log.warn("Bean factory is null");
 			}
 
 			return;

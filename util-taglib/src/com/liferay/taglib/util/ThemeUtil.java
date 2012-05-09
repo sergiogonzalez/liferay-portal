@@ -252,7 +252,12 @@ public class ThemeUtil {
 
 		// Merge templates
 
-		template.processTemplate(writer);
+		try {
+			template.processTemplate(writer);
+		}
+		finally {
+			request.removeAttribute(WebKeys.VELOCITY_TAGLIB);
+		}
 
 		if (write) {
 			return null;
@@ -410,7 +415,12 @@ public class ThemeUtil {
 
 		// Merge templates
 
-		template.processTemplate(writer);
+		try {
+			template.processTemplate(writer);
+		}
+		finally {
+			request.removeAttribute(WebKeys.VELOCITY_TAGLIB);
+		}
 
 		if (write) {
 			return null;

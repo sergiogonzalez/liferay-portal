@@ -76,7 +76,9 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 	}
 
 	@Override
-	protected void initBeanDefinitionReader(XmlBeanDefinitionReader reader) {
+	protected void initBeanDefinitionReader(
+		XmlBeanDefinitionReader xmlBeanDefinitionReader) {
+
 		ClassLoader beanClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
 				new ClassLoader[] {
@@ -86,11 +88,13 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 		beanClassLoader = new FilterClassLoader(beanClassLoader);
 
-		reader.setBeanClassLoader(beanClassLoader);
+		xmlBeanDefinitionReader.setBeanClassLoader(beanClassLoader);
 	}
 
 	@Override
-	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) {
+	protected void loadBeanDefinitions(
+		XmlBeanDefinitionReader xmlBeanDefinitionReader) {
+
 		String[] configLocations = getPortletConfigLocations();
 
 		if (configLocations == null) {
@@ -99,7 +103,7 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 		for (String configLocation : configLocations) {
 			try {
-				reader.loadBeanDefinitions(configLocation);
+				xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
 			}
 			catch (Exception e) {
 				Throwable cause = e.getCause();
