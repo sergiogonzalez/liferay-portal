@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
+import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
+import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.concurrent.ConcurrentLRUCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,16 +61,22 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
-		InvokerFilterChain invokerFilterChain = getInvokerFilterChain(
-			request, uri, filterChain);
+		try {
+			InvokerFilterChain invokerFilterChain = getInvokerFilterChain(
+				request, uri, filterChain);
 
-		Thread currentThread = Thread.currentThread();
+			Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+			ClassLoader contextClassLoader =
+				currentThread.getContextClassLoader();
 
-		invokerFilterChain.setContextClassLoader(contextClassLoader);
+			invokerFilterChain.setContextClassLoader(contextClassLoader);
 
-		invokerFilterChain.doFilter(servletRequest, servletResponse);
+			invokerFilterChain.doFilter(servletRequest, servletResponse);
+		}
+		finally {
+			request.removeAttribute(WebKeys.INVOKER_FILTER_URI);
+		}
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -123,7 +131,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
 
 		if (_invokerFilterChainSize > 0) {
-			_filterChains = new ConcurrentLRUCache<Integer, InvokerFilterChain>(
+			_filterChains = new ConcurrentLRUCache<String, InvokerFilterChain>(
 				_invokerFilterChainSize);
 		}
 
@@ -176,7 +184,11 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 				request, _dispatcher, uri, filterChain);
 		}
 
-		Integer key = uri.hashCode();
+		CacheKeyGenerator cacheKeyGenerator =
+			CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				InvokerFilter.class.getName());
+
+		String key = String.valueOf(cacheKeyGenerator.getCacheKey(uri));
 
 		InvokerFilterChain invokerFilterChain = _filterChains.get(key);
 
@@ -219,7 +231,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	private String _contextPath;
 	private Dispatcher _dispatcher;
-	private ConcurrentLRUCache<Integer, InvokerFilterChain> _filterChains;
+	private ConcurrentLRUCache<String, InvokerFilterChain> _filterChains;
 	private FilterConfig _filterConfig;
 	private int _invokerFilterChainSize;
 	private InvokerFilterHelper _invokerFilterHelper;

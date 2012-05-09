@@ -43,9 +43,9 @@ public class PermissionsURLTag extends TagSupport {
 
 	public static void doTag(
 			String redirect, String modelResource,
-			String modelResourceDescription, String resourcePrimKey,
-			String windowState, String var, int[] roleTypes,
-			PageContext pageContext)
+			String modelResourceDescription, long resourceGroupId,
+			String resourcePrimKey, String windowState, String var,
+			int[] roleTypes, PageContext pageContext)
 		throws Exception {
 
 		HttpServletRequest request =
@@ -53,6 +53,10 @@ public class PermissionsURLTag extends TagSupport {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (resourceGroupId <= 0) {
+			resourceGroupId = themeDisplay.getScopeGroupId();
+		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -95,6 +99,8 @@ public class PermissionsURLTag extends TagSupport {
 		portletURL.setParameter("modelResource", modelResource);
 		portletURL.setParameter(
 			"modelResourceDescription", modelResourceDescription);
+		portletURL.setParameter(
+			"resourceGroupId", String.valueOf(resourceGroupId));
 		portletURL.setParameter("resourcePrimKey", resourcePrimKey);
 
 		if (roleTypes != null) {
@@ -118,7 +124,8 @@ public class PermissionsURLTag extends TagSupport {
 		try {
 			doTag(
 				_redirect, _modelResource, _modelResourceDescription,
-				_resourcePrimKey, _windowState, _var, _roleTypes, pageContext);
+				_resourceGroupId, _resourcePrimKey, _windowState, _var,
+				_roleTypes, pageContext);
 		}
 		catch (Exception e) {
 			throw new JspException(e);
@@ -137,6 +144,10 @@ public class PermissionsURLTag extends TagSupport {
 
 	public void setRedirect(String redirect) {
 		_redirect = redirect;
+	}
+
+	public void setResourceGroupId(long resourceGroupId) {
+		_resourceGroupId = resourceGroupId;
 	}
 
 	public void setResourcePrimKey(String resourcePrimKey) {
@@ -158,6 +169,7 @@ public class PermissionsURLTag extends TagSupport {
 	private String _modelResource;
 	private String _modelResourceDescription;
 	private String _redirect;
+	private long _resourceGroupId;
 	private String _resourcePrimKey;
 	private int[] _roleTypes;
 	private String _var;

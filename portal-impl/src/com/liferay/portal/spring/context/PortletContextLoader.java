@@ -32,12 +32,12 @@ public class PortletContextLoader extends ContextLoader {
 	@Override
 	protected void customizeContext(
 		ServletContext servletContext,
-		ConfigurableWebApplicationContext applicationContext) {
+		ConfigurableWebApplicationContext configurableWebApplicationContext) {
 
 		String configLocation = servletContext.getInitParameter(
 			PORTAL_CONFIG_LOCATION_PARAM);
 
-		applicationContext.setConfigLocation(configLocation);
+		configurableWebApplicationContext.setConfigLocation(configLocation);
 	}
 
 	@Override
