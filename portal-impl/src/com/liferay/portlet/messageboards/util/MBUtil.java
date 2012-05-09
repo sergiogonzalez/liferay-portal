@@ -326,9 +326,17 @@ public class MBUtil {
 		if (Validator.isNotNull(emailMessageAddedSignature)) {
 			return emailMessageAddedSignature;
 		}
+
+		emailMessageAddedSignature = ContentUtil.get(
+			PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE);
+
+		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+			return emailMessageAddedSignature;
+		}
 		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE);
+			return StringUtil.replace(
+				emailMessageAddedSignature, "[$MAILING_LIST_ADDRESS$]",
+				StringPool.BLANK);
 		}
 	}
 
@@ -385,9 +393,17 @@ public class MBUtil {
 		if (Validator.isNotNull(emailMessageUpdatedSignature)) {
 			return emailMessageUpdatedSignature;
 		}
+
+		emailMessageUpdatedSignature = ContentUtil.get(
+			PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE);
+
+		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+			return emailMessageUpdatedSignature;
+		}
 		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE);
+			return StringUtil.replace(
+				emailMessageUpdatedSignature, "[$MAILING_LIST_ADDRESS$]",
+				StringPool.BLANK);
 		}
 	}
 

@@ -74,7 +74,7 @@ import org.springframework.web.context.ContextLoaderListener;
 public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
-	public void contextDestroyed(ServletContextEvent event) {
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
 
 		ThreadLocalCacheManager.destroy();
@@ -122,7 +122,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		try {
-			super.contextDestroyed(event);
+			super.contextDestroyed(servletContextEvent);
 
 			try {
 				OSGiServiceUtil.stopFramework();

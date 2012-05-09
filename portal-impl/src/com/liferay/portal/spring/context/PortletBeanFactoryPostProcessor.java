@@ -29,7 +29,7 @@ public class PortletBeanFactoryPostProcessor
 	implements BeanFactoryPostProcessor {
 
 	public void postProcessBeanFactory(
-		ConfigurableListableBeanFactory beanFactory) {
+		ConfigurableListableBeanFactory configurableListableBeanFactory) {
 
 		ClassLoader beanClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
@@ -40,7 +40,7 @@ public class PortletBeanFactoryPostProcessor
 
 		beanClassLoader = new FilterClassLoader(beanClassLoader);
 
-		beanFactory.setBeanClassLoader(beanClassLoader);
+		configurableListableBeanFactory.setBeanClassLoader(beanClassLoader);
 	}
 
 }

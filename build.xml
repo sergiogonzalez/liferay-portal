@@ -237,43 +237,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 						</replace>
 					</then>
 				</if>
-
-				<delete>
-					<fileset
-						dir="${app.server.dir}/modules"
-						includes="commons-codec-repackaged.jar"
-					/>
-				</delete>
-
-				<copy todir="${app.server.dir}/modules">
-					<fileset
-						dir="lib/portal"
-						includes="commons-codec.jar"
-					/>
-				</copy>
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<unjar
-					dest="${tstamp.value}"
-					src="${app.server.dir}/modules/jsf-impl.jar"
-				/>
-
-				<if>
-					<available file="${tstamp.value}/META-INF/services/javax.servlet.ServletContainerInitializer" />
-					<then>
-						<delete file="${tstamp.value}/META-INF/services/javax.servlet.ServletContainerInitializer" />
-
-						<zip
-							basedir="${tstamp.value}"
-							destfile="${app.server.dir}/modules/jsf-impl.jar"
-						/>
-					</then>
-				</if>
-
-				<delete dir="${tstamp.value}" />
 			</then>
 		</if>
 
@@ -366,8 +329,8 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 				</if>
 
 				<replace file="${app.server.instance.dir}/configuration/standalone.xml">
-					<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.0" default-virtual-server="default-host">]]></replacetoken>
-					<replacevalue><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.0" default-virtual-server="default-host">
+					<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">]]></replacetoken>
+					<replacevalue><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
 						<configuration>
 							<jsp-configuration development="true" />
 						</configuration>]]>
@@ -410,7 +373,7 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 
 						<replace file="${app.server.jetty.bin.dir}/run.bat">
 							<replacetoken>set "JAVA_OPTS=-D</replacetoken>
-							<replacevalue>set "JAVA_OPTS=-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
+							<replacevalue>set "JAVA_OPTS=-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
 						</replace>
 
 						<loadfile property="run.bat.content" srcfile="${app.server.jetty.bin.dir}/run.bat">
@@ -440,7 +403,7 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 
 						<replace file="${app.server.jetty.bin.dir}/run.sh">
 							<replacetoken>export JAVA_OPTS="-D</replacetoken>
-							<replacevalue>export JAVA_OPTS="-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
+							<replacevalue>export JAVA_OPTS="-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
 						</replace>
 
 						<loadfile property="run.sh.content" srcfile="${app.server.jetty.bin.dir}/run.sh">
@@ -474,29 +437,6 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 							file="tools/servers/jetty/contexts/root.xml"
 							tofile="${app.server.dir}/contexts/root.xml"
 						/>
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<available file="${app.server.dir}/etc/start.config" />
-					</not>
-					<then>
-						<unjar src="${app.server.dir}/start.jar" dest="${app.server.dir}">
-							<patternset>
-								<include name="**/start.config" />
-							</patternset>
-							<mapper
-								type="glob"
-								from="org/eclipse/jetty/start/*"
-								to="etc/*"
-							/>
-						</unjar>
-
-						<echo file="${app.server.dir}/etc/start.config" append="true">
-jetty.logs=$(jetty.home)/logs
-
-$(jetty.home)/lib/liferay/*</echo>
 					</then>
 				</if>
 

@@ -352,9 +352,9 @@ public class JournalIndexer extends BaseIndexer {
 			String type = dynamicElementElement.attributeValue(
 				"type", StringPool.BLANK);
 
-			if (!type.equals("image") && !type.equals("multi-list") &&
-				!type.equals("list") && !type.equals("document_library") &&
-				!type.equals("boolean") && !type.equals("link_to_layout") &&
+			if (!type.equals("boolean") && !type.equals("document_library") &&
+				!type.equals("image") && !type.equals("list") &&
+				!type.equals("link_to_layout") && !type.equals("multi-list") &&
 				!type.equals("selection_break")) {
 
 				Element dynamicContentElement = dynamicElementElement.element(
