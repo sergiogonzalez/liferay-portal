@@ -40,9 +40,11 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 public class PortalApplicationContext extends XmlWebApplicationContext {
 
 	@Override
-	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) {
+	protected void loadBeanDefinitions(
+		XmlBeanDefinitionReader xmlBeanDefinitionReader) {
+
 		try {
-			super.loadBeanDefinitions(reader);
+			super.loadBeanDefinitions(xmlBeanDefinitionReader);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -50,7 +52,7 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 			}
 		}
 
-		reader.setResourceLoader(new DefaultResourceLoader());
+		xmlBeanDefinitionReader.setResourceLoader(new DefaultResourceLoader());
 
 		if (PropsValues.SPRING_CONFIGS == null) {
 			return;
@@ -68,7 +70,7 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 
 		for (String configLocation : configLocations) {
 			try {
-				reader.loadBeanDefinitions(configLocation);
+				xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
 			}
 			catch (Exception e) {
 				Throwable cause = e.getCause();

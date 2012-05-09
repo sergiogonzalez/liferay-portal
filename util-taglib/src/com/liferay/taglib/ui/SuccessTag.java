@@ -17,25 +17,15 @@ package com.liferay.taglib.ui;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SuccessTag extends IncludeTag implements BodyTag {
+public class SuccessTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		request.setAttribute("liferay-ui:success:key", _key);
-		request.setAttribute("liferay-ui:success:message", _message);
-		request.setAttribute(
-			"liferay-ui:success:translateMessage",
-			String.valueOf(_translateMessage));
-
-		return EVAL_BODY_BUFFERED;
+		return EVAL_BODY_INCLUDE;
 	}
 
 	public void setKey(String key) {
@@ -54,6 +44,22 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 	protected String getPage() {
 		return _PAGE;
 	}
+
+	@Override
+	protected boolean isCleanUpSetAttributes() {
+		return _CLEAN_UP_SET_ATTRIBUTES;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-ui:success:key", _key);
+		request.setAttribute("liferay-ui:success:message", _message);
+		request.setAttribute(
+			"liferay-ui:success:translateMessage",
+			String.valueOf(_translateMessage));
+	}
+
+	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private static final String _PAGE = "/html/taglib/ui/success/page.jsp";
 

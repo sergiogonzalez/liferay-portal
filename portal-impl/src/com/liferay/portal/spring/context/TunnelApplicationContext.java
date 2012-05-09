@@ -31,19 +31,21 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 public class TunnelApplicationContext extends XmlWebApplicationContext {
 
 	@Override
-	public void setParent(ApplicationContext parent) {
-		if (parent == null) {
+	public void setParent(ApplicationContext applicationContext) {
+		if (applicationContext == null) {
 			BeanLocatorImpl beanLocatorImpl =
 				(BeanLocatorImpl)PortalBeanLocatorUtil.getBeanLocator();
 
-			parent = beanLocatorImpl.getApplicationContext();
+			applicationContext = beanLocatorImpl.getApplicationContext();
 		}
 
-		super.setParent(parent);
+		super.setParent(applicationContext);
 	}
 
 	@Override
-	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) {
+	protected void loadBeanDefinitions(
+		XmlBeanDefinitionReader xmlBeanDefinitionReader) {
+
 		String[] configLocations = getConfigLocations();
 
 		if (configLocations == null) {
@@ -52,7 +54,7 @@ public class TunnelApplicationContext extends XmlWebApplicationContext {
 
 		for (String configLocation : configLocations) {
 			try {
-				reader.loadBeanDefinitions(configLocation);
+				xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
 			}
 			catch (Exception e) {
 				Throwable cause = e.getCause();

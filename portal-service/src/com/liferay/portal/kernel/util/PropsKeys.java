@@ -817,6 +817,8 @@ public interface PropsKeys {
 
 	public static final String INDEX_FILTER_SEARCH_LIMIT = "index.filter.search.limit";
 
+	public static final String INDEX_FORCE_GC_BEFORE_DELETE = "index.force.gc.before.delete";
+
 	public static final String INDEX_ON_STARTUP = "index.on.startup";
 
 	public static final String INDEX_ON_STARTUP_DELAY = "index.on.startup.delay";
@@ -1261,6 +1263,8 @@ public interface PropsKeys {
 
 	public static final String LOOK_AND_FEEL_MODIFIABLE = "look.and.feel.modifiable";
 
+	public static final String LUCENE_ANALYZER_MAX_TOKENS = "lucene.analyzer.max.tokens";
+
 	public static final String LUCENE_BUFFER_SIZE = "lucene.buffer.size";
 
 	public static final String LUCENE_COMMIT_BATCH_SIZE = "lucene.commit.batch.size";
@@ -1275,7 +1279,7 @@ public interface PropsKeys {
 
 	public static final String LUCENE_MERGE_FACTOR = "lucene.merge.factor";
 
-	public static final String LUCENE_OPTIMIZE_INTERVAL = "lucene.optimize.interval";
+	public static final String LUCENE_MERGE_POLICY = "lucene.merge.policy";
 
 	public static final String LUCENE_REPLICATE_WRITE = "lucene.replicate.write";
 
@@ -1694,6 +1698,8 @@ public interface PropsKeys {
 	public static final String PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST = "portlet.add.default.resource.check.whitelist";
 
 	public static final String PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS = "portlet.add.default.resource.check.whitelist.actions";
+
+	public static final String PORTLET_CONTAINER_RESTRICT = "portlet.container.restrict";
 
 	public static final String PORTLET_CSS_ENABLED = "portlet.css.enabled";
 
