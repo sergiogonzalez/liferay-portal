@@ -295,13 +295,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			name = GetterUtil.getString(image.getImageId());
 		}
 
-		name = name + StringPool.PERIOD + image.getType();
-
 		if (DLStoreUtil.hasFile(companyId, repositoryId, name)) {
 			DLStoreUtil.deleteFile(companyId, repositoryId, name);
 		}
 
-		DLStoreUtil.addFile(companyId, repositoryId, name, true, bytes);
+		DLStoreUtil.addFile(companyId, repositoryId, name, false, bytes);
 	}
 
 	protected void migrateImage(long imageId) throws Exception {
