@@ -152,8 +152,10 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(AssetVocabulary.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

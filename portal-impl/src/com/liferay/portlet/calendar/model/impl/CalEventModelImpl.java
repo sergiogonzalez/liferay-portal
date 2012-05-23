@@ -716,17 +716,15 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					CalEvent.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			CalEvent.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1159,7 +1157,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	private boolean _setOriginalRemindBy;
 	private int _firstReminder;
 	private int _secondReminder;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private CalEvent _escapedModelProxy;
 }

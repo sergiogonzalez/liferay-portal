@@ -486,17 +486,15 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					OrgLabor.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			OrgLabor.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -789,7 +787,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	private int _friClose;
 	private int _satOpen;
 	private int _satClose;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private OrgLabor _escapedModelProxy;
 }

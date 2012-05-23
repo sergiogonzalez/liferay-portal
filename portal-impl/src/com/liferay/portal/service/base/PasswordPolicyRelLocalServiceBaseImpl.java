@@ -290,8 +290,10 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

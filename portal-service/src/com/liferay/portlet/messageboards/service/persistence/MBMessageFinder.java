@@ -32,12 +32,21 @@ public interface MBMessageFinder {
 		long[] categoryIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int filterCountByG_U_MD_C_S(long groupId, long userId,
+		java.util.Date modifiedDate, long[] categoryIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int filterCountByG_U_C_A_S(long groupId, long userId,
 		long[] categoryIds, boolean anonymous, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<java.lang.Long> filterFindByG_U_C_S(long groupId,
 		long userId, long[] categoryIds, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.Long> filterFindByG_U_MD_C_S(long groupId,
+		long userId, java.util.Date modifiedDate, long[] categoryIds,
+		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<java.lang.Long> filterFindByG_U_C_A_S(long groupId,

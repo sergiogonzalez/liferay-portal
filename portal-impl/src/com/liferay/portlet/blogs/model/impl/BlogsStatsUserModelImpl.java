@@ -359,17 +359,15 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					BlogsStatsUser.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			BlogsStatsUser.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -600,7 +598,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	private int _ratingsTotalEntries;
 	private double _ratingsTotalScore;
 	private double _ratingsAverageScore;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private BlogsStatsUser _escapedModelProxy;
 }

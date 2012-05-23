@@ -281,17 +281,15 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					ResourceTypePermission.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			ResourceTypePermission.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -475,7 +473,6 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
 	private long _actionIds;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private ResourceTypePermission _escapedModelProxy;
 }

@@ -130,8 +130,10 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(MDRAction.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

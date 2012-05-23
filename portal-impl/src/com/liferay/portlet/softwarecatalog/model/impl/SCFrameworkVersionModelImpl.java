@@ -450,17 +450,15 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					SCFrameworkVersion.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SCFrameworkVersion.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -719,7 +717,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
 	private int _priority;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private SCFrameworkVersion _escapedModelProxy;
 }

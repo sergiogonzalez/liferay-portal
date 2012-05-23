@@ -151,8 +151,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(JournalFolder.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

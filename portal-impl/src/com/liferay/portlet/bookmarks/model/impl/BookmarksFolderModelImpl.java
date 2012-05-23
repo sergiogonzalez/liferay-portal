@@ -478,17 +478,15 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					BookmarksFolder.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			BookmarksFolder.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -784,7 +782,6 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	private boolean _setOriginalParentFolderId;
 	private String _name;
 	private String _description;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private BookmarksFolder _escapedModelProxy;
 }

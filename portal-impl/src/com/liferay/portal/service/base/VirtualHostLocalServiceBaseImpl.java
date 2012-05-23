@@ -290,8 +290,10 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(VirtualHost.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

@@ -83,7 +83,7 @@ public class EditRolePermissionsAction extends PortletAction {
 				e instanceof PrincipalException ||
 				e instanceof RolePermissionsException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.roles_admin.error");
 			}
@@ -106,7 +106,7 @@ public class EditRolePermissionsAction extends PortletAction {
 			if (e instanceof NoSuchRoleException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.roles_admin.error");
 			}

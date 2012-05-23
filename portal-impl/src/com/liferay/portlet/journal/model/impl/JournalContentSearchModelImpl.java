@@ -317,17 +317,15 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					JournalContentSearch.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			JournalContentSearch.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -530,7 +528,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	private String _originalPortletId;
 	private String _articleId;
 	private String _originalArticleId;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private JournalContentSearch _escapedModelProxy;
 }

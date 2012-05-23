@@ -543,8 +543,9 @@ public class ServletResponseUtil {
 		}
 
 		response.setHeader(
-			HttpHeaders.CACHE_CONTROL, HttpHeaders.CACHE_CONTROL_PUBLIC_VALUE);
-		response.setHeader(HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_PUBLIC_VALUE);
+			HttpHeaders.CACHE_CONTROL, HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE);
+		response.setHeader(
+			HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
 		if (Validator.isNotNull(fileName)) {
 			String contentDisposition =
@@ -635,7 +636,8 @@ public class ServletResponseUtil {
 	private static final String _CLIENT_ABORT_EXCEPTION =
 		"org.apache.catalina.connector.ClientAbortException";
 
-	private static final String _RANGE_REGEX = "^bytes=\\d*-\\d*(,\\d*-\\d*)*$";
+	private static final String _RANGE_REGEX =
+		"^bytes=\\d*-\\d*(,\\s?\\d*-\\d*)*$";
 
 	private static Log _log = LogFactoryUtil.getLog(ServletResponseUtil.class);
 

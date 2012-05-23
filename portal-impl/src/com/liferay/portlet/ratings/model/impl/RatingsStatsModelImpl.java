@@ -272,17 +272,15 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					RatingsStats.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			RatingsStats.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -451,7 +449,6 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	private int _totalEntries;
 	private double _totalScore;
 	private double _averageScore;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private RatingsStats _escapedModelProxy;
 }

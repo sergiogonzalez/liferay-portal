@@ -73,7 +73,7 @@ public class EditRepositoryAction extends PortletAction {
 			if (e instanceof NoSuchRepositoryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.document_library.error");
 			}
@@ -83,7 +83,7 @@ public class EditRepositoryAction extends PortletAction {
 					 e instanceof InvalidRepositoryException ||
 					 e instanceof RepositoryNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -104,7 +104,7 @@ public class EditRepositoryAction extends PortletAction {
 			if (e instanceof NoSuchRepositoryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.document_library.error");
 			}

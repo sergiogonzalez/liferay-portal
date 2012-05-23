@@ -62,7 +62,7 @@ public class EditUserPortraitAction extends PortletAction {
 			if (e instanceof NoSuchUserException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.users_admin.error");
 			}
@@ -70,7 +70,7 @@ public class EditUserPortraitAction extends PortletAction {
 					 e instanceof UserPortraitSizeException ||
 					 e instanceof UserPortraitTypeException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

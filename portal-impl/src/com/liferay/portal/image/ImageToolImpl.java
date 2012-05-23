@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.JavaProps;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.util.FileImpl;
 
 import com.sun.media.jai.codec.ImageCodec;
@@ -132,7 +132,7 @@ public class ImageToolImpl implements ImageTool {
 	public void encodeGIF(RenderedImage renderedImage, OutputStream os)
 		throws IOException {
 
-		if (JavaProps.isJDK6()) {
+		if (JavaDetector.isJDK6()) {
 			ImageIO.write(renderedImage, TYPE_GIF, os);
 		}
 		else {

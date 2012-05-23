@@ -16,7 +16,6 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingConstants;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -41,16 +39,10 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserPersonalSite;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -107,75 +99,7 @@ public class GroupImpl extends GroupBaseImpl {
 	public String getDescriptiveName(Locale locale)
 		throws PortalException, SystemException {
 
-		String name = getName();
-
-		if (isCompany()) {
-			name = LanguageUtil.get(locale, "global");
-		}
-		else if (isControlPanel()) {
-			name = LanguageUtil.get(locale, "control-panel");
-		}
-		else if (isLayout()) {
-			Layout layout = LayoutLocalServiceUtil.getLayout(getClassPK());
-
-			name = layout.getName(locale);
-		}
-		else if (isLayoutPrototype()) {
-			LayoutPrototype layoutPrototype =
-				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
-					getClassPK());
-
-			name = layoutPrototype.getName(locale);
-		}
-		else if (isLayoutSetPrototype()) {
-			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
-					getClassPK());
-
-			name = layoutSetPrototype.getName(locale);
-		}
-		else if (isOrganization()) {
-			long organizationId = getOrganizationId();
-
-			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(organizationId);
-
-			name = organization.getName();
-
-			Group group = organization.getGroup();
-
-			if (group.isStaged() && isStagingGroup()) {
-				name = name.concat(" (Staging)");
-			}
-		}
-		else if (isUser()) {
-			long userId = getClassPK();
-
-			User user = UserLocalServiceUtil.getUserById(userId);
-
-			name = user.getFullName();
-		}
-		else if (isUserGroup()) {
-			long userGroupId = getClassPK();
-
-			UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
-				userGroupId);
-
-			name = userGroup.getName();
-		}
-		else if (isUserPersonalSite()) {
-			name = LanguageUtil.get(locale, "user-personal-site");
-		}
-		else if (name.equals(GroupConstants.GUEST)) {
-			Company company = CompanyLocalServiceUtil.getCompany(
-				getCompanyId());
-
-			Account account = company.getAccount();
-
-			name = account.getName();
-		}
-
-		return name;
+		return GroupLocalServiceUtil.getGroupDescriptiveName(this, locale);
 	}
 
 	public Group getLiveGroup() {
@@ -429,6 +353,17 @@ public class GroupImpl extends GroupBaseImpl {
 
 	public boolean isRegularSite() {
 		return hasClassName(Group.class);
+	}
+
+	public boolean isRoot() {
+		if (getParentGroupId() ==
+				GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean isStaged() {

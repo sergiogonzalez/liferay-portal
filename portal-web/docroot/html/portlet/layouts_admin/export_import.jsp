@@ -23,9 +23,16 @@ String redirectWindowState = ParamUtil.getString(request, "redirectWindowState")
 
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EXPORT);
 
-Group group = (Group)request.getAttribute(WebKeys.GROUP);
-
 long groupId = ParamUtil.getLong(request, "groupId");
+
+Group group = null;
+
+if (groupId > 0) {
+	group = GroupLocalServiceUtil.getGroup(groupId);
+}
+else {
+	group = (Group)request.getAttribute(WebKeys.GROUP);
+}
 
 Group liveGroup = group;
 
@@ -33,7 +40,7 @@ if (group.isStagingGroup()) {
 	liveGroup = group.getLiveGroup();
 }
 
-long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
+long liveGroupId = ParamUtil.getLong(request, "liveGroupId", liveGroup.getGroupId());
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
@@ -166,44 +173,47 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
-					var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
+					<c:if test="<%= !group.isLayoutPrototype() %>">
+						var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
 
-					if (layoutsExportTreeOutput) {
-						var treeView = layoutsExportTreeOutput.getData('treeInstance');
+						if (layoutsExportTreeOutput) {
+							var treeView = layoutsExportTreeOutput.getData('treeInstance');
 
-						var layoutIds = [];
+							var layoutIds = [];
 
-						var regexLayoutId = /layoutId_(\d+)/;
+							var regexLayoutId = /layoutId_(\d+)/;
 
-						treeView.eachChildren(
-							function(item, index, collection) {
-								if (item.isChecked()) {
-									var match = regexLayoutId.exec(item.get('id'));
+							treeView.eachChildren(
+								function(item, index, collection) {
+									if (item.isChecked()) {
+										var match = regexLayoutId.exec(item.get('id'));
 
-									if (match) {
-										layoutIds.push(
-											{
-												includeChildren: !item.hasChildNodes(),
-												layoutId: match[1]
-											}
-										);
+										if (match) {
+											layoutIds.push(
+												{
+													includeChildren: !item.hasChildNodes(),
+													layoutId: match[1]
+												}
+											);
+										}
 									}
-								}
-							},
-							true
-						);
+								},
+								true
+							);
 
-						var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
+							var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
 
-						if (layoutIdsInput) {
-							layoutIdsInput.val(A.JSON.stringify(layoutIds));
+							if (layoutIdsInput) {
+								layoutIdsInput.val(A.JSON.stringify(layoutIds));
+							}
 						}
-					}
+					</c:if>
 
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+						<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:actionURL>
 
 					submitForm(form, '<%= exportPagesURL + "&etag=0" %>', false);

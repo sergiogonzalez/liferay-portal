@@ -124,6 +124,7 @@ public class ServiceBuilder {
 		String modelHintsFileName = arguments.get("service.model.hints.file");
 		String springFileName = arguments.get("service.spring.file");
 		String springBaseFileName = arguments.get("service.spring.base.file");
+		String springClusterFileName = arguments.get("service.spring.cluster.file");
 		String springDynamicDataSourceFileName = arguments.get("service.spring.dynamic.data.source.file");
 		String springHibernateFileName = arguments.get("service.spring.hibernate.file");
 		String springInfrastructureFileName = arguments.get("service.spring.infrastructure.file");
@@ -146,7 +147,7 @@ public class ServiceBuilder {
 		try {
 			new ServiceBuilder(
 				fileName, hbmFileName, ormFileName, modelHintsFileName,
-				springFileName, springBaseFileName,
+				springFileName, springBaseFileName, springClusterFileName,
 				springDynamicDataSourceFileName, springHibernateFileName,
 				springInfrastructureFileName, springShardDataSourceFileName,
 				apiDir, implDir, jsonFileName, remotingFileName, sqlDir,
@@ -412,8 +413,9 @@ public class ServiceBuilder {
 	public ServiceBuilder(
 		String fileName, String hbmFileName, String ormFileName,
 		String modelHintsFileName, String springFileName,
-		String springBaseFileName, String springDynamicDataSourceFileName,
-		String springHibernateFileName, String springInfrastructureFileName,
+		String springBaseFileName, String springClusterFileName,
+		String springDynamicDataSourceFileName, String springHibernateFileName,
+		String springInfrastructureFileName,
 		String springShardDataSourceFileName, String apiDir, String implDir,
 		String jsonFileName, String remotingFileName, String sqlDir,
 		String sqlFileName, String sqlIndexesFileName,
@@ -423,20 +425,21 @@ public class ServiceBuilder {
 
 		this(
 			fileName, hbmFileName, ormFileName, modelHintsFileName,
-			springFileName, springBaseFileName, springDynamicDataSourceFileName,
-			springHibernateFileName, springInfrastructureFileName,
-			springShardDataSourceFileName, apiDir, implDir, jsonFileName,
-			remotingFileName, sqlDir, sqlFileName, sqlIndexesFileName,
-			sqlIndexesPropertiesFileName, sqlSequencesFileName,
-			autoNamespaceTables, beanLocatorUtil, propsUtil, pluginName,
-			testDir, true);
+			springFileName, springBaseFileName, springClusterFileName,
+			springDynamicDataSourceFileName, springHibernateFileName,
+			springInfrastructureFileName, springShardDataSourceFileName, apiDir,
+			implDir, jsonFileName, remotingFileName, sqlDir, sqlFileName,
+			sqlIndexesFileName, sqlIndexesPropertiesFileName,
+			sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
+			propsUtil, pluginName, testDir, true);
 	}
 
 	public ServiceBuilder(
 		String fileName, String hbmFileName, String ormFileName,
 		String modelHintsFileName, String springFileName,
-		String springBaseFileName, String springDynamicDataSourceFileName,
-		String springHibernateFileName, String springInfrastructureFileName,
+		String springBaseFileName, String springClusterFileName,
+		String springDynamicDataSourceFileName, String springHibernateFileName,
+		String springInfrastructureFileName,
 		String springShardDataSourceFileName, String apiDir, String implDir,
 		String jsonFileName, String remotingFileName, String sqlDir,
 		String sqlFileName, String sqlIndexesFileName,
@@ -499,6 +502,8 @@ public class ServiceBuilder {
 			"service_wrapper", _tplServiceWrapper);
 		_tplSpringBaseXml = _getTplProperty(
 			"spring_base_xml", _tplSpringBaseXml);
+		_tplSpringClusterXml = _getTplProperty(
+			"spring_cluster_xml", _tplSpringClusterXml);
 		_tplSpringDynamicDataSourceXml = _getTplProperty(
 			"spring_dynamic_data_source_xml", _tplSpringDynamicDataSourceXml);
 		_tplSpringHibernateXml = _getTplProperty(
@@ -519,6 +524,7 @@ public class ServiceBuilder {
 			_modelHintsFileName = modelHintsFileName;
 			_springFileName = springFileName;
 			_springBaseFileName = springBaseFileName;
+			_springClusterFileName = springClusterFileName;
 			_springDynamicDataSourceFileName = springDynamicDataSourceFileName;
 			_springHibernateFileName = springHibernateFileName;
 			_springInfrastructureFileName = springInfrastructureFileName;
@@ -915,7 +921,7 @@ public class ServiceBuilder {
 
 			ServiceBuilder serviceBuilder = new ServiceBuilder(
 				refFileName, _hbmFileName, _ormFileName, _modelHintsFileName,
-				_springFileName, _springBaseFileName,
+				_springFileName, _springBaseFileName, _springClusterFileName,
 				_springDynamicDataSourceFileName, _springHibernateFileName,
 				_springInfrastructureFileName, _springShardDataSourceFileName,
 				_apiDir, _implDir, _jsonFileName, _remotingFileName, _sqlDir,
@@ -3093,13 +3099,19 @@ public class ServiceBuilder {
 	}
 
 	private void _createSpringClusterXml() throws Exception {
-		File ejbFile = new File(_implDir + "/META-INF/cluster-spring.xml");
-
-		if (ejbFile.exists()) {
-			System.out.println("Removing deprecated " + ejbFile);
-
-			ejbFile.delete();
+		if (Validator.isNull(_springClusterFileName)) {
+			return;
 		}
+
+		// Content
+
+		String content = _processTemplate(_tplSpringClusterXml);
+
+		// Write file
+
+		File ejbFile = new File(_springClusterFileName);
+
+		FileUtil.write(ejbFile, content, true);
 	}
 
 	private void _createSpringDynamicDataSourceXml() throws Exception {
@@ -4968,6 +4980,7 @@ public class ServiceBuilder {
 	private String _remotingFileName;
 	private String _serviceOutputPath;
 	private String _springBaseFileName;
+	private String _springClusterFileName;
 	private String _springDynamicDataSourceFileName;
 	private String _springFileName;
 	private String _springHibernateFileName;
@@ -5026,6 +5039,7 @@ public class ServiceBuilder {
 	private String _tplServiceUtil = _TPL_ROOT + "service_util.ftl";
 	private String _tplServiceWrapper = _TPL_ROOT + "service_wrapper.ftl";
 	private String _tplSpringBaseXml = _TPL_ROOT + "spring_base_xml.ftl";
+	private String _tplSpringClusterXml = _TPL_ROOT + "spring_cluster_xml.ftl";
 	private String _tplSpringDynamicDataSourceXml =
 		_TPL_ROOT + "spring_dynamic_data_source_xml.ftl";
 	private String _tplSpringHibernateXml =

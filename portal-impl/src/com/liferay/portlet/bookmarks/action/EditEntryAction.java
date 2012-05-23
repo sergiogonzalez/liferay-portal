@@ -85,14 +85,14 @@ public class EditEntryAction extends PortletAction {
 			if (e instanceof NoSuchEntryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.bookmarks.error");
 			}
 			else if (e instanceof EntryURLException ||
 					 e instanceof NoSuchFolderException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof AssetCategoryException ||
 					 e instanceof AssetTagException) {
@@ -118,7 +118,7 @@ public class EditEntryAction extends PortletAction {
 			if (e instanceof NoSuchEntryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.bookmarks.error");
 			}

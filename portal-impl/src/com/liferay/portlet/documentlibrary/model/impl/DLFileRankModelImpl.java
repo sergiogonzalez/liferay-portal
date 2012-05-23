@@ -293,17 +293,15 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					DLFileRank.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DLFileRank.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -492,7 +490,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	private long _fileEntryId;
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private DLFileRank _escapedModelProxy;
 }

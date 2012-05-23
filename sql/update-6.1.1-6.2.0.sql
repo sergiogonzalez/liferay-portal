@@ -230,9 +230,35 @@ update Country set name = 'yemen' where name = 'Yemen';
 update Country set name = 'zambia' where name = 'Zambia';
 update Country set name = 'zimbabwe' where name = 'Zimbabwe';
 
+alter table DLFolder add status INTEGER;
+alter table DLFolder add statusByUserId LONG;
+alter table DLFolder add statusByUserName VARCHAR(75) null;
+alter table DLFolder add statusDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update DLFolder set status = 0;
+update DLFolder set statusByUserId = userId;
+update DLFolder set statusByUserName = userName;
+update DLFolder set statusDate = modifiedDate;
+
 drop table Groups_Permissions;
 
 alter table JournalArticle add folderId LONG;
+
+create table JournalFolder (
+	uuid_ VARCHAR(75) null,
+	folderId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	parentFolderId LONG,
+	name VARCHAR(100) null,
+	description STRING null
+);
 
 drop table OrgGroupPermission;
 

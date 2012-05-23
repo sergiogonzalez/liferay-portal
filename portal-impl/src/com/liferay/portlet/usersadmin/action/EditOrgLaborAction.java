@@ -60,12 +60,12 @@ public class EditOrgLaborAction extends PortletAction {
 			if (e instanceof NoSuchOrgLaborException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.users_admin.error");
 			}
 			else if (e instanceof NoSuchListTypeException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -86,7 +86,7 @@ public class EditOrgLaborAction extends PortletAction {
 			if (e instanceof NoSuchOrgLaborException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.users_admin.error");
 			}

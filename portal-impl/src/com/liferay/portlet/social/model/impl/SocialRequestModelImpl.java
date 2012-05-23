@@ -503,17 +503,15 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					SocialRequest.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SocialRequest.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -813,7 +811,6 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private SocialRequest _escapedModelProxy;
 }

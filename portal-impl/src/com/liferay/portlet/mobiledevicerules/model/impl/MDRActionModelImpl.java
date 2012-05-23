@@ -692,17 +692,15 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					MDRAction.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MDRAction.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1023,7 +1021,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	private String _descriptionCurrentLanguageId;
 	private String _type;
 	private String _typeSettings;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private MDRAction _escapedModelProxy;
 }

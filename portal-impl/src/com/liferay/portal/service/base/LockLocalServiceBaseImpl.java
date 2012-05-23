@@ -286,7 +286,10 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(Lock.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(Lock.class,
+			clazz.getClassLoader());
 	}
 
 	/**

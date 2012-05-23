@@ -109,7 +109,7 @@ public class LoginAction extends PortletAction {
 						_log.info("Authentication failed");
 					}
 
-					SessionErrors.add(actionRequest, e.getClass().getName());
+					SessionErrors.add(actionRequest, e.getClass());
 				}
 			}
 			else if (e instanceof CompanyMaxUsersException ||
@@ -122,7 +122,7 @@ public class LoginAction extends PortletAction {
 					 e instanceof UserPasswordException ||
 					 e instanceof UserScreenNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				_log.error(e, e);

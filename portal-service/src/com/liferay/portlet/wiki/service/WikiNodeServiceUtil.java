@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -117,7 +116,6 @@ public class WikiNodeServiceUtil {
 
 			ReferenceRegistry.registerReference(WikiNodeServiceUtil.class,
 				"_service");
-			MethodCache.remove(WikiNodeService.class);
 		}
 
 		return _service;

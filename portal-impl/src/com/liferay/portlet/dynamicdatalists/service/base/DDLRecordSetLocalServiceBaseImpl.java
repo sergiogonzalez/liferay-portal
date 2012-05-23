@@ -133,8 +133,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(DDLRecordSet.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

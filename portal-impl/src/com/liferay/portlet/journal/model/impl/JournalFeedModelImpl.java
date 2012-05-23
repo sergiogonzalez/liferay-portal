@@ -714,17 +714,15 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					JournalFeed.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			JournalFeed.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1173,7 +1171,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private String _contentField;
 	private String _feedType;
 	private double _feedVersion;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private JournalFeed _escapedModelProxy;
 }

@@ -265,17 +265,15 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					RepositoryEntry.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			RepositoryEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -452,7 +450,6 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	private boolean _setOriginalRepositoryId;
 	private String _mappedId;
 	private String _originalMappedId;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private RepositoryEntry _escapedModelProxy;
 }

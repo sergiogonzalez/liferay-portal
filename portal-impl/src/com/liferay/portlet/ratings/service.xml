@@ -68,4 +68,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>EntryScore</exception>
+	</exceptions>
 </service-builder>

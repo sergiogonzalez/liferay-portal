@@ -104,6 +104,13 @@ else if (tabs2.equals("message-updated-email")) {
 				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 
 				<aui:input name="preferences--threadAsQuestionByDefault--" type="checkbox" value="<%= threadAsQuestionByDefault %>" />
+
+				<aui:select label="show-recent-posts-from-last" name="preferences--recentPostsDateOffset--">
+					<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", 24) %>' selected='<%= recentPostsDateOffset.equals("1") %>' value="1" />
+					<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", 7) %>' selected='<%= recentPostsDateOffset.equals("7") %>' value="7" />
+					<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", 30) %>' selected='<%= recentPostsDateOffset.equals("30") %>' value="30" />
+					<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", 365) %>' selected='<%= recentPostsDateOffset.equals("365") %>' value="365" />
+				</aui:select>
 			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.equals("email-from") %>'>
@@ -137,12 +144,16 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
 					</dd>
-					<dt>
-						[$MAILING_LIST_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-					</dd>
+
+					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
+						<dt>
+							[$MAILING_LIST_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+						</dd>
+					</c:if>
+
 					<dt>
 						[$MESSAGE_USER_ADDRESS$]
 					</dt>
@@ -235,12 +246,16 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<%= HtmlUtil.escape(emailFromName) %>
 					</dd>
-					<dt>
-						[$MAILING_LIST_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-					</dd>
+
+					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
+						<dt>
+							[$MAILING_LIST_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+						</dd>
+					</c:if>
+
 					<dt>
 						[$MESSAGE_BODY$]
 					</dt>
@@ -295,18 +310,21 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
 					</dd>
-					<dt>
-						[$TO_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-address-of-the-email-recipient" />
-					</dd>
-					<dt>
-						[$TO_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-name-of-the-email-recipient" />
-					</dd>
+
+					<c:if test="<%= !PropsValues.MESSAGE_BOARDS_EMAIL_BULK %>">
+						<dt>
+							[$TO_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-address-of-the-email-recipient" />
+						</dd>
+						<dt>
+							[$TO_NAME$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-name-of-the-email-recipient" />
+						</dd>
+					</c:if>
 				</dl>
 			</div>
 		</c:when>

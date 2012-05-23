@@ -423,17 +423,15 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					LayoutBranch.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			LayoutBranch.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -670,7 +668,6 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	private boolean _master;
 	private boolean _originalMaster;
 	private boolean _setOriginalMaster;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private LayoutBranch _escapedModelProxy;
 }

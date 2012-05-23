@@ -264,6 +264,7 @@
 		<property name="beanDefinitions">
 			<map>
 				<entry key="com.liferay.portal.cache.ThreadLocalCacheAdvice" value="nextMethodInterceptor" />
+				<entry key="com.liferay.portal.cluster.ClusterableChainableMethodAdviceInjector" value="parentChainableMethodAdvice,servletContextName" />
 				<entry key="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor" value="transactionAttributeSource,transactionManager" />
 				<entry key="com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl" value="dataSource,sessionFactoryClassLoader,sessionFactoryImplementor" />
 				<entry key="com.liferay.portal.dao.shard.advice.ShardAdvice" value="" />
@@ -444,6 +445,11 @@
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpc" class="com.liferay.portal.xmlrpc.XmlRpcImpl" />
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil" class="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil">
 		<property name="xmlRpc" ref="com.liferay.portal.kernel.xmlrpc.XmlRpc" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.xuggler.XugglerUtil" class="com.liferay.portal.kernel.xuggler.XugglerUtil">
+		<property name="xuggler">
+			<bean class="com.liferay.portal.xuggler.XugglerImpl" />
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.zip.ZipReaderFactory" class="com.liferay.portal.zip.ZipReaderFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.zip.ZipReaderFactoryUtil" class="com.liferay.portal.kernel.zip.ZipReaderFactoryUtil">

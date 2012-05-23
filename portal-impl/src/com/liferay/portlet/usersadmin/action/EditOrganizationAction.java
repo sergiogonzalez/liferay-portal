@@ -103,7 +103,7 @@ public class EditOrganizationAction extends PortletAction {
 			if (e instanceof NoSuchOrganizationException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.users_admin.error");
 			}
@@ -129,7 +129,7 @@ public class EditOrganizationAction extends PortletAction {
 						e.getClass().getName() + nslte.getType());
 				}
 				else {
-					SessionErrors.add(actionRequest, e.getClass().getName());
+					SessionErrors.add(actionRequest, e.getClass());
 				}
 
 				if (e instanceof RequiredOrganizationException) {
@@ -170,7 +170,7 @@ public class EditOrganizationAction extends PortletAction {
 			if (e instanceof NoSuchOrganizationException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.users_admin.error");
 			}

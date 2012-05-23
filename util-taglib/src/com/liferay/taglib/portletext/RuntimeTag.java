@@ -17,8 +17,10 @@ package com.liferay.taglib.portletext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.taglib.portletext.RuntimePortletIDs;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -27,9 +29,9 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
-import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -70,6 +72,12 @@ public class RuntimeTag extends TagSupport {
 
 		String portletId = portletName;
 
+		RestrictPortletServletRequest restrictPortletServletRequest =
+			new RestrictPortletServletRequest(request);
+
+		request = DynamicServletRequest.addQueryString(
+			restrictPortletServletRequest, queryString);
+
 		try {
 			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
@@ -77,9 +85,6 @@ public class RuntimeTag extends TagSupport {
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					request, portletId, defaultPreferences);
 			}
-
-			request = DynamicServletRequest.addQueryString(
-				request, queryString);
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -89,21 +94,36 @@ public class RuntimeTag extends TagSupport {
 
 			PortletContainerUtil.render(request, response, portlet);
 
-			Set<String> runtimePortletIds = (Set<String>)request.getAttribute(
-				WebKeys.RUNTIME_PORTLET_IDS);
+			RuntimePortletIDs runtimePortletIDs =
+				(RuntimePortletIDs)request.getAttribute(
+					WebKeys.RUNTIME_PORTLET_IDS);
 
-			if (runtimePortletIds == null) {
-				runtimePortletIds = new HashSet<String>();
+			if (runtimePortletIDs == null) {
+				runtimePortletIDs = new RuntimePortletIDs();
+
+				request.setAttribute(
+					WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIDs);
 			}
 
-			runtimePortletIds.add(portletName);
-
-			request.setAttribute(
-				WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIds);
+			runtimePortletIDs.addRuntimePortletID(portletName);
 		}
 		finally {
-			request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
+			restrictPortletServletRequest.mergeSharedAttributes();
 		}
+	}
+
+	public static Set<String> getRuntimePortletIDs(
+		ServletRequest servletRequest) {
+
+		RuntimePortletIDs runtimePortletIDs =
+			(RuntimePortletIDs)servletRequest.getAttribute(
+				WebKeys.RUNTIME_PORTLET_IDS);
+
+		if (runtimePortletIDs == null) {
+			return null;
+		}
+
+		return runtimePortletIDs.getRuntimePortletIDs();
 	}
 
 	@Override

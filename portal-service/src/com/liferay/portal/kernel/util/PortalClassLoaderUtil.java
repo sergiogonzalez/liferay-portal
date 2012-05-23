@@ -27,7 +27,7 @@ public class PortalClassLoaderUtil {
 	}
 
 	public static void setClassLoader(ClassLoader classLoader) {
-		if (ServerDetector.isJOnAS() && JavaProps.isJDK6()) {
+		if (ServerDetector.isJOnAS() && JavaDetector.isJDK6()) {
 			_classLoader = new URLClassLoader(new URL[0], classLoader);
 		}
 		else {

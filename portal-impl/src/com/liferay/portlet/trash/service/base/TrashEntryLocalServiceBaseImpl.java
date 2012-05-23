@@ -122,8 +122,10 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(TrashEntry.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

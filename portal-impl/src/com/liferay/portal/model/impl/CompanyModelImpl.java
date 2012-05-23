@@ -427,17 +427,15 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					Company.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			Company.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -678,7 +676,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	private boolean _setOriginalSystem;
 	private int _maxUsers;
 	private boolean _active;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Company _escapedModelProxy;
 }

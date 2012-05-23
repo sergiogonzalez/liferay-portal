@@ -65,14 +65,14 @@ public class EditFileShortcutAction extends PortletAction {
 			if (e instanceof NoSuchFileShortcutException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.document_library.error");
 			}
 			else if (e instanceof FileShortcutPermissionException ||
 					 e instanceof NoSuchFileEntryException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -93,7 +93,7 @@ public class EditFileShortcutAction extends PortletAction {
 			if (e instanceof NoSuchFileShortcutException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.document_library.error");
 			}

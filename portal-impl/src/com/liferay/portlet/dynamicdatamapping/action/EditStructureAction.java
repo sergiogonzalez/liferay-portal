@@ -96,7 +96,7 @@ public class EditStructureAction extends PortletAction {
 			if (e instanceof NoSuchStructureException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.dynamic_data_mapping.error");
 			}
@@ -145,7 +145,7 @@ public class EditStructureAction extends PortletAction {
 			if (//e instanceof NoSuchStructureException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward(
 					"portlet.dynamic_data_mapping.error");

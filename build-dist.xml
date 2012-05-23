@@ -767,6 +767,22 @@ know what you are doing as it can cause loss of data.
 release was successful.</echo>
 	</target>
 
+	<target name="exec-patching-tool">
+		<if>
+			<os family="unix" />
+			<then>
+				<exec dir="${patching.tool.dir}" executable="sh">
+					<arg line="patching-tool.sh ${patching.tool.arg.line}" />
+				</exec>
+			</then>
+			<else>
+				<exec dir="${patching.tool.dir}" executable="cmd.exe">
+					<arg line="/c patching-tool.bat ${patching.tool.arg.line}" />
+				</exec>
+			</else>
+		</if>
+	</target>
+
 	<target name="prepare-generated-files">
 		<ant dir="portal-impl" target="build-iw" inheritAll="false" />
 		<ant dir="portal-impl" target="build-services" inheritAll="false" />
@@ -822,7 +838,7 @@ release was successful.</echo>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.geronimo.bin.dir}">
-				<include name="*.sh"/>
+				<include name="*.sh" />
 			</fileset>
 		</chmod>
 	</target>
@@ -861,7 +877,7 @@ release was successful.</echo>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.glassfish.bin.dir}">
-				<exclude name="*.bat"/>
+				<exclude name="*.bat" />
 			</fileset>
 		</chmod>
 	</target>
@@ -897,13 +913,23 @@ release was successful.</echo>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.jboss.bin.dir}">
-				<include name="*.sh"/>
+				<include name="*.sh" />
 			</fileset>
 		</chmod>
 
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
 			<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[</extensions>]]></replacetoken>
+			<replacevalue><![CDATA[</extensions>
+				<system-properties>
+					<property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8" />
+					<property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true" />
+				</system-properties>]]>
+			</replacevalue>
 		</replace>
 
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
@@ -916,7 +942,7 @@ release was successful.</echo>
 			<replacevalue><![CDATA[<security-domains>
 				<security-domain name="PortalRealm">
 					<authentication>
-						<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required"/>
+						<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
 					</authentication>
 				</security-domain>]]>
 			</replacevalue>
@@ -995,7 +1021,7 @@ release was successful.</echo>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.jonas.bin.dir}">
-				<exclude name="*.bat"/>
+				<exclude name="*.bat" />
 			</fileset>
 		</chmod>
 
@@ -1113,7 +1139,7 @@ release was successful.</echo>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.tomcat.bin.dir}">
-				<include name="*.sh"/>
+				<include name="*.sh" />
 			</fileset>
 		</chmod>
 
@@ -1391,9 +1417,10 @@ sh startWebLogic.sh</echo>
 						<mkdir dir="${zip.executable.dir}/../patching-tool/logs" />
 						<mkdir dir="${zip.executable.dir}/../patching-tool/patches" />
 
-						<exec dir="${zip.executable.dir}/../patching-tool" executable="cmd.exe">
-							<arg line="/c patching-tool.bat auto-discovery" />
-						</exec>
+						<antcall target="exec-patching-tool">
+							<param name="patching.tool.dir" value="${zip.executable.dir}/../patching-tool" />
+							<param name="patching.tool.arg.line" value="auto-discovery" />
+						</antcall>
 
 						<zip
 							destfile="dist/${zip.executable.file}-${lp.version}.zip"

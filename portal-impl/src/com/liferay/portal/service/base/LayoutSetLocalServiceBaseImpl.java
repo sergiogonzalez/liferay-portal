@@ -289,8 +289,10 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(LayoutSet.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

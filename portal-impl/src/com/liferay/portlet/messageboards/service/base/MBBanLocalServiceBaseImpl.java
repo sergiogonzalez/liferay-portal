@@ -138,7 +138,10 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(MBBan.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(MBBan.class,
+			clazz.getClassLoader());
 	}
 
 	/**

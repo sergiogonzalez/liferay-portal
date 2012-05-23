@@ -316,7 +316,16 @@ public class LayoutExporter {
 
 		String type = "layout-set";
 
-		if (group.isLayoutSetPrototype()) {
+		if (group.isLayoutPrototype()) {
+			type = "layout-prototype";
+
+			LayoutPrototype layoutPrototype =
+				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+					group.getClassPK());
+
+			headerElement.addAttribute("type-uuid", layoutPrototype.getUuid());
+		}
+		else if (group.isLayoutSetPrototype()) {
 			type ="layout-set-prototype";
 
 			LayoutSetPrototype layoutSetPrototype =
@@ -633,9 +642,13 @@ public class LayoutExporter {
 
 		LayoutRevision layoutRevision = null;
 
-		if (LayoutStagingUtil.isBranchingLayout(layout)) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		boolean exportLAR = ParamUtil.getBoolean(serviceContext, "exportLAR");
+
+		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout) &&
+			!layout.isTypeURL()) {
 
 			long layoutSetBranchId = ParamUtil.getLong(
 				serviceContext, "layoutSetBranchId");
@@ -648,7 +661,7 @@ public class LayoutExporter {
 				layoutSetBranchId, true, layout.getPlid());
 
 			if (layoutRevision == null) {
-					return;
+				return;
 			}
 
 			LayoutStagingHandler layoutStagingHandler =

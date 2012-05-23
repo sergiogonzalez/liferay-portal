@@ -389,17 +389,15 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					Country.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			Country.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -619,7 +617,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Country _escapedModelProxy;
 }

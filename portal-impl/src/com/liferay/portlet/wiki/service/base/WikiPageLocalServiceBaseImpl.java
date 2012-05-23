@@ -164,7 +164,10 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(WikiPage.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(WikiPage.class,
+			clazz.getClassLoader());
 	}
 
 	/**

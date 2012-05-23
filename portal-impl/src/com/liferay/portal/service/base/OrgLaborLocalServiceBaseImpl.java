@@ -287,7 +287,10 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(OrgLabor.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(OrgLabor.class,
+			clazz.getClassLoader());
 	}
 
 	/**

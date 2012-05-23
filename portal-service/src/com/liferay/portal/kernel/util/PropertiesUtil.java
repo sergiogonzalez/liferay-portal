@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil;
 import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 
@@ -145,7 +143,7 @@ public class PropertiesUtil {
 	public static Properties load(InputStream is, String charsetName)
 		throws IOException {
 
-		if (JavaProps.isJDK6()) {
+		if (JavaDetector.isJDK6()) {
 			return loadJDK6(new InputStreamReader(is, charsetName));
 		}
 		else {
@@ -196,7 +194,7 @@ public class PropertiesUtil {
 	public static Properties load(String s, String charsetName)
 		throws IOException {
 
-		if (JavaProps.isJDK6()) {
+		if (JavaDetector.isJDK6()) {
 			return loadJDK6(new UnsyncStringReader(s));
 		}
 		else {
@@ -243,6 +241,11 @@ public class PropertiesUtil {
 	public static Properties loadJDK6(Reader reader) throws IOException {
 		try {
 			Properties properties = new Properties();
+
+			if (_jdk6LoadMethod == null) {
+				_jdk6LoadMethod = ReflectionUtil.getDeclaredMethod(
+					Properties.class, "load", Reader.class);
+			}
 
 			_jdk6LoadMethod.invoke(properties, reader);
 
@@ -327,20 +330,6 @@ public class PropertiesUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PropertiesUtil.class);
-
 	private static Method _jdk6LoadMethod;
-
-	static {
-		if (JavaProps.isJDK6()) {
-			try {
-				_jdk6LoadMethod = ReflectionUtil.getDeclaredMethod(
-					Properties.class, "load", Reader.class);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-	}
 
 }

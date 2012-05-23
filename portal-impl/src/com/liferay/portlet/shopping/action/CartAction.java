@@ -68,7 +68,7 @@ public void processAction(
 			if (e instanceof NoSuchItemException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.shopping.error");
 			}

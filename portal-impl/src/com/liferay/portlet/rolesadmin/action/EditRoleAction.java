@@ -67,7 +67,7 @@ public class EditRoleAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.roles_admin.error");
 			}
@@ -76,7 +76,7 @@ public class EditRoleAction extends PortletAction {
 					 e instanceof RequiredRoleException ||
 					 e instanceof RoleNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				if (cmd.equals(Constants.DELETE)) {
 					String redirect = PortalUtil.escapeRedirect(
@@ -106,7 +106,7 @@ public class EditRoleAction extends PortletAction {
 			if (e instanceof NoSuchRoleException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.roles_admin.error");
 			}

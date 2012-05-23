@@ -53,14 +53,14 @@ public class CopyTemplateAction extends PortletAction {
 			if (e instanceof NoSuchTemplateException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.journal.error");
 			}
 			else if (e instanceof DuplicateTemplateIdException ||
 					 e instanceof TemplateIdException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

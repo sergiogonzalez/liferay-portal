@@ -15,7 +15,6 @@
 package com.liferay.portlet.softwarecatalog.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -94,7 +93,6 @@ public class SCLicenseServiceUtil {
 
 			ReferenceRegistry.registerReference(SCLicenseServiceUtil.class,
 				"_service");
-			MethodCache.remove(SCLicenseService.class);
 		}
 
 		return _service;

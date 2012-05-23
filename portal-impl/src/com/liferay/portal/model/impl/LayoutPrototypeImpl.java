@@ -37,6 +37,12 @@ public class LayoutPrototypeImpl extends LayoutPrototypeBaseImpl {
 			getCompanyId(), getLayoutPrototypeId());
 	}
 
+	public long getGroupId() throws PortalException, SystemException {
+		Group group = getGroup();
+
+		return group.getGroupId();
+	}
+
 	public Layout getLayout() throws PortalException, SystemException {
 		Group group = getGroup();
 

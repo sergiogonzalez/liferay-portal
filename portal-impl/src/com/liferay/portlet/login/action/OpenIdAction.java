@@ -120,7 +120,7 @@ public class OpenIdAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof DuplicateUserEmailAddressException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof OpenIDException) {
 				if (_log.isInfoEnabled()) {
@@ -129,7 +129,7 @@ public class OpenIdAction extends PortletAction {
 							e.getMessage());
 				}
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				_log.error("Error processing the OpenID login", e);

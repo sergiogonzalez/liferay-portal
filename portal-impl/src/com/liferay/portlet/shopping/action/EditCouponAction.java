@@ -79,7 +79,7 @@ public class EditCouponAction extends PortletAction {
 			if (e instanceof NoSuchCouponException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.shopping.error");
 			}
@@ -112,7 +112,7 @@ public class EditCouponAction extends PortletAction {
 						clskue.getSkus());
 				}
 				else {
-					SessionErrors.add(actionRequest, e.getClass().getName());
+					SessionErrors.add(actionRequest, e.getClass());
 				}
 			}
 			else {
@@ -134,7 +134,7 @@ public class EditCouponAction extends PortletAction {
 			if (e instanceof NoSuchCouponException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.shopping.error");
 			}

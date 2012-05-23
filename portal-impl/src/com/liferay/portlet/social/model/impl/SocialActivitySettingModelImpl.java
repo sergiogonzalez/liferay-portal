@@ -373,17 +373,15 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					SocialActivitySetting.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SocialActivitySetting.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -583,7 +581,6 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 	private String _name;
 	private String _originalName;
 	private String _value;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private SocialActivitySetting _escapedModelProxy;
 }

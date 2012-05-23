@@ -15,7 +15,6 @@
 package com.liferay.portlet.polls.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -70,7 +69,6 @@ public class PollsVoteServiceUtil {
 
 			ReferenceRegistry.registerReference(PollsVoteServiceUtil.class,
 				"_service");
-			MethodCache.remove(PollsVoteService.class);
 		}
 
 		return _service;

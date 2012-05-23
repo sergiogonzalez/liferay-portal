@@ -912,7 +912,7 @@ public class GetterUtil {
 	private static long _parseLong(String value, long defaultValue) {
 		if (_useJDKParseLong == null) {
 			if (OSDetector.isAIX() && ServerDetector.isWebSphere() &&
-				JavaProps.isIBM() && JavaProps.is64bit()) {
+				JavaDetector.isIBM() && JavaDetector.is64bit()) {
 
 				_useJDKParseLong = Boolean.TRUE;
 			}

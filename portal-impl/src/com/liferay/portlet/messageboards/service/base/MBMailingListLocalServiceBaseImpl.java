@@ -141,8 +141,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(MBMailingList.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

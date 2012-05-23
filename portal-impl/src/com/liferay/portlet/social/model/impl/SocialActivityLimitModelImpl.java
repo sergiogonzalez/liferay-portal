@@ -390,17 +390,15 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					SocialActivityLimit.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SocialActivityLimit.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -634,7 +632,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	private String _activityCounterName;
 	private String _originalActivityCounterName;
 	private String _value;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private SocialActivityLimit _escapedModelProxy;
 }

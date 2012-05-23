@@ -115,7 +115,7 @@ public class ExportImportAction extends EditConfigurationAction {
 			if (e instanceof NoSuchLayoutException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(
 					actionRequest, "portlet.portlet_configuration.error");
@@ -293,7 +293,7 @@ public class ExportImportAction extends EditConfigurationAction {
 				(e instanceof LARTypeException) ||
 				(e instanceof PortletIdException)) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				_log.error(e, e);

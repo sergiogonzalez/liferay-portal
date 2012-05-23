@@ -128,8 +128,10 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(ExpandoColumn.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

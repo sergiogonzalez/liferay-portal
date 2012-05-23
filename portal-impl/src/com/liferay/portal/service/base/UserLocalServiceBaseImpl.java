@@ -324,7 +324,10 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(User.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(User.class,
+			clazz.getClassLoader());
 	}
 
 	/**

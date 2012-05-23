@@ -54,7 +54,7 @@ public class EditWorkflowDefinitionLinkAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof WorkflowException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(
 					actionRequest, "portlet.workflow_definition_links.error");

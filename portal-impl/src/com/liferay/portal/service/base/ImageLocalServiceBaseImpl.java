@@ -292,7 +292,10 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(Image.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(Image.class,
+			clazz.getClassLoader());
 	}
 
 	/**

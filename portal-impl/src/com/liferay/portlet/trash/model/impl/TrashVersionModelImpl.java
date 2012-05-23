@@ -243,17 +243,15 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					TrashVersion.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			TrashVersion.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -406,7 +404,6 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	private long _classNameId;
 	private long _classPK;
 	private int _status;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private TrashVersion _escapedModelProxy;
 }

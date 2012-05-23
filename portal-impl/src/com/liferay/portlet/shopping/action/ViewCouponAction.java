@@ -62,7 +62,7 @@ public class ViewCouponAction extends PortletAction {
 			if (e instanceof NoSuchCouponException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.shopping.error");
 			}

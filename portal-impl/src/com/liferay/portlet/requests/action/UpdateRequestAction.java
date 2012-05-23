@@ -82,7 +82,7 @@ public class UpdateRequestAction extends PortletAction {
 			if (e instanceof NoSuchRequestException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.requests.error");
 			}

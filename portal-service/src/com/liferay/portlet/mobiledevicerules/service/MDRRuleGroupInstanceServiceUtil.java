@@ -15,7 +15,6 @@
 package com.liferay.portlet.mobiledevicerules.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -113,7 +112,6 @@ public class MDRRuleGroupInstanceServiceUtil {
 
 			ReferenceRegistry.registerReference(MDRRuleGroupInstanceServiceUtil.class,
 				"_service");
-			MethodCache.remove(MDRRuleGroupInstanceService.class);
 		}
 
 		return _service;

@@ -308,17 +308,15 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					SocialRelation.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SocialRelation.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -518,7 +516,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private SocialRelation _escapedModelProxy;
 }

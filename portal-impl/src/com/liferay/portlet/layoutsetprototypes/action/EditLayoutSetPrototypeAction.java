@@ -71,13 +71,13 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(
 					actionRequest, "portlet.layout_set_prototypes.error");
 			}
 			else if (e instanceof RequiredLayoutSetPrototypeException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				String redirect = PortalUtil.escapeRedirect(
 					ParamUtil.getString(actionRequest, "redirect"));
@@ -105,7 +105,7 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			if (e instanceof NoSuchLayoutSetPrototypeException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward(
 					"portlet.layout_set_prototypes.error");

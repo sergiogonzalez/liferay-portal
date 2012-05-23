@@ -51,27 +51,34 @@
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.countByG_U_C_S">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT currentMessage.threadId) AS COUNT_VALUE
+				COUNT(DISTINCT currentMessage.rootMessageId) AS COUNT_VALUE
 			FROM
 				MBMessage currentMessage
-			INNER JOIN
-				MBMessage rootMessage ON
-					(rootMessage.messageId = currentMessage.rootMessageId)
 			WHERE
 				(currentMessage.groupId = ?) AND
 				(currentMessage.categoryId = ?) AND
 				(currentMessage.userId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.countByG_U_MD_C_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT currentMessage.rootMessageId) AS COUNT_VALUE
+			FROM
+				MBMessage currentMessage
+			WHERE
+				(currentMessage.groupId = ?) AND
+				(currentMessage.categoryId = ?) AND
+				(currentMessage.userId = ?) AND
+				(currentMessage.modifiedDate > ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.countByG_U_C_A_S">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT currentMessage.threadId) AS COUNT_VALUE
+				COUNT(DISTINCT currentMessage.rootMessageId) AS COUNT_VALUE
 			FROM
 				MBMessage currentMessage
-			INNER JOIN
-				MBMessage rootMessage ON
-					(rootMessage.messageId = currentMessage.rootMessageId)
 			WHERE
 				(currentMessage.groupId = ?) AND
 				(currentMessage.categoryId = ?) AND
@@ -100,39 +107,50 @@
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByG_U_C_S">
 		<![CDATA[
 			SELECT
-				currentMessage.threadId
+				currentMessage.threadId, currentMessage.rootMessageId
 			FROM
 				MBMessage currentMessage
-			INNER JOIN
-				MBMessage rootMessage ON
-					(rootMessage.messageId = currentMessage.rootMessageId)
 			WHERE
 				(currentMessage.groupId = ?) AND
 				(currentMessage.categoryId = ?) AND
 				(currentMessage.userId = ?)
 			GROUP BY
-				currentMessage.threadId
+				currentMessage.threadId, currentMessage.rootMessageId
 			ORDER BY
 				MAX(currentMessage.priority) DESC,
+				MAX(currentMessage.modifiedDate) DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByG_U_MD_C_S">
+		<![CDATA[
+			SELECT
+				currentMessage.threadId, currentMessage.rootMessageId
+			FROM
+				MBMessage currentMessage
+			WHERE
+				(currentMessage.groupId = ?) AND
+				(currentMessage.categoryId = ?) AND
+				(currentMessage.userId = ?) AND
+				(currentMessage.modifiedDate > ?)
+			GROUP BY
+				currentMessage.threadId, currentMessage.rootMessageId
+			ORDER BY
 				MAX(currentMessage.modifiedDate) DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByG_U_C_A_S">
 		<![CDATA[
 			SELECT
-				currentMessage.threadId
+				currentMessage.threadId, currentMessage.rootMessageId
 			FROM
 				MBMessage currentMessage
-			INNER JOIN
-				MBMessage rootMessage ON
-					(rootMessage.messageId = currentMessage.rootMessageId)
 			WHERE
 				(currentMessage.groupId = ?) AND
 				(currentMessage.categoryId = ?) AND
 				(currentMessage.userId = ?) AND
 				(currentMessage.anonymous = ?)
 			GROUP BY
-				currentMessage.threadId
+				currentMessage.threadId, currentMessage.rootMessageId
 			ORDER BY
 				MAX(currentMessage.priority) DESC,
 				MAX(currentMessage.modifiedDate) DESC
@@ -162,6 +180,22 @@
 				(MBThread.groupId = ?) AND
 				(MBMessage.userId = ?) AND
 				(MBMessage.categoryId != -1)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.countByG_U_MD_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT MBThread.threadId) AS COUNT_VALUE
+			FROM
+				MBThread
+			INNER JOIN
+				MBMessage ON
+					(MBThread.threadId = MBMessage.threadId)
+			WHERE
+				(MBThread.groupId = ?) AND
+				(MBThread.categoryId != -1) AND
+				(MBThread.lastPostDate > ?) AND
+				(MBMessage.userId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.countByG_U_A_S">
@@ -260,6 +294,24 @@
 				(MBMessage.categoryId != -1)
 			ORDER BY
 				MBThread.priority DESC,
+				MBThread.lastPostDate DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_U_MD_S">
+		<![CDATA[
+			SELECT
+				DISTINCT {MBThread.*}
+			FROM
+				MBThread
+			INNER JOIN
+				MBMessage ON
+					(MBThread.threadId = MBMessage.threadId)
+			WHERE
+				(MBThread.groupId = ?) AND
+				(MBThread.categoryId != -1) AND
+				(MBThread.lastPostDate > ?) AND
+				(MBMessage.userId = ?)
+			ORDER BY
 				MBThread.lastPostDate DESC
 		]]>
 	</sql>

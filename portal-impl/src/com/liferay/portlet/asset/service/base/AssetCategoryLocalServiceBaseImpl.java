@@ -148,8 +148,10 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(AssetCategory.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

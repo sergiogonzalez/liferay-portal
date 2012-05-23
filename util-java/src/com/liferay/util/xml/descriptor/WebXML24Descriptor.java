@@ -30,6 +30,13 @@ public class WebXML24Descriptor extends SimpleXMLDescriptor {
 
 	public WebXML24Descriptor() {
 		_orderedChildren.put(
+			"servlet",
+			new String[] {
+				"icon", "servlet-name", "display-name", "description",
+				"servlet-class", "jsp-file", "init-param", "load-on-startup",
+				"run-as", "security-role-ref"
+			});
+		_orderedChildren.put(
 			"jsp-config", new String[] {"taglib", "jsp-property-group"});
 	}
 

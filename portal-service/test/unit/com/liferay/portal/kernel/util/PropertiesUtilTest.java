@@ -46,7 +46,7 @@ public class PropertiesUtilTest extends TestCase {
 	}
 
 	public void testLoadJDK6() throws Exception {
-		if (JavaProps.isJDK6()) {
+		if (JavaDetector.isJDK6()) {
 			Properties properties = PropertiesUtil.loadJDK6(
 				new UnsyncStringReader(_PROPERTIES_STRING));
 

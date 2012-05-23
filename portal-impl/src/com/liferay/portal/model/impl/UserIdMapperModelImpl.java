@@ -269,17 +269,15 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					UserIdMapper.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			UserIdMapper.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -457,7 +455,6 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	private String _description;
 	private String _externalUserId;
 	private String _originalExternalUserId;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private UserIdMapper _escapedModelProxy;
 }

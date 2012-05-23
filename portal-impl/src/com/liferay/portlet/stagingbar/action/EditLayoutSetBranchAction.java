@@ -103,7 +103,7 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			else if (e instanceof PrincipalException ||
 					 e instanceof SystemException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.staging_bar.error");
 			}
@@ -136,7 +136,7 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			if (e instanceof NoSuchGroupException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.staging_bar.error");
 			}

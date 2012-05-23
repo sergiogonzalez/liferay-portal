@@ -287,7 +287,10 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(Contact.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(Contact.class,
+			clazz.getClassLoader());
 	}
 
 	/**

@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -108,7 +107,6 @@ public class PasswordPolicyServiceUtil {
 
 			ReferenceRegistry.registerReference(PasswordPolicyServiceUtil.class,
 				"_service");
-			MethodCache.remove(PasswordPolicyService.class);
 		}
 
 		return _service;

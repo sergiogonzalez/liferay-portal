@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -63,6 +62,16 @@ public class MBThreadServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
+		long groupId, long userId, java.util.Date modifiedDate, int status,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupThreads(groupId, userId, modifiedDate, status,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -87,6 +96,13 @@ public class MBThreadServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupThreads(groupId, userId, status, start, end);
+	}
+
+	public static int getGroupThreadsCount(long groupId, long userId,
+		java.util.Date modifiedDate, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupThreadsCount(groupId, userId, modifiedDate, status);
 	}
 
 	public static int getGroupThreadsCount(long groupId, long userId, int status)
@@ -153,7 +169,6 @@ public class MBThreadServiceUtil {
 
 			ReferenceRegistry.registerReference(MBThreadServiceUtil.class,
 				"_service");
-			MethodCache.remove(MBThreadService.class);
 		}
 
 		return _service;

@@ -291,8 +291,10 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(LayoutRevision.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

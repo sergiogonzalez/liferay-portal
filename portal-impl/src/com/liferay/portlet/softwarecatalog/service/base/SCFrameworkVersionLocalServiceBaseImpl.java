@@ -132,8 +132,10 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(SCFrameworkVersion.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

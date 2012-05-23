@@ -52,7 +52,7 @@ public class TransactionalExecutionTestListener
 		if ((transactionContext != null) &&
 			!transactionContext._transactionStatus.isCompleted()) {
 
-			_rollbackTransaction(transactionContext);
+			rollbackTransaction(transactionContext);
 		}
 	}
 
@@ -74,26 +74,21 @@ public class TransactionalExecutionTestListener
 			TransactionContext transactionContext = new TransactionContext(
 				_platformTransactionManager, transactionAttribute);
 
-			_startNewTransaction(transactionContext);
+			startNewTransaction(transactionContext);
 
 			_transactionContextCache.put(testMethod, transactionContext);
 		}
 	}
 
-	private void _rollbackTransaction(TransactionContext transactionContext) {
+	protected void rollbackTransaction(TransactionContext transactionContext) {
 		transactionContext.rollBackTransaction();
 	}
 
-	private void _startNewTransaction(TransactionContext transactionContext) {
+	protected void startNewTransaction(TransactionContext transactionContext) {
 		transactionContext.startTransaction();
 	}
 
-	private PlatformTransactionManager _platformTransactionManager;
-	private TransactionAttributeSource _transactionAttributeSource;
-	private Map<Method, TransactionContext> _transactionContextCache =
-		new ConcurrentHashMap<Method, TransactionContext>();
-
-	private static class TransactionContext {
+	protected static class TransactionContext {
 
 		public TransactionContext(
 			PlatformTransactionManager platformTransactionManager,
@@ -117,5 +112,10 @@ public class TransactionalExecutionTestListener
 		private TransactionAttribute _transactionAttribute;
 		private TransactionStatus _transactionStatus;
 	}
+
+	private PlatformTransactionManager _platformTransactionManager;
+	private TransactionAttributeSource _transactionAttributeSource;
+	private Map<Method, TransactionContext> _transactionContextCache =
+		new ConcurrentHashMap<Method, TransactionContext>();
 
 }

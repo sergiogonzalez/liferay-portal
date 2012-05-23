@@ -442,8 +442,8 @@ public class DLFileEntryTypeLocalServiceImpl
 				serviceContext);
 		}
 
-		List<DLFolder> subFolders = dlFolderPersistence.findByG_P_M(
-			groupId, folderId, false);
+		List<DLFolder> subFolders = dlFolderPersistence.findByG_M_P(
+			groupId, false, folderId);
 
 		for (DLFolder subFolder : subFolders) {
 			long subFolderId = subFolder.getFolderId();

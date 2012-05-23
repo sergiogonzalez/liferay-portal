@@ -15,7 +15,6 @@
 package com.liferay.portlet.mobiledevicerules.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -390,7 +389,6 @@ public class MDRActionLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(MDRActionLocalServiceUtil.class,
 				"_service");
-			MethodCache.remove(MDRActionLocalService.class);
 		}
 
 		return _service;

@@ -176,7 +176,8 @@ public class OrganizationLocalServiceImpl
 		// Group
 
 		Group group = groupLocalService.addGroup(
-			userId, Organization.class.getName(), organizationId, name, null,
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			Organization.class.getName(), organizationId, name, null,
 			GroupConstants.TYPE_SITE_PRIVATE, null, site, true, null);
 
 		// Role
@@ -668,24 +669,24 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the organizations associated with the user. If includeNonUser
-	 * is <code>true</code>, the result includes those organizations that are
-	 * not directly associated to the user but he is an owner or an
-	 * administrator of the organization.
+	 * Returns all the organizations associated with the user. If
+	 * includeAdministrative is <code>true</code>, the result includes those
+	 * organizations that are not directly associated to the user but he is an
+	 * administrator or an owner of the organization.
 	 *
 	 * @param  userId the primary key of the user
-	 * @param  includeIndirectlyAssociated whether to includes organizations
-	 *         that are indirectly associated to the user because he is an owner
-	 *         or an administrator of the organization
+	 * @param  includeAdministrative whether to includes organizations that are
+	 *         indirectly associated to the user because he is an administrator
+	 *         or an owner of the organization
 	 * @return the organizations associated with the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Organization> getUserOrganizations(
-			long userId, boolean includeIndirectlyAssociated)
+			long userId, boolean includeAdministrative)
 		throws PortalException, SystemException {
 
-		if (!includeIndirectlyAssociated) {
+		if (!includeAdministrative) {
 			return getUserOrganizations(userId);
 		}
 
@@ -1619,9 +1620,9 @@ public class OrganizationLocalServiceImpl
 
 		if (!oldName.equals(name)) {
 			groupLocalService.updateGroup(
-				group.getGroupId(), name, group.getDescription(),
-				group.getType(), group.getFriendlyURL(), group.isActive(),
-				null);
+				group.getGroupId(), group.getParentGroupId(), name,
+				group.getDescription(), group.getType(), group.getFriendlyURL(),
+				group.isActive(), null);
 		}
 
 		if (group.isSite() != site) {
@@ -1867,7 +1868,8 @@ public class OrganizationLocalServiceImpl
 				if ((organizationId <= 0) ||
 					(organization.getOrganizationId() != organizationId)) {
 
-					throw new DuplicateOrganizationException(name);
+					throw new DuplicateOrganizationException(
+						"There is another organization named " + name);
 				}
 			}
 		}

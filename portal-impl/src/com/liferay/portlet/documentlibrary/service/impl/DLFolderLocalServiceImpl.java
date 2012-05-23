@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -40,10 +41,13 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -261,8 +265,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			return dlFolderPersistence.findByG_P(groupId, parentFolderId);
 		}
 		else {
-			return dlFolderPersistence.findByG_P_M(
-				groupId, parentFolderId, false);
+			return dlFolderPersistence.findByG_M_P(
+				groupId, false, parentFolderId);
 		}
 	}
 
@@ -276,8 +280,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				groupId, parentFolderId, start, end, obc);
 		}
 		else {
-			return dlFolderPersistence.findByG_P_M(
-				groupId, parentFolderId, false, start, end, obc);
+			return dlFolderPersistence.findByG_M_P(
+				groupId, false, parentFolderId, start, end, obc);
 		}
 	}
 
@@ -385,8 +389,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			return dlFolderPersistence.countByG_P(groupId, parentFolderId);
 		}
 		else {
-			return dlFolderPersistence.countByG_P_M(
-				groupId, parentFolderId, false);
+			return dlFolderPersistence.countByG_M_P(
+				groupId, false, parentFolderId);
 		}
 	}
 
@@ -401,14 +405,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return dlFolderPersistence.findByG_P_M(
-			groupId, parentFolderId, true, start, end, obc);
+		return dlFolderPersistence.findByG_M_P(
+			groupId, true, parentFolderId, start, end, obc);
 	}
 
 	public int getMountFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
-		return dlFolderPersistence.countByG_P_M(groupId, parentFolderId, true);
+		return dlFolderPersistence.countByG_M_P(groupId, true, parentFolderId);
 	}
 
 	public void getSubfolderIds(
@@ -565,6 +569,40 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setLastPostDate(lastPostDate);
 
 		dlFolderPersistence.update(dlFolder, false);
+	}
+
+	public DLFolder updateStatus(
+			long userId, long folderId, int status,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Folder
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+		dlFolder.setStatus(status);
+		dlFolder.setStatusByUserId(user.getUserId());
+		dlFolder.setStatusByUserName(user.getFullName());
+		dlFolder.setStatusDate(new Date());
+
+		dlFolderPersistence.update(dlFolder, false);
+
+		// Folders, file entries, and file shortcuts
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		List<Object> foldersAndFileEntriesAndFileShortcuts =
+			getFoldersAndFileEntriesAndFileShortcuts(
+				dlFolder.getGroupId(), folderId, null, false, queryDefinition);
+
+		dlAppHelperLocalService.updateStatuses(
+			user, foldersAndFileEntriesAndFileShortcuts, status);
+
+		return dlFolder;
 	}
 
 	protected void addFolderResources(

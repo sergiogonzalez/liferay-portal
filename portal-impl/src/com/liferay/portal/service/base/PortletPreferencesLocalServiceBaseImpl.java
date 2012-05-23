@@ -291,8 +291,10 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(PortletPreferences.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

@@ -371,17 +371,15 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					MBBan.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBBan.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -598,7 +596,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private String _banUserUuid;
 	private long _originalBanUserId;
 	private boolean _setOriginalBanUserId;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private MBBan _escapedModelProxy;
 }

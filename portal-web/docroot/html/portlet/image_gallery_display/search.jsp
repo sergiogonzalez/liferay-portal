@@ -122,7 +122,13 @@ boolean useAssetEntryQuery = false;
 		<br /><br />
 
 		<%
-			String[] mediaGalleryMimeTypes = null;
+		Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+
+		long defaultFolderId = GetterUtil.getLong(preferences.getValue("rootFolderId", StringPool.BLANK), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
+
+		String[] mediaGalleryMimeTypes = null;
 		%>
 
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>

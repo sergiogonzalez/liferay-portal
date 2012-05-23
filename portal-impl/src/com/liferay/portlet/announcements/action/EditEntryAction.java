@@ -82,7 +82,7 @@ public class EditEntryAction extends PortletAction {
 				e instanceof NoSuchEntryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -103,7 +103,7 @@ public class EditEntryAction extends PortletAction {
 			if (e instanceof NoSuchEntryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.announcements.error");
 			}

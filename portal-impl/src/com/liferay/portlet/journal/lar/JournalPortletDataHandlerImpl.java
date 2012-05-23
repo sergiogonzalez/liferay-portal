@@ -1417,8 +1417,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			int endPos3 = content.indexOf(CharPool.CLOSE_CURLY_BRACE, beginPos);
 			int endPos4 = content.indexOf(CharPool.CLOSE_PARENTHESIS, beginPos);
 			int endPos5 = content.indexOf(CharPool.LESS_THAN, beginPos);
-			int endPos6 = content.indexOf(CharPool.QUOTE, beginPos);
-			int endPos7 = content.indexOf(CharPool.SPACE, beginPos);
+			int endPos6 = content.indexOf(CharPool.QUESTION, beginPos);
+			int endPos7 = content.indexOf(CharPool.QUOTE, beginPos);
+			int endPos8 = content.indexOf(CharPool.SPACE, beginPos);
 
 			int endPos = endPos1;
 
@@ -1444,6 +1445,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			if ((endPos == -1) || ((endPos7 != -1) && (endPos7 < endPos))) {
 				endPos = endPos7;
+			}
+
+			if ((endPos == -1) || ((endPos8 != -1) && (endPos8 < endPos))) {
+				endPos = endPos8;
 			}
 
 			if ((beginPos == -1) || (endPos == -1)) {
@@ -1623,30 +1628,28 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			boolean checkDateRange)
 		throws Exception {
 
-		if (portletDataContext.isWithinDateRange(folder.getModifiedDate())) {
-			exportParentFolder(
-				portletDataContext, foldersElement, folder.getParentFolderId());
+		if (checkDateRange &&
+			!portletDataContext.isWithinDateRange(folder.getModifiedDate())) {
 
-			String path = getFolderPath(portletDataContext, folder);
+			return;
+		}
 
-			if (portletDataContext.isPathNotProcessed(path)) {
-				Element folderElement = foldersElement.addElement("folder");
+		exportParentFolder(
+			portletDataContext, foldersElement, folder.getParentFolderId());
 
-				portletDataContext.addClassedModel(
-					folderElement, path, folder, _NAMESPACE);
-			}
+		String path = getFolderPath(portletDataContext, folder);
+
+		if (portletDataContext.isPathNotProcessed(path)) {
+			Element folderElement = foldersElement.addElement("folder");
+
+			portletDataContext.addClassedModel(
+				folderElement, path, folder, _NAMESPACE);
 		}
 
 		List<JournalArticle> articles = JournalArticleUtil.findByG_F(
 			folder.getGroupId(), folder.getFolderId());
 
 		for (JournalArticle article : articles) {
-			exportFolder(
-				portletDataContext, foldersElement, articlesElement,
-				structuresElement, templatesElement, dlFileEntryTypesElement,
-				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-				folder, true);
-
 			exportArticle(
 				portletDataContext, articlesElement, structuresElement,
 				templatesElement, dlFileEntryTypesElement, dlFoldersElement,
@@ -1704,12 +1707,16 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			int endPos2 = content.indexOf(
 				CharPool.CLOSE_BRACKET, beginPos + hrefLength);
 			int endPos3 = content.indexOf(
-				CharPool.CLOSE_PARENTHESIS, beginPos + hrefLength);
+				CharPool.CLOSE_CURLY_BRACE, beginPos + hrefLength);
 			int endPos4 = content.indexOf(
-				CharPool.LESS_THAN, beginPos + hrefLength);
+				CharPool.CLOSE_PARENTHESIS, beginPos + hrefLength);
 			int endPos5 = content.indexOf(
-				CharPool.QUOTE, beginPos + hrefLength);
+				CharPool.LESS_THAN, beginPos + hrefLength);
 			int endPos6 = content.indexOf(
+				CharPool.QUESTION, beginPos + hrefLength);
+			int endPos7 = content.indexOf(
+				CharPool.QUOTE, beginPos + hrefLength);
+			int endPos8 = content.indexOf(
 				CharPool.SPACE, beginPos + hrefLength);
 
 			int endPos = endPos1;
@@ -1732,6 +1739,14 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			if ((endPos == -1) || ((endPos6 != -1) && (endPos6 < endPos))) {
 				endPos = endPos6;
+			}
+
+			if ((endPos == -1) || ((endPos7 != -1) && (endPos7 < endPos))) {
+				endPos = endPos7;
+			}
+
+			if ((endPos == -1) || ((endPos8 != -1) && (endPos8 < endPos))) {
+				endPos = endPos8;
 			}
 
 			if (endPos == -1) {
@@ -2134,6 +2149,22 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	protected static void importFolder(
+			PortletDataContext portletDataContext, Element folderElement)
+		throws Exception {
+
+		String path = folderElement.attributeValue("path");
+
+		if (!portletDataContext.isPathNotProcessed(path)) {
+			return;
+		}
+
+		JournalFolder folder =
+			(JournalFolder)portletDataContext.getZipEntryAsObject(path);
+
+		importFolder(portletDataContext, path, folder);
+	}
+
+	protected static void importFolder(
 			PortletDataContext portletDataContext, String folderPath,
 			JournalFolder folder)
 		throws Exception {
@@ -2452,6 +2483,14 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "web-content")) {
+			Element foldersElement = rootElement.element("folders");
+
+			List<Element> folderElements = foldersElement.elements("folder");
+
+			for (Element folderElement : folderElements) {
+				importFolder(portletDataContext, folderElement);
+			}
+
 			Element articlesElement = rootElement.element("articles");
 
 			List<Element> articleElements = articlesElement.elements("article");

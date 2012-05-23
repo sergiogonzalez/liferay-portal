@@ -47,6 +47,10 @@ public class WikiPageAssetRenderer extends BaseAssetRenderer {
 		_page = page;
 	}
 
+	public String getAssetRendererFactoryClassName() {
+		return WikiPageAssetRendererFactory.CLASS_NAME;
+	}
+
 	public long getClassPK() {
 		if (!_page.isApproved() &&
 			(_page.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {

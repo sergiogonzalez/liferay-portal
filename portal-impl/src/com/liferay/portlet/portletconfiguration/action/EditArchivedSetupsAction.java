@@ -81,12 +81,12 @@ public class EditArchivedSetupsAction extends EditConfigurationAction {
 			if (e instanceof NoSuchPortletItemException ||
 				e instanceof PortletItemNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(
 					actionRequest, "portlet.portlet_configuration.error");

@@ -707,17 +707,15 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					AssetCategory.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			AssetCategory.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1039,7 +1037,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	private long _vocabularyId;
 	private long _originalVocabularyId;
 	private boolean _setOriginalVocabularyId;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private AssetCategory _escapedModelProxy;
 }

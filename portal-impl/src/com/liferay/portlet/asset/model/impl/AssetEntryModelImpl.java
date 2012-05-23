@@ -1047,17 +1047,15 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					AssetEntry.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			AssetEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1547,7 +1545,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private int _width;
 	private double _priority;
 	private int _viewCount;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private AssetEntry _escapedModelProxy;
 }

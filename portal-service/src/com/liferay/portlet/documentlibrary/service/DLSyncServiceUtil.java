@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -93,7 +92,6 @@ public class DLSyncServiceUtil {
 
 			ReferenceRegistry.registerReference(DLSyncServiceUtil.class,
 				"_service");
-			MethodCache.remove(DLSyncService.class);
 		}
 
 		return _service;

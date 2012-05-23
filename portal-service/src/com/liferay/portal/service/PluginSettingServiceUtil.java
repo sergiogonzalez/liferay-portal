@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -72,7 +71,6 @@ public class PluginSettingServiceUtil {
 
 			ReferenceRegistry.registerReference(PluginSettingServiceUtil.class,
 				"_service");
-			MethodCache.remove(PluginSettingService.class);
 		}
 
 		return _service;

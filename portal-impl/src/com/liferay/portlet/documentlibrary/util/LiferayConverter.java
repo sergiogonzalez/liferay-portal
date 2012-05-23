@@ -44,6 +44,7 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -416,9 +417,17 @@ public abstract class LiferayConverter {
 		}
 	}
 
-	protected int getAudioBitRate(int originalBitRate) {
+	protected int getAudioBitRate(ICodec outputICodec, int originalBitRate) {
 		if ((originalBitRate == 0) || (originalBitRate > AUDIO_BIT_RATE_MAX)) {
 			originalBitRate = AUDIO_BIT_RATE_DEFAULT;
+		}
+
+		ICodec.ID iCodecID = outputICodec.getID();
+
+		if (iCodecID.equals(ICodec.ID.CODEC_ID_VORBIS)) {
+			if (originalBitRate < 64000) {
+				originalBitRate = 64000;
+			}
 		}
 
 		return originalBitRate;
@@ -454,6 +463,25 @@ public abstract class LiferayConverter {
 		}
 
 		return null;
+	}
+
+	protected Format getAudioSampleFormat(
+		ICodec outputICodec, Format originalSampleFormat) {
+
+		Format sampleFormat = null;
+
+		List<Format> supportedSampleFormats =
+			outputICodec.getSupportedAudioSampleFormats();
+
+		for (Format supportedSampleFormat : supportedSampleFormats) {
+			sampleFormat = supportedSampleFormat;
+
+			if (supportedSampleFormat == originalSampleFormat) {
+				break;
+			}
+		}
+
+		return sampleFormat;
 	}
 
 	protected int getAudioSampleRate() {
@@ -610,7 +638,15 @@ public abstract class LiferayConverter {
 		if ((iStreamCoder != null) &&
 			(iStreamCoder.getCodecType() != ICodec.Type.CODEC_TYPE_UNKNOWN)) {
 
-			if (iStreamCoder.open() < 0) {
+			int result = iStreamCoder.setStandardsCompliance(
+				IStreamCoder.CodecStandardsCompliance.COMPLIANCE_EXPERIMENTAL);
+
+			if (result < 0) {
+				throw new RuntimeException(
+					"Unable to set compliance mode to experimental");
+			}
+
+			if (iStreamCoder.open(null, null) < 0) {
 				throw new RuntimeException("Unable to open coder");
 			}
 		}
@@ -625,33 +661,6 @@ public abstract class LiferayConverter {
 			String outputURL, int index)
 		throws Exception {
 
-		IStream outputIStream = outputIContainer.addNewStream(index);
-
-		outputIStreams[index] = outputIStream;
-
-		IStreamCoder outputIStreamCoder = outputIStream.getStreamCoder();
-
-		outputIStreamCoders[index] = outputIStreamCoder;
-
-		int bitRate = inputIStreamCoder.getBitRate();
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Original audio bitrate " + bitRate);
-		}
-
-		bitRate = getAudioBitRate(bitRate);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Modified audio bitrate " + bitRate);
-		}
-
-		outputIStreamCoder.setBitRate(bitRate);
-
-		int channels = getAudioEncodingChannels(
-			outputIContainer, inputIStreamCoder.getChannels());
-
-		outputIStreamCoder.setChannels(channels);
-
 		ICodec iCodec = getAudioEncodingICodec(outputIContainer);
 
 		if (iCodec == null) {
@@ -665,18 +674,62 @@ public abstract class LiferayConverter {
 					outputURL);
 		}
 
-		outputIStreamCoder.setCodec(iCodec);
+		IStream outputIStream = outputIContainer.addNewStream(iCodec);
+
+		outputIStreams[index] = outputIStream;
+
+		IStreamCoder outputIStreamCoder = outputIStream.getStreamCoder();
+
+		outputIStreamCoders[index] = outputIStreamCoder;
+
+		int bitRate = inputIStreamCoder.getBitRate();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Original audio bitrate " + bitRate);
+		}
+
+		bitRate = getAudioBitRate(iCodec, bitRate);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Modified audio bitrate " + bitRate);
+		}
+
+		outputIStreamCoder.setBitRate(bitRate);
+
+		int channels = getAudioEncodingChannels(
+			outputIContainer, inputIStreamCoder.getChannels());
+
+		outputIStreamCoder.setChannels(channels);
 
 		outputIStreamCoder.setGlobalQuality(0);
+
+		Format sampleFormat = inputIStreamCoder.getSampleFormat();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Original audio sample format " + sampleFormat.toString());
+		}
+
+		sampleFormat = getAudioSampleFormat(iCodec, sampleFormat);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Modified audio sample format " + sampleFormat.toString());
+		}
+
+		outputIStreamCoder.setSampleFormat(sampleFormat);
+
 		outputIStreamCoder.setSampleRate(getAudioSampleRate());
 
 		iAudioResamplers[index] = createIAudioResampler(
 			inputIStreamCoder, outputIStreamCoder);
 
 		inputIAudioSamples[index] = IAudioSamples.make(
-			1024, inputIStreamCoder.getChannels());
+			1024, inputIStreamCoder.getChannels(),
+			inputIStreamCoder.getSampleFormat());
 		outputIAudioSamples[index] = IAudioSamples.make(
-			1024, outputIStreamCoder.getChannels());
+			1024, outputIStreamCoder.getChannels(),
+			outputIStreamCoder.getSampleFormat());
 	}
 
 	protected IAudioSamples resampleAudio(

@@ -312,17 +312,15 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					SocialActivityAchievement.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SocialActivityAchievement.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -517,7 +515,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	private boolean _firstInGroup;
 	private boolean _originalFirstInGroup;
 	private boolean _setOriginalFirstInGroup;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private SocialActivityAchievement _escapedModelProxy;
 }

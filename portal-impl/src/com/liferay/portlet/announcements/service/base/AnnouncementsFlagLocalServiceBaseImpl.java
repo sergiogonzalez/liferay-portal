@@ -128,8 +128,10 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(AnnouncementsFlag.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

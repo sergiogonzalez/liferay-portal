@@ -15,7 +15,6 @@
 package com.liferay.portlet.announcements.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -102,7 +101,6 @@ public class AnnouncementsEntryServiceUtil {
 
 			ReferenceRegistry.registerReference(AnnouncementsEntryServiceUtil.class,
 				"_service");
-			MethodCache.remove(AnnouncementsEntryService.class);
 		}
 
 		return _service;

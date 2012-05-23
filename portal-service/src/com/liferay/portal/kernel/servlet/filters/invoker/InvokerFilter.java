@@ -121,7 +121,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		if (invokerFilterHelper != null) {
 			servletContext.removeAttribute(InvokerFilterHelper.class.getName());
 
-			_invokerFilterHelper.destroy();
+			invokerFilterHelper.destroy();
 		}
 	}
 

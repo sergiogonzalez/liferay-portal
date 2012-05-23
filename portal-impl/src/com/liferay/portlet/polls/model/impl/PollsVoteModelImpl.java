@@ -382,17 +382,15 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					PollsVote.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			PollsVote.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -625,7 +623,6 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	private long _originalChoiceId;
 	private boolean _setOriginalChoiceId;
 	private Date _voteDate;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private PollsVote _escapedModelProxy;
 }

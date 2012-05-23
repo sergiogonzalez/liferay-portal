@@ -253,17 +253,15 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					DDMStructureLink.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			DDMStructureLink.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -419,7 +417,6 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	private long _structureId;
 	private long _originalStructureId;
 	private boolean _setOriginalStructureId;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private DDMStructureLink _escapedModelProxy;
 }

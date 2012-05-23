@@ -343,7 +343,8 @@ public class LayoutImporter {
 
 		String larType = headerElement.attributeValue("type");
 
-		if (!larType.equals("layout-set") &&
+		if (!larType.equals("layout-prototype") &&
+			!larType.equals("layout-set") &&
 			!larType.equals("layout-set-prototype")) {
 
 			throw new LARTypeException(
@@ -365,10 +366,38 @@ public class LayoutImporter {
 
 		portletDataContext.setSourceGroupId(sourceGroupId);
 
-		// Layout set prototype
+		// Layout and layout set prototype
 
-		if (group.isLayoutSetPrototype() &&
-			larType.equals("layout-set-prototype")) {
+		if (group.isLayoutPrototype() && larType.equals("layout-prototype")) {
+			LayoutPrototype layoutPrototype =
+				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+					group.getClassPK());
+
+			String layoutPrototypeUuid = GetterUtil.getString(
+				headerElement.attributeValue("type-uuid"));
+
+			LayoutPrototype existingLayoutPrototype = null;
+
+			if (Validator.isNotNull(layoutPrototypeUuid)) {
+				try {
+					existingLayoutPrototype =
+						LayoutPrototypeLocalServiceUtil.
+							getLayoutPrototypeByUuidAndCompanyId(
+								layoutPrototypeUuid, companyId);
+				}
+				catch (NoSuchLayoutPrototypeException nslpe) {
+				}
+			}
+
+			if (existingLayoutPrototype == null) {
+				layoutPrototype.setUuid(layoutPrototypeUuid);
+
+				LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
+					layoutPrototype);
+			}
+		}
+		else if (group.isLayoutSetPrototype() &&
+				 larType.equals("layout-set-prototype")) {
 
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(

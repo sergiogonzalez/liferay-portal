@@ -132,8 +132,10 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(DDMStorageLink.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

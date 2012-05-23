@@ -319,17 +319,15 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					Ticket.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			Ticket.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -551,7 +549,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private int _type;
 	private String _extraInfo;
 	private Date _expirationDate;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Ticket _escapedModelProxy;
 }

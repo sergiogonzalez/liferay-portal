@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.webdav.WebDAVStorage;
 
 import java.io.InputStream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -37,6 +38,7 @@ public class GetMethodImpl implements Method {
 
 		try {
 			WebDAVStorage storage = webDavRequest.getWebDAVStorage();
+			HttpServletRequest request = webDavRequest.getHttpServletRequest();
 			HttpServletResponse response =
 				webDavRequest.getHttpServletResponse();
 
@@ -57,9 +59,9 @@ public class GetMethodImpl implements Method {
 
 			if (is != null) {
 				try {
-					response.setContentType(resource.getContentType());
-
-					ServletResponseUtil.write(response, is);
+					ServletResponseUtil.sendFile(
+						request, response, resource.getDisplayName(), is,
+						resource.getSize(), resource.getContentType());
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {

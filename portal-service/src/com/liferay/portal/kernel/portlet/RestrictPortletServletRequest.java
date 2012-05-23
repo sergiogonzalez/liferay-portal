@@ -141,8 +141,8 @@ public class RestrictPortletServletRequest
 			if (value == _nullValue) {
 				servletRequest.removeAttribute(name);
 
-				if (_log.isInfoEnabled()) {
-					_log.info("Remove shared attribute " + name);
+				if (_log.isDebugEnabled()) {
+					_log.debug("Remove shared attribute " + name);
 				}
 			}
 			else {
@@ -151,8 +151,8 @@ public class RestrictPortletServletRequest
 				if ((masterValue == null) || !(value instanceof Mergeable)) {
 					servletRequest.setAttribute(name, value);
 
-					if (_log.isInfoEnabled()) {
-						_log.info("Set shared attribute " + name);
+					if (_log.isDebugEnabled()) {
+						_log.debug("Set shared attribute " + name);
 					}
 				}
 				else {
@@ -162,8 +162,8 @@ public class RestrictPortletServletRequest
 
 					masterMergeable.merge(slaveMergeable);
 
-					if (_log.isInfoEnabled()) {
-						_log.info("Merge shared attribute " + name);
+					if (_log.isDebugEnabled()) {
+						_log.debug("Merge shared attribute " + name);
 					}
 				}
 			}

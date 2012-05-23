@@ -365,17 +365,15 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					JournalArticleImage.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			JournalArticleImage.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -606,7 +604,6 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	private boolean _tempImage;
 	private boolean _originalTempImage;
 	private boolean _setOriginalTempImage;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private JournalArticleImage _escapedModelProxy;
 }

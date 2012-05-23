@@ -114,7 +114,7 @@ public class CheckoutAction extends CartAction {
 					e instanceof ShippingStreetException ||
 					e instanceof ShippingZipException) {
 
-					SessionErrors.add(actionRequest, e.getClass().getName());
+					SessionErrors.add(actionRequest, e.getClass());
 
 					setForward(
 						actionRequest, "portlet.shopping.checkout_first");

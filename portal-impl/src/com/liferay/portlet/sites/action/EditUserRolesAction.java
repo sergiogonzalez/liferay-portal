@@ -59,7 +59,7 @@ public class EditUserRolesAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.sites_admin.error");
 			}
@@ -96,7 +96,7 @@ public class EditUserRolesAction extends PortletAction {
 				e instanceof NoSuchRoleException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.sites_admin.error");
 			}

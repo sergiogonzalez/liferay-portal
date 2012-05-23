@@ -177,8 +177,10 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(BlogsEntry.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

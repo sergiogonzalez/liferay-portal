@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserImpl;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -233,15 +235,19 @@ public class UserFinderImpl
 		if (doUnion) {
 			params2 = new LinkedHashMap<String, Object>(params1);
 
+			List<Long> organizationIds = new ArrayList<Long>();
+
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+			if ((group != null) && group.isOrganization()) {
+				organizationIds.add(groupId);
+			}
+
 			List<Organization> organizations = GroupUtil.getOrganizations(
 				groupId);
 
-			Long[] organizationIds = new Long[organizations.size()];
-
-			for (int i = 0; i < organizations.size(); i++) {
-				Organization organization = organizations.get(i);
-
-				organizationIds[i] = organization.getOrganizationId();
+			for (Organization organization : organizations) {
+				organizationIds.add(organization.getOrganizationId());
 			}
 
 			params2.remove("usersGroups");
@@ -449,15 +455,19 @@ public class UserFinderImpl
 		if (doUnion) {
 			params2 = new LinkedHashMap<String, Object>(params1);
 
+			List<Long> organizationIds = new ArrayList<Long>();
+
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+			if ((group != null) && group.isOrganization()) {
+				organizationIds.add(groupId);
+			}
+
 			List<Organization> organizations = GroupUtil.getOrganizations(
 				groupId);
 
-			Long[] organizationIds = new Long[organizations.size()];
-
-			for (int i = 0; i < organizations.size(); i++) {
-				Organization organization = organizations.get(i);
-
-				organizationIds[i] = organization.getOrganizationId();
+			for (Organization organization : organizations) {
+				organizationIds.add(organization.getOrganizationId());
 			}
 
 			params2.remove("usersGroups");

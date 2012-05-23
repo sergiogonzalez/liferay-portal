@@ -105,6 +105,8 @@ AUI.add(
 
 		var STR_PARENT_NODE = 'parentNode';
 
+		var STR_PARENT_CATEGORY_ID = 'parentCategoryId';
+
 		var STR_QUERY = 'query';
 
 		var STR_SELECTED = 'selected';
@@ -112,6 +114,8 @@ AUI.add(
 		var STR_SUCCESS = 'success';
 
 		var STR_TITLE = 'title';
+
+		var STR_URI = 'uri';
 
 		var STR_VOCABULARY_ID = 'vocabularyId';
 
@@ -207,8 +211,6 @@ AUI.add(
 
 						instance._addCategoryButton = addCategoryButton;
 
-						instance._addCategoryButtonWrapper = addCategoryButton.ancestor('.aui-button');
-
 						A.one(idPrefix + 'addVocabularyButton').on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
 						A.one(idPrefix + 'categoryPermissionsButton').on(EVENT_CLICK, instance._onChangePermissions, instance);
 						A.one(idPrefix + 'deleteSelectedItems').on(EVENT_CLICK, instance._deleteSelected, instance);
@@ -243,7 +245,7 @@ AUI.add(
 						var ioCategory = instance._getIOCategory();
 
 						ioCategory.set('form', form.getDOM());
-						ioCategory.set('uri', form.attr(STR_ACTION));
+						ioCategory.set(STR_URI, form.attr(STR_ACTION));
 
 						ioCategory.start();
 					},
@@ -254,7 +256,7 @@ AUI.add(
 						var ioVocabulary = instance._getIOVocabulary();
 
 						ioVocabulary.set('form', form.getDOM());
-						ioVocabulary.set('uri', form.attr(STR_ACTION));
+						ioVocabulary.set(STR_URI, form.attr(STR_ACTION));
 
 						ioVocabulary.start();
 					},
@@ -350,7 +352,7 @@ AUI.add(
 
 												var ioCategoryDetails = instance._getIOCategoryDetails();
 
-												ioCategoryDetails.set('uri', categoryURL.toString()).start();
+												ioCategoryDetails.set(STR_URI, categoryURL.toString()).start();
 											}
 										}
 									}
@@ -631,6 +633,12 @@ AUI.add(
 
 								url.setParameter(STR_VOCABULARY_ID, instance._selectedVocabularyId);
 							}
+							else if (action == ACTION_ADD_SUBCATEGORY) {
+								path += STR_EDIT_CATEGORY;
+
+								url.setParameter(STR_PARENT_CATEGORY_ID, instance._selectedCategoryId);
+								url.setParameter(STR_VOCABULARY_ID, instance._selectedVocabularyId);
+							}
 							else if (action == ACTION_EDIT) {
 								path += STR_EDIT_CATEGORY;
 
@@ -844,8 +852,7 @@ AUI.add(
 									instance._selectedVocabularyId = instance._getVocabularyId(firstVocabulary);
 								}
 
-								instance._addCategoryButton.attr('disabled', !firstVocabulary);
-								instance._addCategoryButtonWrapper.toggleClass('aui-button-disabled', !firstVocabulary);
+								Liferay.Util.toggleDisabled(instance._addCategoryButton, !firstVocabulary);
 
 								if (callback) {
 									callback();
@@ -1456,7 +1463,7 @@ AUI.add(
 
 						panelPermissionsChange.show();
 
-						panelPermissionsChange.iframe.set('uri', url);
+						panelPermissionsChange.iframe.set(STR_URI, url);
 
 						panelPermissionsChange._syncUIPosAlign();
 
@@ -2111,10 +2118,10 @@ AUI.add(
 
 						var categoryPanelAdd = instance._categoryPanelAdd;
 
+						var categoryURL = instance._createURL(CATEGORY, action, LIFECYCLE_RENDER);
+
 						if (!categoryPanelAdd) {
 							categoryPanelAdd = instance._createCategoryPanelAdd();
-
-							var categoryURL = instance._createURL(CATEGORY, ACTION_ADD, LIFECYCLE_RENDER);
 
 							categoryPanelAdd.plug(
 								A.Plugin.IO,
@@ -2126,6 +2133,8 @@ AUI.add(
 						}
 						else if (instance._currentCategoryPanelAddIOHandle) {
 							instance._currentCategoryPanelAddIOHandle.detach();
+
+							categoryPanelAdd.io.set(STR_URI, categoryURL.toString());
 						}
 
 						categoryPanelAdd.show();
@@ -2354,7 +2363,7 @@ AUI.add(
 						var ioCategoryUpdate = instance._getIOCategoryUpdate();
 
 						ioCategoryUpdate.set('data', data);
-						ioCategoryUpdate.set('uri', moveURL.toString());
+						ioCategoryUpdate.set(STR_URI, moveURL.toString());
 
 						ioCategoryUpdate.set('arguments.success', vocabularyId);
 

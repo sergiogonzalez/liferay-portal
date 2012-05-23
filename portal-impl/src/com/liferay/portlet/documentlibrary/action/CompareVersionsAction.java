@@ -64,7 +64,7 @@ public class CompareVersionsAction extends PortletAction {
 			if (e instanceof NoSuchFileEntryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				setForward(renderRequest, "portlet.document_library.error");
 			}

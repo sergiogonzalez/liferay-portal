@@ -442,17 +442,15 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					WikiNode.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			WikiNode.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -722,7 +720,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	private String _originalName;
 	private String _description;
 	private Date _lastPostDate;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private WikiNode _escapedModelProxy;
 }

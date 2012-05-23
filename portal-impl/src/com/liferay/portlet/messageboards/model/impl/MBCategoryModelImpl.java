@@ -523,17 +523,15 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					MBCategory.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBCategory.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -866,7 +864,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private int _threadCount;
 	private int _messageCount;
 	private Date _lastPostDate;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private MBCategory _escapedModelProxy;
 }

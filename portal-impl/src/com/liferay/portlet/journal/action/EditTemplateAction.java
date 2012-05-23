@@ -106,7 +106,7 @@ public class EditTemplateAction extends PortletAction {
 			if (e instanceof NoSuchTemplateException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.journal.error");
 			}
@@ -118,7 +118,7 @@ public class EditTemplateAction extends PortletAction {
 					 e instanceof TemplateSmallImageSizeException ||
 					 e instanceof TemplateXslException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				if (e instanceof RequiredTemplateException) {
 					String redirect = PortalUtil.escapeRedirect(
@@ -158,7 +158,7 @@ public class EditTemplateAction extends PortletAction {
 			if (//e instanceof NoSuchTemplateException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.journal.error");
 			}

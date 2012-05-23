@@ -291,8 +291,10 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

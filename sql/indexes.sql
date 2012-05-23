@@ -186,6 +186,7 @@ create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_);
 create index IX_2E1BAFD9 on DDMTemplate (classNameId, classPK, type_, mode_);
 create index IX_32F83D16 on DDMTemplate (classPK);
 create index IX_DB24DDDD on DDMTemplate (groupId);
+create index IX_BD9A4A91 on DDMTemplate (groupId, classNameId);
 create index IX_824ADC72 on DDMTemplate (groupId, classNameId, classPK);
 create unique index IX_233D3B8 on DDMTemplate (groupId, templateKey);
 create index IX_33BEF579 on DDMTemplate (language);
@@ -251,9 +252,11 @@ create unique index IX_C99B2650 on DLFileVersion (uuid_, groupId);
 
 create index IX_A74DB14C on DLFolder (companyId);
 create index IX_F2EA1ACE on DLFolder (groupId);
+create index IX_C6081B20 on DLFolder (groupId, mountPoint, parentFolderId);
+create index IX_86893A06 on DLFolder (groupId, mountPoint, parentFolderId, status);
 create index IX_49C37475 on DLFolder (groupId, parentFolderId);
-create index IX_2A048EA0 on DLFolder (groupId, parentFolderId, mountPoint);
 create unique index IX_902FD874 on DLFolder (groupId, parentFolderId, name);
+create index IX_24946E5B on DLFolder (groupId, parentFolderId, status);
 create index IX_51556082 on DLFolder (parentFolderId, name);
 create index IX_EE29C715 on DLFolder (repositoryId);
 create index IX_CBC408D8 on DLFolder (uuid_);
@@ -294,6 +297,7 @@ create unique index IX_5DE0BE11 on Group_ (companyId, classNameId, liveGroupId, 
 create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL);
 create unique index IX_BBCA55B on Group_ (companyId, liveGroupId, name);
 create unique index IX_5AA68501 on Group_ (companyId, name);
+create index IX_5D75499E on Group_ (companyId, parentGroupId);
 create index IX_16218A38 on Group_ (liveGroupId);
 create index IX_7B590A7A on Group_ (type_, active_);
 

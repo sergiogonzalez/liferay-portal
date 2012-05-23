@@ -402,17 +402,15 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					ShoppingCategory.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			ShoppingCategory.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -667,7 +665,6 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	private boolean _setOriginalParentCategoryId;
 	private String _name;
 	private String _description;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private ShoppingCategory _escapedModelProxy;
 }

@@ -621,17 +621,15 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					AssetVocabulary.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			AssetVocabulary.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -917,7 +915,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _settings;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private AssetVocabulary _escapedModelProxy;
 }

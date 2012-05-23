@@ -150,8 +150,10 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

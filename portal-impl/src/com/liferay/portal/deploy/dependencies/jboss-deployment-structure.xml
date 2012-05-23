@@ -2,6 +2,9 @@
 
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.0">
 	<deployment>
+		<exclusions>
+			<module name="org.apache.log4j" />
+		</exclusions>
 		<dependencies>
 			<module name="com.liferay.portal"></module>
 			<module name="org.jboss.modules"></module>

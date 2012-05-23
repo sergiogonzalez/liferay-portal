@@ -154,8 +154,10 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(MBCategory.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

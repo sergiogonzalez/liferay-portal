@@ -53,6 +53,7 @@ import java.util.Set;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.data.AllowableActions;
+import org.apache.chemistry.opencmis.commons.data.CmisExtensionElement;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.Action;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
@@ -427,7 +428,24 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		Set<Action> allowableActionsSet =
 			allowableActions.getAllowableActions();
 
-		return allowableActionsSet.contains(Action.CAN_CHECK_IN);
+		if (allowableActionsSet.contains(Action.CAN_CHECK_IN)) {
+			return true;
+		}
+
+		List<CmisExtensionElement> cmisExtensionElements =
+			allowableActions.getExtensions();
+
+		for (CmisExtensionElement cmisExtensionElement :
+				cmisExtensionElements) {
+
+			String name = cmisExtensionElement.getName();
+
+			if (name.equals("canCheckInSpecified")) {
+				return GetterUtil.getBoolean(cmisExtensionElement.getValue());
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isCheckedOut() {

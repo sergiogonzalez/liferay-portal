@@ -90,7 +90,7 @@ public class EditItemAction extends PortletAction {
 				e instanceof NoSuchItemException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.shopping.error");
 			}
@@ -104,7 +104,7 @@ public class EditItemAction extends PortletAction {
 					 e instanceof ItemSmallImageNameException ||
 					 e instanceof ItemSmallImageSizeException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -125,7 +125,7 @@ public class EditItemAction extends PortletAction {
 			if (e instanceof NoSuchItemException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.shopping.error");
 			}

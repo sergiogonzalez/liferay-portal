@@ -294,8 +294,10 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(ResourceTypePermission.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

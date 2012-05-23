@@ -53,13 +53,12 @@ public class DeployManagerImpl implements DeployManager {
 	public String getInstalledDir() throws Exception {
 		if (ServerDetector.isGlassfish()) {
 			File file = new File(
-				System.getProperty("catalina.home"), "applications");
+				System.getProperty("com.sun.aas.instanceRoot"), "applications");
 
 			return file.getAbsolutePath();
 		}
-		else {
-			return DeployUtil.getAutoDeployDestDir();
-		}
+
+		return DeployUtil.getAutoDeployDestDir();
 	}
 
 	public PluginPackage getInstalledPluginPackage(String context) {

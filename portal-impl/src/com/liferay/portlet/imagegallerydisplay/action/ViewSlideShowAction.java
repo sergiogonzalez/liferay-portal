@@ -46,7 +46,7 @@ public class ViewSlideShowAction extends PortletAction {
 			if (e instanceof NoSuchFolderException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward(
 					"portlet.image_gallery_display.error");

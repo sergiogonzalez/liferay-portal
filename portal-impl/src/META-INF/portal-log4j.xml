@@ -286,8 +286,8 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.kernel.portlet">
-		<priority value="INFO" />
+	<category name="com.liferay.portal.kernel.portlet.RestrictPortletServletRequest">
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.kernel.search.HitsOpenSearchImpl">
@@ -318,7 +318,7 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.kernel.util.JavaProps">
+	<category name="com.liferay.portal.kernel.util.JavaDetector">
 		<priority value="ERROR" />
 	</category>
 
@@ -691,6 +691,10 @@
 	</category>
 
 	<category name="com.liferay.portal.util.HttpImpl">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.util.JarUtil">
 		<priority value="INFO" />
 	</category>
 

@@ -63,12 +63,12 @@ public class EditCategoryAction extends PortletAction {
 			if (e instanceof NoSuchCategoryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.shopping.error");
 			}
 			else if (e instanceof CategoryNameException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -89,7 +89,7 @@ public class EditCategoryAction extends PortletAction {
 			if (e instanceof NoSuchCategoryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.shopping.error");
 			}

@@ -67,14 +67,14 @@ public class UpdateEmailAddressAction extends Action {
 				e instanceof ReservedUserEmailAddressException ||
 				e instanceof UserEmailAddressException) {
 
-				SessionErrors.add(request, e.getClass().getName());
+				SessionErrors.add(request, e.getClass());
 
 				return mapping.findForward("portal.update_email_address");
 			}
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
-				SessionErrors.add(request, e.getClass().getName());
+				SessionErrors.add(request, e.getClass());
 
 				return mapping.findForward("portal.error");
 			}

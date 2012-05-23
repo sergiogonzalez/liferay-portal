@@ -568,17 +568,15 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					ShoppingCoupon.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			ShoppingCoupon.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -934,7 +932,6 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	private double _minOrder;
 	private double _discount;
 	private String _discountType;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private ShoppingCoupon _escapedModelProxy;
 }

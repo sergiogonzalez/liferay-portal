@@ -147,8 +147,10 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(JournalFeed.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

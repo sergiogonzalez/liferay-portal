@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -376,6 +375,12 @@ public class DDMTemplateLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTemplates(groupId, classNameId);
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
 		long groupId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTemplates(groupId, classNameId, classPK);
@@ -457,7 +462,6 @@ public class DDMTemplateLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(DDMTemplateLocalServiceUtil.class,
 				"_service");
-			MethodCache.remove(DDMTemplateLocalService.class);
 		}
 
 		return _service;

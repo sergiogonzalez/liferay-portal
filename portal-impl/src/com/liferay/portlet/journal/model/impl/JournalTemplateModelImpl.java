@@ -776,17 +776,15 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					JournalTemplate.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			JournalTemplate.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1159,7 +1157,6 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	private long _originalSmallImageId;
 	private boolean _setOriginalSmallImageId;
 	private String _smallImageURL;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private JournalTemplate _escapedModelProxy;
 }

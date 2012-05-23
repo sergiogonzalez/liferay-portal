@@ -61,7 +61,7 @@
 			<replacefilter token="genericJvmArguments=&quot;&quot;" value="genericJvmArguments=&quot;-Dfile.encoding=UTF8 -Xk22000 -Xp64k,16k&quot;" />
 			<replacefilter token="verboseModeGarbageCollection=&quot;false&quot;" value="verboseModeGarbageCollection=&quot;true&quot;" />
 			<replacefilter token="verboseModeJNI=&quot;false&quot;" value="verboseModeJNI=&quot;false&quot; initialHeapSize=&quot;256&quot; maximumHeapSize=&quot;1024&quot;" />
-			<replacefilter token="xmi:id=&quot;DynamicCache_" value="defaultPriority=&quot;3&quot; hashSize=&quot;0&quot; cacheSize=&quot;3000&quot; xmi:id=&quot;DynamicCache_"/>
+			<replacefilter token="xmi:id=&quot;DynamicCache_" value="defaultPriority=&quot;3&quot; hashSize=&quot;0&quot; cacheSize=&quot;3000&quot; xmi:id=&quot;DynamicCache_" />
 		</replace>
 
 		<exec executable="${pscp.executable}">

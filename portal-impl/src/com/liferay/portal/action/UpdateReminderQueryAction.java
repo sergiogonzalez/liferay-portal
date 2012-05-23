@@ -59,14 +59,14 @@ public class UpdateReminderQueryAction extends Action {
 		}
 		catch (Exception e) {
 			if (e instanceof UserReminderQueryException) {
-				SessionErrors.add(request, e.getClass().getName());
+				SessionErrors.add(request, e.getClass());
 
 				return mapping.findForward("portal.update_reminder_query");
 			}
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
-				SessionErrors.add(request, e.getClass().getName());
+				SessionErrors.add(request, e.getClass());
 
 				return mapping.findForward("portal.error");
 			}

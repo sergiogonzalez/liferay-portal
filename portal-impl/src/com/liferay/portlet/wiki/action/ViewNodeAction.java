@@ -51,7 +51,7 @@ public class ViewNodeAction extends PortletAction {
 			if (e instanceof NoSuchNodeException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.wiki.error");
 			}

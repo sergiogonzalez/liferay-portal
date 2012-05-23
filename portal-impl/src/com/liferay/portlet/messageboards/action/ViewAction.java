@@ -47,7 +47,7 @@ public class ViewAction extends PortletAction {
 				e instanceof NoSuchCategoryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.message_boards.error");
 			}

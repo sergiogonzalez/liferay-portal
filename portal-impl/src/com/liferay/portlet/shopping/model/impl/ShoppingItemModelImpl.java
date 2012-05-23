@@ -963,17 +963,15 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					ShoppingItem.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			ShoppingItem.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1524,7 +1522,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	private long _originalLargeImageId;
 	private boolean _setOriginalLargeImageId;
 	private String _largeImageURL;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private ShoppingItem _escapedModelProxy;
 }

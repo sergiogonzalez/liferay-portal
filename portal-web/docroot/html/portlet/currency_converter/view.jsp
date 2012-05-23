@@ -181,7 +181,7 @@ decimalFormat.setMinimumFractionDigits(2);
 		<table border="1" cellpadding="2" cellspacing="0">
 		<tr>
 			<td>
-				<img height="288" src="http://ichart.yahoo.com/z?s=<%= currency.getSymbol() %>=X&t=<%= chartId %>?" width="512" />
+				<img height="288" src="http://ichart.yahoo.com/z?s=<%= currency.getSymbol() %>=X&t=<%= HtmlUtil.escape(chartId) %>?" width="512" />
 			</td>
 		</tr>
 		</table>

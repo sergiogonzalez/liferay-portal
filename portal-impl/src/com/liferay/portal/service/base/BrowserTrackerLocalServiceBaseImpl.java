@@ -290,8 +290,10 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

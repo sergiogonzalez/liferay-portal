@@ -87,7 +87,7 @@ public class SetupWizardAction extends Action {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(request, e.getClass().getName());
+				SessionErrors.add(request, e.getClass());
 
 				return mapping.findForward("portal.setup_wizard");
 			}

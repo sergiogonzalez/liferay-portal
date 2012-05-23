@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -189,7 +190,7 @@ public class ExportLayoutsAction extends PortletAction {
 		catch (Exception e) {
 			_log.error(e, e);
 
-			SessionErrors.add(actionRequest, e.getClass().getName());
+			SessionErrors.add(actionRequest, e.getClass());
 
 			String pagesRedirect = ParamUtil.getString(
 				actionRequest, "pagesRedirect");
@@ -214,7 +215,7 @@ public class ExportLayoutsAction extends PortletAction {
 			if (e instanceof NoSuchGroupException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.layouts_admin.error");
 			}
@@ -247,6 +248,10 @@ public class ExportLayoutsAction extends PortletAction {
 	protected long[] getLayoutIds(
 			long groupId, boolean privateLayout, String layoutIdsJSON)
 		throws Exception {
+
+		if (Validator.isNull(layoutIdsJSON)) {
+			return new long[0];
+		}
 
 		List<Long> layoutIds = new ArrayList<Long>();
 

@@ -325,17 +325,15 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					UserTracker.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			UserTracker.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -559,7 +557,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	private String _remoteAddr;
 	private String _remoteHost;
 	private String _userAgent;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private UserTracker _escapedModelProxy;
 }

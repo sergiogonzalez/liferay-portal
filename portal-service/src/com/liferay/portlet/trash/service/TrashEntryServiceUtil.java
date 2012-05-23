@@ -15,7 +15,6 @@
 package com.liferay.portlet.trash.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -111,7 +110,6 @@ public class TrashEntryServiceUtil {
 
 			ReferenceRegistry.registerReference(TrashEntryServiceUtil.class,
 				"_service");
-			MethodCache.remove(TrashEntryService.class);
 		}
 
 		return _service;

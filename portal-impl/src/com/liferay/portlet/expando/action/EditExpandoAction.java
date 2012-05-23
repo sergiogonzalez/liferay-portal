@@ -87,7 +87,7 @@ public class EditExpandoAction extends PortletAction {
 			if (e instanceof NoSuchColumnException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.expando.error");
 			}
@@ -96,7 +96,7 @@ public class EditExpandoAction extends PortletAction {
 					 e instanceof DuplicateColumnNameException ||
 					 e instanceof ValueDataException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -117,7 +117,7 @@ public class EditExpandoAction extends PortletAction {
 			if (e instanceof NoSuchColumnException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.expando.error");
 			}

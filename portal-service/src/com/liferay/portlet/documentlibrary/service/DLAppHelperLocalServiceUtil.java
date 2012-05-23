@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -139,11 +138,25 @@ public class DLAppHelperLocalServiceUtil {
 		getService().moveFolder(folder);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
+		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveFolderToTrash(userId, folder);
+	}
+
 	public static void restoreFileEntryFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().restoreFileEntryFromTrash(userId, fileEntry);
+	}
+
+	public static void restoreFolderFromTrash(long userId,
+		com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreFolderFromTrash(userId, folder);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetEntry updateAsset(
@@ -210,13 +223,19 @@ public class DLAppHelperLocalServiceUtil {
 			newStatus, workflowContext);
 	}
 
+	public static void updateStatuses(com.liferay.portal.model.User user,
+		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateStatuses(user, dlFileEntriesAndDLFolders, status);
+	}
+
 	public static DLAppHelperLocalService getService() {
 		if (_service == null) {
 			_service = (DLAppHelperLocalService)PortalBeanLocatorUtil.locate(DLAppHelperLocalService.class.getName());
 
 			ReferenceRegistry.registerReference(DLAppHelperLocalServiceUtil.class,
 				"_service");
-			MethodCache.remove(DLAppHelperLocalService.class);
 		}
 
 		return _service;

@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
@@ -54,6 +57,7 @@ import com.liferay.portlet.bookmarks.util.BookmarksIndexer;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
 import com.liferay.portlet.documentlibrary.trash.DLFileEntryTrashHandler;
+import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
 import com.liferay.portlet.documentlibrary.util.DLIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
 import com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler;
@@ -83,7 +87,9 @@ public class ServiceTestUtil {
 
 	public static final int THREAD_COUNT = 25;
 
-	public static Group addGroup(String name) throws Exception {
+	public static Group addGroup(long parentGroupId, String name)
+		throws Exception {
+
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			TestPropsValues.getCompanyId(), name);
 
@@ -91,7 +97,7 @@ public class ServiceTestUtil {
 			return group;
 		}
 
-		String description ="This is a test group";
+		String description = "This is a test group.";
 		int type = GroupConstants.TYPE_SITE_OPEN;
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
@@ -99,8 +105,36 @@ public class ServiceTestUtil {
 		boolean active = true;
 
 		return GroupLocalServiceUtil.addGroup(
-			TestPropsValues.getUserId(), null, 0, name, description, type,
-			friendlyURL, site, active, getServiceContext());
+			TestPropsValues.getUserId(), parentGroupId, null, 0, name,
+			description, type, friendlyURL, site, active, getServiceContext());
+	}
+
+	public static Group addGroup(String name) throws Exception {
+		return addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID, name);
+	}
+
+	public static Layout addLayout(long groupId, String name) throws Exception {
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
+
+		Layout layout = null;
+
+		try {
+			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				groupId, false, friendlyURL);
+
+			return layout;
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		String description = "This is a test page.";
+
+		return LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), groupId, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
+			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+			getServiceContext());
 	}
 
 	public static User addUser(
@@ -280,6 +314,7 @@ public class ServiceTestUtil {
 
 		TrashHandlerRegistryUtil.register(new BlogsEntryTrashHandler());
 		TrashHandlerRegistryUtil.register(new DLFileEntryTrashHandler());
+		TrashHandlerRegistryUtil.register(new DLFolderTrashHandler());
 
 		// Workflow
 

@@ -166,7 +166,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAddFileEntryWithInvalidMimeType() throws Exception {
-		long folderId = folder.getFolderId();
+		long folderId = parentFolder.getFolderId();
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 
@@ -205,7 +205,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAddNullFileEntry() throws Exception {
-		long folderId = folder.getFolderId();
+		long folderId = parentFolder.getFolderId();
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 
@@ -311,7 +311,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAsstTags() throws Exception {
-		long folderId = folder.getFolderId();
+		long folderId = parentFolder.getFolderId();
 		String name = "TestTags.txt";
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;

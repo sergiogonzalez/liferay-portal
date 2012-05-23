@@ -113,8 +113,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		PluginPackageUtil.registerInstalledPluginPackage(pluginPackage);
 
-		ServletContextPool.put(servletContextName, servletContext);
-
 		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
 		initServiceComponent(servletContext, classLoader);

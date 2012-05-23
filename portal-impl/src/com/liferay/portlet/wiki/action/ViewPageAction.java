@@ -67,7 +67,7 @@ public class ViewPageAction extends PortletAction {
 				e instanceof NoSuchPageException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.wiki.error");
 			}

@@ -88,7 +88,7 @@ public class EditProductEntryAction extends PortletAction {
 			if (e instanceof NoSuchProductEntryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.software_catalog.error");
 			}
@@ -101,7 +101,7 @@ public class EditProductEntryAction extends PortletAction {
 					 e instanceof ProductEntryShortDescriptionException ||
 					 e instanceof ProductEntryTypeException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -122,7 +122,7 @@ public class EditProductEntryAction extends PortletAction {
 			if (e instanceof NoSuchProductEntryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.software_catalog.error");
 			}

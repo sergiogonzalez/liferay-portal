@@ -97,6 +97,9 @@ public class PluginContextListener
 
 		servletContext.setAttribute(PLUGIN_CLASS_LOADER, pluginClassLoader);
 
+		ServletContextPool.put(
+			servletContext.getServletContextName(), servletContext);
+
 		registerPortalLifecycle();
 	}
 

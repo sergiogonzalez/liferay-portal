@@ -141,8 +141,10 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(SocialActivityLimit.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

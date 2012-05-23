@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -32,6 +34,7 @@ import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUt
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -72,6 +75,10 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		long userId = portletDataContext.getUserId(structure.getUserUuid());
 
+		Map<Long, Long> structureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			structureElement, structure, _NAMESPACE);
 
@@ -110,6 +117,9 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		portletDataContext.importClassedModel(
 			structure, importedStructure, _NAMESPACE);
+
+		structureIds.put(
+			structure.getStructureId(), importedStructure.getStructureId());
 	}
 
 	@Override
@@ -187,7 +197,20 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		DDMTemplate template =
 			(DDMTemplate)portletDataContext.getZipEntryAsObject(path);
 
+		if (template.getClassNameId() != PortalUtil.getClassNameId(
+				DDMStructure.class)) {
+
+			return;
+		}
+
 		long userId = portletDataContext.getUserId(template.getUserUuid());
+
+		Map<Long, Long> structureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
+
+		long classPK = MapUtil.getLong(
+			structureIds, template.getClassPK(), template.getClassPK());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			templateElement, template, _NAMESPACE);
@@ -203,7 +226,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 				importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
 					userId, portletDataContext.getScopeGroupId(),
-					template.getClassNameId(), template.getClassPK(),
+					template.getClassNameId(), classPK,
 					template.getTemplateKey(), template.getNameMap(),
 					template.getDescriptionMap(), template.getType(),
 					template.getMode(), template.getLanguage(),
@@ -220,10 +243,9 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		else {
 			importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
 				userId, portletDataContext.getScopeGroupId(),
-				template.getClassNameId(), template.getClassPK(),
-				template.getTemplateKey(), template.getNameMap(),
-				template.getDescriptionMap(), template.getType(),
-				template.getMode(), template.getLanguage(),
+				template.getClassNameId(), classPK, template.getTemplateKey(),
+				template.getNameMap(), template.getDescriptionMap(),
+				template.getType(), template.getMode(), template.getLanguage(),
 				template.getScript(), serviceContext);
 		}
 
@@ -281,11 +303,12 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(_NAMESPACE, "templates")) {
-			Element templatesElement = rootElement.addElement("templates");
+		Element templatesElement = rootElement.addElement("templates");
 
-			List<DDMTemplate> templates = DDMTemplateUtil.findByGroupId(
-				portletDataContext.getScopeGroupId());
+		if (portletDataContext.getBooleanParameter(_NAMESPACE, "templates")) {
+			List<DDMTemplate> templates = DDMTemplateUtil.findByG_C(
+				portletDataContext.getScopeGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class));
 
 			for (DDMTemplate template : templates) {
 				if (portletDataContext.isWithinDateRange(

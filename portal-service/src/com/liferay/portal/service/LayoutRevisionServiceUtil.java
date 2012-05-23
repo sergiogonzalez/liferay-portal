@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -83,7 +82,6 @@ public class LayoutRevisionServiceUtil {
 
 			ReferenceRegistry.registerReference(LayoutRevisionServiceUtil.class,
 				"_service");
-			MethodCache.remove(LayoutRevisionService.class);
 		}
 
 		return _service;

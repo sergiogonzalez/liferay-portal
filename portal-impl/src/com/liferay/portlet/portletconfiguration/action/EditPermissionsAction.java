@@ -67,7 +67,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(
 					actionRequest, "portlet.portlet_configuration.error");

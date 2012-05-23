@@ -1968,13 +1968,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setSubject(subject);
 		}
 
+		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
+
 		if (Validator.isNotNull(signature)) {
-			body += "\n--\n" + signature;
+			String signatureSeparator = null;
+
+			if (htmlFormat) {
+				signatureSeparator = "<br />--<br />";
+			}
+			else {
+				signatureSeparator = "\n--\n";
+			}
+
+			body += signatureSeparator + signature;
 		}
 
 		String messageBody = message.getBody();
-
-		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
 
 		if (htmlFormat && message.isFormatBBCode()) {
 			try {
@@ -2001,7 +2010,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			new MBSubscriptionSender();
 
 		subscriptionSenderPrototype.setBody(body);
-		subscriptionSenderPrototype.setBulk(true);
+		subscriptionSenderPrototype.setBulk(
+			PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
 		subscriptionSenderPrototype.setCompanyId(message.getCompanyId());
 		subscriptionSenderPrototype.setContextAttribute(
 			"[$MESSAGE_BODY$]", messageBody, false);

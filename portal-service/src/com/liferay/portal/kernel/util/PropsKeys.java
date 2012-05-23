@@ -1185,6 +1185,8 @@ public interface PropsKeys {
 
 	public static final String LDAP_IMPORT_INTERVAL = "ldap.import.interval";
 
+	public static final String LDAP_IMPORT_LOCK_EXPIRATION_TIME = "ldap.import.lock.expiration.time";
+
 	public static final String LDAP_IMPORT_METHOD = "ldap.import.method";
 
 	public static final String LDAP_IMPORT_ON_STARTUP = "ldap.import.on.startup";
@@ -1358,6 +1360,8 @@ public interface PropsKeys {
 	public static final String MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLES = "message.boards.category.display.styles";
 
 	public static final String MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLES_DEFAULT = "message.boards.category.display.styles.default";
+
+	public static final String MESSAGE_BOARDS_EMAIL_BULK = "message.boards.email.bulk";
 
 	public static final String MESSAGE_BOARDS_EMAIL_FROM_ADDRESS = "message.boards.email.from.address";
 
@@ -1747,7 +1751,7 @@ public interface PropsKeys {
 
 	public static final String RESOURCE_REPOSITORIES_ROOT = "resource.repositories.root";
 
-	public static final String REST_PROXY_DOMAINS_ALLOWED = "rest.proxy.domains.allowed";
+	public static final String REST_PROXY_URL_PREFIXES_ALLOWED = "rest.proxy.url.prefixes.allowed";
 
 	public static final String ROBOTS_TXT_WITH_SITEMAP = "robots.txt.with.sitemap";
 
@@ -1947,11 +1951,15 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_ADD_MAIN = "sites.form.add.main";
 
+	public static final String SITES_FORM_ADD_MISCELLANEOUS = "sites.form.add.miscellaneous";
+
 	public static final String SITES_FORM_ADD_SEO = "sites.form.add.seo";
 
 	public static final String SITES_FORM_UPDATE_ADVANCED = "sites.form.update.advanced";
 
 	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";
+
+	public static final String SITES_FORM_UPDATE_MISCELLANEOUS = "sites.form.update.miscellaneous";
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
 
@@ -2280,6 +2288,14 @@ public interface PropsKeys {
 	public static final String XUGGLER_ENABLED = "xuggler.enabled";
 
 	public static final String XUGGLER_FFPRESET = "xuggler.ffpreset.";
+
+	public static final String XUGGLER_JAR_FILE = "xuggler.jar.file";
+
+	public static final String XUGGLER_JAR_NAME = "xuggler.jar.name";
+
+	public static final String XUGGLER_JAR_OPTIONS = "xuggler.jar.options";
+
+	public static final String XUGGLER_JAR_URL = "xuggler.jar.url";
 
 	public static final String YM_LOGIN = "ym.login";
 

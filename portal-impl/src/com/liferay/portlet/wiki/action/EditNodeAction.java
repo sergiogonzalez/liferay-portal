@@ -74,14 +74,14 @@ public class EditNodeAction extends PortletAction {
 			if (e instanceof NoSuchNodeException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.wiki.error");
 			}
 			else if (e instanceof DuplicateNodeNameException ||
 					 e instanceof NodeNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -106,7 +106,7 @@ public class EditNodeAction extends PortletAction {
 			if (e instanceof NoSuchNodeException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.wiki.error");
 			}

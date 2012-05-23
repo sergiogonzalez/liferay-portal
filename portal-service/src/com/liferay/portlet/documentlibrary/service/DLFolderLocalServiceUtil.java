@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -576,13 +575,23 @@ public class DLFolderLocalServiceUtil {
 		getService().updateLastPostDate(folderId, lastPostDate);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFolder updateStatus(
+		long userId, long folderId, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStatus(userId, folderId, status, workflowContext,
+			serviceContext);
+	}
+
 	public static DLFolderLocalService getService() {
 		if (_service == null) {
 			_service = (DLFolderLocalService)PortalBeanLocatorUtil.locate(DLFolderLocalService.class.getName());
 
 			ReferenceRegistry.registerReference(DLFolderLocalServiceUtil.class,
 				"_service");
-			MethodCache.remove(DLFolderLocalService.class);
 		}
 
 		return _service;

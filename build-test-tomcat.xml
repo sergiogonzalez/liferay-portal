@@ -169,13 +169,13 @@ web.server.display.node=true</echo>
 						</antcall>
 					</then>
 					<else>
-						<antcall target="prepare-root-xml" inheritAll="false"/>
+						<antcall target="prepare-root-xml" inheritAll="false" />
 					</else>
 				</if>
 			</then>
 		</if>
 
-		<antcall target="deploy-properties" inheritAll="false"/>
+		<antcall target="deploy-properties" inheritAll="false" />
 
 		<delete dir="${user.home}/liferay" />
 

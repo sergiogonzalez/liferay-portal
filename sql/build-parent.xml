@@ -158,28 +158,29 @@
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="sql.dir=${basedir}" />
 			<arg value="sample.sql.base.dir=${basedir}/../benchmarks" />
+			<arg value="sample.sql.db.type=hypersonic" />
+			<arg value="sample.sql.max.blogs.entry.comment.count=1" />
+			<arg value="sample.sql.max.blogs.entry.count=1" />
+			<arg value="sample.sql.max.ddl.record.count=1" />
+			<arg value="sample.sql.max.ddl.record.set.count=1" />
+			<arg value="sample.sql.max.dl.file.entry.count=1" />
+			<arg value="sample.sql.max.dl.file.entry.size=1" />
+			<arg value="sample.sql.max.dl.folder.count=1" />
+			<arg value="sample.sql.max.dl.folder.depth=1" />
+			<arg value="sample.sql.max.group.count=1" />
+			<arg value="sample.sql.max.journal.article.count=1" />
+			<arg value="sample.sql.max.journal.article.size=1" />
+			<arg value="sample.sql.max.mb.category.count=1" />
+			<arg value="sample.sql.max.mb.message.count=1" />
+			<arg value="sample.sql.max.mb.thread.count=1" />
+			<arg value="sample.sql.max.user.count=1" />
+			<arg value="sample.sql.max.user.to.group.count=1" />
+			<arg value="sample.sql.max.wiki.node.count=1" />
+			<arg value="sample.sql.max.wiki.page.comment.count=1" />
+			<arg value="sample.sql.max.wiki.page.count=1" />
+			<arg value="sample.sql.optimize.buffer.size=8192" />
 			<arg value="sample.sql.output.dir=${tstamp.value}" />
 			<arg value="sample.sql.output.merge=true" />
-			<arg value="sample.sql.db.type=hypersonic" />
-			<arg value="sample.sql.blogs.entry.comment.count=1" />
-			<arg value="sample.sql.blogs.entry.count=1" />
-			<arg value="sample.sql.ddl.record.count=1" />
-			<arg value="sample.sql.ddl.record.set.count=1" />
-			<arg value="sample.sql.dl.file.entry.count=1" />
-			<arg value="sample.sql.dl.file.entry.size=1" />
-			<arg value="sample.sql.dl.folder.count=1" />
-			<arg value="sample.sql.dl.folder.depth=1" />
-			<arg value="sample.sql.group.count=1" />
-			<arg value="sample.sql.journal.article.count=${sample.sql.journal.article.count}" />
-			<arg value="sample.sql.journal.article.size=${sample.sql.journal.article.size}" />
-			<arg value="sample.sql.mb.category.count=1" />
-			<arg value="sample.sql.mb.message.count=1" />
-			<arg value="sample.sql.mb.thread.count=1" />
-			<arg value="sample.sql.user.count=1" />
-			<arg value="sample.sql.user.to.group.count=1" />
-			<arg value="sample.sql.wiki.node.count=1" />
-			<arg value="sample.sql.wiki.page.comment.count=1" />
-			<arg value="sample.sql.wiki.page.count=1" />
 		</java>
 
 		<delete dir="${tstamp.value}" />

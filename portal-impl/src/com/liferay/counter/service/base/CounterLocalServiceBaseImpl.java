@@ -116,7 +116,10 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(Counter.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(Counter.class,
+			clazz.getClassLoader());
 	}
 
 	/**

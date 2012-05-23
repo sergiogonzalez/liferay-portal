@@ -269,17 +269,15 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					MBStatsUser.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			MBStatsUser.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -461,7 +459,6 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	private int _originalMessageCount;
 	private boolean _setOriginalMessageCount;
 	private Date _lastPostDate;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private MBStatsUser _escapedModelProxy;
 }

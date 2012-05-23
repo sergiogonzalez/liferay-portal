@@ -293,8 +293,10 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(LayoutSetPrototype.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

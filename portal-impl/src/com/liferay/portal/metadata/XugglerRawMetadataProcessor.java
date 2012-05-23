@@ -20,13 +20,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
@@ -51,57 +49,6 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 		throws Exception {
 
 		return;
-	}
-
-	@Override
-	public Metadata extractMetadata(
-			String extension, String mimeType, File file)
-		throws SystemException {
-
-		Metadata metadata = null;
-
-		if (!isSupported(mimeType)) {
-			return metadata;
-		}
-
-		try {
-			metadata = extractMetadata(file);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return metadata;
-	}
-
-	@Override
-	public Metadata extractMetadata(
-			String extension, String mimeType, InputStream inputStream)
-		throws SystemException {
-
-		Metadata metadata = null;
-
-		File file = null;
-
-		if (!isSupported(mimeType)) {
-			return metadata;
-		}
-
-		try {
-			file = FileUtil.createTempFile(extension);
-
-			FileUtil.write(file, inputStream);
-
-			metadata = extractMetadata(file);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
-
-		return metadata;
 	}
 
 	public void importGeneratedFiles(
@@ -160,10 +107,61 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 		}
 	}
 
-	protected boolean isSupported(String mimeType) throws SystemException {
-		if (PrefsPropsUtil.getBoolean(
-				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {
+	@Override
+	@SuppressWarnings("unused")
+	protected Metadata extractMetadata(
+			String extension, String mimeType, File file)
+		throws SystemException {
 
+		Metadata metadata = null;
+
+		if (!isSupported(mimeType)) {
+			return metadata;
+		}
+
+		try {
+			metadata = extractMetadata(file);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return metadata;
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	protected Metadata extractMetadata(
+			String extension, String mimeType, InputStream inputStream)
+		throws SystemException {
+
+		Metadata metadata = null;
+
+		File file = null;
+
+		if (!isSupported(mimeType)) {
+			return metadata;
+		}
+
+		try {
+			file = FileUtil.createTempFile(extension);
+
+			FileUtil.write(file, inputStream);
+
+			metadata = extractMetadata(file);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+
+		return metadata;
+	}
+
+	protected boolean isSupported(String mimeType) {
+		if (XugglerUtil.isEnabled()) {
 			if (AudioProcessorUtil.isAudioSupported(mimeType)) {
 				return true;
 			}

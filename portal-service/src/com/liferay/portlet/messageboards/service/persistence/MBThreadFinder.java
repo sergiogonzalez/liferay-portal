@@ -24,6 +24,10 @@ public interface MBThreadFinder {
 	public int countByG_C_S(long groupId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByG_U_MD_S(long groupId, long userId,
+		java.util.Date modifiedDate, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int countByG_U_A_S(long groupId, long userId, boolean anonymous,
 		int status) throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -64,6 +68,11 @@ public interface MBThreadFinder {
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_C_S(
 		long groupId, long categoryId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_U_MD_S(
+		long groupId, long userId, java.util.Date modifiedDate, int status,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_U_A_S(

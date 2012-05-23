@@ -693,17 +693,15 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					MBMailingList.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBMailingList.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1168,7 +1166,6 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private MBMailingList _escapedModelProxy;
 }

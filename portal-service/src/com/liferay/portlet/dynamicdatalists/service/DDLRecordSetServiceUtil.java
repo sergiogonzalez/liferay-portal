@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatalists.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -124,7 +123,6 @@ public class DDLRecordSetServiceUtil {
 
 			ReferenceRegistry.registerReference(DDLRecordSetServiceUtil.class,
 				"_service");
-			MethodCache.remove(DDLRecordSetService.class);
 		}
 
 		return _service;

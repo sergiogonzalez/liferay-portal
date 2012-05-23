@@ -136,8 +136,10 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(DDLRecord.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

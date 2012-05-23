@@ -287,7 +287,10 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(Website.class, getClassLoader());
+		Class<?> clazz = getClass();
+
+		return DynamicQueryFactoryUtil.forClass(Website.class,
+			clazz.getClassLoader());
 	}
 
 	/**

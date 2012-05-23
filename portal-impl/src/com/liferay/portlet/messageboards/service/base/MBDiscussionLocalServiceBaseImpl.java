@@ -141,8 +141,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(MBDiscussion.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

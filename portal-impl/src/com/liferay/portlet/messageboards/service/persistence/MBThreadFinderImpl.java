@@ -31,6 +31,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,6 +47,9 @@ public class MBThreadFinderImpl
 
 	public static final String COUNT_BY_G_U_S =
 		MBThreadFinder.class.getName() + ".countByG_U_S";
+
+	public static final String COUNT_BY_G_U_MD_S =
+		MBThreadFinder.class.getName() + ".countByG_U_MD_S";
 
 	public static final String COUNT_BY_G_U_A_S =
 		MBThreadFinder.class.getName() + ".countByG_U_A_S";
@@ -64,6 +68,9 @@ public class MBThreadFinderImpl
 
 	public static final String FIND_BY_G_U_S =
 		MBThreadFinder.class.getName() + ".findByG_U_S";
+
+	public static final String FIND_BY_G_U_MD_S =
+		MBThreadFinder.class.getName() + ".findByG_U_MD_S";
 
 	public static final String FIND_BY_G_U_A_S =
 		MBThreadFinder.class.getName() + ".findByG_U_A_S";
@@ -126,6 +133,66 @@ public class MBThreadFinderImpl
 		throws SystemException {
 
 		return doCountByG_C_S(groupId, categoryId, status, false);
+	}
+
+	public int countByG_U_MD_S(
+			long groupId, long userId, Date modifiedDate, int status)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_G_U_MD_S);
+
+			if (userId <= 0) {
+				sql = StringUtil.replace(
+					sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.appendCriteria(
+					sql, "AND (MBThread.status = ?)");
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
+
+			qPos.add(modifiedDate);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public int countByG_U_A_S(
@@ -371,6 +438,57 @@ public class MBThreadFinderImpl
 		throws SystemException {
 
 		return doFindByG_C_S(groupId, categoryId, status, start, end, false);
+	}
+
+	public List<MBThread> findByG_U_MD_S(
+			long groupId, long userId, Date modifiedDate, int status, int start,
+			int end)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_U_MD_S);
+
+			if (userId <= 0) {
+				sql = StringUtil.replace(
+					sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.appendCriteria(
+					sql, "AND (MBThread.status = ?)");
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("MBThread", MBThreadImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
+
+			qPos.add(modifiedDate);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			return (List<MBThread>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public List<MBThread> findByG_U_A_S(
@@ -755,5 +873,10 @@ public class MBThreadFinderImpl
 			closeSession(session);
 		}
 	}
+
+	private static final String _INNER_JOIN_SQL =
+		"INNER JOIN MBMessage ON (MBThread.threadId = MBMessage.threadId)";
+
+	private static final String _USER_ID_SQL = "AND (MBMessage.userId = ?)";
 
 }

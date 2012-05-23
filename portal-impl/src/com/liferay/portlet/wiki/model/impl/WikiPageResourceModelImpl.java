@@ -237,17 +237,15 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					WikiPageResource.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			WikiPageResource.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -408,7 +406,6 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	private boolean _setOriginalNodeId;
 	private String _title;
 	private String _originalTitle;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private WikiPageResource _escapedModelProxy;
 }

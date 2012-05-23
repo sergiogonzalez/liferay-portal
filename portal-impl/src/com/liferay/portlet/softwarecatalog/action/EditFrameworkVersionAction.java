@@ -63,13 +63,13 @@ public class EditFrameworkVersionAction extends PortletAction {
 			if (e instanceof NoSuchFrameworkVersionException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.software_catalog.error");
 			}
 			else if (e instanceof FrameworkVersionNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -90,7 +90,7 @@ public class EditFrameworkVersionAction extends PortletAction {
 			if (e instanceof NoSuchFrameworkVersionException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.software_catalog.error");
 			}

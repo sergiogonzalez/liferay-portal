@@ -127,8 +127,10 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(WikiPageResource.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

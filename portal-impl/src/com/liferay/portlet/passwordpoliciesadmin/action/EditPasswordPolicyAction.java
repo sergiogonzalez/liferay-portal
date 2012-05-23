@@ -62,7 +62,7 @@ public class EditPasswordPolicyAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(
 					actionRequest, "portlet.password_policies_admin.error");
@@ -72,7 +72,7 @@ public class EditPasswordPolicyAction extends PortletAction {
 					 e instanceof NoSuchPasswordPolicyException ||
 					 e instanceof RequiredPasswordPolicyException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				if (cmd.equals(Constants.DELETE)) {
 					String redirect = PortalUtil.escapeRedirect(
@@ -102,7 +102,7 @@ public class EditPasswordPolicyAction extends PortletAction {
 			if (e instanceof NoSuchPasswordPolicyException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward(
 					"portlet.password_policies_admin.error");

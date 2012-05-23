@@ -149,8 +149,10 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(AnnouncementsEntry.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

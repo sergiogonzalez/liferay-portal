@@ -250,7 +250,7 @@ public class EditLayoutsAction extends PortletAction {
 			if (e instanceof NoSuchLayoutException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.layouts_admin.error");
 			}
@@ -313,7 +313,7 @@ public class EditLayoutsAction extends PortletAction {
 			if (e instanceof NoSuchGroupException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.layouts_admin.error");
 			}

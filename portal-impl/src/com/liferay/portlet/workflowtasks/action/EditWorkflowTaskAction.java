@@ -82,12 +82,12 @@ public class EditWorkflowTaskAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof WorkflowTaskDueDateException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof PrincipalException ||
 					 e instanceof WorkflowException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.workflow_tasks.error");
 			}
@@ -109,7 +109,7 @@ public class EditWorkflowTaskAction extends PortletAction {
 		catch (Exception e) {
 			if (e instanceof WorkflowException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.workflow_tasks.error");
 			}

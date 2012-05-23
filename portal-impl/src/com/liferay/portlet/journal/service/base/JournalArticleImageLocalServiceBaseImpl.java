@@ -147,8 +147,10 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(JournalArticleImage.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

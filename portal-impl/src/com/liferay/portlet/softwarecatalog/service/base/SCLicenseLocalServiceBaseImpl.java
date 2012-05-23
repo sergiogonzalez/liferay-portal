@@ -131,8 +131,10 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(SCLicense.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -125,12 +124,13 @@ public class DLFolderServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
-		long groupId, long parentFolderId, boolean includeMountfolders,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long parentFolderId, int status,
+		boolean includeMountfolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getFolders(groupId, parentFolderId, includeMountfolders,
-			start, end, obc);
+				   .getFolders(groupId, parentFolderId, status,
+			includeMountfolders, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
@@ -191,10 +191,11 @@ public class DLFolderServiceUtil {
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId,
-		boolean includeMountfolders)
+		int status, boolean includeMountfolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getFoldersCount(groupId, parentFolderId, includeMountfolders);
+				   .getFoldersCount(groupId, parentFolderId, status,
+			includeMountfolders);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getMountFolders(
@@ -310,7 +311,6 @@ public class DLFolderServiceUtil {
 
 			ReferenceRegistry.registerReference(DLFolderServiceUtil.class,
 				"_service");
-			MethodCache.remove(DLFolderService.class);
 		}
 
 		return _service;

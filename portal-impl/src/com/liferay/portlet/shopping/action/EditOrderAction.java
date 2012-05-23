@@ -68,7 +68,7 @@ public class EditOrderAction extends PortletAction {
 			if (e instanceof NoSuchOrderException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.shopping.error");
 			}
@@ -91,7 +91,7 @@ public class EditOrderAction extends PortletAction {
 			if (e instanceof NoSuchOrderException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.shopping.error");
 			}

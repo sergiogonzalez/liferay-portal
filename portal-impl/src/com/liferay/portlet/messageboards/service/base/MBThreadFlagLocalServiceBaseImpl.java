@@ -141,8 +141,10 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(MBThreadFlag.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

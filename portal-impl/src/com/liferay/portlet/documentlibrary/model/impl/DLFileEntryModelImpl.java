@@ -812,17 +812,15 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					DLFileEntry.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DLFileEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1309,7 +1307,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _largeImageId;
 	private long _custom1ImageId;
 	private long _custom2ImageId;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private DLFileEntry _escapedModelProxy;
 }

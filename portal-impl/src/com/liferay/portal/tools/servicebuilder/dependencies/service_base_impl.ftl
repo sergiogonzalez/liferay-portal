@@ -183,7 +183,9 @@ import javax.sql.DataSource;
 		}
 
 		public DynamicQuery dynamicQuery() {
-			return DynamicQueryFactoryUtil.forClass(${entity.name}.class, getClassLoader());
+			Class<?> clazz = getClass();
+
+			return DynamicQueryFactoryUtil.forClass(${entity.name}.class, clazz.getClassLoader());
 		}
 
 		/**

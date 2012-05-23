@@ -944,17 +944,15 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					Contact.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			Contact.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -1547,7 +1545,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private String _jobTitle;
 	private String _jobClass;
 	private String _hoursOfOperation;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Contact _escapedModelProxy;
 }

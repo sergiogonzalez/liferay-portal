@@ -290,8 +290,10 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

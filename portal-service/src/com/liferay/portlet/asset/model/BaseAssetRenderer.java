@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -40,6 +41,18 @@ import javax.servlet.http.HttpServletRequest;
  * @author Sergio González
  */
 public abstract class BaseAssetRenderer implements AssetRenderer {
+
+	public AssetRendererFactory getAssetRendererFactory() {
+		if (_assetRendererFactory != null) {
+			return _assetRendererFactory;
+		}
+
+		_assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				getAssetRendererFactoryClassName());
+
+		return _assetRendererFactory;
+	}
 
 	public String[] getAvailableLocales() {
 		return _AVAILABLE_LOCALES;
@@ -193,5 +206,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	private static final String[] _AVAILABLE_LOCALES = new String[0];
+
+	private AssetRendererFactory _assetRendererFactory;
 
 }

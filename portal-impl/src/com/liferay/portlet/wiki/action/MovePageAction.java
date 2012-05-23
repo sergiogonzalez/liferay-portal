@@ -70,7 +70,7 @@ public class MovePageAction extends PortletAction {
 				e instanceof NoSuchPageException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.wiki.error");
 			}
@@ -78,7 +78,7 @@ public class MovePageAction extends PortletAction {
 					 e instanceof PageContentException ||
 					 e instanceof PageTitleException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -102,7 +102,7 @@ public class MovePageAction extends PortletAction {
 				e instanceof PageTitleException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.wiki.error");
 			}

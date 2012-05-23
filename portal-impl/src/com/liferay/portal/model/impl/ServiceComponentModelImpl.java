@@ -245,17 +245,15 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					ServiceComponent.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			ServiceComponent.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -440,7 +438,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	private boolean _setOriginalBuildNumber;
 	private long _buildDate;
 	private String _data;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private ServiceComponent _escapedModelProxy;
 }

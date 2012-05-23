@@ -950,6 +950,7 @@ public class JavadocFormatter {
 		String absolutePath = file.getAbsolutePath();
 
 		absolutePath = StringUtil.replace(absolutePath, "\\", "/");
+		absolutePath = StringUtil.replace(absolutePath, "/./", "/");
 
 		int pos = absolutePath.indexOf("/portal-impl/src/");
 

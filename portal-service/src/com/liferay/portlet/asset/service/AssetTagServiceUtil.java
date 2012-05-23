@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -192,7 +191,6 @@ public class AssetTagServiceUtil {
 
 			ReferenceRegistry.registerReference(AssetTagServiceUtil.class,
 				"_service");
-			MethodCache.remove(AssetTagService.class);
 		}
 
 		return _service;

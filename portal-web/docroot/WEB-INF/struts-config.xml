@@ -748,6 +748,11 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
+		<action path="/image_gallery_display/edit_shortcut" type="com.liferay.portlet.documentlibrary.action.EditFileShortcutAction">
+			<forward name="portlet.document_library.edit_file_shortcut" path="portlet.document_library.edit_file_shortcut" />
+			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
+		</action>
+
 		<action path="/image_gallery_display/embedded_player" forward="portlet.image_gallery_display.embedded_player" />
 
 		<action path="/image_gallery_display/find_folder" type="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
@@ -946,6 +951,17 @@
 		<action path="/layout_prototypes/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layout_prototypes.error" />
+		</action>
+
+		<action path="/layout_prototypes/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
+			<forward name="portlet.layouts_admin.error" path="portlet.layout_prototypes.error" />
+			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
+		</action>
+
+		<action path="/layout_prototypes/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
 		</action>
 
 		<action path="/layout_prototypes/view" forward="portlet.layout_prototypes.view" />
@@ -1850,13 +1866,17 @@
 
 		<!-- Trash -->
 
+		<action path="/trash/edit_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
+			<forward name="portlet.message_boards.error" path="portlet.trash.error" />
+		</action>
+
 		<action path="/trash/edit_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.trash.view" />
 		</action>
 
 		<action path="/trash/view" forward="portlet.trash.view" />
 
-		<action path="/trash/view_content" forward="portlet.asset_publisher.view_content" />
+		<action path="/trash/view_content" forward="portlet.trash.view_content" />
 
 		<!-- Update Manager -->
 

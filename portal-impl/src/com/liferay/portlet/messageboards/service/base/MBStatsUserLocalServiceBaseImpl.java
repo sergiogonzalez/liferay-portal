@@ -145,8 +145,10 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

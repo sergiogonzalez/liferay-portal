@@ -121,7 +121,7 @@ public class EditMessageAction extends PortletAction {
 				e instanceof PrincipalException ||
 				e instanceof RequiredMessageException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.message_boards.error");
 			}
@@ -134,7 +134,7 @@ public class EditMessageAction extends PortletAction {
 					 e instanceof MessageBodyException ||
 					 e instanceof MessageSubjectException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof AssetCategoryException ||
 					 e instanceof AssetTagException) {
@@ -160,7 +160,7 @@ public class EditMessageAction extends PortletAction {
 			if (e instanceof NoSuchMessageException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.message_boards.error");
 			}

@@ -135,6 +135,9 @@ public class XMLMerger {
 			else {
 				originalElements.add(childElement);
 			}
+
+			_orderChildren(
+				childElement, _descriptor.getChildrenOrder(childElement));
 		}
 
 		for (Element duplicateElement : duplicateElements) {

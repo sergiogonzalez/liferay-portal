@@ -88,14 +88,14 @@ public class EditActionAction extends EditRuleAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.mobile_device_rules.error");
 			}
 			else if (e instanceof NoSuchActionException ||
 					 e instanceof NoSuchRuleGroupException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

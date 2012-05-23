@@ -2024,9 +2024,16 @@
 			</basic>
 			<basic name="defaultFileEntryTypeId" />
 			<basic name="overrideFileEntryTypes" />
+			<basic name="status" />
+			<basic name="statusByUserId" />
+			<basic name="statusByUserName" />
+			<basic name="statusDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="statusByUserUuid" />
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
@@ -3671,7 +3678,9 @@
 	</entity>
 	<entity class="com.liferay.portal.model.impl.CountryImpl" name="Country">
 		<table name="Country" />
-		<attributes />
+		<attributes>
+			<transient name="nameCurrentLanguageId" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portal.model.impl.EmailAddressImpl" name="EmailAddress">
 		<table name="EmailAddress" />

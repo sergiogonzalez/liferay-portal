@@ -145,8 +145,10 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
+
 		return DynamicQueryFactoryUtil.forClass(SocialActivityAchievement.class,
-			getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	/**

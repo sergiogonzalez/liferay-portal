@@ -552,25 +552,25 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Returns all the organizations associated with the user. If includeNonUser
-	* is <code>true</code>, the result includes those organizations that are
-	* not directly associated to the user but he is an owner or an
-	* administrator of the organization.
+	* Returns all the organizations associated with the user. If
+	* includeAdministrative is <code>true</code>, the result includes those
+	* organizations that are not directly associated to the user but he is an
+	* administrator or an owner of the organization.
 	*
 	* @param userId the primary key of the user
-	* @param includeIndirectlyAssociated whether to includes organizations
-	that are indirectly associated to the user because he is an owner
-	or an administrator of the organization
+	* @param includeAdministrative whether to includes organizations that are
+	indirectly associated to the user because he is an administrator
+	or an owner of the organization
 	* @return the organizations associated with the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId, boolean includeIndirectlyAssociated)
+		long userId, boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _organizationLocalService.getUserOrganizations(userId,
-			includeIndirectlyAssociated);
+			includeAdministrative);
 	}
 
 	/**

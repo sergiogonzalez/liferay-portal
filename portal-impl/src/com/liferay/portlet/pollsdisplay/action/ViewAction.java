@@ -58,7 +58,7 @@ public class ViewAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (!(e instanceof NoSuchQuestionException)) {
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.polls_display.error");
 			}

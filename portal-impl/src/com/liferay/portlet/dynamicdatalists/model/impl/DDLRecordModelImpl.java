@@ -518,17 +518,15 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					DDLRecord.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DDLRecord.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -832,7 +830,6 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	private boolean _setOriginalRecordSetId;
 	private String _version;
 	private int _displayIndex;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private DDLRecord _escapedModelProxy;
 }

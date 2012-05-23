@@ -255,7 +255,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1605,6 +1605,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-user-statistics" />
+			<param name="test.ant.script.suite" value="PortalWebUserStatisticsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-web-content-display" />
 			<param name="test.ant.script.suite" value="PortalWebWebContentDisplayTestSuite" />
 		</antcall>
@@ -1986,12 +1991,12 @@
 				<isset property="skip.delete-liferay-home" />
 			</not>
 			<then>
-				<delete dir="${user.home}/liferay"/>
+				<delete dir="${user.home}/liferay" />
 			</then>
 		</if>
 
 		<delete includeemptydirs="true">
-			<fileset dir="${app.server.parent.dir}" excludes="*.zip"/>
+			<fileset dir="${app.server.parent.dir}" excludes="*.zip" />
 		</delete>
 	</target>
 
@@ -2279,6 +2284,25 @@
 		<exec executable="taskkill.exe">
 			<arg line="/f /fi &quot;pid eq ${java.process.pid}&quot;" />
 		</exec>
+	</target>
+
+	<target name="merge-test-results">
+		<mkdir dir="test-results" />
+
+		<junitreport todir="test-results">
+			<fileset dir="portal-impl/test-results">
+				<include name="**/TEST-*.xml" />
+			</fileset>
+			<fileset dir="portal-service/test-results">
+				<include name="**/TEST-*.xml" />
+			</fileset>
+			<fileset dir="util-java/test-results">
+				<include name="**/TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="test-results/html" />
+		</junitreport>
+
+		<echo message="A report with all the test results can be found at test-results/html/index.html." />
 	</target>
 
 	<target name="prepare-common">
@@ -2653,16 +2677,16 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="set.permission.algorithm.5" />
 			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5"/>
-				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.view.dynamic.inheritance=false" value="permissions.view.dynamic.inheritance=false"/>
+				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5" />
+				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.view.dynamic.inheritance=false" value="permissions.view.dynamic.inheritance=false" />
 			</then>
 		</if>
 
 		<if>
 			<isset property="set.permission.algorithm.6" />
 			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="permissions.user.check.algorithm=5" value=""/>
-				<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value=""/>
+				<replace file="portal-impl/src/portal-ext.properties" token="permissions.user.check.algorithm=5" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value="" />
 			</then>
 		</if>
 	</target>
@@ -3050,7 +3074,7 @@ file.
 								<isset property="skip.delete-liferay-home" />
 							</not>
 							<then>
-								<delete dir="${user.home}/liferay"/>
+								<delete dir="${user.home}/liferay" />
 							</then>
 						</if>
 
@@ -3143,10 +3167,10 @@ file.
 		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
 
 		<replace file="${sql.file}">
-			<replacefilter token="drop database lportal;" value="drop database ${db.schema};"/>
-			<replacefilter token="create database lportal;" value="create database ${db.schema} pagesize 8192;"/>
-			<replacefilter token="create database lportal pagesize 8192;" value="create database ${db.schema} pagesize 8192;"/>
-			<replacefilter token="connect to lportal;" value="connect to ${db.schema} USER ${db.username} USING ${db.password};"/>
+			<replacefilter token="drop database lportal;" value="drop database ${db.schema};" />
+			<replacefilter token="create database lportal;" value="create database ${db.schema} pagesize 8192;" />
+			<replacefilter token="create database lportal pagesize 8192;" value="create database ${db.schema} pagesize 8192;" />
+			<replacefilter token="connect to lportal;" value="connect to ${db.schema} USER ${db.username} USING ${db.password};" />
 		</replace>
 
 		<exec executable="${plink.executable}">
@@ -3213,16 +3237,16 @@ file.
 			<isset property="test.database.collate" />
 			<then>
 				<replace file="${sql.file}">
-					<replacefilter token="drop database if exists lportal;" value="drop database if exists ${db.schema};"/>
-					<replacefilter token="create database lportal character set utf8;" value="create database ${db.schema} character set utf8 collate utf8_bin;"/>
-					<replacefilter token="use lportal;" value="use ${db.schema};"/>
+					<replacefilter token="drop database if exists lportal;" value="drop database if exists ${db.schema};" />
+					<replacefilter token="create database lportal character set utf8;" value="create database ${db.schema} character set utf8 collate utf8_bin;" />
+					<replacefilter token="use lportal;" value="use ${db.schema};" />
 				</replace>
 			</then>
 			<else>
 				<replace file="${sql.file}">
-					<replacefilter token="drop database if exists lportal;" value="drop database if exists ${db.schema};"/>
-					<replacefilter token="create database lportal character set utf8;" value="create database ${db.schema} character set utf8;"/>
-					<replacefilter token="use lportal;" value="use ${db.schema};"/>
+					<replacefilter token="drop database if exists lportal;" value="drop database if exists ${db.schema};" />
+					<replacefilter token="create database lportal character set utf8;" value="create database ${db.schema} character set utf8;" />
+					<replacefilter token="use lportal;" value="use ${db.schema};" />
 				</replace>
 			</else>
 		</if>
@@ -3312,9 +3336,9 @@ file.
 		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
 
 		<replace file="${sql.file}">
-			<replacefilter token="drop database lportal;" value="drop database ${db.schema};"/>
-			<replacefilter token="create database lportal encoding = 'UNICODE';" value="create database ${db.schema} encoding = 'UNICODE';"/>
-			<replacefilter token="\c lportal;" value="\c ${db.schema};"/>
+			<replacefilter token="drop database lportal;" value="drop database ${db.schema};" />
+			<replacefilter token="create database lportal encoding = 'UNICODE';" value="create database ${db.schema} encoding = 'UNICODE';" />
+			<replacefilter token="\c lportal;" value="\c ${db.schema};" />
 		</replace>
 
 		<exec executable="${plink.executable}">
@@ -3381,9 +3405,9 @@ file.
 		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
 
 		<replace file="${sql.file}">
-			<replacefilter token="drop database lportal;" value="drop database ${db.schema};"/>
-			<replacefilter token="create database lportal;" value="create database ${db.schema};"/>
-			<replacefilter token="use lportal;" value="use ${db.schema};"/>
+			<replacefilter token="drop database lportal;" value="drop database ${db.schema};" />
+			<replacefilter token="create database lportal;" value="create database ${db.schema};" />
+			<replacefilter token="use lportal;" value="use ${db.schema};" />
 		</replace>
 
 		<exec executable="${plink.executable}">
@@ -3438,9 +3462,9 @@ file.
 
 		<replace file="${sql.file}">
 			<replacefilter token="use master" value="use master${line.separator}dump transaction master with no_log${line.separator}go${line.separator}if exists (select * from master.dbo.sysdatabases where name = &quot;${db.schema}&quot;)${line.separator}begin${line.separator}drop database ${db.schema}${line.separator}end${line.separator}go${line.separator}create database ${db.schema} on ${db.device.name} = &quot;250m&quot;${line.separator}go" />
-			<replacefilter token="exec sp_dboption 'lportal', 'allow nulls by default' , true" value="exec sp_dboption '${db.schema}', 'allow nulls by default' , true"/>
-			<replacefilter token="exec sp_dboption 'lportal', 'select into/bulkcopy/pllsort' , true" value="exec sp_dboption '${db.schema}', 'select into/bulkcopy/pllsort' , true"/>
-			<replacefilter token="use lportal" value="use ${db.schema}${line.separator}go"/>
+			<replacefilter token="exec sp_dboption 'lportal', 'allow nulls by default' , true" value="exec sp_dboption '${db.schema}', 'allow nulls by default' , true" />
+			<replacefilter token="exec sp_dboption 'lportal', 'select into/bulkcopy/pllsort' , true" value="exec sp_dboption '${db.schema}', 'select into/bulkcopy/pllsort' , true" />
+			<replacefilter token="use lportal" value="use ${db.schema}${line.separator}go" />
 		</replace>
 
 		<exec executable="${plink.executable}">
@@ -3800,9 +3824,9 @@ file.
 
 		<antcall target="revert-test-properties" />
 
-		<antcall target="test-integration" inheritAll="false"/>
+		<antcall target="test-integration" inheritAll="false" />
 
-		<antcall target="test-unit" inheritAll="false"/>
+		<antcall target="test-unit" inheritAll="false" />
 
 		<ant dir="sql" target="test-sample-sql" inheritAll="false" />
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
-import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -232,9 +230,6 @@ public class SecurePluginContextListener
 
 	@Override
 	protected void fireDeployEvent() {
-		HotDeployUtil.fireDeployEvent(
-			new HotDeployEvent(servletContext, pluginClassLoader));
-
 		super.fireDeployEvent();
 
 		if (_servletContextListeners != null) {

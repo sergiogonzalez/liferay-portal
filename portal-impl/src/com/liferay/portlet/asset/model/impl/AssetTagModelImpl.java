@@ -383,17 +383,15 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					AssetTag.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			AssetTag.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -614,7 +612,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private String _name;
 	private String _originalName;
 	private int _assetCount;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private AssetTag _escapedModelProxy;
 }

@@ -309,17 +309,15 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-					Region.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			Region.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -491,7 +489,6 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Region _escapedModelProxy;
 }

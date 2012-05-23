@@ -118,7 +118,7 @@ public class EditQuestionAction extends PortletAction {
 			if (e instanceof NoSuchQuestionException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.polls.error");
 			}
@@ -129,7 +129,7 @@ public class EditQuestionAction extends PortletAction {
 					 e instanceof QuestionExpirationDateException ||
 					 e instanceof QuestionTitleException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				SessionMessages.add(
 					actionRequest,
@@ -157,7 +157,7 @@ public class EditQuestionAction extends PortletAction {
 			if (e instanceof NoSuchQuestionException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.polls.error");
 			}

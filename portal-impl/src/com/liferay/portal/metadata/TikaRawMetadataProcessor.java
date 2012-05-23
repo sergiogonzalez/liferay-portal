@@ -39,44 +39,6 @@ import org.xml.sax.ContentHandler;
  */
 public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
-	@Override
-	public Metadata extractMetadata(
-			String extension, String mimeType, File file)
-		throws SystemException {
-
-		Metadata metadata = super.extractMetadata(extension, mimeType, file);
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = new FileInputStream(file);
-
-			return extractMetadata(inputStream, metadata);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
-	}
-
-	@Override
-	public Metadata extractMetadata(
-			String extension, String mimeType, InputStream inputStream)
-		throws SystemException {
-
-		Metadata metadata = super.extractMetadata(
-			extension, mimeType, inputStream);
-
-		try {
-			return extractMetadata(inputStream, metadata);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
 	public void setParser(Parser parser) {
 		_parser = parser;
 	}
@@ -111,6 +73,44 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		metadata.remove(XMPDM.RELATIVE_PEAK_AUDIO_FILE_PATH.getName());
 
 		return metadata;
+	}
+
+	@Override
+	protected Metadata extractMetadata(
+			String extension, String mimeType, File file)
+		throws SystemException {
+
+		Metadata metadata = super.extractMetadata(extension, mimeType, file);
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = new FileInputStream(file);
+
+			return extractMetadata(inputStream, metadata);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
+	@Override
+	protected Metadata extractMetadata(
+			String extension, String mimeType, InputStream inputStream)
+		throws SystemException {
+
+		Metadata metadata = super.extractMetadata(
+			extension, mimeType, inputStream);
+
+		try {
+			return extractMetadata(inputStream, metadata);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

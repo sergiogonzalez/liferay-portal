@@ -75,14 +75,14 @@ public class EditRecordSetAction extends PortletAction {
 			if (e instanceof NoSuchRecordSetException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.dynamic_data_lists.error");
 			}
 			else if (e instanceof RecordSetDDMStructureIdException ||
 					 e instanceof RecordSetNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -111,7 +111,7 @@ public class EditRecordSetAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.dynamic_data_lists.error");
 			}

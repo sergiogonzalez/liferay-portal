@@ -87,7 +87,7 @@ public class VerifyEmailAddressAction extends Action {
 		}
 		catch (Exception e) {
 			if (e instanceof PortalException || e instanceof SystemException) {
-				SessionErrors.add(request, e.getClass().getName());
+				SessionErrors.add(request, e.getClass());
 
 				return mapping.findForward("portal.verify_email_address");
 			}

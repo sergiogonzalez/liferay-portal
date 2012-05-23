@@ -53,14 +53,14 @@ public class CopyStructureAction extends PortletAction {
 			if (e instanceof NoSuchStructureException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.journal.error");
 			}
 			else if (e instanceof DuplicateStructureIdException ||
 					 e instanceof StructureIdException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

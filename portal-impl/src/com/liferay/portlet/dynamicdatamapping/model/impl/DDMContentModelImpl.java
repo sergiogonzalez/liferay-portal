@@ -453,17 +453,15 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					DDMContent.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DDMContent.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -731,7 +729,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _xml;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private DDMContent _escapedModelProxy;
 }

@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -127,7 +126,6 @@ public class ThemeLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(ThemeLocalServiceUtil.class,
 				"_service");
-			MethodCache.remove(ThemeLocalService.class);
 		}
 
 		return _service;

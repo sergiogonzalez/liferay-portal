@@ -89,18 +89,18 @@ public class EditFileEntryTypeAction extends PortletAction {
 				e instanceof NoSuchMetadataSetException ||
 				e instanceof StructureDuplicateElementException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof NoSuchFileEntryTypeException ||
 					 e instanceof NoSuchStructureException ||
 					 e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.document_library.error");
 			}
 			else if (e instanceof RequiredStructureException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				sendRedirect(actionRequest, actionResponse);
 			}
@@ -148,7 +148,7 @@ public class EditFileEntryTypeAction extends PortletAction {
 			if (e instanceof NoSuchFileEntryTypeException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.document_library.error");
 			}

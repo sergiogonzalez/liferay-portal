@@ -83,7 +83,7 @@ public class UpdatePasswordAction extends Action {
 					UserLocalServiceUtil.checkLockout(user);
 				}
 				catch (UserLockoutException ule) {
-					SessionErrors.add(request, ule.getClass().getName());
+					SessionErrors.add(request, ule.getClass());
 				}
 			}
 
@@ -103,14 +103,14 @@ public class UpdatePasswordAction extends Action {
 		}
 		catch (Exception e) {
 			if (e instanceof UserPasswordException) {
-				SessionErrors.add(request, e.getClass().getName(), e);
+				SessionErrors.add(request, e.getClass(), e);
 
 				return mapping.findForward("portal.update_password");
 			}
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
-				SessionErrors.add(request, e.getClass().getName());
+				SessionErrors.add(request, e.getClass());
 
 				return mapping.findForward("portal.error");
 			}

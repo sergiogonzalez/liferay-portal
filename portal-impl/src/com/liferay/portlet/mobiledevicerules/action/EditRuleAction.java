@@ -83,7 +83,7 @@ public class EditRuleAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.mobile_device_rules.error");
 			}
@@ -91,7 +91,7 @@ public class EditRuleAction extends PortletAction {
 					 e instanceof NoSuchRuleGroupException ||
 					 e instanceof UnknownRuleHandlerException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

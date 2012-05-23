@@ -69,14 +69,14 @@ public class EditFolderAction extends PortletAction {
 			if (e instanceof NoSuchFolderException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.journal.error");
 			}
 			else if (e instanceof DuplicateFolderNameException ||
 					 e instanceof FolderNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -97,7 +97,7 @@ public class EditFolderAction extends PortletAction {
 			if (e instanceof NoSuchFolderException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.journal.error");
 			}

@@ -483,17 +483,15 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-					DLSync.class.getName(), getPrimaryKey());
-		}
-
-		return _expandoBridge;
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DLSync.class.getName(), getPrimaryKey());
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		getExpandoBridge().setAttributes(serviceContext);
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -817,7 +815,6 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	private String _event;
 	private String _type;
 	private String _version;
-	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private DLSync _escapedModelProxy;
 }

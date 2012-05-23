@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -422,7 +421,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(DLFileEntryTypeLocalServiceUtil.class,
 				"_service");
-			MethodCache.remove(DLFileEntryTypeLocalService.class);
 		}
 
 		return _service;

@@ -232,7 +232,7 @@ public class EditUserAction extends PortletAction {
 			if (e instanceof NoSuchUserException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.users_admin.error");
 			}
@@ -300,7 +300,7 @@ public class EditUserAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass().getName());
+				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.users_admin.error");
 			}
@@ -403,13 +403,14 @@ public class EditUserAction extends PortletAction {
 			user = UserServiceUtil.updateUser(
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, reminderQueryQuestion,
-				reminderQueryAnswer, screenName, emailAddress, facebookId,
-				openId, languageId, timeZoneId, greeting, comments, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-				birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn,
-				jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
-				groupIds, organizationIds, roleIds, userGroupRoles,
-				userGroupIds, addresses, emailAddresses, phones, websites,
+				reminderQueryAnswer, user.getScreenName(),
+				user.getEmailAddress(), facebookId, openId, languageId,
+				timeZoneId, greeting, comments, firstName, middleName, lastName,
+				prefixId, suffixId, male, birthdayMonth, birthdayDay,
+				birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
+				mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
+				organizationIds, roleIds, userGroupRoles, userGroupIds,
+				addresses, emailAddresses, phones, websites,
 				announcementsDeliveries, serviceContext);
 		}
 

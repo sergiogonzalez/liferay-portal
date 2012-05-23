@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -489,7 +488,6 @@ public class AssetCategoryLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(AssetCategoryLocalServiceUtil.class,
 				"_service");
-			MethodCache.remove(AssetCategoryLocalService.class);
 		}
 
 		return _service;
