@@ -139,7 +139,9 @@ public abstract class MimeResponseImpl
 
 		if (getLifecycle().equals(PortletRequest.RESOURCE_PHASE) ||
 			_portletRequestImpl.getWindowState().equals(
-				LiferayWindowState.EXCLUSIVE)) {
+				LiferayWindowState.EXCLUSIVE) ||
+			_portletRequestImpl.getWindowState().equals(
+				LiferayWindowState.EXCLUSIVE_RESOURCEFUL)) {
 
 			valid = true;
 		}

@@ -85,7 +85,7 @@ boolean expired = true;
 				content = RuntimePageUtil.processXML(request, content, actionURLLogic);
 				content = RuntimePageUtil.processXML(request, content, renderURLLogic);
 
-				if (themeDisplay.isStateExclusive()) {
+				if (themeDisplay.isStateExclusive() || themeDisplay.isStateExclusiveResourceful()) {
 					out.print(content);
 
 					return;

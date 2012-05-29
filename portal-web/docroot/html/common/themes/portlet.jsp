@@ -89,7 +89,7 @@ boolean wsrp = ParamUtil.getBoolean(request, "wsrp");
 	<c:when test="<%= themeDisplay.isFacebook() %>">
 		<%@ include file="/html/common/themes/portlet_facebook.jspf" %>
 	</c:when>
-	<c:when test="<%= themeDisplay.isStateExclusive() %>">
+	<c:when test="<%= themeDisplay.isStateExclusive() || themeDisplay.isStateExclusiveResourceful() %>">
 		<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
 	</c:when>
 	<c:when test="<%= themeDisplay.isStatePopUp() %>">
