@@ -133,11 +133,11 @@ public class ActionUtil
 
 		Group group = null;
 
-		if (groupId > 0) {
-			group = GroupLocalServiceUtil.getGroup(groupId);
-		}
-		else if (!cmd.equals(Constants.ADD)) {
+		if (!cmd.equals(Constants.ADD)) {
 			group = themeDisplay.getScopeGroup();
+		}
+		else if (groupId > 0) {
+			group = GroupLocalServiceUtil.getGroup(groupId);
 		}
 
 		request.setAttribute(WebKeys.GROUP, group);

@@ -20,9 +20,9 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-long groupId = ParamUtil.getLong(request, "groupId");
+Group group = ActionUtil.getGroup(request);
 
-Group group = GroupServiceUtil.getGroup(groupId);
+long groupId = group.getGroupId();
 
 Organization organization = null;
 
