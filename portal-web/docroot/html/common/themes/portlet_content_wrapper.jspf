@@ -21,7 +21,7 @@
 <c:choose>
 	<c:when test="<%= portletDisplay.isActive() %>">
 		<c:choose>
-			<c:when test="<%= themeDisplay.isStateExclusive() && themeDisplay.isStateExclusiveResourceful() %>">
+			<c:when test="<%= themeDisplay.isStateExclusive() || themeDisplay.isStateExclusiveResourceful() %>">
 				<%@ include file="/html/common/themes/portlet_content.jspf" %>
 			</c:when>
 			<c:when test="<%= portletDisplay.isAccess() %>">

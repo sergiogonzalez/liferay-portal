@@ -23,6 +23,80 @@
 
 	</c:when>
 	<c:otherwise>
+		<c:if test="<%= themeDisplay.isStateExclusiveResourceful() %>">
+			<%
+			String portletId = portlet.getPortletId();
+			String rootPortletId = portlet.getRootPortletId();
+			String cssClasses = StringPool.BLANK;
+
+			Portlet portletResourcePortlet = null;
+
+			if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+				String portletResource = ParamUtil.getString(request, "portletResource");
+
+				HttpServletRequest originalRequest = PortalUtil.getOriginalServletRequest(request);
+
+				InvokerPortlet invokerPortlet = null;
+
+				boolean access = false;
+
+				PortletMode portletMode = renderRequest.getPortletMode();
+
+				boolean allowAddPortletDefaultResource = PortalUtil.isAllowAddPortletDefaultResource(request, portlet);
+
+				if (portlet.isUndeployedPortlet()) {
+					access = true;
+				}
+				else if (allowAddPortletDefaultResource) {
+					access = PortletPermissionUtil.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroupId(), layout, portlet, portletMode);
+				}
+
+				
+				try {
+					if (portlet.isReady() && access) {
+						invokerPortlet = PortletInstanceFactoryUtil.create(portlet, application);
+					}
+				}
+				/*catch (UnavailableException ue) {
+					ue.printStackTrace();
+				}*/
+				catch (PortletException pe) {
+					pe.printStackTrace();
+				}
+				catch (RuntimeException re) {
+					re.printStackTrace();
+				}
+
+				PortletContext portletCtx = portletConfig.getPortletContext();
+				WindowState windowState = renderRequest.getWindowState();
+
+				PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
+
+				RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(originalRequest, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
+
+				if (Validator.isNull(portletResource)) {
+					portletResource = ParamUtil.getString(renderRequestImpl, "portletResource");
+				}
+
+				if (Validator.isNotNull(portletResource)) {
+					portletResourcePortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
+				}
+			}
+
+
+			cssClasses = "portlet-boundary portlet-boundary" + HtmlUtil.escapeAttribute(PortalUtil.getPortletNamespace(rootPortletId)) + StringPool.SPACE + cssClasses + StringPool.SPACE + portlet.getCssClassWrapper();
+
+			if (portletResourcePortlet != null) {
+				cssClasses += StringPool.SPACE + portletResourcePortlet.getCssClassWrapper();
+			}
+			%>
+			<div class="<%= cssClasses %>">
+		</c:if>
+
 		<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + tilesPortletContent %>" />
+
+		<c:if test="<%= themeDisplay.isStateExclusiveResourceful() %>">
+			</div>
+		</c:if>
 	</c:otherwise>
 </c:choose>
