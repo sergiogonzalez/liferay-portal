@@ -144,7 +144,10 @@
 
 	<target name="deploy">
 		<if>
-			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<or>
+				<equals arg1="${app.server.type}" arg2="glassfish" />
+				<equals arg1="${app.server.type}" arg2="websphere" />
+			</or>
 			<then>
 				<delete dir="${app.server.portal.dir}" />
 				<delete file="${app.server.portal.dir}" />
@@ -767,7 +770,10 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 		<mkdir dir="${app.server.work.dir}" />
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<or>
+				<equals arg1="${app.server.type}" arg2="glassfish" />
+				<equals arg1="${app.server.type}" arg2="websphere" />
+			</or>
 			<then>
 				<tstamp>
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -781,6 +787,45 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 				<delete dir="${app.server.portal.dir}" />
 
 				<move file="${tstamp.value}" tofile="${app.server.portal.dir}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="websphere" />
+			<then>
+				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+					<arg line="/c startServer.bat server1" />
+				</exec>
+
+				<echo>Installing liferay-portal.war.</echo>
+
+				<echo file="wsadmin.py">print AdminApp.list()
+
+print AdminApp.uninstall('DefaultApplication')
+
+print AdminConfig.save()
+
+print AdminApp.install('${app.server.websphere.instance.dir}/wsadmin-deploy/liferay-portal.war', '[-appname liferay-portal -contextroot /]')
+
+print AdminConfig.save()
+
+print AdminApp.list()
+
+appManager = AdminControl.queryNames('type=ApplicationManager,process=server1,*')
+
+print appManager
+
+print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')</echo>
+
+				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+					<arg line="/c wsadmin.bat -f ${basedir}\wsadmin.py" />
+				</exec>
+
+				<delete file="wsadmin.py" />
+
+				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+					<arg line="/c stopServer.bat server1" />
+				</exec>
 			</then>
 		</if>
 
