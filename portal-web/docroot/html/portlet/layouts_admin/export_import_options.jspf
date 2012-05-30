@@ -64,6 +64,9 @@
 					<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= true %>" />
 				</li>
 				<li class="tree-item">
+					<aui:input label="application-display-styles" name="<%= PortletDataHandlerKeys.APPLICATION_DISPLAY_STYLES %>" type="checkbox" value="<%= true %>" />
+				</li>
+				<li class="tree-item">
 					<c:choose>
 						<c:when test="<%= cmd.equals(Constants.IMPORT) && !group.isLayoutPrototype() %>">
 							<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />

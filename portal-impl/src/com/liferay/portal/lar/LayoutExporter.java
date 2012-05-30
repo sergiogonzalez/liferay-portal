@@ -69,6 +69,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -76,6 +77,9 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
+import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -199,6 +203,8 @@ public class LayoutExporter {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
+		boolean exportApplicationDisplayStyles = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.APPLICATION_DISPLAY_STYLES);
 		boolean exportCategories = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.CATEGORIES);
 		boolean exportIgnoreLastPublishDate = MapUtil.getBoolean(
@@ -224,6 +230,8 @@ public class LayoutExporter {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Export categories " + exportCategories);
+			_log.debug("Export display styles " +
+				exportApplicationDisplayStyles);
 			_log.debug("Export permissions " + exportPermissions);
 			_log.debug(
 				"Export portlet archived setups " +
@@ -413,6 +421,14 @@ public class LayoutExporter {
 			}
 		}
 
+		if (exportApplicationDisplayStyles) {
+			Element applicationDisplayStylesElement =
+				rootElement.addElement("application-display-styles");
+
+			exportApplicationDisplayStyles(
+				portletDataContext, applicationDisplayStylesElement);
+		}
+
 		Element layoutsElement = rootElement.addElement("layouts");
 
 		String layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
@@ -566,6 +582,32 @@ public class LayoutExporter {
 		portletDataContext.addZipEntry(
 			portletDataContext.getRootPath() + "/categories-hierarchy.xml",
 			document.formattedString());
+	}
+
+	protected void exportApplicationDisplayStyles(
+			PortletDataContext portletDataContext,
+			Element applicationDisplayStylesElement)
+		throws Exception {
+
+		for (int i = 0;
+			 i < PropsValues.APPLICATION_DISPLAY_STYLE_CLASS_NAMES.length;
+			 i++) {
+
+			String className =
+				PropsValues.APPLICATION_DISPLAY_STYLE_CLASS_NAMES[i];
+
+			long classNameId = PortalUtil.getClassNameId(className);
+
+			List<DDMTemplate> templates =
+				DDMTemplateLocalServiceUtil.getTemplates(
+					portletDataContext.getScopeGroupId(), classNameId);
+
+			for (DDMTemplate template : templates) {
+				DDMPortletDataHandlerImpl.exportTemplate(
+					portletDataContext, applicationDisplayStylesElement,
+					template);
+			}
+		}
 	}
 
 	protected void exportJournalArticle(

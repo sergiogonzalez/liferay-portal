@@ -19,6 +19,9 @@ package com.liferay.portal.kernel.lar;
  */
 public class PortletDataHandlerKeys {
 
+	public static final String APPLICATION_DISPLAY_STYLES =
+		"APPLICATION_DISPLAY_STYLES";
+
 	public static final String CATEGORIES = "CATEGORIES";
 
 	public static final String DATA_STRATEGY = "DATA_STRATEGY";

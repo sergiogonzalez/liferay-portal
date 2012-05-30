@@ -83,6 +83,8 @@ public interface PropsKeys {
 
 	public static final String ANNOUNCEMENTS_ENTRY_TYPES = "announcements.entry.types";
 
+	public static final String APPLICATION_DISPLAY_STYLE_CLASS_NAMES = "application.display.style.class.names";
+
 	public static final String APPLICATION_SHUTDOWN_EVENTS = "application.shutdown.events";
 
 	public static final String APPLICATION_STARTUP_EVENTS = "application.startup.events";
@@ -1076,6 +1078,16 @@ public interface PropsKeys {
 	public static final String LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN = "layout.manage.pages.initial.children";
 
 	public static final String LAYOUT_PARALLEL_RENDER_ENABLE = "layout.parallel.render.enable";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_ALLOW_CORE_THREAD_TIMEOUT = "layout.parallel.render.thread.pool.allow.core.thread.timeout";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_CORE_THREAD_COUNT = "layout.parallel.render.thread.pool.core.thread.count";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_KEEP_ALIVE_TIME = "layout.parallel.render.thread.pool.keep.alive.time";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_QUEUE_SIZE = "layout.parallel.render.thread.pool.max.queue.size";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_THREAD_COUNT = "layout.parallel.render.thread.pool.max.thread.count";
 
 	public static final String LAYOUT_PARALLEL_RENDER_TIMEOUT = "layout.parallel.render.timeout";
 

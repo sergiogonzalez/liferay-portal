@@ -211,10 +211,6 @@ public class BaseDeployer implements Deployer {
 				appServerType + " is not a valid application server type");
 		}
 
-		if (appServerType.equals(ServerDetector.GLASSFISH_ID)) {
-			unpackWar = false;
-		}
-
 		if (Validator.isNotNull(jbossPrefix) &&
 			!Validator.isNumber(jbossPrefix)) {
 
@@ -821,19 +817,21 @@ public class BaseDeployer implements Deployer {
 		if (appServerType.equals(ServerDetector.JBOSS_ID)) {
 			deployDir = jbossPrefix + deployDir;
 		}
-		else if (appServerType.equals(ServerDetector.JETTY_ID) ||
+		else if (appServerType.equals(ServerDetector.GERONIMO_ID) ||
+				 appServerType.equals(ServerDetector.GLASSFISH_ID) ||
+				 appServerType.equals(ServerDetector.JETTY_ID) ||
+				 appServerType.equals(ServerDetector.JONAS_ID) ||
 				 appServerType.equals(ServerDetector.OC4J_ID) ||
 				 appServerType.equals(ServerDetector.RESIN_ID) ||
-				 appServerType.equals(ServerDetector.TOMCAT_ID)) {
+				 appServerType.equals(ServerDetector.TOMCAT_ID) ||
+				 appServerType.equals(ServerDetector.WEBLOGIC_ID)) {
 
 			if (unpackWar) {
 				deployDir = deployDir.substring(0, deployDir.length() - 4);
 			}
 		}
 
-		deployDir = destDir + "/" + deployDir;
-
-		File deployDirFile = new File(deployDir);
+		File deployDirFile = new File(destDir + "/" + deployDir);
 
 		try {
 			PluginPackage previousPluginPackage = readPluginPackage(
@@ -878,10 +876,14 @@ public class BaseDeployer implements Deployer {
 					PluginPackageUtil.endPluginPackageInstallation(context);
 				}
 				else {
-					if (appServerType.equals(ServerDetector.JBOSS_ID)) {
-						File doDeployFile = new File(deployDir + ".dodeploy");
-
-						FileUtil.write(doDeployFile, StringPool.BLANK);
+					if (appServerType.equals(ServerDetector.GLASSFISH_ID)) {
+						FileUtil.delete(
+							destDir + "/.autodeploystatus/" + deployDir);
+					}
+					else if (appServerType.equals(ServerDetector.JBOSS_ID)) {
+						FileUtil.write(
+							destDir + "/" + deployDir + ".dodeploy",
+							StringPool.BLANK);
 					}
 				}
 			}

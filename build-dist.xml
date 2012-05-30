@@ -1166,8 +1166,6 @@ release was successful.</echo>
 			<path location="${app.server.weblogic.wlserver.dir}" />
 		</pathconvert>
 
-		<delete dir="${app.server.weblogic.dir}" />
-
 		<if>
 			<not>
 				<available file="${app.server.parent.dir}/${app.server.weblogic.zip.name}" />
@@ -1175,11 +1173,17 @@ release was successful.</echo>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
-				<echo>Please download the WebLogic zip file from ${app.server.weblogic.zip.url} and
+				<fail>
+.
+
+Please download the WebLogic zip file from ${app.server.weblogic.zip.url} and
 place it here: ${app.server.parent.dir}/${app.server.weblogic.zip.name}. Then
-rerun this task.</echo>
+rerun this task.
+				</fail>
 			</then>
 		</if>
+
+		<delete dir="${app.server.weblogic.dir}" />
 
 		<unzip
 			dest="${app.server.weblogic.dir}"

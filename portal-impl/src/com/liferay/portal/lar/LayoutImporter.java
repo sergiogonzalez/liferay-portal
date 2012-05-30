@@ -97,6 +97,7 @@ import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
@@ -207,6 +208,8 @@ public class LayoutImporter {
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
 
+		boolean importApplicationDisplayStyles = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.APPLICATION_DISPLAY_STYLES);
 		boolean deleteMissingLayouts = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
 			Boolean.TRUE.booleanValue());
@@ -514,6 +517,19 @@ public class LayoutImporter {
 
 		LayoutSetLocalServiceUtil.updateLookAndFeel(
 			groupId, privateLayout, themeId, colorSchemeId, css, wapTheme);
+
+		if (importApplicationDisplayStyles) {
+			Element applicationDisplayStylesElement =
+				rootElement.element("application-display-styles");
+
+			List<Element> templateElements =
+				applicationDisplayStylesElement.elements("template");
+
+			for (Element templateElement : templateElements) {
+				DDMPortletDataHandlerImpl.importTemplate(
+					portletDataContext, templateElement);
+			}
+		}
 
 		// Read asset categories, asset tags, comments, locks, permissions, and
 		// ratings entries to make them available to the data handlers through
