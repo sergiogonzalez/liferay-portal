@@ -1152,22 +1152,6 @@ release was successful.</echo>
 	</target>
 
 	<target name="unzip-weblogic">
-		<property name="app.server.weblogic.dir.abs" location="${app.server.weblogic.dir}" />
-
-		<property name="app.server.weblogic.instance.dir.abs" location="${app.server.weblogic.instance.dir}" />
-
-		<pathconvert property="app.server.weblogic.instance.dir.unix" targetos="unix">
-			<path location="${app.server.weblogic.instance.dir.abs}" />
-		</pathconvert>
-
-		<var name="app.server.weblogic.wlserver.dir" value="${app.server.weblogic.dir.abs}/wlserver" />
-
-		<pathconvert property="app.server.weblogic.wlserver.dir.unix" targetos="unix">
-			<path location="${app.server.weblogic.wlserver.dir}" />
-		</pathconvert>
-
-		<delete dir="${app.server.weblogic.dir}" />
-
 		<if>
 			<not>
 				<available file="${app.server.parent.dir}/${app.server.weblogic.zip.name}" />
@@ -1175,11 +1159,17 @@ release was successful.</echo>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
-				<echo>Please download the WebLogic zip file from ${app.server.weblogic.zip.url} and
+				<fail>
+.
+
+Please download the WebLogic zip file from ${app.server.weblogic.zip.url} and
 place it here: ${app.server.parent.dir}/${app.server.weblogic.zip.name}. Then
-rerun this task.</echo>
+rerun this task.
+				</fail>
 			</then>
 		</if>
+
+		<delete dir="${app.server.weblogic.dir}" />
 
 		<unzip
 			dest="${app.server.weblogic.dir}"
@@ -1212,8 +1202,8 @@ closeTemplate()</echo>
 		<if>
 			<os family="windows" />
 			<then>
-				<exec dir="${app.server.weblogic.dir.abs}" executable="cmd">
-					<env key="MW_HOME" value="${app.server.weblogic.dir.abs}" />
+				<exec dir="${app.server.weblogic.dir}" executable="cmd">
+					<env key="MW_HOME" value="${app.server.weblogic.dir}" />
 					<arg value="/c" />
 					<arg value="configure.cmd" />
 				</exec>
@@ -1222,7 +1212,7 @@ closeTemplate()</echo>
 
 set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
 
-set "MW_HOME=${app.server.weblogic.dir.abs}"
+set "MW_HOME=${app.server.weblogic.dir}"
 
 set "WL_HOME=${app.server.weblogic.wlserver.dir}"
 
@@ -1241,7 +1231,7 @@ set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
 
 set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=512m"
 
-set "MW_HOME=${app.server.weblogic.dir.abs}"
+set "MW_HOME=${app.server.weblogic.dir}"
 
 call startWebLogic.cmd</echo>
 			</then>
@@ -1288,6 +1278,111 @@ sh startWebLogic.sh</echo>
 				/>
 			</else>
 		</if>
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
+	<target name="unzip-websphere">
+		<if>
+			<or>
+				<not>
+					<available file="${app.server.parent.dir}/${app.server.websphere.fix.pack.jdk.name}" />
+				</not>
+				<not>
+					<available file="${app.server.parent.dir}/${app.server.websphere.fix.pack.was.name}" />
+				</not>
+				<not>
+					<available file="${app.server.parent.dir}/${app.server.websphere.update.installer.zip.name}" />
+				</not>
+				<not>
+					<available file="${app.server.parent.dir}/${app.server.websphere.zip.name}" />
+				</not>
+			</or>
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<fail>
+.
+
+Please download ${app.server.websphere.fix.jdk.name},
+${app.server.websphere.fix.pack.was.name},
+${app.server.websphere.update.installer.zip.name}, and
+${app.server.websphere.zip.name} from ${app.server.websphere.zip.url} and put
+them in ${app.server.parent.dir}. Then rerun this task.
+				</fail>
+			</then>
+		</if>
+
+		<delete dir="${app.server.websphere.dir}" />
+
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<unzip
+			dest="${tstamp.value}/was"
+			src="${app.server.parent.dir}/${app.server.websphere.zip.name}"
+		/>
+
+		<echo file="${tstamp.value}/was/WAS/liferay-responsefile.txt">
+			-OPT disableOSPrereqChecking="true"
+			-OPT feature="noFeature"
+			-OPT installLocation="${app.server.websphere.dir}"
+			-OPT installType="installNew"
+			-OPT PROF_cellName=liferay-cell
+			-OPT PROF_enableAdminSecurity="false"
+			-OPT PROF_enableService="false"
+			-OPT PROF_isDefault="true"
+			-OPT PROF_isDeveloperServer="true"
+			-OPT PROF_nodeName=liferay-node
+			-OPT PROF_omitAction="defaultAppDeployAndConfig"
+			-OPT PROF_omitAction="deployAdminConsole"
+			-OPT PROF_omitAction="samplesInstallAndConfig"
+			-OPT PROF_portsFile="liferay-portdef.props"
+			-OPT PROF_profileName="liferay"
+			-OPT PROF_winserviceCheck="false"
+			-OPT profileType="standAlone"
+			-OPT silentInstallLicenseAcceptance="true"
+		</echo>
+
+		<echo file="${tstamp.value}/was/WAS/liferay-portdef.props">
+			WC_defaulthost=8080
+		</echo>
+
+		<echo>Installing application server. This may take a few minutes.</echo>
+
+		<exec dir="${tstamp.value}/was/WAS" executable="cmd.exe">
+			<arg line="/c install.exe -options liferay-responsefile.txt -silent" />
+		</exec>
+
+		<unzip
+			dest="${tstamp.value}/updi"
+			src="${app.server.parent.dir}/${app.server.websphere.update.installer.zip.name}"
+		/>
+
+		<echo file="${tstamp.value}/updi/UpdateInstaller/liferay-responsefile.txt">
+			-OPT installLocation="${app.server.websphere.dir}\UpdateInstaller"
+			-OPT silentInstallLicenseAcceptance="true"
+			-OPT skipStartMenu=true
+		</echo>
+
+		<echo>Installing update installer.</echo>
+
+		<exec dir="${tstamp.value}/updi/UpdateInstaller" executable="cmd.exe">
+			<arg line="/c install.exe -options liferay-responsefile.txt -silent" />
+		</exec>
+
+		<echo file="${app.server.websphere.dir}/UpdateInstaller/liferay-responsefile.txt">
+			-W maintenance.package="${app.server.parent.dir}\${app.server.websphere.fix.pack.jdk.name};${app.server.parent.dir}\${app.server.websphere.fix.pack.was.name}"
+			-W product.location="${app.server.websphere.dir}"
+			-W update.type="install"
+		</echo>
+
+		<echo>Installing fix pack.</echo>
+
+		<exec dir="${app.server.websphere.dir}/UpdateInstaller" executable="cmd.exe">
+			<arg line="/c update.bat -options liferay-responsefile.txt -silent" />
+		</exec>
 
 		<delete dir="${tstamp.value}" />
 	</target>
