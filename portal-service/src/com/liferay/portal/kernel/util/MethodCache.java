@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import java.lang.reflect.Method;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael C. Han
@@ -75,8 +75,8 @@ public class MethodCache {
 	}
 
 	private MethodCache() {
-		_classesMap = new HashMap<String, Class<?>>();
-		_methodsMap = new HashMap<MethodKey, Method>();
+		_classesMap = new ConcurrentHashMap<String, Class<?>>();
+		_methodsMap = new ConcurrentHashMap<MethodKey, Method>();
 	}
 
 	private Method _get(

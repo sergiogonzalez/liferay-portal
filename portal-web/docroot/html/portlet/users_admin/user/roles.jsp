@@ -143,43 +143,42 @@ userGroupRoles.addAll(organizationRoles);
 	<liferay-ui:message key="this-user-does-not-belong-to-an-organization-to-which-an-organization-role-can-be-assigned" />
 </c:if>
 
-<c:if test="<%= !organizationRoles.isEmpty() %>">
-	<liferay-ui:search-container
-		headerNames="title,organization,null"
-		id="organizationRolesSearchContainer"
+<liferay-ui:search-container
+	headerNames="title,organization,null"
+	id="organizationRolesSearchContainer"
+>
+	<liferay-ui:search-container-results
+		results="<%= organizationRoles %>"
+		total="<%= organizationRoles.size() %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.UserGroupRole"
+		keyProperty="roleId"
+		modelVar="userGroupRole"
 	>
-		<liferay-ui:search-container-results
-			results="<%= organizationRoles %>"
-			total="<%= organizationRoles.size() %>"
+		<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(userGroupRole.getRole()) %>" />
+		<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(userGroupRole.getRole()) %>" />
+
+		<liferay-ui:search-container-column-text
+			name="title"
+			value="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
 		/>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.UserGroupRole"
-			keyProperty="roleId"
-			modelVar="userGroupRole"
-		>
-			<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(userGroupRole.getRole()) %>" />
-			<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(userGroupRole.getRole()) %>" />
+		<liferay-ui:search-container-column-text
+			name="organization"
+			value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
+		/>
 
-			<liferay-ui:search-container-column-text
-				name="title"
-				value="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
-			/>
+		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+			<liferay-ui:search-container-column-text>
+				<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+			</liferay-ui:search-container-column-text>
+		</c:if>
+	</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-column-text
-				name="organization"
-				value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
-			/>
-
-			<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
-				<liferay-ui:search-container-column-text>
-					<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
-				</liferay-ui:search-container-column-text>
-			</c:if>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator paginate="<%= false %>" />
-	</liferay-ui:search-container>
+	<liferay-ui:search-iterator paginate="<%= false %>" />
+</liferay-ui:search-container>
 
 	<aui:script use="liferay-search-container">
 		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizationRolesSearchContainer');
@@ -200,7 +199,7 @@ userGroupRoles.addAll(organizationRoles);
 			'.modify-link'
 		);
 	</aui:script>
-</c:if>
+
 
 <c:if test="<%= !organizations.isEmpty() && !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 	<liferay-ui:icon
