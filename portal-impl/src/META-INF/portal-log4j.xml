@@ -650,19 +650,19 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.tools.BaseDeployer">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.tools.DBUpgrader">
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.tools.PortletDeployer">
+	<category name="com.liferay.portal.tools.deploy.BaseDeployer">
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.tools.ThemeDeployer">
+	<category name="com.liferay.portal.tools.deploy.PortletDeployer">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.tools.deploy.ThemeDeployer">
 		<priority value="INFO" />
 	</category>
 
