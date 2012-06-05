@@ -81,6 +81,8 @@ public interface PropsKeys {
 
 	public static final String ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL = "announcements.entry.check.interval";
 
+	public static final String ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES = "announcements.entry.page.delta.values";
+
 	public static final String ANNOUNCEMENTS_ENTRY_TYPES = "announcements.entry.types";
 
 	public static final String APPLICATION_SHUTDOWN_EVENTS = "application.shutdown.events";
@@ -189,6 +191,8 @@ public interface PropsKeys {
 
 	public static final String AUTO_DEPLOY_UNPACK_WAR = "auto.deploy.unpack.war";
 
+	public static final String AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_QUERY = "auto.deploy.websphere.wsadmin.app.manager.query";
+
 	public static final String AUTO_LOGIN_HOOKS = "auto.login.hooks";
 
 	public static final String AUTO_LOGIN_IGNORE_HOSTS = "auto.login.ignore.hosts";
@@ -214,6 +218,8 @@ public interface PropsKeys {
 	public static final String BLOGS_EMAIL_FROM_NAME = "blogs.email.from.name";
 
 	public static final String BLOGS_ENTRY_COMMENTS_ENABLED = "blogs.entry.comments.enabled";
+
+	public static final String BLOGS_ENTRY_PAGE_DELTA_VALUES = "blogs.entry.page.delta.values";
 
 	public static final String BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = "blogs.entry.previous.and.next.navigation.enabled";
 
@@ -1023,6 +1029,10 @@ public interface PropsKeys {
 
 	public static final String JSON_DESERIALIZER_STRICT_MODE = "json.deserializer.strict.mode";
 
+	public static final String JSON_SERVICE_AUTH_TOKEN_ENABLED = "json.service.auth.token.enabled";
+
+	public static final String JSON_SERVICE_AUTH_TOKEN_HOSTS_ALLOWED = "json.service.auth.token.hosts.allowed";
+
 	public static final String JSON_SERVICE_INVALID_CLASS_NAMES = "json.service.invalid.class.names";
 
 	public static final String JSON_SERVICE_PUBLIC_METHODS = "json.service.public.methods";
@@ -1076,6 +1086,16 @@ public interface PropsKeys {
 	public static final String LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN = "layout.manage.pages.initial.children";
 
 	public static final String LAYOUT_PARALLEL_RENDER_ENABLE = "layout.parallel.render.enable";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_ALLOW_CORE_THREAD_TIMEOUT = "layout.parallel.render.thread.pool.allow.core.thread.timeout";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_CORE_THREAD_COUNT = "layout.parallel.render.thread.pool.core.thread.count";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_KEEP_ALIVE_TIME = "layout.parallel.render.thread.pool.keep.alive.time";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_QUEUE_SIZE = "layout.parallel.render.thread.pool.max.queue.size";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_THREAD_COUNT = "layout.parallel.render.thread.pool.max.thread.count";
 
 	public static final String LAYOUT_PARALLEL_RENDER_TIMEOUT = "layout.parallel.render.timeout";
 
@@ -1234,6 +1254,8 @@ public interface PropsKeys {
 	public static final String LIFERAY_HOME = "liferay.home";
 
 	public static final String LIFERAY_LIB_GLOBAL_DIR = "liferay.lib.global.dir";
+
+	public static final String LIFERAY_LIB_GLOBAL_SHARED_DIR = "liferay.lib.global.shared.dir";
 
 	public static final String LIFERAY_LIB_PORTAL_DIR = "liferay.lib.portal.dir";
 
@@ -1700,6 +1722,8 @@ public interface PropsKeys {
 	public static final String PORTAL_JAAS_STRICT_PASSWORD = "portal.jaas.strict.password";
 
 	public static final String PORTAL_PROXY_PATH = "portal.proxy.path";
+
+	public static final String PORTAL_SECURITY_MANAGER_FILE_CHECKER_DEFAULT_READ_PATHS = "portal.security.manager.file.checker.default.read.paths";
 
 	public static final String PORTAL_SECURITY_MANAGER_STRATEGY = "portal.security.manager.strategy";
 

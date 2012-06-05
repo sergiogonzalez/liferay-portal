@@ -87,8 +87,6 @@ boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
 boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
-User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
-
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
@@ -200,10 +198,21 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						</span>
 
 						<span class="user-date">
-							<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {userDisplay.getDisplayURL(themeDisplay), HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}) %>' />
+
+							<%
+							String displayURL = StringPool.BLANK;
+
+							User userDisplay = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
+
+							if (userDisplay != null) {
+								displayURL = userDisplay.getDisplayURL(themeDisplay);
+							}
+							%>
+
+							<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}) %>' />
 						</span>
 
-						<c:if test="<%= fileEntry.isSupportsSocial() %>">
+						<c:if test="<%= enableRatings && fileEntry.isSupportsSocial() %>">
 							<span class="lfr-asset-ratings">
 								<liferay-ui:ratings
 									className="<%= DLFileEntryConstants.getClassName() %>"

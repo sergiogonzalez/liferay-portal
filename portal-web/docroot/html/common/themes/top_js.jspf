@@ -300,6 +300,8 @@
 			useBrowserConsole: false
 		};
 
+		Liferay.authToken = '<%= AuthTokenUtil.getToken(request) %>';
+
 		<%
 		String currentURL = PortalUtil.getCurrentURL(request);
 		%>

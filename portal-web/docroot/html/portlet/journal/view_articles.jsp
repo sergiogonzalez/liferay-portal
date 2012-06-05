@@ -47,22 +47,16 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 			JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
 			%>
 
-			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
-		</div>
-	</c:if>
-</c:if>
+			<liferay-portlet:renderURL varImpl="addArticlesURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
+				<portlet:param name="struts_action" value="/journal/edit_article" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="structureId" value="<%= displayTerms.getStructureId() %>" />
+			</liferay-portlet:renderURL>
 
-<c:if test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
-	<aui:input name="<%= displayTerms.TEMPLATE_ID %>" type="hidden" value="<%= displayTerms.getTemplateId() %>" />
-
-	<c:if test="<%= showAddArticleButton %>">
-		<div class="portlet-msg-info">
-
-			<%
-			JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(scopeGroupId, displayTerms.getTemplateId());
-			%>
-
-			<liferay-ui:message arguments="<%= template.getName(locale) %>" key="showing-content-filtered-by-template-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
+			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= structure.getName(locale) %>" key="add-new-x" /></a>)
 		</div>
 	</c:if>
 </c:if>
@@ -71,25 +65,26 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 	<aui:input name="groupId" type="hidden" />
 </c:if>
 
-<liferay-ui:search-form
-	page="/html/portlet/journal/article_search.jsp"
-	searchContainer="<%= searchContainer %>"
-/>
-
 <%
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
 searchTerms.setFolderId(-1);
 searchTerms.setVersion(-1);
 
-String search = ParamUtil.getString(request, displayTerms.ADVANCED_SEARCH, null);
+if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	searchTerms.setFolderId(folderId);
+}
+
+boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEARCH, false);
+
+String keywords = ParamUtil.getString(request, "keywords");
 
 List results = null;
 int total = 0;
 %>
 
 <c:choose>
-	<c:when test="<%= (search != null) %>">
+	<c:when test="<%= (Validator.isNotNull(keywords) || advancedSearch) %>">
 		<c:choose>
 			<c:when test="<%= PropsValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
 				<%@ include file="/html/portlet/journal/article_search_results_index.jspf" %>
@@ -98,6 +93,28 @@ int total = 0;
 				<%@ include file="/html/portlet/journal/article_search_results_database.jspf" %>
 			</c:otherwise>
 		</c:choose>
+	</c:when>
+	<c:when test='<%= displayTerms.getNavigation().equals("mine") %>'>
+
+		<%
+		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), null);
+		total = JournalArticleServiceUtil.getArticlesCountByUserId(scopeGroupId, themeDisplay.getUserId());
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+		%>
+
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+
+		<%
+		results = JournalArticleServiceUtil.getArticlesByStructureId(scopeGroupId, displayTerms.getStructureId(), searchContainer.getStart(), searchContainer.getEnd(), null);
+		total = JournalArticleServiceUtil.getArticlesCountByStructureId(scopeGroupId, displayTerms.getStructureId());
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+		%>
+
 	</c:when>
 	<c:otherwise>
 
@@ -111,18 +128,6 @@ int total = 0;
 
 	</c:otherwise>
 </c:choose>
-
-<div class="separator article-separator"><!-- --></div>
-
-<c:if test="<%= !results.isEmpty() %>">
-	<aui:button-row>
-		<aui:button cssClass="expire-articles-button" onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
-
-		<aui:button cssClass="delete-articles-button" onClick='<%= renderResponse.getNamespace() + "deleteArticles();" %>' value="delete" />
-	</aui:button-row>
-
-	<br /><br />
-</c:if>
 
 <%
 List resultRows = searchContainer.getResultRows();
@@ -228,28 +233,4 @@ for (int i = 0; i < results.size(); i++) {
 		},
 		['liferay-util-list-fields']
 	);
-</aui:script>
-
-<aui:script use="aui-base">
-	var buttons = A.all('.delete-articles-button, .expire-articles-button');
-
-	if (buttons.size()) {
-		var toggleDisabled = A.bind(Liferay.Util.toggleDisabled, Liferay.Util, ':button');
-
-		var resultsGrid = A.one('.results-grid');
-
-		if (resultsGrid) {
-			resultsGrid.delegate(
-				'click',
-				function(event) {
-					var disabled = (resultsGrid.one(':checked') == null);
-
-					toggleDisabled(disabled);
-				},
-				':checkbox'
-			);
-		}
-
-		toggleDisabled(true);
-	}
 </aui:script>

@@ -84,7 +84,7 @@ public class JSONServiceAction extends JSONAction {
 		String className = ParamUtil.getString(request, "serviceClassName");
 		String methodName = ParamUtil.getString(request, "serviceMethodName");
 
-		checkMethodPublicAccess(
+		checkMethodGuestAccess(
 			request, methodName, PropsValues.JSON_SERVICE_PUBLIC_METHODS);
 
 		String[] serviceParameters = getStringArrayFromJSON(
@@ -147,7 +147,7 @@ public class JSONServiceAction extends JSONAction {
 		return null;
 	}
 
-	protected void checkMethodPublicAccess(
+	protected void checkMethodGuestAccess(
 			HttpServletRequest request, String methodName,
 			String[] publicMethods)
 		throws PrincipalException {
@@ -161,7 +161,8 @@ public class JSONServiceAction extends JSONAction {
 		String remoteUser = request.getRemoteUser();
 
 		if (remoteUser == null) {
-			throw new PrincipalException("Public access denied");
+			throw new PrincipalException(
+				"Please sign in to invoke this method");
 		}
 	}
 

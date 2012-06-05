@@ -377,6 +377,7 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/image_gallery_display/css/main.css</header-portlet-css>
+		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<css-class-wrapper>portlet-image-gallery-display</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
@@ -745,6 +746,7 @@
 		<portlet-name>84</portlet-name>
 		<icon>/html/icons/announcements.png</icon>
 		<struts-path>announcements</struts-path>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.announcements.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
 			<trigger>
@@ -904,8 +906,7 @@
 		<scopeable>false</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<render-weight>25</render-weight>
-		<ajaxable>false</ajaxable>
+		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/asset_publisher/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-asset-publisher</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>

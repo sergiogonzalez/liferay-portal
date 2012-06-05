@@ -273,6 +273,7 @@
 				<entry key="com.liferay.portal.messaging.async.AsyncAdvice" value="defaultDestinationName,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" value="monitoringDestinationName,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.search.IndexableAdvice" value="nextMethodInterceptor" />
+				<entry key="com.liferay.portal.security.pacl.PACLAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator" value="methodInterceptor" />
 				<entry key="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" value="" />
 				<entry key="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" value="" />
@@ -392,7 +393,7 @@
 			<bean class="com.liferay.portal.util.LocalizationImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.MethodParameterNamesResolverUtil" class="com.liferay.portal.kernel.util.MethodParametersResolverUtil">
+	<bean id="com.liferay.portal.kernel.util.MethodParametersResolverUtil" class="com.liferay.portal.kernel.util.MethodParametersResolverUtil">
 		<property name="methodParametersResolver">
 			<bean class="com.liferay.portal.util.MethodParametersResolverImpl" />
 		</property>
@@ -598,6 +599,15 @@
 			<bean class="com.liferay.portal.service.persistence.BatchSessionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil" class="com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil">
+		<property name="stopperClassNames">
+			<set>
+				<value>org.apache.catalina.connector.Request</value>
+				<value>org.apache.catalina.core.ApplicationHttpRequest</value>
+				<value>org.apache.catalina.core.ApplicationRequest</value>
+			</set>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.struts.StrutsActionRegistryUtil" class="com.liferay.portal.struts.StrutsActionRegistryUtil">
 		<property name="strutsActionRegistry">
 			<bean class="com.liferay.portal.struts.StrutsActionRegistryImpl" />
@@ -789,7 +799,7 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePage" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageImpl" />
-	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePagetUtil" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil">
+	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil">
 		<property name="runtimePage" ref="com.liferay.portlet.layoutconfiguration.util.RuntimePage" />
 	</bean>
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">

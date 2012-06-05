@@ -229,6 +229,8 @@
 	<classpathentry kind="lib" path="lib/portal/mimepull.jar"/>
 	<classpathentry kind="lib" path="lib/portal/msnm.jar"/>
 	<classpathentry kind="lib" path="lib/portal/nekohtml.jar"/>
+	<classpathentry kind="lib" path="lib/portal/oauth.jar"/>
+	<classpathentry kind="lib" path="lib/portal/oauth-provider.jar"/>
 	<classpathentry kind="lib" path="lib/portal/odmg.jar"/>
 	<classpathentry kind="lib" path="lib/portal/openid4java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/oro.jar"/>
