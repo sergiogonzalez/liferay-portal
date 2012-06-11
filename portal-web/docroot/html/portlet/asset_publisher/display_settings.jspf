@@ -276,7 +276,7 @@ long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry
 						showGlobalScope: true,
 						showToolbar: true,
 						struts_action: '/dynamic_data_mapping/view_template',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "display-styles") %>'
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-styles") %>'
 					},
 					function (ddmPortletWindow) {
 						ddmPortletWindow.once(
