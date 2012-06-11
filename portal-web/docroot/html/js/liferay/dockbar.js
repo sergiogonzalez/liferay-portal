@@ -325,7 +325,42 @@ AUI.add(
 					);
 				}
 
-				Util.openWindow(config);
+				var uri = config.uri;
+				var dialogConfig = config.dialog || {};
+				var title = config.title;
+				var id = config.id;
+
+				dialogConfig.title = title;
+				dialogConfig.id = id;
+				dialogConfig.bodyContent = '<div class="aui-icon aui-icon-loading" />';
+
+				if (uri) {
+					uri = uri.replace(/(p_p_state=)[^&]+(&?)/, '$1exclusive_resourceful$2');
+				}
+
+				var dialog = new A.Dialog(dialogConfig).render();
+
+				dialog.bodyNode.plug(A.Plugin.ParseContent);
+
+				A.io.request(
+					uri,
+					{
+						dataType: 'json',
+						after: {
+							success: function(event, obj) {
+								var instance = this;
+
+								Liferay.Portlet._loadPortletFiles(
+									instance.get('responseData'), function(html) {
+										dialog.setStdModContent(A.WidgetStdMod.BODY, html);
+									}
+								);
+							}
+						}
+					}
+				);
+
+				//Util.openWindow(config);
 			},
 
 			_toggleAppShortcut: function(item, force) {
@@ -775,7 +810,7 @@ AUI.add(
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'liferay-store', 'node-focusmanager']
+			['aui-dialog', 'aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(

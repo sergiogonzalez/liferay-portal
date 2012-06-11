@@ -801,6 +801,8 @@ public class ServicePreAction extends Action {
 		themeDisplay.setLifecycleRender(lifecycle.equals("0"));
 		themeDisplay.setLifecycleResource(lifecycle.equals("2"));
 		themeDisplay.setStateExclusive(LiferayWindowState.isExclusive(request));
+		themeDisplay.setStateExclusiveResourceful(
+			LiferayWindowState.isExclusiveResourceful(request));
 		themeDisplay.setStateMaximized(LiferayWindowState.isMaximized(request));
 		themeDisplay.setStatePopUp(LiferayWindowState.isPopUp(request));
 		themeDisplay.setIsolated(isolated);

@@ -379,6 +379,16 @@ public class PortletRequestUtil {
 			}
 
 			try {
+				renderURL.setWindowState(
+					LiferayWindowState.EXCLUSIVE_RESOURCEFUL);
+
+				requestElement.addElement(
+					"render-url-exclusive-resourceful", renderURL);
+			}
+			catch (WindowStateException wse) {
+			}
+
+			try {
 				renderURL.setWindowState(LiferayWindowState.MAXIMIZED);
 
 				requestElement.addElement("render-url-maximized", renderURL);

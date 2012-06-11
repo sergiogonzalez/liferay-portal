@@ -45,7 +45,7 @@
 			);
 		},
 
-		_loadPortletFiles: function(response, loadHTML) {
+		_loadPortletFiles: function(response, callback) {
 			var headerCssPaths = response.headerCssPaths || [];
 			var footerCssPaths = response.footerCssPaths || [];
 
@@ -94,13 +94,13 @@
 					javascriptPaths,
 					{
 						onEnd: function(obj) {
-							loadHTML(responseHTML);
+							callback(responseHTML);
 						}
 					}
 				);
 			}
 			else {
-				loadHTML(responseHTML);
+				callback(responseHTML);
 			}
 		},
 

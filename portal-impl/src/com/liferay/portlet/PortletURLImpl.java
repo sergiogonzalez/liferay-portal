@@ -1039,7 +1039,8 @@ public class PortletURLImpl
 				!_windowStateString.equals(
 					LiferayWindowState.EXCLUSIVE.toString()) &&
 				!_windowStateString.equals(
-					LiferayWindowState.POP_UP.toString())) {
+					LiferayWindowState.EXCLUSIVE_RESOURCEFUL.toString()) &&
+				!_windowStateString.equals(LiferayWindowState.POP_UP.toString())) {
 
 				String lastString = sb.stringAt(sb.index() - 1);
 
@@ -1149,7 +1150,8 @@ public class PortletURLImpl
 				!_windowStateString.equals(
 					LiferayWindowState.EXCLUSIVE.toString()) &&
 				!_windowStateString.equals(
-					LiferayWindowState.POP_UP.toString())) {
+					LiferayWindowState.EXCLUSIVE_RESOURCEFUL.toString()) &&
+				!_windowStateString.equals(LiferayWindowState.POP_UP.toString())) {
 
 				sb.append("wsrp-fragmentID");
 				sb.append(StringPool.EQUAL);

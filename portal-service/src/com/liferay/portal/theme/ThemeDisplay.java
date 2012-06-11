@@ -676,6 +676,10 @@ public class ThemeDisplay
 		return _stateExclusive;
 	}
 
+	public boolean isStateExclusiveResourceful() {
+		return _stateExclusiveResourceful;
+	}
+
 	public boolean isStateMaximized() {
 		return _stateMaximized;
 	}
@@ -1154,6 +1158,12 @@ public class ThemeDisplay
 		_stateExclusive = stateExclusive;
 	}
 
+	public void setStateExclusiveResourceful(
+		boolean stateExclusiveResourceful) {
+
+		_stateExclusiveResourceful = stateExclusiveResourceful;
+	}
+
 	public void setStateMaximized(boolean stateMaximized) {
 		_stateMaximized = stateMaximized;
 	}
@@ -1381,6 +1391,7 @@ public class ThemeDisplay
 	private boolean _showStagingIcon;
 	private boolean _signedIn;
 	private boolean _stateExclusive;
+	private boolean _stateExclusiveResourceful;
 	private boolean _stateMaximized;
 	private boolean _statePopUp;
 	private Theme _theme;
