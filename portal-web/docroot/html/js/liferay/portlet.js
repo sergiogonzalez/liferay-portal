@@ -1,12 +1,24 @@
 ;(function(A, Liferay) {
-	var Util = Liferay.Util;
+	var AArray = A.Array,
+		AObject = A.Object,
+		Util = Liferay.Util;
 
 	var arrayIndexOf = A.Array.indexOf;
 
 	var TPL_NOT_AJAXABLE = '<div class="portlet-msg-info">{0}</div>';
 
+	var RESOURCE_TYPE_CSS = 0;
+
+	var RESOURCE_TYPE_JS = 1;
+
 	var Portlet = {
 		list: [],
+
+		mapResources: {
+			css: {},
+			js: {}
+		},
+
 		runtimePortletIds: [],
 
 		isStatic: function(portletId) {
@@ -15,6 +27,77 @@
 			var id = Util.getPortletId(portletId.id || portletId);
 
 			return (id in instance._staticPortlets);
+		},
+
+		loadPortletFiles: function(response, callback) {
+			var headerCssPaths = response.headerCssPaths || [];
+			var footerCssPaths = response.footerCssPaths || [];
+
+			var javascriptPaths = response.headerJavaScriptPaths || [];
+
+			javascriptPaths = javascriptPaths.concat(response.footerJavaScriptPaths || []);
+
+			footerCssPaths = Portlet._filterResource(footerCssPaths, RESOURCE_TYPE_CSS);
+			headerCssPaths = Portlet._filterResource(headerCssPaths, RESOURCE_TYPE_CSS);
+			javascriptPaths = Portlet._filterResource(javascriptPaths, RESOURCE_TYPE_JS);
+
+			var head = A.one('head');
+			var body = A.getBody();
+
+			if (headerCssPaths.length) {
+				A.Get.css(
+					headerCssPaths.slice(0),
+					{
+						insertBefore: head.get('firstChild').getDOM(),
+						onSuccess: function(event) {
+							if (Liferay.Browser.isIe()) {
+								A.all('body link').appendTo(head);
+
+								A.all('link.lfr-css-file').each(
+									function(item, index, collection) {
+										document.createStyleSheet(item.get('href'));
+									}
+								);
+							}
+
+							Portlet._updateResourcesMap(headerCssPaths, RESOURCE_TYPE_CSS);
+						}
+					}
+				);
+			}
+
+			var lastChild = body.get('lastChild').getDOM();
+
+			if (footerCssPaths.length) {
+				A.Get.css(
+					footerCssPaths.slice(0),
+					{
+						insertBefore: lastChild,
+						onSuccess: function(event) {
+							Portlet._updateResourcesMap(footerCssPaths, RESOURCE_TYPE_CSS);
+						}
+					}
+				);
+			}
+
+			var responseHTML = response.portletHTML;
+
+			if (javascriptPaths.length) {
+				A.Get.script(
+					javascriptPaths.slice(0),
+					{
+						onEnd: function(obj) {
+							callback(responseHTML);
+						},
+						onSuccess: function(event) {
+							Portlet._updateResourcesMap(javascriptPaths, RESOURCE_TYPE_JS);
+						}
+					}
+				);
+			}
+			else {
+				callback(responseHTML);
+			}
 		},
 
 		refreshLayout: function(portletBoundary){
@@ -45,63 +128,42 @@
 			);
 		},
 
-		_loadPortletFiles: function(response, callback) {
-			var headerCssPaths = response.headerCssPaths || [];
-			var footerCssPaths = response.footerCssPaths || [];
+		_filterResource: function(resourceArray, type) {
+			var mapResources = Portlet.mapResources;
 
-			var javascriptPaths = response.headerJavaScriptPaths || [];
+			var resourceMap = mapResources.css;
 
-			javascriptPaths = javascriptPaths.concat(response.footerJavaScriptPaths || []);
+			if (type == RESOURCE_TYPE_JS){
+				resourceMap = mapResources.js;
+			}
+			
+			resourceArray = AArray.reject(
+				resourceArray,
+				function(item, index, collection) {
+					return AObject.owns(resourceMap, item);
+				}
+			);
 
-			var head = A.one('head');
-			var body = A.getBody();
+			return resourceArray;
+		},
 
-			if (headerCssPaths.length) {
-				A.Get.css(
-					headerCssPaths,
-					{
-						insertBefore: head.get('firstChild').getDOM(),
-						onSuccess: function(event) {
-							if (Liferay.Browser.isIe()) {
-								A.all('body link').appendTo(head);
+		_updateResourcesMap: function(resourceArray, type) {
+			var resourceMap = Portlet.mapResources.css;
 
-								A.all('link.lfr-css-file').each(
-									function(item, index, collection) {
-										document.createStyleSheet(item.get('href'));
-									}
-								);
-							}
-						}
+			if (type === RESOURCE_TYPE_JS) {
+				resourceMap = Portlet.mapResources.js;
+			}
+
+			AArray.each(
+				resourceArray,
+				function(item, index, collection) {
+					if (AObject.owns(resourceMap, item)) {
+						throw 'Internal error. File: ' + item + ' already exists in resources map';
 					}
-				);
-			}
 
-			var lastChild = body.get('lastChild').getDOM();
-
-			if (footerCssPaths.length) {
-				A.Get.css(
-					footerCssPaths,
-					{
-						insertBefore: lastChild
-					}
-				);
-			}
-
-			var responseHTML = response.portletHTML;
-
-			if (javascriptPaths.length) {
-				A.Get.script(
-					javascriptPaths,
-					{
-						onEnd: function(obj) {
-							callback(responseHTML);
-						}
-					}
-				);
-			}
-			else {
-				callback(responseHTML);
-			}
+					resourceMap[item] = true;
+				}
+			);
 		},
 
 		_staticPortlets: {}
@@ -311,7 +373,7 @@
 								addPortletReturn(response.portletHTML);
 							}
 							else {
-								Portlet._loadPortletFiles(response, addPortletReturn);
+								Portlet.loadPortletFiles(response, addPortletReturn);
 							}
 						}
 					}
@@ -340,7 +402,7 @@
 				Liferay.fire('closePortlet', options);
 			}
 			else {
-				self.focus();
+				instance.focus();
 			}
 		},
 		['aui-io-request']
