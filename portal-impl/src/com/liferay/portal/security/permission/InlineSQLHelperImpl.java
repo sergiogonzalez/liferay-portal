@@ -389,7 +389,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			userResourceBlockIds.add(_NO_RESOURCE_BLOCKS_ID);
 		}
 
-		if (Validator.isNotNull(userIdField)) {
+		if (Validator.isNotNull(userIdField) &&
+			!ownerResourceBlockIds.isEmpty()) {
 			permissionWhere = permissionWhere.concat(
 				CustomSQLUtil.get(FILTER_BY_RESOURCE_BLOCK_ID_OWNER));
 
