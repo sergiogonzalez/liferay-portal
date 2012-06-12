@@ -1039,6 +1039,8 @@ public class PortletURLImpl
 				!_windowStateString.equals(
 					LiferayWindowState.EXCLUSIVE.toString()) &&
 				!_windowStateString.equals(
+					LiferayWindowState.EXCLUSIVE_RESOURCEFUL.toString()) &&
+				!_windowStateString.equals(
 					LiferayWindowState.POP_UP.toString())) {
 
 				String lastString = sb.stringAt(sb.index() - 1);
@@ -1148,6 +1150,8 @@ public class PortletURLImpl
 				!_windowStateString.equals(WindowState.MAXIMIZED.toString()) &&
 				!_windowStateString.equals(
 					LiferayWindowState.EXCLUSIVE.toString()) &&
+				!_windowStateString.equals(
+					LiferayWindowState.EXCLUSIVE_RESOURCEFUL.toString()) &&
 				!_windowStateString.equals(
 					LiferayWindowState.POP_UP.toString())) {
 

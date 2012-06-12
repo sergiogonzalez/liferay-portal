@@ -78,6 +78,7 @@ public class PortletDisplay implements Serializable {
 		_showPrintIcon = master.isShowPrintIcon();
 		_showRefreshIcon = master.isShowRefreshIcon();
 		_stateExclusive = master.isStateExclusive();
+		_stateExclusiveResourceful = master.isStateExclusiveResourceful();
 		_stateMax = master.isStateMax();
 		_stateMin = master.isStateMin();
 		_stateNormal = master.isStateNormal();
@@ -139,6 +140,7 @@ public class PortletDisplay implements Serializable {
 		slave.setShowPrintIcon(_showPrintIcon);
 		slave.setShowRefreshIcon(_showRefreshIcon);
 		slave.setStateExclusive(_stateExclusive);
+		slave.setStateExclusiveResourceful(_stateExclusiveResourceful);
 		slave.setStateMax(_stateMax);
 		slave.setStateMin(_stateMin);
 		slave.setStateNormal(_stateNormal);
@@ -407,6 +409,10 @@ public class PortletDisplay implements Serializable {
 		return _stateExclusive;
 	}
 
+	public boolean isStateExclusiveResourceful() {
+		return _stateExclusiveResourceful;
+	}
+
 	public boolean isStateMax() {
 		return _stateMax;
 	}
@@ -469,6 +475,7 @@ public class PortletDisplay implements Serializable {
 		_showPrintIcon = false;
 		_showRefreshIcon = false;
 		_stateExclusive = false;
+		_stateExclusiveResourceful = false;
 		_stateMax = false;
 		_stateMin = false;
 		_stateNormal = false;
@@ -662,6 +669,12 @@ public class PortletDisplay implements Serializable {
 		_stateExclusive = stateExclusive;
 	}
 
+	public void setStateExclusiveResourceful(
+		boolean stateExclusiveResourceful) {
+
+		_stateExclusiveResourceful = stateExclusiveResourceful;
+	}
+
 	public void setStateMax(boolean stateMax) {
 		_stateMax = stateMax;
 	}
@@ -804,6 +817,7 @@ public class PortletDisplay implements Serializable {
 	private boolean _showPrintIcon;
 	private boolean _showRefreshIcon;
 	private boolean _stateExclusive;
+	private boolean _stateExclusiveResourceful;
 	private boolean _stateMax;
 	private boolean _stateMin;
 	private boolean _stateNormal;

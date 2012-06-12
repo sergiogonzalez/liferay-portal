@@ -17,6 +17,8 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -25,6 +27,9 @@ import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HeaderCacheServletResponse;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.servlet.StringServletResponse;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -66,6 +71,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Sergio González
  */
 public class LayoutAction extends Action {
 
@@ -377,6 +383,23 @@ public class LayoutAction extends Action {
 			if (layout != null) {
 				if (themeDisplay.isStateExclusive()) {
 					PortletContainerUtil.render(request, response, portlet);
+
+					return null;
+				}
+				else if (themeDisplay.isStateExclusiveResourceful()) {
+					PortletContainerUtil.render(request, response, portlet);
+
+					StringServletResponse stringResponse =
+						(StringServletResponse)response;
+
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+					ActionUtil.populatePortletJSONObject(
+						request, stringResponse, portlet, jsonObject);
+
+					response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+
+					ServletResponseUtil.write(response, jsonObject.toString());
 
 					return null;
 				}
