@@ -2912,14 +2912,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				passwordExpiresOn - (passwordPolicy.getWarningTime() * 1000);
 
 			if (now.getTime() > timeStartWarning) {
+				isPasswordExpiringSoon = true;
 
-				if (isPasswordExpired(user)) {
-					if (!user.isPasswordReset()) {
-						isPasswordExpiringSoon = true;
-					}
-				}
-				else {
-					isPasswordExpiringSoon = true;
+				if (isPasswordExpired(user) && user.isPasswordReset()) {
+					isPasswordExpiringSoon = false;
 				}
 			}
 		}
