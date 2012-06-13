@@ -3882,6 +3882,37 @@ public class PortalImpl implements Portal {
 		return _allSystemSiteRoles;
 	}
 
+	public String getUniqueElementId(
+		HttpServletRequest request, String elementId) {
+
+		String uniqueElementId = elementId;
+
+		Set<String> uniqueElementIds = (Set<String>)request.getAttribute(
+			WebKeys.UNIQUE_ELEMENT_IDS);
+
+		if (uniqueElementIds == null) {
+			uniqueElementIds = new HashSet<String>();
+
+			request.setAttribute(WebKeys.UNIQUE_ELEMENT_IDS, uniqueElementIds);
+		}
+		else {
+			int i = 1;
+
+			while (uniqueElementIds.contains(uniqueElementId)) {
+				uniqueElementId = elementId.concat(StringPool.UNDERLINE).concat(
+					String.valueOf(i));
+			}
+		}
+
+		uniqueElementIds.add(uniqueElementId);
+
+		return uniqueElementId;
+	}
+
+	public String getUniqueElementId(PortletRequest request, String elementId) {
+		return getUniqueElementId(getHttpServletRequest(request), elementId);
+	}
+
 	public UploadPortletRequest getUploadPortletRequest(
 		PortletRequest portletRequest) {
 
