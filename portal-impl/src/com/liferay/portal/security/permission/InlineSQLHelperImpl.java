@@ -385,12 +385,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		// A SQL syntax error occurs if there is not at least one resource block
 		// ID.
 
+		if (ownerResourceBlockIds.isEmpty()) {
+			ownerResourceBlockIds.add(_NO_RESOURCE_BLOCKS_ID);
+		}
+
 		if (userResourceBlockIds.isEmpty()) {
 			userResourceBlockIds.add(_NO_RESOURCE_BLOCKS_ID);
 		}
 
-		if (Validator.isNotNull(userIdField) &&
-			!ownerResourceBlockIds.isEmpty()) {
+		if (Validator.isNotNull(userIdField)) {
 			permissionWhere = permissionWhere.concat(
 				CustomSQLUtil.get(FILTER_BY_RESOURCE_BLOCK_ID_OWNER));
 
