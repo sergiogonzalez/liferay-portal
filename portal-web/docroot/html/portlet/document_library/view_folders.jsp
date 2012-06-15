@@ -122,10 +122,6 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 						</liferay-portlet:renderURL>
 
 						<%
-						PortletURL expandViewDocumentsHomeURL = PortletURLUtil.clone(viewDocumentsHomeURL, liferayPortletResponse);
-
-						expandViewDocumentsHomeURL.setParameter("expandFolder", Boolean.TRUE.toString());
-
 						String navigation = ParamUtil.getString(request, "navigation", "home");
 
 						long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
@@ -135,28 +131,15 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 						request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(repositoryId));
 						%>
 
-						<li class="folder <%= (navigation.equals("home") && (folderId == rootFolderId) && (fileEntryTypeId == -1)) ? "selected" : StringPool.BLANK %>">
-
-							<%
-							request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-							%>
-
-							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
-
-							<c:if test="<%= (foldersCount > 0) %>">
-								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= rootFolderId %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewDocumentsHomeURL.toString() %>">
-									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
-								</a>
-							</c:if>
-
-							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= rootFolderId %>" data-navigation="home" data-title="<%= LanguageUtil.get(pageContext, "home") %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
-								<liferay-ui:icon image="../aui/home" message="" />
-
-								<span class="entry-title">
-									<%= LanguageUtil.get(pageContext, "home") %>
-								</span>
-							</a>
-						</li>
+						<liferay-ui:folder-navigation
+							actionFolderJSP="/html/portlet/document_library/folder_action.jsp"
+							curFolderId="<%= rootFolderId %>"
+							curFolderName="<%= LanguageUtil.get(pageContext, "home") %>"
+							expandNode="<%= (foldersCount > 0) %>"
+							imageNode="../aui/home"
+							selectedFolder="<%= (navigation.equals("home") && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>"
+							viewURL="<%= viewDocumentsHomeURL %>"
+						/>
 
 						<c:if test="<%= rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 							<liferay-portlet:renderURL varImpl="viewRecentDocumentsURL">
@@ -272,34 +255,16 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 										<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 									</liferay-portlet:renderURL>
 
-									<%
-									PortletURL expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
-
-									expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
-									%>
-
-									<li class="folder <%= (mountFolder.getFolderId() == folderId) ? "selected" : StringPool.BLANK %>">
-
-										<%
-										request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-										%>
-
-										<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
-
-										<c:if test="<%= mountFoldersCount > 0 %>">
-											<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewURL.toString() %>">
-												<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
-											</a>
-										</c:if>
-
-										<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-repository-id="<%= mountFolder.getRepositoryId() %>" data-title="<%= mountFolder.getName() %>" href="<%= viewURL.toString() %>">
-											<liferay-ui:icon image="drive" />
-
-											<span class="entry-title">
-												<%= mountFolder.getName() %>
-											</span>
-										</a>
-									</li>
+									<liferay-ui:folder-navigation
+										actionFolderJSP="/html/portlet/document_library/folder_action.jsp"
+										curFolderId="<%= mountFolder.getFolderId() %>"
+										curFolderName="<%= mountFolder.getName() %>"
+										expandNode="<%= (mountFoldersCount > 0) %>"
+										imageNode="drive"
+										selectedFolder="<%= mountFolder.getFolderId() == folderId %>"
+										repositoryId="<%= mountFolder.getRepositoryId() %>"
+										viewURL="<%= viewURL %>"
+									/>
 
 							<%
 								}
@@ -378,41 +343,16 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
-							<%
-							expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
-
-							expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
-							%>
-
-							<li class="folder <%= (curFolder.getFolderId() == folderId) ? "selected" : StringPool.BLANK %>">
-
-								<%
-								request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-								%>
-
-								<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
-
-								<c:if test="<%= foldersCount > 0 %>">
-									<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewURL.toString() %>">
-										<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
-									</a>
-								</c:if>
-
-								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-repository-id="<%= curFolder.getRepositoryId() %>" data-title="<%= curFolder.getName() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
-									<c:choose>
-										<c:when test="<%= (foldersCount + fileEntriesCount) > 0 %>">
-											<liferay-ui:icon image="folder_full_document" />
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:icon image="folder_empty" />
-										</c:otherwise>
-									</c:choose>
-
-									<span class="entry-title">
-										<%= curFolder.getName() %>
-									</span>
-								</a>
-							</li>
+							<liferay-ui:folder-navigation
+								actionFolderJSP="/html/portlet/document_library/folder_action.jsp"
+								curFolderId="<%= curFolder.getFolderId() %>"
+								curFolderName="<%= curFolder.getName() %>"
+								expandNode="<%= (foldersCount > 0) %>"
+								imageNode="<%= ((foldersCount + fileEntriesCount) > 0) ? "folder_full_document" : "folder_empty" %>"
+								selectedFolder="<%= curFolder.getFolderId() == folderId %>"
+								repositoryId="<%= curFolder.getRepositoryId() %>"
+								viewURL="<%= viewURL %>"
+							/>
 
 						<%
 						}

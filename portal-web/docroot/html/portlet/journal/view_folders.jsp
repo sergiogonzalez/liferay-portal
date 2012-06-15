@@ -94,6 +94,13 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 
 						<%
 						int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folderId);
+
+						String navigation = ParamUtil.getString(liferayPortletRequest, "navigation", "home");
+
+						String structureId = ParamUtil.getString(liferayPortletRequest, "structureId");
+
+						liferayPortletRequest.setAttribute("view_entries.jsp-folder", folder);
+						liferayPortletRequest.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
 						%>
 
 						<liferay-portlet:renderURL varImpl="viewArticlesHomeURL">
@@ -105,41 +112,15 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
-						<%
-						PortletURL expandArticlesHomeURL = PortletURLUtil.clone(viewArticlesHomeURL, liferayPortletResponse);
-
-						expandArticlesHomeURL.setParameter("expandFolder", Boolean.TRUE.toString());
-
-						String navigation = ParamUtil.getString(liferayPortletRequest, "navigation", "home");
-
-						String structureId = ParamUtil.getString(liferayPortletRequest, "structureId");
-
-						liferayPortletRequest.setAttribute("view_entries.jsp-folder", folder);
-						liferayPortletRequest.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
-						%>
-
-						<li class="folder <%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(structureId) ? "selected" : StringPool.BLANK %>">
-
-							<%
-							request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-							%>
-
-							<liferay-util:include page="/html/portlet/journal/folder_action.jsp" />
-
-							<c:if test="<%= (foldersCount > 0) %>">
-								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandArticlesHomeURL.toString() %>">
-									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
-								</a>
-							</c:if>
-
-							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-navigation="home" data-title="<%= LanguageUtil.get(pageContext, "home") %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewArticlesHomeURL.toString() %>">
-								<liferay-ui:icon image="../aui/home" message="" />
-
-								<span class="article-title">
-									<%= LanguageUtil.get(pageContext, "home") %>
-								</span>
-							</a>
-						</li>
+						<liferay-ui:folder-navigation
+							actionFolderJSP="/html/portlet/journal/folder_action.jsp"
+							curFolderId="<%= JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>"
+							curFolderName="<%= LanguageUtil.get(pageContext, "home") %>"
+							expandNode="<%= (foldersCount > 0) %>"
+							imageNode="../aui/home"
+							selectedFolder="<%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(structureId) %>"
+							viewURL="<%= viewArticlesHomeURL %>"
+						/>
 
 						<liferay-portlet:renderURL varImpl="viewRecentArticlesURL">
 							<portlet:param name="struts_action" value="/journal/view" />
@@ -196,9 +177,9 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 								<a class="browse-folder" data-structure-id="<%= String.valueOf(0) %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewBasicJournalStructureArticlesURL.toString() %>">
 									<liferay-ui:icon image="history" message="" />
 
-										<span class="entry-title">
-											<%= LanguageUtil.get(pageContext, "basic-web-content") %>
-										</span>
+									<span class="entry-title">
+										<%= LanguageUtil.get(pageContext, "basic-web-content") %>
+									</span>
 								</a>
 							</li>
 						</c:if>
@@ -278,41 +259,15 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
-							<%
-							expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
-
-							expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
-							%>
-
-							<li class="folder <%= (curFolder.getFolderId() == folderId) ? "selected" : StringPool.BLANK %>">
-
-								<%
-								request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-								%>
-
-								<liferay-util:include page="/html/portlet/journal/folder_action.jsp" />
-
-								<c:if test="<%= foldersCount > 0 %>">
-									<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewURL.toString() %>">
-										<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
-									</a>
-								</c:if>
-
-								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-title="<%= curFolder.getName() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
-									<c:choose>
-										<c:when test="<%= (foldersCount + articlesCount) > 0 %>">
-											<liferay-ui:icon image="folder_full_document" />
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:icon image="folder_empty" />
-										</c:otherwise>
-									</c:choose>
-
-									<span class="article-title">
-										<%= curFolder.getName() %>
-									</span>
-								</a>
-							</li>
+							<liferay-ui:folder-navigation
+								actionFolderJSP="/html/portlet/journal/folder_action.jsp"
+								curFolderId="<%= curFolder.getFolderId() %>"
+								curFolderName="<%= curFolder.getName() %>"
+								expandNode="<%= (foldersCount > 0) %>"
+								imageNode="<%= ((foldersCount + articlesCount) > 0) ? "folder_full_document" : "folder_empty" %>"
+								selectedFolder="<%= curFolder.getFolderId() == folderId %>"
+								viewURL="<%= viewURL %>"
+							/>
 
 						<%
 						}
