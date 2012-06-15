@@ -19,52 +19,92 @@
 <%
 Translation translation = (Translation)request.getAttribute(WebKeys.TRANSLATOR_TRANSLATION);
 
+String[] allLanguageIds = PrefsPropsUtil.getStringArray(PropsKeys.TRANSLATOR_LANGUAGES, StringPool.COMMA);
+
 if (translation == null) {
-	translation = new Translation(PropsUtil.get(PropsKeys.TRANSLATOR_DEFAULT_LANGUAGES), StringPool.BLANK, StringPool.BLANK);
+	String translationId = PropsUtil.get(PropsKeys.TRANSLATOR_DEFAULT_LANGUAGES);
+
+	String[] languageIds = TranslatorUtil.getFromAndToLanguageIds(translationId, allLanguageIds);
+
+	if (languageIds != null) {
+		String fromLanguageId = languageIds[0];
+		String toLanguageId = languageIds[1];
+
+		translation = new Translation(fromLanguageId, toLanguageId, StringPool.BLANK, StringPool.BLANK);
+	}
 }
 %>
 
-<portlet:actionURL var="portletURL" />
+<c:choose>
+	<c:when test="<%= translation == null %>">
+		<div class="portlet-msg-error">
+			<liferay-ui:message key="please-configure-valid-default-languages" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<portlet:actionURL var="portletURL" />
 
-<aui:form accept-charset="UTF-8" action="<%= portletURL %>" method="post" name="fm">
-	<c:if test="<%= Validator.isNotNull(translation.getToText()) %>">
-		<%= HtmlUtil.escape(translation.getToText()) %>
-	</c:if>
+		<aui:form accept-charset="UTF-8" action="<%= portletURL %>" method="post" name="fm">
+			<liferay-ui:error exception="<%= MicrosoftTranslatorException.class %>">
 
-	<aui:fieldset>
-		<aui:input cssClass="lfr-textarea-container" label="" name="text" type="textarea" value="<%= translation.getFromText() %>" wrap="soft" />
+				<%
+				MicrosoftTranslatorException mte = (MicrosoftTranslatorException)errorException;
 
-		<aui:select label="" name="id">
-			<aui:option label="en_zh" selected='<%= translation.getTranslationId().equals("en_zh") %>' />
-			<aui:option label="en_zt" selected='<%= translation.getTranslationId().equals("en_zt") %>' />
-			<aui:option label="en_nl" selected='<%= translation.getTranslationId().equals("en_nl") %>' />
-			<aui:option label="en_fr" selected='<%= translation.getTranslationId().equals("en_fr") %>' />
-			<aui:option label="en_de" selected='<%= translation.getTranslationId().equals("en_de") %>' />
-			<aui:option label="en_it" selected='<%= translation.getTranslationId().equals("en_it") %>' />
-			<aui:option label="en_ja" selected='<%= translation.getTranslationId().equals("en_ja") %>' />
-			<aui:option label="en_ko" selected='<%= translation.getTranslationId().equals("en_ko") %>' />
-			<aui:option label="en_pt" selected='<%= translation.getTranslationId().equals("en_pt") %>' />
-			<aui:option label="en_es" selected='<%= translation.getTranslationId().equals("en_es") %>' />
-			<aui:option label="zh_en" selected='<%= translation.getTranslationId().equals("zh_en") %>' />
-			<aui:option label="zt_en" selected='<%= translation.getTranslationId().equals("zt_en") %>' />
-			<aui:option label="nl_en" selected='<%= translation.getTranslationId().equals("nl_en") %>' />
-			<aui:option label="fr_en" selected='<%= translation.getTranslationId().equals("fr_en") %>' />
-			<aui:option label="fr_de" selected='<%= translation.getTranslationId().equals("fr_de") %>' />
-			<aui:option label="de_en" selected='<%= translation.getTranslationId().equals("de_en") %>' />
-			<aui:option label="de_fr" selected='<%= translation.getTranslationId().equals("de_fr") %>' />
-			<aui:option label="it_en" selected='<%= translation.getTranslationId().equals("it_en") %>' />
-			<aui:option label="ja_en" selected='<%= translation.getTranslationId().equals("ja_en") %>' />
-			<aui:option label="ko_en" selected='<%= translation.getTranslationId().equals("ko_en") %>' />
-			<aui:option label="pt_en" selected='<%= translation.getTranslationId().equals("pt_en") %>' />
-			<aui:option label="ru_en" selected='<%= translation.getTranslationId().equals("ru_en") %>' />
-			<aui:option label="es_en" selected='<%= translation.getTranslationId().equals("es_en") %>' />
-		</aui:select>
-	</aui:fieldset>
+				String message = mte.getMessage();
 
-	<aui:button-row>
-		<aui:button type="submit" value="translate" />
-	</aui:button-row>
-</aui:form>
+				if (message.startsWith("ACS50012") || message.startsWith("ACS70002") || message.startsWith("ACS90011")) {
+				%>
+
+					<liferay-ui:message key="please-configure-a-valid-microsoft-translator-license" />
+
+				<%
+				}
+				%>
+
+			</liferay-ui:error>
+
+			<c:if test="<%= Validator.isNotNull(translation.getToText()) %>">
+				<%= HtmlUtil.escape(translation.getToText()) %>
+			</c:if>
+
+			<aui:fieldset>
+				<aui:input cssClass="lfr-textarea-container" label="" name="text" type="textarea" value="<%= translation.getFromText() %>" wrap="soft" />
+
+				<aui:select label="language-from" name="fromLanguageId">
+
+					<%
+					for (String languageId : allLanguageIds) {
+					%>
+
+						<aui:option label='<%= "language." + languageId %>' selected="<%= translation.getFromLanguageId().equals(languageId) %>" value="<%= languageId %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+
+				<aui:select label="language-to" name="toLanguageId">
+
+					<%
+					for (String languageId : allLanguageIds) {
+					%>
+
+						<aui:option label='<%= "language." + languageId %>' selected="<%= translation.getToLanguageId().equals(languageId) %>" value="<%= languageId %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:fieldset>
+
+			<aui:button-row>
+				<aui:button type="submit" value="translate" />
+			</aui:button-row>
+		</aui:form>
+	</c:otherwise>
+</c:choose>
 
 <c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 	<aui:script>

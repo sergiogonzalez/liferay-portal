@@ -16,72 +16,55 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
+<c:if test="<%= !user.isDefaultUser() %>">
+	<aui:input cssClass="select-entries aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
+</c:if>
+
 <liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	String taglibURL = "javascript:" + renderResponse.getNamespace() + "openPermissionsView()";
-	%>
-
-	<liferay-ui:icon
-		image="permissions"
-		message="permissions"
-		url="<%= taglibURL %>"
-	/>
-
-	<c:choose>
-		<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), JournalArticle.class.getName(), scopeGroupId) %>">
-			<portlet:actionURL var="unsubscribeURL">
-				<portlet:param name="struts_action" value="/journal/edit_article" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon
-				image="unsubscribe"
-				message="unsubscribe"
-				url="<%= unsubscribeURL %>"
-			/>
-		</c:when>
-		<c:otherwise>
-			<portlet:actionURL var="subscribeURL">
-				<portlet:param name="struts_action" value="/journal/edit_article" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon
-				image="subscribe"
-				message="subscribe"
-				url="<%= subscribeURL %>"
-			/>
-		</c:otherwise>
-	</c:choose>
-
-	<%
-	taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteArticles();";
+	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.DELETE + "'});";
 	%>
 
 	<liferay-ui:icon
 		cssClass="delete-articles-button"
 		image="delete"
 		message="delete"
-		url="<%= taglibURL %>"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
 	/>
 
 	<%
-	taglibURL = "javascript:" + renderResponse.getNamespace() + "expireArticles();";
+	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.EXPIRE + "'});";
 	%>
 
 	<liferay-ui:icon
 		cssClass="expire-articles-button"
 		image="time"
 		message="expire"
-		url="<%= taglibURL %>"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
+	/>
+
+	<%
+	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.MOVE + "'});";
+	%>
+
+	<liferay-ui:icon
+		cssClass="move-articles-button"
+		image="submit"
+		message="move"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
 	/>
 </liferay-ui:icon-menu>
 
 <span class="add-button" id="<portlet:namespace />addButtonContainer">
 	<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
+</span>
+
+<span class="sort-button" id="<portlet:namespace />sortButtonContainer">
+	<liferay-util:include page="/html/portlet/journal/sort_button.jsp" />
 </span>
 
 <span class="manage-button">
@@ -118,7 +101,7 @@
 	</c:if>
 </span>
 
-<aui:script use="aui-base">
+<aui:script>
 	function <portlet:namespace />openFeedsView() {
 		Liferay.Util.openWindow(
 			{
@@ -128,19 +111,6 @@
 				id: '<portlet:namespace />openFeedsView',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "feeds") %>',
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_feeds" /></liferay-portlet:renderURL>'
-			}
-		);
-	}
-
-	function <portlet:namespace />openPermissionsView() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					width: 820
-				},
-				id: '<portlet:namespace />openPermissionsView',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
-				uri: '<liferay-security:permissionsURL modelResource="com.liferay.portlet.journal" modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>" resourcePrimKey="<%= String.valueOf(scopeGroupId) %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" />'
 			}
 		);
 	}
@@ -169,30 +139,5 @@
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_templates" /></liferay-portlet:renderURL>'
 			}
 		);
-	}
-
-	var buttons = A.all('.delete-articles-button, .expire-articles-button');
-
-	if (buttons.size()) {
-		var resultsGrid = A.one('.results-grid');
-
-		if (resultsGrid) {
-			resultsGrid.delegate(
-				'click',
-				function(event) {
-					if (resultsGrid.one(':checked') == null) {
-						buttons.hide();
-					}
-					else {
-						buttons.show();
-					}
-				},
-				':checkbox'
-			);
-		}
-
-		if (resultsGrid.one(':checked') == null) {
-			buttons.hide();
-		}
 	}
 </aui:script>

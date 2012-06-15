@@ -22,7 +22,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
 String type = (String)request.getAttribute("liferay-ui:search:type");
 
-String id = searchContainer.getId();
+String id = searchContainer.getId(request);
 
 int start = searchContainer.getStart();
 int end = searchContainer.getEnd();
@@ -270,7 +270,7 @@ int sortColumnIndex = -1;
 				textSearchEntry.setAlign(rowChecker.getAlign());
 				textSearchEntry.setColspan(rowChecker.getColspan());
 				textSearchEntry.setCssClass(rowChecker.getCssClass());
-				textSearchEntry.setName(rowChecker.getRowCheckBox(rowIsChecked, rowIsDisabled, row.getPrimaryKey()));
+				textSearchEntry.setName(rowChecker.getRowCheckBox(request, rowIsChecked, rowIsDisabled, row.getPrimaryKey()));
 				textSearchEntry.setValign(rowChecker.getValign());
 
 				row.addSearchEntry(0, textSearchEntry);

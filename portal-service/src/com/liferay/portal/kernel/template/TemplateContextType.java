@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.template;
  */
 public enum TemplateContextType {
 
-	EMPTY, RESTRICTED, STANDARD,
+	CLASS_LOADER, EMPTY, RESTRICTED, STANDARD,
 
 }

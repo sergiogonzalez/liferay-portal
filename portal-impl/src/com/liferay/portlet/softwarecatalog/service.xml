@@ -43,11 +43,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />
@@ -133,11 +131,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-
 		<finder name="G_U" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />

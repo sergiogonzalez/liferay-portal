@@ -35,6 +35,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
@@ -61,6 +63,7 @@ import com.liferay.portlet.documentlibrary.trash.DLFileShortcutTrashHandler;
 import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
 import com.liferay.portlet.documentlibrary.util.DLIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
+import com.liferay.portlet.journal.util.JournalIndexer;
 import com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler;
 import com.liferay.portlet.messageboards.util.MBIndexer;
 import com.liferay.portlet.messageboards.workflow.MBDiscussionWorkflowHandler;
@@ -115,6 +118,13 @@ public class ServiceTestUtil {
 	}
 
 	public static Layout addLayout(long groupId, String name) throws Exception {
+		return addLayout(groupId, name, false);
+	}
+
+	public static Layout addLayout(
+			long groupId, String name, boolean privateLayout)
+		throws Exception {
+
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
@@ -132,10 +142,34 @@ public class ServiceTestUtil {
 		String description = "This is a test page.";
 
 		return LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), groupId, false,
+			TestPropsValues.getUserId(), groupId, privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
 			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			getServiceContext());
+	}
+
+	public static LayoutPrototype addLayoutPrototype(String name)
+		throws Exception {
+
+		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(Locale.getDefault(), name);
+
+		return LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			nameMap, null, true);
+	}
+
+	public static LayoutSetPrototype addLayoutSetPrototype(String name)
+		throws Exception {
+
+		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(Locale.getDefault(), name);
+
+		return LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			nameMap, null, true, true, getServiceContext());
 	}
 
 	public static User addUser(
@@ -249,6 +283,7 @@ public class ServiceTestUtil {
 
 		IndexerRegistryUtil.register(new BlogsIndexer());
 		IndexerRegistryUtil.register(new ContactIndexer());
+		IndexerRegistryUtil.register(new JournalIndexer());
 		IndexerRegistryUtil.register(new UserIndexer());
 		IndexerRegistryUtil.register(new BookmarksIndexer());
 		IndexerRegistryUtil.register(new DLIndexer());

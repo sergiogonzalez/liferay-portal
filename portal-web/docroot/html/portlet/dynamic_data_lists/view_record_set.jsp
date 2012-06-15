@@ -34,13 +34,17 @@ boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 
 <c:choose>
 	<c:when test="<%= listDDMTemplateId > 0 %>">
-		<%= DDLUtil.getTemplateContent(listDDMTemplateId, recordSet, themeDisplay, renderRequest, renderResponse) %>
-	</c:when>
-	<c:when test="<%= spreadsheet %>">
-		<liferay-util:include page="/html/portlet/dynamic_data_lists/view_spreadsheet_records.jsp" />
+		<liferay-util:include page="/html/portlet/dynamic_data_lists/view_template_records.jsp" />
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/html/portlet/dynamic_data_lists/view_records.jsp" />
+		<c:choose>
+			<c:when test="<%= spreadsheet %>">
+				<liferay-util:include page="/html/portlet/dynamic_data_lists/view_spreadsheet_records.jsp" />
+			</c:when>
+			<c:otherwise>
+				<liferay-util:include page="/html/portlet/dynamic_data_lists/view_records.jsp" />
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 

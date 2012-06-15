@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.util.DefaultThreadLocalBinder;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 /**
  * @author Shuyang Zhou
@@ -28,9 +29,7 @@ public class JettyThreadLocalBinder extends DefaultThreadLocalBinder {
 			return;
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
+		ClassLoader classLoader = PACLClassLoaderUtil.getContextClassLoader();
 
 		classLoader = classLoader.getParent();
 

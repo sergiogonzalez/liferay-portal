@@ -701,6 +701,51 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>folder-navigation</name>
+		<tag-class>com.liferay.taglib.ui.FolderNavigationTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>actionFolderJSP</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>curFolderId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>curFolderName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>expandNode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>imageNode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>selectedFolder</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>repositoryId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>viewURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>form-navigator</name>
 		<tag-class>com.liferay.taglib.ui.FormNavigatorTag</tag-class>
 		<body-content>JSP</body-content>

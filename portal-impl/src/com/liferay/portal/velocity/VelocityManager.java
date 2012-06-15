@@ -19,18 +19,26 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.StringResourceLoader;
 import org.apache.velocity.runtime.resource.util.StringResourceRepository;
+import org.apache.velocity.util.introspection.SecureUberspector;
 
 /**
  * @author Raymond Augé
@@ -65,17 +73,71 @@ public class VelocityManager implements TemplateManager {
 	public void destroy() {
 		StringResourceLoader.clearRepositories();
 
+		_classLoaderVelocityContexts.clear();
+
+		_classLoaderVelocityContexts = null;
 		_restrictedVelocityContext = null;
 		_standardVelocityContext = null;
 		_velocityEngine = null;
 		_templateContextHelper = null;
 	}
 
+	public void destroy(ClassLoader classLoader) {
+		_classLoaderVelocityContexts.remove(classLoader);
+	}
+
 	public Template getTemplate(
 		String templateId, String templateContent, String errorTemplateId,
 		String errorTemplateContent, TemplateContextType templateContextType) {
 
-		if (templateContextType.equals(TemplateContextType.EMPTY)) {
+		if (templateContextType.equals(TemplateContextType.CLASS_LOADER)) {
+
+			// This template will have all of its utilities initialized within
+			// the class loader of the current thread
+
+			ClassLoader contextClassLoader =
+				PACLClassLoaderUtil.getContextClassLoader();
+
+			PACLPolicy threadLocalPACLPolicy =
+				PortalSecurityManagerThreadLocal.getPACLPolicy();
+
+			PACLPolicy contextClassLoaderPACLPolicy =
+				PACLPolicyManager.getPACLPolicy(contextClassLoader);
+
+			try {
+				PortalSecurityManagerThreadLocal.setPACLPolicy(
+					contextClassLoaderPACLPolicy);
+
+				VelocityContext velocityContext =
+					_classLoaderVelocityContexts.get(contextClassLoader);
+
+				if (velocityContext == null) {
+					velocityContext = new VelocityContext();
+
+					Map<String, Object> helperUtilities =
+						_templateContextHelper.getHelperUtilities();
+
+					for (Map.Entry<String, Object> entry :
+							helperUtilities.entrySet()) {
+
+						velocityContext.put(entry.getKey(), entry.getValue());
+					}
+
+					_classLoaderVelocityContexts.put(
+						contextClassLoader, velocityContext);
+				}
+
+				return new PACLVelocityTemplate(
+					templateId, templateContent, errorTemplateId,
+					errorTemplateContent, velocityContext, _velocityEngine,
+					_templateContextHelper, contextClassLoaderPACLPolicy);
+			}
+			finally {
+				PortalSecurityManagerThreadLocal.setPACLPolicy(
+					threadLocalPACLPolicy);
+			}
+		}
+		else if (templateContextType.equals(TemplateContextType.EMPTY)) {
 			return new VelocityTemplate(
 				templateId, templateContent, errorTemplateId,
 				errorTemplateContent, null, _velocityEngine,
@@ -142,29 +204,42 @@ public class VelocityManager implements TemplateManager {
 
 		ExtendedProperties extendedProperties = new FastExtendedProperties();
 
-		extendedProperties.setProperty(_RESOURCE_LOADER, "string,servlet");
+		extendedProperties.setProperty(
+			VelocityEngine.EVENTHANDLER_METHODEXCEPTION,
+			LiferayMethodExceptionEventHandler.class.getName());
 
 		extendedProperties.setProperty(
-			"string." + _RESOURCE_LOADER + ".cache",
+			RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES,
+			StringUtil.merge(PropsValues.VELOCITY_ENGINE_RESTRICTED_CLASSES));
+
+		extendedProperties.setProperty(
+			RuntimeConstants.INTROSPECTOR_RESTRICT_PACKAGES,
+			StringUtil.merge(PropsValues.VELOCITY_ENGINE_RESTRICTED_PACKAGES));
+
+		extendedProperties.setProperty(
+			VelocityEngine.RESOURCE_LOADER, "string,servlet");
+
+		extendedProperties.setProperty(
+			"servlet." + VelocityEngine.RESOURCE_LOADER + ".cache",
 			String.valueOf(
 				PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
 
 		extendedProperties.setProperty(
-			"string." + _RESOURCE_LOADER + ".class",
+			"servlet." + VelocityEngine.RESOURCE_LOADER + ".class",
+			LiferayResourceLoader.class.getName());
+
+		extendedProperties.setProperty(
+			"string." + VelocityEngine.RESOURCE_LOADER + ".cache",
+			String.valueOf(
+				PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
+
+		extendedProperties.setProperty(
+			"string." + VelocityEngine.RESOURCE_LOADER + ".class",
 			StringResourceLoader.class.getName());
 
 		extendedProperties.setProperty(
-			"string." + _RESOURCE_LOADER + ".repository.class",
+			"string." + VelocityEngine.RESOURCE_LOADER + ".repository.class",
 			StringResourceRepositoryImpl.class.getName());
-
-		extendedProperties.setProperty(
-			"servlet." + _RESOURCE_LOADER + ".cache",
-			String.valueOf(
-				PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
-
-		extendedProperties.setProperty(
-			"servlet." + _RESOURCE_LOADER + ".class",
-			LiferayResourceLoader.class.getName());
 
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CLASS,
@@ -173,6 +248,18 @@ public class VelocityManager implements TemplateManager {
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CACHE_CLASS,
 			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE));
+
+		extendedProperties.setProperty(
+			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
+			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));
+
+		extendedProperties.setProperty(
+			VelocityEngine.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
+			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER_CATEGORY));
+
+		extendedProperties.setProperty(
+			RuntimeConstants.UBERSPECT_CLASSNAME,
+			SecureUberspector.class.getName());
 
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,
@@ -187,14 +274,6 @@ public class VelocityManager implements TemplateManager {
 			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
 			String.valueOf(
 				!PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
-
-		extendedProperties.setProperty(
-			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));
-
-		extendedProperties.setProperty(
-			VelocityEngine.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER_CATEGORY));
 
 		_velocityEngine.setExtendedProperties(extendedProperties);
 
@@ -229,9 +308,8 @@ public class VelocityManager implements TemplateManager {
 		_templateContextHelper = templateContextHelper;
 	}
 
-	private static final String _RESOURCE_LOADER =
-		VelocityEngine.RESOURCE_LOADER;
-
+	private Map<ClassLoader, VelocityContext> _classLoaderVelocityContexts =
+		new ConcurrentHashMap<ClassLoader, VelocityContext>();
 	private VelocityContext _restrictedVelocityContext;
 	private VelocityContext _standardVelocityContext;
 	private TemplateContextHelper _templateContextHelper;

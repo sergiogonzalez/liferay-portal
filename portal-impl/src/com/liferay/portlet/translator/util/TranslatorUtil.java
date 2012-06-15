@@ -14,25 +14,58 @@
 
 package com.liferay.portlet.translator.util;
 
-import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portlet.translator.model.Translation;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class TranslatorUtil {
 
+	public static String[] getFromAndToLanguageIds(
+		String translationId, String[] allLanguageIds) {
+
+		try {
+			int pos = translationId.indexOf(StringPool.UNDERLINE);
+
+			String fromLanguageId = translationId.substring(0, pos);
+
+			if (!ArrayUtil.contains(allLanguageIds, fromLanguageId)) {
+				pos = translationId.indexOf(StringPool.UNDERLINE, pos + 1);
+
+				fromLanguageId = translationId.substring(0, pos);
+
+				if (!ArrayUtil.contains(allLanguageIds, fromLanguageId)) {
+					return null;
+				}
+			}
+
+			String toLanguageId = translationId.substring(pos + 1);
+
+			if (!ArrayUtil.contains(allLanguageIds, toLanguageId)) {
+				return null;
+			}
+
+			return new String[] {fromLanguageId, toLanguageId};
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	public static Translation getTranslation(
-		String translationId, String fromText) {
+			String fromLanguageId, String toLanguageId, String fromText)
+		throws WebCacheException {
 
-		WebCacheItem wci = new TranslationWebCacheItem(translationId, fromText);
+		WebCacheItem wci = new TranslationWebCacheItem(
+			fromLanguageId, toLanguageId, fromText);
 
-		return (Translation)WebCachePoolUtil.get(
-			"translator." + translationId + "|" +
-				Base64.objectToString(fromText),
-			wci);
+		return (Translation)wci.convert("");
 	}
 
 }

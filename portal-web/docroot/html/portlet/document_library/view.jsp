@@ -113,7 +113,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			</div>
 
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+				<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
 			</div>
 
 			<div class="aui-helper-hidden" id="<portlet:namespace />syncNotification">
@@ -257,7 +257,8 @@ if (folder != null) {
 			rowIds: '<%= RowChecker.ROW_IDS %>',
 			strutsAction: '/document_library/view',
 			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
-			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>
+			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,
+			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>
 		}
 	);
 </aui:script>
