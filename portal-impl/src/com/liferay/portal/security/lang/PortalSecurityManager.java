@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
@@ -160,6 +161,7 @@ public class PortalSecurityManager extends SecurityManager {
 
 		// Load dependent classes to prevent ClassCircularityError
 
+		_log.debug("Loading " + FileAvailabilityUtil.class.getName());
 		_log.debug("Loading " + PortalHookPermission.class.getName());
 
 		// Touch dependent classes to prevent NoClassDefError

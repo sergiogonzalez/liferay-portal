@@ -749,6 +749,10 @@ public interface PropsKeys {
 
 	public static final String FREEMARKER_ENGINE_MODIFICATION_CHECK_INTERVAL = "freemarker.engine.modification.check.interval";
 
+	public static final String FREEMARKER_ENGINE_RESTRICTED_CLASSES = "freemarker.engine.restricted.classes";
+
+	public static final String FREEMARKER_ENGINE_RESTRICTED_PACKAGES = "freemarker.engine.restricted.packages";
+
 	public static final String FREEMARKER_ENGINE_TEMPLATE_EXCEPTION_HANDLER = "freemarker.engine.template.exception.handler";
 
 	public static final String FREEMARKER_ENGINE_TEMPLATE_LOADERS = "freemarker.engine.template.loaders";
@@ -1435,6 +1439,10 @@ public interface PropsKeys {
 
 	public static final String MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT = "message.boards.thread.views.default";
 
+	public static final String MICROSOFT_TRANSLATOR_CLIENT_ID = "microsoft.translator.client.id";
+
+	public static final String MICROSOFT_TRANSLATOR_CLIENT_SECRET = "microsoft.translator.client.secret";
+
 	public static final String MIME_TYPES_CONTENT_DISPOSITION_INLINE = "mime.types.content.disposition.inline";
 
 	public static final String MINIFIER_INLINE_CONTENT_CACHE_SIZE = "minifier.inline.content.cache.size";
@@ -2113,6 +2121,8 @@ public interface PropsKeys {
 
 	public static final String TRANSLATOR_DEFAULT_LANGUAGES = "translator.default.languages";
 
+	public static final String TRANSLATOR_LANGUAGES = "translator.languages";
+
 	public static final String TRASH_SEARCH_LIMIT = "trash.search.limit";
 
 	public static final String UPGRADE_PROCESSES = "upgrade.processes";
@@ -2220,6 +2230,10 @@ public interface PropsKeys {
 	public static final String VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED = "velocity.engine.resource.manager.cache.enabled";
 
 	public static final String VELOCITY_ENGINE_RESOURCE_MANAGER_MODIFICATION_CHECK_INTERVAL = "velocity.engine.resource.manager.modification.check.interval";
+
+	public static final String VELOCITY_ENGINE_RESTRICTED_CLASSES = "velocity.engine.restricted.classes";
+
+	public static final String VELOCITY_ENGINE_RESTRICTED_PACKAGES = "velocity.engine.restricted.packages";
 
 	public static final String VELOCITY_ENGINE_VELOCIMACRO_LIBRARY = "velocity.engine.velocimacro.library";
 

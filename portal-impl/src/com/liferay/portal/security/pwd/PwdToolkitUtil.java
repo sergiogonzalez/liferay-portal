@@ -17,11 +17,8 @@ package com.liferay.portal.security.pwd;
 import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
-import com.liferay.portal.util.PropsUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -29,7 +26,11 @@ import com.liferay.portal.util.PropsUtil;
 public class PwdToolkitUtil {
 
 	public static String generate(PasswordPolicy passwordPolicy) {
-		return _instance._generate(passwordPolicy);
+		return _toolkit.generate(passwordPolicy);
+	}
+
+	public static Toolkit getToolkit() {
+		return _toolkit;
 	}
 
 	public static void validate(
@@ -42,34 +43,17 @@ public class PwdToolkitUtil {
 				UserPasswordException.PASSWORDS_DO_NOT_MATCH);
 		}
 
-		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(companyId)) {
-			_instance._validate(userId, password1, password2, passwordPolicy);
+		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(companyId) &&
+			PwdToolkitUtilThreadLocal.isValidate()) {
+
+			_toolkit.validate(userId, password1, password2, passwordPolicy);
 		}
 	}
 
-	private PwdToolkitUtil() {
-		_toolkit = (BasicToolkit)InstancePool.get(
-			PropsUtil.get(PropsKeys.PASSWORDS_TOOLKIT));
+	public void setToolkit(Toolkit toolkit) {
+		_toolkit = toolkit;
 	}
 
-	private String _generate(PasswordPolicy passwordPolicy) {
-		return _toolkit.generate(passwordPolicy);
-	}
-
-	private void _validate(
-			long userId, String password1, String password2,
-			PasswordPolicy passwordPolicy)
-		throws PortalException, SystemException {
-
-		if (!PwdToolkitUtilThreadLocal.isValidate()) {
-			return;
-		}
-
-		_toolkit.validate(userId, password1, password2, passwordPolicy);
-	}
-
-	private static PwdToolkitUtil _instance = new PwdToolkitUtil();
-
-	private BasicToolkit _toolkit;
+	private static Toolkit _toolkit;
 
 }

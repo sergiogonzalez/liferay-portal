@@ -1446,19 +1446,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 			else {
 				user.setDigest(StringPool.BLANK);
+				user.setPasswordReset(true);
 
 				userPersistence.update(user, false);
 
 				throw new PasswordExpiredException();
 			}
-		}
-
-		// Check if warning message should be sent
-
-		if (isPasswordExpiringSoon(user)) {
-			user.setPasswordReset(true);
-
-			userPersistence.update(user, false);
 		}
 
 		// Check if user should be forced to change password on first login
@@ -2898,6 +2891,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean isPasswordExpiringSoon(User user)
 		throws PortalException, SystemException {
 
+		boolean isPasswordExpiringSoon = false;
+
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 		if (passwordPolicy.isExpireable()) {
@@ -2917,14 +2912,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				passwordExpiresOn - (passwordPolicy.getWarningTime() * 1000);
 
 			if (now.getTime() > timeStartWarning) {
-				return true;
-			}
-			else {
-				return false;
+				isPasswordExpiringSoon = true;
+
+				if (isPasswordExpired(user) && user.isPasswordReset()) {
+					isPasswordExpiringSoon = false;
+				}
 			}
 		}
 
-		return false;
+		return isPasswordExpiringSoon;
 	}
 
 	/**
@@ -3338,9 +3334,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String passwordResetURL = StringPool.BLANK;
 
 		if (company.isSendPasswordResetLink()) {
-			Date expirationDate = new Date(
-				System.currentTimeMillis() +
-					(passwordPolicy.getResetTicketMaxAge() * 1000));
+			Date expirationDate = null;
+
+			if (passwordPolicy.getResetTicketMaxAge() > 0) {
+				expirationDate = new Date(
+					System.currentTimeMillis() +
+						(passwordPolicy.getResetTicketMaxAge() * 1000));
+			}
 
 			Ticket ticket = ticketLocalService.addTicket(
 				companyId, User.class.getName(), user.getUserId(),

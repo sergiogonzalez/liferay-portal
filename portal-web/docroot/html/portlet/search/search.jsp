@@ -120,6 +120,14 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 
 	<%@ include file="/html/portlet/search/main_search.jspf" %>
 
+	<%
+	String[] entryClassNames = searchContext.getEntryClassNames();
+
+	if (entryClassNames.length == 1) {
+		portletURL.setParameter("entryClassName", entryClassNames[0]);
+	}
+	%>
+
 	<c:if test="<%= displayOpenSearchResults %>">
 		<liferay-ui:panel collapsible="<%= true %>" cssClass="open-search-panel" extended="<%= true %>" id="searchOpenSearchPanelContainer" persistState="<%= true %>" title="open-search">
 			<%@ include file="/html/portlet/search/open_search.jspf" %>

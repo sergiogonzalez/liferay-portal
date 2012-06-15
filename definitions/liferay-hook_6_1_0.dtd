@@ -81,6 +81,7 @@ organizations.form.add.main
 organizations.form.add.miscellaneous
 passwords.passwordpolicytoolkit.generator
 passwords.passwordpolicytoolkit.static
+passwords.toolkit
 phone.number.format.impl
 phone.number.format.international.regexp
 phone.number.format.usa.regexp

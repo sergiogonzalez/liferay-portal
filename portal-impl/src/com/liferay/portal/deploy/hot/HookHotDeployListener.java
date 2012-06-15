@@ -112,6 +112,9 @@ import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.ldap.AttributesTransformerFactory;
+import com.liferay.portal.security.pwd.PwdToolkitUtil;
+import com.liferay.portal.security.pwd.Toolkit;
+import com.liferay.portal.security.pwd.ToolkitWrapper;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
@@ -410,6 +413,13 @@ public class HookHotDeployListener
 
 		if (portalProperties.containsKey(PropsKeys.MAIL_HOOK_IMPL)) {
 			com.liferay.mail.util.HookFactory.setInstance(null);
+		}
+
+		if (portalProperties.containsKey(PropsKeys.PASSWORDS_TOOLKIT)) {
+			ToolkitWrapper toolkitWrapper =
+				(ToolkitWrapper)PwdToolkitUtil.getToolkit();
+
+			toolkitWrapper.setToolkit(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PHONE_NUMBER_FORMAT_IMPL)) {
@@ -1723,6 +1733,19 @@ public class HookHotDeployListener
 					mailHookClassName);
 
 			com.liferay.mail.util.HookFactory.setInstance(mailHook);
+		}
+
+		if (portalProperties.containsKey(PropsKeys.PASSWORDS_TOOLKIT)) {
+			String toolkitClassName = portalProperties.getProperty(
+				PropsKeys.PASSWORDS_TOOLKIT);
+
+			Toolkit toolkit = (Toolkit)newInstance(
+				portletClassLoader, Sanitizer.class, toolkitClassName);
+
+			ToolkitWrapper toolkitWrapper =
+				(ToolkitWrapper)PwdToolkitUtil.getToolkit();
+
+			toolkitWrapper.setToolkit(toolkit);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PHONE_NUMBER_FORMAT_IMPL)) {

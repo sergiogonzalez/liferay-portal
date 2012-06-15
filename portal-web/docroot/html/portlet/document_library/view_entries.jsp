@@ -138,8 +138,9 @@ if (fileEntryTypeId >= 0) {
 
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-	searchContext.setEnd(searchContainer.getEnd());
-	searchContext.setStart(searchContainer.getStart());
+	searchContext.setAttribute("paginationType", "none");
+	searchContext.setEnd(entryEnd);
+	searchContext.setStart(entryStart);
 
 	Hits hits = indexer.search(searchContext);
 
@@ -166,7 +167,7 @@ if (fileEntryTypeId >= 0) {
 		results.add(fileEntry);
 	}
 
-	total = results.size();
+	total = hits.getLength();
 }
 else {
 	if (navigation.equals("home")) {
@@ -194,8 +195,8 @@ else {
 			groupFileEntriesUserId = user.getUserId();
 		}
 
-		results= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, entryStart, entryEnd);
-		total= DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId);
+		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
+		total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
 	}
 }
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
@@ -84,20 +85,20 @@ public class ThemeUtil {
 
 	public static void include(
 			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext, String page,
+			HttpServletResponse response, PageContext pageContext, String path,
 			Theme theme)
 		throws Exception {
 
 		String extension = theme.getTemplateExtension();
 
 		if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_FTL)) {
-			includeFTL(servletContext, request, pageContext, page, theme, true);
+			includeFTL(servletContext, request, pageContext, path, theme, true);
 		}
 		else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_VM)) {
-			includeVM(servletContext, request, pageContext, page, theme, true);
+			includeVM(servletContext, request, pageContext, path, theme, true);
 		}
 		else {
-			String path = theme.getTemplatesPath() + StringPool.SLASH + page;
+			path = theme.getTemplatesPath() + StringPool.SLASH + path;
 
 			includeJSP(servletContext, request, response, path, theme);
 		}
@@ -106,6 +107,93 @@ public class ThemeUtil {
 	public static String includeFTL(
 			ServletContext servletContext, HttpServletRequest request,
 			PageContext pageContext, String path, Theme theme, boolean write)
+		throws Exception {
+
+		return doDispatch(
+			servletContext, request, null, pageContext, path, theme, write,
+			ThemeHelper.TEMPLATE_EXTENSION_FTL);
+	}
+
+	public static void includeJSP(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, String path, Theme theme)
+		throws Exception {
+
+		doDispatch(
+			servletContext, request, response, null, path, theme, true,
+			ThemeHelper.TEMPLATE_EXTENSION_JSP);
+	}
+
+	public static String includeVM(
+			ServletContext servletContext, HttpServletRequest request,
+			PageContext pageContext, String path, Theme theme, boolean write)
+		throws Exception {
+
+		return doDispatch(
+			servletContext, request, null, pageContext, path, theme, write,
+			ThemeHelper.TEMPLATE_EXTENSION_VM);
+	}
+
+	protected static String doDispatch(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext, String path,
+			Theme theme, boolean write, String extension)
+		throws Exception {
+
+		String pluginServletContextName = GetterUtil.getString(
+			theme.getServletContextName());
+
+		ServletContext pluginServletContext = ServletContextPool.get(
+			pluginServletContextName);
+
+		ClassLoader pluginClassLoader =
+			(ClassLoader)pluginServletContext.getAttribute(
+				PluginContextListener.PLUGIN_CLASS_LOADER);
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		TemplateContextType templateContextType = TemplateContextType.STANDARD;
+
+		if ((pluginClassLoader != null) &&
+			(pluginClassLoader != contextClassLoader)) {
+
+			currentThread.setContextClassLoader(pluginClassLoader);
+
+			templateContextType = TemplateContextType.CLASS_LOADER;
+		}
+
+		try {
+			if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_FTL)) {
+				return doIncludeFTL(
+					servletContext, request, pageContext, path, theme,
+					templateContextType, write);
+			}
+			else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_JSP)) {
+				doIncludeJSP(servletContext, request, response, path, theme);
+			}
+			else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_VM)) {
+				return doIncludeVM(
+					servletContext, request, pageContext, path, theme,
+					templateContextType, write);
+			}
+
+			return null;
+		}
+		finally {
+			if ((pluginClassLoader != null) &&
+				(pluginClassLoader != contextClassLoader)) {
+
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	protected static String doIncludeFTL(
+			ServletContext servletContext, HttpServletRequest request,
+			PageContext pageContext, String path, Theme theme,
+			TemplateContextType templateContextType, boolean write)
 		throws Exception {
 
 		// The servlet context name will be null when the theme is deployed to
@@ -157,8 +245,7 @@ public class ThemeUtil {
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.FREEMARKER, resourcePath,
-			TemplateContextType.STANDARD);
+			TemplateManager.FREEMARKER, resourcePath, templateContextType);
 
 		// FreeMarker variables
 
@@ -260,7 +347,7 @@ public class ThemeUtil {
 		}
 	}
 
-	public static void includeJSP(
+	protected static void doIncludeJSP(
 			ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response, String path, Theme theme)
 		throws Exception {
@@ -304,9 +391,10 @@ public class ThemeUtil {
 		}
 	}
 
-	public static String includeVM(
+	protected static String doIncludeVM(
 			ServletContext servletContext, HttpServletRequest request,
-			PageContext pageContext, String page, Theme theme, boolean write)
+			PageContext pageContext, String page, Theme theme,
+			TemplateContextType templateContextType, boolean write)
 		throws Exception {
 
 		// The servlet context name will be null when the theme is deployed to
@@ -364,8 +452,7 @@ public class ThemeUtil {
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.VELOCITY, resourcePath,
-			TemplateContextType.STANDARD);
+			TemplateManager.VELOCITY, resourcePath, templateContextType);
 
 		// Velocity variables
 
@@ -416,7 +503,7 @@ public class ThemeUtil {
 		}
 	}
 
-	public static void insertTilesVariables(HttpServletRequest request) {
+	protected static void insertTilesVariables(HttpServletRequest request) {
 		ComponentContext componentContext =
 			(ComponentContext)request.getAttribute(
 				ComponentConstants.COMPONENT_CONTEXT);
