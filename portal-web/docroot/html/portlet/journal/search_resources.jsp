@@ -142,7 +142,7 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 								'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
 								'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>
 							},
-							src: Liferay.DL_SEARCH_END
+							src: Liferay.JOURNAL_SEARCH_END
 						}
 					);
 				}
