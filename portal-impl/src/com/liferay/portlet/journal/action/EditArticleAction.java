@@ -97,8 +97,6 @@ import org.apache.struts.action.ActionMapping;
  */
 public class EditArticleAction extends PortletAction {
 
-	public static final String VERSION_SEPARATOR = "_version_";
-
 	@Override
 	public void processAction(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
@@ -428,12 +426,13 @@ public class EditArticleAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "deleteArticleIds"));
 
 		for (String removeArticleLocaleId : removeArticleLocaleIds) {
-			int pos = removeArticleLocaleId.lastIndexOf(VERSION_SEPARATOR);
+			int pos = removeArticleLocaleId.lastIndexOf(
+				ActionUtil.VERSION_SEPARATOR);
 
 			String articleId = removeArticleLocaleId.substring(0, pos);
 			double version = GetterUtil.getDouble(
 				removeArticleLocaleId.substring(
-					pos + VERSION_SEPARATOR.length()));
+					pos + ActionUtil.VERSION_SEPARATOR.length()));
 			String languageId = ParamUtil.getString(
 				actionRequest, "languageId");
 

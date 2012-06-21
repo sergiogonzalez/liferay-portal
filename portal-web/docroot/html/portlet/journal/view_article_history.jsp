@@ -117,7 +117,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				articleVersion = articleVersion.toEscapedModel();
 
-				ResultRow row = new ResultRow(articleVersion, articleVersion.getArticleId() + EditArticleAction.VERSION_SEPARATOR + articleVersion.getVersion(), i);
+				ResultRow row = new ResultRow(articleVersion, articleVersion.getArticleId() + ActionUtil.VERSION_SEPARATOR + articleVersion.getVersion(), i);
 
 				PortletURL rowURL = null;
 
