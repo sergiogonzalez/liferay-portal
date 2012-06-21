@@ -47,6 +47,35 @@ List headerNames = searchContainer.getHeaderNames();
 headerNames.add(2, "status");
 headerNames.add(StringPool.BLANK);
 
+Map<String, String> orderableHeaders = new HashMap<String, String>();
+
+orderableHeaders.put("display-date", "display-date");
+orderableHeaders.put("modified-date", "modified-date");
+
+String orderByCol = ParamUtil.getString(liferayPortletRequest, "orderByCol");
+String orderByType = ParamUtil.getString(liferayPortletRequest, "orderByType");
+
+if (Validator.isNull(orderByCol)) {
+	orderByCol = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-col", StringPool.BLANK);
+	orderByType = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-type", "asc");
+}
+else {
+	boolean saveOrderBy = ParamUtil.getBoolean(liferayPortletRequest, "saveOrderBy");
+
+	if (saveOrderBy) {
+		portalPreferences.setValue(PortletKeys.JOURNAL, "order-by-col", orderByCol);
+		portalPreferences.setValue(PortletKeys.JOURNAL, "order-by-type", orderByType);
+	}
+}
+
+OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(orderByCol, orderByType);
+
+searchContainer.setOrderableHeaders(orderableHeaders);
+searchContainer.setOrderByComparator(orderByComparator);
+searchContainer.setOrderByCol(orderByCol);
+searchContainer.setOrderByJS("javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'orderKey', 'orderByType');");
+searchContainer.setOrderByType(orderByType);
+
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("article-selector");
@@ -65,7 +94,17 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 		<div class="portlet-msg-info">
 
 			<%
-			JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
+			String name = LanguageUtil.get(pageContext, "basic-web-content");
+
+			String structureId = StringPool.BLANK;
+
+			if (!displayTerms.getStructureId().equals("0")) {
+				JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
+
+				name = structure.getName(locale);
+
+				structureId = displayTerms.getStructureId();
+			}
 			%>
 
 			<liferay-portlet:renderURL varImpl="addArticlesURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
@@ -74,10 +113,10 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-				<portlet:param name="structureId" value="<%= displayTerms.getStructureId() %>" />
+				<portlet:param name="structureId" value="<%= structureId %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= structure.getName(locale) %>" key="add-new-x" /></a>)
+			<liferay-ui:message arguments="<%= name %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= name %>" key="add-new-x" /></a>)
 		</div>
 	</c:if>
 </c:if>
@@ -122,6 +161,15 @@ if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	searchTerms.setFolderId(folderId);
 }
 
+if (Validator.isNotNull(displayTerms.getStructureId())) {
+	searchTerms.setStructureId(displayTerms.getStructureId());
+}
+
+if (displayTerms.getNavigation().equals("recent")) {
+	searchContainer.setOrderByCol("create-date");
+	searchContainer.setOrderByType(orderByType);
+}
+
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, displayTerms.ADVANCED_SEARCH, false);
 
 String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
@@ -147,7 +195,7 @@ int total = 0;
 	<c:when test='<%= displayTerms.getNavigation().equals("mine") %>'>
 
 		<%
-		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), entryStart, entryEnd, null);
+		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalArticleServiceUtil.getArticlesCountByUserId(scopeGroupId, themeDisplay.getUserId());
 
 		searchContainer.setResults(results);
@@ -155,7 +203,7 @@ int total = 0;
 		%>
 
 	</c:when>
-	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+	<c:when test='<%= Validator.isNotNull(displayTerms.getStructureId()) || Validator.isNotNull(displayTerms.getTemplateId()) || displayTerms.getNavigation().equals("recent") %>'>
 
 		<%
 		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderId(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
@@ -169,7 +217,7 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, entryStart, entryEnd, null);
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId);
 
 		searchContainer.setResults(results);
