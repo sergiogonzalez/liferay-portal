@@ -105,7 +105,7 @@ AUI.add(
 						instance._itemChosenHandle = contentBox.delegate(itemChosenEvent, instance._onItemChosen, itemSelector, instance);
 
 						instance.after('dataChange', instance._afterDataChange);
-
+						debugger;
 						instance.publish(
 							'transitionComplete',
 							{

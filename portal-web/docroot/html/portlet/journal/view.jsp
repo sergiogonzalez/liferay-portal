@@ -186,7 +186,8 @@ int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_fold
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletId %>',
 			rowIds: '<%= RowChecker.ROW_IDS %>',
-			strutsAction: '/journal/view'
+			strutsAction: '/journal/view',
+			updateable: true
 		}
 	);
 </aui:script>
