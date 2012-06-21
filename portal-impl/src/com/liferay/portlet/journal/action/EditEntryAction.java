@@ -52,8 +52,6 @@ import org.apache.struts.action.ActionMapping;
  */
 public class EditEntryAction extends PortletAction {
 
-	public static final String VERSION_SEPARATOR = "_version_";
-
 	@Override
 	public void processAction(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
