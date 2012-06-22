@@ -90,18 +90,19 @@ AUI.add(
 						var selectedFolderNode = instance._folderContainer.one('.selected .browse-folder');
 
 						var selectedFolderId = 0;
+						var repositoryId = 0;
 
 						if (selectedFolderNode) {
 							selectedFolderId = selectedFolderNode.attr(DATA_FOLDER_ID);
-						}
 
-						var repositoryId = selectedFolderNode.attr(DATA_REPOSITORY_ID);
+							repositoryId = selectedFolderNode.attr(DATA_REPOSITORY_ID);
 
-						if (!repositoryId) {
-							var repositories = instance._config.repositories;
+							if (!repositoryId) {
+								var repositories = instance._config.repositories;
 
-							if (repositories) {
-								repositoryId = repositories[0].id;
+								if (repositories) {
+									repositoryId = repositories[0].id;
+								}
 							}
 						}
 
