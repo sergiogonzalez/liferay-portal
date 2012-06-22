@@ -1,5 +1,3 @@
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %>
-
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -19,13 +17,13 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)liferayPortletRequest.getAttribute("view.jsp-folder");
+JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
 
-long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long parentFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-boolean expandFolder = ParamUtil.getBoolean(liferayPortletRequest, "expandFolder");
+boolean expandFolder = ParamUtil.getBoolean(request, "expandFolder");
 
 if (folder != null) {
 	parentFolderId = folder.getParentFolderId();
@@ -44,11 +42,11 @@ if (folder != null) {
 	}
 }
 
-int entryStart = ParamUtil.getInteger(liferayPortletRequest, "entryStart");
-int entryEnd = ParamUtil.getInteger(liferayPortletRequest, "entryEnd", SearchContainer.DEFAULT_DELTA);
+int entryStart = ParamUtil.getInteger(request, "entryStart");
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
 
-int folderStart = ParamUtil.getInteger(liferayPortletRequest, "folderStart");
-int folderEnd = ParamUtil.getInteger(liferayPortletRequest, "folderEnd", SearchContainer.DEFAULT_DELTA);
+int folderStart = ParamUtil.getInteger(request, "folderStart");
+int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
 List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, folderStart, folderEnd);
 
@@ -58,7 +56,7 @@ if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	total = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, parentFolderId);
 }
 
-liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(total));
+request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 %>
 
 <div class="lfr-header-row">
@@ -110,12 +108,12 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 
 						expandArticlesHomeURL.setParameter("expandFolder", Boolean.TRUE.toString());
 
-						String navigation = ParamUtil.getString(liferayPortletRequest, "navigation", "home");
+						String navigation = ParamUtil.getString(request, "navigation", "home");
 
-						String structureId = ParamUtil.getString(liferayPortletRequest, "structureId");
+						String structureId = ParamUtil.getString(request, "structureId");
 
-						liferayPortletRequest.setAttribute("view_entries.jsp-folder", folder);
-						liferayPortletRequest.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
+						request.setAttribute("view_entries.jsp-folder", folder);
+						request.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
 						%>
 
 						<li class="folder <%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(structureId) ? "selected" : StringPool.BLANK %>">
@@ -132,7 +130,7 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 								</a>
 							</c:if>
 
-							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-navigation="home" data-title="<%= LanguageUtil.get(pageContext, "home") %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewArticlesHomeURL.toString() %>">
+							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-navigation="home" data-title="<%= LanguageUtil.get(pageContext, "home") %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewArticlesHomeURL.toString() %>">
 								<liferay-ui:icon image="../aui/home" message="" />
 
 								<span class="article-title">
@@ -145,6 +143,10 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="navigation" value="recent" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+							<portlet:param name="entryStart" value="0" />
+							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+							<portlet:param name="folderStart" value="0" />
+							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
 						<li class="folder <%= navigation.equals("recent") && Validator.isNull(structureId) ? "selected" : StringPool.BLANK %>">
@@ -161,6 +163,7 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 							<liferay-portlet:renderURL varImpl="viewMyArticlesURL">
 								<portlet:param name="struts_action" value="/journal/view" />
 								<portlet:param name="navigation" value="mine" />
+								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 								<portlet:param name="folderStart" value="0" />
@@ -185,6 +188,7 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 						<c:if test="<%= !structures.isEmpty() %>">
 							<liferay-portlet:renderURL varImpl="viewBasicJournalStructureArticlesURL">
 								<portlet:param name="struts_action" value="/journal/view" />
+								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 								<portlet:param name="structureId" value="0" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
@@ -209,6 +213,7 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 
 							<liferay-portlet:renderURL varImpl="viewJournalStructureArticlesURL">
 								<portlet:param name="struts_action" value="/journal/view" />
+								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 								<portlet:param name="structureId" value="<%= structure.getStructureId() %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
@@ -264,9 +269,9 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 							int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
 							int articlesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, curFolder.getFolderId());
 
-							liferayPortletRequest.setAttribute("view_entries.jsp-folder", curFolder);
-							liferayPortletRequest.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
-							liferayPortletRequest.setAttribute("view_entries.jsp-folderSelected", String.valueOf(folderId == curFolder.getFolderId()));
+							request.setAttribute("view_entries.jsp-folder", curFolder);
+							request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
+							request.setAttribute("view_entries.jsp-folderSelected", String.valueOf(folderId == curFolder.getFolderId()));
 						%>
 
 							<liferay-portlet:renderURL varImpl="viewURL">

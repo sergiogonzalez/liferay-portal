@@ -42,16 +42,6 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 
 ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
-List headerNames = searchContainer.getHeaderNames();
-
-headerNames.add(2, "status");
-headerNames.add(StringPool.BLANK);
-
-Map<String, String> orderableHeaders = new HashMap<String, String>();
-
-orderableHeaders.put("display-date", "display-date");
-orderableHeaders.put("modified-date", "modified-date");
-
 String orderByCol = ParamUtil.getString(liferayPortletRequest, "orderByCol");
 String orderByType = ParamUtil.getString(liferayPortletRequest, "orderByType");
 
@@ -70,7 +60,6 @@ else {
 
 OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(orderByCol, orderByType);
 
-searchContainer.setOrderableHeaders(orderableHeaders);
 searchContainer.setOrderByComparator(orderByComparator);
 searchContainer.setOrderByCol(orderByCol);
 searchContainer.setOrderByJS("javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'orderKey', 'orderByType');");
@@ -290,7 +279,7 @@ liferayPortletRequest.setAttribute("view.jsp-total", String.valueOf(total));
 							%>
 
 							<liferay-ui:icon
-								cssClass="document-display-style selectable"
+								cssClass="article-display-style selectable"
 								image="../file_system/small/html"
 								label="<%= true %>"
 								message="<%= curArticle.getTitle(locale) %>"

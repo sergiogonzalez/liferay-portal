@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortalPreferences;
@@ -47,10 +48,12 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 	static {
 		headerNames.add("id");
 		headerNames.add("title");
+		headerNames.add("status");
 		//headerNames.add("version");
 		headerNames.add("modified-date");
 		headerNames.add("display-date");
 		headerNames.add("author");
+		headerNames.add(StringPool.BLANK);
 
 		orderableHeaders.put("id", "id");
 		orderableHeaders.put("name", "title");

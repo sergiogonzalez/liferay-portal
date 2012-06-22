@@ -47,8 +47,8 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, DisplayTerm
 				'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
 				'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
 				'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
-				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>,
-				'<portlet:namespace />searchType': <%= JournalSearchConstants.FRAGMENT %>
+				'<portlet:namespace />searchType': <%= JournalSearchConstants.FRAGMENT %>,
+				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
 			};
 
 			if (<%= Validator.isNull(keywords) %>) {

@@ -150,10 +150,8 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 		</aui:script>
 	</liferay-util:buffer>
 
-	<div clas="kaaa">
-		<div id="<portlet:namespace />searchInfo">
-			<%= searchInfo %>
-		</div>
+	<div id="<portlet:namespace />searchInfo">
+		<%= searchInfo %>
 	</div>
 </c:if>
 
@@ -180,26 +178,7 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 			portletURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
 			portletURL.setParameter("keywords", keywords);
 
-			List<String> headerNames = new ArrayList<String>();
-
-			headerNames.add("id");
-			headerNames.add("title");
-			//headerNames.add("version");
-			headerNames.add("modified-date");
-			headerNames.add("display-date");
-			headerNames.add("author");
-
 			SearchContainer searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
-
-			Map<String, String> orderableHeaders = new HashMap<String, String>();
-
-			orderableHeaders.put("id", "id");
-			orderableHeaders.put("name", "title");
-			//orderableHeaders.put("version", "version");
-			orderableHeaders.put("modified-date", "modified-date");
-			orderableHeaders.put("display-date", "display-date");
-
-			searchContainer.setOrderableHeaders(orderableHeaders);
 
 			String orderByCol = ParamUtil.getString(request, "orderByCol");
 
@@ -315,7 +294,7 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 								%>
 
 								<liferay-ui:icon
-									cssClass="document-display-style selectable"
+									cssClass="article-display-style selectable"
 									image="../file_system/small/html"
 									label="<%= true %>"
 									message="<%= curArticle.getTitle(locale) %>"
