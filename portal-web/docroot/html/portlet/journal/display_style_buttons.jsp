@@ -14,22 +14,24 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
+String navigation = ParamUtil.getString(liferayPortletRequest, "navigation", "home");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
 
-long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+String structureId = ParamUtil.getString(liferayPortletRequest, "structureId");
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
+String displayStyle = ParamUtil.getString(liferayPortletRequest, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
+	displayStyle = portalPreferences.getValue(PortletKeys.JOURNAL, "display-style", PropsValues.JOURNAL_DEFAULT_DISPLAY_VIEW);
 }
 
-String keywords = ParamUtil.getString(request, "keywords");
+String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
+
+boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, DisplayTerms.ADVANCED_SEARCH, false);
 %>
 
 <c:if test="<%= displayViews.length > 1 %>">
@@ -38,15 +40,15 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		function onButtonClick(displayStyle) {
 			var config = {
-				'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search" %>',
+				'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/journal/view" : "/journal/search" %>',
 				'<portlet:namespace />navigation': '<%= HtmlUtil.escapeJS(navigation) %>',
 				'<portlet:namespace />folderId': '<%= folderId %>',
 				'<portlet:namespace />displayStyle': displayStyle,
 				'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
 				'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
 				'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
-				'<portlet:namespace />searchType': <%= DLSearchConstants.FRAGMENT %>,
-				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
+				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>,
+				'<portlet:namespace />searchType': <%= JournalSearchConstants.FRAGMENT %>
 			};
 
 			if (<%= Validator.isNull(keywords) %>) {
@@ -56,8 +58,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 				config['<portlet:namespace />keywords'] = '<%= HtmlUtil.escapeJS(keywords) %>';
 			}
 
-			if (<%= fileEntryTypeId != -1 %>) {
-				config['<portlet:namespace />fileEntryTypeId'] = '<%= String.valueOf(fileEntryTypeId) %>';
+			if (<%= !structureId.equals("0") %>) {
+				config['<portlet:namespace />structureId'] = '<%= HtmlUtil.escapeJS(structureId) %>';
 			}
 
 			updateDisplayStyle(config);
@@ -80,10 +82,10 @@ String keywords = ParamUtil.getString(request, "keywords");
 				'<portlet:namespace />dataRequest',
 				{
 					requestParams: config,
-					src: Liferay.DL_ENTRIES_PAGINATOR
+					src: Liferay.JOURNAL_ENTRIES_PAGINATOR
 				}
 			);
-		}
+		};
 
 		var displayStyleToolbarChildren = [];
 
