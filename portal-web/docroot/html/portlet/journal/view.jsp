@@ -91,7 +91,11 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			portletURL.setParameter("folderId", String.valueOf(folderId));
 			%>
 
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+			<div id="<portlet:namespace />advanceSearchContainer">
+				<liferay-util:include page="/html/portlet/journal/article_search.jsp" />
+			</div>
+
+			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
@@ -100,16 +104,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 				<aui:input name="newFolderId" type="hidden" />
 
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
-					<liferay-util:include page="/html/portlet/journal/article_search.jsp" />
-
-					<c:choose>
-						<c:when test='<%= navigation.equals("recent") %>'>
-							<liferay-util:include page="/html/portlet/journal/view_recent.jsp" />
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
-						</c:otherwise>
-					</c:choose>
+					<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
 				</div>
 
 				<div class="article-entries-paginator"></div>
