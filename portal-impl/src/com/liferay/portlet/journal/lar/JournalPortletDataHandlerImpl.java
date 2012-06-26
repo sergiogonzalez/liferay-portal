@@ -2612,14 +2612,15 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 							"Skipping article with path " + path +
 								" because of invalid content");
 					}
-				} catch (ArticleTitleException ate){
+				}
+				catch (ArticleTitleException ate) {
 					if (_log.isWarnEnabled()) {
 						String path = articleElement.attributeValue("path");
 
 						_log.warn(
 							"Skipping article with path " + path +
 								" because of invalid article title");
-					}					
+					}
 				}
 			}
 		}
