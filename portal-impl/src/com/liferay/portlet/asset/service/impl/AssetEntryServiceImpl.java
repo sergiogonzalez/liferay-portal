@@ -197,6 +197,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			companyId, groupIds, className, keywords, languageId);
 	}
 
+	/**
+	 * @deprecated {@link #updateEntry(long, String, long, String, long, long[],
+	 *             String[], boolean, Date, Date, Date, String, String, String,
+	 *             String, String, String, int, int, Integer, boolean)}
+	 */
 	public AssetEntry updateEntry(
 			long groupId, String className, long classPK, String classUuid,
 			long classTypeId, long[] categoryIds, String[] tagNames,
@@ -211,9 +216,28 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		return assetEntryLocalService.updateEntry(
 			getUserId(), groupId, className, classPK, classUuid, classTypeId,
-			categoryIds, tagNames, visible, startDate, endDate, publishDate,
-			expirationDate, mimeType, title, description, summary, url,
-			layoutUuid, height, width, priority, sync);
+			categoryIds, tagNames, visible, startDate, endDate, expirationDate,
+			mimeType, title, description, summary, url, layoutUuid, height,
+			width, priority, sync);
+	}
+
+	public AssetEntry updateEntry(
+			long groupId, String className, long classPK, String classUuid,
+			long classTypeId, long[] categoryIds, String[] tagNames,
+			boolean visible, Date startDate, Date endDate, Date expirationDate,
+			String mimeType, String title, String description, String summary,
+			String url, String layoutUuid, int height, int width,
+			Integer priority, boolean sync)
+		throws PortalException, SystemException {
+
+		AssetEntryPermission.check(
+			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
+
+		return assetEntryLocalService.updateEntry(
+			getUserId(), groupId, className, classPK, classUuid, classTypeId,
+			categoryIds, tagNames, visible, startDate, endDate, expirationDate,
+			mimeType, title, description, summary, url, layoutUuid, height,
+			width, priority, sync);
 	}
 
 	protected AssetEntryQuery buildFilteredEntryQuery(

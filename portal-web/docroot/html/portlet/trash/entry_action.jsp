@@ -27,20 +27,25 @@ TrashEntry entry = (TrashEntry)row.getObject();
 %>
 
 <liferay-ui:icon-menu>
-	<portlet:actionURL var="restoreTrashEntryURL">
+	<portlet:actionURL var="restoreEntryURL">
 		<portlet:param name="struts_action" value="/trash/edit_entry" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 	</portlet:actionURL>
 
+	<%
+	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {entryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+	%>
+
 	<liferay-ui:icon
 		image="undo"
 		message="restore"
-		url="<%= restoreTrashEntryURL %>"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
 	/>
 
-	<portlet:actionURL var="deleteTrashEntryURL">
+	<portlet:actionURL var="deleteEntryURL">
 		<portlet:param name="struts_action" value="/trash/edit_entry" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
@@ -49,6 +54,6 @@ TrashEntry entry = (TrashEntry)row.getObject();
 
 	<liferay-ui:icon
 		image="delete"
-		url="<%= deleteTrashEntryURL %>"
+		url="<%= deleteEntryURL %>"
 	/>
 </liferay-ui:icon-menu>

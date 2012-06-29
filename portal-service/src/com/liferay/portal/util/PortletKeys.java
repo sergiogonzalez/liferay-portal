@@ -33,6 +33,8 @@ public class PortletKeys {
 
 	public static final String ANNOUNCEMENTS = "84";
 
+	public static final String APPLICATION_DISPLAY_STYLES = "183";
+
 	public static final String ASSET_BROWSER = "172";
 
 	public static final String ASSET_PUBLISHER = "101";

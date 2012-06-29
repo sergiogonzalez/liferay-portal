@@ -14,14 +14,23 @@
 
 package com.liferay.portlet.documentlibrary.trash;
 
+import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
  * Represents the trash handler for the folder entity.
@@ -31,6 +40,39 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 public class DLFolderTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = DLFolder.class.getName();
+
+	@Override
+	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDLFolder(trashEntry.getClassPK());
+
+		String restoredTitle = dlFolder.getName();
+
+		if (Validator.isNotNull(newName)) {
+			restoredTitle = newName;
+		}
+
+		String originalTitle = restoredTitle;
+
+		if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
+			originalTitle = restoredTitle.substring(
+				0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
+		}
+
+		DLFolder duplicatedFolder = DLFolderLocalServiceUtil.fetchFolder(
+			dlFolder.getGroupId(), dlFolder.getParentFolderId(), originalTitle);
+
+		if (duplicatedFolder != null) {
+			DuplicateEntryException dee = new DuplicateEntryException();
+
+			dee.setDuplicateEntryId(duplicatedFolder.getFolderId());
+			dee.setOldName(duplicatedFolder.getName());
+			dee.setTrashEntryId(trashEntry.getEntryId());
+
+			throw dee;
+		}
+	}
 
 	/**
 	 * Deletes all folders with the matching primary keys.
@@ -86,6 +128,34 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		for (long classPK : classPKs) {
 			DLAppServiceUtil.restoreFolderFromTrash(classPK);
 		}
+	}
+
+	@Override
+	public void updateTitle(long classPK, String name)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDLFolder(classPK);
+
+		dlFolder.setName(name);
+
+		DLFolderLocalServiceUtil.updateDLFolder(dlFolder, false);
+	}
+
+	protected DLFolder getDLFolder(long classPK)
+		throws SystemException, PortalException {
+
+		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
+			0, classPK, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		Folder folder = repository.getFolder(classPK);
+
+		return (DLFolder)folder.getModel();
 	}
 
 }

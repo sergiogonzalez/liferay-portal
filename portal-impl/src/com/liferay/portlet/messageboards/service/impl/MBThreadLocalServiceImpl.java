@@ -102,7 +102,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			assetEntryLocalService.updateEntry(
 				message.getUserId(), message.getGroupId(),
 				MBThread.class.getName(), thread.getThreadId(), null, 0,
-				new long[0], new String[0], false, null, null, null, null, null,
+				new long[0], new String[0], false, null, null, null, null,
 				String.valueOf(thread.getRootMessageId()), null, null, null,
 				null, 0, 0, null, false);
 		}
@@ -163,18 +163,18 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			// Ratings
 
 			ratingsStatsLocalService.deleteStats(
-				MBMessage.class.getName(), message.getMessageId());
+				message.getWorkflowClassName(), message.getMessageId());
 
 			// Asset
 
 			assetEntryLocalService.deleteEntry(
-				MBMessage.class.getName(), message.getMessageId());
+				message.getWorkflowClassName(), message.getMessageId());
 
 			// Resources
 
 			if (!message.isDiscussion()) {
 				resourceLocalService.deleteResource(
-					message.getCompanyId(), MBMessage.class.getName(),
+					message.getCompanyId(), message.getWorkflowClassName(),
 					ResourceConstants.SCOPE_INDIVIDUAL, message.getMessageId());
 			}
 

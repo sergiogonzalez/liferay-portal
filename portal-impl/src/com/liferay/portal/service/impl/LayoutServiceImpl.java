@@ -819,10 +819,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public void schedulePublishToRemote(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, boolean secureConnection,
-			long remoteGroupId, boolean remotePrivateLayout, Date startDate,
-			Date endDate, String groupName, String cronText,
-			Date schedulerStartDate, Date schedulerEndDate, String description)
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			boolean remotePrivateLayout, Date startDate, Date endDate,
+			String groupName, String cronText, Date schedulerStartDate,
+			Date schedulerEndDate, String description)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
@@ -831,8 +832,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		LayoutsRemotePublisherRequest publisherRequest =
 			new LayoutsRemotePublisherRequest(
 				getUserId(), sourceGroupId, privateLayout, layoutIdMap,
-				parameterMap, remoteAddress, remotePort, secureConnection,
-				remoteGroupId, remotePrivateLayout, startDate, endDate);
+				parameterMap, remoteAddress, remotePort, remotePathContext,
+				secureConnection, remoteGroupId, remotePrivateLayout, startDate,
+				endDate);
 
 		String jobName = PortalUUIDUtil.generate();
 

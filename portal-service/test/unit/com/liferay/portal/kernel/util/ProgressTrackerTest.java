@@ -109,12 +109,14 @@ public class ProgressTrackerTest extends TestCase {
 		return progressTracker;
 	}
 
+	@Override
 	protected void setUp() throws Exception {
 		_mockHttpSession = new MockHttpSession();
 
 		_mockInstallProcess = new MockInstallProcess(_mockHttpSession);
 	}
 
+	@Override
 	protected void tearDown() throws Exception {
 		_mockInstallProcess.finish();
 	}

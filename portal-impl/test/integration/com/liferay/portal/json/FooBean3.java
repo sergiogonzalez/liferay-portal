@@ -47,6 +47,7 @@ public class FooBean3 {
 		_longArray = longArray;
 	}
 
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 

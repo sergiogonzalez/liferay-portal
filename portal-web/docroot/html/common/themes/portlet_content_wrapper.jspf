@@ -14,14 +14,14 @@
  */
 --%>
 
-<c:if test="<%= !themeDisplay.isStateExclusive() %>">
+<c:if test="<%= !themeDisplay.isStateExclusive() && !themeDisplay.isStateExclusiveResourceful() %>">
 	<div class="portlet-body">
 </c:if>
 
 <c:choose>
 	<c:when test="<%= portletDisplay.isActive() %>">
 		<c:choose>
-			<c:when test="<%= themeDisplay.isStateExclusive() %>">
+			<c:when test="<%= themeDisplay.isStateExclusive() || themeDisplay.isStateExclusiveResourceful() %>">
 				<%@ include file="/html/common/themes/portlet_content.jspf" %>
 			</c:when>
 			<c:when test="<%= portletDisplay.isAccess() %>">
@@ -50,6 +50,6 @@
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= !themeDisplay.isStateExclusive() %>">
+<c:if test="<%= !themeDisplay.isStateExclusive() && !themeDisplay.isStateExclusiveResourceful() %>">
 	</div>
 </c:if>

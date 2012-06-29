@@ -71,6 +71,7 @@
 	<taskdef classpathref="lib.classpath" resource="tasks.properties" />
 
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
+	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
 
 	<property name="doc.dir" value="${project.dir}/api" />
 
@@ -154,6 +155,8 @@
 			<var name="dir.location.windows" unset="true" />
 		</sequential>
 	</for>
+
+	<basename file="${basedir}" property="basedir.name" />
 
 	<antelope:stringutil string="${basedir}" property="basedir.unix">
 		<antelope:replace regex="\\" replacement="/" />

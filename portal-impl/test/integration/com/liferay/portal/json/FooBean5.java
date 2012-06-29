@@ -45,6 +45,7 @@ public class FooBean5 {
 		_longValue = longValue;
 	}
 
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 

@@ -744,15 +744,15 @@ public class PortletURLImpl
 		Portlet portlet = (Portlet)_request.getAttribute(
 			WebKeys.RENDER_PORTLET);
 
-		if (portlet == null) {
-			return;
-		}
+		if (portlet != null) {
+			String portletId = portlet.getPortletId();
 
-		if (portlet.getPortletId().equals(_portletId) ||
-			!_portlet.isAddDefaultResource() ||
-			portlet.getPortletId().equals(PortletKeys.CONTROL_PANEL_MENU)) {
+			if (portletId.equals(_portletId) ||
+				portletId.equals(PortletKeys.CONTROL_PANEL_MENU) ||
+				!_portlet.isAddDefaultResource()) {
 
-			return;
+				return;
+			}
 		}
 
 		Set<String> portletAddDefaultResourceCheckWhiteList =
@@ -1017,10 +1017,10 @@ public class PortletURLImpl
 
 			name = prependNamespace(name);
 
-			for (int i = 0; i < values.length; i++) {
+			for (String value : values) {
 				sb.append(name);
 				sb.append(StringPool.EQUAL);
-				sb.append(processValue(key, values[i]));
+				sb.append(processValue(key, value));
 				sb.append(StringPool.AMPERSAND);
 			}
 		}
@@ -1038,6 +1038,8 @@ public class PortletURLImpl
 				!_windowStateString.equals(WindowState.MAXIMIZED.toString()) &&
 				!_windowStateString.equals(
 					LiferayWindowState.EXCLUSIVE.toString()) &&
+				!_windowStateString.equals(
+					LiferayWindowState.EXCLUSIVE_RESOURCEFUL.toString()) &&
 				!_windowStateString.equals(
 					LiferayWindowState.POP_UP.toString())) {
 
@@ -1149,6 +1151,8 @@ public class PortletURLImpl
 				!_windowStateString.equals(
 					LiferayWindowState.EXCLUSIVE.toString()) &&
 				!_windowStateString.equals(
+					LiferayWindowState.EXCLUSIVE_RESOURCEFUL.toString()) &&
+				!_windowStateString.equals(
 					LiferayWindowState.POP_UP.toString())) {
 
 				sb.append("wsrp-fragmentID");
@@ -1184,10 +1188,10 @@ public class PortletURLImpl
 
 			name = prependNamespace(name);
 
-			for (int i = 0; i < values.length; i++) {
+			for (String value : values) {
 				parameterSb.append(name);
 				parameterSb.append(StringPool.EQUAL);
-				parameterSb.append(HttpUtil.encodeURL(values[i]));
+				parameterSb.append(HttpUtil.encodeURL(value));
 				parameterSb.append(StringPool.AMPERSAND);
 			}
 		}

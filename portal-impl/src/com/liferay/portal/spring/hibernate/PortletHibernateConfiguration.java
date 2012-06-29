@@ -17,6 +17,8 @@ package com.liferay.portal.spring.hibernate;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
+import org.hibernate.dialect.Dialect;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Ganesh Ram
@@ -41,6 +43,13 @@ public class PortletHibernateConfiguration
 	@Override
 	protected String[] getConfigurationResources() {
 		return new String[] {"META-INF/portlet-hbm.xml"};
+	}
+
+	@Override
+	protected void setDB(Dialect dialect) {
+
+		// Plugins should not update the default DB reference
+
 	}
 
 }

@@ -32,7 +32,9 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.service.impl.GroupLocalServiceImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -421,6 +423,7 @@ public class GroupFinderImpl
 					StringUtil.merge(
 						_getGroupOrganizationClassNameIds(),
 						" OR Group_.classNameId = ")));
+			findByC_C_SQL = replaceOrderBy(findByC_C_SQL, obc);
 
 			StringBundler sb = new StringBundler();
 
@@ -621,6 +624,8 @@ public class GroupFinderImpl
 						StringUtil.merge(
 							classNameIds, " OR Group_.classNameId = ")));
 			}
+
+			findByC_N_D_SQL = replaceOrderBy(findByC_N_D_SQL, obc);
 
 			StringBundler sb = new StringBundler();
 
@@ -915,6 +920,18 @@ public class GroupFinderImpl
 		}
 
 		return resultSQL;
+	}
+
+	protected String replaceOrderBy(String sql, OrderByComparator obc) {
+		if (obc instanceof GroupNameComparator) {
+			sql = StringUtil.replace(
+				sql, "Group_.name AS groupName",
+				"REPLACE(Group_.name, '" +
+					GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX +
+						"', '') AS groupName");
+		}
+
+		return sql;
 	}
 
 	protected void setJoin(

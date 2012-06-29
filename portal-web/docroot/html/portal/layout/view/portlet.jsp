@@ -62,7 +62,7 @@ else {
 }
 %>
 
-<c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isStatePopUp() && !themeDisplay.isWidget() %>">
+<c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isStateExclusiveResourceful() && !themeDisplay.isStatePopUp() && !themeDisplay.isWidget() %>">
 
 	<%
 	for (String portletId : PropsValues.LAYOUT_STATIC_PORTLETS_ALL) {

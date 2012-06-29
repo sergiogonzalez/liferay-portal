@@ -23,10 +23,14 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Zsolt Balogh
+ * @author Sergio González
  */
 public class LiferayWindowState extends WindowState {
 
 	public static final WindowState EXCLUSIVE = new WindowState("exclusive");
+
+	public static final WindowState EXCLUSIVE_RESOURCEFUL = new WindowState(
+		"exclusive_resourceful");
 
 	public static final WindowState POP_UP = new WindowState("pop_up");
 
@@ -34,6 +38,17 @@ public class LiferayWindowState extends WindowState {
 		String state = _getWindowState(request);
 
 		if ((state != null) && state.equals(EXCLUSIVE.toString())) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public static boolean isExclusiveResourceful(HttpServletRequest request) {
+		String state = _getWindowState(request);
+
+		if ((state != null) && state.equals(EXCLUSIVE_RESOURCEFUL.toString())) {
 			return true;
 		}
 		else {
@@ -72,6 +87,14 @@ public class LiferayWindowState extends WindowState {
 			newWindowState.equals(LiferayWindowState.EXCLUSIVE)) {
 
 			return true;
+		}
+
+		// Changes to EXCLUSIVE_RESOURCEFUL are not preserved
+
+		if ((newWindowState != null) &&
+			newWindowState.equals(LiferayWindowState.EXCLUSIVE_RESOURCEFUL)) {
+
+			return false;
 		}
 
 		// Some window states are automatically preserved

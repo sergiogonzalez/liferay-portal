@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.spring.util.FilterClassLoader;
 
+import java.lang.reflect.Proxy;
+
 import java.net.URL;
 
 import sun.reflect.Reflection;
@@ -180,6 +182,14 @@ public class PACLClassUtil {
 						callerClass.getName());
 			}
 
+			if (Proxy.isProxyClass(callerClass)) {
+				if (debug) {
+					_log.debug("Skipping frame because it is proxy class");
+				}
+
+				continue;
+			}
+
 			ClassLoader callerClassLoader = _getCallerClassLoader(callerClass);
 
 			if (callerClassLoader == null) {
@@ -210,6 +220,12 @@ public class PACLClassUtil {
 					PACLPolicyManager.getDefaultPACLPolicy();
 
 				if (paclPolicy == null) {
+					if (debug) {
+						_log.debug(
+							"Possibly return default PACL policy " +
+								defaultPACLPolicy);
+					}
+
 					paclPolicy = defaultPACLPolicy;
 				}
 
@@ -233,11 +249,21 @@ public class PACLClassUtil {
 				continue;
 			}
 
+			if (debug) {
+				_log.debug(
+					"Lookup PACL policy for caller class loader " +
+						callerClassLoader);
+			}
+
 			PACLPolicy callerPACLPolicy = PACLPolicyManager.getPACLPolicy(
 				callerClassLoader);
 
 			if (callerPACLPolicy != null) {
 				paclPolicy = callerPACLPolicy;
+
+				if (debug) {
+					_log.debug("Possibly return PACL policy " + paclPolicy);
+				}
 
 				if (!deep) {
 					break;

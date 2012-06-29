@@ -385,6 +385,8 @@ public interface PropsKeys {
 
 	public static final String COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE = "company.security.auto.login.max.age";
 
+	public static final String COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE = "company.security.login.form.autocomplete";
+
 	public static final String COMPANY_SECURITY_SEND_PASSWORD = "company.security.send.password";
 
 	public static final String COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK = "company.security.send.password.reset.link";
@@ -678,6 +680,8 @@ public interface PropsKeys {
 	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT = "dynamic.data.mapping.template.language.content";
 
 	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_TYPES = "dynamic.data.mapping.template.language.types";
+
+	public static final String DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS = "dynamic.resource.servlet.allowed.paths";
 
 	public static final String EDITOR_WYSIWYG_DEFAULT = "editor.wysiwyg.default";
 
@@ -1737,6 +1741,8 @@ public interface PropsKeys {
 
 	public static final String PORTAL_SECURITY_MANAGER_FILE_CHECKER_DEFAULT_READ_PATHS = "portal.security.manager.file.checker.default.read.paths";
 
+	public static final String PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES = "portal.security.manager.preload.classloader.classes";
+
 	public static final String PORTAL_SECURITY_MANAGER_STRATEGY = "portal.security.manager.strategy";
 
 	public static final String PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED = "portlet.add.default.resource.check.enabled";
@@ -2062,6 +2068,8 @@ public interface PropsKeys {
 	public static final String SQL_DATA_COM_LIFERAY_PORTAL_MODEL_REGION_REGION_ID = "sql.data.com.liferay.portal.model.Region.region.id";
 
 	public static final String SQL_DATA_MAX_PARAMETERS = "sql.data.max.parameters";
+
+	public static final String STAGING_LOCK_ENABLED = "staging.lock.enabled";
 
 	public static final String STRIP_CSS_SASS_ENABLED = "strip.css.sass.enabled";
 

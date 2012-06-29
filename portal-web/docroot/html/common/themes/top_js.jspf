@@ -117,6 +117,9 @@
 				getCDNDynamicResourcesHost: function() {
 					return "<%= themeDisplay.getCDNDynamicResourcesHost() %>";
 				},
+				getCDNBaseURL: function() {
+					return "<%= themeDisplay.getCDNBaseURL() %>";
+				},
 				getCDNHost: function() {
 					return "<%= themeDisplay.getCDNHost() %>";
 				},
@@ -187,6 +190,9 @@
 				},
 				isStateExclusive: function() {
 					return <%= themeDisplay.isStateExclusive() %>;
+				},
+				isStateExclusiveResourceful: function() {
+					return <%= themeDisplay.isStateExclusiveResourceful() %>;
 				},
 				isStateMaximized: function() {
 					return <%= themeDisplay.isStateMaximized() %>;

@@ -33,6 +33,7 @@ public class LiferayPersistenceIntegrationJUnitTestRunner
 		super(clazz);
 	}
 
+	@Override
 	protected void loadSpringContext() {
 		List<String> extraConfigLocations = new ArrayList<String>(1);
 

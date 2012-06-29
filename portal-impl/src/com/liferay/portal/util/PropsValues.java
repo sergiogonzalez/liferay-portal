@@ -310,6 +310,8 @@ public class PropsValues {
 
 	public static final int COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE), CookieKeys.MAX_AGE);
 
+	public static final boolean COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE));
+
 	public static final boolean COMPANY_SECURITY_SEND_PASSWORD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_SECURITY_SEND_PASSWORD));
 
 	public static final boolean COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK));
@@ -554,6 +556,8 @@ public class PropsValues {
 
 	public static final boolean DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY));
 
+	public static final String[] DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS = PropsUtil.getArray(PropsKeys.DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS);
+
 	public static final String EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
 	public static final boolean EHCACHE_BLOCKING_CACHE_ALLOWED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.EHCACHE_BLOCKING_CACHE_ALLOWED));
@@ -602,7 +606,7 @@ public class PropsValues {
 
 	public static final boolean FREEMARKER_ENGINE_LOCALIZED_LOOKUP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.FREEMARKER_ENGINE_LOCALIZED_LOOKUP));
 
-	public static final String[] FREEMARKER_ENGINE_MACRO_LIBRARY = PropsUtil.getArray(PropsKeys.FREEMARKER_ENGINE_MACRO_LIBRARY);
+	public static final String FREEMARKER_ENGINE_MACRO_LIBRARY = PropsUtil.get(PropsKeys.FREEMARKER_ENGINE_MACRO_LIBRARY);
 
 	public static final int FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL));
 
@@ -1286,6 +1290,8 @@ public class PropsValues {
 
 	public static final String PORTAL_PROXY_PATH = PropsUtil.get(PropsKeys.PORTAL_PROXY_PATH);
 
+	public static final String[] PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES = PropsUtil.getArray(PropsKeys.PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES);
+
 	public static final String PORTAL_SECURITY_MANAGER_STRATEGY = PropsUtil.get(PropsKeys.PORTAL_SECURITY_MANAGER_STRATEGY);
 
 	public static boolean PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED));
@@ -1509,6 +1515,8 @@ public class PropsValues {
 	public static final String SPRITE_ROOT_DIR = PropsUtil.get(PropsKeys.SPRITE_ROOT_DIR);
 
 	public static final int SQL_DATA_MAX_PARAMETERS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SQL_DATA_MAX_PARAMETERS));
+
+	public static boolean STAGING_LOCK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.STAGING_LOCK_ENABLED));
 
 	public static boolean STRIP_CSS_SASS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.STRIP_CSS_SASS_ENABLED));
 

@@ -145,6 +145,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 	protected HttpServlet getServlet() {
 		return new WebServerServlet() {
 
+			@Override
 			protected boolean isSupportsRangeHeader(String contentType) {
 				return true;
 			}

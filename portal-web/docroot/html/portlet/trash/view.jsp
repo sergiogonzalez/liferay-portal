@@ -127,7 +127,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
-				path="/html/portlet/trash/trash_entry_actions.jsp"
+				path="/html/portlet/trash/entry_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -190,5 +190,15 @@ portletURL.setParameter("tabs1", tabs1);
 			}
 		},
 		['liferay-util-list-fields']
+	);
+</aui:script>
+
+<aui:script use="liferay-trash">
+	new Liferay.Portlet.Trash(
+		{
+			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="checkEntry" /><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>',
+			namespace: '<portlet:namespace />',
+			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/trash/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
+		}
 	);
 </aui:script>

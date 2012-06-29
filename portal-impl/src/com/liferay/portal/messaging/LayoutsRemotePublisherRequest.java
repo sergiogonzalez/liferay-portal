@@ -29,9 +29,9 @@ public class LayoutsRemotePublisherRequest
 	public LayoutsRemotePublisherRequest(
 		long userId, long sourceGroupId, boolean privateLayout,
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-		String remoteAddress, int remotePort, boolean secureConnection,
-		long remoteGroupId, boolean remotePrivateLayout, Date startDate,
-		Date endDate) {
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId,
+		boolean remotePrivateLayout, Date startDate, Date endDate) {
 
 		_userId = userId;
 		_sourceGroupId = sourceGroupId;
@@ -40,6 +40,7 @@ public class LayoutsRemotePublisherRequest
 		_parameterMap = parameterMap;
 		_remoteAddress = remoteAddress;
 		_remotePort = remotePort;
+		_remotePathContext = remotePathContext;
 		_secureConnection = secureConnection;
 		_remoteGroupId = remoteGroupId;
 		_remotePrivateLayout = remotePrivateLayout;
@@ -73,6 +74,10 @@ public class LayoutsRemotePublisherRequest
 
 	public long getRemoteGroupId() {
 		return _remoteGroupId;
+	}
+
+	public String getRemotePathContext() {
+		return _remotePathContext;
 	}
 
 	public int getRemotePort() {
@@ -145,6 +150,10 @@ public class LayoutsRemotePublisherRequest
 		_remoteGroupId = remoteGroupId;
 	}
 
+	public void setRemotePathContext(String remotePathContext) {
+		_remotePathContext = remotePathContext;
+	}
+
 	public void setRemotePort(int remotePort) {
 		_remotePort = remotePort;
 	}
@@ -186,6 +195,7 @@ public class LayoutsRemotePublisherRequest
 	private boolean _privateLayout;
 	private String _remoteAddress;
 	private long _remoteGroupId;
+	private String _remotePathContext;
 	private int _remotePort;
 	private boolean _remotePrivateLayout;
 	private Date _scheduledFireTime;

@@ -124,6 +124,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		);
 	}
 
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -134,6 +135,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		return attributes;
 	}
 
+	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		<#list entity.regularColList as column>
 			<#if column.isPrimitiveType()>

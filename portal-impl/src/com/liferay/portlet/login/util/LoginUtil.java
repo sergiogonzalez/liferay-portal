@@ -88,8 +88,10 @@ public class LoginUtil {
 
 		String requestURI = request.getRequestURI();
 
-		if (requestURI.startsWith("/api/liferay") ||
-			requestURI.startsWith("/api/secure/liferay")) {
+		String contextPath = PortalUtil.getPathContext();
+
+		if (requestURI.startsWith(contextPath.concat("/api/liferay")) ||
+			requestURI.startsWith(contextPath.concat("/api/secure/liferay"))) {
 
 			// Tunnel requests are serialized objects and cannot manipulate the
 			// request input stream in any way. Do not use the auth pipeline to

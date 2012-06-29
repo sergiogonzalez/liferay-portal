@@ -152,7 +152,10 @@ public class EditFileEntryAction extends PortletAction {
 				checkOutFileEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE)) {
-				moveFileEntries(actionRequest);
+				moveFileEntries(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
+				moveFileEntries(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFileEntries(actionRequest, true);
@@ -170,7 +173,9 @@ public class EditFileEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.PREVIEW)) {
 			}
-			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
+			else if (!cmd.equals(Constants.MOVE_FROM_TRASH) &&
+					 !windowState.equals(LiferayWindowState.POP_UP)) {
+
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
@@ -624,26 +629,36 @@ public class EditFileEntryAction extends PortletAction {
 		return errorMessage;
 	}
 
-	protected void moveFileEntries(ActionRequest actionRequest)
+	protected void moveFileEntries(
+			ActionRequest actionRequest, boolean moveFromTrash)
 		throws Exception {
 
+		long[] fileEntryIds = null;
+
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			fileEntryIds = new long[] {fileEntryId};
+		}
+		else {
+			fileEntryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+		}
+
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
-		if (fileEntryId > 0) {
-			DLAppServiceUtil.moveFileEntry(
-				fileEntryId, newFolderId, serviceContext);
-		}
-		else {
-			long[] fileEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+		for (long moveFileEntryId : fileEntryIds) {
+			if (moveFromTrash) {
+				DLAppServiceUtil.moveFileEntryFromTrash(
+					moveFileEntryId, newFolderId, serviceContext);
+			}
 
-			for (int i = 0; i < fileEntryIds.length; i++) {
+			else {
 				DLAppServiceUtil.moveFileEntry(
-					fileEntryIds[i], newFolderId, serviceContext);
+					moveFileEntryId, newFolderId, serviceContext);
 			}
 		}
 	}

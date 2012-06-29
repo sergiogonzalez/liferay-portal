@@ -163,7 +163,9 @@
 	</target>
 
 	<target name="build-dist-plugins">
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.includes.required}</echo>
+		<antcall inheritAll="false" target="update-plugins-includes">
+			<param name="plugins.includes.bundle.required" value="true" />
+		</antcall>
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
 	</target>
@@ -290,10 +292,8 @@
 	</target>
 
 	<target name="build-dist-tcat-admin-webapps-plugins">
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">
-			plugins.includes=${lp.plugins.includes.tcat}
-
-			plugins.war.excludes=**/WEB-INF/src/**
+		<echo append="true" file="${lp.plugins.dir}/build.${user.name}.properties">
+			plugins.war.excludes=**/WEB-INF/service/**,**/WEB-INF/src/**
 		</echo>
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
@@ -303,8 +303,6 @@
 		</copy>
 
 		<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
-
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.includes.required}</echo>
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
 	</target>
@@ -749,7 +747,9 @@ know what you are doing as it can cause loss of data.
 
 		<move file="${lp.plugins.dir}/dist/liferay-plugins-sdk-${lp.version}.zip" tofile="dist/liferay-plugins-sdk-${lp.version}.zip" />
 
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.includes.misc}</echo>
+		<antcall target="update-plugins-includes">
+			<param name="plugins.includes.marketplace.required" value="true" />
+		</antcall>
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
 
@@ -784,6 +784,7 @@ release was successful.</echo>
 
 	<target name="prepare-generated-files">
 		<ant dir="portal-impl" target="build-iw" inheritAll="false" />
+		<ant dir="portal-impl" target="build-lib-versions" inheritAll="false" />
 		<ant dir="portal-impl" target="build-services" inheritAll="false" />
 		<ant dir="portal-impl" target="build-wsdds" inheritAll="false" />
 
@@ -1792,6 +1793,55 @@ them in ${app.server.parent.dir}. Then rerun this task.
 		</exec>
 
 		<delete dir="${tstamp.value}" />
+	</target>
+
+	<target name="update-plugins-includes">
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">
+plugins.includes=</echo>
+
+		<xmltask source="${lp.plugins.dir}/summary.xml">
+			<call path="plugins-summary/plugin">
+				<param name="plugins.includes.plugin.bundle" path="releng/bundle/text()" />
+				<param name="plugins.includes.plugin.marketplace" path="releng/marketplace/text()" />
+				<param name="plugins.includes.plugin.name" path="artifact-id/text()" />
+				<param name="plugins.includes.plugin.public" path="releng/public/text()" />
+				<actions>
+					<antcall target="update-plugins-includes-plugin">
+						<param name="plugins.includes.plugin.bundle" value="@{plugins.includes.plugin.bundle}" />
+						<param name="plugins.includes.plugin.marketplace" value="@{plugins.includes.plugin.marketplace}" />
+						<param name="plugins.includes.plugin.name" value="@{plugins.includes.plugin.name}" />
+						<param name="plugins.includes.plugin.public" value="@{plugins.includes.plugin.public}" />
+					</antcall>
+				</actions>
+			</call>
+		</xmltask>
+	</target>
+
+	<target name="update-plugins-includes-plugin">
+		<if>
+			<and>
+				<or>
+					<and>
+						<equals arg1="${lp.release.type}" arg2="CE" />
+						<equals arg1="${plugins.includes.plugin.public}" arg2="true" />
+					</and>
+					<equals arg1="${lp.release.type}" arg2="EE" />
+				</or>
+				<or>
+					<and>
+						<equals arg1="${plugins.includes.bundle.required}" arg2="true" />
+						<equals arg1="${plugins.includes.plugin.bundle}" arg2="true" />
+					</and>
+					<and>
+						<equals arg1="${plugins.includes.marketplace.required}" arg2="true" />
+						<equals arg1="${plugins.includes.plugin.marketplace}" arg2="true" />
+					</and>
+				</or>
+			</and>
+			<then>
+				<echo append="true" file="${lp.plugins.dir}/build.${user.name}.properties">${plugins.includes.plugin.name},</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="zip-api">

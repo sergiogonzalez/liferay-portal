@@ -155,6 +155,23 @@ AUI.add(
 
 					boundingBox.addClass('lfr-component');
 
+					boundingBox.delegate(
+						EVENT_CLICK,
+						function(event) {
+							var result = Liferay.fire(
+								'menu:click',
+								{
+									item: event.currentTarget
+								}
+							);
+
+							if (!result) {
+								event.preventDefault();
+							}
+						},
+						'a'
+					);
+
 					instance._overlay = overlay;
 				}
 				else {

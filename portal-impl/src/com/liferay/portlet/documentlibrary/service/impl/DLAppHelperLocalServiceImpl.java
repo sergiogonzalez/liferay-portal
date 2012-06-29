@@ -164,10 +164,9 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry.getGroupId(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, false, null, null, null, null,
-				fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, 0, 0, null,
-				false);
+				assetTagNames, false, null, null, null, fileEntry.getMimeType(),
+				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
+				null, 0, 0, null, false);
 		}
 
 		AssetEntry fileVersionAssetEntry = assetEntryLocalService.fetchEntry(
@@ -190,7 +189,7 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, false, null,
-				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
 
@@ -362,6 +361,36 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getTitle(), fileEntry.getDescription(),
 				DLSyncConstants.EVENT_UPDATE, fileEntry.getVersion());
 		}
+	}
+
+	public FileEntry moveFileEntryFromTrash(
+			long userId, FileEntry fileEntry, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// File entry
+
+		List<DLFileVersion> dlFileVersions =
+			dlFileVersionLocalService.getFileVersions(
+				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
+
+		dlFileVersions = ListUtil.sort(
+			dlFileVersions, new FileVersionVersionComparator());
+
+		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
+
+		dlFileEntryLocalService.updateStatus(
+			userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
+			new HashMap<String, Serializable>(), serviceContext);
+
+		// File rank
+
+		dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
+
+		// App helper
+
+		return dlAppService.moveFileEntry(
+			fileEntry.getFileEntryId(), newFolderId, serviceContext);
 	}
 
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
@@ -689,7 +718,7 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, false, null,
-				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
 		}
@@ -698,7 +727,7 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry.getGroupId(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, visible, null, null, null, null,
+				assetTagNames, visible, null, null, null,
 				fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
@@ -713,7 +742,7 @@ public class DLAppHelperLocalServiceImpl
 					DLFileShortcut.class.getName(),
 					dlFileShortcut.getFileShortcutId(),
 					dlFileShortcut.getUuid(), fileEntryTypeId, assetCategoryIds,
-					assetTagNames, true, null, null, null, null,
+					assetTagNames, true, null, null, null,
 					fileEntry.getMimeType(), fileEntry.getTitle(),
 					fileEntry.getDescription(), null, null, null, 0, 0, null,
 					false);
@@ -818,7 +847,7 @@ public class DLAppHelperLocalServiceImpl
 								DLFileEntryConstants.getClassName(),
 								fileEntry.getFileEntryId(), fileEntry.getUuid(),
 								fileEntryTypeId, assetCategoryIds,
-								assetTagNames, true, null, null, null, null,
+								assetTagNames, true, null, null, null,
 								draftAssetEntry.getMimeType(),
 								fileEntry.getTitle(),
 								fileEntry.getDescription(), null, null, null, 0,
@@ -961,7 +990,9 @@ public class DLAppHelperLocalServiceImpl
 						SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 						StringPool.BLANK, 0);
 				}
-				else {
+				else if (latestDlFileVersion.getStatus() ==
+							WorkflowConstants.STATUS_APPROVED) {
+
 					socialActivityLocalService.addActivity(
 						user.getUserId(), dlFileEntry.getGroupId(),
 						DLFileEntryConstants.getClassName(),

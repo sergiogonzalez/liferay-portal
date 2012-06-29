@@ -274,6 +274,8 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 	<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
 	<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
 
+	<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
+
 	<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
 
 		<%
@@ -339,6 +341,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_GROUP_ID %>">
 			<liferay-ui:message arguments="<%= roe.getRemoteGroupId() %>" key="the-remote-site-id-x-is-not-valid" />
+		</c:if>
+
+		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PATH_CONTEXT %>">
+			<liferay-ui:message arguments="<%= roe.getRemotePathContext() %>" key="the-remote-path-context-x-is-not-valid" />
 		</c:if>
 
 		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PORT %>">

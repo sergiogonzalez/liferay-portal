@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ContextPathUtil;
@@ -144,9 +145,10 @@ public class PortletImpl extends PortletBaseImpl {
 		List<SchedulerEntry> schedulerEntries, String portletURLClass,
 		String friendlyURLMapperClass, String friendlyURLMapping,
 		String friendlyURLRoutes, String urlEncoderClass,
-		String portletDataHandlerClass, String portletLayoutListenerClass,
-		String pollerProcessorClass, String popMessageListenerClass,
-		String socialActivityInterpreterClass,
+		String portletDataHandlerClass,
+		String portletDisplayTemplateHandlerClass,
+		String portletLayoutListenerClass, String pollerProcessorClass,
+		String popMessageListenerClass, String socialActivityInterpreterClass,
 		String socialRequestInterpreterClass, String webDAVStorageToken,
 		String webDAVStorageClass, String xmlRpcMethodClass,
 		String controlPanelEntryCategory, double controlPanelEntryWeight,
@@ -205,6 +207,8 @@ public class PortletImpl extends PortletBaseImpl {
 		_friendlyURLRoutes = friendlyURLRoutes;
 		_urlEncoderClass = urlEncoderClass;
 		_portletDataHandlerClass = portletDataHandlerClass;
+		_portletDisplayTemplateHandlerClass =
+			portletDisplayTemplateHandlerClass;
 		_portletLayoutListenerClass = portletLayoutListenerClass;
 		_pollerProcessorClass = pollerProcessorClass;
 		_popMessageListenerClass = popMessageListenerClass;
@@ -345,9 +349,10 @@ public class PortletImpl extends PortletBaseImpl {
 			getOpenSearchClass(), getSchedulerEntries(), getPortletURLClass(),
 			getFriendlyURLMapperClass(), getFriendlyURLMapping(),
 			getFriendlyURLRoutes(), getURLEncoderClass(),
-			getPortletDataHandlerClass(), getPortletLayoutListenerClass(),
-			getPollerProcessorClass(), getPopMessageListenerClass(),
-			getSocialActivityInterpreterClass(),
+			getPortletDataHandlerClass(),
+			getPortletDisplayTemplateHandlerClass(),
+			getPortletLayoutListenerClass(), getPollerProcessorClass(),
+			getPopMessageListenerClass(), getSocialActivityInterpreterClass(),
 			getSocialRequestInterpreterClass(), getWebDAVStorageToken(),
 			getWebDAVStorageClass(), getXmlRpcMethodClass(),
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
@@ -1171,6 +1176,32 @@ public class PortletImpl extends PortletBaseImpl {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
 		return portletBag.getPortletDataHandlerInstance();
+	}
+
+	/**
+	 * Returns the name of the portlet display style class of the portlet.
+	 *
+	 * @return the name of the portlet display style class of the portlet
+	 */
+	public String getPortletDisplayTemplateHandlerClass() {
+		return _portletDisplayTemplateHandlerClass;
+	}
+
+	/**
+	 * Returns the portlet display style instance of the portlet.
+	 *
+	 * @return the portlet display style instance of the portlet
+	 */
+	public PortletDisplayTemplateHandler
+		getPortletDisplayTemplateHandlerInstance() {
+
+		if (Validator.isNull(getPortletDisplayTemplateHandlerClass())) {
+			return null;
+		}
+
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		return portletBag.getPortletDisplayTemplateHandlerInstance();
 	}
 
 	/**
@@ -2783,6 +2814,20 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets the name of the portlet display template handler class of the
+	 * portlet.
+	 *
+	 * @param portletDisplayTemplateHandlerClass the name of display template
+	 *        handler class of the portlet
+	 */
+	public void setPortletDisplayTemplateHandlerClass(
+		String portletDisplayTemplateHandlerClass) {
+
+		_portletDisplayTemplateHandlerClass =
+			portletDisplayTemplateHandlerClass;
+	}
+
+	/**
 	 * Sets the filters of the portlet.
 	 *
 	 * @param portletFilters the filters of the portlet
@@ -3563,6 +3608,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The name of the portlet data handler class of the portlet.
 	 */
 	private String _portletDataHandlerClass;
+
+	/**
+	 * The name of the display style handler class of the portlet.
+	 */
+	private String _portletDisplayTemplateHandlerClass;
 
 	/**
 	 * The filters of the portlet.

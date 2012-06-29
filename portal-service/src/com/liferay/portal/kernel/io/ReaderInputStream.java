@@ -194,6 +194,7 @@ public class ReaderInputStream extends InputStream {
 		return result;
 	}
 
+	@Override
 	public long skip(long length) throws IOException {
 		if (length < 0) {
 			throw new IllegalArgumentException();

@@ -33,6 +33,7 @@ import javax.servlet.ServletContext;
  */
 public class VelocityServletResourceParser extends URLResourceParser {
 
+	@Override
 	public URL getURL(String source) throws IOException {
 		int pos = source.indexOf(SERVLET_SEPARATOR);
 

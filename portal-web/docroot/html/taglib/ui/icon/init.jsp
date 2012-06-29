@@ -16,6 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="java.net.URL" %>
+
 <%
 String id = (String)request.getAttribute("liferay-ui:icon:id");
 
