@@ -106,6 +106,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -334,7 +335,26 @@ public class ServicePreAction extends Action {
 				// Get locale from the request
 
 				if ((locale == null) && PropsValues.LOCALE_DEFAULT_REQUEST) {
-					locale = request.getLocale();
+					Enumeration<Locale> locales =
+						(Enumeration<Locale>)request.getLocales();
+
+					while (locales.hasMoreElements()) {
+						Locale requestLocale = locales.nextElement();
+
+						if (Validator.isNull(requestLocale.getCountry())) {
+							String requestLanguageCode =
+								requestLocale.getLanguage();
+
+							requestLocale = LanguageUtil.getLocale(
+								requestLanguageCode);
+						}
+
+						if (LanguageUtil.isAvailableLocale(requestLocale)) {
+							locale = requestLocale;
+
+							break;
+						}
+					}
 				}
 
 				// Get locale from the default user
