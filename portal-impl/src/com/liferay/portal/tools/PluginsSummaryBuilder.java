@@ -132,6 +132,7 @@ public class PluginsSummaryBuilder {
 		String pageURL = StringPool.BLANK;
 		String author = StringPool.BLANK;
 		String licenses = StringPool.BLANK;
+		String liferayVersions = StringPool.BLANK;
 
 		if (fileName.endsWith(".properties")) {
 			Properties properties = PropertiesUtil.load(content);
@@ -144,6 +145,7 @@ public class PluginsSummaryBuilder {
 			pageURL = _readProperty(properties, "page-url");
 			author = _readProperty(properties, "author");
 			licenses = _readProperty(properties, "licenses");
+			liferayVersions = _readProperty(properties, "liferay-versions");
 		}
 		else {
 			Document document = SAXReaderUtil.read(content);
@@ -159,6 +161,8 @@ public class PluginsSummaryBuilder {
 			pageURL = rootElement.elementText("page-url");
 			author = rootElement.elementText("author");
 			licenses = _readList(rootElement.element("licenses"), "license");
+			liferayVersions = _readList(
+				rootElement.element("liferay-versions"), "liferay-version");
 		}
 
 		_distinctAuthors.add(author);
@@ -176,6 +180,7 @@ public class PluginsSummaryBuilder {
 		_writeElement(sb, "page-url", pageURL, 2);
 		_writeElement(sb, "author", author, 2);
 		_writeElement(sb, "licenses", licenses, 2);
+		_writeElement(sb, "liferay-versions", liferayVersions, 2);
 
 		sb.append("\t\t<releng>\n");
 		sb.append(_readReleng(fileName));
@@ -245,7 +250,6 @@ public class PluginsSummaryBuilder {
 
 		_writeElement(sb, "bundle", relengProperties, 3);
 		_writeElement(sb, "category", relengProperties, 3);
-		_writeElement(sb, "compatibility", relengProperties, 3);
 		_writeElement(sb, "demo-url", relengProperties, 3);
 
 		if (FileUtil.exists(fullWebInfDirName + "releng/icons/90x90.png")) {
@@ -300,7 +304,6 @@ public class PluginsSummaryBuilder {
 
 		_writeProperty(sb, relengProperties, "bundle", "false");
 		_writeProperty(sb, relengProperties, "category", "");
-		_writeProperty(sb, relengProperties, "compatibility", "");
 		_writeProperty(sb, relengProperties, "demo-url", "");
 		_writeProperty(sb, relengProperties, "labs", "true");
 		_writeProperty(sb, relengProperties, "marketplace", "false");
