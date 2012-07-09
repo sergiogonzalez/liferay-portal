@@ -43,6 +43,10 @@
 		var modules = {};
 
 		var moduleList = {
+			'app-view-dd-navigation': ['aui-base', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-history-manager', 'liferay-portlet-base', 'liferay-util-list-fields'],
+			'app-view-folders-navigation': ['aui-base'],
+			'app-view-page-navigation': ['aui-paginator', 'aui-parse-content', 'liferay-history-manager', 'liferay-portlet-base'],
+			'app-view-select-navigation': ['aui-base', 'liferay-app-view-dd-navigation', 'liferay-history-manager', 'liferay-portlet-base', 'liferay-util-list-fields'],
 			'asset-categories-selector': ['aui-tree', 'liferay-asset-tags-selector'],
 			'asset-tags-selector': ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-form-textfield', 'aui-io-request', 'aui-live-search', 'aui-template', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource'],
 			'auto-fields': ['aui-base', 'aui-data-set', 'aui-io-request', 'aui-parse-content', 'sortable', 'base', 'liferay-undo-manager'],
