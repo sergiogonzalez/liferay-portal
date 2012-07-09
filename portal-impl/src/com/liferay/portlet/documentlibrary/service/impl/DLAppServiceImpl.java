@@ -79,7 +79,8 @@ import java.util.concurrent.Callable;
  * primary key of the specific repository. If the repository is a default
  * Liferay repository, the <code>repositoryId</code> is the <code>groupId</code>
  * or <code>scopeGroupId</code>. Otherwise, the <code>repositoryId</code> will
- * correspond to values obtained from {@link RepositoryServiceUtil}.
+ * correspond to values obtained from {@link
+ * com.liferay.portal.service.RepositoryServiceUtil}.
  * </p>
  *
  * @author Alexander Chow
@@ -1941,7 +1942,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @return the temporary file entry names
 	 * @throws PortalException if the folder was invalid
 	 * @throws SystemException if a system exception occurred
-	 * @see    #addTempFileEntry(long, long, String, String, File)
+	 * @see    com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl#addTempFileEntry(
+	 *         long, long, String, String, File)
 	 * @see    com.liferay.portal.kernel.util.TempFileUtil
 	 */
 	public String[] getTempFileEntryNames(
@@ -2177,6 +2179,38 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return moveFolders(
 			folderId, parentFolderId, fromRepository, toRepository,
 			serviceContext);
+	}
+
+	/**
+	 * Moves the folder with the primary key from the trash portlet
+	 * to the new parent folder with the primary key
+	 *
+	 * @param  folderId the primary key of the folder
+	 * @param  parentFolderId the primary key of the new parent folder
+	 * @param  serviceContext the service context to be applied
+	 * @return the file entry
+	 * @throws PortalException if the folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Folder moveFolderFromTrash(
+			long folderId, long parentFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(folderId, 0, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		Folder folder = repository.getFolder(folderId);
+
+		DLFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		return dlAppHelperLocalService.moveFolderFromTrash(
+			getUserId(), folder, parentFolderId, serviceContext);
 	}
 
 	/**

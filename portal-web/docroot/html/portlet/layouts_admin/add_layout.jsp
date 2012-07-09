@@ -97,6 +97,10 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 			</div>
 
 			<aui:input id="addLayoutHidden" name="hidden" />
+
+			<div class="aui-helper-hidden" id="<portlet:namespace />layoutPrototypeLinkOptions">
+				<aui:input label="automatically-apply-changes-done-to-the-page-template" name="layoutPrototypeLinkEnabled" type="checkbox" value="true" />
+			</div>
 		</aui:fieldset>
 
 		<aui:button-row>
@@ -113,6 +117,10 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 			var hiddenFields = A.one('#<portlet:namespace />hiddenFields');
 
 			hiddenFields.toggle(layoutPrototypeIdSelect && !layoutPrototypeIdSelect.val());
+
+			var layoutPrototypeLinkOptions = A.one('#<portlet:namespace />layoutPrototypeLinkOptions');
+
+			layoutPrototypeLinkOptions.toggle(layoutPrototypeIdSelect && layoutPrototypeIdSelect.val() != '');
 		}
 
 		showHiddenFields();
