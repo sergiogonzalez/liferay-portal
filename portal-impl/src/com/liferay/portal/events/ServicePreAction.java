@@ -335,8 +335,7 @@ public class ServicePreAction extends Action {
 				// Get locale from the request
 
 				if ((locale == null) && PropsValues.LOCALE_DEFAULT_REQUEST) {
-					Enumeration<Locale> locales =
-						(Enumeration<Locale>)request.getLocales();
+					Enumeration<Locale> locales = request.getLocales();
 
 					while (locales.hasMoreElements()) {
 						Locale requestLocale = locales.nextElement();
