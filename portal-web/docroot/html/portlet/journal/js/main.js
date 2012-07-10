@@ -1189,13 +1189,16 @@ AUI.add(
 						cmd = instance.articleId ? 'update' : 'add';
 					}
 
-					var cmdInput = instance.getByName(form, 'cmd');
-					var newArticleIdInput = instance.getByName(form, 'newArticleId');
 					var articleIdInput = instance.getByName(form, 'articleId');
+					var classNameIdInput = instance.getByName(form, 'classNameId');
+					var cmdInput = instance.getByName(form, 'cmd');
 					var contentInput = instance.getByName(form, 'content');
+					var newArticleIdInput = instance.getByName(form, 'newArticleId');
 					var workflowActionInput = instance.getByName(form, 'workflowAction');
 
-					var canSubmit = instance.validateRequiredFields();
+					var classNameId = Liferay.Util.toNumber(classNameIdInput.val());
+
+					var canSubmit = classNameId || instance.validateRequiredFields();
 
 					if (canSubmit) {
 						if (cmd == 'publish') {

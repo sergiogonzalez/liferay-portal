@@ -16,11 +16,16 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.ReleaseConstants;
 
 import java.io.IOException;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -88,6 +93,36 @@ public abstract class VerifyProcess {
 	}
 
 	protected void doVerify() throws Exception {
+	}
+
+	/**
+	 * @return the portal build number before {@link
+	 *         com.liferay.portal.tools.DBUpgrader} has a chance to update it to
+	 *         the value in {@link ReleaseInfo#getBuildNumber}
+	 */
+	protected int getBuildNumber() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select buildNumber from Release_ where servletContextName " +
+					"= ?");
+
+			ps.setString(1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			rs = ps.executeQuery();
+
+			rs.next();
+
+			return rs.getInt(1);
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyProcess.class);

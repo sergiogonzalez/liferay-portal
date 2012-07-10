@@ -135,8 +135,8 @@ portletURL.setParameter("modelResource", modelResource);
 					%>
 
 					<aui:select name="defaultValue">
-						<aui:option label="true" selected="<%= curValue %>" value="true" />
-						<aui:option label="false" selected="<%= !curValue %>" value="false" />
+						<aui:option label="<%= true %>" selected="<%= curValue %>" value="true" />
+						<aui:option label="<%= false %>" selected="<%= !curValue %>" value="false" />
 					</aui:select>
 				</c:when>
 				<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN_ARRAY %>">
@@ -212,15 +212,15 @@ portletURL.setParameter("modelResource", modelResource);
 			<aui:input name="PropertyName--hidden--" type="hidden" value="hidden" />
 
 			<aui:select helpMessage="custom-field-hidden-help" label="hidden" name="Property--hidden--">
-				<aui:option label="true" selected="<%= propertyHidden %>" value="1" />
-				<aui:option label="false" selected="<%= !propertyHidden %>" value="0" />
+				<aui:option label="<%= true %>" selected="<%= propertyHidden %>" value="1" />
+				<aui:option label="<%= false %>" selected="<%= !propertyHidden %>" value="0" />
 			</aui:select>
 
 			<aui:input name="PropertyName--visible-with-update-permission--" type="hidden" value="visible-with-update-permission" />
 
 			<aui:select helpMessage="custom-field-visible-with-update-permission-help" label="visible-with-update-permission" name="Property--visible-with-update-permission--">
-				<aui:option label="true" selected="<%= propertyVisibleWithUpdatePermission %>" value="1" />
-				<aui:option label="false" selected="<%= !propertyVisibleWithUpdatePermission %>" value="0" />
+				<aui:option label="<%= true %>" selected="<%= propertyVisibleWithUpdatePermission %>" value="1" />
+				<aui:option label="<%= false %>" selected="<%= !propertyVisibleWithUpdatePermission %>" value="0" />
 			</aui:select>
 
 			<aui:input name="PropertyName--index-type--" type="hidden" value="index-type" />
@@ -250,8 +250,8 @@ portletURL.setParameter("modelResource", modelResource);
 				<aui:input name="PropertyName--secret--" type="hidden" value="secret" />
 
 				<aui:select helpMessage="custom-field-secret-help" label="secret" name="Property--secret--">
-					<aui:option label="true" selected="<%= propertySecret %>" value="1" />
-					<aui:option label="false" selected="<%= !propertySecret %>" value="0" />
+					<aui:option label="<%= true %>" selected="<%= propertySecret %>" value="1" />
+					<aui:option label="<%= false %>" selected="<%= !propertySecret %>" value="0" />
 				</aui:select>
 
 				<aui:input name="PropertyName--height--" type="hidden" value="height" />

@@ -56,11 +56,28 @@ public abstract class BaseSocialRequestInterpreter
 
 			String userDisplayURL = user.getDisplayURL(themeDisplay);
 
-			userName =
-				"<a href=\"" + userDisplayURL + "\">" +
-					HtmlUtil.escape(userName) + "</a>";
+			return "<a href=\"" + userDisplayURL + "\">" +
+				HtmlUtil.escape(userName) + "</a>";
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
+	}
 
-			return userName;
+	public String getUserNameLink(long userId, ThemeDisplay themeDisplay) {
+		try {
+			if (userId <= 0) {
+				return StringPool.BLANK;
+			}
+
+			User user = UserLocalServiceUtil.getUserById(userId);
+
+			String userName = user.getFullName();
+
+			String userDisplayURL = user.getDisplayURL(themeDisplay);
+
+			return "<a href=\"" + userDisplayURL + "\">" +
+				HtmlUtil.escape(userName) + "</a>";
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

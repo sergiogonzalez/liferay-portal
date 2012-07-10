@@ -287,6 +287,12 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 			className, classPK, status, versions, typeSettingsProperties);
 	}
 
+	public void checkEntries()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_trashEntryLocalService.checkEntries();
+	}
+
 	/**
 	* Deletes the trash entry with the primary key.
 	*

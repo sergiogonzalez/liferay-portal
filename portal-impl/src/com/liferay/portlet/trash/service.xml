@@ -42,10 +42,18 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="G_LtCD" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="createDate" comparator="&lt;" />
+		</finder>
 		<finder name="C_C" return-type="TrashEntry" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
 	<entity name="TrashVersion" local-service="false" remote-service="false">
 

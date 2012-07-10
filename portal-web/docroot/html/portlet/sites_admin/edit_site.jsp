@@ -84,6 +84,12 @@ if (group != null) {
 	miscellaneousSections = PropsValues.SITES_FORM_UPDATE_MISCELLANEOUS;
 }
 
+int trashEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENABLED);
+
+if ((trashEnabled == 0) && ArrayUtil.contains(advancedSections, "recycle-bin")) {
+	advancedSections = ArrayUtil.remove(advancedSections, "recycle-bin");
+}
+
 String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
 %>
 

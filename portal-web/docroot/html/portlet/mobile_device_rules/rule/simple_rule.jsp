@@ -58,6 +58,6 @@ if (rule != null) {
 
 <aui:select name="tablet">
 	<aui:option label="any" selected="<%= tablet == 0 %>" value="" />
-	<aui:option label="true" selected="<%= tablet == 1 %>" />
-	<aui:option label="false" selected="<%= tablet == 2 %>" />
+	<aui:option label="<%= true %>" selected="<%= tablet == 1 %>" />
+	<aui:option label="<%= false %>" selected="<%= tablet == 2 %>" />
 </aui:select>

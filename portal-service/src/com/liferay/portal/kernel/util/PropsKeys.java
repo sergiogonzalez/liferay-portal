@@ -1105,6 +1105,8 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_PARENTABLE = "layout.parentable";
 
+	public static final String LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT = "layout.prototype.link.enabled.default";
+
 	public static final String LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD = "layout.prototype.merge.fail.threshold";
 
 	public static final String LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME = "layout.prototype.merge.lock.max.time";
@@ -2137,6 +2139,10 @@ public interface PropsKeys {
 
 	public static final String TRANSLATOR_LANGUAGES = "translator.languages";
 
+	public static final String TRASH_ENABLED = "trash.enabled";
+
+	public static final String TRASH_ENTRIES_MAX_AGE = "trash.entries.max.age";
+
 	public static final String TRASH_SEARCH_LIMIT = "trash.search.limit";
 
 	public static final String UPGRADE_PROCESSES = "upgrade.processes";
@@ -2278,8 +2284,6 @@ public interface PropsKeys {
 	public static final String WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES = "web.server.servlet.accept.ranges.mime.types";
 
 	public static final String WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED = "web.server.servlet.directory.indexing.enabled";
-
-	public static final String WEB_SERVER_SERVLET_HTTP_STATUS_CODE_STRICT = "web.server.servlet.http.status.code.strict";
 
 	public static final String WEB_SERVER_SERVLET_MAX_RANGE_FIELDS = "web.server.servlet.max.range.fields";
 

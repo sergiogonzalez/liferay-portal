@@ -39,16 +39,26 @@
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
-			<portlet:renderURL var="moveURL">
-				<portlet:param name="struts_action" value="/document_library/move_file_entry" />
-				<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
-				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-			</portlet:renderURL>
+
+			<%
+			PortletURL moveURL = liferayPortletResponse.createRenderURL();
+
+			if (fileShortcut != null) {
+				moveURL.setParameter("struts_action", "/document_library/move_file_shortcut");
+				moveURL.setParameter("fileShortcutId", String.valueOf(fileShortcut.getFileShortcutId()));
+			}
+			else {
+				moveURL.setParameter("struts_action", "/document_library/move_file_entry");
+				moveURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+			}
+
+			moveURL.setParameter("redirect", viewFolderURL.toString());
+			%>
 
 			<liferay-ui:icon
 				image="submit"
 				message="move"
-				url="<%= moveURL %>"
+				url="<%= moveURL.toString() %>"
 			/>
 		</c:if>
 	</c:otherwise>

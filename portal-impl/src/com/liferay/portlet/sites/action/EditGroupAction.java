@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
@@ -423,6 +425,30 @@ public class EditGroupAction extends PortletAction {
 
 		typeSettingsProperties.setProperty("false-robots.txt", publicRobots);
 		typeSettingsProperties.setProperty("true-robots.txt", privateRobots);
+
+		boolean trashEnabled = ParamUtil.getBoolean(
+			actionRequest, "trashEnabled",
+			GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty("trashEnabled")));
+
+		typeSettingsProperties.setProperty(
+			"trashEnabled", String.valueOf(trashEnabled));
+
+		int trashEntriesMaxAgeSite = ParamUtil.getInteger(
+			actionRequest, "trashEntriesMaxAge",
+			GetterUtil.getInteger(
+				typeSettingsProperties.getProperty("trashEntriesMaxAge")));
+
+		int trashEntriesMaxAgePortal = PrefsPropsUtil.getInteger(
+			themeDisplay.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE);
+
+		if (trashEntriesMaxAgeSite != trashEntriesMaxAgePortal) {
+			typeSettingsProperties.setProperty(
+				"trashEntriesMaxAge", String.valueOf(trashEntriesMaxAgeSite));
+		}
+		else {
+			typeSettingsProperties.remove("trashEntriesMaxAge");
+		}
 
 		// Virtual hosts
 

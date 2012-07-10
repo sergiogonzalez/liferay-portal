@@ -17,6 +17,7 @@ package com.liferay.portal.webserver;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.User;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.BaseDLAppTestCase;
@@ -24,7 +25,7 @@ import com.liferay.portlet.documentlibrary.service.BaseDLAppTestCase;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
+import javax.servlet.Servlet;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -36,15 +37,19 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 
 	public MockHttpServletResponse service(
 			String method, String path, Map<String, String> headers,
-			byte[] data)
+			Map<String, String> params, User user, byte[] data)
 		throws Exception {
-
-		MockHttpServletResponse response = new MockHttpServletResponse();
-
-		response.setCharacterEncoding(StringPool.UTF8);
 
 		if (headers == null) {
 			headers = new HashMap<String, String>();
+		}
+
+		if (params == null) {
+			params = new HashMap<String, String>();
+		}
+
+		if (user == null) {
+			user = TestPropsValues.getUser();
 		}
 
 		String requestURI =
@@ -53,10 +58,11 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 		MockHttpServletRequest request = new MockHttpServletRequest(
 			method, requestURI);
 
-		request.setAttribute(WebKeys.USER, TestPropsValues.getUser());
+		request.setAttribute(WebKeys.USER, user);
 		request.setContextPath(_CONTEXT_PATH);
 		request.setServletPath(_SERVLET_PATH);
 		request.setPathInfo(_PATH_INFO_PREFACE + path);
+		request.setParameters(params);
 
 		if (data != null) {
 			request.setContent(data);
@@ -78,12 +84,18 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 			request.addHeader(key, value);
 		}
 
-		getServlet().service(request, response);
+		MockHttpServletResponse response = new MockHttpServletResponse();
+
+		response.setCharacterEncoding(StringPool.UTF8);
+
+		Servlet httpServlet = getServlet();
+
+		httpServlet.service(request, response);
 
 		return response;
 	}
 
-	protected HttpServlet getServlet() {
+	protected Servlet getServlet() {
 		return new WebServerServlet();
 	}
 

@@ -26,6 +26,7 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
@@ -84,11 +85,16 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 	 * @throws PortalException if any one of the file entries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteTrashEntries(long[] classPKs)
+	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
 		throws PortalException, SystemException {
 
 		for (long classPK : classPKs) {
-			DLAppServiceUtil.deleteFileEntry(classPK);
+			if (checkPermission) {
+				DLAppServiceUtil.deleteFileEntry(classPK);
+			}
+			else {
+				DLAppLocalServiceUtil.deleteFileEntry(classPK);
+			}
 		}
 	}
 
