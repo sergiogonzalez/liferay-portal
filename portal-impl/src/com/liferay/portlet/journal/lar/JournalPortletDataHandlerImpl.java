@@ -413,7 +413,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		content = importLinksToLayout(portletDataContext, content);
 
-		content = validateArticleContent(content);
+		content = validateContentLocale(content);
 
 		article.setContent(content);
 
@@ -2427,7 +2427,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		return content;
 	}
 
-	protected static String validateArticleContent(String content)
+	protected static String validateContentLocale(String content)
 		throws Exception {
 
 		Document document = SAXReaderUtil.read(content);
@@ -2663,7 +2663,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 						_log.warn(
 							"Skipping article with path " + path +
-								" because of invalid article title");
+								" because of invalid title");
 					}
 				}
 			}
