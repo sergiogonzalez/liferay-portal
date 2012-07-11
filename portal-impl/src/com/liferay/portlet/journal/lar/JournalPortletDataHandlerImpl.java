@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.lar;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -30,12 +31,14 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -55,7 +58,9 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.ArticleContentException;
+import com.liferay.portlet.journal.ArticleTitleException;
 import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchStructureException;
@@ -91,6 +96,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -406,6 +412,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			group.getFriendlyURL());
 
 		content = importLinksToLayout(portletDataContext, content);
+
+		content = validateContentLocale(content);
 
 		article.setContent(content);
 
@@ -2419,6 +2427,43 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		return content;
 	}
 
+	protected static String validateContentLocale(String content)
+		throws Exception {
+
+		Document document = SAXReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		Attribute defaultLocaleAttribute = rootElement.attribute(
+			"default-locale");
+
+		if (defaultLocaleAttribute != null) {
+			String defaultLocale = defaultLocaleAttribute.getStringValue();
+
+			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+			boolean supportedLocale = false;
+
+			for (Locale locale : availableLocales) {
+				String languageId = LocaleUtil.toLanguageId(locale);
+
+				if (languageId.equalsIgnoreCase(defaultLocale)) {
+					supportedLocale = true;
+
+					break;
+				}
+			}
+
+			if (!supportedLocale) {
+				rootElement.remove(defaultLocaleAttribute);
+
+				content = DDMXMLUtil.formatXML(document);
+			}
+		}
+
+		return content;
+	}
+
 	@Override
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
@@ -2610,6 +2655,15 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 						_log.warn(
 							"Skipping article with path " + path +
 								" because of invalid content");
+					}
+				}
+				catch (ArticleTitleException ate) {
+					if (_log.isWarnEnabled()) {
+						String path = articleElement.attributeValue("path");
+
+						_log.warn(
+							"Skipping article with path " + path +
+								" because of invalid title");
 					}
 				}
 			}
