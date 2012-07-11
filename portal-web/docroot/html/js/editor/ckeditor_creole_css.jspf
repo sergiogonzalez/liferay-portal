@@ -14,12 +14,18 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+td.cke_dialog_ui_hbox_first {
+	display:none !important;
+}
 
-<style>
-	<%@ include file="/html/js/editor/ckeditor_creole_css.jspf" %>
-</style>
+td.cke_dialog_footer td.cke_dialog_ui_hbox_first {
+	display:block !important;
+}
 
-<liferay-util:include page="/html/js/editor/ckeditor.jsp">
-	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_creole.jsp" />
-</liferay-util:include>
+a.cke_dialog_tab {
+	display: none !important;
+}
+
+a.cke_dialog_tab_selected {
+	display:block !important;
+}
