@@ -148,10 +148,6 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	/**
 	* Returns the first email address in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching email address
@@ -165,11 +161,20 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last email address in the ordered set where companyId = &#63;.
+	* Returns the first email address in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last email address in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -184,11 +189,20 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63;.
+	* Returns the last email address in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63;.
 	*
 	* @param emailAddressId the primary key of the current email address
 	* @param companyId the company ID
@@ -252,10 +266,6 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	/**
 	* Returns the first email address in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching email address
@@ -269,11 +279,20 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last email address in the ordered set where userId = &#63;.
+	* Returns the first email address in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last email address in the ordered set where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -288,11 +307,20 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the email addresses before and after the current email address in the ordered set where userId = &#63;.
+	* Returns the last email address in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the email addresses before and after the current email address in the ordered set where userId = &#63;.
 	*
 	* @param emailAddressId the primary key of the current email address
 	* @param userId the user ID
@@ -360,10 +388,6 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	/**
 	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -378,11 +402,21 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63;.
+	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByC_C_First(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
@@ -398,11 +432,21 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63;.
+	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByC_C_Last(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
 	* @param emailAddressId the primary key of the current email address
 	* @param companyId the company ID
@@ -474,10 +518,6 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	/**
 	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
@@ -493,11 +533,22 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByC_C_C_First(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
@@ -514,11 +565,22 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByC_C_C_Last(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param emailAddressId the primary key of the current email address
 	* @param companyId the company ID
@@ -596,10 +658,6 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	/**
 	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
@@ -616,11 +674,23 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByC_C_C_P_First(
+		long companyId, long classNameId, long classPK, boolean primary,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
@@ -638,11 +708,23 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching email address, or <code>null</code> if a matching email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.EmailAddress fetchByC_C_C_P_Last(
+		long companyId, long classNameId, long classPK, boolean primary,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
 	*
 	* @param emailAddressId the primary key of the current email address
 	* @param companyId the company ID

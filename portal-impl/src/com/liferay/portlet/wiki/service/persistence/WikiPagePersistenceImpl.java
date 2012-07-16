@@ -1548,10 +1548,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki page
@@ -1561,31 +1557,45 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByUuid_First(uuid, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByUuid(uuid, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1596,34 +1606,48 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByUuid_Last(uuid, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<WikiPage> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param uuid the uuid
@@ -2103,10 +2127,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2117,35 +2137,51 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByUuid_C_First(uuid, companyId,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -2157,37 +2193,53 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByUuid_C_Last(uuid, companyId,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
 		List<WikiPage> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param uuid the uuid
@@ -2483,10 +2535,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki page
@@ -2496,31 +2544,45 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByNodeId_First(long nodeId,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByNodeId_First(nodeId, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByNodeId_First(long nodeId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByNodeId(nodeId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2531,34 +2593,48 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByNodeId_Last(long nodeId,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByNodeId_Last(nodeId, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByNodeId_Last(long nodeId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByNodeId(nodeId);
 
 		List<WikiPage> list = findByNodeId(nodeId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -2849,10 +2925,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where format = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param format the format
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki page
@@ -2862,31 +2934,45 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByFormat_First(String format,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByFormat_First(format, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("format=");
+		msg.append(format);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where format = &#63;.
+	 *
+	 * @param format the format
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByFormat_First(String format,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByFormat(format, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("format=");
-			msg.append(format);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where format = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param format the format
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2897,34 +2983,48 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByFormat_Last(String format,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByFormat_Last(format, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("format=");
+		msg.append(format);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where format = &#63;.
+	 *
+	 * @param format the format
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByFormat_Last(String format,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFormat(format);
 
 		List<WikiPage> list = findByFormat(format, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("format=");
-			msg.append(format);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where format = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param format the format
@@ -3230,10 +3330,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3244,35 +3340,51 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByR_N_First(long resourcePrimKey, long nodeId,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByR_N_First(resourcePrimKey, nodeId,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("resourcePrimKey=");
+		msg.append(resourcePrimKey);
+
+		msg.append(", nodeId=");
+		msg.append(nodeId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param nodeId the node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByR_N_First(long resourcePrimKey, long nodeId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByR_N(resourcePrimKey, nodeId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("resourcePrimKey=");
-			msg.append(resourcePrimKey);
-
-			msg.append(", nodeId=");
-			msg.append(nodeId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
@@ -3284,37 +3396,53 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByR_N_Last(long resourcePrimKey, long nodeId,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByR_N_Last(resourcePrimKey, nodeId,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("resourcePrimKey=");
+		msg.append(resourcePrimKey);
+
+		msg.append(", nodeId=");
+		msg.append(nodeId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param nodeId the node ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByR_N_Last(long resourcePrimKey, long nodeId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByR_N(resourcePrimKey, nodeId);
 
 		List<WikiPage> list = findByR_N(resourcePrimKey, nodeId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("resourcePrimKey=");
-			msg.append(resourcePrimKey);
-
-			msg.append(", nodeId=");
-			msg.append(nodeId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param resourcePrimKey the resource prim key
@@ -3624,10 +3752,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3638,34 +3762,49 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_T_First(long nodeId, String title,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_T_First(nodeId, title, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_T_First(long nodeId, String title,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByN_T(nodeId, title, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", title=");
-			msg.append(title);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param title the title
@@ -3677,37 +3816,52 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_T_Last(long nodeId, String title,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_T_Last(nodeId, title, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_T_Last(long nodeId, String title,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_T(nodeId, title);
 
 		List<WikiPage> list = findByN_T(nodeId, title, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", title=");
-			msg.append(title);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -4017,10 +4171,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param head the head
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -4031,34 +4181,49 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_H_First(long nodeId, boolean head,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_H_First(nodeId, head, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_H_First(long nodeId, boolean head,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByN_H(nodeId, head, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param head the head
@@ -4070,37 +4235,52 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_H_Last(long nodeId, boolean head,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_H_Last(nodeId, head, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_H_Last(long nodeId, boolean head,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_H(nodeId, head);
 
 		List<WikiPage> list = findByN_H(nodeId, head, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -4410,10 +4590,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param parentTitle the parent title
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -4424,35 +4600,51 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_P_First(long nodeId, String parentTitle,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_P_First(nodeId, parentTitle,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", parentTitle=");
+		msg.append(parentTitle);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param parentTitle the parent title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_P_First(long nodeId, String parentTitle,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByN_P(nodeId, parentTitle, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", parentTitle=");
-			msg.append(parentTitle);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param parentTitle the parent title
@@ -4464,37 +4656,53 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_P_Last(long nodeId, String parentTitle,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_P_Last(nodeId, parentTitle,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", parentTitle=");
+		msg.append(parentTitle);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param parentTitle the parent title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_P_Last(long nodeId, String parentTitle,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_P(nodeId, parentTitle);
 
 		List<WikiPage> list = findByN_P(nodeId, parentTitle, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", parentTitle=");
-			msg.append(parentTitle);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -4818,10 +5026,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param redirectTitle the redirect title
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -4832,35 +5036,51 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_R_First(long nodeId, String redirectTitle,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_R_First(nodeId, redirectTitle,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", redirectTitle=");
+		msg.append(redirectTitle);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param redirectTitle the redirect title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_R_First(long nodeId, String redirectTitle,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByN_R(nodeId, redirectTitle, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", redirectTitle=");
-			msg.append(redirectTitle);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param redirectTitle the redirect title
@@ -4872,37 +5092,53 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_R_Last(long nodeId, String redirectTitle,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_R_Last(nodeId, redirectTitle,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", redirectTitle=");
+		msg.append(redirectTitle);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param redirectTitle the redirect title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_R_Last(long nodeId, String redirectTitle,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_R(nodeId, redirectTitle);
 
 		List<WikiPage> list = findByN_R(nodeId, redirectTitle, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", redirectTitle=");
-			msg.append(redirectTitle);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -5212,10 +5448,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -5226,34 +5458,49 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_S_First(long nodeId, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_S_First(nodeId, status, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_S_First(long nodeId, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByN_S(nodeId, status, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param status the status
@@ -5265,37 +5512,52 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_S_Last(long nodeId, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_S_Last(nodeId, status, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_S_Last(long nodeId, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_S(nodeId, status);
 
 		List<WikiPage> list = findByN_S(nodeId, status, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -5764,10 +6026,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
 	 * @param status the status
@@ -5779,38 +6037,56 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByR_N_S_First(long resourcePrimKey, long nodeId,
 		int status, OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByR_N_S_First(resourcePrimKey, nodeId, status,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("resourcePrimKey=");
+		msg.append(resourcePrimKey);
+
+		msg.append(", nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param nodeId the node ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByR_N_S_First(long resourcePrimKey, long nodeId,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<WikiPage> list = findByR_N_S(resourcePrimKey, nodeId, status, 0,
 				1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("resourcePrimKey=");
-			msg.append(resourcePrimKey);
-
-			msg.append(", nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
@@ -5823,40 +6099,58 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByR_N_S_Last(long resourcePrimKey, long nodeId,
 		int status, OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByR_N_S_Last(resourcePrimKey, nodeId, status,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("resourcePrimKey=");
+		msg.append(resourcePrimKey);
+
+		msg.append(", nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param nodeId the node ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByR_N_S_Last(long resourcePrimKey, long nodeId,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByR_N_S(resourcePrimKey, nodeId, status);
 
 		List<WikiPage> list = findByR_N_S(resourcePrimKey, nodeId, status,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("resourcePrimKey=");
-			msg.append(resourcePrimKey);
-
-			msg.append(", nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param resourcePrimKey the resource prim key
@@ -6169,10 +6463,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param nodeId the node ID
 	 * @param status the status
@@ -6184,38 +6474,55 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByU_N_S_First(long userId, long nodeId, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByU_N_S_First(userId, nodeId, status,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param nodeId the node ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByU_N_S_First(long userId, long nodeId, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByU_N_S(userId, nodeId, status, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(", nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param nodeId the node ID
@@ -6228,40 +6535,57 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByU_N_S_Last(long userId, long nodeId, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByU_N_S_Last(userId, nodeId, status,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param nodeId the node ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByU_N_S_Last(long userId, long nodeId, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_N_S(userId, nodeId, status);
 
 		List<WikiPage> list = findByU_N_S(userId, nodeId, status, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(", nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param userId the user ID
@@ -6760,10 +7084,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @param head the head
@@ -6775,38 +7095,55 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_T_H_First(long nodeId, String title, boolean head,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_T_H_First(nodeId, title, head,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_T_H_First(long nodeId, String title, boolean head,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByN_T_H(nodeId, title, head, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", title=");
-			msg.append(title);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param title the title
@@ -6819,40 +7156,57 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_T_H_Last(long nodeId, String title, boolean head,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_T_H_Last(nodeId, title, head,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param head the head
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_T_H_Last(long nodeId, String title, boolean head,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_T_H(nodeId, title, head);
 
 		List<WikiPage> list = findByN_T_H(nodeId, title, head, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", title=");
-			msg.append(title);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -7188,10 +7542,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @param status the status
@@ -7203,38 +7553,55 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_T_S_First(long nodeId, String title, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_T_S_First(nodeId, title, status,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_T_S_First(long nodeId, String title, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByN_T_S(nodeId, title, status, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", title=");
-			msg.append(title);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param title the title
@@ -7247,40 +7614,57 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_T_S_Last(long nodeId, String title, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_T_S_Last(nodeId, title, status,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_T_S_Last(long nodeId, String title, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_T_S(nodeId, title, status);
 
 		List<WikiPage> list = findByN_T_S(nodeId, title, status, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", title=");
-			msg.append(title);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -7616,10 +8000,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param head the head
 	 * @param parentTitle the parent title
@@ -7631,38 +8011,56 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_H_P_First(long nodeId, boolean head,
 		String parentTitle, OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_H_P_First(nodeId, head, parentTitle,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(", parentTitle=");
+		msg.append(parentTitle);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param head the head
+	 * @param parentTitle the parent title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_H_P_First(long nodeId, boolean head,
+		String parentTitle, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<WikiPage> list = findByN_H_P(nodeId, head, parentTitle, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(", parentTitle=");
-			msg.append(parentTitle);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param head the head
@@ -7675,40 +8073,58 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_H_P_Last(long nodeId, boolean head,
 		String parentTitle, OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_H_P_Last(nodeId, head, parentTitle,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(", parentTitle=");
+		msg.append(parentTitle);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param head the head
+	 * @param parentTitle the parent title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_H_P_Last(long nodeId, boolean head,
+		String parentTitle, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByN_H_P(nodeId, head, parentTitle);
 
 		List<WikiPage> list = findByN_H_P(nodeId, head, parentTitle, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(", parentTitle=");
-			msg.append(parentTitle);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -8032,10 +8448,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param head the head
 	 * @param status the status
@@ -8047,38 +8459,55 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_H_S_First(long nodeId, boolean head, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_H_S_First(nodeId, head, status,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param head the head
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_H_S_First(long nodeId, boolean head, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiPage> list = findByN_H_S(nodeId, head, status, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param head the head
@@ -8091,40 +8520,57 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_H_S_Last(long nodeId, boolean head, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_H_S_Last(nodeId, head, status,
+				orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param head the head
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_H_S_Last(long nodeId, boolean head, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_H_S(nodeId, head, status);
 
 		List<WikiPage> list = findByN_H_S(nodeId, head, status, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID
@@ -8457,10 +8903,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param nodeId the node ID
 	 * @param head the head
 	 * @param parentTitle the parent title
@@ -8473,41 +8915,60 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_H_P_S_First(long nodeId, boolean head,
 		String parentTitle, int status, OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_H_P_S_First(nodeId, head, parentTitle,
+				status, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(", parentTitle=");
+		msg.append(parentTitle);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param head the head
+	 * @param parentTitle the parent title
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_H_P_S_First(long nodeId, boolean head,
+		String parentTitle, int status, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<WikiPage> list = findByN_H_P_S(nodeId, head, parentTitle, status,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(", parentTitle=");
-			msg.append(parentTitle);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the node ID
 	 * @param head the head
@@ -8521,43 +8982,62 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage findByN_H_P_S_Last(long nodeId, boolean head,
 		String parentTitle, int status, OrderByComparator orderByComparator)
 		throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_H_P_S_Last(nodeId, head, parentTitle,
+				status, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("nodeId=");
+		msg.append(nodeId);
+
+		msg.append(", head=");
+		msg.append(head);
+
+		msg.append(", parentTitle=");
+		msg.append(parentTitle);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param head the head
+	 * @param parentTitle the parent title
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPage fetchByN_H_P_S_Last(long nodeId, boolean head,
+		String parentTitle, int status, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByN_H_P_S(nodeId, head, parentTitle, status);
 
 		List<WikiPage> list = findByN_H_P_S(nodeId, head, parentTitle, status,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("nodeId=");
-			msg.append(nodeId);
-
-			msg.append(", head=");
-			msg.append(head);
-
-			msg.append(", parentTitle=");
-			msg.append(parentTitle);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPageException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param pageId the primary key of the current wiki page
 	 * @param nodeId the node ID

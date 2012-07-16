@@ -995,10 +995,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	/**
 	 * Returns the first cal event in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cal event
@@ -1008,31 +1004,45 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByUuid_First(uuid, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cal event in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<CalEvent> list = findByUuid(uuid, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last cal event in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1043,34 +1053,48 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByUuid_Last(uuid, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cal event in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<CalEvent> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the cal events before and after the current cal event in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param eventId the primary key of the current cal event
 	 * @param uuid the uuid
@@ -1550,10 +1574,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	/**
 	 * Returns the first cal event in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1564,35 +1584,51 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByUuid_C_First(uuid, companyId,
+				orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cal event in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<CalEvent> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last cal event in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1604,37 +1640,53 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByUuid_C_Last(uuid, companyId,
+				orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cal event in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
 		List<CalEvent> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the cal events before and after the current cal event in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param eventId the primary key of the current cal event
 	 * @param uuid the uuid
@@ -1932,10 +1984,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	/**
 	 * Returns the first cal event in the ordered set where companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cal event
@@ -1945,31 +1993,45 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByCompanyId_First(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByCompanyId_First(companyId, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cal event in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<CalEvent> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last cal event in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1980,34 +2042,48 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByCompanyId_Last(companyId, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cal event in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
 		List<CalEvent> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the cal events before and after the current cal event in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param eventId the primary key of the current cal event
 	 * @param companyId the company ID
@@ -2286,10 +2362,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	/**
 	 * Returns the first cal event in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cal event
@@ -2299,31 +2371,45 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByGroupId_First(groupId, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cal event in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<CalEvent> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last cal event in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2334,34 +2420,48 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByGroupId_Last(groupId, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cal event in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<CalEvent> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the cal events before and after the current cal event in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param eventId the primary key of the current cal event
 	 * @param groupId the group ID
@@ -2946,10 +3046,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	/**
 	 * Returns the first cal event in the ordered set where remindBy &ne; &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param remindBy the remind by
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cal event
@@ -2959,32 +3055,46 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByNotRemindBy_First(int remindBy,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByNotRemindBy_First(remindBy, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("remindBy=");
+		msg.append(remindBy);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cal event in the ordered set where remindBy &ne; &#63;.
+	 *
+	 * @param remindBy the remind by
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByNotRemindBy_First(int remindBy,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<CalEvent> list = findByNotRemindBy(remindBy, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("remindBy=");
-			msg.append(remindBy);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last cal event in the ordered set where remindBy &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param remindBy the remind by
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2995,34 +3105,48 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByNotRemindBy_Last(int remindBy,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByNotRemindBy_Last(remindBy, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("remindBy=");
+		msg.append(remindBy);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cal event in the ordered set where remindBy &ne; &#63;.
+	 *
+	 * @param remindBy the remind by
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByNotRemindBy_Last(int remindBy,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByNotRemindBy(remindBy);
 
 		List<CalEvent> list = findByNotRemindBy(remindBy, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("remindBy=");
-			msg.append(remindBy);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the cal events before and after the current cal event in the ordered set where remindBy &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param eventId the primary key of the current cal event
 	 * @param remindBy the remind by
@@ -3327,10 +3451,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	/**
 	 * Returns the first cal event in the ordered set where groupId = &#63; and type = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3341,34 +3461,49 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByG_T_First(long groupId, String type,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByG_T_First(groupId, type, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cal event in the ordered set where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByG_T_First(long groupId, String type,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<CalEvent> list = findByG_T(groupId, type, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", type=");
-			msg.append(type);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last cal event in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param type the type
@@ -3380,37 +3515,52 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByG_T_Last(long groupId, String type,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByG_T_Last(groupId, type, orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cal event in the ordered set where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByG_T_Last(long groupId, String type,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_T(groupId, type);
 
 		List<CalEvent> list = findByG_T(groupId, type, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", type=");
-			msg.append(type);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the cal events before and after the current cal event in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param eventId the primary key of the current cal event
 	 * @param groupId the group ID
@@ -4413,10 +4563,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	/**
 	 * Returns the first cal event in the ordered set where groupId = &#63; and repeating = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param repeating the repeating
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -4427,35 +4573,51 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByG_R_First(long groupId, boolean repeating,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByG_R_First(groupId, repeating,
+				orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", repeating=");
+		msg.append(repeating);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cal event in the ordered set where groupId = &#63; and repeating = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param repeating the repeating
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByG_R_First(long groupId, boolean repeating,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<CalEvent> list = findByG_R(groupId, repeating, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", repeating=");
-			msg.append(repeating);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last cal event in the ordered set where groupId = &#63; and repeating = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param repeating the repeating
@@ -4467,37 +4629,53 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByG_R_Last(long groupId, boolean repeating,
 		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByG_R_Last(groupId, repeating,
+				orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", repeating=");
+		msg.append(repeating);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cal event in the ordered set where groupId = &#63; and repeating = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param repeating the repeating
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByG_R_Last(long groupId, boolean repeating,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_R(groupId, repeating);
 
 		List<CalEvent> list = findByG_R(groupId, repeating, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", repeating=");
-			msg.append(repeating);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the cal events before and after the current cal event in the ordered set where groupId = &#63; and repeating = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param eventId the primary key of the current cal event
 	 * @param groupId the group ID
@@ -5141,10 +5319,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	/**
 	 * Returns the first cal event in the ordered set where groupId = &#63; and type = &#63; and repeating = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param type the type
 	 * @param repeating the repeating
@@ -5156,38 +5330,56 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByG_T_R_First(long groupId, String type,
 		boolean repeating, OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByG_T_R_First(groupId, type, repeating,
+				orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", repeating=");
+		msg.append(repeating);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cal event in the ordered set where groupId = &#63; and type = &#63; and repeating = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param repeating the repeating
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByG_T_R_First(long groupId, String type,
+		boolean repeating, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<CalEvent> list = findByG_T_R(groupId, type, repeating, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", type=");
-			msg.append(type);
-
-			msg.append(", repeating=");
-			msg.append(repeating);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last cal event in the ordered set where groupId = &#63; and type = &#63; and repeating = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param type the type
@@ -5200,40 +5392,58 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent findByG_T_R_Last(long groupId, String type,
 		boolean repeating, OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByG_T_R_Last(groupId, type, repeating,
+				orderByComparator);
+
+		if (calEvent != null) {
+			return calEvent;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", repeating=");
+		msg.append(repeating);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cal event in the ordered set where groupId = &#63; and type = &#63; and repeating = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param repeating the repeating
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByG_T_R_Last(long groupId, String type,
+		boolean repeating, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_T_R(groupId, type, repeating);
 
 		List<CalEvent> list = findByG_T_R(groupId, type, repeating, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", type=");
-			msg.append(type);
-
-			msg.append(", repeating=");
-			msg.append(repeating);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchEventException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the cal events before and after the current cal event in the ordered set where groupId = &#63; and type = &#63; and repeating = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param eventId the primary key of the current cal event
 	 * @param groupId the group ID

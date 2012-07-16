@@ -137,7 +137,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				<aui:input name="fileEntryIds" type="hidden" />
 				<aui:input name="fileShortcutIds" type="hidden" />
 
-				<div class="document-container" id="<portlet:namespace />documentContainer">
+				<div class="document-container" id="<portlet:namespace />entriesContainer">
 					<c:choose>
 						<c:when test='<%= strutsAction.equals("/document_library/search") %>'>
 							<liferay-util:include page="/html/portlet/document_library/search_resources.jsp" />
@@ -198,10 +198,6 @@ if (folder != null) {
 
 	new Liferay.Portlet.DocumentLibrary(
 		{
-			actions: {
-				DELETE: '<%= Constants.DELETE %>',
-				MOVE: '<%= Constants.MOVE %>'
-			},
 			allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 			defaultParams: {
 				p_p_id: <%= portletId %>,

@@ -673,10 +673,6 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	/**
 	 * Returns the first message boards thread flag in the ordered set where userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message boards thread flag
@@ -686,31 +682,46 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public MBThreadFlag findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchThreadFlagException, SystemException {
+		MBThreadFlag mbThreadFlag = fetchByUserId_First(userId,
+				orderByComparator);
+
+		if (mbThreadFlag != null) {
+			return mbThreadFlag;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchThreadFlagException(msg.toString());
+	}
+
+	/**
+	 * Returns the first message boards thread flag in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThreadFlag fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<MBThreadFlag> list = findByUserId(userId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchThreadFlagException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last message boards thread flag in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -721,34 +732,48 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public MBThreadFlag findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchThreadFlagException, SystemException {
+		MBThreadFlag mbThreadFlag = fetchByUserId_Last(userId, orderByComparator);
+
+		if (mbThreadFlag != null) {
+			return mbThreadFlag;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchThreadFlagException(msg.toString());
+	}
+
+	/**
+	 * Returns the last message boards thread flag in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThreadFlag fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
 		List<MBThreadFlag> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchThreadFlagException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param threadFlagId the primary key of the current message boards thread flag
 	 * @param userId the user ID
@@ -1021,10 +1046,6 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	/**
 	 * Returns the first message boards thread flag in the ordered set where threadId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param threadId the thread ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message boards thread flag
@@ -1034,32 +1055,47 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public MBThreadFlag findByThreadId_First(long threadId,
 		OrderByComparator orderByComparator)
 		throws NoSuchThreadFlagException, SystemException {
+		MBThreadFlag mbThreadFlag = fetchByThreadId_First(threadId,
+				orderByComparator);
+
+		if (mbThreadFlag != null) {
+			return mbThreadFlag;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("threadId=");
+		msg.append(threadId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchThreadFlagException(msg.toString());
+	}
+
+	/**
+	 * Returns the first message boards thread flag in the ordered set where threadId = &#63;.
+	 *
+	 * @param threadId the thread ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThreadFlag fetchByThreadId_First(long threadId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<MBThreadFlag> list = findByThreadId(threadId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("threadId=");
-			msg.append(threadId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchThreadFlagException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last message boards thread flag in the ordered set where threadId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param threadId the thread ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1070,34 +1106,49 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public MBThreadFlag findByThreadId_Last(long threadId,
 		OrderByComparator orderByComparator)
 		throws NoSuchThreadFlagException, SystemException {
+		MBThreadFlag mbThreadFlag = fetchByThreadId_Last(threadId,
+				orderByComparator);
+
+		if (mbThreadFlag != null) {
+			return mbThreadFlag;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("threadId=");
+		msg.append(threadId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchThreadFlagException(msg.toString());
+	}
+
+	/**
+	 * Returns the last message boards thread flag in the ordered set where threadId = &#63;.
+	 *
+	 * @param threadId the thread ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThreadFlag fetchByThreadId_Last(long threadId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByThreadId(threadId);
 
 		List<MBThreadFlag> list = findByThreadId(threadId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("threadId=");
-			msg.append(threadId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchThreadFlagException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where threadId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param threadFlagId the primary key of the current message boards thread flag
 	 * @param threadId the thread ID

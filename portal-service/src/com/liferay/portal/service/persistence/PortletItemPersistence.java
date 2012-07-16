@@ -151,10 +151,6 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	/**
 	* Returns the first portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -169,11 +165,21 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
+	* Returns the first portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching portlet item, or <code>null</code> if a matching portlet item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletItem fetchByG_C_First(long groupId,
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
@@ -189,11 +195,21 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the portlet items before and after the current portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
+	* Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching portlet item, or <code>null</code> if a matching portlet item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletItem fetchByG_C_Last(long groupId,
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the portlet items before and after the current portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
 	*
 	* @param portletItemId the primary key of the current portlet item
 	* @param groupId the group ID
@@ -266,10 +282,6 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	/**
 	* Returns the first portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param portletId the portlet ID
 	* @param classNameId the class name ID
@@ -285,11 +297,22 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
+	* Returns the first portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param portletId the portlet ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching portlet item, or <code>null</code> if a matching portlet item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletItem fetchByG_P_C_First(
+		long groupId, java.lang.String portletId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param portletId the portlet ID
@@ -306,11 +329,22 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the portlet items before and after the current portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
+	* Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param portletId the portlet ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching portlet item, or <code>null</code> if a matching portlet item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletItem fetchByG_P_C_Last(
+		long groupId, java.lang.String portletId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the portlet items before and after the current portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
 	*
 	* @param portletItemId the primary key of the current portlet item
 	* @param groupId the group ID

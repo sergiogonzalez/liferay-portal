@@ -250,10 +250,6 @@ public class WorkflowDefinitionLinkUtil {
 	/**
 	* Returns the first workflow definition link in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching workflow definition link
@@ -270,11 +266,23 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	* Returns the last workflow definition link in the ordered set where companyId = &#63;.
+	* Returns the first workflow definition link in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowDefinitionLink fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last workflow definition link in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -292,11 +300,23 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	* Returns the workflow definition links before and after the current workflow definition link in the ordered set where companyId = &#63;.
+	* Returns the last workflow definition link in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowDefinitionLink fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the workflow definition links before and after the current workflow definition link in the ordered set where companyId = &#63;.
 	*
 	* @param workflowDefinitionLinkId the primary key of the current workflow definition link
 	* @param companyId the company ID
@@ -386,10 +406,6 @@ public class WorkflowDefinitionLinkUtil {
 	/**
 	* Returns the first workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param workflowDefinitionName the workflow definition name
 	* @param workflowDefinitionVersion the workflow definition version
@@ -410,11 +426,27 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	* Returns the last workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
+	* Returns the first workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param workflowDefinitionName the workflow definition name
+	* @param workflowDefinitionVersion the workflow definition version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowDefinitionLink fetchByC_W_W_First(
+		long companyId, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_W_W_First(companyId, workflowDefinitionName,
+			workflowDefinitionVersion, orderByComparator);
+	}
+
+	/**
+	* Returns the last workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
 	*
 	* @param companyId the company ID
 	* @param workflowDefinitionName the workflow definition name
@@ -436,11 +468,27 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	* Returns the workflow definition links before and after the current workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
+	* Returns the last workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param workflowDefinitionName the workflow definition name
+	* @param workflowDefinitionVersion the workflow definition version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowDefinitionLink fetchByC_W_W_Last(
+		long companyId, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_W_W_Last(companyId, workflowDefinitionName,
+			workflowDefinitionVersion, orderByComparator);
+	}
+
+	/**
+	* Returns the workflow definition links before and after the current workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
 	*
 	* @param workflowDefinitionLinkId the primary key of the current workflow definition link
 	* @param companyId the company ID

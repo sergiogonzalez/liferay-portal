@@ -621,10 +621,6 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	/**
 	 * Returns the first trash version in the ordered set where entryId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching trash version
@@ -634,31 +630,46 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	public TrashVersion findByEntryId_First(long entryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVersionException, SystemException {
+		TrashVersion trashVersion = fetchByEntryId_First(entryId,
+				orderByComparator);
+
+		if (trashVersion != null) {
+			return trashVersion;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("entryId=");
+		msg.append(entryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first trash version in the ordered set where entryId = &#63;.
+	 *
+	 * @param entryId the entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching trash version, or <code>null</code> if a matching trash version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TrashVersion fetchByEntryId_First(long entryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<TrashVersion> list = findByEntryId(entryId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("entryId=");
-			msg.append(entryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last trash version in the ordered set where entryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -669,34 +680,49 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	public TrashVersion findByEntryId_Last(long entryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVersionException, SystemException {
+		TrashVersion trashVersion = fetchByEntryId_Last(entryId,
+				orderByComparator);
+
+		if (trashVersion != null) {
+			return trashVersion;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("entryId=");
+		msg.append(entryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last trash version in the ordered set where entryId = &#63;.
+	 *
+	 * @param entryId the entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching trash version, or <code>null</code> if a matching trash version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TrashVersion fetchByEntryId_Last(long entryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByEntryId(entryId);
 
 		List<TrashVersion> list = findByEntryId(entryId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("entryId=");
-			msg.append(entryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the trash versions before and after the current trash version in the ordered set where entryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param versionId the primary key of the current trash version
 	 * @param entryId the entry ID
@@ -982,10 +1008,6 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	/**
 	 * Returns the first trash version in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -996,35 +1018,51 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	public TrashVersion findByC_C_First(long classNameId, long classPK,
 		OrderByComparator orderByComparator)
 		throws NoSuchVersionException, SystemException {
+		TrashVersion trashVersion = fetchByC_C_First(classNameId, classPK,
+				orderByComparator);
+
+		if (trashVersion != null) {
+			return trashVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first trash version in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching trash version, or <code>null</code> if a matching trash version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TrashVersion fetchByC_C_First(long classNameId, long classPK,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<TrashVersion> list = findByC_C(classNameId, classPK, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", classPK=");
-			msg.append(classPK);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last trash version in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
@@ -1036,37 +1074,53 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	public TrashVersion findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator orderByComparator)
 		throws NoSuchVersionException, SystemException {
+		TrashVersion trashVersion = fetchByC_C_Last(classNameId, classPK,
+				orderByComparator);
+
+		if (trashVersion != null) {
+			return trashVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last trash version in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching trash version, or <code>null</code> if a matching trash version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TrashVersion fetchByC_C_Last(long classNameId, long classPK,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(classNameId, classPK);
 
 		List<TrashVersion> list = findByC_C(classNameId, classPK, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", classPK=");
-			msg.append(classPK);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the trash versions before and after the current trash version in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param versionId the primary key of the current trash version
 	 * @param classNameId the class name ID

@@ -175,7 +175,19 @@ public class ScriptTag extends BaseScriptTag {
 			if (!ServerDetector.isResin()) {
 				cleanUp();
 			}
+
+			request.removeAttribute(WebKeys.JAVASCRIPT_CONTEXT);
 		}
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		request.setAttribute(WebKeys.JAVASCRIPT_CONTEXT, Boolean.TRUE);
+
+		return super.doStartTag();
 	}
 
 	@Override

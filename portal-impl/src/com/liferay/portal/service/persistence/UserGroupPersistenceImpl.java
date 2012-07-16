@@ -726,10 +726,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	/**
 	 * Returns the first user group in the ordered set where companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group
@@ -739,32 +735,47 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup findByCompanyId_First(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupException, SystemException {
+		UserGroup userGroup = fetchByCompanyId_First(companyId,
+				orderByComparator);
+
+		if (userGroup != null) {
+			return userGroup;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user group in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroup fetchByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserGroup> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user group in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -775,34 +786,48 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup findByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupException, SystemException {
+		UserGroup userGroup = fetchByCompanyId_Last(companyId, orderByComparator);
+
+		if (userGroup != null) {
+			return userGroup;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user group in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroup fetchByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
 		List<UserGroup> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userGroupId the primary key of the current user group
 	 * @param companyId the company ID
@@ -1406,10 +1431,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	/**
 	 * Returns the first user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1420,35 +1441,51 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup findByC_P_First(long companyId, long parentUserGroupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupException, SystemException {
+		UserGroup userGroup = fetchByC_P_First(companyId, parentUserGroupId,
+				orderByComparator);
+
+		if (userGroup != null) {
+			return userGroup;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", parentUserGroupId=");
+		msg.append(parentUserGroupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroup fetchByC_P_First(long companyId, long parentUserGroupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserGroup> list = findByC_P(companyId, parentUserGroupId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", parentUserGroupId=");
-			msg.append(parentUserGroupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
@@ -1460,37 +1497,53 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup findByC_P_Last(long companyId, long parentUserGroupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupException, SystemException {
+		UserGroup userGroup = fetchByC_P_Last(companyId, parentUserGroupId,
+				orderByComparator);
+
+		if (userGroup != null) {
+			return userGroup;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", parentUserGroupId=");
+		msg.append(parentUserGroupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroup fetchByC_P_Last(long companyId, long parentUserGroupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_P(companyId, parentUserGroupId);
 
 		List<UserGroup> list = findByC_P(companyId, parentUserGroupId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", parentUserGroupId=");
-			msg.append(parentUserGroupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userGroupId the primary key of the current user group
 	 * @param companyId the company ID

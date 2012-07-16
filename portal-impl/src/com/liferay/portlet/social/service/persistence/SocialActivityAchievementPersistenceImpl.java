@@ -864,10 +864,6 @@ public class SocialActivityAchievementPersistenceImpl
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social activity achievement
@@ -877,32 +873,47 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByGroupId_First(groupId,
+				orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity achievement in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<SocialActivityAchievement> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity achievement in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -913,34 +924,49 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByGroupId_Last(groupId,
+				orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity achievement in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<SocialActivityAchievement> list = findByGroupId(groupId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activityAchievementId the primary key of the current social activity achievement
 	 * @param groupId the group ID
@@ -1227,10 +1253,6 @@ public class SocialActivityAchievementPersistenceImpl
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1241,35 +1263,52 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByG_U_First(long groupId, long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_U_First(groupId,
+				userId, orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByG_U_First(long groupId,
+		long userId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<SocialActivityAchievement> list = findByG_U(groupId, userId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
@@ -1281,37 +1320,53 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByG_U_Last(long groupId, long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_U_Last(groupId,
+				userId, orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByG_U_Last(long groupId, long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_U(groupId, userId);
 
 		List<SocialActivityAchievement> list = findByG_U(groupId, userId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activityAchievementId the primary key of the current social activity achievement
 	 * @param groupId the group ID
@@ -1616,10 +1671,6 @@ public class SocialActivityAchievementPersistenceImpl
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1630,35 +1681,52 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByG_N_First(long groupId, String name,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_N_First(groupId,
+				name, orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByG_N_First(long groupId,
+		String name, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<SocialActivityAchievement> list = findByG_N(groupId, name, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
@@ -1670,37 +1738,53 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByG_N_Last(long groupId, String name,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_N_Last(groupId,
+				name, orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByG_N_Last(long groupId, String name,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_N(groupId, name);
 
 		List<SocialActivityAchievement> list = findByG_N(groupId, name,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activityAchievementId the primary key of the current social activity achievement
 	 * @param groupId the group ID
@@ -2004,10 +2088,6 @@ public class SocialActivityAchievementPersistenceImpl
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param firstInGroup the first in group
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2018,35 +2098,52 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByG_F_First(long groupId,
 		boolean firstInGroup, OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_F_First(groupId,
+				firstInGroup, orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", firstInGroup=");
+		msg.append(firstInGroup);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param firstInGroup the first in group
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByG_F_First(long groupId,
+		boolean firstInGroup, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<SocialActivityAchievement> list = findByG_F(groupId, firstInGroup,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", firstInGroup=");
-			msg.append(firstInGroup);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param firstInGroup the first in group
@@ -2058,37 +2155,54 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByG_F_Last(long groupId,
 		boolean firstInGroup, OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_F_Last(groupId,
+				firstInGroup, orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", firstInGroup=");
+		msg.append(firstInGroup);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param firstInGroup the first in group
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByG_F_Last(long groupId,
+		boolean firstInGroup, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_F(groupId, firstInGroup);
 
 		List<SocialActivityAchievement> list = findByG_F(groupId, firstInGroup,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", firstInGroup=");
-			msg.append(firstInGroup);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activityAchievementId the primary key of the current social activity achievement
 	 * @param groupId the group ID
@@ -2564,10 +2678,6 @@ public class SocialActivityAchievementPersistenceImpl
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param firstInGroup the first in group
@@ -2579,38 +2689,56 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByG_U_F_First(long groupId,
 		long userId, boolean firstInGroup, OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_U_F_First(groupId,
+				userId, firstInGroup, orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", firstInGroup=");
+		msg.append(firstInGroup);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param firstInGroup the first in group
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByG_U_F_First(long groupId,
+		long userId, boolean firstInGroup, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<SocialActivityAchievement> list = findByG_U_F(groupId, userId,
 				firstInGroup, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(", firstInGroup=");
-			msg.append(firstInGroup);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
@@ -2623,40 +2751,58 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByG_U_F_Last(long groupId,
 		long userId, boolean firstInGroup, OrderByComparator orderByComparator)
 		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByG_U_F_Last(groupId,
+				userId, firstInGroup, orderByComparator);
+
+		if (socialActivityAchievement != null) {
+			return socialActivityAchievement;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", firstInGroup=");
+		msg.append(firstInGroup);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityAchievementException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param firstInGroup the first in group
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByG_U_F_Last(long groupId,
+		long userId, boolean firstInGroup, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_U_F(groupId, userId, firstInGroup);
 
 		List<SocialActivityAchievement> list = findByG_U_F(groupId, userId,
 				firstInGroup, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(", firstInGroup=");
-			msg.append(firstInGroup);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityAchievementException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activityAchievementId the primary key of the current social activity achievement
 	 * @param groupId the group ID

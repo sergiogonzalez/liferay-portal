@@ -731,10 +731,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	/**
 	 * Returns the first membership request in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching membership request
@@ -744,32 +740,47 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchMembershipRequestException, SystemException {
+		MembershipRequest membershipRequest = fetchByGroupId_First(groupId,
+				orderByComparator);
+
+		if (membershipRequest != null) {
+			return membershipRequest;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipRequestException(msg.toString());
+	}
+
+	/**
+	 * Returns the first membership request in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching membership request, or <code>null</code> if a matching membership request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MembershipRequest fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<MembershipRequest> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchMembershipRequestException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last membership request in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -780,34 +791,49 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchMembershipRequestException, SystemException {
+		MembershipRequest membershipRequest = fetchByGroupId_Last(groupId,
+				orderByComparator);
+
+		if (membershipRequest != null) {
+			return membershipRequest;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipRequestException(msg.toString());
+	}
+
+	/**
+	 * Returns the last membership request in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MembershipRequest fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<MembershipRequest> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchMembershipRequestException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param membershipRequestId the primary key of the current membership request
 	 * @param groupId the group ID
@@ -1088,10 +1114,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	/**
 	 * Returns the first membership request in the ordered set where userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching membership request
@@ -1101,32 +1123,47 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchMembershipRequestException, SystemException {
+		MembershipRequest membershipRequest = fetchByUserId_First(userId,
+				orderByComparator);
+
+		if (membershipRequest != null) {
+			return membershipRequest;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipRequestException(msg.toString());
+	}
+
+	/**
+	 * Returns the first membership request in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching membership request, or <code>null</code> if a matching membership request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MembershipRequest fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<MembershipRequest> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchMembershipRequestException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last membership request in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1137,34 +1174,49 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchMembershipRequestException, SystemException {
+		MembershipRequest membershipRequest = fetchByUserId_Last(userId,
+				orderByComparator);
+
+		if (membershipRequest != null) {
+			return membershipRequest;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipRequestException(msg.toString());
+	}
+
+	/**
+	 * Returns the last membership request in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MembershipRequest fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
 		List<MembershipRequest> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchMembershipRequestException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the membership requests before and after the current membership request in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param membershipRequestId the primary key of the current membership request
 	 * @param userId the user ID
@@ -1459,10 +1511,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	/**
 	 * Returns the first membership request in the ordered set where groupId = &#63; and statusId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param statusId the status ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1473,35 +1521,51 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest findByG_S_First(long groupId, int statusId,
 		OrderByComparator orderByComparator)
 		throws NoSuchMembershipRequestException, SystemException {
+		MembershipRequest membershipRequest = fetchByG_S_First(groupId,
+				statusId, orderByComparator);
+
+		if (membershipRequest != null) {
+			return membershipRequest;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", statusId=");
+		msg.append(statusId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipRequestException(msg.toString());
+	}
+
+	/**
+	 * Returns the first membership request in the ordered set where groupId = &#63; and statusId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param statusId the status ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching membership request, or <code>null</code> if a matching membership request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MembershipRequest fetchByG_S_First(long groupId, int statusId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<MembershipRequest> list = findByG_S(groupId, statusId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", statusId=");
-			msg.append(statusId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchMembershipRequestException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last membership request in the ordered set where groupId = &#63; and statusId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param statusId the status ID
@@ -1513,37 +1577,53 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest findByG_S_Last(long groupId, int statusId,
 		OrderByComparator orderByComparator)
 		throws NoSuchMembershipRequestException, SystemException {
+		MembershipRequest membershipRequest = fetchByG_S_Last(groupId,
+				statusId, orderByComparator);
+
+		if (membershipRequest != null) {
+			return membershipRequest;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", statusId=");
+		msg.append(statusId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipRequestException(msg.toString());
+	}
+
+	/**
+	 * Returns the last membership request in the ordered set where groupId = &#63; and statusId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param statusId the status ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MembershipRequest fetchByG_S_Last(long groupId, int statusId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_S(groupId, statusId);
 
 		List<MembershipRequest> list = findByG_S(groupId, statusId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", statusId=");
-			msg.append(statusId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchMembershipRequestException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63; and statusId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param membershipRequestId the primary key of the current membership request
 	 * @param groupId the group ID
@@ -1850,10 +1930,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	/**
 	 * Returns the first membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param statusId the status ID
@@ -1865,38 +1941,56 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest findByG_U_S_First(long groupId, long userId,
 		int statusId, OrderByComparator orderByComparator)
 		throws NoSuchMembershipRequestException, SystemException {
+		MembershipRequest membershipRequest = fetchByG_U_S_First(groupId,
+				userId, statusId, orderByComparator);
+
+		if (membershipRequest != null) {
+			return membershipRequest;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", statusId=");
+		msg.append(statusId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipRequestException(msg.toString());
+	}
+
+	/**
+	 * Returns the first membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param statusId the status ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching membership request, or <code>null</code> if a matching membership request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MembershipRequest fetchByG_U_S_First(long groupId, long userId,
+		int statusId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<MembershipRequest> list = findByG_U_S(groupId, userId, statusId,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(", statusId=");
-			msg.append(statusId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchMembershipRequestException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
@@ -1909,40 +2003,58 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest findByG_U_S_Last(long groupId, long userId,
 		int statusId, OrderByComparator orderByComparator)
 		throws NoSuchMembershipRequestException, SystemException {
+		MembershipRequest membershipRequest = fetchByG_U_S_Last(groupId,
+				userId, statusId, orderByComparator);
+
+		if (membershipRequest != null) {
+			return membershipRequest;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", statusId=");
+		msg.append(statusId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipRequestException(msg.toString());
+	}
+
+	/**
+	 * Returns the last membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param statusId the status ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MembershipRequest fetchByG_U_S_Last(long groupId, long userId,
+		int statusId, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_U_S(groupId, userId, statusId);
 
 		List<MembershipRequest> list = findByG_U_S(groupId, userId, statusId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(", statusId=");
-			msg.append(statusId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchMembershipRequestException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param membershipRequestId the primary key of the current membership request
 	 * @param groupId the group ID

@@ -744,10 +744,6 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	/**
 	 * Returns the first user group role in the ordered set where userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group role
@@ -757,31 +753,46 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByUserId_First(userId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user group role in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserGroupRole> list = findByUserId(userId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user group role in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -792,34 +803,49 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByUserId_Last(userId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user group role in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
 		List<UserGroupRole> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user group roles before and after the current user group role in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userGroupRolePK the primary key of the current user group role
 	 * @param userId the user ID
@@ -1092,10 +1118,6 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	/**
 	 * Returns the first user group role in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group role
@@ -1105,32 +1127,47 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByGroupId_First(groupId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user group role in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserGroupRole> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user group role in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1141,34 +1178,49 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByGroupId_Last(groupId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user group role in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<UserGroupRole> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user group roles before and after the current user group role in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userGroupRolePK the primary key of the current user group role
 	 * @param groupId the group ID
@@ -1441,10 +1493,6 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	/**
 	 * Returns the first user group role in the ordered set where roleId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param roleId the role ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group role
@@ -1454,31 +1502,46 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByRoleId_First(long roleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByRoleId_First(roleId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("roleId=");
+		msg.append(roleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user group role in the ordered set where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByRoleId_First(long roleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserGroupRole> list = findByRoleId(roleId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user group role in the ordered set where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param roleId the role ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1489,34 +1552,49 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByRoleId_Last(long roleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByRoleId_Last(roleId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("roleId=");
+		msg.append(roleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user group role in the ordered set where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByRoleId_Last(long roleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRoleId(roleId);
 
 		List<UserGroupRole> list = findByRoleId(roleId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user group roles before and after the current user group role in the ordered set where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userGroupRolePK the primary key of the current user group role
 	 * @param roleId the role ID
@@ -1802,10 +1880,6 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	/**
 	 * Returns the first user group role in the ordered set where userId = &#63; and groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1816,35 +1890,51 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByU_G_First(long userId, long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByU_G_First(userId, groupId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user group role in the ordered set where userId = &#63; and groupId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByU_G_First(long userId, long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserGroupRole> list = findByU_G(userId, groupId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(", groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user group role in the ordered set where userId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param groupId the group ID
@@ -1856,37 +1946,53 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByU_G_Last(long userId, long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByU_G_Last(userId, groupId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user group role in the ordered set where userId = &#63; and groupId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByU_G_Last(long userId, long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_G(userId, groupId);
 
 		List<UserGroupRole> list = findByU_G(userId, groupId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(", groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user group roles before and after the current user group role in the ordered set where userId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userGroupRolePK the primary key of the current user group role
 	 * @param userId the user ID
@@ -2177,10 +2283,6 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	/**
 	 * Returns the first user group role in the ordered set where groupId = &#63; and roleId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param roleId the role ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2191,35 +2293,51 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByG_R_First(long groupId, long roleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByG_R_First(groupId, roleId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", roleId=");
+		msg.append(roleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user group role in the ordered set where groupId = &#63; and roleId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByG_R_First(long groupId, long roleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserGroupRole> list = findByG_R(groupId, roleId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user group role in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param roleId the role ID
@@ -2231,37 +2349,53 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole findByG_R_Last(long groupId, long roleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserGroupRoleException, SystemException {
+		UserGroupRole userGroupRole = fetchByG_R_Last(groupId, roleId,
+				orderByComparator);
+
+		if (userGroupRole != null) {
+			return userGroupRole;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", roleId=");
+		msg.append(roleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserGroupRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user group role in the ordered set where groupId = &#63; and roleId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroupRole fetchByG_R_Last(long groupId, long roleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_R(groupId, roleId);
 
 		List<UserGroupRole> list = findByG_R(groupId, roleId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserGroupRoleException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user group roles before and after the current user group role in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userGroupRolePK the primary key of the current user group role
 	 * @param groupId the group ID

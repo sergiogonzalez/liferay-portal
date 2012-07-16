@@ -145,10 +145,6 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	/**
 	* Returns the first team in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching team
@@ -161,11 +157,19 @@ public interface TeamPersistence extends BasePersistence<Team> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last team in the ordered set where groupId = &#63;.
+	* Returns the first team in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching team, or <code>null</code> if a matching team could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Team fetchByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last team in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -179,11 +183,19 @@ public interface TeamPersistence extends BasePersistence<Team> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the teams before and after the current team in the ordered set where groupId = &#63;.
+	* Returns the last team in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching team, or <code>null</code> if a matching team could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Team fetchByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the teams before and after the current team in the ordered set where groupId = &#63;.
 	*
 	* @param teamId the primary key of the current team
 	* @param groupId the group ID

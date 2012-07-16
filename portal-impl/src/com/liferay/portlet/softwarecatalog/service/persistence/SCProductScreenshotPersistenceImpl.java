@@ -743,10 +743,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	/**
 	 * Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param productEntryId the product entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching s c product screenshot
@@ -756,32 +752,48 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	public SCProductScreenshot findByProductEntryId_First(long productEntryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = fetchByProductEntryId_First(productEntryId,
+				orderByComparator);
+
+		if (scProductScreenshot != null) {
+			return scProductScreenshot;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("productEntryId=");
+		msg.append(productEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProductScreenshotException(msg.toString());
+	}
+
+	/**
+	 * Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByProductEntryId_First(
+		long productEntryId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<SCProductScreenshot> list = findByProductEntryId(productEntryId,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("productEntryId=");
-			msg.append(productEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchProductScreenshotException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param productEntryId the product entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -792,34 +804,49 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	public SCProductScreenshot findByProductEntryId_Last(long productEntryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = fetchByProductEntryId_Last(productEntryId,
+				orderByComparator);
+
+		if (scProductScreenshot != null) {
+			return scProductScreenshot;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("productEntryId=");
+		msg.append(productEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProductScreenshotException(msg.toString());
+	}
+
+	/**
+	 * Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByProductEntryId_Last(long productEntryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByProductEntryId(productEntryId);
 
 		List<SCProductScreenshot> list = findByProductEntryId(productEntryId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("productEntryId=");
-			msg.append(productEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchProductScreenshotException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the s c product screenshots before and after the current s c product screenshot in the ordered set where productEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param productScreenshotId the primary key of the current s c product screenshot
 	 * @param productEntryId the product entry ID

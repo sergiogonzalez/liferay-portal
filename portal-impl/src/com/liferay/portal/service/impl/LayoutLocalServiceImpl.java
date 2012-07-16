@@ -804,17 +804,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, long parentLayoutId)
 		throws SystemException {
 
-		Layout firstLayout = null;
-
-		try {
-			firstLayout = layoutPersistence.findByG_P_P_First(
-				groupId, privateLayout, parentLayoutId,
-				new LayoutPriorityComparator());
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
-
-		return firstLayout;
+		return layoutPersistence.fetchByG_P_P_First(
+			groupId, privateLayout, parentLayoutId,
+			new LayoutPriorityComparator());
 	}
 
 	/**
