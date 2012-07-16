@@ -645,10 +645,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	/**
 	 * Returns the first s c license in the ordered set where active = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching s c license
@@ -658,31 +654,45 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public SCLicense findByActive_First(boolean active,
 		OrderByComparator orderByComparator)
 		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = fetchByActive_First(active, orderByComparator);
+
+		if (scLicense != null) {
+			return scLicense;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the first s c license in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense fetchByActive_First(boolean active,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<SCLicense> list = findByActive(active, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("active=");
-			msg.append(active);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLicenseException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last s c license in the ordered set where active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -693,34 +703,48 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public SCLicense findByActive_Last(boolean active,
 		OrderByComparator orderByComparator)
 		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = fetchByActive_Last(active, orderByComparator);
+
+		if (scLicense != null) {
+			return scLicense;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the last s c license in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense fetchByActive_Last(boolean active,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByActive(active);
 
 		List<SCLicense> list = findByActive(active, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("active=");
-			msg.append(active);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLicenseException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the s c licenses before and after the current s c license in the ordered set where active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param licenseId the primary key of the current s c license
 	 * @param active the active
@@ -1323,10 +1347,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	/**
 	 * Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param active the active
 	 * @param recommended the recommended
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1337,35 +1357,51 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public SCLicense findByA_R_First(boolean active, boolean recommended,
 		OrderByComparator orderByComparator)
 		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = fetchByA_R_First(active, recommended,
+				orderByComparator);
+
+		if (scLicense != null) {
+			return scLicense;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(", recommended=");
+		msg.append(recommended);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense fetchByA_R_First(boolean active, boolean recommended,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<SCLicense> list = findByA_R(active, recommended, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("active=");
-			msg.append(active);
-
-			msg.append(", recommended=");
-			msg.append(recommended);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLicenseException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param active the active
 	 * @param recommended the recommended
@@ -1377,37 +1413,53 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public SCLicense findByA_R_Last(boolean active, boolean recommended,
 		OrderByComparator orderByComparator)
 		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = fetchByA_R_Last(active, recommended,
+				orderByComparator);
+
+		if (scLicense != null) {
+			return scLicense;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(", recommended=");
+		msg.append(recommended);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense fetchByA_R_Last(boolean active, boolean recommended,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByA_R(active, recommended);
 
 		List<SCLicense> list = findByA_R(active, recommended, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("active=");
-			msg.append(active);
-
-			msg.append(", recommended=");
-			msg.append(recommended);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLicenseException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the s c licenses before and after the current s c license in the ordered set where active = &#63; and recommended = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param licenseId the primary key of the current s c license
 	 * @param active the active

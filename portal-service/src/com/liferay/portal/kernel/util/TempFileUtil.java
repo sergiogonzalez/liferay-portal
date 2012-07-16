@@ -17,42 +17,33 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
-import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * @author Sergio González
+ * @author Matthew Kong
  */
 public class TempFileUtil {
 
 	public static String addTempFile(
 			long userId, String tempPathName, File file)
-		throws IOException, PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		String tempFileName = FileUtil.createTempFileName();
 
-		DLStoreUtil.validate(tempFileName, true, file);
-
-		File tempFile = getTempFile(tempFileName, tempPathName);
-
-		FileUtil.copyFile(file, tempFile);
-
-		return tempFileName;
+		return addTempFile(userId, tempFileName, tempPathName, file);
 	}
 
 	public static String addTempFile(
 			long userId, String fileName, String tempPathName, File file)
-		throws IOException, PortalException, SystemException {
+		throws PortalException, SystemException {
 
-		DLStoreUtil.validate(fileName, true, file);
+		String tempFileName = getTempFileName(userId, fileName, tempPathName);
 
-		File tempFile = getTempFile(userId, fileName, tempPathName);
-
-		FileUtil.copyFile(file, tempFile);
+		DLStoreUtil.addFile(_COMPANY_ID, _REPOSITORY_ID, tempFileName, file);
 
 		return fileName;
 	}
@@ -60,7 +51,7 @@ public class TempFileUtil {
 	public static String addTempFile(
 			long userId, String fileName, String tempPathName,
 			InputStream inputStream)
-		throws IOException, PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		File file = null;
 
@@ -69,227 +60,146 @@ public class TempFileUtil {
 				(ByteArrayFileInputStream)inputStream;
 
 			file = byteArrayFileInputStream.getFile();
-
-			DLStoreUtil.validate(fileName, true, file);
-		}
-		else {
-			DLStoreUtil.validate(fileName, true, inputStream);
 		}
 
-		File tempFile = getTempFile(userId, fileName, tempPathName);
+		String tempFileName = getTempFileName(userId, fileName, tempPathName);
 
 		if (file != null) {
-			FileUtil.copyFile(file, tempFile);
+			DLStoreUtil.addFile(
+				_COMPANY_ID, _REPOSITORY_ID, tempFileName, file);
 		}
 		else {
-			FileUtil.write(tempFile, inputStream);
+			DLStoreUtil.addFile(
+				_COMPANY_ID, _REPOSITORY_ID, tempFileName, inputStream);
 		}
 
 		return fileName;
 	}
 
 	public static String addTempFile(String tempPathName, File file)
-		throws IOException, PortalException, SystemException {
+		throws PortalException, SystemException {
 
-		String tempFileName = FileUtil.createTempFileName();
-
-		DLStoreUtil.validate(tempFileName, false, file);
-
-		File tempFile = getTempFile(tempFileName, tempPathName);
-
-		FileUtil.copyFile(file, tempFile);
-
-		return tempFileName;
+		return addTempFile(_USER_ID, tempPathName, file);
 	}
 
 	public static String addTempFile(
 			String fileName, String tempPathName, File file)
-		throws IOException, PortalException, SystemException {
+		throws PortalException, SystemException {
 
-		DLStoreUtil.validate(fileName, true, file);
-
-		File tempFile = getTempFile(fileName, tempPathName);
-
-		FileUtil.copyFile(file, tempFile);
-
-		return fileName;
+		return addTempFile(_USER_ID, fileName, tempPathName, file);
 	}
 
 	public static void deleteTempFile(
 			long userId, String fileName, String tempPathName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
-		File file = getTempFile(userId, fileName, tempPathName);
+		String tempFileName = getTempFileName(userId, fileName, tempPathName);
 
-		FileUtil.delete(file);
+		deleteTempFile(tempFileName);
+	}
+
+	public static void deleteTempFile(String tempFileName)
+		throws PortalException, SystemException {
+
+		DLStoreUtil.deleteFile(_COMPANY_ID, _REPOSITORY_ID, tempFileName);
 	}
 
 	public static void deleteTempFile(String fileName, String tempPathName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
-		File file = getTempFile(fileName, tempPathName);
-
-		FileUtil.delete(file);
+		deleteTempFile(_USER_ID, fileName, tempPathName);
 	}
 
-	public static File getTempFile(
-			long userId, String fileName, String tempPathName)
-		throws PortalException {
+	public static InputStream getTempFileAsStream(String tempFileName)
+		throws PortalException, SystemException {
 
-		String absoluteFilePath = _getTempAbsolutePath(
-			userId, fileName, tempPathName);
-
-		return new File(absoluteFilePath);
-	}
-
-	public static File getTempFile(String fileName, String tempPathName)
-		throws PortalException {
-
-		String absoluteFilePath = _getTempAbsolutePath(fileName, tempPathName);
-
-		return new File(absoluteFilePath);
+		return DLStoreUtil.getFileAsStream(
+			_COMPANY_ID, _REPOSITORY_ID, tempFileName);
 	}
 
 	public static String[] getTempFileEntryNames(
 		long userId, String tempPathName) {
 
-		File dir = new File(_getTempAbsolutePath(tempPathName));
+		try {
+			String tempFolderName = getTempFolderName(userId, tempPathName);
 
-		StringBundler sb = new StringBundler(5);
+			String[] fileNames = DLStoreUtil.getFileNames(
+				_COMPANY_ID, _REPOSITORY_ID, tempFolderName);
 
-		sb.append(StringPool.PERIOD);
-		sb.append(StringPool.STAR);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(userId);
-		sb.append(_SUFFIX_TEMP_FILENAME_USERID_REGEX);
+			for (int i = 0; i < fileNames.length; i++) {
+				String fileName = StringUtil.extractLast(
+					fileNames[i], StringPool.SLASH);
 
-		FileFilter fileFilter = new FileFilter(sb.toString());
+				fileName = StringUtil.replace(
+					fileName, _SUFFIX_TEMP_FILENAME, StringPool.BLANK);
 
-		File[] files = dir.listFiles(fileFilter);
+				fileNames[i] = fileName;
+			}
 
-		int count = 0;
-
-		if (files != null) {
-			count = files.length;
+			return fileNames;
 		}
-
-		String[] fileNames = new String[count];
-
-		for (int i = 0; i < count; i++) {
-			File file = files[i];
-
-			String fileName = StringUtil.replace(
-				file.getName(),
-				StringPool.UNDERLINE + userId + _SUFFIX_TEMP_FILENAME,
-				StringPool.BLANK);
-
-			fileNames[i] = fileName;
+		catch (Exception e) {
+			return new String[0];
 		}
-
-		return fileNames;
 	}
 
 	public static String[] getTempFileEntryNames(String tempPathName) {
-		File dir = new File(_getTempAbsolutePath(tempPathName));
+		return getTempFileEntryNames(_USER_ID, tempPathName);
+	}
 
-		File[] files = dir.listFiles(
-			new FileFilter(_SUFFIX_TEMP_FILENAME_REGEX));
+	public static String getTempFileName(
+			long userId, String fileName, String tempPathName)
+		throws PortalException {
 
-		String[] fileNames = new String[files.length];
+		validateFileName(fileName);
 
-		for (int i = 0; i < files.length; i++) {
-			File file = files[i];
+		StringBundler sb = new StringBundler(3);
 
-			String fileName = StringUtil.replace(
-				file.getName(), _SUFFIX_TEMP_FILENAME, StringPool.BLANK);
+		sb.append(getTempFolderName(userId, tempPathName));
+		sb.append(fileName);
+		sb.append(_SUFFIX_TEMP_FILENAME);
 
-			fileNames[i] = fileName;
-		}
+		return sb.toString();
+	}
 
-		return fileNames;
+	public static long getTempFileSize(String tempFileName)
+		throws PortalException, SystemException {
+
+		return DLStoreUtil.getFileSize(
+			_COMPANY_ID, _REPOSITORY_ID, tempFileName);
+	}
+
+	protected static String getTempFolderName(
+		long userId, String tempPathName) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_BASE_TEMP_PATHNAME);
+		sb.append(tempPathName);
+		sb.append(StringPool.SLASH);
+		sb.append(userId);
+		sb.append(StringPool.SLASH);
+
+		return sb.toString();
 	}
 
 	protected static void validateFileName(String name) throws PortalException {
-		if ((name == null) ||
+		if ((name == null) || name.contains(StringPool.BACK_SLASH) ||
 			name.contains(StringPool.SLASH) ||
-			name.contains(StringPool.BACK_SLASH) ||
 			name.contains(File.pathSeparator)) {
 
 			throw new TempFileNameException();
 		}
 	}
 
-	private static String _getTempAbsolutePath(
-			long userId, String fileName, String tempPathName)
-		throws PortalException {
+	private static final String _BASE_TEMP_PATHNAME = "liferay_temp/";
 
-		StringBundler sb = new StringBundler(5);
+	private static final long _COMPANY_ID = 0;
 
-		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
-		sb.append(_BASE_TEMP_PATHNAME);
-		sb.append(tempPathName);
-		sb.append(StringPool.SLASH);
-		sb.append(_getTempFileName(userId, fileName));
-
-		return sb.toString();
-	}
-
-	private static String _getTempAbsolutePath(String tempPathName) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
-		sb.append(_BASE_TEMP_PATHNAME);
-		sb.append(tempPathName);
-		sb.append(StringPool.SLASH);
-
-		return sb.toString();
-	}
-
-	private static String _getTempAbsolutePath(
-			String fileName, String tempPathName)
-		throws PortalException {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
-		sb.append(_BASE_TEMP_PATHNAME);
-		sb.append(tempPathName);
-		sb.append(StringPool.SLASH);
-		sb.append(_getTempFileName(fileName));
-
-		return sb.toString();
-	}
-
-	private static String _getTempFileName(long userId, String fileName)
-		throws PortalException {
-
-		validateFileName(fileName);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(fileName);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(userId);
-		sb.append(_SUFFIX_TEMP_FILENAME);
-
-		return sb.toString();
-	}
-
-	private static String _getTempFileName(String fileName)
-		throws PortalException {
-
-		validateFileName(fileName);
-
-		return fileName + _SUFFIX_TEMP_FILENAME;
-	}
-
-	private static final String _BASE_TEMP_PATHNAME = "/liferay/";
+	private static final long _REPOSITORY_ID = 0;
 
 	private static final String _SUFFIX_TEMP_FILENAME = "_temp.tmp";
 
-	private static final String _SUFFIX_TEMP_FILENAME_REGEX = ".*_temp\\.tmp";
-
-	private static final String _SUFFIX_TEMP_FILENAME_USERID_REGEX =
-		"_temp\\.tmp";
+	private static final long _USER_ID = 0;
 
 }

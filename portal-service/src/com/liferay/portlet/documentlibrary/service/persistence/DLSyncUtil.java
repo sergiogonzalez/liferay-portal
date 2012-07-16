@@ -298,10 +298,6 @@ public class DLSyncUtil {
 	/**
 	* Returns the first d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param modifiedDate the modified date
 	* @param repositoryId the repository ID
@@ -321,11 +317,26 @@ public class DLSyncUtil {
 	}
 
 	/**
-	* Returns the last d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	* Returns the first d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d l sync, or <code>null</code> if a matching d l sync could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync fetchByC_M_R_First(
+		long companyId, java.util.Date modifiedDate, long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_M_R_First(companyId, modifiedDate, repositoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param modifiedDate the modified date
@@ -346,11 +357,26 @@ public class DLSyncUtil {
 	}
 
 	/**
-	* Returns the d l syncs before and after the current d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	* Returns the last d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d l sync, or <code>null</code> if a matching d l sync could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync fetchByC_M_R_Last(
+		long companyId, java.util.Date modifiedDate, long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_M_R_Last(companyId, modifiedDate, repositoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the d l syncs before and after the current d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
 	*
 	* @param syncId the primary key of the current d l sync
 	* @param companyId the company ID

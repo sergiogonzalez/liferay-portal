@@ -769,10 +769,6 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	/**
 	 * Returns the first d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param modifiedDate the modified date
 	 * @param repositoryId the repository ID
@@ -784,38 +780,56 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public DLSync findByC_M_R_First(long companyId, Date modifiedDate,
 		long repositoryId, OrderByComparator orderByComparator)
 		throws NoSuchSyncException, SystemException {
+		DLSync dlSync = fetchByC_M_R_First(companyId, modifiedDate,
+				repositoryId, orderByComparator);
+
+		if (dlSync != null) {
+			return dlSync;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", modifiedDate=");
+		msg.append(modifiedDate);
+
+		msg.append(", repositoryId=");
+		msg.append(repositoryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchSyncException(msg.toString());
+	}
+
+	/**
+	 * Returns the first d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param repositoryId the repository ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d l sync, or <code>null</code> if a matching d l sync could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLSync fetchByC_M_R_First(long companyId, Date modifiedDate,
+		long repositoryId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<DLSync> list = findByC_M_R(companyId, modifiedDate, repositoryId,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", modifiedDate=");
-			msg.append(modifiedDate);
-
-			msg.append(", repositoryId=");
-			msg.append(repositoryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchSyncException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param modifiedDate the modified date
@@ -828,40 +842,58 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public DLSync findByC_M_R_Last(long companyId, Date modifiedDate,
 		long repositoryId, OrderByComparator orderByComparator)
 		throws NoSuchSyncException, SystemException {
+		DLSync dlSync = fetchByC_M_R_Last(companyId, modifiedDate,
+				repositoryId, orderByComparator);
+
+		if (dlSync != null) {
+			return dlSync;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", modifiedDate=");
+		msg.append(modifiedDate);
+
+		msg.append(", repositoryId=");
+		msg.append(repositoryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchSyncException(msg.toString());
+	}
+
+	/**
+	 * Returns the last d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param modifiedDate the modified date
+	 * @param repositoryId the repository ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d l sync, or <code>null</code> if a matching d l sync could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLSync fetchByC_M_R_Last(long companyId, Date modifiedDate,
+		long repositoryId, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByC_M_R(companyId, modifiedDate, repositoryId);
 
 		List<DLSync> list = findByC_M_R(companyId, modifiedDate, repositoryId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", modifiedDate=");
-			msg.append(modifiedDate);
-
-			msg.append(", repositoryId=");
-			msg.append(repositoryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchSyncException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the d l syncs before and after the current d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param syncId the primary key of the current d l sync
 	 * @param companyId the company ID

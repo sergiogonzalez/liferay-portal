@@ -133,8 +133,16 @@ portletURL.setParameter("tabs1", tabs1);
 			<liferay-ui:search-container-column-text
 				name="removed-date"
 				orderable="<%= true %>"
-				value="<%= dateFormatDateTime.format(entry.getCreateDate()) %>"
-			/>
+			>
+				<span title="<liferay-ui:message arguments="<%= dateFormatDateTime.format(entry.getCreateDate()) %>" key="deleted-x" />">
+
+					<%
+					Date createDate = entry.getCreateDate();
+					%>
+
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - createDate.getTime(), true) %>" key="x-ago" />
+				</span>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="removed-by"
@@ -148,6 +156,14 @@ portletURL.setParameter("tabs1", tabs1);
 			/>
 		</liferay-ui:search-container-row>
 
+		<div class="lfr-message-info">
+			<liferay-ui:message arguments="<%= TrashUtil.getMaxAge(group) %>" key="entries-that-have-been-in-recycle-bin-for-more-than-x-days-will-be-automatically-deleted" />
+
+			<c:if test="<%= total > 0 %>">
+				<a href="javascript:;" onClick="<%= renderResponse.getNamespace() %>emptyTrash();"><liferay-ui:message key="empty-the-recycle-bin" /></a>
+			</c:if>
+		</div>
+
 		<aui:button-row>
 			<liferay-ui:search-form
 				page="/html/portlet/trash/entry_search.jsp"
@@ -157,8 +173,6 @@ portletURL.setParameter("tabs1", tabs1);
 				<aui:button name="deleteButton" onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value="delete" />
 
 				<aui:button name="restoreButton" onClick='<%= renderResponse.getNamespace() + "restoreEntries();" %>' value="restore" />
-
-				<aui:button name="emptyTrashButton" onClick='<%= renderResponse.getNamespace() + "emptyTrash();" %>' value="empty-the-recycle-bin" />
 			</c:if>
 		</aui:button-row>
 

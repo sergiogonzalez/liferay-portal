@@ -247,10 +247,6 @@ public class DLFileRankUtil {
 	/**
 	* Returns the first document library file rank in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank
@@ -266,11 +262,22 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	* Returns the last document library file rank in the ordered set where userId = &#63;.
+	* Returns the first document library file rank in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file rank in the ordered set where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -287,11 +294,22 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	* Returns the document library file ranks before and after the current document library file rank in the ordered set where userId = &#63;.
+	* Returns the last document library file rank in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the document library file ranks before and after the current document library file rank in the ordered set where userId = &#63;.
 	*
 	* @param fileRankId the primary key of the current document library file rank
 	* @param userId the user ID
@@ -367,10 +385,6 @@ public class DLFileRankUtil {
 	/**
 	* Returns the first document library file rank in the ordered set where fileEntryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank
@@ -387,11 +401,23 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	* Returns the last document library file rank in the ordered set where fileEntryId = &#63;.
+	* Returns the first document library file rank in the ordered set where fileEntryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param fileEntryId the file entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchByFileEntryId_First(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByFileEntryId_First(fileEntryId, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file rank in the ordered set where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -409,11 +435,23 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	* Returns the document library file ranks before and after the current document library file rank in the ordered set where fileEntryId = &#63;.
+	* Returns the last document library file rank in the ordered set where fileEntryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param fileEntryId the file entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchByFileEntryId_Last(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByFileEntryId_Last(fileEntryId, orderByComparator);
+	}
+
+	/**
+	* Returns the document library file ranks before and after the current document library file rank in the ordered set where fileEntryId = &#63;.
 	*
 	* @param fileRankId the primary key of the current document library file rank
 	* @param fileEntryId the file entry ID
@@ -492,10 +530,6 @@ public class DLFileRankUtil {
 	/**
 	* Returns the first document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -513,11 +547,24 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
+	* Returns the first document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_U_First(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
@@ -536,11 +583,24 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	* Returns the document library file ranks before and after the current document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
+	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_U_Last(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the document library file ranks before and after the current document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
 	*
 	* @param fileRankId the primary key of the current document library file rank
 	* @param groupId the group ID
@@ -624,10 +684,6 @@ public class DLFileRankUtil {
 	/**
 	* Returns the first document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param active the active
@@ -646,11 +702,26 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
+	* Returns the first document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_A_First(
+		long groupId, long userId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_U_A_First(groupId, userId, active,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
@@ -670,11 +741,25 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	* Returns the document library file ranks before and after the current document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
+	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_A_Last(
+		long groupId, long userId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_U_A_Last(groupId, userId, active, orderByComparator);
+	}
+
+	/**
+	* Returns the document library file ranks before and after the current document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
 	*
 	* @param fileRankId the primary key of the current document library file rank
 	* @param groupId the group ID

@@ -154,10 +154,6 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	/**
 	* Returns the first s c license in the ordered set where active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c license
@@ -171,11 +167,20 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 			com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
-	* Returns the last s c license in the ordered set where active = &#63;.
+	* Returns the first s c license in the ordered set where active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByActive_First(
+		boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c license in the ordered set where active = &#63;.
 	*
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -190,11 +195,20 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 			com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
-	* Returns the s c licenses before and after the current s c license in the ordered set where active = &#63;.
+	* Returns the last s c license in the ordered set where active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByActive_Last(
+		boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the s c licenses before and after the current s c license in the ordered set where active = &#63;.
 	*
 	* @param licenseId the primary key of the current s c license
 	* @param active the active
@@ -325,10 +339,6 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	/**
 	* Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param active the active
 	* @param recommended the recommended
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -343,11 +353,21 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 			com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
-	* Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
+	* Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param active the active
+	* @param recommended the recommended
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByA_R_First(
+		boolean active, boolean recommended,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
 	*
 	* @param active the active
 	* @param recommended the recommended
@@ -363,11 +383,21 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 			com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
-	* Returns the s c licenses before and after the current s c license in the ordered set where active = &#63; and recommended = &#63;.
+	* Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param active the active
+	* @param recommended the recommended
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByA_R_Last(
+		boolean active, boolean recommended,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the s c licenses before and after the current s c license in the ordered set where active = &#63; and recommended = &#63;.
 	*
 	* @param licenseId the primary key of the current s c license
 	* @param active the active

@@ -249,10 +249,6 @@ public class ResourceBlockUtil {
 	/**
 	* Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -270,11 +266,24 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
+	* Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ResourceBlock fetchByC_N_First(
+		long companyId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_N_First(companyId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
 	*
 	* @param companyId the company ID
 	* @param name the name
@@ -293,11 +302,24 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and name = &#63;.
+	* Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ResourceBlock fetchByC_N_Last(
+		long companyId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_N_Last(companyId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and name = &#63;.
 	*
 	* @param resourceBlockId the primary key of the current resource block
 	* @param companyId the company ID
@@ -382,10 +404,6 @@ public class ResourceBlockUtil {
 	/**
 	* Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param name the name
@@ -405,11 +423,26 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
+	* Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_First(
+		long companyId, long groupId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_G_N_First(companyId, groupId, name,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
@@ -429,11 +462,26 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
+	* Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_Last(
+		long companyId, long groupId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_G_N_Last(companyId, groupId, name,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
 	*
 	* @param resourceBlockId the primary key of the current resource block
 	* @param companyId the company ID

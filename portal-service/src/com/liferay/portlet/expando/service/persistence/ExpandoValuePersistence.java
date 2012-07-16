@@ -152,10 +152,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param tableId the table ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
@@ -169,11 +165,20 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the last expando value in the ordered set where tableId = &#63;.
+	* Returns the first expando value in the ordered set where tableId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByTableId_First(
+		long tableId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last expando value in the ordered set where tableId = &#63;.
 	*
 	* @param tableId the table ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -188,11 +193,20 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63;.
+	* Returns the last expando value in the ordered set where tableId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByTableId_Last(
+		long tableId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63;.
 	*
 	* @param valueId the primary key of the current expando value
 	* @param tableId the table ID
@@ -257,10 +271,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	/**
 	* Returns the first expando value in the ordered set where columnId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param columnId the column ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
@@ -274,11 +284,20 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the last expando value in the ordered set where columnId = &#63;.
+	* Returns the first expando value in the ordered set where columnId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param columnId the column ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByColumnId_First(
+		long columnId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last expando value in the ordered set where columnId = &#63;.
 	*
 	* @param columnId the column ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -293,11 +312,20 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the expando values before and after the current expando value in the ordered set where columnId = &#63;.
+	* Returns the last expando value in the ordered set where columnId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param columnId the column ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByColumnId_Last(
+		long columnId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the expando values before and after the current expando value in the ordered set where columnId = &#63;.
 	*
 	* @param valueId the primary key of the current expando value
 	* @param columnId the column ID
@@ -361,10 +389,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	/**
 	* Returns the first expando value in the ordered set where rowId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param rowId the row ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
@@ -378,11 +402,20 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the last expando value in the ordered set where rowId = &#63;.
+	* Returns the first expando value in the ordered set where rowId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param rowId the row ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByRowId_First(
+		long rowId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last expando value in the ordered set where rowId = &#63;.
 	*
 	* @param rowId the row ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -397,11 +430,20 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the expando values before and after the current expando value in the ordered set where rowId = &#63;.
+	* Returns the last expando value in the ordered set where rowId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param rowId the row ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByRowId_Last(
+		long rowId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the expando values before and after the current expando value in the ordered set where rowId = &#63;.
 	*
 	* @param valueId the primary key of the current expando value
 	* @param rowId the row ID
@@ -469,10 +511,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63; and columnId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param tableId the table ID
 	* @param columnId the column ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -487,11 +525,21 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63;.
+	* Returns the first expando value in the ordered set where tableId = &#63; and columnId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param columnId the column ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_First(
+		long tableId, long columnId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63;.
 	*
 	* @param tableId the table ID
 	* @param columnId the column ID
@@ -507,11 +555,21 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and columnId = &#63;.
+	* Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param columnId the column ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_Last(
+		long tableId, long columnId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and columnId = &#63;.
 	*
 	* @param valueId the primary key of the current expando value
 	* @param tableId the table ID
@@ -580,10 +638,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param tableId the table ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -598,11 +652,21 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the last expando value in the ordered set where tableId = &#63; and classPK = &#63;.
+	* Returns the first expando value in the ordered set where tableId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByT_CPK_First(
+		long tableId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last expando value in the ordered set where tableId = &#63; and classPK = &#63;.
 	*
 	* @param tableId the table ID
 	* @param classPK the class p k
@@ -618,11 +682,21 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and classPK = &#63;.
+	* Returns the last expando value in the ordered set where tableId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByT_CPK_Last(
+		long tableId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and classPK = &#63;.
 	*
 	* @param valueId the primary key of the current expando value
 	* @param tableId the table ID
@@ -691,10 +765,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63; and rowId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param tableId the table ID
 	* @param rowId the row ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -709,11 +779,21 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the last expando value in the ordered set where tableId = &#63; and rowId = &#63;.
+	* Returns the first expando value in the ordered set where tableId = &#63; and rowId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param rowId the row ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByT_R_First(
+		long tableId, long rowId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last expando value in the ordered set where tableId = &#63; and rowId = &#63;.
 	*
 	* @param tableId the table ID
 	* @param rowId the row ID
@@ -729,11 +809,21 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and rowId = &#63;.
+	* Returns the last expando value in the ordered set where tableId = &#63; and rowId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param rowId the row ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByT_R_Last(
+		long tableId, long rowId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and rowId = &#63;.
 	*
 	* @param valueId the primary key of the current expando value
 	* @param tableId the table ID
@@ -841,10 +931,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	/**
 	* Returns the first expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -859,11 +945,21 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the last expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
+	* Returns the first expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByC_C_First(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
@@ -879,11 +975,21 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the expando values before and after the current expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
+	* Returns the last expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByC_C_Last(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the expando values before and after the current expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param valueId the primary key of the current expando value
 	* @param classNameId the class name ID
@@ -997,10 +1103,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param tableId the table ID
 	* @param columnId the column ID
 	* @param data the data
@@ -1016,11 +1118,22 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
+	* Returns the first expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param columnId the column ID
+	* @param data the data
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_D_First(
+		long tableId, long columnId, java.lang.String data,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
 	*
 	* @param tableId the table ID
 	* @param columnId the column ID
@@ -1037,11 +1150,22 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
+	* Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param tableId the table ID
+	* @param columnId the column ID
+	* @param data the data
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_D_Last(
+		long tableId, long columnId, java.lang.String data,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
 	*
 	* @param valueId the primary key of the current expando value
 	* @param tableId the table ID

@@ -812,10 +812,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	/**
 	 * Returns the first social activity setting in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social activity setting
@@ -825,32 +821,47 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivitySetting findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByGroupId_First(groupId,
+				orderByComparator);
+
+		if (socialActivitySetting != null) {
+			return socialActivitySetting;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySettingException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity setting in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<SocialActivitySetting> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivitySettingException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity setting in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -861,34 +872,49 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivitySetting findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByGroupId_Last(groupId,
+				orderByComparator);
+
+		if (socialActivitySetting != null) {
+			return socialActivitySetting;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySettingException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity setting in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<SocialActivitySetting> list = findByGroupId(groupId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivitySettingException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activitySettingId the primary key of the current social activity setting
 	 * @param groupId the group ID
@@ -1175,10 +1201,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	/**
 	 * Returns the first social activity setting in the ordered set where groupId = &#63; and classNameId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1189,35 +1211,52 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivitySetting findByG_C_First(long groupId,
 		long classNameId, OrderByComparator orderByComparator)
 		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByG_C_First(groupId,
+				classNameId, orderByComparator);
+
+		if (socialActivitySetting != null) {
+			return socialActivitySetting;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySettingException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity setting in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByG_C_First(long groupId,
+		long classNameId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<SocialActivitySetting> list = findByG_C(groupId, classNameId, 0,
 				1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", classNameId=");
-			msg.append(classNameId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivitySettingException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity setting in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
@@ -1229,37 +1268,54 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivitySetting findByG_C_Last(long groupId, long classNameId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByG_C_Last(groupId,
+				classNameId, orderByComparator);
+
+		if (socialActivitySetting != null) {
+			return socialActivitySetting;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySettingException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity setting in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByG_C_Last(long groupId,
+		long classNameId, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_C(groupId, classNameId);
 
 		List<SocialActivitySetting> list = findByG_C(groupId, classNameId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", classNameId=");
-			msg.append(classNameId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivitySettingException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activitySettingId the primary key of the current social activity setting
 	 * @param groupId the group ID
@@ -1551,10 +1607,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	/**
 	 * Returns the first social activity setting in the ordered set where groupId = &#63; and activityType = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param activityType the activity type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1565,35 +1617,52 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivitySetting findByG_A_First(long groupId,
 		int activityType, OrderByComparator orderByComparator)
 		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByG_A_First(groupId,
+				activityType, orderByComparator);
+
+		if (socialActivitySetting != null) {
+			return socialActivitySetting;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", activityType=");
+		msg.append(activityType);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySettingException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity setting in the ordered set where groupId = &#63; and activityType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param activityType the activity type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByG_A_First(long groupId,
+		int activityType, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<SocialActivitySetting> list = findByG_A(groupId, activityType, 0,
 				1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", activityType=");
-			msg.append(activityType);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivitySettingException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity setting in the ordered set where groupId = &#63; and activityType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param activityType the activity type
@@ -1605,37 +1674,54 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivitySetting findByG_A_Last(long groupId, int activityType,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByG_A_Last(groupId,
+				activityType, orderByComparator);
+
+		if (socialActivitySetting != null) {
+			return socialActivitySetting;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", activityType=");
+		msg.append(activityType);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySettingException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity setting in the ordered set where groupId = &#63; and activityType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param activityType the activity type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByG_A_Last(long groupId,
+		int activityType, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_A(groupId, activityType);
 
 		List<SocialActivitySetting> list = findByG_A(groupId, activityType,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", activityType=");
-			msg.append(activityType);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivitySettingException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63; and activityType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activitySettingId the primary key of the current social activity setting
 	 * @param groupId the group ID
@@ -1936,10 +2022,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	/**
 	 * Returns the first social activity setting in the ordered set where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param activityType the activity type
@@ -1951,38 +2033,56 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivitySetting findByG_C_A_First(long groupId,
 		long classNameId, int activityType, OrderByComparator orderByComparator)
 		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByG_C_A_First(groupId,
+				classNameId, activityType, orderByComparator);
+
+		if (socialActivitySetting != null) {
+			return socialActivitySetting;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", activityType=");
+		msg.append(activityType);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySettingException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity setting in the ordered set where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param activityType the activity type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByG_C_A_First(long groupId,
+		long classNameId, int activityType, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<SocialActivitySetting> list = findByG_C_A(groupId, classNameId,
 				activityType, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", activityType=");
-			msg.append(activityType);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivitySettingException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity setting in the ordered set where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
@@ -1995,40 +2095,58 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivitySetting findByG_C_A_Last(long groupId,
 		long classNameId, int activityType, OrderByComparator orderByComparator)
 		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByG_C_A_Last(groupId,
+				classNameId, activityType, orderByComparator);
+
+		if (socialActivitySetting != null) {
+			return socialActivitySetting;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", activityType=");
+		msg.append(activityType);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySettingException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity setting in the ordered set where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param activityType the activity type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByG_C_A_Last(long groupId,
+		long classNameId, int activityType, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_C_A(groupId, classNameId, activityType);
 
 		List<SocialActivitySetting> list = findByG_C_A(groupId, classNameId,
 				activityType, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", activityType=");
-			msg.append(activityType);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivitySettingException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activitySettingId the primary key of the current social activity setting
 	 * @param groupId the group ID

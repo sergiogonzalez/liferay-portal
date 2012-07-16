@@ -249,10 +249,6 @@ public class UserGroupGroupRoleUtil {
 	/**
 	* Returns the first user group group role in the ordered set where userGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userGroupId the user group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user group group role
@@ -269,11 +265,23 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the last user group group role in the ordered set where userGroupId = &#63;.
+	* Returns the first user group group role in the ordered set where userGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userGroupId the user group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByUserGroupId_First(
+		long userGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUserGroupId_First(userGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user group group role in the ordered set where userGroupId = &#63;.
 	*
 	* @param userGroupId the user group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -291,11 +299,23 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the user group group roles before and after the current user group group role in the ordered set where userGroupId = &#63;.
+	* Returns the last user group group role in the ordered set where userGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userGroupId the user group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByUserGroupId_Last(
+		long userGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUserGroupId_Last(userGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the user group group roles before and after the current user group group role in the ordered set where userGroupId = &#63;.
 	*
 	* @param userGroupGroupRolePK the primary key of the current user group group role
 	* @param userGroupId the user group ID
@@ -372,10 +392,6 @@ public class UserGroupGroupRoleUtil {
 	/**
 	* Returns the first user group group role in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user group group role
@@ -391,11 +407,22 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the last user group group role in the ordered set where groupId = &#63;.
+	* Returns the first user group group role in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user group group role in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -412,11 +439,22 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the user group group roles before and after the current user group group role in the ordered set where groupId = &#63;.
+	* Returns the last user group group role in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the user group group roles before and after the current user group group role in the ordered set where groupId = &#63;.
 	*
 	* @param userGroupGroupRolePK the primary key of the current user group group role
 	* @param groupId the group ID
@@ -492,10 +530,6 @@ public class UserGroupGroupRoleUtil {
 	/**
 	* Returns the first user group group role in the ordered set where roleId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param roleId the role ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user group group role
@@ -511,11 +545,22 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the last user group group role in the ordered set where roleId = &#63;.
+	* Returns the first user group group role in the ordered set where roleId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param roleId the role ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByRoleId_First(
+		long roleId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByRoleId_First(roleId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user group group role in the ordered set where roleId = &#63;.
 	*
 	* @param roleId the role ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -532,11 +577,22 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the user group group roles before and after the current user group group role in the ordered set where roleId = &#63;.
+	* Returns the last user group group role in the ordered set where roleId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param roleId the role ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByRoleId_Last(
+		long roleId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByRoleId_Last(roleId, orderByComparator);
+	}
+
+	/**
+	* Returns the user group group roles before and after the current user group group role in the ordered set where roleId = &#63;.
 	*
 	* @param userGroupGroupRolePK the primary key of the current user group group role
 	* @param roleId the role ID
@@ -617,10 +673,6 @@ public class UserGroupGroupRoleUtil {
 	/**
 	* Returns the first user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userGroupId the user group ID
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -638,11 +690,24 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the last user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
+	* Returns the first user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userGroupId the user group ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByU_G_First(
+		long userGroupId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByU_G_First(userGroupId, groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
 	*
 	* @param userGroupId the user group ID
 	* @param groupId the group ID
@@ -661,11 +726,24 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the user group group roles before and after the current user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
+	* Returns the last user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userGroupId the user group ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByU_G_Last(
+		long userGroupId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByU_G_Last(userGroupId, groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the user group group roles before and after the current user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
 	*
 	* @param userGroupGroupRolePK the primary key of the current user group group role
 	* @param userGroupId the user group ID
@@ -746,10 +824,6 @@ public class UserGroupGroupRoleUtil {
 	/**
 	* Returns the first user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param roleId the role ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -767,11 +841,24 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the last user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
+	* Returns the first user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param roleId the role ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByG_R_First(
+		long groupId, long roleId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_R_First(groupId, roleId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param roleId the role ID
@@ -790,11 +877,24 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	* Returns the user group group roles before and after the current user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
+	* Returns the last user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param roleId the role ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroupGroupRole fetchByG_R_Last(
+		long groupId, long roleId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_R_Last(groupId, roleId, orderByComparator);
+	}
+
+	/**
+	* Returns the user group group roles before and after the current user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
 	*
 	* @param userGroupGroupRolePK the primary key of the current user group group role
 	* @param groupId the group ID

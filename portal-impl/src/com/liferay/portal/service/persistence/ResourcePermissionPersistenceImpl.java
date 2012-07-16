@@ -1159,10 +1159,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where scope = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param scope the scope
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource permission
@@ -1172,32 +1168,47 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByScope_First(int scope,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByScope_First(scope,
+				orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("scope=");
+		msg.append(scope);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where scope = &#63;.
+	 *
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByScope_First(int scope,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ResourcePermission> list = findByScope(scope, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("scope=");
-			msg.append(scope);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where scope = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param scope the scope
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1208,34 +1219,49 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByScope_Last(int scope,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByScope_Last(scope,
+				orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("scope=");
+		msg.append(scope);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where scope = &#63;.
+	 *
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByScope_Last(int scope,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByScope(scope);
 
 		List<ResourcePermission> list = findByScope(scope, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("scope=");
-			msg.append(scope);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where scope = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param scope the scope
@@ -1656,10 +1682,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where roleId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param roleId the role ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource permission
@@ -1669,32 +1691,47 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByRoleId_First(long roleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByRoleId_First(roleId,
+				orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("roleId=");
+		msg.append(roleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByRoleId_First(long roleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ResourcePermission> list = findByRoleId(roleId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param roleId the role ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1705,34 +1742,49 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByRoleId_Last(long roleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByRoleId_Last(roleId,
+				orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("roleId=");
+		msg.append(roleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByRoleId_Last(long roleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRoleId(roleId);
 
 		List<ResourcePermission> list = findByRoleId(roleId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param roleId the role ID
@@ -2025,10 +2077,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param primKey the prim key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2039,35 +2087,51 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByC_P_First(long companyId, String primKey,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_P_First(companyId,
+				primKey, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_P_First(long companyId, String primKey,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ResourcePermission> list = findByC_P(companyId, primKey, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param primKey the prim key
@@ -2079,37 +2143,53 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByC_P_Last(long companyId, String primKey,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_P_Last(companyId,
+				primKey, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_P_Last(long companyId, String primKey,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_P(companyId, primKey);
 
 		List<ResourcePermission> list = findByC_P(companyId, primKey,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param companyId the company ID
@@ -2433,10 +2513,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
@@ -2448,38 +2524,56 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByC_N_S_First(long companyId, String name,
 		int scope, OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_S_First(companyId,
+				name, scope, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_S_First(long companyId, String name,
+		int scope, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<ResourcePermission> list = findByC_N_S(companyId, name, scope, 0,
 				1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
@@ -2492,40 +2586,58 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByC_N_S_Last(long companyId, String name,
 		int scope, OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_S_Last(companyId,
+				name, scope, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_S_Last(long companyId, String name,
+		int scope, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByC_N_S(companyId, name, scope);
 
 		List<ResourcePermission> list = findByC_N_S(companyId, name, scope,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param companyId the company ID
@@ -2876,10 +2988,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
@@ -2892,41 +3000,60 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByC_N_S_P_First(long companyId, String name,
 		int scope, String primKey, OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_S_P_First(companyId,
+				name, scope, primKey, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_S_P_First(long companyId, String name,
+		int scope, String primKey, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<ResourcePermission> list = findByC_N_S_P(companyId, name, scope,
 				primKey, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
@@ -2940,43 +3067,62 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByC_N_S_P_Last(long companyId, String name,
 		int scope, String primKey, OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_S_P_Last(companyId,
+				name, scope, primKey, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_S_P_Last(long companyId, String name,
+		int scope, String primKey, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByC_N_S_P(companyId, name, scope, primKey);
 
 		List<ResourcePermission> list = findByC_N_S_P(companyId, name, scope,
 				primKey, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param companyId the company ID
@@ -3345,10 +3491,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and ownerId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param primKey the prim key
@@ -3361,41 +3503,60 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByC_N_P_O_First(long companyId, String name,
 		String primKey, long ownerId, OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_P_O_First(companyId,
+				name, primKey, ownerId, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(", ownerId=");
+		msg.append(ownerId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and ownerId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param primKey the prim key
+	 * @param ownerId the owner ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_P_O_First(long companyId, String name,
+		String primKey, long ownerId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<ResourcePermission> list = findByC_N_P_O(companyId, name, primKey,
 				ownerId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", ownerId=");
-			msg.append(ownerId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and ownerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
@@ -3409,43 +3570,62 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public ResourcePermission findByC_N_P_O_Last(long companyId, String name,
 		String primKey, long ownerId, OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_P_O_Last(companyId,
+				name, primKey, ownerId, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(", ownerId=");
+		msg.append(ownerId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and ownerId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param primKey the prim key
+	 * @param ownerId the owner ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_P_O_Last(long companyId, String name,
+		String primKey, long ownerId, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByC_N_P_O(companyId, name, primKey, ownerId);
 
 		List<ResourcePermission> list = findByC_N_P_O(companyId, name, primKey,
 				ownerId, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", ownerId=");
-			msg.append(ownerId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and ownerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param companyId the company ID
@@ -3824,10 +4004,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
@@ -3842,44 +4018,64 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String name, int scope, String primKey, long roleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_S_P_R_First(companyId,
+				name, scope, primKey, roleId, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(", roleId=");
+		msg.append(roleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_S_P_R_First(long companyId,
+		String name, int scope, String primKey, long roleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ResourcePermission> list = findByC_N_S_P_R(companyId, name, scope,
 				primKey, roleId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(12);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
@@ -3895,46 +4091,66 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		int scope, String primKey, long roleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_S_P_R_Last(companyId,
+				name, scope, primKey, roleId, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(", roleId=");
+		msg.append(roleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_S_P_R_Last(long companyId,
+		String name, int scope, String primKey, long roleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_N_S_P_R(companyId, name, scope, primKey, roleId);
 
 		List<ResourcePermission> list = findByC_N_S_P_R(companyId, name, scope,
 				primKey, roleId, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(12);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param companyId the company ID
@@ -4559,10 +4775,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param primKey the prim key
@@ -4577,44 +4789,64 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String name, String primKey, long roleId, long actionIds,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_P_R_A_First(companyId,
+				name, primKey, roleId, actionIds, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(", roleId=");
+		msg.append(roleId);
+
+		msg.append(", actionIds=");
+		msg.append(actionIds);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_P_R_A_First(long companyId,
+		String name, String primKey, long roleId, long actionIds,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ResourcePermission> list = findByC_N_P_R_A(companyId, name,
 				primKey, roleId, actionIds, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(12);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(", actionIds=");
-			msg.append(actionIds);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
@@ -4630,46 +4862,66 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String primKey, long roleId, long actionIds,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_P_R_A_Last(companyId,
+				name, primKey, roleId, actionIds, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(", roleId=");
+		msg.append(roleId);
+
+		msg.append(", actionIds=");
+		msg.append(actionIds);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_P_R_A_Last(long companyId,
+		String name, String primKey, long roleId, long actionIds,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_N_P_R_A(companyId, name, primKey, roleId, actionIds);
 
 		List<ResourcePermission> list = findByC_N_P_R_A(companyId, name,
 				primKey, roleId, actionIds, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(12);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(", actionIds=");
-			msg.append(actionIds);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param companyId the company ID
@@ -5066,10 +5318,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
@@ -5085,47 +5333,68 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String name, int scope, String primKey, long roleId, long actionIds,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_S_P_R_A_First(companyId,
+				name, scope, primKey, roleId, actionIds, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(14);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(", roleId=");
+		msg.append(roleId);
+
+		msg.append(", actionIds=");
+		msg.append(actionIds);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_S_P_R_A_First(long companyId,
+		String name, int scope, String primKey, long roleId, long actionIds,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ResourcePermission> list = findByC_N_S_P_R_A(companyId, name,
 				scope, primKey, roleId, actionIds, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(14);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(", actionIds=");
-			msg.append(actionIds);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
@@ -5142,6 +5411,56 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String name, int scope, String primKey, long roleId, long actionIds,
 		OrderByComparator orderByComparator)
 		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByC_N_S_P_R_A_Last(companyId,
+				name, scope, primKey, roleId, actionIds, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(14);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(", roleId=");
+		msg.append(roleId);
+
+		msg.append(", actionIds=");
+		msg.append(actionIds);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByC_N_S_P_R_A_Last(long companyId,
+		String name, int scope, String primKey, long roleId, long actionIds,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_N_S_P_R_A(companyId, name, scope, primKey, roleId,
 				actionIds);
 
@@ -5149,44 +5468,15 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				scope, primKey, roleId, actionIds, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(14);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(", actionIds=");
-			msg.append(actionIds);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourcePermissionId the primary key of the current resource permission
 	 * @param companyId the company ID

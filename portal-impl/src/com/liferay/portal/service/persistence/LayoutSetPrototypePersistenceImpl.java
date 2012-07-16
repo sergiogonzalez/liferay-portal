@@ -743,10 +743,6 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	/**
 	 * Returns the first layout set prototype in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout set prototype
@@ -756,31 +752,46 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
+		LayoutSetPrototype layoutSetPrototype = fetchByUuid_First(uuid,
+				orderByComparator);
+
+		if (layoutSetPrototype != null) {
+			return layoutSetPrototype;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutSetPrototypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout set prototype in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetPrototype fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<LayoutSetPrototype> list = findByUuid(uuid, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLayoutSetPrototypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last layout set prototype in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -791,34 +802,49 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
+		LayoutSetPrototype layoutSetPrototype = fetchByUuid_Last(uuid,
+				orderByComparator);
+
+		if (layoutSetPrototype != null) {
+			return layoutSetPrototype;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutSetPrototypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout set prototype in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetPrototype fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<LayoutSetPrototype> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLayoutSetPrototypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
 	 * @param uuid the uuid
@@ -1448,10 +1474,6 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	/**
 	 * Returns the first layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1462,35 +1484,51 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
+		LayoutSetPrototype layoutSetPrototype = fetchByUuid_C_First(uuid,
+				companyId, orderByComparator);
+
+		if (layoutSetPrototype != null) {
+			return layoutSetPrototype;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutSetPrototypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetPrototype fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<LayoutSetPrototype> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLayoutSetPrototypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1502,37 +1540,53 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
+		LayoutSetPrototype layoutSetPrototype = fetchByUuid_C_Last(uuid,
+				companyId, orderByComparator);
+
+		if (layoutSetPrototype != null) {
+			return layoutSetPrototype;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutSetPrototypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetPrototype fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
 		List<LayoutSetPrototype> list = findByUuid_C(uuid, companyId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLayoutSetPrototypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
 	 * @param uuid the uuid
@@ -2157,10 +2211,6 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	/**
 	 * Returns the first layout set prototype in the ordered set where companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout set prototype
@@ -2170,32 +2220,47 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype findByCompanyId_First(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
+		LayoutSetPrototype layoutSetPrototype = fetchByCompanyId_First(companyId,
+				orderByComparator);
+
+		if (layoutSetPrototype != null) {
+			return layoutSetPrototype;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutSetPrototypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout set prototype in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetPrototype fetchByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<LayoutSetPrototype> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLayoutSetPrototypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last layout set prototype in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2206,34 +2271,49 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype findByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
+		LayoutSetPrototype layoutSetPrototype = fetchByCompanyId_Last(companyId,
+				orderByComparator);
+
+		if (layoutSetPrototype != null) {
+			return layoutSetPrototype;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutSetPrototypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout set prototype in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetPrototype fetchByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
 		List<LayoutSetPrototype> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLayoutSetPrototypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
 	 * @param companyId the company ID
@@ -2817,10 +2897,6 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	/**
 	 * Returns the first layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2831,35 +2907,51 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype findByC_A_First(long companyId, boolean active,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
+		LayoutSetPrototype layoutSetPrototype = fetchByC_A_First(companyId,
+				active, orderByComparator);
+
+		if (layoutSetPrototype != null) {
+			return layoutSetPrototype;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutSetPrototypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetPrototype fetchByC_A_First(long companyId, boolean active,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<LayoutSetPrototype> list = findByC_A(companyId, active, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", active=");
-			msg.append(active);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLayoutSetPrototypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
@@ -2871,37 +2963,53 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype findByC_A_Last(long companyId, boolean active,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
+		LayoutSetPrototype layoutSetPrototype = fetchByC_A_Last(companyId,
+				active, orderByComparator);
+
+		if (layoutSetPrototype != null) {
+			return layoutSetPrototype;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutSetPrototypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetPrototype fetchByC_A_Last(long companyId, boolean active,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_A(companyId, active);
 
 		List<LayoutSetPrototype> list = findByC_A(companyId, active, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", active=");
-			msg.append(active);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchLayoutSetPrototypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
 	 * @param companyId the company ID

@@ -146,10 +146,6 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	/**
 	* Returns the first org labor in the ordered set where organizationId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param organizationId the organization ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching org labor
@@ -163,11 +159,20 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last org labor in the ordered set where organizationId = &#63;.
+	* Returns the first org labor in the ordered set where organizationId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param organizationId the organization ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching org labor, or <code>null</code> if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_First(
+		long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last org labor in the ordered set where organizationId = &#63;.
 	*
 	* @param organizationId the organization ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -182,11 +187,20 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the org labors before and after the current org labor in the ordered set where organizationId = &#63;.
+	* Returns the last org labor in the ordered set where organizationId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param organizationId the organization ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_Last(
+		long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the org labors before and after the current org labor in the ordered set where organizationId = &#63;.
 	*
 	* @param orgLaborId the primary key of the current org labor
 	* @param organizationId the organization ID

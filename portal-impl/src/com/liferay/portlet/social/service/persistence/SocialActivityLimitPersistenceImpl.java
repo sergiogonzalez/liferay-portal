@@ -735,10 +735,6 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	/**
 	 * Returns the first social activity limit in the ordered set where userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social activity limit
@@ -748,32 +744,47 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	public SocialActivityLimit findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityLimitException, SystemException {
+		SocialActivityLimit socialActivityLimit = fetchByUserId_First(userId,
+				orderByComparator);
+
+		if (socialActivityLimit != null) {
+			return socialActivityLimit;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityLimitException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity limit in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityLimit fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<SocialActivityLimit> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityLimitException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity limit in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -784,34 +795,49 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	public SocialActivityLimit findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityLimitException, SystemException {
+		SocialActivityLimit socialActivityLimit = fetchByUserId_Last(userId,
+				orderByComparator);
+
+		if (socialActivityLimit != null) {
+			return socialActivityLimit;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityLimitException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity limit in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityLimit fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
 		List<SocialActivityLimit> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityLimitException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity limits before and after the current social activity limit in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activityLimitId the primary key of the current social activity limit
 	 * @param userId the user ID
@@ -1097,10 +1123,6 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	/**
 	 * Returns the first social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1111,35 +1133,51 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	public SocialActivityLimit findByC_C_First(long classNameId, long classPK,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityLimitException, SystemException {
+		SocialActivityLimit socialActivityLimit = fetchByC_C_First(classNameId,
+				classPK, orderByComparator);
+
+		if (socialActivityLimit != null) {
+			return socialActivityLimit;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityLimitException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityLimit fetchByC_C_First(long classNameId, long classPK,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<SocialActivityLimit> list = findByC_C(classNameId, classPK, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", classPK=");
-			msg.append(classPK);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityLimitException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
@@ -1151,37 +1189,53 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	public SocialActivityLimit findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator orderByComparator)
 		throws NoSuchActivityLimitException, SystemException {
+		SocialActivityLimit socialActivityLimit = fetchByC_C_Last(classNameId,
+				classPK, orderByComparator);
+
+		if (socialActivityLimit != null) {
+			return socialActivityLimit;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityLimitException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityLimit fetchByC_C_Last(long classNameId, long classPK,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(classNameId, classPK);
 
 		List<SocialActivityLimit> list = findByC_C(classNameId, classPK,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", classPK=");
-			msg.append(classPK);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchActivityLimitException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the social activity limits before and after the current social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param activityLimitId the primary key of the current social activity limit
 	 * @param classNameId the class name ID

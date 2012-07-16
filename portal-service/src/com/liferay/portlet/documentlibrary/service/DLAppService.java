@@ -261,8 +261,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String fileName, java.lang.String tempFolderName,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException,
-			java.io.IOException;
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Cancels the check out of the file entry. If a user has not checked out

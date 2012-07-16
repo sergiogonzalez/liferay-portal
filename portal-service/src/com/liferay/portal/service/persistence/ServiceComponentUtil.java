@@ -248,10 +248,6 @@ public class ServiceComponentUtil {
 	/**
 	* Returns the first service component in the ordered set where buildNamespace = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param buildNamespace the build namespace
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching service component
@@ -268,11 +264,24 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	* Returns the last service component in the ordered set where buildNamespace = &#63;.
+	* Returns the first service component in the ordered set where buildNamespace = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param buildNamespace the build namespace
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching service component, or <code>null</code> if a matching service component could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ServiceComponent fetchByBuildNamespace_First(
+		java.lang.String buildNamespace,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByBuildNamespace_First(buildNamespace,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last service component in the ordered set where buildNamespace = &#63;.
 	*
 	* @param buildNamespace the build namespace
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -290,11 +299,23 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	* Returns the service components before and after the current service component in the ordered set where buildNamespace = &#63;.
+	* Returns the last service component in the ordered set where buildNamespace = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param buildNamespace the build namespace
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching service component, or <code>null</code> if a matching service component could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ServiceComponent fetchByBuildNamespace_Last(
+		java.lang.String buildNamespace,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByBuildNamespace_Last(buildNamespace, orderByComparator);
+	}
+
+	/**
+	* Returns the service components before and after the current service component in the ordered set where buildNamespace = &#63;.
 	*
 	* @param serviceComponentId the primary key of the current service component
 	* @param buildNamespace the build namespace

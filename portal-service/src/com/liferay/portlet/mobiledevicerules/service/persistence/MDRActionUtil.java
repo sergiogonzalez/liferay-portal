@@ -247,10 +247,6 @@ public class MDRActionUtil {
 	/**
 	* Returns the first m d r action in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action
@@ -266,11 +262,22 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where uuid = &#63;.
+	* Returns the first m d r action in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the last m d r action in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -287,11 +294,22 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r actions before and after the current m d r action in the ordered set where uuid = &#63;.
+	* Returns the last m d r action in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the m d r actions before and after the current m d r action in the ordered set where uuid = &#63;.
 	*
 	* @param actionId the primary key of the current m d r action
 	* @param uuid the uuid
@@ -414,10 +432,6 @@ public class MDRActionUtil {
 	/**
 	* Returns the first m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -435,11 +449,24 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the first m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
@@ -458,11 +485,24 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r actions before and after the current m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the last m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the m d r actions before and after the current m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param actionId the primary key of the current m d r action
 	* @param uuid the uuid
@@ -541,10 +581,6 @@ public class MDRActionUtil {
 	/**
 	* Returns the first m d r action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action
@@ -562,11 +598,24 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where ruleGroupInstanceId = &#63;.
+	* Returns the first m d r action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param ruleGroupInstanceId the rule group instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByRuleGroupInstanceId_First(
+		long ruleGroupInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByRuleGroupInstanceId_First(ruleGroupInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last m d r action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -585,11 +634,24 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r actions before and after the current m d r action in the ordered set where ruleGroupInstanceId = &#63;.
+	* Returns the last m d r action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param ruleGroupInstanceId the rule group instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByRuleGroupInstanceId_Last(
+		long ruleGroupInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByRuleGroupInstanceId_Last(ruleGroupInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the m d r actions before and after the current m d r action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
 	* @param actionId the primary key of the current m d r action
 	* @param ruleGroupInstanceId the rule group instance ID

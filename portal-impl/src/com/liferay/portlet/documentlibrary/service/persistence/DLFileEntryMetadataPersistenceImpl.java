@@ -849,10 +849,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library file entry metadata
@@ -862,32 +858,47 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByUuid_First(uuid,
+				orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryMetadataException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry metadata in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileEntryMetadata> list = findByUuid(uuid, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileEntryMetadataException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file entry metadata in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -898,34 +909,49 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByUuid_Last(uuid,
+				orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryMetadataException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry metadata in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<DLFileEntryMetadata> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileEntryMetadataException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
 	 * @param uuid the uuid
@@ -1216,10 +1242,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where fileEntryTypeId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param fileEntryTypeId the file entry type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library file entry metadata
@@ -1229,32 +1251,48 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata findByFileEntryTypeId_First(
 		long fileEntryTypeId, OrderByComparator orderByComparator)
 		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileEntryTypeId_First(fileEntryTypeId,
+				orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileEntryTypeId=");
+		msg.append(fileEntryTypeId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryMetadataException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry metadata in the ordered set where fileEntryTypeId = &#63;.
+	 *
+	 * @param fileEntryTypeId the file entry type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByFileEntryTypeId_First(
+		long fileEntryTypeId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<DLFileEntryMetadata> list = findByFileEntryTypeId(fileEntryTypeId,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileEntryTypeId=");
-			msg.append(fileEntryTypeId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileEntryMetadataException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file entry metadata in the ordered set where fileEntryTypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileEntryTypeId the file entry type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1265,34 +1303,50 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata findByFileEntryTypeId_Last(
 		long fileEntryTypeId, OrderByComparator orderByComparator)
 		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileEntryTypeId_Last(fileEntryTypeId,
+				orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileEntryTypeId=");
+		msg.append(fileEntryTypeId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryMetadataException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry metadata in the ordered set where fileEntryTypeId = &#63;.
+	 *
+	 * @param fileEntryTypeId the file entry type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByFileEntryTypeId_Last(
+		long fileEntryTypeId, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByFileEntryTypeId(fileEntryTypeId);
 
 		List<DLFileEntryMetadata> list = findByFileEntryTypeId(fileEntryTypeId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileEntryTypeId=");
-			msg.append(fileEntryTypeId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileEntryMetadataException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileEntryTypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
 	 * @param fileEntryTypeId the file entry type ID
@@ -1570,10 +1624,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where fileEntryId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param fileEntryId the file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library file entry metadata
@@ -1583,32 +1633,47 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata findByFileEntryId_First(long fileEntryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileEntryId_First(fileEntryId,
+				orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileEntryId=");
+		msg.append(fileEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryMetadataException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry metadata in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByFileEntryId_First(long fileEntryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileEntryMetadata> list = findByFileEntryId(fileEntryId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileEntryId=");
-			msg.append(fileEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileEntryMetadataException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file entry metadata in the ordered set where fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1619,34 +1684,49 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata findByFileEntryId_Last(long fileEntryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileEntryId_Last(fileEntryId,
+				orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileEntryId=");
+		msg.append(fileEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryMetadataException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry metadata in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByFileEntryId_Last(long fileEntryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFileEntryId(fileEntryId);
 
 		List<DLFileEntryMetadata> list = findByFileEntryId(fileEntryId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileEntryId=");
-			msg.append(fileEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileEntryMetadataException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
 	 * @param fileEntryId the file entry ID
@@ -1925,10 +2005,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where fileVersionId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param fileVersionId the file version ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library file entry metadata
@@ -1938,32 +2014,47 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata findByFileVersionId_First(long fileVersionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileVersionId_First(fileVersionId,
+				orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileVersionId=");
+		msg.append(fileVersionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryMetadataException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry metadata in the ordered set where fileVersionId = &#63;.
+	 *
+	 * @param fileVersionId the file version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByFileVersionId_First(long fileVersionId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileEntryMetadata> list = findByFileVersionId(fileVersionId, 0,
 				1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileVersionId=");
-			msg.append(fileVersionId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileEntryMetadataException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file entry metadata in the ordered set where fileVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileVersionId the file version ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1974,34 +2065,49 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata findByFileVersionId_Last(long fileVersionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileVersionId_Last(fileVersionId,
+				orderByComparator);
+
+		if (dlFileEntryMetadata != null) {
+			return dlFileEntryMetadata;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileVersionId=");
+		msg.append(fileVersionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryMetadataException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry metadata in the ordered set where fileVersionId = &#63;.
+	 *
+	 * @param fileVersionId the file version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByFileVersionId_Last(long fileVersionId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFileVersionId(fileVersionId);
 
 		List<DLFileEntryMetadata> list = findByFileVersionId(fileVersionId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileVersionId=");
-			msg.append(fileVersionId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileEntryMetadataException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
 	 * @param fileVersionId the file version ID

@@ -1129,10 +1129,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	/**
 	 * Returns the first country in the ordered set where active = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching country
@@ -1142,31 +1138,45 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	public Country findByActive_First(boolean active,
 		OrderByComparator orderByComparator)
 		throws NoSuchCountryException, SystemException {
+		Country country = fetchByActive_First(active, orderByComparator);
+
+		if (country != null) {
+			return country;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCountryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first country in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country, or <code>null</code> if a matching country could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Country fetchByActive_First(boolean active,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<Country> list = findByActive(active, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("active=");
-			msg.append(active);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchCountryException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last country in the ordered set where active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1177,34 +1187,48 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	public Country findByActive_Last(boolean active,
 		OrderByComparator orderByComparator)
 		throws NoSuchCountryException, SystemException {
+		Country country = fetchByActive_Last(active, orderByComparator);
+
+		if (country != null) {
+			return country;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCountryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last country in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country, or <code>null</code> if a matching country could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Country fetchByActive_Last(boolean active,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByActive(active);
 
 		List<Country> list = findByActive(active, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("active=");
-			msg.append(active);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchCountryException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the countries before and after the current country in the ordered set where active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param countryId the primary key of the current country
 	 * @param active the active

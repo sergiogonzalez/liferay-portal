@@ -240,10 +240,6 @@ public class GroupUtil {
 	/**
 	* Returns the first group in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching group
@@ -260,11 +256,23 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the last group in the ordered set where companyId = &#63;.
+	* Returns the first group in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -282,11 +290,23 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the groups before and after the current group in the ordered set where companyId = &#63;.
+	* Returns the last group in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the groups before and after the current group in the ordered set where companyId = &#63;.
 	*
 	* @param groupId the primary key of the current group
 	* @param companyId the company ID
@@ -409,10 +429,6 @@ public class GroupUtil {
 	/**
 	* Returns the first group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param parentGroupId the parent group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -430,11 +446,24 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
+	* Returns the first group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchByC_P_First(
+		long companyId, long parentGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_P_First(companyId, parentGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param parentGroupId the parent group ID
@@ -453,11 +482,24 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
+	* Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchByC_P_Last(
+		long companyId, long parentGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_P_Last(companyId, parentGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
 	*
 	* @param groupId the primary key of the current group
 	* @param companyId the company ID
@@ -628,10 +670,6 @@ public class GroupUtil {
 	/**
 	* Returns the first group in the ordered set where type = &#63; and active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param type the type
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -648,11 +686,23 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the last group in the ordered set where type = &#63; and active = &#63;.
+	* Returns the first group in the ordered set where type = &#63; and active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param type the type
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchByT_A_First(int type,
+		boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByT_A_First(type, active, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where type = &#63; and active = &#63;.
 	*
 	* @param type the type
 	* @param active the active
@@ -670,11 +720,23 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the groups before and after the current group in the ordered set where type = &#63; and active = &#63;.
+	* Returns the last group in the ordered set where type = &#63; and active = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param type the type
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchByT_A_Last(int type,
+		boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByT_A_Last(type, active, orderByComparator);
+	}
+
+	/**
+	* Returns the groups before and after the current group in the ordered set where type = &#63; and active = &#63;.
 	*
 	* @param groupId the primary key of the current group
 	* @param type the type
@@ -809,10 +871,6 @@ public class GroupUtil {
 	/**
 	* Returns the first group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param parentGroupId the parent group ID
 	* @param site the site
@@ -832,11 +890,26 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
+	* Returns the first group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param site the site
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchByC_P_S_First(
+		long companyId, long parentGroupId, boolean site,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_P_S_First(companyId, parentGroupId, site,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
 	*
 	* @param companyId the company ID
 	* @param parentGroupId the parent group ID
@@ -857,11 +930,26 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
+	* Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param site the site
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchByC_P_S_Last(
+		long companyId, long parentGroupId, boolean site,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_P_S_Last(companyId, parentGroupId, site,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
 	*
 	* @param groupId the primary key of the current group
 	* @param companyId the company ID

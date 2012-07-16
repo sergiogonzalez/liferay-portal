@@ -308,8 +308,7 @@ public class DLAppServiceHttp {
 		java.lang.String fileName, java.lang.String tempFolderName,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException,
-			java.io.IOException {
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"addTempFileEntry", _addTempFileEntryParameterTypes6);
@@ -329,10 +328,6 @@ public class DLAppServiceHttp {
 
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				if (e instanceof java.io.IOException) {
-					throw (java.io.IOException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

@@ -660,10 +660,6 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	/**
 	 * Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param resourceBlockId the resource block ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource block permission
@@ -673,32 +669,48 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	public ResourceBlockPermission findByResourceBlockId_First(
 		long resourceBlockId, OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockPermissionException, SystemException {
+		ResourceBlockPermission resourceBlockPermission = fetchByResourceBlockId_First(resourceBlockId,
+				orderByComparator);
+
+		if (resourceBlockPermission != null) {
+			return resourceBlockPermission;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("resourceBlockId=");
+		msg.append(resourceBlockId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourceBlockPermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission fetchByResourceBlockId_First(
+		long resourceBlockId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<ResourceBlockPermission> list = findByResourceBlockId(resourceBlockId,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("resourceBlockId=");
-			msg.append(resourceBlockId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourceBlockPermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourceBlockId the resource block ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -709,34 +721,50 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	public ResourceBlockPermission findByResourceBlockId_Last(
 		long resourceBlockId, OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockPermissionException, SystemException {
+		ResourceBlockPermission resourceBlockPermission = fetchByResourceBlockId_Last(resourceBlockId,
+				orderByComparator);
+
+		if (resourceBlockPermission != null) {
+			return resourceBlockPermission;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("resourceBlockId=");
+		msg.append(resourceBlockId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourceBlockPermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission fetchByResourceBlockId_Last(
+		long resourceBlockId, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByResourceBlockId(resourceBlockId);
 
 		List<ResourceBlockPermission> list = findByResourceBlockId(resourceBlockId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("resourceBlockId=");
-			msg.append(resourceBlockId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchResourceBlockPermissionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the resource block permissions before and after the current resource block permission in the ordered set where resourceBlockId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param resourceBlockPermissionId the primary key of the current resource block permission
 	 * @param resourceBlockId the resource block ID

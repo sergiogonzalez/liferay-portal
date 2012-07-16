@@ -244,10 +244,6 @@ public class PollsVoteUtil {
 	/**
 	* Returns the first polls vote in the ordered set where questionId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param questionId the question ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote
@@ -264,11 +260,23 @@ public class PollsVoteUtil {
 	}
 
 	/**
-	* Returns the last polls vote in the ordered set where questionId = &#63;.
+	* Returns the first polls vote in the ordered set where questionId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param questionId the question ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.polls.model.PollsVote fetchByQuestionId_First(
+		long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByQuestionId_First(questionId, orderByComparator);
+	}
+
+	/**
+	* Returns the last polls vote in the ordered set where questionId = &#63;.
 	*
 	* @param questionId the question ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -286,11 +294,23 @@ public class PollsVoteUtil {
 	}
 
 	/**
-	* Returns the polls votes before and after the current polls vote in the ordered set where questionId = &#63;.
+	* Returns the last polls vote in the ordered set where questionId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param questionId the question ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.polls.model.PollsVote fetchByQuestionId_Last(
+		long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByQuestionId_Last(questionId, orderByComparator);
+	}
+
+	/**
+	* Returns the polls votes before and after the current polls vote in the ordered set where questionId = &#63;.
 	*
 	* @param voteId the primary key of the current polls vote
 	* @param questionId the question ID
@@ -366,10 +386,6 @@ public class PollsVoteUtil {
 	/**
 	* Returns the first polls vote in the ordered set where choiceId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param choiceId the choice ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote
@@ -385,11 +401,23 @@ public class PollsVoteUtil {
 	}
 
 	/**
-	* Returns the last polls vote in the ordered set where choiceId = &#63;.
+	* Returns the first polls vote in the ordered set where choiceId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param choiceId the choice ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.polls.model.PollsVote fetchByChoiceId_First(
+		long choiceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByChoiceId_First(choiceId, orderByComparator);
+	}
+
+	/**
+	* Returns the last polls vote in the ordered set where choiceId = &#63;.
 	*
 	* @param choiceId the choice ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -406,11 +434,22 @@ public class PollsVoteUtil {
 	}
 
 	/**
-	* Returns the polls votes before and after the current polls vote in the ordered set where choiceId = &#63;.
+	* Returns the last polls vote in the ordered set where choiceId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param choiceId the choice ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.polls.model.PollsVote fetchByChoiceId_Last(
+		long choiceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByChoiceId_Last(choiceId, orderByComparator);
+	}
+
+	/**
+	* Returns the polls votes before and after the current polls vote in the ordered set where choiceId = &#63;.
 	*
 	* @param voteId the primary key of the current polls vote
 	* @param choiceId the choice ID
