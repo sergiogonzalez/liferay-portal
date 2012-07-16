@@ -238,10 +238,6 @@ public class ImageUtil {
 	/**
 	* Returns the first image in the ordered set where size &lt; &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param size the size
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching image
@@ -256,11 +252,21 @@ public class ImageUtil {
 	}
 
 	/**
-	* Returns the last image in the ordered set where size &lt; &#63;.
+	* Returns the first image in the ordered set where size &lt; &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param size the size
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching image, or <code>null</code> if a matching image could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Image fetchByLtSize_First(int size,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByLtSize_First(size, orderByComparator);
+	}
+
+	/**
+	* Returns the last image in the ordered set where size &lt; &#63;.
 	*
 	* @param size the size
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -276,11 +282,21 @@ public class ImageUtil {
 	}
 
 	/**
-	* Returns the images before and after the current image in the ordered set where size &lt; &#63;.
+	* Returns the last image in the ordered set where size &lt; &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param size the size
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching image, or <code>null</code> if a matching image could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Image fetchByLtSize_Last(int size,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByLtSize_Last(size, orderByComparator);
+	}
+
+	/**
+	* Returns the images before and after the current image in the ordered set where size &lt; &#63;.
 	*
 	* @param imageId the primary key of the current image
 	* @param size the size

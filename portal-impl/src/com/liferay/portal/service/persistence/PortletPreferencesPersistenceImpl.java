@@ -819,10 +819,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	/**
 	 * Returns the first portlet preferences in the ordered set where plid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching portlet preferences
@@ -832,31 +828,46 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences findByPlid_First(long plid,
 		OrderByComparator orderByComparator)
 		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByPlid_First(plid,
+				orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPlid_First(long plid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<PortletPreferences> list = findByPlid(plid, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("plid=");
-			msg.append(plid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -867,34 +878,49 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences findByPlid_Last(long plid,
 		OrderByComparator orderByComparator)
 		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByPlid_Last(plid,
+				orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPlid_Last(long plid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByPlid(plid);
 
 		List<PortletPreferences> list = findByPlid(plid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("plid=");
-			msg.append(plid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param portletPreferencesId the primary key of the current portlet preferences
 	 * @param plid the plid
@@ -1194,10 +1220,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	/**
 	 * Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param plid the plid
 	 * @param portletId the portlet ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1208,35 +1230,51 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences findByP_P_First(long plid, String portletId,
 		OrderByComparator orderByComparator)
 		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByP_P_First(plid,
+				portletId, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByP_P_First(long plid, String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<PortletPreferences> list = findByP_P(plid, portletId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("plid=");
-			msg.append(plid);
-
-			msg.append(", portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param plid the plid
 	 * @param portletId the portlet ID
@@ -1248,37 +1286,53 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences findByP_P_Last(long plid, String portletId,
 		OrderByComparator orderByComparator)
 		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByP_P_Last(plid,
+				portletId, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByP_P_Last(long plid, String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByP_P(plid, portletId);
 
 		List<PortletPreferences> list = findByP_P(plid, portletId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("plid=");
-			msg.append(plid);
-
-			msg.append(", portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param portletPreferencesId the primary key of the current portlet preferences
 	 * @param plid the plid
@@ -1590,10 +1644,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	/**
 	 * Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param ownerId the owner ID
 	 * @param ownerType the owner type
 	 * @param plid the plid
@@ -1605,38 +1655,56 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences findByO_O_P_First(long ownerId, int ownerType,
 		long plid, OrderByComparator orderByComparator)
 		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_O_P_First(ownerId,
+				ownerType, plid, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ownerId=");
+		msg.append(ownerId);
+
+		msg.append(", ownerType=");
+		msg.append(ownerType);
+
+		msg.append(", plid=");
+		msg.append(plid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_O_P_First(long ownerId, int ownerType,
+		long plid, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<PortletPreferences> list = findByO_O_P(ownerId, ownerType, plid,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("ownerId=");
-			msg.append(ownerId);
-
-			msg.append(", ownerType=");
-			msg.append(ownerType);
-
-			msg.append(", plid=");
-			msg.append(plid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param ownerId the owner ID
 	 * @param ownerType the owner type
@@ -1649,40 +1717,58 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences findByO_O_P_Last(long ownerId, int ownerType,
 		long plid, OrderByComparator orderByComparator)
 		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_O_P_Last(ownerId,
+				ownerType, plid, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ownerId=");
+		msg.append(ownerId);
+
+		msg.append(", ownerType=");
+		msg.append(ownerType);
+
+		msg.append(", plid=");
+		msg.append(plid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_O_P_Last(long ownerId, int ownerType,
+		long plid, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByO_O_P(ownerId, ownerType, plid);
 
 		List<PortletPreferences> list = findByO_O_P(ownerId, ownerType, plid,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("ownerId=");
-			msg.append(ownerId);
-
-			msg.append(", ownerType=");
-			msg.append(ownerType);
-
-			msg.append(", plid=");
-			msg.append(plid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param portletPreferencesId the primary key of the current portlet preferences
 	 * @param ownerId the owner ID
@@ -2000,10 +2086,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	/**
 	 * Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param ownerType the owner type
 	 * @param plid the plid
 	 * @param portletId the portlet ID
@@ -2015,38 +2097,56 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences findByO_P_P_First(int ownerType, long plid,
 		String portletId, OrderByComparator orderByComparator)
 		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_P_P_First(ownerType,
+				plid, portletId, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ownerType=");
+		msg.append(ownerType);
+
+		msg.append(", plid=");
+		msg.append(plid);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_P_P_First(int ownerType, long plid,
+		String portletId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<PortletPreferences> list = findByO_P_P(ownerType, plid, portletId,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("ownerType=");
-			msg.append(ownerType);
-
-			msg.append(", plid=");
-			msg.append(plid);
-
-			msg.append(", portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param ownerType the owner type
 	 * @param plid the plid
@@ -2059,40 +2159,58 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences findByO_P_P_Last(int ownerType, long plid,
 		String portletId, OrderByComparator orderByComparator)
 		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_P_P_Last(ownerType,
+				plid, portletId, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ownerType=");
+		msg.append(ownerType);
+
+		msg.append(", plid=");
+		msg.append(plid);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_P_P_Last(int ownerType, long plid,
+		String portletId, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByO_P_P(ownerType, plid, portletId);
 
 		List<PortletPreferences> list = findByO_P_P(ownerType, plid, portletId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("ownerType=");
-			msg.append(ownerType);
-
-			msg.append(", plid=");
-			msg.append(plid);
-
-			msg.append(", portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param portletPreferencesId the primary key of the current portlet preferences
 	 * @param ownerType the owner type

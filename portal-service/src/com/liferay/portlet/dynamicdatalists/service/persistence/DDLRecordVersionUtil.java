@@ -248,10 +248,6 @@ public class DDLRecordVersionUtil {
 	/**
 	* Returns the first d d l record version in the ordered set where recordId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param recordId the record ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record version
@@ -267,11 +263,23 @@ public class DDLRecordVersionUtil {
 	}
 
 	/**
-	* Returns the last d d l record version in the ordered set where recordId = &#63;.
+	* Returns the first d d l record version in the ordered set where recordId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param recordId the record ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByRecordId_First(
+		long recordId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByRecordId_First(recordId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d l record version in the ordered set where recordId = &#63;.
 	*
 	* @param recordId the record ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -288,11 +296,22 @@ public class DDLRecordVersionUtil {
 	}
 
 	/**
-	* Returns the d d l record versions before and after the current d d l record version in the ordered set where recordId = &#63;.
+	* Returns the last d d l record version in the ordered set where recordId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param recordId the record ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByRecordId_Last(
+		long recordId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByRecordId_Last(recordId, orderByComparator);
+	}
+
+	/**
+	* Returns the d d l record versions before and after the current d d l record version in the ordered set where recordId = &#63;.
 	*
 	* @param recordVersionId the primary key of the current d d l record version
 	* @param recordId the record ID
@@ -416,10 +435,6 @@ public class DDLRecordVersionUtil {
 	/**
 	* Returns the first d d l record version in the ordered set where recordId = &#63; and status = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param recordId the record ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -437,11 +452,24 @@ public class DDLRecordVersionUtil {
 	}
 
 	/**
-	* Returns the last d d l record version in the ordered set where recordId = &#63; and status = &#63;.
+	* Returns the first d d l record version in the ordered set where recordId = &#63; and status = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param recordId the record ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByR_S_First(
+		long recordId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByR_S_First(recordId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d l record version in the ordered set where recordId = &#63; and status = &#63;.
 	*
 	* @param recordId the record ID
 	* @param status the status
@@ -460,11 +488,24 @@ public class DDLRecordVersionUtil {
 	}
 
 	/**
-	* Returns the d d l record versions before and after the current d d l record version in the ordered set where recordId = &#63; and status = &#63;.
+	* Returns the last d d l record version in the ordered set where recordId = &#63; and status = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param recordId the record ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByR_S_Last(
+		long recordId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByR_S_Last(recordId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the d d l record versions before and after the current d d l record version in the ordered set where recordId = &#63; and status = &#63;.
 	*
 	* @param recordVersionId the primary key of the current d d l record version
 	* @param recordId the record ID

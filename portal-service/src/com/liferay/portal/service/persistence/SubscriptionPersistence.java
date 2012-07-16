@@ -147,10 +147,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	/**
 	* Returns the first subscription in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching subscription
@@ -164,11 +160,20 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last subscription in the ordered set where userId = &#63;.
+	* Returns the first subscription in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Subscription fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last subscription in the ordered set where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -183,11 +188,20 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the subscriptions before and after the current subscription in the ordered set where userId = &#63;.
+	* Returns the last subscription in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Subscription fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the subscriptions before and after the current subscription in the ordered set where userId = &#63;.
 	*
 	* @param subscriptionId the primary key of the current subscription
 	* @param userId the user ID
@@ -255,10 +269,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	/**
 	* Returns the first subscription in the ordered set where userId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -273,11 +283,21 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last subscription in the ordered set where userId = &#63; and classNameId = &#63;.
+	* Returns the first subscription in the ordered set where userId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Subscription fetchByU_C_First(long userId,
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last subscription in the ordered set where userId = &#63; and classNameId = &#63;.
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
@@ -293,11 +313,21 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the subscriptions before and after the current subscription in the ordered set where userId = &#63; and classNameId = &#63;.
+	* Returns the last subscription in the ordered set where userId = &#63; and classNameId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Subscription fetchByU_C_Last(long userId,
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the subscriptions before and after the current subscription in the ordered set where userId = &#63; and classNameId = &#63;.
 	*
 	* @param subscriptionId the primary key of the current subscription
 	* @param userId the user ID
@@ -369,10 +399,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	/**
 	* Returns the first subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
@@ -388,11 +414,22 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the first subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Subscription fetchByC_C_C_First(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
@@ -409,11 +446,22 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the subscriptions before and after the current subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Subscription fetchByC_C_C_Last(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the subscriptions before and after the current subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param subscriptionId the primary key of the current subscription
 	* @param companyId the company ID

@@ -999,10 +999,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	/**
 	 * Returns the first journal content search in the ordered set where portletId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param portletId the portlet ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching journal content search
@@ -1012,32 +1008,47 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch findByPortletId_First(String portletId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByPortletId_First(portletId,
+				orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal content search in the ordered set where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByPortletId_First(String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<JournalContentSearch> list = findByPortletId(portletId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last journal content search in the ordered set where portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param portletId the portlet ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1048,34 +1059,49 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch findByPortletId_Last(String portletId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByPortletId_Last(portletId,
+				orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal content search in the ordered set where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByPortletId_Last(String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByPortletId(portletId);
 
 		List<JournalContentSearch> list = findByPortletId(portletId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the journal content searchs before and after the current journal content search in the ordered set where portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param portletId the portlet ID
@@ -1375,10 +1401,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	/**
 	 * Returns the first journal content search in the ordered set where articleId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param articleId the article ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching journal content search
@@ -1388,32 +1410,47 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch findByArticleId_First(String articleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByArticleId_First(articleId,
+				orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("articleId=");
+		msg.append(articleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal content search in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByArticleId_First(String articleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<JournalContentSearch> list = findByArticleId(articleId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("articleId=");
-			msg.append(articleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last journal content search in the ordered set where articleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param articleId the article ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1424,34 +1461,49 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch findByArticleId_Last(String articleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByArticleId_Last(articleId,
+				orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("articleId=");
+		msg.append(articleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal content search in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByArticleId_Last(String articleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByArticleId(articleId);
 
 		List<JournalContentSearch> list = findByArticleId(articleId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("articleId=");
-			msg.append(articleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the journal content searchs before and after the current journal content search in the ordered set where articleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param articleId the article ID
@@ -1750,10 +1802,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	/**
 	 * Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1764,35 +1812,52 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch findByG_P_First(long groupId,
 		boolean privateLayout, OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_P_First(groupId,
+				privateLayout, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_P_First(long groupId,
+		boolean privateLayout, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<JournalContentSearch> list = findByG_P(groupId, privateLayout, 0,
 				1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
@@ -1804,37 +1869,54 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch findByG_P_Last(long groupId,
 		boolean privateLayout, OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_P_Last(groupId,
+				privateLayout, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_P_Last(long groupId,
+		boolean privateLayout, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_P(groupId, privateLayout);
 
 		List<JournalContentSearch> list = findByG_P(groupId, privateLayout,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -2139,10 +2221,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	/**
 	 * Returns the first journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2153,35 +2231,52 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch findByG_A_First(long groupId, String articleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_A_First(groupId,
+				articleId, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", articleId=");
+		msg.append(articleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_A_First(long groupId,
+		String articleId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<JournalContentSearch> list = findByG_A(groupId, articleId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", articleId=");
-			msg.append(articleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
@@ -2193,37 +2288,53 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch findByG_A_Last(long groupId, String articleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_A_Last(groupId,
+				articleId, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", articleId=");
+		msg.append(articleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_A_Last(long groupId, String articleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_A(groupId, articleId);
 
 		List<JournalContentSearch> list = findByG_A(groupId, articleId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", articleId=");
-			msg.append(articleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -2535,10 +2646,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	/**
 	 * Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
@@ -2551,38 +2658,56 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		boolean privateLayout, long layoutId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_P_L_First(groupId,
+				privateLayout, layoutId, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", layoutId=");
+		msg.append(layoutId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_P_L_First(long groupId,
+		boolean privateLayout, long layoutId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<JournalContentSearch> list = findByG_P_L(groupId, privateLayout,
 				layoutId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", layoutId=");
-			msg.append(layoutId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
@@ -2596,40 +2721,58 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		boolean privateLayout, long layoutId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_P_L_Last(groupId,
+				privateLayout, layoutId, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", layoutId=");
+		msg.append(layoutId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_P_L_Last(long groupId,
+		boolean privateLayout, long layoutId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_L(groupId, privateLayout, layoutId);
 
 		List<JournalContentSearch> list = findByG_P_L(groupId, privateLayout,
 				layoutId, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", layoutId=");
-			msg.append(layoutId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -2949,10 +3092,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	/**
 	 * Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param articleId the article ID
@@ -2965,38 +3104,56 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		boolean privateLayout, String articleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_P_A_First(groupId,
+				privateLayout, articleId, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", articleId=");
+		msg.append(articleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_P_A_First(long groupId,
+		boolean privateLayout, String articleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<JournalContentSearch> list = findByG_P_A(groupId, privateLayout,
 				articleId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", articleId=");
-			msg.append(articleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
@@ -3010,40 +3167,58 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		boolean privateLayout, String articleId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_P_A_Last(groupId,
+				privateLayout, articleId, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", articleId=");
+		msg.append(articleId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_P_A_Last(long groupId,
+		boolean privateLayout, String articleId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_A(groupId, privateLayout, articleId);
 
 		List<JournalContentSearch> list = findByG_P_A(groupId, privateLayout,
 				articleId, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", articleId=");
-			msg.append(articleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -3387,10 +3562,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	/**
 	 * Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
@@ -3404,41 +3575,60 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		boolean privateLayout, long layoutId, String portletId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_P_L_P_First(groupId,
+				privateLayout, layoutId, portletId, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", layoutId=");
+		msg.append(layoutId);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_P_L_P_First(long groupId,
+		boolean privateLayout, long layoutId, String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<JournalContentSearch> list = findByG_P_L_P(groupId, privateLayout,
 				layoutId, portletId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", layoutId=");
-			msg.append(layoutId);
-
-			msg.append(", portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
@@ -3453,43 +3643,62 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		boolean privateLayout, long layoutId, String portletId,
 		OrderByComparator orderByComparator)
 		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByG_P_L_P_Last(groupId,
+				privateLayout, layoutId, portletId, orderByComparator);
+
+		if (journalContentSearch != null) {
+			return journalContentSearch;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", privateLayout=");
+		msg.append(privateLayout);
+
+		msg.append(", layoutId=");
+		msg.append(layoutId);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContentSearchException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param layoutId the layout ID
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByG_P_L_P_Last(long groupId,
+		boolean privateLayout, long layoutId, String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_L_P(groupId, privateLayout, layoutId, portletId);
 
 		List<JournalContentSearch> list = findByG_P_L_P(groupId, privateLayout,
 				layoutId, portletId, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", layoutId=");
-			msg.append(layoutId);
-
-			msg.append(", portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchContentSearchException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
