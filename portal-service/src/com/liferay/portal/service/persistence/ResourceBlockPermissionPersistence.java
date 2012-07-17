@@ -152,10 +152,6 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	/**
 	* Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param resourceBlockId the resource block ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource block permission
@@ -169,11 +165,20 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
+	* Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_First(
+		long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
 	*
 	* @param resourceBlockId the resource block ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -188,11 +193,20 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the resource block permissions before and after the current resource block permission in the ordered set where resourceBlockId = &#63;.
+	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_Last(
+		long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the resource block permissions before and after the current resource block permission in the ordered set where resourceBlockId = &#63;.
 	*
 	* @param resourceBlockPermissionId the primary key of the current resource block permission
 	* @param resourceBlockId the resource block ID

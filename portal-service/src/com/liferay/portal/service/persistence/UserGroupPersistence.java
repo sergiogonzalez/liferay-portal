@@ -147,10 +147,6 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	/**
 	* Returns the first user group in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user group
@@ -164,11 +160,20 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last user group in the ordered set where companyId = &#63;.
+	* Returns the first user group in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group, or <code>null</code> if a matching user group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserGroup fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user group in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -183,11 +188,20 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the user groups before and after the current user group in the ordered set where companyId = &#63;.
+	* Returns the last user group in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group, or <code>null</code> if a matching user group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserGroup fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the user groups before and after the current user group in the ordered set where companyId = &#63;.
 	*
 	* @param userGroupId the primary key of the current user group
 	* @param companyId the company ID
@@ -318,10 +332,6 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	/**
 	* Returns the first user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param parentUserGroupId the parent user group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -336,11 +346,21 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
+	* Returns the first user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group, or <code>null</code> if a matching user group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserGroup fetchByC_P_First(long companyId,
+		long parentUserGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param parentUserGroupId the parent user group ID
@@ -356,11 +376,21 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the user groups before and after the current user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
+	* Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group, or <code>null</code> if a matching user group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserGroup fetchByC_P_Last(long companyId,
+		long parentUserGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the user groups before and after the current user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
 	*
 	* @param userGroupId the primary key of the current user group
 	* @param companyId the company ID

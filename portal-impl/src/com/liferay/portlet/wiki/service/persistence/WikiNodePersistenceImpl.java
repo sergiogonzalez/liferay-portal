@@ -822,10 +822,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	/**
 	 * Returns the first wiki node in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki node
@@ -835,31 +831,45 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByUuid_First(uuid, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki node in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiNode> list = findByUuid(uuid, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchNodeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki node in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -870,34 +880,48 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByUuid_Last(uuid, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki node in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<WikiNode> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchNodeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the primary key of the current wiki node
 	 * @param uuid the uuid
@@ -1377,10 +1401,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	/**
 	 * Returns the first wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1391,35 +1411,51 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByUuid_C_First(uuid, companyId,
+				orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiNode> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchNodeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1431,37 +1467,53 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByUuid_C_Last(uuid, companyId,
+				orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
 		List<WikiNode> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchNodeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the primary key of the current wiki node
 	 * @param uuid the uuid
@@ -1757,10 +1809,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	/**
 	 * Returns the first wiki node in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki node
@@ -1770,31 +1818,45 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByGroupId_First(groupId, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki node in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiNode> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchNodeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki node in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1805,34 +1867,48 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByGroupId_Last(groupId, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki node in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<WikiNode> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchNodeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the primary key of the current wiki node
 	 * @param groupId the group ID
@@ -2424,10 +2500,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	/**
 	 * Returns the first wiki node in the ordered set where companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki node
@@ -2437,31 +2509,45 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode findByCompanyId_First(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByCompanyId_First(companyId, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki node in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WikiNode> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchNodeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2472,34 +2558,48 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode findByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByCompanyId_Last(companyId, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki node in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
 		List<WikiNode> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchNodeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param nodeId the primary key of the current wiki node
 	 * @param companyId the company ID

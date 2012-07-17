@@ -154,10 +154,6 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	/**
 	* Returns the first d d m storage link in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m storage link
@@ -171,11 +167,20 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
-	* Returns the last d d m storage link in the ordered set where uuid = &#63;.
+	* Returns the first d d m storage link in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last d d m storage link in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -190,11 +195,20 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
-	* Returns the d d m storage links before and after the current d d m storage link in the ordered set where uuid = &#63;.
+	* Returns the last d d m storage link in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the d d m storage links before and after the current d d m storage link in the ordered set where uuid = &#63;.
 	*
 	* @param storageLinkId the primary key of the current d d m storage link
 	* @param uuid the uuid
@@ -295,10 +309,6 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	/**
 	* Returns the first d d m storage link in the ordered set where structureId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m storage link
@@ -312,11 +322,20 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
-	* Returns the last d d m storage link in the ordered set where structureId = &#63;.
+	* Returns the first d d m storage link in the ordered set where structureId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param structureId the structure ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByStructureId_First(
+		long structureId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last d d m storage link in the ordered set where structureId = &#63;.
 	*
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -331,11 +350,20 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
-	* Returns the d d m storage links before and after the current d d m storage link in the ordered set where structureId = &#63;.
+	* Returns the last d d m storage link in the ordered set where structureId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param structureId the structure ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByStructureId_Last(
+		long structureId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the d d m storage links before and after the current d d m storage link in the ordered set where structureId = &#63;.
 	*
 	* @param storageLinkId the primary key of the current d d m storage link
 	* @param structureId the structure ID

@@ -584,10 +584,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	/**
 	 * Returns the first list type in the ordered set where type = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching list type
@@ -597,31 +593,45 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public ListType findByType_First(String type,
 		OrderByComparator orderByComparator)
 		throws NoSuchListTypeException, SystemException {
+		ListType listType = fetchByType_First(type, orderByComparator);
+
+		if (listType != null) {
+			return listType;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchListTypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first list type in the ordered set where type = &#63;.
+	 *
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching list type, or <code>null</code> if a matching list type could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ListType fetchByType_First(String type,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ListType> list = findByType(type, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("type=");
-			msg.append(type);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchListTypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last list type in the ordered set where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -632,34 +642,48 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public ListType findByType_Last(String type,
 		OrderByComparator orderByComparator)
 		throws NoSuchListTypeException, SystemException {
+		ListType listType = fetchByType_Last(type, orderByComparator);
+
+		if (listType != null) {
+			return listType;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchListTypeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last list type in the ordered set where type = &#63;.
+	 *
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching list type, or <code>null</code> if a matching list type could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ListType fetchByType_Last(String type,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByType(type);
 
 		List<ListType> list = findByType(type, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("type=");
-			msg.append(type);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchListTypeException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the list types before and after the current list type in the ordered set where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param listTypeId the primary key of the current list type
 	 * @param type the type

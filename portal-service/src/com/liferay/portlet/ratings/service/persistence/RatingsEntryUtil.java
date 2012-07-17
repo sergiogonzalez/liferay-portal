@@ -252,10 +252,6 @@ public class RatingsEntryUtil {
 	/**
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -273,11 +269,24 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
+	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_First(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
@@ -296,11 +305,24 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	* Returns the ratings entries before and after the current ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
+	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_Last(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the ratings entries before and after the current ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param entryId the primary key of the current ratings entry
 	* @param classNameId the class name ID
@@ -434,10 +456,6 @@ public class RatingsEntryUtil {
 	/**
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param score the score
@@ -457,11 +475,26 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
+	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param score the score
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_S_First(
+		long classNameId, long classPK, double score,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_S_First(classNameId, classPK, score,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
@@ -482,11 +515,26 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	* Returns the ratings entries before and after the current ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
+	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param score the score
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_S_Last(
+		long classNameId, long classPK, double score,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_S_Last(classNameId, classPK, score,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the ratings entries before and after the current ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param entryId the primary key of the current ratings entry
 	* @param classNameId the class name ID

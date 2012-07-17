@@ -767,10 +767,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	/**
 	 * Returns the first blogs stats user in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching blogs stats user
@@ -780,32 +776,47 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByGroupId_First(groupId,
+				orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first blogs stats user in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<BlogsStatsUser> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last blogs stats user in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -816,34 +827,49 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByGroupId_Last(groupId,
+				orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last blogs stats user in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<BlogsStatsUser> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the blogs stats users before and after the current blogs stats user in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statsUserId the primary key of the current blogs stats user
 	 * @param groupId the group ID
@@ -1123,10 +1149,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	/**
 	 * Returns the first blogs stats user in the ordered set where userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching blogs stats user
@@ -1136,31 +1158,46 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByUserId_First(userId,
+				orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first blogs stats user in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<BlogsStatsUser> list = findByUserId(userId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last blogs stats user in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1171,34 +1208,49 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByUserId_Last(userId,
+				orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last blogs stats user in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
 		List<BlogsStatsUser> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the blogs stats users before and after the current blogs stats user in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statsUserId the primary key of the current blogs stats user
 	 * @param userId the user ID
@@ -1635,10 +1687,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	/**
 	 * Returns the first blogs stats user in the ordered set where groupId = &#63; and entryCount &ne; &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param entryCount the entry count
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1649,35 +1697,51 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByG_NotE_First(long groupId, int entryCount,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByG_NotE_First(groupId,
+				entryCount, orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", entryCount=");
+		msg.append(entryCount);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first blogs stats user in the ordered set where groupId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByG_NotE_First(long groupId, int entryCount,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<BlogsStatsUser> list = findByG_NotE(groupId, entryCount, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", entryCount=");
-			msg.append(entryCount);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last blogs stats user in the ordered set where groupId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param entryCount the entry count
@@ -1689,37 +1753,53 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByG_NotE_Last(long groupId, int entryCount,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByG_NotE_Last(groupId, entryCount,
+				orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", entryCount=");
+		msg.append(entryCount);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last blogs stats user in the ordered set where groupId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByG_NotE_Last(long groupId, int entryCount,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_NotE(groupId, entryCount);
 
 		List<BlogsStatsUser> list = findByG_NotE(groupId, entryCount,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", entryCount=");
-			msg.append(entryCount);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the blogs stats users before and after the current blogs stats user in the ordered set where groupId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statsUserId the primary key of the current blogs stats user
 	 * @param groupId the group ID
@@ -2011,10 +2091,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	/**
 	 * Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param entryCount the entry count
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2025,35 +2101,51 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByC_NotE_First(long companyId, int entryCount,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByC_NotE_First(companyId,
+				entryCount, orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", entryCount=");
+		msg.append(entryCount);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByC_NotE_First(long companyId, int entryCount,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<BlogsStatsUser> list = findByC_NotE(companyId, entryCount, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", entryCount=");
-			msg.append(entryCount);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param entryCount the entry count
@@ -2065,37 +2157,53 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByC_NotE_Last(long companyId, int entryCount,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByC_NotE_Last(companyId,
+				entryCount, orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", entryCount=");
+		msg.append(entryCount);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByC_NotE_Last(long companyId, int entryCount,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_NotE(companyId, entryCount);
 
 		List<BlogsStatsUser> list = findByC_NotE(companyId, entryCount,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", entryCount=");
-			msg.append(entryCount);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the blogs stats users before and after the current blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statsUserId the primary key of the current blogs stats user
 	 * @param companyId the company ID
@@ -2402,10 +2510,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	/**
 	 * Returns the first blogs stats user in the ordered set where userId = &#63; and lastPostDate = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param lastPostDate the last post date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2416,35 +2520,51 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByU_L_First(long userId, Date lastPostDate,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByU_L_First(userId, lastPostDate,
+				orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", lastPostDate=");
+		msg.append(lastPostDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first blogs stats user in the ordered set where userId = &#63; and lastPostDate = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param lastPostDate the last post date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByU_L_First(long userId, Date lastPostDate,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<BlogsStatsUser> list = findByU_L(userId, lastPostDate, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(", lastPostDate=");
-			msg.append(lastPostDate);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last blogs stats user in the ordered set where userId = &#63; and lastPostDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param lastPostDate the last post date
@@ -2456,37 +2576,53 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser findByU_L_Last(long userId, Date lastPostDate,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByU_L_Last(userId, lastPostDate,
+				orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", lastPostDate=");
+		msg.append(lastPostDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last blogs stats user in the ordered set where userId = &#63; and lastPostDate = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param lastPostDate the last post date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByU_L_Last(long userId, Date lastPostDate,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_L(userId, lastPostDate);
 
 		List<BlogsStatsUser> list = findByU_L(userId, lastPostDate, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(", lastPostDate=");
-			msg.append(lastPostDate);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the blogs stats users before and after the current blogs stats user in the ordered set where userId = &#63; and lastPostDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statsUserId the primary key of the current blogs stats user
 	 * @param userId the user ID

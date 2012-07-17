@@ -662,10 +662,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	/**
 	 * Returns the first announcements flag in the ordered set where entryId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements flag
@@ -675,32 +671,47 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public AnnouncementsFlag findByEntryId_First(long entryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFlagException, SystemException {
+		AnnouncementsFlag announcementsFlag = fetchByEntryId_First(entryId,
+				orderByComparator);
+
+		if (announcementsFlag != null) {
+			return announcementsFlag;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("entryId=");
+		msg.append(entryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFlagException(msg.toString());
+	}
+
+	/**
+	 * Returns the first announcements flag in the ordered set where entryId = &#63;.
+	 *
+	 * @param entryId the entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AnnouncementsFlag fetchByEntryId_First(long entryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<AnnouncementsFlag> list = findByEntryId(entryId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("entryId=");
-			msg.append(entryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFlagException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -711,34 +722,49 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public AnnouncementsFlag findByEntryId_Last(long entryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFlagException, SystemException {
+		AnnouncementsFlag announcementsFlag = fetchByEntryId_Last(entryId,
+				orderByComparator);
+
+		if (announcementsFlag != null) {
+			return announcementsFlag;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("entryId=");
+		msg.append(entryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFlagException(msg.toString());
+	}
+
+	/**
+	 * Returns the last announcements flag in the ordered set where entryId = &#63;.
+	 *
+	 * @param entryId the entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AnnouncementsFlag fetchByEntryId_Last(long entryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByEntryId(entryId);
 
 		List<AnnouncementsFlag> list = findByEntryId(entryId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("entryId=");
-			msg.append(entryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFlagException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the announcements flags before and after the current announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param flagId the primary key of the current announcements flag
 	 * @param entryId the entry ID

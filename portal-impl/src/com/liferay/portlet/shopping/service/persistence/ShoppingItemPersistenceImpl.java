@@ -1222,10 +1222,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	/**
 	 * Returns the first shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1236,35 +1232,51 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	public ShoppingItem findByG_C_First(long groupId, long categoryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchItemException, SystemException {
+		ShoppingItem shoppingItem = fetchByG_C_First(groupId, categoryId,
+				orderByComparator);
+
+		if (shoppingItem != null) {
+			return shoppingItem;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", categoryId=");
+		msg.append(categoryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchItemException(msg.toString());
+	}
+
+	/**
+	 * Returns the first shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching shopping item, or <code>null</code> if a matching shopping item could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ShoppingItem fetchByG_C_First(long groupId, long categoryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ShoppingItem> list = findByG_C(groupId, categoryId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", categoryId=");
-			msg.append(categoryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchItemException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
@@ -1276,37 +1288,53 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	public ShoppingItem findByG_C_Last(long groupId, long categoryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchItemException, SystemException {
+		ShoppingItem shoppingItem = fetchByG_C_Last(groupId, categoryId,
+				orderByComparator);
+
+		if (shoppingItem != null) {
+			return shoppingItem;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", categoryId=");
+		msg.append(categoryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchItemException(msg.toString());
+	}
+
+	/**
+	 * Returns the last shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching shopping item, or <code>null</code> if a matching shopping item could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ShoppingItem fetchByG_C_Last(long groupId, long categoryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C(groupId, categoryId);
 
 		List<ShoppingItem> list = findByG_C(groupId, categoryId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", categoryId=");
-			msg.append(categoryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchItemException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the shopping items before and after the current shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param itemId the primary key of the current shopping item
 	 * @param groupId the group ID

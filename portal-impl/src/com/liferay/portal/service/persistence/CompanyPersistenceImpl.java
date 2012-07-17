@@ -1110,10 +1110,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	/**
 	 * Returns the first company in the ordered set where system = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching company
@@ -1123,31 +1119,45 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	public Company findBySystem_First(boolean system,
 		OrderByComparator orderByComparator)
 		throws NoSuchCompanyException, SystemException {
+		Company company = fetchBySystem_First(system, orderByComparator);
+
+		if (company != null) {
+			return company;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("system=");
+		msg.append(system);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCompanyException(msg.toString());
+	}
+
+	/**
+	 * Returns the first company in the ordered set where system = &#63;.
+	 *
+	 * @param system the system
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching company, or <code>null</code> if a matching company could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Company fetchBySystem_First(boolean system,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<Company> list = findBySystem(system, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("system=");
-			msg.append(system);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchCompanyException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last company in the ordered set where system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1158,34 +1168,48 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	public Company findBySystem_Last(boolean system,
 		OrderByComparator orderByComparator)
 		throws NoSuchCompanyException, SystemException {
+		Company company = fetchBySystem_Last(system, orderByComparator);
+
+		if (company != null) {
+			return company;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("system=");
+		msg.append(system);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCompanyException(msg.toString());
+	}
+
+	/**
+	 * Returns the last company in the ordered set where system = &#63;.
+	 *
+	 * @param system the system
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching company, or <code>null</code> if a matching company could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Company fetchBySystem_Last(boolean system,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countBySystem(system);
 
 		List<Company> list = findBySystem(system, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("system=");
-			msg.append(system);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchCompanyException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the companies before and after the current company in the ordered set where system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the primary key of the current company
 	 * @param system the system

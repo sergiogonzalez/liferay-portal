@@ -663,10 +663,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	/**
 	 * Returns the first user tracker in the ordered set where companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user tracker
@@ -676,32 +672,47 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker findByCompanyId_First(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByCompanyId_First(companyId,
+				orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserTracker> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserTrackerException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -712,34 +723,49 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker findByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByCompanyId_Last(companyId,
+				orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
 		List<UserTracker> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserTrackerException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user trackers before and after the current user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userTrackerId the primary key of the current user tracker
 	 * @param companyId the company ID
@@ -1011,10 +1037,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	/**
 	 * Returns the first user tracker in the ordered set where userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user tracker
@@ -1024,31 +1046,45 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByUserId_First(userId, orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserTracker> list = findByUserId(userId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserTrackerException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user tracker in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1059,34 +1095,48 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByUserId_Last(userId, orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
 		List<UserTracker> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserTrackerException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user trackers before and after the current user tracker in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userTrackerId the primary key of the current user tracker
 	 * @param userId the user ID
@@ -1371,10 +1421,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	/**
 	 * Returns the first user tracker in the ordered set where sessionId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param sessionId the session ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user tracker
@@ -1384,32 +1430,47 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker findBySessionId_First(String sessionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchBySessionId_First(sessionId,
+				orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("sessionId=");
+		msg.append(sessionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchBySessionId_First(String sessionId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<UserTracker> list = findBySessionId(sessionId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("sessionId=");
-			msg.append(sessionId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserTrackerException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param sessionId the session ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1420,34 +1481,49 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker findBySessionId_Last(String sessionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchBySessionId_Last(sessionId,
+				orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("sessionId=");
+		msg.append(sessionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchBySessionId_Last(String sessionId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countBySessionId(sessionId);
 
 		List<UserTracker> list = findBySessionId(sessionId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("sessionId=");
-			msg.append(sessionId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchUserTrackerException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the user trackers before and after the current user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userTrackerId the primary key of the current user tracker
 	 * @param sessionId the session ID

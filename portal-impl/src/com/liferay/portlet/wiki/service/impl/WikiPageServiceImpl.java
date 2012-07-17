@@ -58,7 +58,6 @@ import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.FeedException;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -111,6 +110,17 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getUserId(), nodeId, title, fileName, file);
 	}
 
+	public void addPageAttachment(
+			long nodeId, String title, String fileName, InputStream inputStream)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
+
+		wikiPageLocalService.addPageAttachment(
+			getUserId(), nodeId, title, fileName, inputStream);
+	}
+
 	public void addPageAttachments(
 			long nodeId, String title,
 			List<ObjectValuePair<String, InputStream>> inputStream)
@@ -126,7 +136,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	public String addTempPageAttachment(
 			long nodeId, String fileName, String tempFolderName,
 			InputStream inputStream)
-		throws IOException, PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		WikiNodePermission.check(
 			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);

@@ -248,10 +248,6 @@ public class ShoppingOrderUtil {
 	/**
 	* Returns the first shopping order in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping order
@@ -267,11 +263,22 @@ public class ShoppingOrderUtil {
 	}
 
 	/**
-	* Returns the last shopping order in the ordered set where groupId = &#63;.
+	* Returns the first shopping order in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching shopping order, or <code>null</code> if a matching shopping order could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingOrder fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last shopping order in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -288,11 +295,22 @@ public class ShoppingOrderUtil {
 	}
 
 	/**
-	* Returns the shopping orders before and after the current shopping order in the ordered set where groupId = &#63;.
+	* Returns the last shopping order in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching shopping order, or <code>null</code> if a matching shopping order could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingOrder fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the shopping orders before and after the current shopping order in the ordered set where groupId = &#63;.
 	*
 	* @param orderId the primary key of the current shopping order
 	* @param groupId the group ID
@@ -535,10 +553,6 @@ public class ShoppingOrderUtil {
 	/**
 	* Returns the first shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param ppPaymentStatus the pp payment status
@@ -558,11 +572,26 @@ public class ShoppingOrderUtil {
 	}
 
 	/**
-	* Returns the last shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
+	* Returns the first shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param ppPaymentStatus the pp payment status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching shopping order, or <code>null</code> if a matching shopping order could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingOrder fetchByG_U_PPPS_First(
+		long groupId, long userId, java.lang.String ppPaymentStatus,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_U_PPPS_First(groupId, userId, ppPaymentStatus,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
@@ -583,11 +612,26 @@ public class ShoppingOrderUtil {
 	}
 
 	/**
-	* Returns the shopping orders before and after the current shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
+	* Returns the last shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param ppPaymentStatus the pp payment status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching shopping order, or <code>null</code> if a matching shopping order could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingOrder fetchByG_U_PPPS_Last(
+		long groupId, long userId, java.lang.String ppPaymentStatus,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_U_PPPS_Last(groupId, userId, ppPaymentStatus,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the shopping orders before and after the current shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
 	*
 	* @param orderId the primary key of the current shopping order
 	* @param groupId the group ID

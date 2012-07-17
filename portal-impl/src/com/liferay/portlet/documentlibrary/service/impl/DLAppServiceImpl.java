@@ -355,7 +355,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public String addTempFileEntry(
 			long groupId, long folderId, String fileName, String tempFolderName,
 			InputStream inputStream)
-		throws IOException, PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		DLFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_DOCUMENT);

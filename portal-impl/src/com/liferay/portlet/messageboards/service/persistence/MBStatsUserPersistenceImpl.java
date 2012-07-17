@@ -698,10 +698,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	/**
 	 * Returns the first message boards stats user in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message boards stats user
@@ -711,31 +707,46 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		MBStatsUser mbStatsUser = fetchByGroupId_First(groupId,
+				orderByComparator);
+
+		if (mbStatsUser != null) {
+			return mbStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first message boards stats user in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBStatsUser fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<MBStatsUser> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last message boards stats user in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -746,34 +757,48 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		MBStatsUser mbStatsUser = fetchByGroupId_Last(groupId, orderByComparator);
+
+		if (mbStatsUser != null) {
+			return mbStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last message boards stats user in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBStatsUser fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<MBStatsUser> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the message boards stats users before and after the current message boards stats user in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statsUserId the primary key of the current message boards stats user
 	 * @param groupId the group ID
@@ -1053,10 +1078,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	/**
 	 * Returns the first message boards stats user in the ordered set where userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message boards stats user
@@ -1066,31 +1087,45 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		MBStatsUser mbStatsUser = fetchByUserId_First(userId, orderByComparator);
+
+		if (mbStatsUser != null) {
+			return mbStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first message boards stats user in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBStatsUser fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<MBStatsUser> list = findByUserId(userId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last message boards stats user in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1101,34 +1136,48 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		MBStatsUser mbStatsUser = fetchByUserId_Last(userId, orderByComparator);
+
+		if (mbStatsUser != null) {
+			return mbStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last message boards stats user in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBStatsUser fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
 		List<MBStatsUser> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the message boards stats users before and after the current message boards stats user in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statsUserId the primary key of the current message boards stats user
 	 * @param userId the user ID
@@ -1573,10 +1622,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	/**
 	 * Returns the first message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param messageCount the message count
@@ -1588,38 +1633,56 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser findByG_NotU_NotM_First(long groupId, long userId,
 		int messageCount, OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		MBStatsUser mbStatsUser = fetchByG_NotU_NotM_First(groupId, userId,
+				messageCount, orderByComparator);
+
+		if (mbStatsUser != null) {
+			return mbStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", messageCount=");
+		msg.append(messageCount);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param messageCount the message count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBStatsUser fetchByG_NotU_NotM_First(long groupId, long userId,
+		int messageCount, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<MBStatsUser> list = findByG_NotU_NotM(groupId, userId,
 				messageCount, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(", messageCount=");
-			msg.append(messageCount);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
@@ -1632,40 +1695,58 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser findByG_NotU_NotM_Last(long groupId, long userId,
 		int messageCount, OrderByComparator orderByComparator)
 		throws NoSuchStatsUserException, SystemException {
+		MBStatsUser mbStatsUser = fetchByG_NotU_NotM_Last(groupId, userId,
+				messageCount, orderByComparator);
+
+		if (mbStatsUser != null) {
+			return mbStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", messageCount=");
+		msg.append(messageCount);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param messageCount the message count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBStatsUser fetchByG_NotU_NotM_Last(long groupId, long userId,
+		int messageCount, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_NotU_NotM(groupId, userId, messageCount);
 
 		List<MBStatsUser> list = findByG_NotU_NotM(groupId, userId,
 				messageCount, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(", messageCount=");
-			msg.append(messageCount);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatsUserException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the message boards stats users before and after the current message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statsUserId the primary key of the current message boards stats user
 	 * @param groupId the group ID

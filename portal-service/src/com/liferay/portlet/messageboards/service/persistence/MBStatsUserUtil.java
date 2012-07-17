@@ -248,10 +248,6 @@ public class MBStatsUserUtil {
 	/**
 	* Returns the first message boards stats user in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards stats user
@@ -267,11 +263,22 @@ public class MBStatsUserUtil {
 	}
 
 	/**
-	* Returns the last message boards stats user in the ordered set where groupId = &#63;.
+	* Returns the first message boards stats user in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards stats user in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -288,11 +295,22 @@ public class MBStatsUserUtil {
 	}
 
 	/**
-	* Returns the message boards stats users before and after the current message boards stats user in the ordered set where groupId = &#63;.
+	* Returns the last message boards stats user in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the message boards stats users before and after the current message boards stats user in the ordered set where groupId = &#63;.
 	*
 	* @param statsUserId the primary key of the current message boards stats user
 	* @param groupId the group ID
@@ -367,10 +385,6 @@ public class MBStatsUserUtil {
 	/**
 	* Returns the first message boards stats user in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards stats user
@@ -386,11 +400,22 @@ public class MBStatsUserUtil {
 	}
 
 	/**
-	* Returns the last message boards stats user in the ordered set where userId = &#63;.
+	* Returns the first message boards stats user in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards stats user in the ordered set where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -407,11 +432,22 @@ public class MBStatsUserUtil {
 	}
 
 	/**
-	* Returns the message boards stats users before and after the current message boards stats user in the ordered set where userId = &#63;.
+	* Returns the last message boards stats user in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the message boards stats users before and after the current message boards stats user in the ordered set where userId = &#63;.
 	*
 	* @param statsUserId the primary key of the current message boards stats user
 	* @param userId the user ID
@@ -540,10 +576,6 @@ public class MBStatsUserUtil {
 	/**
 	* Returns the first message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param messageCount the message count
@@ -563,11 +595,26 @@ public class MBStatsUserUtil {
 	}
 
 	/**
-	* Returns the last message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
+	* Returns the first message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param messageCount the message count
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByG_NotU_NotM_First(
+		long groupId, long userId, int messageCount,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_NotU_NotM_First(groupId, userId, messageCount,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
@@ -588,11 +635,26 @@ public class MBStatsUserUtil {
 	}
 
 	/**
-	* Returns the message boards stats users before and after the current message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
+	* Returns the last message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param messageCount the message count
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByG_NotU_NotM_Last(
+		long groupId, long userId, int messageCount,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_NotU_NotM_Last(groupId, userId, messageCount,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the message boards stats users before and after the current message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
 	*
 	* @param statsUserId the primary key of the current message boards stats user
 	* @param groupId the group ID

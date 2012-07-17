@@ -916,10 +916,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	/**
 	 * Returns the first document library file version in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library file version
@@ -929,31 +925,45 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByUuid_First(uuid, orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileVersion> list = findByUuid(uuid, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file version in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -964,34 +974,48 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByUuid_Last(uuid, orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<DLFileVersion> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file versions before and after the current document library file version in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileVersionId the primary key of the current document library file version
 	 * @param uuid the uuid
@@ -1472,10 +1496,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	/**
 	 * Returns the first document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1486,35 +1506,51 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByUuid_C_First(uuid, companyId,
+				orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileVersion> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1526,37 +1562,53 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByUuid_C_Last(uuid, companyId,
+				orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
 		List<DLFileVersion> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file versions before and after the current document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileVersionId the primary key of the current document library file version
 	 * @param uuid the uuid
@@ -1854,10 +1906,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	/**
 	 * Returns the first document library file version in the ordered set where fileEntryId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param fileEntryId the file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library file version
@@ -1867,32 +1915,47 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByFileEntryId_First(long fileEntryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByFileEntryId_First(fileEntryId,
+				orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileEntryId=");
+		msg.append(fileEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByFileEntryId_First(long fileEntryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileVersion> list = findByFileEntryId(fileEntryId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileEntryId=");
-			msg.append(fileEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file version in the ordered set where fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1903,34 +1966,49 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByFileEntryId_Last(long fileEntryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByFileEntryId_Last(fileEntryId,
+				orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileEntryId=");
+		msg.append(fileEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByFileEntryId_Last(long fileEntryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFileEntryId(fileEntryId);
 
 		List<DLFileVersion> list = findByFileEntryId(fileEntryId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileEntryId=");
-			msg.append(fileEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileVersionId the primary key of the current document library file version
 	 * @param fileEntryId the file entry ID
@@ -2387,10 +2465,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	/**
 	 * Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2401,35 +2475,51 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByF_S_First(long fileEntryId, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByF_S_First(fileEntryId, status,
+				orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileEntryId=");
+		msg.append(fileEntryId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByF_S_First(long fileEntryId, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileVersion> list = findByF_S(fileEntryId, status, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileEntryId=");
-			msg.append(fileEntryId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
@@ -2441,37 +2531,53 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByF_S_Last(long fileEntryId, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByF_S_Last(fileEntryId, status,
+				orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("fileEntryId=");
+		msg.append(fileEntryId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByF_S_Last(long fileEntryId, int status,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByF_S(fileEntryId, status);
 
 		List<DLFileVersion> list = findByF_S(fileEntryId, status, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fileEntryId=");
-			msg.append(fileEntryId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileVersionId the primary key of the current document library file version
 	 * @param fileEntryId the file entry ID
@@ -2778,10 +2884,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	/**
 	 * Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param status the status
@@ -2793,38 +2895,56 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByG_F_S_First(long groupId, long folderId,
 		int status, OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByG_F_S_First(groupId, folderId,
+				status, orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByG_F_S_First(long groupId, long folderId,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<DLFileVersion> list = findByG_F_S(groupId, folderId, status, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", folderId=");
-			msg.append(folderId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
@@ -2837,40 +2957,58 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion findByG_F_S_Last(long groupId, long folderId,
 		int status, OrderByComparator orderByComparator)
 		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByG_F_S_Last(groupId, folderId,
+				status, orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByG_F_S_Last(long groupId, long folderId,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_F_S(groupId, folderId, status);
 
 		List<DLFileVersion> list = findByG_F_S(groupId, folderId, status,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", folderId=");
-			msg.append(folderId);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileVersionException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file versions before and after the current document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileVersionId the primary key of the current document library file version
 	 * @param groupId the group ID

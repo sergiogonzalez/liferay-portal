@@ -681,10 +681,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	/**
 	 * Returns the first polls vote in the ordered set where questionId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param questionId the question ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls vote
@@ -694,32 +690,47 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public PollsVote findByQuestionId_First(long questionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVoteException, SystemException {
+		PollsVote pollsVote = fetchByQuestionId_First(questionId,
+				orderByComparator);
+
+		if (pollsVote != null) {
+			return pollsVote;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("questionId=");
+		msg.append(questionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVoteException(msg.toString());
+	}
+
+	/**
+	 * Returns the first polls vote in the ordered set where questionId = &#63;.
+	 *
+	 * @param questionId the question ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PollsVote fetchByQuestionId_First(long questionId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<PollsVote> list = findByQuestionId(questionId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("questionId=");
-			msg.append(questionId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchVoteException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last polls vote in the ordered set where questionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param questionId the question ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -730,34 +741,49 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public PollsVote findByQuestionId_Last(long questionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVoteException, SystemException {
+		PollsVote pollsVote = fetchByQuestionId_Last(questionId,
+				orderByComparator);
+
+		if (pollsVote != null) {
+			return pollsVote;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("questionId=");
+		msg.append(questionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVoteException(msg.toString());
+	}
+
+	/**
+	 * Returns the last polls vote in the ordered set where questionId = &#63;.
+	 *
+	 * @param questionId the question ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PollsVote fetchByQuestionId_Last(long questionId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByQuestionId(questionId);
 
 		List<PollsVote> list = findByQuestionId(questionId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("questionId=");
-			msg.append(questionId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchVoteException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the polls votes before and after the current polls vote in the ordered set where questionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param voteId the primary key of the current polls vote
 	 * @param questionId the question ID
@@ -1030,10 +1056,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	/**
 	 * Returns the first polls vote in the ordered set where choiceId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param choiceId the choice ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls vote
@@ -1043,31 +1065,45 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public PollsVote findByChoiceId_First(long choiceId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVoteException, SystemException {
+		PollsVote pollsVote = fetchByChoiceId_First(choiceId, orderByComparator);
+
+		if (pollsVote != null) {
+			return pollsVote;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("choiceId=");
+		msg.append(choiceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVoteException(msg.toString());
+	}
+
+	/**
+	 * Returns the first polls vote in the ordered set where choiceId = &#63;.
+	 *
+	 * @param choiceId the choice ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PollsVote fetchByChoiceId_First(long choiceId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<PollsVote> list = findByChoiceId(choiceId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("choiceId=");
-			msg.append(choiceId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchVoteException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last polls vote in the ordered set where choiceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param choiceId the choice ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1078,34 +1114,48 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public PollsVote findByChoiceId_Last(long choiceId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVoteException, SystemException {
+		PollsVote pollsVote = fetchByChoiceId_Last(choiceId, orderByComparator);
+
+		if (pollsVote != null) {
+			return pollsVote;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("choiceId=");
+		msg.append(choiceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVoteException(msg.toString());
+	}
+
+	/**
+	 * Returns the last polls vote in the ordered set where choiceId = &#63;.
+	 *
+	 * @param choiceId the choice ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PollsVote fetchByChoiceId_Last(long choiceId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByChoiceId(choiceId);
 
 		List<PollsVote> list = findByChoiceId(choiceId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("choiceId=");
-			msg.append(choiceId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchVoteException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the polls votes before and after the current polls vote in the ordered set where choiceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param voteId the primary key of the current polls vote
 	 * @param choiceId the choice ID

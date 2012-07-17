@@ -875,10 +875,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	/**
 	 * Returns the first document library file shortcut in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library file shortcut
@@ -888,31 +884,46 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByUuid_First(uuid,
+				orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file shortcut in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileShortcut> list = findByUuid(uuid, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file shortcut in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -923,34 +934,48 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByUuid_Last(uuid, orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file shortcut in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<DLFileShortcut> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileShortcutId the primary key of the current document library file shortcut
 	 * @param uuid the uuid
@@ -1421,10 +1446,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	/**
 	 * Returns the first document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1435,35 +1456,51 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByUuid_C_First(uuid, companyId,
+				orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileShortcut> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1475,37 +1512,53 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByUuid_C_Last(uuid, companyId,
+				orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
 		List<DLFileShortcut> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileShortcutId the primary key of the current document library file shortcut
 	 * @param uuid the uuid
@@ -1800,10 +1853,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	/**
 	 * Returns the first document library file shortcut in the ordered set where toFileEntryId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param toFileEntryId the to file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library file shortcut
@@ -1813,32 +1862,47 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByToFileEntryId_First(long toFileEntryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByToFileEntryId_First(toFileEntryId,
+				orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("toFileEntryId=");
+		msg.append(toFileEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file shortcut in the ordered set where toFileEntryId = &#63;.
+	 *
+	 * @param toFileEntryId the to file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByToFileEntryId_First(long toFileEntryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<DLFileShortcut> list = findByToFileEntryId(toFileEntryId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("toFileEntryId=");
-			msg.append(toFileEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file shortcut in the ordered set where toFileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param toFileEntryId the to file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1849,34 +1913,49 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByToFileEntryId_Last(long toFileEntryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByToFileEntryId_Last(toFileEntryId,
+				orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("toFileEntryId=");
+		msg.append(toFileEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file shortcut in the ordered set where toFileEntryId = &#63;.
+	 *
+	 * @param toFileEntryId the to file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByToFileEntryId_Last(long toFileEntryId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByToFileEntryId(toFileEntryId);
 
 		List<DLFileShortcut> list = findByToFileEntryId(toFileEntryId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("toFileEntryId=");
-			msg.append(toFileEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where toFileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileShortcutId the primary key of the current document library file shortcut
 	 * @param toFileEntryId the to file entry ID
@@ -2171,10 +2250,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	/**
 	 * Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param active the active
@@ -2186,38 +2261,56 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByG_F_A_First(long groupId, long folderId,
 		boolean active, OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByG_F_A_First(groupId, folderId,
+				active, orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByG_F_A_First(long groupId, long folderId,
+		boolean active, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<DLFileShortcut> list = findByG_F_A(groupId, folderId, active, 0,
 				1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", folderId=");
-			msg.append(folderId);
-
-			msg.append(", active=");
-			msg.append(active);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
@@ -2230,40 +2323,58 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByG_F_A_Last(long groupId, long folderId,
 		boolean active, OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByG_F_A_Last(groupId, folderId,
+				active, orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByG_F_A_Last(long groupId, long folderId,
+		boolean active, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_F_A(groupId, folderId, active);
 
 		List<DLFileShortcut> list = findByG_F_A(groupId, folderId, active,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", folderId=");
-			msg.append(folderId);
-
-			msg.append(", active=");
-			msg.append(active);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileShortcutId the primary key of the current document library file shortcut
 	 * @param groupId the group ID
@@ -2899,10 +3010,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	/**
 	 * Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param active the active
@@ -2915,41 +3022,60 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByG_F_A_S_First(long groupId, long folderId,
 		boolean active, int status, OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByG_F_A_S_First(groupId, folderId,
+				active, status, orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param active the active
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByG_F_A_S_First(long groupId, long folderId,
+		boolean active, int status, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<DLFileShortcut> list = findByG_F_A_S(groupId, folderId, active,
 				status, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", folderId=");
-			msg.append(folderId);
-
-			msg.append(", active=");
-			msg.append(active);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
@@ -2963,43 +3089,62 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut findByG_F_A_S_Last(long groupId, long folderId,
 		boolean active, int status, OrderByComparator orderByComparator)
 		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByG_F_A_S_Last(groupId, folderId,
+				active, status, orderByComparator);
+
+		if (dlFileShortcut != null) {
+			return dlFileShortcut;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileShortcutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param active the active
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByG_F_A_S_Last(long groupId, long folderId,
+		boolean active, int status, OrderByComparator orderByComparator)
+		throws SystemException {
 		int count = countByG_F_A_S(groupId, folderId, active, status);
 
 		List<DLFileShortcut> list = findByG_F_A_S(groupId, folderId, active,
 				status, count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", folderId=");
-			msg.append(folderId);
-
-			msg.append(", active=");
-			msg.append(active);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFileShortcutException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param fileShortcutId the primary key of the current document library file shortcut
 	 * @param groupId the group ID

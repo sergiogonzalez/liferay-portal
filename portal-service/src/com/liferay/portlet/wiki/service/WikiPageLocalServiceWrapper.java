@@ -367,8 +367,7 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		java.lang.String fileName, java.lang.String tempFolderName,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException,
-			java.io.IOException {
+			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageLocalService.addTempPageAttachment(userId, fileName,
 			tempFolderName, inputStream);
 	}
@@ -415,7 +414,8 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 
 	public void deleteTempPageAttachment(long userId,
 		java.lang.String fileName, java.lang.String tempFolderName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_wikiPageLocalService.deleteTempPageAttachment(userId, fileName,
 			tempFolderName);
 	}

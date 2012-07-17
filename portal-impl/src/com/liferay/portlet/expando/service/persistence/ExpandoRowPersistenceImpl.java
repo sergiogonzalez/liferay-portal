@@ -634,10 +634,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	/**
 	 * Returns the first expando row in the ordered set where tableId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param tableId the table ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching expando row
@@ -647,31 +643,45 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	public ExpandoRow findByTableId_First(long tableId,
 		OrderByComparator orderByComparator)
 		throws NoSuchRowException, SystemException {
+		ExpandoRow expandoRow = fetchByTableId_First(tableId, orderByComparator);
+
+		if (expandoRow != null) {
+			return expandoRow;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("tableId=");
+		msg.append(tableId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRowException(msg.toString());
+	}
+
+	/**
+	 * Returns the first expando row in the ordered set where tableId = &#63;.
+	 *
+	 * @param tableId the table ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching expando row, or <code>null</code> if a matching expando row could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ExpandoRow fetchByTableId_First(long tableId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<ExpandoRow> list = findByTableId(tableId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("tableId=");
-			msg.append(tableId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchRowException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last expando row in the ordered set where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param tableId the table ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -682,34 +692,48 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	public ExpandoRow findByTableId_Last(long tableId,
 		OrderByComparator orderByComparator)
 		throws NoSuchRowException, SystemException {
+		ExpandoRow expandoRow = fetchByTableId_Last(tableId, orderByComparator);
+
+		if (expandoRow != null) {
+			return expandoRow;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("tableId=");
+		msg.append(tableId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRowException(msg.toString());
+	}
+
+	/**
+	 * Returns the last expando row in the ordered set where tableId = &#63;.
+	 *
+	 * @param tableId the table ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching expando row, or <code>null</code> if a matching expando row could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ExpandoRow fetchByTableId_Last(long tableId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTableId(tableId);
 
 		List<ExpandoRow> list = findByTableId(tableId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("tableId=");
-			msg.append(tableId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchRowException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the expando rows before and after the current expando row in the ordered set where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param rowId the primary key of the current expando row
 	 * @param tableId the table ID

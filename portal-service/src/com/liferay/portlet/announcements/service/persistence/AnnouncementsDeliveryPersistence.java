@@ -153,10 +153,6 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	/**
 	* Returns the first announcements delivery in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements delivery
@@ -170,11 +166,20 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 			com.liferay.portlet.announcements.NoSuchDeliveryException;
 
 	/**
-	* Returns the last announcements delivery in the ordered set where userId = &#63;.
+	* Returns the first announcements delivery in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last announcements delivery in the ordered set where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -189,11 +194,20 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 			com.liferay.portlet.announcements.NoSuchDeliveryException;
 
 	/**
-	* Returns the announcements deliveries before and after the current announcements delivery in the ordered set where userId = &#63;.
+	* Returns the last announcements delivery in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the announcements deliveries before and after the current announcements delivery in the ordered set where userId = &#63;.
 	*
 	* @param deliveryId the primary key of the current announcements delivery
 	* @param userId the user ID

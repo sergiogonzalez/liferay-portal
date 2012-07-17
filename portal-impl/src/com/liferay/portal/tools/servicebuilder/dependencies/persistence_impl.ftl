@@ -1135,10 +1135,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			/**
 			 * Returns the first ${entity.humanName} in the ordered set where ${finder.getHumanConditions(false)}.
 			 *
-			 * <p>
-			 * <#include "range_comment.ftl">
-			 * </p>
-			 *
 			<#list finderColsList as finderCol>
 			 * @param ${finderCol.name} the ${finderCol.humanName}
 			</#list>
@@ -1154,6 +1150,51 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#list>
 
 			OrderByComparator orderByComparator) throws ${noSuchEntity}Exception, SystemException {
+				${entity.name} ${entity.varName} = fetchBy${finder.name}_First(
+
+				<#list finderColsList as finderCol>
+					${finderCol.name},
+				</#list>
+
+				orderByComparator);
+
+				if (${entity.varName} != null) {
+					return ${entity.varName};
+				}
+
+				StringBundler msg = new StringBundler(${(finderColsList?size * 2) + 2});
+
+				msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+				<#list finderColsList as finderCol>
+					msg.append("<#if finderCol_index != 0>, </#if>${finderCol.name}=");
+					msg.append(${finderCol.name});
+
+					<#if !finderCol_has_next>
+						msg.append(StringPool.CLOSE_CURLY_BRACE);
+					</#if>
+				</#list>
+
+				throw new ${noSuchEntity}Exception(msg.toString());
+			}
+
+			/**
+			 * Returns the first ${entity.humanName} in the ordered set where ${finder.getHumanConditions(false)}.
+			 *
+			<#list finderColsList as finderCol>
+			 * @param ${finderCol.name} the ${finderCol.humanName}
+			</#list>
+			 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+			 * @return the first matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
+			 * @throws SystemException if a system exception occurred
+			 */
+			public ${entity.name} fetchBy${finder.name}_First(
+
+			<#list finderColsList as finderCol>
+				${finderCol.type} ${finderCol.name},
+			</#list>
+
+			OrderByComparator orderByComparator) throws SystemException {
 				List<${entity.name}> list = findBy${finder.name}(
 
 				<#list finderColsList as finderCol>
@@ -1162,33 +1203,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				0, 1, orderByComparator);
 
-				if (list.isEmpty()) {
-					StringBundler msg = new StringBundler(${(finderColsList?size * 2) + 2});
-
-					msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-					<#list finderColsList as finderCol>
-						msg.append("<#if finderCol_index != 0>, </#if>${finderCol.name}=");
-						msg.append(${finderCol.name});
-
-						<#if !finderCol_has_next>
-							msg.append(StringPool.CLOSE_CURLY_BRACE);
-						</#if>
-					</#list>
-
-					throw new ${noSuchEntity}Exception(msg.toString());
-				}
-				else {
+				if (!list.isEmpty()) {
 					return list.get(0);
 				}
+
+				return null;
 			}
 
 			/**
 			 * Returns the last ${entity.humanName} in the ordered set where ${finder.getHumanConditions(false)}.
-			 *
-			 * <p>
-			 * <#include "range_comment.ftl">
-			 * </p>
 			 *
 			<#list finderColsList as finderCol>
 			 * @param ${finderCol.name} the ${finderCol.humanName}
@@ -1205,6 +1228,51 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#list>
 
 			OrderByComparator orderByComparator) throws ${noSuchEntity}Exception, SystemException {
+				${entity.name} ${entity.varName} = fetchBy${finder.name}_Last(
+
+				<#list finderColsList as finderCol>
+					${finderCol.name},
+				</#list>
+
+				orderByComparator);
+
+				if (${entity.varName} != null) {
+					return ${entity.varName};
+				}
+
+				StringBundler msg = new StringBundler(${(finderColsList?size * 2) + 2});
+
+				msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+				<#list finderColsList as finderCol>
+					msg.append("<#if finderCol_index != 0>, </#if>${finderCol.name}=");
+					msg.append(${finderCol.name});
+
+					<#if !finderCol_has_next>
+						msg.append(StringPool.CLOSE_CURLY_BRACE);
+					</#if>
+				</#list>
+
+				throw new ${noSuchEntity}Exception(msg.toString());
+			}
+
+			/**
+			 * Returns the last ${entity.humanName} in the ordered set where ${finder.getHumanConditions(false)}.
+			 *
+			<#list finderColsList as finderCol>
+			 * @param ${finderCol.name} the ${finderCol.humanName}
+			</#list>
+			 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+			 * @return the last matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
+			 * @throws SystemException if a system exception occurred
+			 */
+			public ${entity.name} fetchBy${finder.name}_Last(
+
+			<#list finderColsList as finderCol>
+				${finderCol.type} ${finderCol.name},
+			</#list>
+
+			OrderByComparator orderByComparator) throws SystemException {
 				int count = countBy${finder.name}(
 
 				<#list finderColsList as finderCol>
@@ -1225,33 +1293,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				count - 1, count, orderByComparator);
 
-				if (list.isEmpty()) {
-					StringBundler msg = new StringBundler(${(finderColsList?size * 2) + 2});
-
-					msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-					<#list finderColsList as finderCol>
-						msg.append("<#if finderCol_index != 0>, </#if>${finderCol.name}=");
-						msg.append(${finderCol.name});
-
-						<#if !finderCol_has_next>
-							msg.append(StringPool.CLOSE_CURLY_BRACE);
-						</#if>
-					</#list>
-
-					throw new ${noSuchEntity}Exception(msg.toString());
-				}
-				else {
+				if (!list.isEmpty()) {
 					return list.get(0);
 				}
+
+				return null;
 			}
 
 			/**
 			 * Returns the ${entity.humanNames} before and after the current ${entity.humanName} in the ordered set where ${finder.getHumanConditions(false)}.
-			 *
-			 * <p>
-			 * <#include "range_comment.ftl">
-			 * </p>
 			 *
 			 * @param ${entity.PKVarName} the primary key of the current ${entity.humanName}
 			<#list finderColsList as finderCol>
