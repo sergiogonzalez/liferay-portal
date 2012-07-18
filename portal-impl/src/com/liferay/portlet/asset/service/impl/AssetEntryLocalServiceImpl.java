@@ -779,8 +779,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			classNameId, classPK);
 
 		entry.setExpirationDate(expirationDate);
-		entry.setPublishDate(publishDate);
 		entry.setModifiedDate(modifiedDate);
+		entry.setPublishDate(publishDate);
 
 		updateVisible(entry, visible);
 
@@ -788,7 +788,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		return entry;
 	}
-	
+
 	public AssetEntry updateVisible(
 			String className, long classPK, boolean visible)
 		throws PortalException, SystemException {
