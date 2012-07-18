@@ -768,6 +768,27 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	public AssetEntry updateEntry(
+			String className, long classPK, Date publishDate,
+			Date expirationDate, boolean visible, Date modifiedDate)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		AssetEntry entry = assetEntryPersistence.findByC_C(
+			classNameId, classPK);
+
+		entry.setExpirationDate(expirationDate);
+		entry.setPublishDate(publishDate);
+		entry.setModifiedDate(modifiedDate);
+
+		updateVisible(entry, visible);
+
+		assetEntryPersistence.update(entry, false);
+
+		return entry;
+	}
+	
 	public AssetEntry updateVisible(
 			String className, long classPK, boolean visible)
 		throws PortalException, SystemException {
