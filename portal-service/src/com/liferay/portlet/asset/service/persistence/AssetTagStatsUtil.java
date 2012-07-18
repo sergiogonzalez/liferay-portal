@@ -246,6 +246,10 @@ public class AssetTagStatsUtil {
 	/**
 	* Returns the first asset tag stats in the ordered set where tagId = &#63;.
 	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
 	* @param tagId the tag ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset tag stats
@@ -261,22 +265,11 @@ public class AssetTagStatsUtil {
 	}
 
 	/**
-	* Returns the first asset tag stats in the ordered set where tagId = &#63;.
-	*
-	* @param tagId the tag ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagStats fetchByTagId_First(
-		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByTagId_First(tagId, orderByComparator);
-	}
-
-	/**
 	* Returns the last asset tag stats in the ordered set where tagId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
 	*
 	* @param tagId the tag ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -293,22 +286,11 @@ public class AssetTagStatsUtil {
 	}
 
 	/**
-	* Returns the last asset tag stats in the ordered set where tagId = &#63;.
-	*
-	* @param tagId the tag ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagStats fetchByTagId_Last(
-		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByTagId_Last(tagId, orderByComparator);
-	}
-
-	/**
 	* Returns the asset tag statses before and after the current asset tag stats in the ordered set where tagId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
 	*
 	* @param tagStatsId the primary key of the current asset tag stats
 	* @param tagId the tag ID
@@ -383,6 +365,10 @@ public class AssetTagStatsUtil {
 	/**
 	* Returns the first asset tag stats in the ordered set where classNameId = &#63;.
 	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset tag stats
@@ -399,23 +385,11 @@ public class AssetTagStatsUtil {
 	}
 
 	/**
-	* Returns the first asset tag stats in the ordered set where classNameId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagStats fetchByClassNameId_First(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByClassNameId_First(classNameId, orderByComparator);
-	}
-
-	/**
 	* Returns the last asset tag stats in the ordered set where classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
 	*
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -433,23 +407,11 @@ public class AssetTagStatsUtil {
 	}
 
 	/**
-	* Returns the last asset tag stats in the ordered set where classNameId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagStats fetchByClassNameId_Last(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByClassNameId_Last(classNameId, orderByComparator);
-	}
-
-	/**
 	* Returns the asset tag statses before and after the current asset tag stats in the ordered set where classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
 	*
 	* @param tagStatsId the primary key of the current asset tag stats
 	* @param classNameId the class name ID

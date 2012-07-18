@@ -746,6 +746,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	/**
 	 * Returns the first asset tag property in the ordered set where companyId = &#63;.
 	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag property
@@ -755,47 +759,32 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public AssetTagProperty findByCompanyId_First(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagPropertyException, SystemException {
-		AssetTagProperty assetTagProperty = fetchByCompanyId_First(companyId,
-				orderByComparator);
-
-		if (assetTagProperty != null) {
-			return assetTagProperty;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTagPropertyException(msg.toString());
-	}
-
-	/**
-	 * Returns the first asset tag property in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagProperty fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
 		List<AssetTagProperty> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
-		if (!list.isEmpty()) {
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchTagPropertyException(msg.toString());
+		}
+		else {
 			return list.get(0);
 		}
-
-		return null;
 	}
 
 	/**
 	 * Returns the last asset tag property in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -806,49 +795,34 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public AssetTagProperty findByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagPropertyException, SystemException {
-		AssetTagProperty assetTagProperty = fetchByCompanyId_Last(companyId,
-				orderByComparator);
-
-		if (assetTagProperty != null) {
-			return assetTagProperty;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTagPropertyException(msg.toString());
-	}
-
-	/**
-	 * Returns the last asset tag property in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagProperty fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
 		List<AssetTagProperty> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
-		if (!list.isEmpty()) {
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchTagPropertyException(msg.toString());
+		}
+		else {
 			return list.get(0);
 		}
-
-		return null;
 	}
 
 	/**
 	 * Returns the asset tag properties before and after the current asset tag property in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
 	 *
 	 * @param tagPropertyId the primary key of the current asset tag property
 	 * @param companyId the company ID
@@ -1128,6 +1102,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	/**
 	 * Returns the first asset tag property in the ordered set where tagId = &#63;.
 	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
 	 * @param tagId the tag ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag property
@@ -1137,46 +1115,31 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public AssetTagProperty findByTagId_First(long tagId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagPropertyException, SystemException {
-		AssetTagProperty assetTagProperty = fetchByTagId_First(tagId,
-				orderByComparator);
-
-		if (assetTagProperty != null) {
-			return assetTagProperty;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("tagId=");
-		msg.append(tagId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTagPropertyException(msg.toString());
-	}
-
-	/**
-	 * Returns the first asset tag property in the ordered set where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagProperty fetchByTagId_First(long tagId,
-		OrderByComparator orderByComparator) throws SystemException {
 		List<AssetTagProperty> list = findByTagId(tagId, 0, 1, orderByComparator);
 
-		if (!list.isEmpty()) {
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("tagId=");
+			msg.append(tagId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchTagPropertyException(msg.toString());
+		}
+		else {
 			return list.get(0);
 		}
-
-		return null;
 	}
 
 	/**
 	 * Returns the last asset tag property in the ordered set where tagId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
 	 *
 	 * @param tagId the tag ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1187,49 +1150,34 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public AssetTagProperty findByTagId_Last(long tagId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagPropertyException, SystemException {
-		AssetTagProperty assetTagProperty = fetchByTagId_Last(tagId,
-				orderByComparator);
-
-		if (assetTagProperty != null) {
-			return assetTagProperty;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("tagId=");
-		msg.append(tagId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTagPropertyException(msg.toString());
-	}
-
-	/**
-	 * Returns the last asset tag property in the ordered set where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagProperty fetchByTagId_Last(long tagId,
-		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTagId(tagId);
 
 		List<AssetTagProperty> list = findByTagId(tagId, count - 1, count,
 				orderByComparator);
 
-		if (!list.isEmpty()) {
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("tagId=");
+			msg.append(tagId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchTagPropertyException(msg.toString());
+		}
+		else {
 			return list.get(0);
 		}
-
-		return null;
 	}
 
 	/**
 	 * Returns the asset tag properties before and after the current asset tag property in the ordered set where tagId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
 	 *
 	 * @param tagPropertyId the primary key of the current asset tag property
 	 * @param tagId the tag ID
@@ -1535,6 +1483,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	/**
 	 * Returns the first asset tag property in the ordered set where companyId = &#63; and key = &#63;.
 	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param key the key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1545,51 +1497,35 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public AssetTagProperty findByC_K_First(long companyId, String key,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagPropertyException, SystemException {
-		AssetTagProperty assetTagProperty = fetchByC_K_First(companyId, key,
-				orderByComparator);
-
-		if (assetTagProperty != null) {
-			return assetTagProperty;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", key=");
-		msg.append(key);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTagPropertyException(msg.toString());
-	}
-
-	/**
-	 * Returns the first asset tag property in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagProperty fetchByC_K_First(long companyId, String key,
-		OrderByComparator orderByComparator) throws SystemException {
 		List<AssetTagProperty> list = findByC_K(companyId, key, 0, 1,
 				orderByComparator);
 
-		if (!list.isEmpty()) {
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchTagPropertyException(msg.toString());
+		}
+		else {
 			return list.get(0);
 		}
-
-		return null;
 	}
 
 	/**
 	 * Returns the last asset tag property in the ordered set where companyId = &#63; and key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param key the key
@@ -1601,53 +1537,37 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public AssetTagProperty findByC_K_Last(long companyId, String key,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagPropertyException, SystemException {
-		AssetTagProperty assetTagProperty = fetchByC_K_Last(companyId, key,
-				orderByComparator);
-
-		if (assetTagProperty != null) {
-			return assetTagProperty;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", key=");
-		msg.append(key);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTagPropertyException(msg.toString());
-	}
-
-	/**
-	 * Returns the last asset tag property in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagProperty fetchByC_K_Last(long companyId, String key,
-		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_K(companyId, key);
 
 		List<AssetTagProperty> list = findByC_K(companyId, key, count - 1,
 				count, orderByComparator);
 
-		if (!list.isEmpty()) {
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchTagPropertyException(msg.toString());
+		}
+		else {
 			return list.get(0);
 		}
-
-		return null;
 	}
 
 	/**
 	 * Returns the asset tag properties before and after the current asset tag property in the ordered set where companyId = &#63; and key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
 	 *
 	 * @param tagPropertyId the primary key of the current asset tag property
 	 * @param companyId the company ID
