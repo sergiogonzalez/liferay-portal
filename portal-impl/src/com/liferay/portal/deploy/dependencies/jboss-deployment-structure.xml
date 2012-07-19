@@ -8,6 +8,7 @@
 		</exclusions>
 		<dependencies>
 			<module name="com.liferay.portal" />
+			<module name="javax.mail.api" />
 			<module name="org.jboss.modules" />
 		</dependencies>
 	</deployment>
