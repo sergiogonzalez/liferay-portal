@@ -251,6 +251,19 @@ AUI.add(
 				return menu;
 			},
 
+			_afterDataRetrieveSuccess: function(event) {
+				var instance = this;
+
+				var dialog = instance._dialog;
+
+				Liferay.Portlet.loadPortletFiles(
+					event.responseData,
+					function(html) {
+						dialog.setStdModContent(A.WidgetStdMod.BODY, html);
+					}
+				);
+			},
+
 			_createCustomizationMask: function(column) {
 				var instance = this;
 
@@ -313,7 +326,25 @@ AUI.add(
 				return '<div class="dockbar-message ' + cssClass + '" id="' + messageId + '">' + message + '</div>';
 			},
 
+			_getStateConvertIO: function() {
+				var instance = this;
+
+				var stateConvertIO = instance._stateConvertIO;
+
+				if (!stateConvertIO) {
+					stateConvertIO = new Liferay.StateConvertIO();
+
+					stateConvertIO.after('dataRetrieveSuccess', instance._afterDataRetrieveSuccess, instance);
+
+					instance._stateConvertIO = stateConvertIO;
+				}
+
+				return stateConvertIO;
+			},
+
 			_openWindow: function(config, item) {
+				var instance = this;
+
 				if (item) {
 					A.mix(
 						config,
@@ -325,7 +356,47 @@ AUI.add(
 					);
 				}
 
-				Util.openWindow(config);
+				instance._prepareDialog(config);
+
+				var stateConvertIO = instance._getStateConvertIO();
+
+				stateConvertIO.requestResource(config.uri);
+			},
+
+			_prepareDialog: function(config) {
+				var instance = this;
+
+				var dialogConfig = config.dialog || {};
+				var title = config.title;
+				var id = config.id;
+
+				dialogConfig.title = title;
+				dialogConfig.id = id;
+				dialogConfig.bodyContent = '<div class="aui-icon aui-icon-loading" />';
+
+				var dialog = instance._dialog;
+
+				if (!dialog) {
+					dialog = new A.Dialog(dialogConfig).render();
+
+					dialog.bodyNode.plug(Liferay.Plugin.StateConvertNode);
+
+					dialog.bodyNode.plug(A.Plugin.ParseContent);
+
+					instance._dialog = dialog;
+				}
+				else {
+					dialog.set('title', title);
+					dialog.set('id', id);
+
+					dialog.setStdModContent(A.WidgetStdMod.BODY, dialogConfig.bodyContent);
+
+					if (!dialog.get('visible')) {
+						dialog.show();
+					}
+				}
+
+				return dialog;
 			},
 
 			_toggleAppShortcut: function(item, force) {
@@ -367,6 +438,8 @@ AUI.add(
 				}
 			}
 		};
+
+		A.augment(Dockbar, Liferay.StateConvertBase);
 
 		Liferay.provide(
 			Dockbar,
@@ -775,7 +848,7 @@ AUI.add(
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'liferay-store', 'node-focusmanager']
+			['aui-dialog', 'aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(
@@ -835,6 +908,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'event-touch']
+		requires: ['aui-node', 'event-touch', 'liferay-state-convert-io', 'liferay-state-convert-node']
 	}
 );

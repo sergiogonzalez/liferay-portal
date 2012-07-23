@@ -82,7 +82,7 @@ boolean expired = true;
 					AssetEntryServiceUtil.incrementViewCounter(JournalArticle.class.getName(), articleDisplay.getResourcePrimKey());
 				}
 
-				if (themeDisplay.isStateExclusive()) {
+				if (themeDisplay.isStateExclusive() || themeDisplay.isStateExclusiveResourceful()) {
 					out.print(RuntimePageUtil.processXML(request, response, articleDisplay.getContent()));
 
 					return;

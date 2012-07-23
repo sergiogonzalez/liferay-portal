@@ -35,6 +35,8 @@ public class WindowStateFactory {
 		_windowStates.put(_MAXIMIZED, LiferayWindowState.MAXIMIZED);
 		_windowStates.put(_MINIMIZED, LiferayWindowState.MINIMIZED);
 		_windowStates.put(_EXCLUSIVE, LiferayWindowState.EXCLUSIVE);
+		_windowStates.put(
+			_EXCLUSIVE_RESOURCEFUL, LiferayWindowState.EXCLUSIVE_RESOURCEFUL);
 		_windowStates.put(_POP_UP, LiferayWindowState.POP_UP);
 	}
 
@@ -50,6 +52,9 @@ public class WindowStateFactory {
 
 	private static final String _EXCLUSIVE =
 		LiferayWindowState.EXCLUSIVE.toString();
+
+	private static final String _EXCLUSIVE_RESOURCEFUL =
+		LiferayWindowState.EXCLUSIVE_RESOURCEFUL.toString();
 
 	private static final String _MAXIMIZED = WindowState.MAXIMIZED.toString();
 

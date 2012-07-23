@@ -191,6 +191,9 @@
 				isStateExclusive: function() {
 					return <%= themeDisplay.isStateExclusive() %>;
 				},
+				isStateExclusiveResourceful: function() {
+					return <%= themeDisplay.isStateExclusiveResourceful() %>;
+				},
 				isStateMaximized: function() {
 					return <%= themeDisplay.isStateMaximized() %>;
 				},
