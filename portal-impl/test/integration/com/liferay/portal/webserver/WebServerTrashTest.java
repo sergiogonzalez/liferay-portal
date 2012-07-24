@@ -97,31 +97,33 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 	public void testRequestFileInTrash() throws Exception {
 		FileEntry fileEntry = addFileEntry(false, "Test Trash.txt");
 
-		MockHttpServletResponse response =  testRequestFile(
+		MockHttpServletResponse mockHttpServletResponse =  testRequestFile(
 			fileEntry, _user, false);
 
 		Assert.assertEquals(
-			MockHttpServletResponse.SC_OK, response.getStatus());
+			MockHttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 
-		response = testRequestFile(fileEntry, _user, false);
+		mockHttpServletResponse = testRequestFile(fileEntry, _user, false);
 
 		Assert.assertEquals(
-			MockHttpServletResponse.SC_NOT_FOUND, response.getStatus());
+			MockHttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
 
-		response = testRequestFile(fileEntry, _user, true);
+		mockHttpServletResponse = testRequestFile(fileEntry, _user, true);
 
 		Assert.assertEquals(
-			MockHttpServletResponse.SC_UNAUTHORIZED, response.getStatus());
+			MockHttpServletResponse.SC_UNAUTHORIZED,
+			mockHttpServletResponse.getStatus());
 
 		RoleLocalServiceUtil.addUserRoles(
 			_user.getUserId(), new long[] {_role.getRoleId()});
 
-		response = testRequestFile(fileEntry, _user, true);
+		mockHttpServletResponse = testRequestFile(fileEntry, _user, true);
 
 		Assert.assertEquals(
-			MockHttpServletResponse.SC_OK, response.getStatus());
+			MockHttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 	}
 
 	protected void resetPermissionThreadLocal() throws Exception {
@@ -151,12 +153,12 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 				"status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 		}
 
-		MockHttpServletResponse response = service(
+		MockHttpServletResponse mockHttpServletResponse = service(
 			Method.GET, path, null, params, user, null);
 
 		resetPermissionThreadLocal();
 
-		return response;
+		return mockHttpServletResponse;
 	}
 
 	private Role _role;

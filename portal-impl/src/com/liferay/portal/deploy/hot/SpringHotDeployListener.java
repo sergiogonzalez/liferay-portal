@@ -17,7 +17,6 @@ package com.liferay.portal.deploy.hot;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 
@@ -68,10 +67,6 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 		ContextLoaderListener contextLoaderListener =
 			new PortletContextLoaderListener();
 
-		PortletClassLoaderUtil.setClassLoader(
-			hotDeployEvent.getContextClassLoader());
-		PortletClassLoaderUtil.setServletContextName(servletContextName);
-
 		ClassLoader contextClassLoader =
 			PACLClassLoaderUtil.getContextClassLoader();
 
@@ -83,9 +78,6 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 				new ServletContextEvent(servletContext));
 		}
 		finally {
-			PortletClassLoaderUtil.setClassLoader(null);
-			PortletClassLoaderUtil.setServletContextName(null);
-
 			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
 
@@ -106,10 +98,6 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		PortletClassLoaderUtil.setClassLoader(
-			hotDeployEvent.getContextClassLoader());
-		PortletClassLoaderUtil.setServletContextName(servletContextName);
-
 		ClassLoader contextClassLoader =
 			PACLClassLoaderUtil.getContextClassLoader();
 
@@ -121,9 +109,6 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 				new ServletContextEvent(servletContext));
 		}
 		finally {
-			PortletClassLoaderUtil.setClassLoader(null);
-			PortletClassLoaderUtil.setServletContextName(null);
-
 			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
 	}

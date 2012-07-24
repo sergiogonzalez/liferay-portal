@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -116,14 +115,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
-		PortletClassLoaderUtil.setClassLoader(classLoader);
-
-		try {
-			initServiceComponent(servletContext, classLoader);
-		}
-		finally {
-			PortletClassLoaderUtil.setClassLoader(null);
-		}
+		initServiceComponent(servletContext, classLoader);
 
 		registerClpMessageListeners(servletContext, classLoader);
 
