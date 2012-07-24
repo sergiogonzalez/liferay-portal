@@ -60,6 +60,12 @@ public class AssetCategoryFinderUtil {
 		return getFinder().findByEntryId(entryId);
 	}
 
+	public static java.util.List<java.lang.Long> findByG_L(
+		java.lang.Long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByG_L(parentCategoryId);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_N(
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,

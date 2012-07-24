@@ -65,15 +65,16 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			}
 		}
 
-		MockHttpServletResponse response = testRange(rangeHeader);
+		MockHttpServletResponse mockHttpServletResponse = testRange(
+			rangeHeader);
 
-		String contentType = response.getContentType();
+		String contentType = mockHttpServletResponse.getContentType();
 
 		Assert.assertTrue(contentType.startsWith(_BOUNDARY_PREFACE));
 
 		String boundary = contentType.substring(_BOUNDARY_PREFACE.length());
 
-		String responseBody = response.getContentAsString();
+		String responseBody = mockHttpServletResponse.getContentAsString();
 
 		Assert.assertTrue(
 			responseBody.startsWith("\r\n--" + boundary + "\r\n"));
@@ -109,36 +110,46 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 
 	@Test
 	public void testSingleRangeByte() throws Exception {
-		MockHttpServletResponse response = testRange("bytes=10-10");
+		MockHttpServletResponse mockHttpServletResponse = testRange(
+			"bytes=10-10");
 
 		Assert.assertEquals(
-			"1", response.getHeader(HttpHeaders.CONTENT_LENGTH));
+			"1", mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
 		Assert.assertEquals(
-			"bytes 10-10/80", response.getHeader(HttpHeaders.CONTENT_RANGE));
-		Assert.assertEquals("B", response.getContentAsString());
+			"bytes 10-10/80",
+			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_RANGE));
+		Assert.assertEquals("B", mockHttpServletResponse.getContentAsString());
 	}
 
 	@Test
 	public void testSingleRangeFirst() throws Exception {
-		MockHttpServletResponse response = testRange("bytes=0-9");
+		MockHttpServletResponse mockHttpServletResponse = testRange(
+			"bytes=0-9");
 
 		Assert.assertEquals(
-			"10", response.getHeader(HttpHeaders.CONTENT_LENGTH));
+			"10",
+			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
 		Assert.assertEquals(
-			"bytes 0-9/80", response.getHeader(HttpHeaders.CONTENT_RANGE));
-		Assert.assertEquals("A123456789", response.getContentAsString());
+			"bytes 0-9/80",
+			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_RANGE));
+		Assert.assertEquals(
+			"A123456789", mockHttpServletResponse.getContentAsString());
 	}
 
 	@Test
 	public void testSingleRangeLast() throws Exception {
-		MockHttpServletResponse response = testRange("bytes=70-79");
+		MockHttpServletResponse mockHttpServletResponse = testRange(
+			"bytes=70-79");
 
 		Assert.assertEquals(
-			"10", response.getHeader(HttpHeaders.CONTENT_LENGTH));
+			"10",
+			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
 		Assert.assertEquals(
-			"bytes 70-79/80", response.getHeader(HttpHeaders.CONTENT_RANGE));
+			"bytes 70-79/80",
+			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_RANGE));
 		Assert.assertArrayEquals(
-			_UNICODE_DATA.getBytes(), response.getContentAsByteArray());
+			_UNICODE_DATA.getBytes(),
+			mockHttpServletResponse.getContentAsByteArray());
 	}
 
 	@Override
@@ -172,12 +183,13 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			headers.put(HttpHeaders.RANGE, rangeHeader);
 		}
 
-		MockHttpServletResponse response = service(
+		MockHttpServletResponse mockHttpServletResponse = service(
 			Method.GET, path, headers, null, null, null);
 
-		int status = response.getStatus();
+		int status = mockHttpServletResponse.getStatus();
 
-		Assert.assertTrue(response.containsHeader(HttpHeaders.ACCEPT_RANGES));
+		Assert.assertTrue(
+			mockHttpServletResponse.containsHeader(HttpHeaders.ACCEPT_RANGES));
 
 		if (Validator.isNotNull(rangeHeader)) {
 			Assert.assertEquals(HttpServletResponse.SC_PARTIAL_CONTENT, status);
@@ -186,7 +198,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			Assert.assertEquals(HttpServletResponse.SC_OK, status);
 		}
 
-		String contentType = response.getContentType();
+		String contentType = mockHttpServletResponse.getContentType();
 
 		if (Validator.isNotNull(rangeHeader) &&
 			rangeHeader.contains(StringPool.COMMA)) {
@@ -197,7 +209,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			Assert.assertEquals(ContentTypes.TEXT_PLAIN, contentType);
 		}
 
-		return response;
+		return mockHttpServletResponse;
 	}
 
 	private static final String _BOUNDARY_PREFACE =

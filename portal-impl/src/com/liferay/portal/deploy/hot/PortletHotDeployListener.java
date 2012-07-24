@@ -332,8 +332,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			else {
 				if (!portletAppInitialized) {
 					initPortletApp(
-						portlet, servletContextName, servletContext,
-						classLoader);
+						servletContextName, servletContext, classLoader,
+						portlet);
 
 					portletAppInitialized = true;
 				}
@@ -541,8 +541,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 	}
 
 	protected void initPortletApp(
-			Portlet portlet, String servletContextName,
-			ServletContext servletContext, ClassLoader classLoader)
+			String servletContextName, ServletContext servletContext,
+			ClassLoader classLoader, Portlet portlet)
 		throws Exception {
 
 		PortletContextBag portletContextBag = new PortletContextBag(

@@ -23,7 +23,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -75,7 +74,7 @@ public class ActionUtil {
 			}
 
 			node = WikiNodeLocalServiceUtil.addDefaultNode(
-				themeDisplay.getUserId(), serviceContext);
+				themeDisplay.getDefaultUserId(), serviceContext);
 		}
 		else {
 			node = WikiUtil.getFirstNode(portletRequest);
@@ -168,14 +167,6 @@ public class ActionUtil {
 		}
 		catch (NoSuchPageException nspe) {
 			if (title.equals(WikiPageConstants.FRONT_PAGE) && (version == 0)) {
-				long userId = PortalUtil.getUserId(request);
-
-				if (userId == 0) {
-					long companyId = PortalUtil.getCompanyId(request);
-
-					userId = UserLocalServiceUtil.getDefaultUserId(companyId);
-				}
-
 				ServiceContext serviceContext = new ServiceContext();
 
 				Layout layout = themeDisplay.getLayout();
@@ -195,8 +186,8 @@ public class ActionUtil {
 					WorkflowThreadLocal.setEnabled(false);
 
 					page = WikiPageLocalServiceUtil.addPage(
-						userId, nodeId, title, null, WikiPageConstants.NEW,
-						true, serviceContext);
+						themeDisplay.getDefaultUserId(), nodeId, title, null,
+						WikiPageConstants.NEW, true, serviceContext);
 				}
 				finally {
 					WorkflowThreadLocal.setEnabled(workflowEnabled);

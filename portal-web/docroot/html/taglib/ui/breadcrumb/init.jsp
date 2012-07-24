@@ -104,12 +104,23 @@ private void _buildLayoutBreadcrumb(Layout selLayout, String selLayoutParam, boo
 
 	breadcrumbSB.append("</a></span></li>");
 
-	Layout layoutParent = null;
+	Layout parentLayout = null;
 
 	if (selLayout.getParentLayoutId() != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-		layoutParent = LayoutLocalServiceUtil.getLayout(selLayout.getGroupId(), selLayout.isPrivateLayout(), selLayout.getParentLayoutId());
+		if (selLayout instanceof VirtualLayout) {
+			VirtualLayout virtualLayout = (VirtualLayout)selLayout;
 
-		_buildLayoutBreadcrumb(layoutParent, selLayoutParam, false, portletURL, themeDisplay, sb);
+			Layout sourceLayout = virtualLayout.getSourceLayout();
+
+			parentLayout = LayoutLocalServiceUtil.getLayout(sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(), sourceLayout.getParentLayoutId());
+
+			parentLayout = new VirtualLayout(parentLayout, selLayout.getGroup());
+		}
+		else {
+			parentLayout = LayoutLocalServiceUtil.getLayout(selLayout.getGroupId(), selLayout.isPrivateLayout(), selLayout.getParentLayoutId());
+		}
+
+		_buildLayoutBreadcrumb(parentLayout, selLayoutParam, false, portletURL, themeDisplay, sb);
 
 		sb.append(breadcrumbSB.toString());
 	}
