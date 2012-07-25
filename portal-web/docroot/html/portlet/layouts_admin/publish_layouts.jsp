@@ -296,7 +296,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			%>
 
 			<li>
-				<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= layoutPrototypeName %></strong> (<%= layoutPrototypeUuid %>)
+				<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= layoutPrototypeUuid %>)
 			</li>
 
 			<%
@@ -389,11 +389,11 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			<c:if test="<%= schedule %>">
 				<div class="lfr-portlet-toolbar">
 					<span class="lfr-toolbar-button view-button">
-						<aui:a href='javascript:;' label="view-all" />
+						<aui:a href="javascript:;" label="view-all" />
 					</span>
 
 					<span class="lfr-toolbar-button add-button current">
-						<aui:a href='javascript:;' label="add" />
+						<aui:a href="javascript:;" label="add" />
 					</span>
 				</div>
 

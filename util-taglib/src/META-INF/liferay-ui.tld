@@ -1265,6 +1265,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>resizable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>skipEditorLoading</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1755,6 +1760,11 @@
 		<name>language</name>
 		<tag-class>com.liferay.taglib.ui.LanguageTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>displayCurrentLocale</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>displayStyle</name>
 			<required>false</required>

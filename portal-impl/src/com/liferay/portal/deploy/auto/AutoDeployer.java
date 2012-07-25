@@ -23,7 +23,11 @@ import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
  */
 public interface AutoDeployer {
 
-	public void autoDeploy(AutoDeploymentContext autoDeploymentContext)
+	public static final int CODE_DEFAULT = 1;
+
+	public static final int CODE_SKIP_NEWER_VERSION = 2;
+
+	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException;
 
 }
