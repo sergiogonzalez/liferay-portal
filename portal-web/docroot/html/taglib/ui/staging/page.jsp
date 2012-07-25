@@ -118,10 +118,10 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 
 <c:if test="<%= stagingGroup != null %>">
 	<span class="staging-icon-menu-container">
-		<liferay-ui:icon-menu align="auto" cssClass="<%= cssClass %>" direction="down" extended="<%= extended %>" icon='<%= extended ? icon : StringPool.BLANK %>' message='<%= extended ? message : StringPool.BLANK %>' showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu align="auto" cssClass="<%= cssClass %>" direction="down" extended="<%= extended %>" icon="<%= extended ? icon : StringPool.BLANK %>" message="<%= extended ? message : StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 			<c:choose>
 				<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
-					<liferay-ui:icon id='<%= groupId + "publishGlobalNowLink" %>' image="maximize" message='<%= publishNowDialogTitle %>' url="<%= publishRenderURL.toString() %>" />
+					<liferay-ui:icon id='<%= groupId + "publishGlobalNowLink" %>' image="maximize" message="<%= publishNowDialogTitle %>" url="<%= publishRenderURL.toString() %>" />
 
 					<%
 					publishRenderURL.setParameter("schedule", String.valueOf(true));
@@ -173,7 +173,7 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 					</aui:script>
 				</c:when>
 				<c:otherwise>
-					<c:if test="<%= stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
+					<c:if test="<%= (liveGroup != null) && (stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING)) %>">
 
 						<%
 						if (groupId == 0) {
@@ -190,8 +190,8 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 								publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 								publishRenderURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
 
-								publishNowMessage = LanguageUtil.format(pageContext, publishNowDialogTitle, layoutSetBranch.getName());
-								publishScheduleMessage = LanguageUtil.format(pageContext, publishScheduleDialogTitle, layoutSetBranch.getName());
+								publishNowMessage = LanguageUtil.format(pageContext, publishNowDialogTitle, HtmlUtil.escape(layoutSetBranch.getName()));
+								publishScheduleMessage = LanguageUtil.format(pageContext, publishScheduleDialogTitle, HtmlUtil.escape(layoutSetBranch.getName()));
 								%>
 
 							</c:when>

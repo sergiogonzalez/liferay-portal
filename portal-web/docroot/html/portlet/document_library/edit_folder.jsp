@@ -226,7 +226,7 @@ if (workflowEnabled) {
 												}
 											%>
 
-												<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' selected='<%= selected %>' value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
+												<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' selected="<%= selected %>" value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 											<%
 											}
@@ -258,7 +258,7 @@ if (workflowEnabled) {
 							for (DLFileEntryType fileEntryType : fileEntryTypes) {
 							%>
 
-								<aui:option id='<%= renderResponse.getNamespace() + "defaultFileEntryTypeId-" + fileEntryType.getFileEntryTypeId() %>' label="<%= fileEntryType.getName() %>" selected="<%= (fileEntryType.getFileEntryTypeId() == defaultFileEntryTypeId) %>" value="<%= fileEntryType.getFileEntryTypeId() %>" />
+								<aui:option id='<%= renderResponse.getNamespace() + "defaultFileEntryTypeId-" + fileEntryType.getFileEntryTypeId() %>' label="<%= HtmlUtil.escapeAttribute(fileEntryType.getName()) %>" selected="<%= (fileEntryType.getFileEntryTypeId() == defaultFileEntryTypeId) %>" value="<%= fileEntryType.getFileEntryTypeId() %>" />
 
 							<%
 							}
@@ -285,6 +285,25 @@ if (workflowEnabled) {
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>
+
+<liferay-util:buffer var="workflowDefinitionsBuffer">
+	<c:if test="<%= workflowEnabled %>">
+		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE">
+			<aui:option label="no-workflow" value="" />
+
+			<%
+			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+			%>
+
+				<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' selected="<% selected %>" value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+	</c:if>
+</liferay-util:buffer>
 
 <aui:script>
 	var documentTypesChanged = false;
@@ -333,22 +352,6 @@ if (workflowEnabled) {
 					var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
 
 					defaultWorkflow.hide();
-
-					<liferay-util:buffer var="workflowDefinitionsBuffer">
-						<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE"><aui:option label="no-workflow" value="" />
-
-						<%
-						for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-						%>
-
-							<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' selected='<% selected %>' value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
-
-						<%
-						}
-						%>
-
-						</aui:select>
-					</liferay-util:buffer>
 
 					var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
 

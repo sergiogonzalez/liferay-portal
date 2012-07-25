@@ -89,6 +89,8 @@ public interface DestinationNames {
 
 	public static final String MAIL_SYNCHRONIZER = "liferay/mail_synchronizer";
 
+	public static final String MARKETPLACE = "liferay/marketplace";
+
 	/**
 	 * @deprecated {@link #SUBSCRIPTION_SENDER}
 	 */
@@ -97,7 +99,7 @@ public interface DestinationNames {
 	public static final String MESSAGE_BOARDS_MAILING_LIST =
 		"liferay/message_boards_mailing_list";
 
-	public static final String MESSAGE_BUS_DEFAULT_RESPONSE=
+	public static final String MESSAGE_BUS_DEFAULT_RESPONSE =
 		"liferay/message_bus/default_response";
 
 	public static final String MESSAGE_BUS_MESSAGE_STATUS =

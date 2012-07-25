@@ -48,9 +48,8 @@ import java.rmi.RemoteException;
  * </p>
  *
  * <p>
- * You can see a list of services at
- * http://localhost:8080/api/secure/axis. Set the property
- * <b>axis.servlet.hosts.allowed</b> in portal.properties to configure
+ * You can see a list of services at http://localhost:8080/api/axis. Set the
+ * property <b>axis.servlet.hosts.allowed</b> in portal.properties to configure
  * security.
  * </p>
  *
@@ -70,8 +69,8 @@ public class TrashEntryServiceSoap {
 	* permissions.
 	*
 	* @param groupId the primary key of the group
-	* @throws SystemException if a system exception occurred
 	* @throws PrincipalException if a principal exception occurred
+	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteEntries(long groupId) throws RemoteException {
 		try {
@@ -89,8 +88,8 @@ public class TrashEntryServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @return the matching trash entries
-	* @throws SystemException if a system exception occurred
 	* @throws PrincipalException if a principal exception occurred
+	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		long groupId) throws RemoteException {
@@ -117,8 +116,8 @@ public class TrashEntryServiceSoap {
 	<code>null</code>)
 	* @return the range of matching trash entries ordered by comparator
 	<code>obc</code>
-	* @throws SystemException if a system exception occurred
 	* @throws PrincipalException if a system exception occurred
+	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		long groupId, int start, int end,

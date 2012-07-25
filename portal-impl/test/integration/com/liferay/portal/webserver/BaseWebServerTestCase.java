@@ -55,25 +55,25 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 		String requestURI =
 			_CONTEXT_PATH + _SERVLET_PATH + _PATH_INFO_PREFACE + path;
 
-		MockHttpServletRequest request = new MockHttpServletRequest(
-			method, requestURI);
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(method, requestURI);
 
-		request.setAttribute(WebKeys.USER, user);
-		request.setContextPath(_CONTEXT_PATH);
-		request.setServletPath(_SERVLET_PATH);
-		request.setPathInfo(_PATH_INFO_PREFACE + path);
-		request.setParameters(params);
+		mockHttpServletRequest.setAttribute(WebKeys.USER, user);
+		mockHttpServletRequest.setContextPath(_CONTEXT_PATH);
+		mockHttpServletRequest.setParameters(params);
+		mockHttpServletRequest.setPathInfo(_PATH_INFO_PREFACE + path);
+		mockHttpServletRequest.setServletPath(_SERVLET_PATH);
 
 		if (data != null) {
-			request.setContent(data);
+			mockHttpServletRequest.setContent(data);
 
 			String contentType = headers.remove(HttpHeaders.CONTENT_TYPE);
 
 			if (contentType != null) {
-				request.setContentType(contentType);
+				mockHttpServletRequest.setContentType(contentType);
 			}
 			else {
-				request.setContentType(ContentTypes.TEXT_PLAIN);
+				mockHttpServletRequest.setContentType(ContentTypes.TEXT_PLAIN);
 			}
 		}
 
@@ -81,18 +81,19 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 			String key = entry.getKey();
 			String value = entry.getValue();
 
-			request.addHeader(key, value);
+			mockHttpServletRequest.addHeader(key, value);
 		}
 
-		MockHttpServletResponse response = new MockHttpServletResponse();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
-		response.setCharacterEncoding(StringPool.UTF8);
+		mockHttpServletResponse.setCharacterEncoding(StringPool.UTF8);
 
 		Servlet httpServlet = getServlet();
 
-		httpServlet.service(request, response);
+		httpServlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
-		return response;
+		return mockHttpServletResponse;
 	}
 
 	protected Servlet getServlet() {

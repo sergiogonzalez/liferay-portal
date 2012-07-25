@@ -52,6 +52,14 @@ public class HtmlUtil {
 		return getHtml().escapeURL(url);
 	}
 
+	public static String escapeXPath(String xPath) {
+		return getHtml().escapeXPath(xPath);
+	}
+
+	public static String escapeXPathAttribute(String xPathAttribute) {
+		return getHtml().escapeXPathAttribute(xPathAttribute);
+	}
+
 	public static String extractText(String html) {
 		return getHtml().extractText(html);
 	}

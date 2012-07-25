@@ -15,6 +15,7 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 
 /**
  * @author Igor Spasic
@@ -31,7 +32,7 @@ public class CamelFooService {
 	public static void helloWorld() {
 	}
 
-	@JSONWebService(method = "POST")
+	@JSONWebService(method = HttpMethods.POST)
 	public static String post(String value) {
 		return "post " + value;
 	}

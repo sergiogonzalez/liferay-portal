@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -233,6 +234,56 @@ public class HtmlImpl implements Html {
 
 	public String escapeURL(String url) {
 		return escape(url, ESCAPE_MODE_URL);
+	}
+
+	public String escapeXPath(String xPath) {
+		if (Validator.isNull(xPath)) {
+			return xPath;
+		}
+
+		StringBuilder sb = new StringBuilder(xPath.length());
+
+		for (int i = 0; i < xPath.length(); i++) {
+			char c = xPath.charAt(i);
+
+			boolean hasToken = false;
+
+			for (int j = 0; j < _XPATH_TOKENS.length; j++) {
+				if (c == _XPATH_TOKENS[j]) {
+					hasToken = true;
+
+					break;
+				}
+			}
+
+			if (hasToken) {
+				sb.append(StringPool.UNDERLINE);
+			}
+			else {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public String escapeXPathAttribute(String xPathAttribute) {
+		boolean hasApostrophe = xPathAttribute.contains(StringPool.APOSTROPHE);
+		boolean hasQuote = xPathAttribute.contains(StringPool.QUOTE);
+
+		if (hasQuote && hasApostrophe) {
+			String[] parts = xPathAttribute.split(StringPool.APOSTROPHE);
+
+			return "concat('".concat(
+				StringUtil.merge(parts, "', \"'\", '")).concat("')");
+		}
+
+		if (hasQuote) {
+			return StringPool.APOSTROPHE.concat(xPathAttribute).concat(
+				StringPool.APOSTROPHE);
+		}
+
+		return StringPool.QUOTE.concat(xPathAttribute).concat(StringPool.QUOTE);
 	}
 
 	public String extractText(String html) {
@@ -495,5 +546,11 @@ public class HtmlImpl implements Html {
 	};
 
 	private static final char[] _TAG_SCRIPT = {'s', 'c', 'r', 'i', 'p', 't'};
+
+	// See http://www.w3.org/TR/xpath20/#lexical-structure
+
+	private static final char[] _XPATH_TOKENS = {
+		'(', ')', '[', ']', '.', '@', ',', ':', '/', '|', '+', '-', '=', '!',
+		'<', '>', '*', '$', '"', '"', ' ', 9, 10, 13, 133, 8232};
 
 }

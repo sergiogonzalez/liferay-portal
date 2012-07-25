@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.test.BaseTestCase;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.ByteArrayOutputStream;
@@ -1146,6 +1147,13 @@ public class ProcessExecutorTest extends BaseTestCase {
 			return null;
 		}
 
+		@Override
+		public String toString() {
+			Class<?> clazz = getClass();
+
+			return clazz.getSimpleName();
+		}
+
 		private int _serverPort;
 
 	}
@@ -1348,9 +1356,13 @@ public class ProcessExecutorTest extends BaseTestCase {
 	private static class AttachParentProcessCallable
 		implements ProcessCallable<Serializable> {
 
-		public AttachParentProcessCallable(String className, int serverPort) {
-			_className = className;
+		public AttachParentProcessCallable(String className, int serverPort)
+			throws Exception {
+
 			_serverPort = serverPort;
+
+			_processCallableClass = (Class<ProcessCallable<?>>)Class.forName(
+				className);
 		}
 
 		public Serializable call() throws ProcessException {
@@ -1369,11 +1381,8 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 				serverThread.start();
 
-				Class<ProcessCallable<?>> processCallableClass =
-					(Class<ProcessCallable<?>>)Class.forName(_className);
-
 				Constructor<ProcessCallable<?>> constructor =
-					processCallableClass.getConstructor(int.class);
+					_processCallableClass.getConstructor(int.class);
 
 				ProcessExecutor.execute(
 					_classPath, _createArguments(),
@@ -1392,7 +1401,25 @@ public class ProcessExecutorTest extends BaseTestCase {
 			return null;
 		}
 
-		private String _className;
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(7);
+
+			Class<?> clazz = getClass();
+
+			sb.append(clazz.getSimpleName());
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("className=");
+			sb.append(_processCallableClass.getSimpleName());
+			sb.append(", serverPort=");
+			sb.append(_serverPort);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
+		}
+
+		private Class<ProcessCallable<?>> _processCallableClass;
 		private int _serverPort;
 
 	}
@@ -1436,6 +1463,13 @@ public class ProcessExecutorTest extends BaseTestCase {
 				DummyExceptionProcessCallable.class.getName());
 		}
 
+		@Override
+		public String toString() {
+			Class<?> clazz = getClass();
+
+			return clazz.getSimpleName();
+		}
+
 	}
 
 	private static class DummyJob implements Callable<Void> {
@@ -1467,6 +1501,13 @@ public class ProcessExecutorTest extends BaseTestCase {
 			return DummyReturnProcessCallable.class.getName();
 		}
 
+		@Override
+		public String toString() {
+			Class<?> clazz = getClass();
+
+			return clazz.getSimpleName();
+		}
+
 	}
 
 	private static class KillJVMProcessCallable
@@ -1480,6 +1521,22 @@ public class ProcessExecutorTest extends BaseTestCase {
 			System.exit(_exitCode);
 
 			return null;
+		}
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(5);
+
+			Class<?> clazz = getClass();
+
+			sb.append(clazz.getSimpleName());
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("exitCode=");
+			sb.append(_exitCode);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
 		}
 
 		private int _exitCode;
@@ -1522,6 +1579,24 @@ public class ProcessExecutorTest extends BaseTestCase {
 			return null;
 		}
 
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(7);
+
+			Class<?> clazz = getClass();
+
+			sb.append(clazz.getSimpleName());
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("leadingLog=");
+			sb.append(_leadingLog);
+			sb.append(", bodyLog=");
+			sb.append(_bodyLog);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
+		}
+
 		private String _bodyLog;
 		private String _leadingLog;
 
@@ -1557,6 +1632,22 @@ public class ProcessExecutorTest extends BaseTestCase {
 			}
 
 			return null;
+		}
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(5);
+
+			Class<?> clazz = getClass();
+
+			sb.append(clazz.getSimpleName());
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("logMessage=");
+			sb.append(_logMessage);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
 		}
 
 		private String _logMessage;
@@ -1614,6 +1705,22 @@ public class ProcessExecutorTest extends BaseTestCase {
 			return System.getProperty(_propertyKey);
 		}
 
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(5);
+
+			Class<?> clazz = getClass();
+
+			sb.append(clazz.getSimpleName());
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("propertyKey=");
+			sb.append(_propertyKey);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
+		}
+
 		private String _propertyKey;
 
 	}
@@ -1642,6 +1749,22 @@ public class ProcessExecutorTest extends BaseTestCase {
 			}
 
 			return null;
+		}
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(5);
+
+			Class<?> clazz = getClass();
+
+			sb.append(clazz.getSimpleName());
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("returnValue=");
+			sb.append(_returnValue);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
 		}
 
 		private String _returnValue;
@@ -1833,6 +1956,13 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 		public Serializable call() {
 			return UnserializableProcessCallable.class.getName();
+		}
+
+		@Override
+		public String toString() {
+			Class<?> clazz = getClass();
+
+			return clazz.getSimpleName();
 		}
 
 		@SuppressWarnings("unused")
