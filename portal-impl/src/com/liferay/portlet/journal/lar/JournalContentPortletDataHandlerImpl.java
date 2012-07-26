@@ -227,6 +227,7 @@ public class JournalContentPortletDataHandlerImpl
 
 		articleElement.addAttribute("path", path);
 
+		Element templatesElement = rootElement.addElement("templates");
 		Element dlFileEntryTypesElement = rootElement.addElement(
 			"dl-file-entry-types");
 		Element dlFoldersElement = rootElement.addElement("dl-folders");
@@ -238,7 +239,7 @@ public class JournalContentPortletDataHandlerImpl
 			"dl-repository-entries");
 
 		JournalPortletDataHandlerImpl.exportArticle(
-			portletDataContext, rootElement, rootElement, rootElement,
+			portletDataContext, rootElement, rootElement, templatesElement,
 			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
 			dlFileRanksElement, dlRepositoriesElement,
 			dlRepositoryEntriesElement, article, false);
@@ -247,8 +248,9 @@ public class JournalContentPortletDataHandlerImpl
 		String preferenceTemplateId = portletPreferences.getValue(
 			"templateId", null);
 
-		if (Validator.isNotNull(defaultTemplateId)
-				&& !defaultTemplateId.equals(preferenceTemplateId)) {
+		if (Validator.isNotNull(defaultTemplateId) &&
+			Validator.isNotNull(preferenceTemplateId) &&
+			!defaultTemplateId.equals(preferenceTemplateId)) {
 
 			JournalTemplate template =
 				JournalTemplateLocalServiceUtil.getTemplate(
@@ -257,7 +259,7 @@ public class JournalContentPortletDataHandlerImpl
 			articleElement.addAttribute("template-uuid", template.getUuid());
 
 			JournalPortletDataHandlerImpl.exportTemplate(
-				portletDataContext, rootElement, dlFileEntryTypesElement,
+				portletDataContext, templatesElement, dlFileEntryTypesElement,
 				dlFoldersElement, dlFilesElement, dlFileRanksElement,
 				dlRepositoriesElement, dlRepositoryEntriesElement, template);
 		}
@@ -305,13 +307,13 @@ public class JournalContentPortletDataHandlerImpl
 				portletDataContext, structureElement);
 		}
 
-		List<Element> templateElements = rootElement.elements("template");
+		Element templatesElement = rootElement.element("templates");
 
-		if (templateElements != null) {
-			for (Element templateElement : templateElements) {
-				JournalPortletDataHandlerImpl.importTemplate(
-					portletDataContext, templateElement);
-			}
+		List<Element> templateElements = templatesElement.elements("template");
+
+		for (Element templateElement : templateElements) {
+			JournalPortletDataHandlerImpl.importTemplate(
+				portletDataContext, templateElement);
 		}
 
 		Element articleElement = rootElement.element("article");
