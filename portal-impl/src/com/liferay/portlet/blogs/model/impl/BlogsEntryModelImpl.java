@@ -829,17 +829,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	@Override
-	public BlogsEntry toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (BlogsEntry)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			BlogsEntry.class.getName(), getPrimaryKey());
@@ -850,6 +839,17 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public BlogsEntry toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (BlogsEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -42,6 +42,16 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 		</div>
 	</c:when>
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.MANAGE_STAGING) %>">
+
+		<liferay-ui:error exception="<%= LocaleException.class %>">
+
+			<%
+			LocaleException le = (LocaleException)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales()), StringUtil.merge(le.getTargetAvailableLocales())} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= SystemException.class %>">
 
 			<%
@@ -189,7 +199,7 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 					}
 				%>
 
-					<aui:input disabled="<%= portletDataHandler.isAlwaysStaged() %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) + includedInEveryPublish %>" name='<%= StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId() %>' type="checkbox" value="<%= staged %>" />
+					<aui:input disabled="<%= portletDataHandler.isAlwaysStaged() %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) + includedInEveryPublish %>" name="<%= StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId() %>" type="checkbox" value="<%= staged %>" />
 
 				<%
 				}

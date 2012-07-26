@@ -306,17 +306,6 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	@Override
-	public AnnouncementsFlag toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (AnnouncementsFlag)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			AnnouncementsFlag.class.getName(), getPrimaryKey());
@@ -327,6 +316,17 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public AnnouncementsFlag toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AnnouncementsFlag)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

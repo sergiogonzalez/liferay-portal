@@ -258,17 +258,6 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	}
 
 	@Override
-	public DDMStorageLink toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (DDMStorageLink)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			DDMStorageLink.class.getName(), getPrimaryKey());
@@ -279,6 +268,17 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public DDMStorageLink toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DDMStorageLink)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

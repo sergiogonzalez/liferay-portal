@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialActivity;
@@ -89,6 +91,15 @@ public class SocialActivityInterpreterLocalServiceImpl
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay) {
 
+		try {
+			if (activity.getUserId() == themeDisplay.getDefaultUserId()) {
+				return null;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		if (activity.getMirrorActivityId() > 0) {
 			SocialActivity mirrorActivity = null;
 
@@ -125,6 +136,9 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 		return null;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SocialActivityInterpreterLocalServiceImpl.class);
 
 	private List<SocialActivityInterpreter> _activityInterpreters =
 		new ArrayList<SocialActivityInterpreter>();

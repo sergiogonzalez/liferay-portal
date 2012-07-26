@@ -287,17 +287,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	}
 
 	@Override
-	public Release toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Release)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			Release.class.getName(), getPrimaryKey());
@@ -308,6 +297,17 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Release toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Release)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

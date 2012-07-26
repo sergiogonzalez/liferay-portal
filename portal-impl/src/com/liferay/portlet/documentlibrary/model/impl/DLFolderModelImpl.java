@@ -776,17 +776,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	@Override
-	public DLFolder toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (DLFolder)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DLFolder.class.getName(), getPrimaryKey());
@@ -797,6 +786,17 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public DLFolder toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DLFolder)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

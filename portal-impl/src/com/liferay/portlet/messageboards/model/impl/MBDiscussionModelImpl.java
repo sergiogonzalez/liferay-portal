@@ -241,17 +241,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	@Override
-	public MBDiscussion toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MBDiscussion)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			MBDiscussion.class.getName(), getPrimaryKey());
@@ -262,6 +251,17 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public MBDiscussion toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBDiscussion)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

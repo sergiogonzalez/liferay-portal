@@ -390,17 +390,6 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	@Override
-	public AssetCategoryProperty toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (AssetCategoryProperty)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AssetCategoryProperty.class.getName(), getPrimaryKey());
@@ -411,6 +400,17 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public AssetCategoryProperty toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AssetCategoryProperty)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

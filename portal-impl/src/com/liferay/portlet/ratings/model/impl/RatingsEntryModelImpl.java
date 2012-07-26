@@ -410,17 +410,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	@Override
-	public RatingsEntry toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (RatingsEntry)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			RatingsEntry.class.getName(), getPrimaryKey());
@@ -431,6 +420,17 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public RatingsEntry toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (RatingsEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

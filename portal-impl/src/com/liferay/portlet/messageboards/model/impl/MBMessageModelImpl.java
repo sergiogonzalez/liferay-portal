@@ -949,17 +949,6 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	@Override
-	public MBMessage toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MBMessage)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBMessage.class.getName(), getPrimaryKey());
@@ -970,6 +959,17 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public MBMessage toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBMessage)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

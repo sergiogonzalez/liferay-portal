@@ -474,17 +474,6 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	}
 
 	@Override
-	public BookmarksFolder toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (BookmarksFolder)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			BookmarksFolder.class.getName(), getPrimaryKey());
@@ -495,6 +484,17 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public BookmarksFolder toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (BookmarksFolder)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

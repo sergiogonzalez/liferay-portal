@@ -491,17 +491,6 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	@Override
-	public SocialRequest toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (SocialRequest)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			SocialRequest.class.getName(), getPrimaryKey());
@@ -512,6 +501,17 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public SocialRequest toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SocialRequest)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

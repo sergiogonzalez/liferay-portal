@@ -246,6 +246,10 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userGroupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="unsetGroupTeamsUsers" qname="operNS:unsetGroupTeamsUsers" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userIds" type="tns:ArrayOf_xsd_long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="unsetGroupUsers" qname="operNS:unsetGroupUsers" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userIds" type="tns:ArrayOf_xsd_long"></parameter>
@@ -434,7 +438,7 @@
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addGroupUsers addOrganizationUsers addPasswordPolicyUsers addRoleUsers addTeamUsers addUser addUserGroupUsers addUserWithWorkflow deletePortrait deleteRoleUser deleteUser getCompanyUsers getCompanyUsersCount getGroupUserIds getGroupUsers getOrganizationUserIds getOrganizationUsers getRoleUserIds getUserByEmailAddress getUserById getUserByScreenName getUserGroupUsers getUserIdByEmailAddress getUserIdByScreenName hasGroupUser hasRoleUser setRoleUsers setUserGroupUsers unsetGroupUsers unsetOrganizationUsers unsetPasswordPolicyUsers unsetRoleUsers unsetTeamUsers unsetUserGroupUsers updateAgreedToTermsOfUse updateEmailAddress updateIncompleteUser updateLockoutById updateOpenId updateOrganizations updatePassword updatePortrait updateReminderQuery updateScreenName updateStatus updateUser" />
+		<parameter name="allowedMethods" value="addGroupUsers addOrganizationUsers addPasswordPolicyUsers addRoleUsers addTeamUsers addUser addUserGroupUsers addUserWithWorkflow deletePortrait deleteRoleUser deleteUser getCompanyUsers getCompanyUsersCount getGroupUserIds getGroupUsers getOrganizationUserIds getOrganizationUsers getRoleUserIds getUserByEmailAddress getUserById getUserByScreenName getUserGroupUsers getUserIdByEmailAddress getUserIdByScreenName hasGroupUser hasRoleUser setRoleUsers setUserGroupUsers unsetGroupTeamsUsers unsetGroupUsers unsetOrganizationUsers unsetPasswordPolicyUsers unsetRoleUsers unsetTeamUsers unsetUserGroupUsers updateAgreedToTermsOfUse updateEmailAddress updateIncompleteUser updateLockoutById updateOpenId updateOrganizations updatePassword updatePortrait updateReminderQuery updateScreenName updateStatus updateUser" />
 		<parameter name="className" value="com.liferay.portal.service.http.UserServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.announcements.portlet.liferay.com,http://model.portal.liferay.com,http://persistence.service.portal.liferay.com,http://service.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

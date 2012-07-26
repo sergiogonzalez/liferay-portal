@@ -419,17 +419,6 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	@Override
-	public LayoutBranch toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (LayoutBranch)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			LayoutBranch.class.getName(), getPrimaryKey());
@@ -440,6 +429,17 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public LayoutBranch toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (LayoutBranch)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

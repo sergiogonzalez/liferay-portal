@@ -451,17 +451,6 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	}
 
 	@Override
-	public JournalFolder toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (JournalFolder)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			JournalFolder.class.getName(), getPrimaryKey());
@@ -472,6 +461,17 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public JournalFolder toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (JournalFolder)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -370,17 +370,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 	}
 
 	@Override
-	public WorkflowInstanceLink toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (WorkflowInstanceLink)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			WorkflowInstanceLink.class.getName(), getPrimaryKey());
@@ -391,6 +380,17 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public WorkflowInstanceLink toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (WorkflowInstanceLink)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

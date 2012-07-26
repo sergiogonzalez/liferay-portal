@@ -64,8 +64,8 @@ public interface TrashEntryService extends BaseService {
 	* permissions.
 	*
 	* @param groupId the primary key of the group
-	* @throws SystemException if a system exception occurred
 	* @throws PrincipalException if a principal exception occurred
+	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -76,8 +76,8 @@ public interface TrashEntryService extends BaseService {
 	*
 	* @param groupId the primary key of the group
 	* @return the matching trash entries
-	* @throws SystemException if a system exception occurred
 	* @throws PrincipalException if a principal exception occurred
+	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.trash.model.TrashEntryList getEntries(
@@ -96,8 +96,8 @@ public interface TrashEntryService extends BaseService {
 	<code>null</code>)
 	* @return the range of matching trash entries ordered by comparator
 	<code>obc</code>
-	* @throws SystemException if a system exception occurred
 	* @throws PrincipalException if a system exception occurred
+	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.trash.model.TrashEntryList getEntries(

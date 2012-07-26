@@ -325,7 +325,7 @@ public class LayoutTemplateLocalServiceImpl
 		}
 
 		List<Element> layoutTemplateElements = element.elements(
-						"layout-template");
+			"layout-template");
 
 		for (Element layoutTemplateElement : layoutTemplateElements) {
 			String layoutTemplateId = layoutTemplateElement.attributeValue(

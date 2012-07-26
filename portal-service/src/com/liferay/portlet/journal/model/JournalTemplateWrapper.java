@@ -813,6 +813,12 @@ public class JournalTemplateWrapper implements JournalTemplate,
 		_journalTemplate.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_journalTemplate.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	@Override
 	public java.lang.Object clone() {
 		return new JournalTemplateWrapper((JournalTemplate)_journalTemplate.clone());

@@ -313,17 +313,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	@Override
-	public Image toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Image)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			Image.class.getName(), getPrimaryKey());
@@ -334,6 +323,17 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Image toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Image)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

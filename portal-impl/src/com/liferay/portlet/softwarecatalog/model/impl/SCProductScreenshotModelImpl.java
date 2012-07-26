@@ -283,17 +283,6 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	}
 
 	@Override
-	public SCProductScreenshot toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (SCProductScreenshot)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			SCProductScreenshot.class.getName(), getPrimaryKey());
@@ -304,6 +293,17 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public SCProductScreenshot toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SCProductScreenshot)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

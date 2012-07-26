@@ -321,17 +321,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	}
 
 	@Override
-	public AssetLink toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (AssetLink)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AssetLink.class.getName(), getPrimaryKey());
@@ -342,6 +331,17 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public AssetLink toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AssetLink)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

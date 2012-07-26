@@ -350,17 +350,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	}
 
 	@Override
-	public ShoppingCart toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (ShoppingCart)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ShoppingCart.class.getName(), getPrimaryKey());
@@ -371,6 +360,17 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public ShoppingCart toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ShoppingCart)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

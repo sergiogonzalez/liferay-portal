@@ -225,17 +225,6 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	}
 
 	@Override
-	public JournalArticleResource toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (JournalArticleResource)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			JournalArticleResource.class.getName(), getPrimaryKey());
@@ -246,6 +235,17 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public JournalArticleResource toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (JournalArticleResource)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

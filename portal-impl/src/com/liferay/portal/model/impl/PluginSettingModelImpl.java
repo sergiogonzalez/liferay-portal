@@ -322,17 +322,6 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	@Override
-	public PluginSetting toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (PluginSetting)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			PluginSetting.class.getName(), getPrimaryKey());
@@ -343,6 +332,17 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public PluginSetting toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (PluginSetting)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

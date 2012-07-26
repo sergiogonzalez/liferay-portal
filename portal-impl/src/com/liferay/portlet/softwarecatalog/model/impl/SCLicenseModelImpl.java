@@ -333,17 +333,6 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	}
 
 	@Override
-	public SCLicense toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (SCLicense)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			SCLicense.class.getName(), getPrimaryKey());
@@ -354,6 +343,17 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public SCLicense toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SCLicense)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

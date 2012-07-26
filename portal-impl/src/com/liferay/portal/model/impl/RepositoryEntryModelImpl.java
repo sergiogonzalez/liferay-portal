@@ -253,17 +253,6 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	@Override
-	public RepositoryEntry toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (RepositoryEntry)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			RepositoryEntry.class.getName(), getPrimaryKey());
@@ -274,6 +263,17 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public RepositoryEntry toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (RepositoryEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

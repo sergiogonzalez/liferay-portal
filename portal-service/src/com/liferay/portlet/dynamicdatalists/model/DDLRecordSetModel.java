@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.model;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
@@ -465,6 +466,9 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>, GroupedModel
 	public ExpandoBridge getExpandoBridge();
 
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	public Object clone();
 

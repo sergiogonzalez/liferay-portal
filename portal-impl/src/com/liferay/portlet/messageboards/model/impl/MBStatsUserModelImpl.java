@@ -257,17 +257,6 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	@Override
-	public MBStatsUser toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MBStatsUser)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			MBStatsUser.class.getName(), getPrimaryKey());
@@ -278,6 +267,17 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public MBStatsUser toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBStatsUser)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

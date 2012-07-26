@@ -257,17 +257,6 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	}
 
 	@Override
-	public UserIdMapper toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (UserIdMapper)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			UserIdMapper.class.getName(), getPrimaryKey());
@@ -278,6 +267,17 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public UserIdMapper toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (UserIdMapper)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

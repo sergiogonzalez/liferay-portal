@@ -438,17 +438,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	}
 
 	@Override
-	public WikiNode toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (WikiNode)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			WikiNode.class.getName(), getPrimaryKey());
@@ -459,6 +448,17 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public WikiNode toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (WikiNode)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -635,17 +635,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	@Override
-	public Address toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Address)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Address.class.getName(), getPrimaryKey());
@@ -656,6 +645,17 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Address toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Address)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

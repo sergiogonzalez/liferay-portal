@@ -4,6 +4,7 @@ package ${packagePath}.model;
 	import ${packagePath}.service.persistence.${entity.name}PK;
 </#if>
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
@@ -344,6 +345,10 @@ public interface ${entity.name}Model extends
 	public ExpandoBridge getExpandoBridge();
 
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	<#if entity.hasLocalizedColumn()>
+		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException;
+	</#if>
 
 	public Object clone();
 

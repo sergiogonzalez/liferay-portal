@@ -423,17 +423,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	@Override
-	public Company toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Company)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Company.class.getName(), getPrimaryKey());
@@ -444,6 +433,17 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Company toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Company)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

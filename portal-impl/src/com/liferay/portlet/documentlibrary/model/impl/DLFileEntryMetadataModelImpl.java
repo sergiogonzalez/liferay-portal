@@ -296,17 +296,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	}
 
 	@Override
-	public DLFileEntryMetadata toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (DLFileEntryMetadata)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			DLFileEntryMetadata.class.getName(), getPrimaryKey());
@@ -317,6 +306,17 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public DLFileEntryMetadata toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DLFileEntryMetadata)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

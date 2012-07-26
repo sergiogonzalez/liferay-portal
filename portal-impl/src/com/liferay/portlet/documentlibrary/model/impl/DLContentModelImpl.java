@@ -328,17 +328,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	@Override
-	public DLContent toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (DLContent)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DLContent.class.getName(), getPrimaryKey());
@@ -349,6 +338,17 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public DLContent toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DLContent)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

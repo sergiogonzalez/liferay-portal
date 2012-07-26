@@ -472,17 +472,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	}
 
 	@Override
-	public EmailAddress toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (EmailAddress)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			EmailAddress.class.getName(), getPrimaryKey());
@@ -493,6 +482,17 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public EmailAddress toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (EmailAddress)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

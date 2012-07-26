@@ -313,17 +313,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	@Override
-	public UserTracker toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (UserTracker)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			UserTracker.class.getName(), getPrimaryKey());
@@ -334,6 +323,17 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public UserTracker toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (UserTracker)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

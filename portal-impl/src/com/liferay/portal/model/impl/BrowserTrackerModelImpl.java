@@ -187,17 +187,6 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	}
 
 	@Override
-	public BrowserTracker toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (BrowserTracker)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			BrowserTracker.class.getName(), getPrimaryKey());
@@ -208,6 +197,17 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public BrowserTracker toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (BrowserTracker)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -300,17 +300,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	}
 
 	@Override
-	public SocialActivityAchievement toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (SocialActivityAchievement)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			SocialActivityAchievement.class.getName(), getPrimaryKey());
@@ -321,6 +310,17 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public SocialActivityAchievement toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SocialActivityAchievement)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

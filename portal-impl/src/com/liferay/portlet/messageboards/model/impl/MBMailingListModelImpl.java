@@ -681,17 +681,6 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	}
 
 	@Override
-	public MBMailingList toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MBMailingList)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBMailingList.class.getName(), getPrimaryKey());
@@ -702,6 +691,17 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public MBMailingList toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBMailingList)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -559,6 +559,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		_role.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_role.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	@Override
 	public java.lang.Object clone() {
 		return new RoleWrapper((Role)_role.clone());

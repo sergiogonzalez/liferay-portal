@@ -241,17 +241,6 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	}
 
 	@Override
-	public DDMStructureLink toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (DDMStructureLink)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			DDMStructureLink.class.getName(), getPrimaryKey());
@@ -262,6 +251,17 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public DDMStructureLink toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DDMStructureLink)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -1589,6 +1589,12 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		_layoutRevision.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_layoutRevision.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	@Override
 	public java.lang.Object clone() {
 		return new LayoutRevisionWrapper((LayoutRevision)_layoutRevision.clone());

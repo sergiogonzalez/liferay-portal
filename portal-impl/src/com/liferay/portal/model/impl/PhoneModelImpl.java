@@ -494,17 +494,6 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	}
 
 	@Override
-	public Phone toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Phone)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Phone.class.getName(), getPrimaryKey());
@@ -515,6 +504,17 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Phone toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Phone)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -329,17 +329,6 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	}
 
 	@Override
-	public PortletPreferences toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (PortletPreferences)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			PortletPreferences.class.getName(), getPrimaryKey());
@@ -350,6 +339,17 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public PortletPreferences toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (PortletPreferences)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

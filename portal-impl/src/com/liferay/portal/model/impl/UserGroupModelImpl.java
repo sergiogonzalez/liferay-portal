@@ -345,17 +345,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	}
 
 	@Override
-	public UserGroup toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (UserGroup)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			UserGroup.class.getName(), getPrimaryKey());
@@ -366,6 +355,17 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public UserGroup toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (UserGroup)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -353,17 +353,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	}
 
 	@Override
-	public Subscription toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Subscription)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Subscription.class.getName(), getPrimaryKey());
@@ -374,6 +363,17 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Subscription toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Subscription)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

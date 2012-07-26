@@ -514,17 +514,6 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	}
 
 	@Override
-	public DDLRecord toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (DDLRecord)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DDLRecord.class.getName(), getPrimaryKey());
@@ -535,6 +524,17 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public DDLRecord toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DDLRecord)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -343,17 +343,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	@Override
-	public UserNotificationEvent toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (UserNotificationEvent)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			UserNotificationEvent.class.getName(), getPrimaryKey());
@@ -364,6 +353,17 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public UserNotificationEvent toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (UserNotificationEvent)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

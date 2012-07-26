@@ -323,17 +323,6 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	}
 
 	@Override
-	public ShoppingOrderItem toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (ShoppingOrderItem)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			ShoppingOrderItem.class.getName(), getPrimaryKey());
@@ -344,6 +333,17 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public ShoppingOrderItem toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ShoppingOrderItem)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

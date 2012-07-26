@@ -836,17 +836,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	@Override
-	public PasswordPolicy toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (PasswordPolicy)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			PasswordPolicy.class.getName(), getPrimaryKey());
@@ -857,6 +846,17 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public PasswordPolicy toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (PasswordPolicy)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

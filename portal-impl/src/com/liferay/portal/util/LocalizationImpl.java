@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -81,6 +83,47 @@ public class LocalizationImpl implements Localization {
 			xml, _AVAILABLE_LOCALES, StringPool.BLANK);
 
 		return StringUtil.split(attributeValue);
+	}
+
+	public Locale getDefaultImportLocale(
+		String className, long classPK, Locale contentDefaultLocale,
+		Locale[] contentAvailableLocales) {
+
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+		if (ArrayUtil.contains(availableLocales, contentDefaultLocale)) {
+			return contentDefaultLocale;
+		}
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		if (ArrayUtil.contains(contentAvailableLocales, defaultLocale)) {
+			return defaultLocale;
+		}
+
+		for (Locale contentAvailableLocale : contentAvailableLocales) {
+			if (ArrayUtil.contains(availableLocales, contentAvailableLocale)) {
+				return contentAvailableLocale;
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("Language ");
+			sb.append(LocaleUtil.toLanguageId(contentDefaultLocale));
+			sb.append(" is missing for ");
+			sb.append(className);
+			sb.append(" with primary key ");
+			sb.append(classPK);
+			sb.append(". Setting default language to ");
+			sb.append(LocaleUtil.toLanguageId(defaultLocale));
+			sb.append(".");
+
+			_log.warn(sb.toString());
+		}
+
+		return defaultLocale;
 	}
 
 	public String getDefaultLocale(String xml) {

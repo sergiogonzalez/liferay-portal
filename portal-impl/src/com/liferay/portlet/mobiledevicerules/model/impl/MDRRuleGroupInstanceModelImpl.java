@@ -493,17 +493,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 	}
 
 	@Override
-	public MDRRuleGroupInstance toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MDRRuleGroupInstance)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MDRRuleGroupInstance.class.getName(), getPrimaryKey());
@@ -514,6 +503,17 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public MDRRuleGroupInstance toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MDRRuleGroupInstance)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

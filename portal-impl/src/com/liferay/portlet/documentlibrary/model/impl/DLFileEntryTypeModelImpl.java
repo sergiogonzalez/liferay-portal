@@ -443,17 +443,6 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	}
 
 	@Override
-	public DLFileEntryType toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (DLFileEntryType)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DLFileEntryType.class.getName(), getPrimaryKey());
@@ -464,6 +453,17 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public DLFileEntryType toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DLFileEntryType)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

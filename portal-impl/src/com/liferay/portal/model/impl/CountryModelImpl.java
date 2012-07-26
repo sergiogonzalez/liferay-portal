@@ -385,17 +385,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	@Override
-	public Country toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Country)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			Country.class.getName(), getPrimaryKey());
@@ -406,6 +395,17 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Country toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Country)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

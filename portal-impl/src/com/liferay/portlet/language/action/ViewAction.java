@@ -104,6 +104,18 @@ public class ViewAction extends PortletAction {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
+		String queryString = StringPool.BLANK;
+
+		int pos = redirect.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+
+		if (pos == -1) {
+			pos = redirect.indexOf(StringPool.QUESTION);
+		}
+
+		if (pos != -1) {
+			queryString = redirect.substring(pos);
+		}
+
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 			redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
 
@@ -112,22 +124,11 @@ public class ViewAction extends PortletAction {
 			}
 		}
 		else {
-			String layoutURL = PortalUtil.getLayoutFriendlyURL(
+			redirect = PortalUtil.getLayoutFriendlyURL(
 				layout, themeDisplay, locale);
-
-			int pos = redirect.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
-
-			if (pos == -1) {
-				pos = redirect.indexOf(StringPool.QUESTION);
-			}
-
-			if (pos != -1) {
-				redirect = layoutURL + redirect.substring(pos);
-			}
-			else {
-				redirect = layoutURL;
-			}
 		}
+
+		redirect = redirect + queryString;
 
 		actionResponse.sendRedirect(redirect);
 	}

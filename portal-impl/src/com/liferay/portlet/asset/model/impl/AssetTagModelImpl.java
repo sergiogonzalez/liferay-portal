@@ -379,17 +379,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	}
 
 	@Override
-	public AssetTag toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (AssetTag)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AssetTag.class.getName(), getPrimaryKey());
@@ -400,6 +389,17 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public AssetTag toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AssetTag)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

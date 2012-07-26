@@ -257,17 +257,6 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	}
 
 	@Override
-	public TrashVersion toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (TrashVersion)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			TrashVersion.class.getName(), getPrimaryKey());
@@ -278,6 +267,17 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public TrashVersion toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (TrashVersion)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

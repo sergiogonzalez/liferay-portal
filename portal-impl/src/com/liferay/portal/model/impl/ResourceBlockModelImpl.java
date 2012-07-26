@@ -326,17 +326,6 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	@Override
-	public ResourceBlock toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (ResourceBlock)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ResourceBlock.class.getName(), getPrimaryKey());
@@ -347,6 +336,17 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public ResourceBlock toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ResourceBlock)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

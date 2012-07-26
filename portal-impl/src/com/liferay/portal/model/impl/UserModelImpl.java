@@ -1164,17 +1164,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	@Override
-	public User toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (User)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			User.class.getName(), getPrimaryKey());
@@ -1185,6 +1174,17 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public User toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (User)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

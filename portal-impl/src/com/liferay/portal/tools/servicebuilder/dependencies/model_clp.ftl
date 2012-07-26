@@ -8,6 +8,7 @@ package ${packagePath}.model;
 	import ${packagePath}.service.persistence.${entity.name}PK;
 </#if>
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -443,6 +444,18 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			else {
 				${entity.name}LocalServiceUtil.update${entity.name}(this);
 			}
+		}
+	</#if>
+
+	<#if entity.hasLocalizedColumn()>
+		@SuppressWarnings("unused")
+		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException {
+
+			<#list entity.regularColList as column>
+				<#if column.localized>
+					set${column.methodName}(get${column.methodName}(defaultImportLocale), defaultImportLocale, defaultImportLocale);
+				</#if>
+			</#list>
 		}
 	</#if>
 

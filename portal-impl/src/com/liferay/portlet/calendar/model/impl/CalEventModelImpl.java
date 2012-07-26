@@ -712,17 +712,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	@Override
-	public CalEvent toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (CalEvent)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			CalEvent.class.getName(), getPrimaryKey());
@@ -733,6 +722,17 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public CalEvent toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (CalEvent)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

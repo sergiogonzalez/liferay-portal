@@ -378,17 +378,6 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	@Override
-	public PollsVote toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (PollsVote)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			PollsVote.class.getName(), getPrimaryKey());
@@ -399,6 +388,17 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public PollsVote toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (PollsVote)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

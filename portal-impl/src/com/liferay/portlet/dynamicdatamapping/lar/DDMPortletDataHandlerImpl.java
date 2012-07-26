@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
@@ -39,6 +42,7 @@ import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUt
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateUtil;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -109,6 +113,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		DDMStructure structure =
 			(DDMStructure)portletDataContext.getZipEntryAsObject(path);
+
+		prepareLanguagesForImport(structure);
 
 		long userId = portletDataContext.getUserId(structure.getUserUuid());
 
@@ -308,6 +314,22 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		sb.append(".xml");
 
 		return sb.toString();
+	}
+
+	protected static void prepareLanguagesForImport(DDMStructure structure)
+		throws PortalException {
+
+		Locale structureDefaultLocale = LocaleUtil.fromLanguageId(
+			structure.getDefaultLocale());
+
+		Locale[] structureAvailableLocales = LocaleUtil.fromLanguageIds(
+			structure.getAvailableLocales());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			DDMStructure.class.getName(), structure.getPrimaryKey(),
+			structureDefaultLocale, structureAvailableLocales);
+
+		structure.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override

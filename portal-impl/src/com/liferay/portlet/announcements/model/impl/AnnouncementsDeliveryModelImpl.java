@@ -340,17 +340,6 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	}
 
 	@Override
-	public AnnouncementsDelivery toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (AnnouncementsDelivery)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AnnouncementsDelivery.class.getName(), getPrimaryKey());
@@ -361,6 +350,17 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public AnnouncementsDelivery toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AnnouncementsDelivery)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

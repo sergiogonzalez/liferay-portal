@@ -590,17 +590,6 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	}
 
 	@Override
-	public SCProductEntry toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (SCProductEntry)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			SCProductEntry.class.getName(), getPrimaryKey());
@@ -611,6 +600,17 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public SCProductEntry toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SCProductEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

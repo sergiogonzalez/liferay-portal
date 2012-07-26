@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
@@ -523,6 +524,9 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	public ExpandoBridge getExpandoBridge();
 
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	public Object clone();
 

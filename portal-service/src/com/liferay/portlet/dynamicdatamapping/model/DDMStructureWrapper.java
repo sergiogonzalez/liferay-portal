@@ -733,6 +733,12 @@ public class DDMStructureWrapper implements DDMStructure,
 		_ddmStructure.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_ddmStructure.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	@Override
 	public java.lang.Object clone() {
 		return new DDMStructureWrapper((DDMStructure)_ddmStructure.clone());

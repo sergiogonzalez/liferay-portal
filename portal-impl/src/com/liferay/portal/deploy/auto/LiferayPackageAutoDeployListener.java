@@ -48,9 +48,9 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 			_log.info("Extracting Liferay package for " + file.getPath());
 		}
 
-		_autoDeployer.autoDeploy(autoDeploymentContext);
+		int code = _autoDeployer.autoDeploy(autoDeploymentContext);
 
-		if (_log.isInfoEnabled()) {
+		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
 				"Liferay package for " + file.getPath() +" extracted " +
 					"successfully. Deployment will start in a few seconds.");

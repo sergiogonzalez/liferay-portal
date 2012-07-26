@@ -212,17 +212,6 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	}
 
 	@Override
-	public PortalPreferences toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (PortalPreferences)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			PortalPreferences.class.getName(), getPrimaryKey());
@@ -233,6 +222,17 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public PortalPreferences toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (PortalPreferences)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
@@ -740,6 +741,9 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	public ExpandoBridge getExpandoBridge();
 
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	public Object clone();
 

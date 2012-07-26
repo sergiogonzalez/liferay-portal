@@ -218,17 +218,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	}
 
 	@Override
-	public MBThreadFlag toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MBThreadFlag)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			MBThreadFlag.class.getName(), getPrimaryKey());
@@ -239,6 +228,17 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public MBThreadFlag toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBThreadFlag)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -307,17 +307,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	}
 
 	@Override
-	public Ticket toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Ticket)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Ticket.class.getName(), getPrimaryKey());
@@ -328,6 +317,17 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Ticket toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Ticket)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

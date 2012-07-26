@@ -900,17 +900,6 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	@Override
-	public WikiPage toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (WikiPage)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			WikiPage.class.getName(), getPrimaryKey());
@@ -921,6 +910,17 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public WikiPage toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (WikiPage)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

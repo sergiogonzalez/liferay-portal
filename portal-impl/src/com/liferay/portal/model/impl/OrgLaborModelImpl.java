@@ -482,17 +482,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	}
 
 	@Override
-	public OrgLabor toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (OrgLabor)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			OrgLabor.class.getName(), getPrimaryKey());
@@ -503,6 +492,17 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public OrgLabor toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (OrgLabor)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -113,8 +113,9 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public static long FOLDERID_COLUMN_BITMASK = 4L;
 	public static long GROUPID_COLUMN_BITMASK = 8L;
 	public static long STATUS_COLUMN_BITMASK = 16L;
-	public static long UUID_COLUMN_BITMASK = 32L;
-	public static long VERSION_COLUMN_BITMASK = 64L;
+	public static long TITLE_COLUMN_BITMASK = 32L;
+	public static long UUID_COLUMN_BITMASK = 64L;
+	public static long VERSION_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -600,7 +601,17 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public void setTitle(String title) {
+		_columnBitmask |= TITLE_COLUMN_BITMASK;
+
+		if (_originalTitle == null) {
+			_originalTitle = _title;
+		}
+
 		_title = title;
+	}
+
+	public String getOriginalTitle() {
+		return GetterUtil.getString(_originalTitle);
 	}
 
 	@JSON
@@ -842,17 +853,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	@Override
-	public DLFileVersion toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (DLFileVersion)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DLFileVersion.class.getName(), getPrimaryKey());
@@ -863,6 +863,17 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public DLFileVersion toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DLFileVersion)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -981,6 +992,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionModelImpl._originalFileEntryId = dlFileVersionModelImpl._fileEntryId;
 
 		dlFileVersionModelImpl._setOriginalFileEntryId = false;
+
+		dlFileVersionModelImpl._originalTitle = dlFileVersionModelImpl._title;
 
 		dlFileVersionModelImpl._originalVersion = dlFileVersionModelImpl._version;
 
@@ -1321,6 +1334,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private String _extension;
 	private String _mimeType;
 	private String _title;
+	private String _originalTitle;
 	private String _description;
 	private String _changeLog;
 	private String _extraSettings;

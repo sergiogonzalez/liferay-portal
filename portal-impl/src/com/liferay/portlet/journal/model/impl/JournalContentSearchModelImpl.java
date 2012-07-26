@@ -305,17 +305,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	@Override
-	public JournalContentSearch toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (JournalContentSearch)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			JournalContentSearch.class.getName(), getPrimaryKey());
@@ -326,6 +315,17 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public JournalContentSearch toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (JournalContentSearch)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

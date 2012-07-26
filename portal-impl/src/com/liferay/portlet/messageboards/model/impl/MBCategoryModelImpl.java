@@ -519,17 +519,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	}
 
 	@Override
-	public MBCategory toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MBCategory)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBCategory.class.getName(), getPrimaryKey());
@@ -540,6 +529,17 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public MBCategory toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBCategory)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

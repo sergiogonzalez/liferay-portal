@@ -5,8 +5,8 @@
 -->
 
 <!--
-This file is now deprecated. Please upgrade to liferay-plugin-package.properties
-instead.
+The Marketplace does not allow plugins that have liferay-plugin-package.xml.
+Please use liferay-plugin-package.properties instead.
 -->
 
 <!--

@@ -25,7 +25,7 @@ public interface Plugin {
 
 	public static final String TYPE_HOOK = "hook";
 
-	public static final String TYPE_LAYOUT_TEMPLATE = "layout-template";
+	public static final String TYPE_LAYOUT_TEMPLATE = "layouttpl";
 
 	public static final String TYPE_PORTLET = "portlet";
 

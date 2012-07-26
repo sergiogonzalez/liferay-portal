@@ -217,17 +217,6 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 	}
 
 	@Override
-	public ResourceAction toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (ResourceAction)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			ResourceAction.class.getName(), getPrimaryKey());
@@ -238,6 +227,17 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public ResourceAction toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ResourceAction)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

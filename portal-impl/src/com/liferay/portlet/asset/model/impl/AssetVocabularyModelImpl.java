@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model.impl;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
@@ -617,17 +618,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	}
 
 	@Override
-	public AssetVocabulary toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (AssetVocabulary)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AssetVocabulary.class.getName(), getPrimaryKey());
@@ -638,6 +628,26 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+		setTitle(getTitle(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+	}
+
+	@Override
+	public AssetVocabulary toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AssetVocabulary)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

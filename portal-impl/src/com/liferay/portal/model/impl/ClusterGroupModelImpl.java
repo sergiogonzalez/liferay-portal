@@ -189,17 +189,6 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	}
 
 	@Override
-	public ClusterGroup toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (ClusterGroup)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			ClusterGroup.class.getName(), getPrimaryKey());
@@ -210,6 +199,17 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public ClusterGroup toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ClusterGroup)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

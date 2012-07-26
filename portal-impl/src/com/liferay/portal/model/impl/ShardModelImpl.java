@@ -242,17 +242,6 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	}
 
 	@Override
-	public Shard toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Shard)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			Shard.class.getName(), getPrimaryKey());
@@ -263,6 +252,17 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Shard toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Shard)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

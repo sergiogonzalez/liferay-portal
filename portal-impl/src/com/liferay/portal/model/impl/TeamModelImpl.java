@@ -389,17 +389,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	@Override
-	public Team toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Team)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Team.class.getName(), getPrimaryKey());
@@ -410,6 +399,17 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Team toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Team)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

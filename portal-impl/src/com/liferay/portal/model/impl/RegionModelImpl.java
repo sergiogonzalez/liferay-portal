@@ -305,17 +305,6 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	@Override
-	public Region toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (Region)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			Region.class.getName(), getPrimaryKey());
@@ -326,6 +315,17 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public Region toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Region)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

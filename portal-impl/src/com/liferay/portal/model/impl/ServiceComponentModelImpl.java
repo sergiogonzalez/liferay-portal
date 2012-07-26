@@ -233,17 +233,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	}
 
 	@Override
-	public ServiceComponent toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (ServiceComponent)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			ServiceComponent.class.getName(), getPrimaryKey());
@@ -254,6 +243,17 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public ServiceComponent toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ServiceComponent)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

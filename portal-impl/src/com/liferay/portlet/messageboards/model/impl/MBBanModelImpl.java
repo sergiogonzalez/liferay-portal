@@ -367,17 +367,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	@Override
-	public MBBan toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MBBan)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBBan.class.getName(), getPrimaryKey());
@@ -388,6 +377,17 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public MBBan toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBBan)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
@@ -634,17 +635,6 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	}
 
 	@Override
-	public MDRRule toEscapedModel() {
-		if (_escapedModelProxy == null) {
-			_escapedModelProxy = (MDRRule)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelProxyInterfaces,
-					new AutoEscapeBeanHandler(this));
-		}
-
-		return _escapedModelProxy;
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MDRRule.class.getName(), getPrimaryKey());
@@ -655,6 +645,26 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+		setName(getName(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+	}
+
+	@Override
+	public MDRRule toEscapedModel() {
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MDRRule)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModelProxy;
 	}
 
 	@Override
