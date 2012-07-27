@@ -21,9 +21,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -754,7 +756,15 @@ public class PortalUtil {
 	public static HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request) {
 
-		return getPortal().getOriginalServletRequest(request);
+		HttpServletRequest originalServletRequest =
+			getPortal().getOriginalServletRequest(request);
+
+		if (ServerDetector.isWebLogic()) {
+			originalServletRequest = new NonSerializableObjectRequestWrapper(
+				originalServletRequest);
+		}
+
+		return originalServletRequest;
 	}
 
 	public static String getOuterPortletId(HttpServletRequest request) {
