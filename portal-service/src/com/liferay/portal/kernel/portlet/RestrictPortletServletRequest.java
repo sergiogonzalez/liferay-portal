@@ -16,8 +16,10 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.NonSerializableObjectHandler;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.util.Mergeable;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -45,6 +47,10 @@ public class RestrictPortletServletRequest
 	public Object getAttribute(String name) {
 		Object value = _attributes.get(name);
 
+		if (ServerDetector.isWebLogic()) {
+			value = NonSerializableObjectHandler.getValue(value);
+		}
+
 		if (value == _nullValue) {
 			return null;
 		}
@@ -53,7 +59,13 @@ public class RestrictPortletServletRequest
 			return value;
 		}
 
-		return super.getAttribute(name);
+		value = super.getAttribute(name);
+
+		if (ServerDetector.isWebLogic()) {
+			value = NonSerializableObjectHandler.getValue(value);
+		}
+
+		return value;
 	}
 
 	@Override
@@ -73,6 +85,10 @@ public class RestrictPortletServletRequest
 		for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
 			String key = entry.getKey();
 			Object value = entry.getValue();
+
+			if (ServerDetector.isWebLogic()) {
+				value = NonSerializableObjectHandler.getValue(value);
+			}
 
 			if (value == null) {
 				names.remove(key);
@@ -122,6 +138,10 @@ public class RestrictPortletServletRequest
 			value = _nullValue;
 		}
 
+		if (ServerDetector.isWebLogic()) {
+			value = new NonSerializableObjectHandler(value);
+		}
+
 		_attributes.put(name, value);
 	}
 
@@ -129,6 +149,10 @@ public class RestrictPortletServletRequest
 		for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
 			String name = entry.getKey();
 			Object value = entry.getValue();
+
+			if (ServerDetector.isWebLogic()) {
+				value = NonSerializableObjectHandler.getValue(value);
+			}
 
 			doMergeSharedAttributes(servletRequest, name, value);
 		}
@@ -147,6 +171,11 @@ public class RestrictPortletServletRequest
 			}
 			else {
 				Object masterValue = servletRequest.getAttribute(name);
+
+				if (ServerDetector.isWebLogic()) {
+					masterValue = NonSerializableObjectHandler.getValue(
+						masterValue);
+				}
 
 				if ((masterValue == null) || !(value instanceof Mergeable)) {
 					servletRequest.setAttribute(name, value);
