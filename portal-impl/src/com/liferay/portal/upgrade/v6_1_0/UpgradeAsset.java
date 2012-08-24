@@ -180,4 +180,5 @@ public class UpgradeAsset extends UpgradeProcess {
 			"update AssetEntry set classNameId = " + dlFileEntryClassNameId +
 				" where classNameId = " + igImageClassNameId);
 	}
+
 }
