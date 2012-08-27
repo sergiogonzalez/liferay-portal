@@ -95,7 +95,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		checkReplyToPermission(groupId, categoryId, parentMessageId);
+		checkReplyToPermission(groupId, categoryId, threadId, parentMessageId);
 
 		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
 			throw new LockedThreadException();
@@ -609,7 +609,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 			checkReplyToPermission(
 				message.getGroupId(), message.getCategoryId(),
-				message.getParentMessageId());
+				message.getThreadId(), message.getParentMessageId());
 		}
 		else {
 			MBMessagePermission.check(
@@ -645,10 +645,21 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	protected void checkReplyToPermission(
-			long groupId, long categoryId, long parentMessageId)
+			long groupId, long categoryId, long threadId, long parentMessageId)
 		throws PortalException, SystemException {
 
 		if (parentMessageId > 0) {
+			MBMessage parentMessage = mbMessagePersistence.fetchByPrimaryKey(
+				parentMessageId);
+
+			if ((parentMessage == null) ||
+				(parentMessage.getCategoryId() != categoryId) ||
+				(parentMessage.getThreadId() != threadId) ||
+				(parentMessage.getGroupId() != groupId)) {
+
+				throw new PrincipalException();
+			}
+
 			if (MBCategoryPermission.contains(
 					getPermissionChecker(), groupId, categoryId,
 					ActionKeys.ADD_MESSAGE)) {
@@ -656,16 +667,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				return;
 			}
 
-			MBMessage parentMessage = mbMessagePersistence.fetchByPrimaryKey(
-				parentMessageId);
-
-			if ((parentMessage == null) ||
-				!MBCategoryPermission.contains(
-					getPermissionChecker(), groupId, categoryId,
-					ActionKeys.REPLY_TO_MESSAGE)) {
-
-				throw new PrincipalException();
-			}
+			MBCategoryPermission.check(
+				getPermissionChecker(), groupId, categoryId,
+				ActionKeys.REPLY_TO_MESSAGE);
 		}
 		else {
 			MBCategoryPermission.check(
