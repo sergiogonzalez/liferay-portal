@@ -179,6 +179,7 @@ type = ParamUtil.getString(request, "type", type);
 
 	ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
+	searchTerms.setFolderIds(new ArrayList<Long>());
 	searchTerms.setVersion(-1);
 
 	List<JournalArticle> results = null;

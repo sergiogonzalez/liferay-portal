@@ -32,6 +32,7 @@ import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -123,7 +124,7 @@ public class JournalArticleAtomCollectionProvider
 			return journalArticles;
 		}
 
-		long folderId = 0;
+		List<Long> folderIds = Collections.emptyList();
 		long classNameId = 0;
 		String keywords = null;
 		Double version = null;
@@ -138,7 +139,7 @@ public class JournalArticleAtomCollectionProvider
 		OrderByComparator obc = new ArticleVersionComparator();
 
 		int count = JournalArticleServiceUtil.searchCount(
-			companyId, groupId, folderId, classNameId, keywords, version, type,
+			companyId, groupId, folderIds, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate);
 
@@ -147,7 +148,7 @@ public class JournalArticleAtomCollectionProvider
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
 		journalArticles = JournalArticleServiceUtil.search(
-			companyId, groupId, folderId, classNameId, keywords, version, type,
+			companyId, groupId, folderIds, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate, atomPager.getStart(), atomPager.getEnd() + 1, obc);
 
