@@ -51,8 +51,11 @@ List<Group> mySites = user.getMySites(true, max);
 			}
 
 			if (mySite.getPublicLayoutsPageCount() == 0) {
-				if (mySite.isRegularSite()) {
+				if (mySite.isSite()) {
 					showPublicSite = PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
+				}
+				else if (mySite.isOrganization()) {
+					showPublicSite = false;
 				}
 				else if (mySite.isUser()) {
 					showPublicSite = PropsValues.MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
@@ -65,6 +68,9 @@ List<Group> mySites = user.getMySites(true, max);
 			else if ((defaultPublicLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultPublicLayout, true, ActionKeys.VIEW)) {
 				showPublicSite = false;
 			}
+			else if (mySite.isOrganization() && !mySite.isSite()) {
+				_log.error("There is one organization without a site which has pages.");
+			}
 
 			boolean showPrivateSite = true;
 
@@ -75,8 +81,11 @@ List<Group> mySites = user.getMySites(true, max);
 			}
 
 			if (mySite.getPrivateLayoutsPageCount() == 0) {
-				if (mySite.isRegularSite()) {
+				if (mySite.isSite()) {
 					showPrivateSite = PropsValues.MY_SITES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS;
+				}
+				else if (mySite.isOrganization()) {
+					showPrivateSite = false;
 				}
 				else if (mySite.isUser()) {
 					showPrivateSite = PropsValues.MY_SITES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS;
@@ -89,10 +98,8 @@ List<Group> mySites = user.getMySites(true, max);
 			else if ((defaultPrivateLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultPrivateLayout, true, ActionKeys.VIEW)) {
 				showPrivateSite = false;
 			}
-
-			if (!mySite.isControlPanel() && !mySite.isSite() && !mySite.isUser()) {
-				showPublicSite = false;
-				showPrivateSite = false;
+			else if (mySite.isOrganization() && !mySite.isSite()) {
+				_log.error("There is one organization without a site which has pages.");
 			}
 		%>
 
@@ -300,7 +307,7 @@ List<Group> mySites = user.getMySites(true, max);
 						String publicAddPageHREF = null;
 						String privateAddPageHREF = null;
 
-						if (mySite.isRegularSite() && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT)) {
+						if (mySite.isSite() && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT)) {
 							PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
 
 							addPageURL.setWindowState(WindowState.NORMAL);
