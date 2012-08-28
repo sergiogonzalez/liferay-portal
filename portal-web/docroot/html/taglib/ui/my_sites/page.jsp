@@ -40,67 +40,8 @@ List<Group> mySites = user.getMySites(true, max);
 		for (Group mySite : mySites) {
 			String escapedSiteName = HtmlUtil.escape(mySite.getName());
 
-			boolean showPublicSite = true;
-
-			boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.POWER_USER, true);
-
-			Layout defaultPublicLayout = null;
-
-			if (mySite.getDefaultPublicPlid() > 0) {
-				defaultPublicLayout = LayoutLocalServiceUtil.fetchFirstLayout(mySite.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
-
-			if (mySite.getPublicLayoutsPageCount() == 0) {
-				if (mySite.isSite()) {
-					showPublicSite = PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
-				}
-				else if (mySite.isOrganization()) {
-					showPublicSite = false;
-				}
-				else if (mySite.isUser()) {
-					showPublicSite = PropsValues.MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
-
-					if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED && !hasPowerUserRole) {
-						showPublicSite = false;
-					}
-				}
-			}
-			else if ((defaultPublicLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultPublicLayout, true, ActionKeys.VIEW)) {
-				showPublicSite = false;
-			}
-			else if (mySite.isOrganization() && !mySite.isSite()) {
-				_log.error("There is one organization without a site which has pages.");
-			}
-
-			boolean showPrivateSite = true;
-
-			Layout defaultPrivateLayout = null;
-
-			if (mySite.getDefaultPrivatePlid() > 0) {
-				defaultPrivateLayout = LayoutLocalServiceUtil.fetchFirstLayout(mySite.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
-
-			if (mySite.getPrivateLayoutsPageCount() == 0) {
-				if (mySite.isSite()) {
-					showPrivateSite = PropsValues.MY_SITES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS;
-				}
-				else if (mySite.isOrganization()) {
-					showPrivateSite = false;
-				}
-				else if (mySite.isUser()) {
-					showPrivateSite = PropsValues.MY_SITES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS;
-
-					if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED && !hasPowerUserRole) {
-						showPrivateSite = false;
-					}
-				}
-			}
-			else if ((defaultPrivateLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultPrivateLayout, true, ActionKeys.VIEW)) {
-				showPrivateSite = false;
-			}
-			else if (mySite.isOrganization() && !mySite.isSite()) {
-				_log.error("There is one organization without a site which has pages.");
-			}
+			boolean showPublicSite = mySite.isShowSite(permissionChecker, false);
+			boolean showPrivateSite = mySite.isShowSite(permissionChecker, true);
 		%>
 
 			<c:if test="<%= showPublicSite || showPrivateSite %>">
