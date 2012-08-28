@@ -42,6 +42,7 @@ import com.liferay.portlet.journal.util.comparator.ArticleModifiedDateComparator
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +90,13 @@ public class GetArticlesAction extends Action {
 
 		long companyId = PortalUtil.getCompanyId(request);
 		long groupId = ParamUtil.getLong(request, "groupId");
+
 		long folderId = ParamUtil.getLong(request, "folderId");
+
+		List<Long> folderIds = new ArrayList<Long>(1);
+
+		folderIds.add(folderId);
+
 		String articleId = null;
 		Double version = null;
 		String title = null;
@@ -156,7 +163,7 @@ public class GetArticlesAction extends Action {
 		}
 
 		return JournalArticleServiceUtil.search(
-			companyId, groupId, folderId, 0, articleId, version, title,
+			companyId, groupId, folderIds, 0, articleId, version, title,
 			description, content, type, structureIds, templateIds,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator,
 			start, end, obc);

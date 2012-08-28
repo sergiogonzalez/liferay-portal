@@ -152,7 +152,7 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		searchContext.setEnd(3);
-		searchContext.setFolderIds(null);
+		searchContext.setFolderIds((long[])null);
 		searchContext.setStart(1);
 
 		hits = indexer.search(searchContext);

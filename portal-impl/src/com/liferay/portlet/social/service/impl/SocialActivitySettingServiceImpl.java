@@ -27,8 +27,7 @@ import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.service.base.SocialActivitySettingServiceBaseImpl;
 import com.liferay.portlet.social.util.comparator.SocialActivityDefinitionNameComparator;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
+import java.util.Collections;
 import java.util.List;
 
 /**
