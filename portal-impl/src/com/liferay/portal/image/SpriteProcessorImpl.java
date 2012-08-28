@@ -72,8 +72,9 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 	public Properties generate(
 			ServletContext servletContext, List<URL> imageURLs,
-			String spriteFileName, String spritePropertiesFileName,
-			String rootPath, int maxHeight, int maxWidth, int maxSize)
+			String spriteRootDirName, String spriteFileName,
+			String spritePropertiesFileName, String rootPath, int maxHeight,
+			int maxWidth, int maxSize)
 		throws IOException {
 
 		if (imageURLs.size() < 1) {
@@ -82,10 +83,17 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 		Collections.sort(imageURLs, new PropertyComparator("path"));
 
-		File tempDir = (File)servletContext.getAttribute(
-			JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+		File spriteRootDir = null;
 
-		File spriteRootDir = new File(tempDir, SpriteProcessor.PATH);
+		if (Validator.isNull(spriteRootDirName)) {
+			File tempDir = (File)servletContext.getAttribute(
+				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+
+			spriteRootDir = new File(tempDir, SpriteProcessor.PATH);
+		}
+		else {
+			spriteRootDir = new File(spriteRootDirName);
+		}
 
 		spriteRootDir.mkdirs();
 

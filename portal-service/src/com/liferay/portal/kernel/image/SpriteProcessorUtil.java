@@ -32,13 +32,14 @@ public class SpriteProcessorUtil {
 
 	public static Properties generate(
 			ServletContext servletContext, List<URL> imageURLs,
-			String spriteFileName, String spritePropertiesFileName,
-			String rootPath, int maxHeight, int maxWidth, int maxSize)
+			String spriteRootDirName, String spriteFileName,
+			String spritePropertiesFileName, String rootPath, int maxHeight,
+			int maxWidth, int maxSize)
 		throws IOException {
 
 		return getSpriteProcessor().generate(
-			servletContext, imageURLs, spriteFileName, spritePropertiesFileName,
-			rootPath, maxHeight, maxWidth, maxSize);
+			servletContext, imageURLs, spriteRootDirName, spriteFileName,
+			spritePropertiesFileName, rootPath, maxHeight, maxWidth, maxSize);
 	}
 
 	public static SpriteProcessor getSpriteProcessor() {

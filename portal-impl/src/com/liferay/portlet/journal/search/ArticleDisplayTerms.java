@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -100,6 +102,18 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		return folderId;
 	}
 
+	public List<Long> getFolderIds() {
+		if (folderIds != null) {
+			return folderIds;
+		}
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return folderIds;
+	}
+
 	public long getGroupId() {
 		return groupId;
 	}
@@ -149,6 +163,10 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		this.displayDateLT = displayDateLT;
 	}
 
+	public void setFolderIds(List<Long> folderIds) {
+		this.folderIds = folderIds;
+	}
+
 	public long setGroupId(PortletRequest portletRequest) {
 		groupId = ParamUtil.getLong(portletRequest, GROUP_ID);
 
@@ -175,6 +193,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 	protected Date displayDateGT;
 	protected Date displayDateLT;
 	protected long folderId;
+	protected List<Long> folderIds;
 	protected long groupId;
 	protected String navigation;
 	protected String status;
