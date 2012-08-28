@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.upgrade.UpgradeProcessUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -103,6 +104,8 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void updateIGImageClassName() throws Exception {
 		if (GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.DL_FILE_ENTRY_TYPE_IGIMAGE))) {
+
+			UpgradeProcessUtil.setCreateIGImageDocumentType(true);
 
 			updateIGImageClassNameClassTypeId();
 

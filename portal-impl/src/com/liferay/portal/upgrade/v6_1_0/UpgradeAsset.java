@@ -14,14 +14,17 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.events.BaseDefaultDDMStructureAction;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.upgrade.UpgradeProcessUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -115,6 +118,8 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void updateIGImageClassName() throws Exception {
 		if (GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.DL_FILE_ENTRY_TYPE_IGIMAGE))) {
+
+			UpgradeProcessUtil.setCreateIGImageDocumentType(true);
 
 			updateIGImageClassNameClassTypeId();
 
