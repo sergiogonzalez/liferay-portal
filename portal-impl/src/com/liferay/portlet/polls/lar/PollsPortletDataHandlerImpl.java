@@ -304,6 +304,10 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		long userId = portletDataContext.getUserId(vote.getUserUuid());
 
+		if (vote.getUserName().equals("Anonymous")) {
+			userId = vote.getUserId();
+		}
+
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				PollsQuestion.class);
