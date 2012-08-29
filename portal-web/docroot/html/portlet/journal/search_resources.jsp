@@ -196,7 +196,15 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 			ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
-			searchTerms.setFolderId(searchFolderId);
+			List<Long> folderIds = new ArrayList<Long>(1);
+
+			folderIds.add(searchFolderId);
+
+			searchTerms.setFolderIds(folderIds);
+
+			if (searchFolderId <= 0) {
+				searchTerms.setFolderIds(new ArrayList<Long>());
+			}
 
 			try {
 				List results = null;

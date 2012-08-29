@@ -154,6 +154,10 @@ AUI.add(
 						foldersConfig.displayStyle = displayStyle;
 						foldersConfig.displayStyleCSSClass = displayStyleCSSClass;
 						foldersConfig.displayStyleToolbar = displayStyleToolbar;
+						foldersConfig.entry = {
+							paramName: 'structureId',
+							typeId: 'data-structure-id'
+						};
 						foldersConfig.namespace = namespace;
 						foldersConfig.portletContainerId = portletContainerId;
 
@@ -254,6 +258,12 @@ AUI.add(
 
 						var selectedFolder = instance._appViewSelect._getSelectedFolder();
 
+						var searchFolderId = selectedFolder.id;
+
+						if (searchFolderId === 0) {
+							searchFolderId = -1;
+						}
+
 						var searchData = {
 							advancedSearch: true,
 							andOperator: instance._andOperatorNode.get('value'),
@@ -262,7 +272,7 @@ AUI.add(
 							description: instance._descriptionNode.get('value'),
 							keywords: '',
 							searchArticleId: instance._searchArticleIdNode.get('value'),
-							searchFolderId: selectedFolder.id,
+							searchFolderId: searchFolderId,
 							showSearchInfo: true,
 							status: instance._statusNode.get('value'),
 							title: instance._titleNode.get('value'),
@@ -285,9 +295,8 @@ AUI.add(
 							folderId: selectedFolder.id,
 							content: instance._contentNode.get('value'),
 							description: instance._descriptionNode.get('value'),
-							keywords: '',
+							keywords: instance._keywordsNode.get('value'),
 							searchArticleId: instance._searchArticleIdNode.get('value'),
-							searchFolderId: selectedFolder.id,
 							showSearchInfo: true,
 							status: instance._statusNode.get('value'),
 							title: instance._titleNode.get('value'),
@@ -353,6 +362,12 @@ AUI.add(
 
 						var selectedFolder = instance._appViewSelect.get(STR_SELECTED_FOLDER);
 
+						var searchFolderId = selectedFolder.id;
+
+						if (searchFolderId === 0) {
+							searchFolderId = -1;
+						}
+
 						var searchData = {
 							advancedSearch: false,
 							andOperator: '',
@@ -361,7 +376,7 @@ AUI.add(
 							description: '',
 							keywords: instance._keywordsNode.get('value'),
 							searchArticleId: '',
-							searchFolderId: selectedFolder.id,
+							searchFolderId: searchFolderId,
 							showSearchInfo: true,
 							status: '',
 							title: '',

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -222,6 +223,11 @@ public class SearchContext implements Serializable {
 		for (Facet facet : facets) {
 			_facets.put(facet.getFieldName(), facet);
 		}
+	}
+
+	public void setFolderIds(List<Long> folderIds) {
+		_folderIds = ArrayUtil.toArray(
+			folderIds.toArray(new Long[folderIds.size()]));
 	}
 
 	public void setFolderIds(long[] folderIds) {

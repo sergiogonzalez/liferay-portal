@@ -20,6 +20,7 @@
 		<delete dir="classes" />
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
+		<delete dir="woven-classes" />
 		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
 		<delete file="${jar.file}.jar" failonerror="false" />
 		<delete file="${jar.file}-javadoc.jar" failonerror="false" />
@@ -72,11 +73,13 @@
 	</target>
 
 	<target name="jar" depends="compile">
-		<antcall target="manifest" />
-
 		<if>
 			<available file="bnd.bnd" />
 			<then>
+				<antcall target="manifest-helper">
+					<param name="manifest.helper.analyze" value="false" />
+				</antcall>
+
 				<bndexpand propertyfile="${project.dir}/common.bnd" />
 
 				<bnd
@@ -142,30 +145,9 @@
 				<available file="classes/META-INF/MANIFEST.MF" />
 			</not>
 			<then>
-				<trycatch>
-					<try>
-						<taskdef
-							classname="com.liferay.util.ant.ManifestHelperTask"
-							classpathref="project.classpath"
-							name="liferay-manifest-helper"
-						/>
-					</try>
-					<catch>
-						<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
-						<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
-
-						<taskdef
-							classname="com.liferay.util.ant.ManifestHelperTask"
-							classpathref="project.classpath"
-							name="liferay-manifest-helper"
-						/>
-					</catch>
-				</trycatch>
-
-				<liferay-manifest-helper
-					analyze="true"
-					classpathref="project.classpath"
-				/>
+				<antcall target="manifest-helper">
+					<param name="manifest.helper.analyze" value="true" />
+				</antcall>
 
 				<mkdir dir="classes/META-INF" />
 
@@ -179,10 +161,12 @@
 					<attribute name="Bundle-Vendor" value="${release.info.vendor}" />
 					<attribute name="Bundle-Version" value="${release.info.version}" />
 					<attribute name="Export-Package" value="${export.packages}" />
-					<attribute name="Java-Compiler" value="javac.compiler=${javac.compiler}" />
-					<attribute name="Java-Debug" value="javac.debug=${javac.debug}" />
-					<attribute name="Java-Deprecation" value="javac.encoding=${javac.encoding}" />
-					<attribute name="Jsp-Precompile" value="jsp.precompile=${jsp.precompile}" />
+					<attribute name="Import-Package" value="${import.packages}" />
+					<attribute name="Javac-Compiler" value="${javac.compiler}" />
+					<attribute name="Javac-Debug" value="${javac.debug}" />
+					<attribute name="Javac-Deprecation" value="${javac.deprecation}" />
+					<attribute name="Javac-Encoding" value="${javac.encoding}" />
+					<attribute name="Jsp-Precompile" value="${jsp.precompile}" />
 					<attribute name="Liferay-Portal-Build-Date" value="${release.info.build.date}" />
 					<attribute name="Liferay-Portal-Build-Number" value="${release.info.build.number}" />
 					<attribute name="Liferay-Portal-Build-Revision" value="${build.revision}" />
@@ -208,5 +192,32 @@
 				</if>
 			</then>
 		</if>
+	</target>
+
+	<target name="manifest-helper">
+		<trycatch>
+			<try>
+				<taskdef
+					classname="com.liferay.util.ant.ManifestHelperTask"
+					classpathref="project.classpath"
+					name="liferay-manifest-helper"
+				/>
+			</try>
+			<catch>
+				<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
+				<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
+
+				<taskdef
+					classname="com.liferay.util.ant.ManifestHelperTask"
+					classpathref="project.classpath"
+					name="liferay-manifest-helper"
+				/>
+			</catch>
+		</trycatch>
+
+		<liferay-manifest-helper
+			analyze="${manifest.helper.analyze}"
+			classpathref="project.classpath"
+		/>
 	</target>
 </project>

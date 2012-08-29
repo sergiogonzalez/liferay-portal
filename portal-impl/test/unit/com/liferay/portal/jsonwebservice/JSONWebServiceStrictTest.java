@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,10 +28,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
 
 /**
  * @author Igor Spasic
@@ -62,7 +59,7 @@ public class JSONWebServiceStrictTest extends BaseJSONWebServiceTestCase {
 		try {
 			lookupJSONWebServiceAction(mockHttpServletRequest);
 
-			fail();
+			Assert.fail();
 		}
 		catch (RuntimeException re) {
 		}
@@ -73,9 +70,9 @@ public class JSONWebServiceStrictTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);
 
-		assertNotNull(jsonWebServiceAction);
+		Assert.assertNotNull(jsonWebServiceAction);
 
-		assertEquals("post 123", jsonWebServiceAction.invoke());
+		Assert.assertEquals("post 123", jsonWebServiceAction.invoke());
 	}
 
 }

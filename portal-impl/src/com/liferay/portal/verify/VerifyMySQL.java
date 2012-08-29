@@ -78,6 +78,11 @@ public class VerifyMySQL extends VerifyProcess {
 
 			while (rs.next()) {
 				String tableName = rs.getString("Name");
+
+				if (!isPortalTableName(tableName)) {
+					continue;
+				}
+
 				String engine = GetterUtil.getString(rs.getString("Engine"));
 				String comment = GetterUtil.getString(rs.getString("Comment"));
 

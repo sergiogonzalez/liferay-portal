@@ -24,6 +24,7 @@ import java.util.Map;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,8 +36,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * @author Igor Spasic
@@ -91,7 +90,7 @@ public class JSONWebServiceServiceActionTest
 			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
 			mockHttpServletResponse);
 
-		assertEquals("{}", json);
+		Assert.assertEquals("{}", json);
 	}
 
 	@Test
@@ -116,7 +115,7 @@ public class JSONWebServiceServiceActionTest
 			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
 			mockHttpServletResponse);
 
-		assertEquals("\"Welcome 173 to Jupiter\"", json);
+		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
 
 	protected MockHttpServletRequest createInvokerHttpServletRequest(

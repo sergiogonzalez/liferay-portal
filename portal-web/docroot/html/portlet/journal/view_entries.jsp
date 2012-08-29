@@ -143,16 +143,22 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 <%
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
-searchTerms.setFolderId(-1);
-searchTerms.setVersion(-1);
-
 if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	searchTerms.setFolderId(folderId);
+	List<Long> folderIds = new ArrayList<Long>(1);
+
+	folderIds.add(folderId);
+
+	searchTerms.setFolderIds(folderIds);
+}
+else {
+	searchTerms.setFolderIds(new ArrayList<Long>());
 }
 
 if (Validator.isNotNull(displayTerms.getStructureId())) {
 	searchTerms.setStructureId(displayTerms.getStructureId());
 }
+
+searchTerms.setVersion(-1);
 
 if (displayTerms.getNavigation().equals("recent")) {
 	searchContainer.setOrderByCol("create-date");
@@ -195,8 +201,8 @@ int total = 0;
 	<c:when test='<%= Validator.isNotNull(displayTerms.getStructureId()) || Validator.isNotNull(displayTerms.getTemplateId()) || displayTerms.getNavigation().equals("recent") %>'>
 
 		<%
-		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderId(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderId(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate());
+		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate());
 
 		searchContainer.setResults(results);
 		searchContainer.setTotal(total);

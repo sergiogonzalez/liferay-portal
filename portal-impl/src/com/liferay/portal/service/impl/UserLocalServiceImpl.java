@@ -790,9 +790,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Contact
 
-		Date birthday = PortalUtil.getDate(
-			birthdayMonth, birthdayDay, birthdayYear,
-			ContactBirthdayException.class);
+		Date birthday = getBirthday(birthdayMonth, birthdayDay, birthdayYear);
 
 		Contact contact = contactPersistence.create(user.getContactId());
 
@@ -4036,9 +4034,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setJobTitle(jobTitle);
 			user.setExpandoBridgeAttributes(serviceContext);
 
-			Date birthday = PortalUtil.getDate(
-				birthdayMonth, birthdayDay, birthdayYear,
-				ContactBirthdayException.class);
+			Date birthday = getBirthday(
+				birthdayMonth, birthdayDay, birthdayYear);
 
 			Contact contact = user.getContact();
 
@@ -4793,9 +4790,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Contact
 
-		Date birthday = PortalUtil.getDate(
-			birthdayMonth, birthdayDay, birthdayYear,
-			ContactBirthdayException.class);
+		Date birthday = getBirthday(birthdayMonth, birthdayDay, birthdayYear);
 
 		long contactId = user.getContactId();
 
@@ -5252,6 +5247,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return authResult;
+	}
+
+	protected Date getBirthday(
+			int birthdayMonth, int birthdayDay, int birthdayYear)
+		throws PortalException {
+
+		Date birthday = PortalUtil.getDate(
+			birthdayMonth, birthdayDay, birthdayYear,
+			ContactBirthdayException.class);
+
+		Date now = new Date();
+
+		if (birthday.after(now)) {
+			throw new ContactBirthdayException();
+		}
+
+		return birthday;
 	}
 
 	protected String getScreenName(String screenName) {

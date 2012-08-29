@@ -16,13 +16,13 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -137,6 +137,59 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 			"{\"id\":173,\"height\":177,\"name\":\"John Doe\",\"value\":" +
 				"\"foo!\",\"world\":\"Welcome 173 to Jupiter\"}",
 			toJSON(invokerResult));
+	}
+
+	@Test
+	public void testInnerCallsNested() throws Exception {
+		Map<String, Object> map1 = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map1.put("$data = /foo/get-foo-data", params);
+
+		params.put("id", 173);
+
+		Map<String, Object> map2 = new LinkedHashMap<String, Object>();
+
+		params.put("$spy = /foo/get-foo-data", map2);
+
+		map2.put("id", "007");
+
+		Map<String, Object> map3 = new LinkedHashMap<String, Object>();
+
+		map2.put("$thief = /foo/get-foo-data", map3);
+
+		map3.put("id", -13);
+
+		Map<String, Object> map4 = new LinkedHashMap<String, Object>();
+
+		map3.put("$world = /foo/hello-world", map4);
+
+		map4.put("@userId", "$thief.id");
+		map4.put("worldName", "Jupiter");
+
+		String json = toJSON(map1);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		result = invokerResult.getResult();
+
+		Assert.assertTrue(result instanceof Map);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{\"id\":173,\"height\":177,\"spy\":{\"id\":7,\"height\":");
+		sb.append("173,\"name\":\"James Bond\",\"value\":\"licensed\",");
+		sb.append("\"thief\":{\"id\":-13,\"height\":59,\"name\":\"Dr. Evil\",");
+		sb.append("\"value\":\"fun\",\"world\":\"Welcome -13 to Jupiter\"}},");
+		sb.append("\"name\":\"John Doe\",\"value\":\"foo!\"}");
+
+		Assert.assertEquals(sb.toString(), toJSON(invokerResult));
 	}
 
 	@Test
