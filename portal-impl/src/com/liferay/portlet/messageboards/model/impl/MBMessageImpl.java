@@ -16,8 +16,6 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyConstants;
@@ -85,23 +83,8 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return body;
 	}
 
-	public MBCategory getCategory() {
-		MBCategory category = null;
-
-		long categoryId = getCategoryId();
-
-		try {
-			category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-		}
-		catch (Exception e) {
-			category = new MBCategoryImpl();
-
-			category.setCategoryId(getCategoryId());
-
-			_log.error(e);
-		}
-
-		return category;
+	public MBCategory getCategory() throws PortalException, SystemException {
+		return MBCategoryLocalServiceUtil.getCategory(getCategoryId());
 	}
 
 	public String getDeletedAttachmentsDir() {
@@ -185,8 +168,6 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public void setAttachmentsDir(String attachmentsDir) {
 		_attachmentDirs = attachmentsDir;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(MBMessageImpl.class);
 
 	private String _attachmentDirs;
 	private String _deletedAttachmentDirs;
