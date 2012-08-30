@@ -33,6 +33,7 @@ public class UpgradeBlogs extends UpgradeProcess {
 			runSQL("drop index IX_E0D90212 on BlogsEntry");
 			runSQL("drop index IX_DA53AFD4 on BlogsEntry");
 			runSQL("drop index IX_B88E740E on BlogsEntry");
+
 			runSQL("alter table BlogsEntry drop column draft");
 		}
 		catch (Exception e) {
