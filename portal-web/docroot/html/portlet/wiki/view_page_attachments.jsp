@@ -117,12 +117,16 @@ for (int i = 0; i < results.size(); i++) {
 
 	// File name
 
+	if (viewTrashAttachments) {
+		shortFileName = DLAppUtil.stripTrashNamespace(shortFileName, TrashUtil.TRASH_TIME_SEPARATOR);
+	}
+
 	StringBundler sb = new StringBundler(6);
 
 	sb.append("<img align=\"left\" border=\"0\" src=\"");
 	sb.append(themeDisplay.getPathThemeImages());
 	sb.append("/file_system/small/");
-	sb.append(DLUtil.getFileIcon(shortFileName));
+	sb.append(DLUtil.getFileIcon(FileUtil.getExtension(shortFileName)));
 	sb.append(".png\">&nbsp;");
 	sb.append(shortFileName);
 
@@ -177,7 +181,7 @@ for (int i = 0; i < results.size(); i++) {
 					cssClass="trash-attachments"
 					image="delete"
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, "x-attachments-in-the-recycle-bin", deletedAttachments.length) %>'
+					message='<%= LanguageUtil.format(pageContext, "x-recent-deleted-attachments", deletedAttachments.length) %>'
 					url="<%= viewTrashAttachmentsURL %>"
 				/>
 			</c:if>
