@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect", currentURL);
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 User selUser = PortalUtil.getSelectedUser(request);
