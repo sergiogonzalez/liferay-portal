@@ -43,9 +43,9 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL">
 			<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

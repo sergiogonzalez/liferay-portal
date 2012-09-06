@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -5263,7 +5264,11 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession session = PortalSessionThreadLocal.getHttpSession();
+
+		if (session == null) {
+			session = request.getSession();
+		}
 
 		ServletContext servletContext = session.getServletContext();
 
@@ -5287,7 +5292,7 @@ public class PortalImpl implements Portal {
 		else if (PropsValues.LAYOUT_SHOW_HTTP_STATUS) {
 			response.setStatus(status);
 
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(session, e.getClass(), e);
 
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(redirect);

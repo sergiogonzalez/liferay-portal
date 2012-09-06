@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.servlet.SecurePluginContextListener;
 
+import java.lang.reflect.Method;
+
 import javax.servlet.ServletContext;
 
 /**
@@ -58,12 +60,15 @@ public class ServletContextListenerHotDeployListener
 
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
-		SecurePluginContextListener securePluginContextListener =
-			(SecurePluginContextListener)servletContext.getAttribute(
-				SecurePluginContextListener.class.getName());
+		Object securePluginContextListener = servletContext.getAttribute(
+			SecurePluginContextListener.class.getName());
 
 		if (securePluginContextListener != null) {
-			securePluginContextListener.instantiatingListeners();
+			Class<?> clazz = securePluginContextListener.getClass();
+
+			Method method = clazz.getMethod("instantiatingListeners");
+
+			method.invoke(securePluginContextListener);
 		}
 	}
 

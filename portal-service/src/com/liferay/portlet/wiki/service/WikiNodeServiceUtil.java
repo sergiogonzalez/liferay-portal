@@ -90,6 +90,19 @@ public class WikiNodeServiceUtil {
 		getService().importPages(nodeId, importer, inputStreams, options);
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiNode moveNodeToTrash(
+		long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveNodeToTrash(nodeId);
+	}
+
+	public static void restoreNodeFromTrash(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreNodeFromTrash(nodeId);
+	}
+
 	public static void subscribeNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

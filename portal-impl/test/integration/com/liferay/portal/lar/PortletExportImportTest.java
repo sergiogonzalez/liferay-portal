@@ -95,7 +95,7 @@ public class PortletExportImportTest extends BaseExportImportTestCase {
 
 		// Create site from site template
 
-		_group = ServiceTestUtil.addGroup(ServiceTestUtil.randomString());
+		_group = ServiceTestUtil.addGroup();
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			_group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
