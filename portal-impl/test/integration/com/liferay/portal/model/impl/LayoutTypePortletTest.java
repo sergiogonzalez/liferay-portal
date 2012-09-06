@@ -302,7 +302,7 @@ public class LayoutTypePortletTest {
 	}
 
 	protected LayoutTypePortlet getLayoutTypePortlet() throws Exception {
-		Group group = ServiceTestUtil.addGroup(ServiceTestUtil.randomString());
+		Group group = ServiceTestUtil.addGroup();
 
 		Layout layout = ServiceTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString(), false);

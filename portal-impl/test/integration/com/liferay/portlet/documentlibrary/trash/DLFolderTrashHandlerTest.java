@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash;
+package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -134,7 +134,7 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 			fileEntryId = fileEntry.getFileEntryId();
 
-			addFileRank(fileEntryId);
+			addDLFileRank(fileEntryId);
 
 			Assert.assertEquals(
 				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
@@ -181,7 +181,7 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			Assert.assertFalse(
 				isAssetEntryVisible(
 					DLFileEntryConstants.getClassName(), fileEntryId));
-			Assert.assertEquals(0, getActiveFileRanksCount(fileEntryId));
+			Assert.assertEquals(0, getActiveDLFileRanksCount(fileEntryId));
 			Assert.assertEquals(
 				initialSearchTrashEntriesCount + 1,
 				searchTrashEntriesCount("File"));
@@ -208,7 +208,7 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			Assert.assertTrue(
 				isAssetEntryVisible(
 					DLFileEntryConstants.getClassName(), fileEntryId));
-			Assert.assertEquals(1, getActiveFileRanksCount(fileEntryId));
+			Assert.assertEquals(1, getActiveDLFileRanksCount(fileEntryId));
 			Assert.assertEquals(
 				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
 		}
@@ -242,7 +242,7 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 						isAssetEntryVisible(
 							DLFileEntryConstants.getClassName(), fileEntryId));
 					Assert.assertEquals(
-						1, getActiveFileRanksCount(fileEntryId));
+						1, getActiveDLFileRanksCount(fileEntryId));
 					Assert.assertEquals(
 						initialSearchTrashEntriesCount,
 						searchTrashEntriesCount("File"));

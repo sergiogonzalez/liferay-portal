@@ -16,9 +16,13 @@ package com.liferay.portlet.trash.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,7 +37,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
@@ -360,6 +363,36 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return trashVersionPersistence.findByC_C(classNameId, classPK);
 	}
 
+	public Hits search(
+			long companyId, long groupId, long userId, String keywords,
+			int start, int end, Sort sort)
+		throws SystemException {
+
+		try {
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setCompanyId(companyId);
+			searchContext.setEnd(end);
+			searchContext.setKeywords(keywords);
+			searchContext.setGroupIds(new long[] {groupId});
+
+			if (sort != null) {
+				searchContext.setSorts(new Sort[] {sort});
+			}
+
+			searchContext.setStart(start);
+			searchContext.setUserId(userId);
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				TrashEntry.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
 	protected void checkEntriesAttachments(Group group)
 		throws PortalException, SystemException {
 
@@ -378,7 +411,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		for (String attachmentFileName : attachmentFileNames) {
-			String trashTime = DLAppUtil.getTrashTime(
+			String trashTime = TrashUtil.getTrashTime(
 				attachmentFileName, TrashUtil.TRASH_TIME_SEPARATOR);
 
 			long timestamp = GetterUtil.getLong(trashTime);

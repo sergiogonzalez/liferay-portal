@@ -47,7 +47,7 @@ public class SocialActivitySettingLocalServiceTest
 	public static void setUp() throws Exception {
 		BaseSocialActivityTestCase.setUp();
 
-		addGroup(TEST_GROUP);
+		addGroup();
 
 		addUsers();
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryServiceUtil;
@@ -33,6 +32,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.portlet.PortletRequest;
 
@@ -57,21 +57,16 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 			restoredTitle = newName;
 		}
 
-		String originalTitle = restoredTitle;
+		String originalTitle = TrashUtil.stripTrashNamespace(restoredTitle);
 
-		if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
-			originalTitle = restoredTitle.substring(
-				0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
-		}
-
-		DLFolder duplicatedFolder = DLFolderLocalServiceUtil.fetchFolder(
+		DLFolder duplicateDLFolder = DLFolderLocalServiceUtil.fetchFolder(
 			dlFolder.getGroupId(), dlFolder.getParentFolderId(), originalTitle);
 
-		if (duplicatedFolder != null) {
+		if (duplicateDLFolder != null) {
 			DuplicateEntryException dee = new DuplicateEntryException();
 
-			dee.setDuplicateEntryId(duplicatedFolder.getFolderId());
-			dee.setOldName(duplicatedFolder.getName());
+			dee.setDuplicateEntryId(duplicateDLFolder.getFolderId());
+			dee.setOldName(duplicateDLFolder.getName());
 			dee.setTrashEntryId(trashEntry.getEntryId());
 
 			throw dee;

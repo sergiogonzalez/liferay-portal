@@ -114,7 +114,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		throws PortalException, SystemException {
 	}
 
-	private AssetRendererFactory getAssetRendererFactory() {
+	protected AssetRendererFactory getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(getClassName());
 	}

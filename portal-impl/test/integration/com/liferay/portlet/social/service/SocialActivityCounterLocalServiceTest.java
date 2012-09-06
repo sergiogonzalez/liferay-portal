@@ -56,7 +56,7 @@ public class SocialActivityCounterLocalServiceTest
 
 	@Before
 	public void beforeTest() throws Exception {
-		addGroup(TEST_GROUP);
+		addGroup();
 
 		addUsers();
 

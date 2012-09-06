@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash;
+package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;

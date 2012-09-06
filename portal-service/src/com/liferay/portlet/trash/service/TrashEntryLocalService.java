@@ -439,4 +439,10 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

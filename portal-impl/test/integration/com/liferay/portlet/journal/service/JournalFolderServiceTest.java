@@ -57,7 +57,7 @@ public class JournalFolderServiceTest {
 
 	@Test
 	public void testContent() throws Exception {
-		Group group = ServiceTestUtil.addGroup("Test Group");
+		Group group = ServiceTestUtil.addGroup();
 
 		JournalFolder folder = _addFolder(group.getGroupId(), 0, "Test Folder");
 
@@ -74,7 +74,7 @@ public class JournalFolderServiceTest {
 	@Test
 	@Transactional
 	public void testSubfolders() throws Exception {
-		Group group = ServiceTestUtil.addGroup("Test Group");
+		Group group = ServiceTestUtil.addGroup();
 
 		JournalFolder folder1 = _addFolder(group.getGroupId(), 0, "Test 1");
 		JournalFolder folder11 = _addFolder(

@@ -482,6 +482,14 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		return _trashEntryLocalService.getVersions(className, classPK);
 	}
 
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntryLocalService.search(companyId, groupId, userId,
+			keywords, start, end, sort);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

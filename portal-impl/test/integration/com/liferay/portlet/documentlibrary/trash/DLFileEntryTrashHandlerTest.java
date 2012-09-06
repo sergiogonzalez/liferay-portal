@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash;
+package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -106,7 +106,6 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			boolean leaveCheckedOut, boolean fileRank)
 		throws Exception {
 
-		int initialFileRanksCount = 0;
 		int initialNotInTrashCount = getNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
 		int initialSearchFileEntriesCount = searchFileEntriesCount();
@@ -131,7 +130,7 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 		}
 
 		if (fileRank) {
-			addFileRank(fileEntryId);
+			addDLFileRank(fileEntryId);
 		}
 
 		if (leaveCheckedOut) {
@@ -176,8 +175,7 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			searchTrashEntriesCount("Basic"));
 
 		if (fileRank) {
-			Assert.assertEquals(
-				initialFileRanksCount, getActiveFileRanksCount(fileEntryId));
+			Assert.assertEquals(0, getActiveDLFileRanksCount(fileEntryId));
 		}
 
 		if (delete) {
@@ -213,9 +211,7 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			}
 
 			if (fileRank) {
-				Assert.assertEquals(
-					initialFileRanksCount + 1,
-					getActiveFileRanksCount(fileEntryId));
+				Assert.assertEquals(1, getActiveDLFileRanksCount(fileEntryId));
 			}
 		}
 

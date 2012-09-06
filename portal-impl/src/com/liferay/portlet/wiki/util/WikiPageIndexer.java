@@ -58,13 +58,13 @@ import javax.portlet.PortletURL;
  * @author Bruno Farache
  * @author Raymond Augé
  */
-public class WikiIndexer extends BaseIndexer {
+public class WikiPageIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {WikiPage.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.WIKI;
 
-	public WikiIndexer() {
+	public WikiPageIndexer() {
 		setPermissionAware(true);
 	}
 
@@ -83,7 +83,7 @@ public class WikiIndexer extends BaseIndexer {
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute(Field.STATUS),
-			WorkflowConstants.STATUS_ANY);
+			WorkflowConstants.STATUS_APPROVED);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);

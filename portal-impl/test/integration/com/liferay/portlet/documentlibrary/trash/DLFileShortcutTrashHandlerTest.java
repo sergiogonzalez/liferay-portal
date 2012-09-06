@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash;
+package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.service.ServiceContext;
@@ -50,7 +50,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 		FileEntry fileEntry = addFileEntry(folderId2, "Subentry.txt");
 
-		DLFileShortcut dlFileShortcut = addFileShortcut(fileEntry, folderId1);
+		DLFileShortcut dlFileShortcut = addDLFileShortcut(fileEntry, folderId1);
 
 		return dlFileShortcut.getFileShortcutId();
 	}
@@ -72,26 +72,23 @@ public class DLFileShortcutTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 		FileEntry fileEntry = addFileEntry(false, "Test Basic.txt");
 
-		long fileEntryId = fileEntry.getFileEntryId();
-
-		DLFileShortcut fileShortcut = addFileShortcut(fileEntry);
-
-		long fileShortcutId = fileShortcut.getFileShortcutId();
+		DLFileShortcut dlFileShortcut = addDLFileShortcut(fileEntry);
 
 		Assert.assertEquals(initialNotInTrashCount + 2, getNotInTrashCount());
 		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());
 
-		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
+		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 
 		Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1, getTrashEntriesCount());
 
-		DLAppServiceUtil.restoreFileEntryFromTrash(fileEntryId);
+		DLAppServiceUtil.restoreFileEntryFromTrash(fileEntry.getFileEntryId());
 
 		Assert.assertEquals(initialNotInTrashCount + 2, getNotInTrashCount());
 
-		DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
+		DLAppServiceUtil.moveFileShortcutToTrash(
+			dlFileShortcut.getFileShortcutId());
 
 		Assert.assertEquals(initialNotInTrashCount + 1, getNotInTrashCount());
 		Assert.assertEquals(
@@ -104,10 +101,12 @@ public class DLFileShortcutTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 				initialNotInTrashCount + 1, getNotInTrashCount());
 			Assert.assertNull(
 				fetchAssetEntry(
-					DLFileShortcut.class.getName(), fileShortcutId));
+					DLFileShortcut.class.getName(),
+					dlFileShortcut.getFileShortcutId()));
 		}
 		else {
-			DLAppServiceUtil.restoreFileShortcutFromTrash(fileShortcutId);
+			DLAppServiceUtil.restoreFileShortcutFromTrash(
+				dlFileShortcut.getFileShortcutId());
 
 			Assert.assertEquals(
 				initialNotInTrashCount + 2, getNotInTrashCount());

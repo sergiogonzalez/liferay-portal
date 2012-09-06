@@ -154,7 +154,7 @@ public class StagingImplTest {
 	protected void enableLocalStaging(boolean stageJournal, boolean stagePolls)
 		throws Exception {
 
-		Group group = ServiceTestUtil.addGroup(ServiceTestUtil.randomString());
+		Group group = ServiceTestUtil.addGroup();
 
 		ServiceTestUtil.addLayout(group.getGroupId(), "Page1");
 		ServiceTestUtil.addLayout(group.getGroupId(), "Page2");
