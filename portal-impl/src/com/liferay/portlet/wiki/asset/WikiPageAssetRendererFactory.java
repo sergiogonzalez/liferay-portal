@@ -53,12 +53,11 @@ public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 				page = WikiPageLocalServiceUtil.getPage(classPK);
 			}
 			else {
-				WikiPageResource wikiPageResource =
+				WikiPageResource pageResource =
 					WikiPageResourceLocalServiceUtil.getPageResource(classPK);
 
 				page = WikiPageLocalServiceUtil.getPage(
-					wikiPageResource.getNodeId(), wikiPageResource.getTitle(),
-					null);
+					pageResource.getNodeId(), pageResource.getTitle(), null);
 			}
 		}
 

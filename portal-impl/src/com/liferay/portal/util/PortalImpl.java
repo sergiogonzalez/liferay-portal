@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -151,7 +152,6 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.portlet.PortletPreferencesThreadLocal;
 import com.liferay.portlet.PortletPreferencesWrapper;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.PortletRequestImpl;
@@ -449,10 +449,6 @@ public class PortalImpl implements Portal {
 
 		_reservedParams.add("p_v_l_s_g_id"); // LPS-23010
 
-		// Portal outer portlet
-
-		_reservedParams.add("p_o_p_id"); // LPS-12097
-
 		// Portal fragment
 
 		_reservedParams.add("p_f_id");
@@ -553,19 +549,23 @@ public class PortalImpl implements Portal {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		if (!portletDisplay.isFocused()) {
-			return;
+		String portletBreadcrumbKey = WebKeys.PORTLET_BREADCRUMBS;
+
+		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!themeDisplay.isPortletDisplayFocused()) {
+
+			portletBreadcrumbKey =
+				WebKeys.PORTLET_BREADCRUMBS + StringPool.UNDERLINE +
+					portletDisplay.getId();
 		}
 
 		List<BreadcrumbEntry> breadcrumbEntries =
-			(List<BreadcrumbEntry>)request.getAttribute(
-				WebKeys.PORTLET_BREADCRUMBS);
+			(List<BreadcrumbEntry>)request.getAttribute(portletBreadcrumbKey);
 
 		if (breadcrumbEntries == null) {
 			breadcrumbEntries = new ArrayList<BreadcrumbEntry>();
 
-			request.setAttribute(
-				WebKeys.PORTLET_BREADCRUMBS, breadcrumbEntries);
+			request.setAttribute(portletBreadcrumbKey, breadcrumbEntries);
 		}
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
@@ -2802,17 +2802,6 @@ public class PortalImpl implements Portal {
 		return originalRequest;
 	}
 
-	public String getOuterPortletId(HttpServletRequest request) {
-		String outerPortletId = (String)request.getAttribute(
-			WebKeys.OUTER_PORTLET_ID);
-
-		if (outerPortletId == null) {
-			outerPortletId = request.getParameter("p_o_p_id");
-		}
-
-		return outerPortletId;
-	}
-
 	public long getParentGroupId(long groupId)
 		throws PortalException, SystemException {
 
@@ -3163,8 +3152,23 @@ public class PortalImpl implements Portal {
 	public List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletBreadcrumbKey = WebKeys.PORTLET_BREADCRUMBS;
+
+		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!themeDisplay.isPortletDisplayFocused()) {
+
+			portletBreadcrumbKey =
+				WebKeys.PORTLET_BREADCRUMBS + StringPool.UNDERLINE +
+					portletDisplay.getId();
+		}
+
 		return (List<BreadcrumbEntry>)request.getAttribute(
-			WebKeys.PORTLET_BREADCRUMBS);
+			portletBreadcrumbKey);
 	}
 
 	public String getPortletDescription(
@@ -3684,13 +3688,9 @@ public class PortalImpl implements Portal {
 			return layout.getGroupId();
 		}
 
-		boolean strict = PortletPreferencesThreadLocal.isStrict();
-
-		PortletPreferencesThreadLocal.setStrict(true);
-
 		try {
 			PortletPreferences portletSetup =
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 					layout, portletId);
 
 			String scopeType = GetterUtil.getString(
@@ -3721,9 +3721,6 @@ public class PortalImpl implements Portal {
 		}
 		catch (Exception e) {
 			return layout.getGroupId();
-		}
-		finally {
-			PortletPreferencesThreadLocal.setStrict(strict);
 		}
 	}
 
@@ -4614,28 +4611,10 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		if (layout.isTypePortlet()) {
-			String checkPortletId = portletId;
+		if ((layoutTypePortlet != null) &&
+			layoutTypePortlet.hasPortletId(portletId)) {
 
-			String outerPortletId = getOuterPortletId(request);
-
-			if (outerPortletId != null) {
-				checkPortletId = outerPortletId;
-			}
-
-			if (layoutTypePortlet.hasPortletId(checkPortletId)) {
-				return true;
-			}
-
-			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-				themeDisplay.getPlid(), portletId);
-
-			if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-					themeDisplay.getCompanyId(), portlet.getPortletName(),
-					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey) > 0) {
-
-				return true;
-			}
+			return true;
 		}
 
 		if (themeDisplay.isSignedIn() &&
@@ -5263,7 +5242,11 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession session = PortalSessionThreadLocal.getHttpSession();
+
+		if (session == null) {
+			session = request.getSession();
+		}
 
 		ServletContext servletContext = session.getServletContext();
 
@@ -5287,7 +5270,7 @@ public class PortalImpl implements Portal {
 		else if (PropsValues.LAYOUT_SHOW_HTTP_STATUS) {
 			response.setStatus(status);
 
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(session, e.getClass(), e);
 
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(redirect);

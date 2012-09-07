@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.Calendar;
@@ -107,11 +108,13 @@ public abstract class BaseWebDriverImpl
 
 		Timeouts timeouts = options.timeouts();
 
-		timeouts.implicitlyWait(3, TimeUnit.MILLISECONDS);
+		timeouts.implicitlyWait(
+			TestPropsValues.TIMEOUT_IMPLICIT_WAIT, TimeUnit.MILLISECONDS);
 
 		List<WebElement> webElements = getWebElements(locator);
 
-		timeouts.implicitlyWait(30, TimeUnit.MILLISECONDS);
+		timeouts.implicitlyWait(
+			TestPropsValues.TIMEOUT_EXPLICIT_WAIT, TimeUnit.MILLISECONDS);
 
 		return webElements.isEmpty();
 	}
@@ -150,6 +153,109 @@ public abstract class BaseWebDriverImpl
 
 	public void uploadTempFile(String location, String value) {
 		uploadFile(location, TestPropsValues.OUTPUT_DIR + value);
+	}
+
+	public void waitForConfirmation(String pattern) throws Exception {
+		int timeout =
+			TestPropsValues.TIMEOUT_EXPLICIT_WAIT /
+				TestPropsValues.TIMEOUT_IMPLICIT_WAIT;
+
+		for (int second = 0;; second++) {
+			if (second >= timeout) {
+				BaseTestCase.fail("Timeout");
+			}
+
+			try {
+				if (pattern.equals(getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+	}
+
+	public void waitForElementNotPresent(String locator) throws Exception {
+		LiferaySeleniumHelper.waitForElementNotPresent(this, locator);
+	}
+
+	public void waitForElementPresent(String locator) throws Exception {
+		int timeout =
+			TestPropsValues.TIMEOUT_EXPLICIT_WAIT /
+				TestPropsValues.TIMEOUT_IMPLICIT_WAIT;
+
+		for (int second = 0;; second++) {
+			if (second >= timeout) {
+				BaseTestCase.fail(
+					"Timeout: unable to find the locator \"" + locator + "\"");
+			}
+
+			try {
+				if (isElementPresent(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+	}
+
+	public void waitForNotPartialText(String locator, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.waitForNotPartialText(this, locator, value);
+	}
+
+	public void waitForNotSelectedLabel(String selectLocator, String pattern)
+		throws Exception {
+
+		LiferaySeleniumHelper.waitForNotSelectedLabel(
+			this, selectLocator, pattern);
+	}
+
+	public void waitForNotText(String locator, String value) throws Exception {
+		LiferaySeleniumHelper.waitForNotText(this, locator, value);
+	}
+
+	public void waitForNotValue(String locator, String value) throws Exception {
+		LiferaySeleniumHelper.waitForNotValue(this, locator, value);
+	}
+
+	public void waitForNotVisible(String locator) throws Exception {
+		LiferaySeleniumHelper.waitForNotVisible(this, locator);
+	}
+
+	public void waitForPartialText(String locator, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.waitForPartialText(this, locator, value);
+	}
+
+	public void waitForSelectedLabel(String selectLocator, String pattern)
+		throws Exception {
+
+		LiferaySeleniumHelper.waitForSelectedLabel(
+			this, selectLocator, pattern);
+	}
+
+	public void waitForText(String locator, String value) throws Exception {
+		LiferaySeleniumHelper.waitForText(this, locator, value);
+	}
+
+	public void waitForTextNotPresent(String value) throws Exception {
+		LiferaySeleniumHelper.waitForTextNotPresent(this, value);
+	}
+
+	public void waitForTextPresent(String value) throws Exception {
+		LiferaySeleniumHelper.waitForTextPresent(this, value);
+	}
+
+	public void waitForValue(String locator, String value) throws Exception {
+		LiferaySeleniumHelper.waitForValue(this, locator, value);
+	}
+
+	public void waitForVisible(String locator) throws Exception {
+		LiferaySeleniumHelper.waitForVisible(this, locator);
 	}
 
 	private String _projectDir;

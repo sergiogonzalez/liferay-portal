@@ -228,6 +228,25 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			fileName);
 	}
 
+	public void movePageToTrash(long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.movePageToTrash(nodeId, title);
+	}
+
+	public void movePageToTrash(long nodeId, java.lang.String title,
+		double version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.movePageToTrash(nodeId, title, version);
+	}
+
+	public void restorePageFromTrash(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.restorePageFromTrash(resourcePrimKey);
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPage revertPage(long nodeId,
 		java.lang.String title, double version,
 		com.liferay.portal.service.ServiceContext serviceContext)

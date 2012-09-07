@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,11 +39,13 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.WikiFormatException;
 import com.liferay.portlet.wiki.engines.WikiEngine;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.model.WikiPageDisplay;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 import com.liferay.portlet.wiki.util.comparator.PageCreateDateComparator;
@@ -64,6 +68,8 @@ import java.util.regex.Pattern;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -271,6 +277,49 @@ public class WikiUtil {
 		}
 
 		return null;
+	}
+
+	public static String getFormattedContent(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			WikiPage wikiPage, PortletURL viewPageURL, PortletURL editPageURL,
+			String title, boolean preview)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		double version = ParamUtil.getDouble(renderRequest, "version");
+
+		PortletURL curViewPageURL = PortletURLUtil.clone(
+			viewPageURL, renderResponse);
+		PortletURL curEditPageURL = PortletURLUtil.clone(
+			editPageURL, renderResponse);
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/wiki/get_page_attachment?p_l_id=");
+		sb.append(themeDisplay.getPlid());
+		sb.append("&nodeId=");
+		sb.append(wikiPage.getNodeId());
+		sb.append("&title=");
+		sb.append(HttpUtil.encodeURL(wikiPage.getTitle()));
+		sb.append("&fileName=");
+
+		String attachmentURLPrefix = sb.toString();
+
+		if (!preview && (version == 0)) {
+			WikiPageDisplay pageDisplay = WikiCacheUtil.getDisplay(
+				wikiPage.getNodeId(), title, curViewPageURL, curEditPageURL,
+				attachmentURLPrefix);
+
+			if (pageDisplay != null) {
+				return pageDisplay.getFormattedContent();
+			}
+		}
+
+		return WikiUtil.convert(
+			wikiPage, curViewPageURL, curEditPageURL, attachmentURLPrefix);
 	}
 
 	public static String getHelpPage(String format) {

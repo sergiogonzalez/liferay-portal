@@ -87,8 +87,8 @@ public class BaseSocialActivityTestCase {
 			null);
 	}
 
-	protected static void addGroup(String name) throws Exception {
-		_group = ServiceTestUtil.addGroup(name);
+	protected static void addGroup() throws Exception {
+		_group = ServiceTestUtil.addGroup();
 	}
 
 	protected static void addUsers() throws Exception {
@@ -166,8 +166,6 @@ public class BaseSocialActivityTestCase {
 			_group.getGroupId(), user.getUserId(), _assetEntry.getClassNameId(),
 			classPK, activityType, activityCounterName);
 	}
-
-	protected static final String TEST_GROUP = "test-group";
 
 	protected static final String TEST_MODEL = "test-model";
 
