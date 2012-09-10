@@ -35,6 +35,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ParameterAutoLogin implements AuthVerifier, AutoLogin {
 
+	public String getAuthType() {
+		return ParameterAutoLogin.class.getSimpleName();
+	}
+
 	public String[] login(
 			HttpServletRequest request, HttpServletResponse response)
 		throws AutoLoginException {

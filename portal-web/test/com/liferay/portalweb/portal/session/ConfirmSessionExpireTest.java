@@ -22,68 +22,23 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfirmSessionExpireTest extends BaseTestCase {
 	public void testConfirmSessionExpire() throws Exception {
-		Thread.sleep(30000);
-		Thread.sleep(15000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@value='Extend']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		Thread.sleep(30000);
-		Thread.sleep(30000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"Warning! Due to inactivity, your session has expired.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Session Expiration Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.click(RuntimeVariables.replace(
-				"link=Session Expiration Test Page"));
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Session Expiration Test Page",
+			RuntimeVariables.replace("Session Expiration Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Sign In"),
-			selenium.getText("sign-in"));
+		Thread.sleep(60000);
+		selenium.waitForVisible("//input[@value='Extend']");
+		Thread.sleep(60000);
+		selenium.waitForVisible("//div[@class='popup-alert-warning']");
+		assertEquals(RuntimeVariables.replace(
+				"Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."),
+			selenium.getText("//div[@class='popup-alert-warning']"));
+		Thread.sleep(5000);
+		selenium.clickAt("link=Session Expiration Test Page",
+			RuntimeVariables.replace("Session Expiration Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("link=Sign In"));
 	}
 }

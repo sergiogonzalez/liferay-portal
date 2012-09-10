@@ -62,6 +62,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 
+	public String getAuthType() {
+		return HttpServletRequest.BASIC_AUTH;
+	}
+
 	public String[] login(
 			HttpServletRequest request, HttpServletResponse response)
 		throws AutoLoginException {

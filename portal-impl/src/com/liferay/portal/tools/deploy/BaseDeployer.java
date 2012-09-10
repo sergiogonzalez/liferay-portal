@@ -502,6 +502,12 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			return;
 		}
 
+		File targetFile = new File(targetDir, "META-INF/context.xml");
+
+		if (targetFile.exists()) {
+			return;
+		}
+
 		String contextPath = DeployUtil.getResourcePath("context.xml");
 
 		String content = FileUtil.read(contextPath);
@@ -511,7 +517,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				content, "antiResourceLocking=\"true\"", StringPool.BLANK);
 		}
 
-		FileUtil.write(new File(targetDir, "META-INF/context.xml"), content);
+		FileUtil.write(targetFile, content);
 	}
 
 	public void copyXmls(

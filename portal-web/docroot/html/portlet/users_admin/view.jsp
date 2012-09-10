@@ -20,6 +20,8 @@
 String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
 String backURL = ParamUtil.getString(request, "backURL", viewUsersRedirect);
 
+int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_APPROVED);
+
 String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -46,6 +48,9 @@ String portletURLString = portletURL.toString();
 
 	<%
 	long organizationGroupId = 0;
+
+	int inactiveUsersCount = 0;
+	int usersCount = 0;
 	%>
 
 	<c:if test="<%= portletName.equals(PortletKeys.USERS_ADMIN) %>">
@@ -154,6 +159,28 @@ String portletURLString = portletURL.toString();
 		submitForm(document.<portlet:namespace />fm, '<%= portletURLString %>');
 	}
 
+	function <portlet:namespace />showUsers(status) {
+
+		<%
+		PortletURL showUsersURL = renderResponse.createRenderURL();
+
+		showUsersURL.setParameter("struts_action", "/users_admin/view_users");
+		showUsersURL.setParameter("usersListView", usersListView);
+
+		long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+		if (organizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+			showUsersURL.setParameter("organizationId", String.valueOf(organizationId));
+		}
+
+		if (Validator.isNotNull(viewUsersRedirect)) {
+			showUsersURL.setParameter("viewUsersRedirect", viewUsersRedirect);
+		}
+		%>
+
+		location.href = Liferay.Util.addParams('<portlet:namespace />status=' + status.value, '<%= showUsersURL.toString() %>');
+	}
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteOrganizations',
@@ -196,6 +223,7 @@ String portletURLString = portletURL.toString();
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
 				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />usersRedirect.value;
 				document.<portlet:namespace />fm.<portlet:namespace />deleteUserIds.value = deleteUserIds;
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>");
 			}
 		},

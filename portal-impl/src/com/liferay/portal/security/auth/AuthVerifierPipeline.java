@@ -43,6 +43,8 @@ import jodd.util.Wildcard;
  */
 public class AuthVerifierPipeline {
 
+	public static final String AUTH_TYPE = "auth.type";
+
 	public static void register(
 		AuthVerifierConfiguration authVerifierConfiguration) {
 
@@ -257,6 +259,8 @@ public class AuthVerifierPipeline {
 
 				Map<String, Object> settings = _mergeSettings(
 					properties, authVerifierResult.getSettings());
+
+				settings.put(AUTH_TYPE, authVerifier.getAuthType());
 
 				authVerifierResult.setSettings(settings);
 

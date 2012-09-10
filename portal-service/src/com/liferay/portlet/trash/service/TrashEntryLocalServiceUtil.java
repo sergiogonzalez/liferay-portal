@@ -491,6 +491,15 @@ public class TrashEntryLocalServiceUtil {
 		return getService().getVersions(className, classPK);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(companyId, groupId, userId, keywords, start, end,
+			sort);
+	}
+
 	public static TrashEntryLocalService getService() {
 		if (_service == null) {
 			_service = (TrashEntryLocalService)PortalBeanLocatorUtil.locate(TrashEntryLocalService.class.getName());

@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 
+	public String getAuthType() {
+		return HttpServletRequest.DIGEST_AUTH;
+	}
+
 	public AuthVerifierResult verify(
 			AccessControlContext accessControlContext, Properties configuration)
 		throws AuthException {

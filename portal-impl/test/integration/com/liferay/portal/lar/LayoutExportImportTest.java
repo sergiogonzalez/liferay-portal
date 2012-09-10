@@ -135,7 +135,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			layoutSetPrototypeGroup.getGroupId(),
 			ServiceTestUtil.randomString(), true);
 
-		Group group = ServiceTestUtil.addGroup(ServiceTestUtil.randomString());
+		Group group = ServiceTestUtil.addGroup();
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			group, layoutSetPrototype.getLayoutSetPrototypeId(), 0,

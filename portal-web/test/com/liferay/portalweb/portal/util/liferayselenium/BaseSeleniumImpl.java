@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
@@ -132,9 +133,108 @@ public abstract class BaseSeleniumImpl
 		super.type(location, TestPropsValues.OUTPUT_DIR + value);
 	}
 
+	public void waitForConfirmation(String pattern) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				BaseTestCase.fail("Timeout");
+			}
+
+			try {
+				if (pattern.equals(getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForElementNotPresent(String locator) throws Exception {
+		LiferaySeleniumHelper.waitForElementNotPresent(this, locator);
+	}
+
+	public void waitForElementPresent(String locator) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				BaseTestCase.fail(
+					"Timeout: unable to find the locator \"" + locator + "\"");
+			}
+
+			try {
+				if (isElementPresent(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForNotPartialText(String locator, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.waitForNotPartialText(this, locator, value);
+	}
+
+	public void waitForNotSelectedLabel(String selectLocator, String pattern)
+		throws Exception {
+
+		LiferaySeleniumHelper.waitForNotSelectedLabel(
+			this, selectLocator, pattern);
+	}
+
+	public void waitForNotText(String locator, String value) throws Exception {
+		LiferaySeleniumHelper.waitForNotText(this, locator, value);
+	}
+
+	public void waitForNotValue(String locator, String value) throws Exception {
+		LiferaySeleniumHelper.waitForNotValue(this, locator, value);
+	}
+
+	public void waitForNotVisible(String locator) throws Exception {
+		LiferaySeleniumHelper.waitForNotVisible(this, locator);
+	}
+
 	@Override
 	public void waitForPageToLoad(String timeout) {
 		super.waitForPageToLoad(_timeout);
+	}
+
+	public void waitForPartialText(String locator, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.waitForPartialText(this, locator, value);
+	}
+
+	public void waitForSelectedLabel(String selectLocator, String pattern)
+		throws Exception {
+
+		LiferaySeleniumHelper.waitForSelectedLabel(
+			this, selectLocator, pattern);
+	}
+
+	public void waitForText(String locator, String value) throws Exception {
+		LiferaySeleniumHelper.waitForText(this, locator, value);
+	}
+
+	public void waitForTextNotPresent(String value) throws Exception {
+		LiferaySeleniumHelper.waitForTextNotPresent(this, value);
+	}
+
+	public void waitForTextPresent(String value) throws Exception {
+		LiferaySeleniumHelper.waitForTextPresent(this, value);
+	}
+
+	public void waitForValue(String locator, String value) throws Exception {
+		LiferaySeleniumHelper.waitForValue(this, locator, value);
+	}
+
+	public void waitForVisible(String locator) throws Exception {
+		LiferaySeleniumHelper.waitForVisible(this, locator);
 	}
 
 	protected String getScreenshotFileName() {

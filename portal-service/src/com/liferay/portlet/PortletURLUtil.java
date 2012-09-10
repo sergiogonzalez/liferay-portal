@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -119,15 +120,16 @@ public class PortletURLUtil {
 	}
 
 	public static PortletURL getCurrent(
-		PortletRequest portletRequest, MimeResponse mimeResponse) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = mimeResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		Enumeration<String> enu = portletRequest.getParameterNames();
+		Enumeration<String> enu = liferayPortletRequest.getParameterNames();
 
 		while (enu.hasMoreElements()) {
 			String param = enu.nextElement();
-			String[] values = portletRequest.getParameterValues(param);
+			String[] values = liferayPortletRequest.getParameterValues(param);
 
 			boolean addParam = true;
 
@@ -147,6 +149,14 @@ public class PortletURLUtil {
 		}
 
 		return portletURL;
+	}
+
+	public static PortletURL getCurrent(
+		PortletRequest portletRequest, MimeResponse mimeResponse) {
+
+		return getCurrent(
+			(LiferayPortletRequest)portletRequest,
+			(LiferayPortletResponse)mimeResponse);
 	}
 
 	public static String getRefreshURL(
@@ -256,15 +266,6 @@ public class PortletURLUtil {
 					}
 				}
 			}
-		}
-
-		String outerPortletId = PortalUtil.getOuterPortletId(request);
-
-		if (outerPortletId != null) {
-			sb.append(StringPool.AMPERSAND);
-			sb.append("p_o_p_id");
-			sb.append(StringPool.EQUAL);
-			sb.append(HttpUtil.encodeURL(outerPortletId));
 		}
 
 		return sb.toString();

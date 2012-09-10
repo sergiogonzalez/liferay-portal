@@ -314,3 +314,8 @@ create table TrashVersion (
 );
 
 drop table Users_Permissions;
+
+alter table WikiNode add status INTEGER;
+alter table WikiNode add statusByUserId LONG;
+alter table WikiNode add statusByUserName VARCHAR(75) null;
+alter table WikiNode add statusDate DATE null;

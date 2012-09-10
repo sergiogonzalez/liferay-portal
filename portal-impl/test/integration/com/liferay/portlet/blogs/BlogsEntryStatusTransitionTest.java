@@ -56,8 +56,7 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
 
-		group = ServiceTestUtil.addGroup(
-			"BlogsEntryStatusTransitionTest#testGroup");
+		group = ServiceTestUtil.addGroup();
 
 		blogsEntry = addBlogsEntry(group, false);
 	}

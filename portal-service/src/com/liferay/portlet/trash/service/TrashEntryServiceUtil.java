@@ -106,15 +106,6 @@ public class TrashEntryServiceUtil {
 		return getService().getEntries(groupId, start, end, obc);
 	}
 
-	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		long groupId, long userId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .search(companyId, groupId, userId, keywords, start, end,
-			sort);
-	}
-
 	public static TrashEntryService getService() {
 		if (_service == null) {
 			_service = (TrashEntryService)PortalBeanLocatorUtil.locate(TrashEntryService.class.getName());

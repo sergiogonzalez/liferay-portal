@@ -22,48 +22,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfirmNoSessionExpireTest extends BaseTestCase {
 	public void testConfirmNoSessionExpire() throws Exception {
-		Thread.sleep(30000);
-		Thread.sleep(30000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementNotPresent("//input[@value='Extend']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		Thread.sleep(30000);
-		Thread.sleep(30000);
-		assertTrue(selenium.isElementNotPresent("//input[@value='Extend']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Session Expiration Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.click(RuntimeVariables.replace(
-				"link=Session Expiration Test Page"));
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Session Expiration Test Page",
+			RuntimeVariables.replace("Session Expiration Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(75000);
+		assertTrue(selenium.isElementNotPresent("//input[@value='Extend']"));
+		selenium.clickAt("link=Session Expiration Test Page",
+			RuntimeVariables.replace("Session Expiration Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("link=Sign Out"));
 	}
 }

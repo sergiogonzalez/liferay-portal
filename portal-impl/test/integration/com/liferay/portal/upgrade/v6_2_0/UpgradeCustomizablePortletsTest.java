@@ -204,7 +204,7 @@ public class UpgradeCustomizablePortletsTest
 	}
 
 	protected Layout getLayout() throws Exception {
-		Group group = ServiceTestUtil.addGroup(ServiceTestUtil.randomString());
+		Group group = ServiceTestUtil.addGroup();
 
 		return ServiceTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString(), false);

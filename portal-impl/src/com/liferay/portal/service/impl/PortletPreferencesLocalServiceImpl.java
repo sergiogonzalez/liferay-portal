@@ -177,6 +177,14 @@ public class PortletPreferencesLocalServiceImpl
 		return portletPreferencesPersistence.findByPlid(plid);
 	}
 
+	public long getPortletPreferencesCount(
+			int ownerType, long plid, String portletId)
+		throws SystemException {
+
+		return portletPreferencesPersistence.countByO_P_P(
+			ownerType, plid, portletId);
+	}
+
 	public javax.portlet.PortletPreferences getPreferences(
 			long companyId, long ownerId, int ownerType, long plid,
 			String portletId)
