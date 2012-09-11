@@ -196,6 +196,10 @@ public class DeepNamedValueScanner {
 			return false;
 		}
 
+		if (targetClassName.startsWith("sun.misc.")) {
+			return false;
+		}
+
 		if (targetClassName.contains("log")) {
 			return false;
 		}
