@@ -204,10 +204,6 @@ public class DeepNamedValueScanner {
 			return false;
 		}
 
-		if (_trackUsageCount) {
-			_incrementUsageCount(_typesStats, targetClass.getName());
-		}
-
 		if (_ignoredClassNames != null) {
 			for (String ignoredClassName : _ignoredClassNames) {
 
@@ -217,6 +213,10 @@ public class DeepNamedValueScanner {
 					return false;
 				}
 			}
+		}
+
+		if (_trackUsageCount) {
+			_incrementUsageCount(_typesStats, targetClass.getName());
 		}
 
 		return true;
