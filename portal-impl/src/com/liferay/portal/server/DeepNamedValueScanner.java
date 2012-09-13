@@ -227,10 +227,6 @@ public class DeepNamedValueScanner {
 			return true;
 		}
 
-		if (_trackUsageCount) {
-			_incrementUsageCount(_namesStats, name);
-		}
-
 		name = name.toLowerCase();
 
 		if (_ignoredNames != null) {
@@ -242,6 +238,10 @@ public class DeepNamedValueScanner {
 					return false;
 				}
 			}
+		}
+
+		if (_trackUsageCount) {
+			_incrementUsageCount(_namesStats, name);
 		}
 
 		return true;
