@@ -23,7 +23,7 @@
 </#macro>
 
 <#macro js file_name>
-	<#assign file_id = "" />
+	<#assign file_id = "js_${digester.digestHex(file_name)}" />
 
 	<#if file_name == js_main_file>
 		<#assign file_id = "mainLiferayThemeJavaScript" />

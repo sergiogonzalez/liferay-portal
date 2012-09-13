@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.DateUtil_IW;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GetterUtil_IW;
@@ -147,6 +148,15 @@ public class TemplateContextHelper {
 		// Date util
 
 		variables.put("dateUtil", DateUtil_IW.getInstance());
+
+		// DigesterUtil
+
+		try {
+			variables.put("digester", DigesterUtil.getDigester());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Expando column service
 
