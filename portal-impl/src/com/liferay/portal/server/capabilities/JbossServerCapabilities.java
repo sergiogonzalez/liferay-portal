@@ -16,6 +16,7 @@ package com.liferay.portal.server.capabilities;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.server.DeepNamedValueScanner;
 
 import javax.servlet.ServletContext;
 
@@ -34,6 +35,39 @@ public class JBossServerCapabilities implements ServerCapabilities  {
 
 	protected void determineSupportsHotDeploy(ServletContext servletContext)
 		throws Exception {
+
+		DeepNamedValueScanner deepNamedValueScanner =
+			new DeepNamedValueScanner("scanEnabled", true);
+
+		deepNamedValueScanner.setVisitArrays(true);
+		deepNamedValueScanner.setVisitMaps(true);
+
+		deepNamedValueScanner.setIgnoredClassNames("registry.AttributeAccess",
+			"modules.Module", "net.sf.ehcache", "org.hibernate", "jandex",
+			"ZipNode", "ChainedInterceptorFactory", "TagAttributeInfo",
+			"AttributeMetaData");
+
+		deepNamedValueScanner.setIgnoredNames("void", "deployment.reflect",
+			"name", "serialversion");
+
+		deepNamedValueScanner.scan(servletContext);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HotDeploy founded: " +
+				deepNamedValueScanner.isFounded() + " in " +
+				deepNamedValueScanner.getElapsed() + "ms by " +
+				deepNamedValueScanner.getMatchingCount() + " matches");
+		}
+
+		Boolean scanEnabledValue =
+			(Boolean)deepNamedValueScanner.getMatchedValue();
+
+		if (scanEnabledValue == null) {
+			_supportsHotDeploy = false;
+		}
+		else {
+			_supportsHotDeploy = scanEnabledValue.booleanValue();
+		}
 	}
 
 
