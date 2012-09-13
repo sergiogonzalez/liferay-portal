@@ -138,7 +138,9 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 
 	addPortletURL.setPortletMode(PortletMode.VIEW);
 
-	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+	PortletResponseImpl portletResponseImpl = (PortletResponseImpl)liferayPortletResponse;
+
+	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(portletResponseImpl.getPlid(), portletResponseImpl.getPortletName(), portletResponseImpl.getLifecycle(), false);
 
 	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
