@@ -40,7 +40,7 @@ public class GlassfishServerCapabilities implements ServerCapabilities {
 		DeepNamedValueScanner deepNamedValueScanner =
 					new DeepNamedValueScanner("masterView");
 
-		deepNamedValueScanner.setIgnoredClassNames("org.apache.felix.");
+		deepNamedValueScanner.setExcludedClassNames("org.apache.felix.");
 		deepNamedValueScanner.setSkipFirstCount(4);
 
 		deepNamedValueScanner.scan(servletContext);
@@ -56,7 +56,7 @@ public class GlassfishServerCapabilities implements ServerCapabilities {
 		deepNamedValueScanner = new DeepNamedValueScanner("autodeploy-enabled");
 
 		deepNamedValueScanner.setVisitMaps(true);
-		deepNamedValueScanner.setIgnoredClassNames("org.apache.felix.",
+		deepNamedValueScanner.setExcludedClassNames("org.apache.felix.",
 				"CountStatisticImpl");
 		deepNamedValueScanner.setSkipFirstCount(2);
 
