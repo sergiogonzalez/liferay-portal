@@ -41,9 +41,10 @@ public class JettyServerCapabilities implements ServerCapabilities {
 			new DeepNamedValueScanner("_scanInterval");
 
 		deepNamedValueScanner.setVisitLists(true);
-		deepNamedValueScanner.setVisitMaps(true);
-		deepNamedValueScanner.setIgnoredClassNames("WebAppProvider",
-			"com.liferay");
+
+		deepNamedValueScanner.setExcludedClassNames("WebAppProvider");
+
+		deepNamedValueScanner.setIncludedClassNames("org.eclipse.jetty");
 
 		deepNamedValueScanner.scan(servletContext);
 
@@ -55,6 +56,9 @@ public class JettyServerCapabilities implements ServerCapabilities {
 		}
 
 		Integer scanInterval = (Integer)deepNamedValueScanner.getMatchedValue();
+
+		System.out.println("---------> " + scanInterval);
+
 
 		if ((scanInterval != null) && (scanInterval.intValue() > 0)) {
 			_supportsHotDeploy = true;
