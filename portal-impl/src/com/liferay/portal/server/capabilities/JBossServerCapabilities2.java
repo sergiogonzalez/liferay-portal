@@ -23,7 +23,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Igor Spasic
  */
-public class JBossServerCapabilities implements ServerCapabilities  {
+public class JBossServerCapabilities2 implements ServerCapabilities  {
 
 	public void determine(ServletContext servletContext) throws Exception {
 		determineSupportsHotDeploy(servletContext);
@@ -40,15 +40,16 @@ public class JBossServerCapabilities implements ServerCapabilities  {
 			new DeepNamedValueScanner("scanEnabled", true);
 
 		deepNamedValueScanner.setVisitArrays(true);
+
 		deepNamedValueScanner.setVisitMaps(true);
 
-		deepNamedValueScanner.setIgnoredClassNames("registry.AttributeAccess",
-			"modules.Module", "net.sf.ehcache", "org.hibernate", "jandex",
-			"ZipNode", "ChainedInterceptorFactory", "TagAttributeInfo",
-			"AttributeMetaData");
+		deepNamedValueScanner.setIncludedClassNames("org.apache.",
+			"org.jboss.");
 
-		deepNamedValueScanner.setIgnoredNames("void", "deployment.reflect",
-			"name", "serialversion");
+		deepNamedValueScanner.setExcludedClassNames("ChainedInterceptorFactory",
+			"TagAttributeInfo", ".jandex.", ".vfs.");
+
+		deepNamedValueScanner.setExcludedNames("serialversion");
 
 		deepNamedValueScanner.scan(servletContext);
 
@@ -72,7 +73,7 @@ public class JBossServerCapabilities implements ServerCapabilities  {
 
 
 	private static Log _log = LogFactoryUtil.getLog(
-		JBossServerCapabilities.class);
+		JBossServerCapabilities2.class);
 
 	private boolean _supportsHotDeploy;
 
