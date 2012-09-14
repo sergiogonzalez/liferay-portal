@@ -56,12 +56,16 @@ public class DeepNamedValueScanner {
 		return _elapsed;
 	}
 
-	public String[] getIgnoredClassNames() {
-		return _ignoredClassNames;
+	public String[] getExcludedClassNames() {
+		return _excludedClassNames;
 	}
 
-	public String[] getIgnoredNames() {
-		return _ignoredNames;
+	public String[] getExcludedNames() {
+		return _excludedNames;
+	}
+
+	public String[] getIncludedClassNames() {
+		return _includedClassNames;
 	}
 
 	public Object getMatchedValue() {
@@ -140,12 +144,34 @@ public class DeepNamedValueScanner {
 		return isFounded();
 	}
 
-	public void setIgnoredClassNames(String... ignoredClassNames) {
-		_ignoredClassNames = ignoredClassNames;
+	public void setExcludedClassNames(String... excludedClassNames) {
+		_excludedClassNames = excludedClassNames;
+
+		if (excludedClassNames != null) {
+			for (int i = 0; i < excludedClassNames.length; i++) {
+				excludedClassNames[i] = excludedClassNames[i].toLowerCase();
+			}
+		}
 	}
 
-	public void setIgnoredNames(String... ignoredNames) {
-		_ignoredNames = ignoredNames;
+	public void setExcludedNames(String... excludedNames) {
+		_excludedNames = excludedNames;
+
+		if (excludedNames != null) {
+			for (int i = 0; i < excludedNames.length; i++) {
+				excludedNames[i] = excludedNames[i].toLowerCase();
+			}
+		}
+	}
+
+	public void setIncludedClassNames(String... includedClassNames) {
+		_includedClassNames = includedClassNames;
+
+		if (includedClassNames != null) {
+			for (int i = 0; i < includedClassNames.length; i++) {
+				includedClassNames[i] = includedClassNames[i].toLowerCase();
+			}
+		}
 	}
 
 	public void setSkipFirstCount(int skipFirstCount) {
@@ -204,14 +230,29 @@ public class DeepNamedValueScanner {
 			return false;
 		}
 
-		if (_ignoredClassNames != null) {
-			for (String ignoredClassName : _ignoredClassNames) {
+		if (_excludedClassNames != null) {
+			for (String excludedClassName : _excludedClassNames) {
+				if (targetClassName.contains(excludedClassName)) {
 
-				ignoredClassName = ignoredClassName.toLowerCase();
-
-				if (targetClassName.contains(ignoredClassName)) {
 					return false;
 				}
+			}
+		}
+
+		if (_includedClassNames != null) {
+			boolean accept = false;
+
+			for (String includedClassName : _includedClassNames) {
+
+				if (targetClassName.contains(includedClassName)) {
+					accept = true;
+
+					break;
+				}
+			}
+
+			if (!accept) {
+				return false;
 			}
 		}
 
@@ -229,12 +270,10 @@ public class DeepNamedValueScanner {
 
 		name = name.toLowerCase();
 
-		if (_ignoredNames != null) {
-			for (String ignoredName : _ignoredNames) {
+		if (_excludedNames != null) {
+			for (String excludedNames : _excludedNames) {
+				if (name.contains(excludedNames)) {
 
-				ignoredName = ignoredName.toLowerCase();
-
-				if (name.contains(ignoredName)) {
 					return false;
 				}
 			}
@@ -495,8 +534,9 @@ public class DeepNamedValueScanner {
 	}
 
 	private long _elapsed;
-	private String[] _ignoredClassNames;
-	private String[] _ignoredNames;
+	private String[] _excludedClassNames;
+	private String[] _excludedNames;
+	private String[] _includedClassNames;
 	private Object _matchedValue;
 	private int _matchingCount;
 	private HashMap<String, KeyValue> _namesStats;
@@ -507,10 +547,10 @@ public class DeepNamedValueScanner {
 	private final String _value;
 	private boolean _visitArrays;
 	private boolean _visitCollections;
-	private Set<String> _visitedIds;
 	private boolean _visitLists;
 	private boolean _visitMaps;
 	private boolean _visitSets;
 	private boolean _visitStaticFields;
+	private Set<String> _visitedIds;
 
 }
