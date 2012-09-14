@@ -23,7 +23,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Igor Spasic
  */
-public class JBossServerCapabilities2 implements ServerCapabilities  {
+public class JBossServerCapabilities implements ServerCapabilities  {
 
 	public void determine(ServletContext servletContext) throws Exception {
 		determineSupportsHotDeploy(servletContext);
@@ -73,7 +73,7 @@ public class JBossServerCapabilities2 implements ServerCapabilities  {
 
 
 	private static Log _log = LogFactoryUtil.getLog(
-		JBossServerCapabilities2.class);
+		JBossServerCapabilities.class);
 
 	private boolean _supportsHotDeploy;
 

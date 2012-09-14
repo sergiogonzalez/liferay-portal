@@ -35,7 +35,7 @@ public class ServerCapabilitiesUtil {
 			serverCapabilities = new GlassfishServerCapabilities();
 		}
 		else if (ServerDetector.isJBoss()) {
-			serverCapabilities = new JBossServerCapabilities2();
+			serverCapabilities = new JBossServerCapabilities();
 		}
 		else if (ServerDetector.isJetty()) {
 			serverCapabilities = new JettyServerCapabilities();
