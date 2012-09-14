@@ -28,9 +28,6 @@ PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, life
 String editPortletURLString = StringPool.BLANK;
 
 if (showEditURL && (editPortletURL != null)) {
-	editPortletURL.setWindowState(LiferayWindowState.POP_UP);
-	editPortletURL.setPortletMode(PortletMode.VIEW);
-
 	if (Validator.isNotNull(portletResource)) {
 		editPortletURL.setParameter("referringPortletResource", portletResource);
 	}
@@ -38,9 +35,7 @@ if (showEditURL && (editPortletURL != null)) {
 		editPortletURL.setParameter("referringPortletResource", portletDisplay.getId());
 	}
 
-	PortletURL redirectURL = renderResponse.createRenderURL();
-
-	redirectURL.setWindowState(LiferayWindowState.POP_UP);
+	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(plid, portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
 	redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect");
 
@@ -50,8 +45,13 @@ if (showEditURL && (editPortletURL != null)) {
 		redirectURL.setParameter("redirect", fullContentRedirect);
 	}
 
+	redirectURL.setWindowState(LiferayWindowState.POP_UP);
+
 	editPortletURL.setParameter("redirect", redirectURL.toString());
 	editPortletURL.setParameter("originalRedirect", redirectURL.toString());
+
+	editPortletURL.setPortletMode(PortletMode.VIEW);
+	editPortletURL.setWindowState(LiferayWindowState.POP_UP);
 
 	editPortletURLString = editPortletURL.toString();
 

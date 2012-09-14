@@ -12,21 +12,35 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.media.dmkaleo1workflow;
+package com.liferay.portal.parsers.creole.ast;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portal.parsers.creole.visitor.ASTVisitor;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class User_SignOutTest extends BaseTestCase {
-	public void testUser_SignOut() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Sign Out");
-		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
-		selenium.waitForPageToLoad("30000");
+public class ListNode extends BaseListNode {
+
+	public ListNode() {
 	}
+
+	public ListNode(BaseParentableNode baseParentableNode) {
+		super(baseParentableNode, null);
+	}
+
+	public ListNode(
+		BaseParentableNode baseParentableNode, CollectionNode collectionNode) {
+
+		super(baseParentableNode, collectionNode);
+	}
+
+	public ListNode(int tokenType) {
+		super(tokenType);
+	}
+
+	@Override
+	public void accept(ASTVisitor astVisitor) {
+		astVisitor.visit(this);
+	}
+
 }
