@@ -29,9 +29,14 @@ String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
 
 if (Validator.isNull(backURL)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
+	if (renderResponse != null) {
+		PortletURL portletURL = renderResponse.createRenderURL();
 
-	backURL = portletURL.toString();
+		backURL = portletURL.toString();
+	}
+	else {
+		backURL = ParamUtil.getString(request, "redirect");
+	}
 }
 
 String[] allSections = new String[0];
