@@ -17,10 +17,13 @@ package com.liferay.portal.kernel.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
+
+import java.util.Date;
 
 import javax.portlet.PortletRequest;
 
@@ -47,6 +50,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	@SuppressWarnings("unused")
 	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+		throws PortalException, SystemException {
+	}
+
+	@SuppressWarnings("unused")
+	public void deleteTrashAttachments(Group group, Date date)
 		throws PortalException, SystemException {
 	}
 

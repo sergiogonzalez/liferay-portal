@@ -69,13 +69,13 @@ import javax.portlet.PortletURL;
  * @author Bruno Farache
  * @author Raymond Augé
  */
-public class MBIndexer extends BaseIndexer {
+public class MBMessageIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {MBMessage.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.MESSAGE_BOARDS;
 
-	public MBIndexer() {
+	public MBMessageIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -570,6 +570,6 @@ public class MBIndexer extends BaseIndexer {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MBIndexer.class);
+	private static Log _log = LogFactoryUtil.getLog(MBMessageIndexer.class);
 
 }

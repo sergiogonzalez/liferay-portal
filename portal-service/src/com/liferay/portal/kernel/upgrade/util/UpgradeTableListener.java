@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.media.dmkaleo1workflow;
+package com.liferay.portal.kernel.upgrade.util;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portal.model.ServiceComponent;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_SignOutTest extends BaseTestCase {
-	public void testUser_SignOut() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Sign Out");
-		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
-		selenium.waitForPageToLoad("30000");
-	}
+public interface UpgradeTableListener {
+
+	public void onAfterUpdateTable(
+			ServiceComponent previousServiceComponent,
+			UpgradeTable upgradeTable)
+		throws Exception;
+
+	public void onBeforeUpdateTable(
+			ServiceComponent previousServiceComponent,
+			UpgradeTable upgradeTable)
+		throws Exception;
+
 }
