@@ -9,7 +9,7 @@
 #end
 
 #macro (js $file_name)
-	#set ($file_id = "")
+	#set ($file_id = "js_${digester.digestHex($file_name)}")
 
 	#if ($file_name == $js_main_file)
 		#set ($file_id = "mainLiferayThemeJavaScript")
@@ -90,4 +90,8 @@ img, .png {
 	#if ($themeDisplay.isShowStagingIcon())
 		$theme.runtime("170")
 	#end
+#end
+
+#macro (silently $foo)
+	#set ($foo = $foo)
 #end
