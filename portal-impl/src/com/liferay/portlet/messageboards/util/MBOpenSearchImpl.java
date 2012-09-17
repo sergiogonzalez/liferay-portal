@@ -35,7 +35,7 @@ public class MBOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public String getPortletId() {
-		return MBIndexer.PORTLET_ID;
+		return MBMessageIndexer.PORTLET_ID;
 	}
 
 	@Override
