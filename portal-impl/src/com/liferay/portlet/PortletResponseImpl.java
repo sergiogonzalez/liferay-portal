@@ -237,6 +237,13 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	public LiferayPortletURL createLiferayPortletURL(
 		long plid, String portletName, String lifecycle) {
 
+		return createLiferayPortletURL(plid, portletName, lifecycle, true);
+	}
+
+	public LiferayPortletURL createLiferayPortletURL(
+		long plid, String portletName, String lifecycle,
+		boolean includeLinkToLayoutUuid) {
+
 		try {
 			Layout layout = (Layout)_portletRequestImpl.getAttribute(
 				WebKeys.LAYOUT);
@@ -250,7 +257,9 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			String linkToLayoutUuid = GetterUtil.getString(
 				_portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
 
-			if (Validator.isNotNull(linkToLayoutUuid)) {
+			if (Validator.isNotNull(linkToLayoutUuid) &&
+				includeLinkToLayoutUuid) {
+
 				try {
 					Layout linkedLayout =
 						LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
@@ -392,7 +401,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	public String encodeURL(String path) {
 		if ((path == null) ||
 			(!path.startsWith("#") && !path.startsWith("/") &&
-				(path.indexOf("://") == -1))) {
+			 !path.contains("://"))) {
 
 			// Allow '#' as well to workaround a bug in Oracle ADF 10.1.3
 

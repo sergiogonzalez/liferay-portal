@@ -42,8 +42,8 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 		_hibernateCacheManager = liferayEhcacheRegionFactory.getCacheManager();
 
-		EhcachePortalCacheManager ehcachePortalCacheManager =
-			(EhcachePortalCacheManager)PortalBeanLocatorUtil.locate(
+		EhcachePortalCacheManager<?, ?> ehcachePortalCacheManager =
+			(EhcachePortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
 				_MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME);
 
 		_portalCacheManager = ehcachePortalCacheManager.getEhcacheManager();

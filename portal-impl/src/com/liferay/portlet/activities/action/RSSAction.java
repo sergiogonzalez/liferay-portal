@@ -92,19 +92,9 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 
-		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
+		String description = ParamUtil.getString(resourceRequest, "feedTitle");
 
-		syndFeed.setDescription(feedTitle);
-
-		syndFeed.setFeedType(RSSUtil.FEED_TYPE_DEFAULT);
-
-		String feedLink =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
-
-		syndFeed.setLink(feedLink);
-
-		syndFeed.setTitle(feedTitle);
+		syndFeed.setDescription(description);
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 
@@ -140,6 +130,18 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 			syndEntries.add(syndEntry);
 		}
+
+		syndFeed.setFeedType(RSSUtil.FEED_TYPE_DEFAULT);
+
+		String link =
+			PortalUtil.getLayoutFullURL(themeDisplay) +
+				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
+
+		syndFeed.setLink(link);
+
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setTitle(description);
+		syndFeed.setUri(link);
 
 		String rss = StringPool.BLANK;
 

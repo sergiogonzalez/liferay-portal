@@ -339,12 +339,6 @@ public class SourceFormatter {
 	private static void _checkIfClause(
 		String ifClause, String fileName, int lineCount) {
 
-		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
-			ifClause.contains("/*") || ifClause.contains("*/")) {
-
-			return;
-		}
-
 		int quoteCount = StringUtil.count(ifClause, StringPool.QUOTE);
 
 		if ((quoteCount % 2) == 1) {
@@ -352,6 +346,13 @@ public class SourceFormatter {
 		}
 
 		ifClause = _stripQuotes(ifClause);
+
+		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
+			ifClause.contains("/*") || ifClause.contains("*/")) {
+
+			return;
+		}
+
 		ifClause = _stripRedundantParentheses(ifClause);
 
 		ifClause = StringUtil.replace(
@@ -1261,7 +1262,8 @@ public class SourceFormatter {
 					fileName, "ServiceUtil: " + fileName);
 			}
 
-			if (!className.equals("ProxyUtil") &&
+			if (!className.equals("DeepNamedValueScanner") &&
+				!className.equals("ProxyUtil") &&
 				newContent.contains("import java.lang.reflect.Proxy;")) {
 
 				_sourceFormatterHelper.printError(

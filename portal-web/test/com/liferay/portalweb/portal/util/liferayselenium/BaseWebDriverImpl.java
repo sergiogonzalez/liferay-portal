@@ -179,23 +179,23 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public void waitForElementPresent(String locator) throws Exception {
-		int timeout =
-			TestPropsValues.TIMEOUT_EXPLICIT_WAIT /
-				TestPropsValues.TIMEOUT_IMPLICIT_WAIT;
+		WebDriver.Options options = manage();
 
-		for (int second = 0;; second++) {
-			if (second >= timeout) {
-				BaseTestCase.fail(
-					"Timeout: unable to find the locator \"" + locator + "\"");
-			}
+		Timeouts timeouts = options.timeouts();
 
-			try {
-				if (isElementPresent(locator)) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
+		timeouts.implicitlyWait(
+			TestPropsValues.TIMEOUT_EXPLICIT_WAIT, TimeUnit.SECONDS);
+
+		try {
+			getWebElement(locator);
+		}
+		catch (Exception e) {
+			BaseTestCase.fail(
+				"Timeout: unable to find the locator \"" + locator + "\"");
+		}
+		finally {
+			timeouts.implicitlyWait(
+				TestPropsValues.TIMEOUT_IMPLICIT_WAIT, TimeUnit.SECONDS);
 		}
 	}
 

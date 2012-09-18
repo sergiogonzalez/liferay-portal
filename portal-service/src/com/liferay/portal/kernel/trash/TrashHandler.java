@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Group;
 import com.liferay.portlet.trash.model.TrashEntry;
+
+import java.util.Date;
 
 import javax.portlet.PortletRequest;
 
@@ -55,6 +58,17 @@ import javax.portlet.PortletRequest;
 public interface TrashHandler {
 
 	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+		throws PortalException, SystemException;
+
+	/**
+	 * Deletes all trash attachments from a group that were deleted after a
+	 * given date.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  date the date from which attachments will be deleted
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteTrashAttachments(Group group, Date date)
 		throws PortalException, SystemException;
 
 	/**

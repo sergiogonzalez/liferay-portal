@@ -41,7 +41,11 @@ public interface UpgradeTable {
 
 	public String getSelectSQL() throws Exception;
 
+	public String getTempFileName();
+
 	public boolean isAllowUniqueIndexes() throws Exception;
+
+	public boolean isDeleteTempFile();
 
 	public void setAllowUniqueIndexes(boolean allowUniqueIndexes)
 		throws Exception;
@@ -51,6 +55,8 @@ public interface UpgradeTable {
 		throws Exception;
 
 	public void setCreateSQL(String createSQL) throws Exception;
+
+	public void setDeleteTempFile(boolean deleteTempFile);
 
 	public void setIndexesSQL(String[] indexesSQL) throws Exception;
 

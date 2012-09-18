@@ -34,11 +34,13 @@ import org.jabsorb.JSONSerializer;
 /**
  * @author Juan Fernández
  * @author Matthew Kong
+ * @author Mate Thurzo
  */
 public class VerifyCalendar extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyEndDate();
 		verifyNoAssets();
 		verifyRecurrence();
 	}
@@ -63,6 +65,13 @@ public class VerifyCalendar extends VerifyProcess {
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
+	}
+
+	protected void verifyEndDate() throws Exception {
+		runSQL(
+			"update CalEvent set endDate = null where endDate is not null " +
+				"and (recurrence like '%\"until\":null%' or recurrence = " +
+					"'null')");
 	}
 
 	protected void verifyNoAssets() throws Exception {
