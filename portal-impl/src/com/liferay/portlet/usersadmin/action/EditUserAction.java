@@ -83,8 +83,6 @@ import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -645,21 +643,6 @@ public class EditUserAction extends PortletAction {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
-
-		if (actionRequest.getParameter("assetCategoryNames") == null ) {
-			long[] assetCategoryIds =
-				AssetCategoryLocalServiceUtil.getCategoryIds(
-					User.class.getName(), user.getUserId());
-
-			serviceContext.setAssetCategoryIds(assetCategoryIds);
-		}
-
-		if (actionRequest.getParameter("assetTagNames") == null ) {
-			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-				User.class.getName(), user.getUserId());
-
-			serviceContext.setAssetTagNames(assetTagNames);
-		}
 
 		user = UserServiceUtil.updateUser(
 			user.getUserId(), oldPassword, newPassword1, newPassword2,

@@ -53,7 +53,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 	public void clearCache() {
 		clearLocalCache();
 
-		for (PortalCache portalCache : _portalCaches.values()) {
+		for (PortalCache<?, ?> portalCache : _portalCaches.values()) {
 			portalCache.removeAll();
 		}
 	}
@@ -61,7 +61,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 	public void clearCache(String className) {
 		clearLocalCache();
 
-		PortalCache portalCache = _getPortalCache(className, true);
+		PortalCache<?, ?> portalCache = _getPortalCache(className, true);
 
 		if (portalCache != null) {
 			portalCache.removeAll();
@@ -103,7 +103,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		}
 
 		if (primaryKey == null) {
-			PortalCache portalCache = _getPortalCache(
+			PortalCache<Serializable, ?> portalCache = _getPortalCache(
 				finderPath.getCacheName(), true);
 
 			Serializable cacheKey = finderPath.encodeCacheKey(args);
@@ -148,7 +148,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 			localCache.put(localCacheKey, primaryKey);
 		}
 
-		PortalCache portalCache = _getPortalCache(
+		PortalCache<Serializable, Object> portalCache = _getPortalCache(
 			finderPath.getCacheName(), true);
 
 		Serializable cacheKey = finderPath.encodeCacheKey(args);
@@ -180,7 +180,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 			localCache.remove(localCacheKey);
 		}
 
-		PortalCache portalCache = _getPortalCache(
+		PortalCache<Serializable, Object> portalCache = _getPortalCache(
 			finderPath.getCacheName(), true);
 
 		Serializable cacheKey = finderPath.encodeCacheKey(args);
@@ -192,19 +192,21 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		_multiVMPool = multiVMPool;
 	}
 
-	private PortalCache _getPortalCache(
+	private PortalCache<Serializable, Object> _getPortalCache(
 		String className, boolean createIfAbsent) {
 
-		PortalCache portalCache = _portalCaches.get(className);
+		PortalCache<Serializable, Object> portalCache = _portalCaches.get(
+			className);
 
 		if ((portalCache == null) && createIfAbsent) {
 			String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-			portalCache = _multiVMPool.getCache(
-				groupKey, PropsValues.VALUE_OBJECT_FINDER_BLOCKING_CACHE);
+			portalCache =
+				(PortalCache<Serializable, Object>)_multiVMPool.getCache(
+					groupKey, PropsValues.VALUE_OBJECT_FINDER_BLOCKING_CACHE);
 
-			PortalCache previousPortalCache = _portalCaches.putIfAbsent(
-				className, portalCache);
+			PortalCache<Serializable, Object> previousPortalCache =
+				_portalCaches.putIfAbsent(className, portalCache);
 
 			if (previousPortalCache != null) {
 				portalCache = previousPortalCache;
@@ -294,7 +296,8 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 	}
 
 	private MultiVMPool _multiVMPool;
-	private ConcurrentMap<String, PortalCache> _portalCaches =
-		new ConcurrentHashMap<String, PortalCache>();
+	private ConcurrentMap<String, PortalCache<Serializable, Object>>
+		_portalCaches =
+			new ConcurrentHashMap<String, PortalCache<Serializable, Object>>();
 
 }

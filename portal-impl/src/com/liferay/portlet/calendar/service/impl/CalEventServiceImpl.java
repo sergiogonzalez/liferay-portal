@@ -35,9 +35,37 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class CalEventServiceImpl extends CalEventServiceBaseImpl {
 
+	public CalEvent addEvent(
+			String title, String description, String location,
+			int startDateMonth, int startDateDay, int startDateYear,
+			int startDateHour, int startDateMinute, int durationHour,
+			int durationMinute, boolean allDay, boolean timeZoneSensitive,
+			String type, boolean repeating, TZSRecurrence recurrence,
+			int remindBy, int firstReminder, int secondReminder,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		CalendarPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_EVENT);
+
+		return calEventLocalService.addEvent(
+			getUserId(), title, description, location, startDateMonth,
+			startDateDay, startDateYear, startDateHour, startDateMinute,
+			durationHour, durationMinute, allDay, timeZoneSensitive, type,
+			repeating, recurrence, remindBy, firstReminder, secondReminder,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated {@link #addEvent(String, String, String, int, int, int, int,
+	 *             int, int, int, boolean, boolean, String, boolean,
+	 *             TZSRecurrence, int, int, int, ServiceContext)}
+	 */
 	public CalEvent addEvent(
 			String title, String description, String location,
 			int startDateMonth, int startDateDay, int startDateYear,
@@ -214,6 +242,32 @@ public class CalEventServiceImpl extends CalEventServiceBaseImpl {
 		calEventLocalService.importICal4j(getUserId(), groupId, inputStream);
 	}
 
+	public CalEvent updateEvent(
+			long eventId, String title, String description, String location,
+			int startDateMonth, int startDateDay, int startDateYear,
+			int startDateHour, int startDateMinute, int durationHour,
+			int durationMinute, boolean allDay, boolean timeZoneSensitive,
+			String type, boolean repeating, TZSRecurrence recurrence,
+			int remindBy, int firstReminder, int secondReminder,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		CalEventPermission.check(
+			getPermissionChecker(), eventId, ActionKeys.UPDATE);
+
+		return calEventLocalService.updateEvent(
+			getUserId(), eventId, title, description, location, startDateMonth,
+			startDateDay, startDateYear, startDateHour, startDateMinute,
+			durationHour, durationMinute, allDay, timeZoneSensitive, type,
+			repeating, recurrence, remindBy, firstReminder, secondReminder,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated {@link #updateEvent(long, String, String, String, int, int,
+	 *             int, int, int, int, int, boolean, boolean, String, boolean,
+	 *             TZSRecurrence, int, int, int, ServiceContext)}
+	 */
 	public CalEvent updateEvent(
 			long eventId, String title, String description, String location,
 			int startDateMonth, int startDateDay, int startDateYear,

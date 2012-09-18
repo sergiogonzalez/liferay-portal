@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -107,7 +108,11 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 		Template template = _createTemplate(templateResource);
 
-		_portalCache.put(templateResource, template);
+		if (PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL !=
+				0) {
+
+			_portalCache.put(templateResource, template);
+		}
 
 		return template;
 	}
@@ -143,7 +148,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		return template;
 	}
 
-	private PortalCache _portalCache;
+	private PortalCache<TemplateResource, Object> _portalCache;
 
 	private class LiferayTemplate extends Template {
 
