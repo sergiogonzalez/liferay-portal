@@ -45,6 +45,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -68,9 +69,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 
-		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
-		syndFeed.setTitle(name);
-		syndFeed.setLink(getFeedURL(portletRequest));
 		syndFeed.setDescription(GetterUtil.getString(description, name));
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
@@ -78,10 +76,15 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		syndFeed.setEntries(syndEntries);
 
 		for (AssetEntry assetEntry : assetEntries) {
-			String link = getEntryURL(
-				portletRequest, portletResponse, linkBehavior, assetEntry);
+			SyndEntry syndEntry = new SyndEntryImpl();
 
 			String author = PortalUtil.getUserName(assetEntry);
+
+			syndEntry.setAuthor(author);
+
+			SyndContent syndContent = new SyndContentImpl();
+
+			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
 			String value = null;
 
@@ -94,26 +97,32 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 				value = assetEntry.getSummary(languageId, true);
 			}
 
-			SyndEntry syndEntry = new SyndEntryImpl();
-
-			syndEntry.setAuthor(author);
-
-			syndEntry.setTitle(assetEntry.getTitle(languageId, true));
-
-			syndEntry.setLink(link);
-			syndEntry.setUri(syndEntry.getLink());
-			syndEntry.setPublishedDate(assetEntry.getCreateDate());
-			syndEntry.setUpdatedDate(assetEntry.getModifiedDate());
-
-			SyndContent syndContent = new SyndContentImpl();
-
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 			syndContent.setValue(value);
 
 			syndEntry.setDescription(syndContent);
 
+			String link = getEntryURL(
+				portletRequest, portletResponse, linkBehavior, assetEntry);
+
+			syndEntry.setLink(link);
+
+			syndEntry.setPublishedDate(assetEntry.getCreateDate());
+			syndEntry.setTitle(assetEntry.getTitle(languageId, true));
+			syndEntry.setUpdatedDate(assetEntry.getModifiedDate());
+			syndEntry.setUri(syndEntry.getLink());
+
 			syndEntries.add(syndEntry);
 		}
+
+		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
+
+		String feedURL = getFeedURL(portletRequest);
+
+		syndFeed.setLink(feedURL);
+
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setTitle(name);
+		syndFeed.setUri(feedURL);
 
 		return RSSUtil.export(syndFeed);
 	}

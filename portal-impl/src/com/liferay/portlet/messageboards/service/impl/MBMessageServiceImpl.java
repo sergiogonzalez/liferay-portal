@@ -59,6 +59,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -708,9 +709,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 
-		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
-		syndFeed.setTitle(name);
-		syndFeed.setLink(feedURL);
 		syndFeed.setDescription(description);
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
@@ -718,7 +716,17 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		syndFeed.setEntries(syndEntries);
 
 		for (MBMessage message : messages) {
-			String author = PortalUtil.getUserName(message);
+			SyndEntry syndEntry = new SyndEntryImpl();
+
+			if (!message.isAnonymous()) {
+				String author = PortalUtil.getUserName(message);
+
+				syndEntry.setAuthor(author);
+			}
+
+			SyndContent syndContent = new SyndContentImpl();
+
+			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
 			String value = null;
 
@@ -747,28 +755,25 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					});
 			}
 
-			SyndEntry syndEntry = new SyndEntryImpl();
-
-			if (!message.isAnonymous()) {
-				syndEntry.setAuthor(author);
-			}
-
-			syndEntry.setTitle(message.getSubject());
-			syndEntry.setLink(
-				entryURL + "&messageId=" + message.getMessageId());
-			syndEntry.setUri(syndEntry.getLink());
-			syndEntry.setPublishedDate(message.getCreateDate());
-			syndEntry.setUpdatedDate(message.getModifiedDate());
-
-			SyndContent syndContent = new SyndContentImpl();
-
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 			syndContent.setValue(value);
 
 			syndEntry.setDescription(syndContent);
 
+			syndEntry.setLink(
+				entryURL + "&messageId=" + message.getMessageId());
+			syndEntry.setPublishedDate(message.getCreateDate());
+			syndEntry.setTitle(message.getSubject());
+			syndEntry.setUpdatedDate(message.getModifiedDate());
+			syndEntry.setUri(syndEntry.getLink());
+
 			syndEntries.add(syndEntry);
 		}
+
+		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
+		syndFeed.setLink(feedURL);
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setTitle(name);
+		syndFeed.setUri(feedURL);
 
 		try {
 			return RSSUtil.export(syndFeed);

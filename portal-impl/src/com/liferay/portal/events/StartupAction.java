@@ -37,7 +37,7 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.util.MBIndexer;
+import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -131,7 +131,7 @@ public class StartupAction extends SimpleAction {
 
 		// Indexers
 
-		IndexerRegistryUtil.register(new MBIndexer());
+		IndexerRegistryUtil.register(new MBMessageIndexer());
 		IndexerRegistryUtil.register(new PluginPackageIndexer());
 
 		// Upgrade

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.Serializable;
 import java.io.Writer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -114,24 +115,8 @@ public abstract class AbstractTemplate implements Template {
 	protected String getTemplateResourceUUID(
 		TemplateResource templateResource) {
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX);
-		sb.append(StringPool.POUND);
-		sb.append(templateResource.getTemplateId());
-		sb.append(StringPool.POUND);
-
-		if (templateResource instanceof StringTemplateResource) {
-			StringTemplateResource stringTemplateResource =
-				(StringTemplateResource)templateResource;
-
-			sb.append(stringTemplateResource.getContent());
-		}
-		else {
-			sb.append(templateResource.getLastModified());
-		}
-
-		return sb.toString();
+		return TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX.concat(
+			StringPool.POUND).concat(templateResource.getTemplateId());
 	}
 
 	protected abstract void handleException(Exception exception, Writer writer)
@@ -164,7 +149,8 @@ public abstract class AbstractTemplate implements Template {
 		cacheName = cacheName.concat(StringPool.PERIOD).concat(
 			templateManagerName);
 
-		PortalCache portalCache = MultiVMPoolUtil.getCache(cacheName);
+		PortalCache<String, Serializable> portalCache =
+			MultiVMPoolUtil.getCache(cacheName);
 
 		Object object = portalCache.get(templateResource.getTemplateId());
 
