@@ -688,6 +688,14 @@ public class StringUtil {
 		}
 	}
 
+	public static void lowerCase(String... array) {
+		if (array != null) {
+			for (int i = 0; i < array.length; i++) {
+				array[i] = array[i].toLowerCase();
+			}
+		}
+	}
+
 	/**
 	 * Returns <code>true</code> if the specified pattern occurs at any position
 	 * in the string.

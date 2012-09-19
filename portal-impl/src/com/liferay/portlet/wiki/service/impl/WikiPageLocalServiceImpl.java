@@ -1621,7 +1621,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			clearPageCache(page);
 		}
 
-		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+		if ((oldStatus == WorkflowConstants.STATUS_IN_TRASH) &&
+			(status != WorkflowConstants.STATUS_IN_TRASH)) {
 
 			// Trash
 
@@ -1903,7 +1904,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String subject = page.getTitle();
 
-		if (subject.indexOf(subjectPrefix) == -1) {
+		if (!subject.contains(subjectPrefix)) {
 			subject = subjectPrefix + StringPool.SPACE + subject;
 		}
 

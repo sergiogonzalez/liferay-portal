@@ -693,6 +693,10 @@ public interface PropsKeys {
 
 	public static final String DL_STORE_S3_SECRET_KEY = "dl.store.s3.secret.key";
 
+	public static final String DL_STORE_S3_TEMPDIR_CLEAN_ACCESS_COUNT_LIMIT = "dl.store.s3.tempdir.clean.access.count.limit";
+
+	public static final String DL_STORE_S3_TEMPDIR_CLEAN_KEEP_LAST_DAYS_COUNT = "dl.store.s3.tempdir.clean.keep.last.days.count";
+
 	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
 
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER = "dynamic.data.lists.error.template.freemarker";
@@ -1034,6 +1038,8 @@ public interface PropsKeys {
 	public static final String JOURNAL_LAR_CREATION_STRATEGY = "journal.lar.creation.strategy";
 
 	public static final String JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT = "journal.publish.to.live.by.default";
+
+	public static final String JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT = "journal.publish.version.history.by.default";
 
 	public static final String JOURNAL_STRUCTURE_FORCE_AUTOGENERATE_ID = "journal.structure.force.autogenerate.id";
 
@@ -2292,10 +2298,6 @@ public interface PropsKeys {
 	public static final String VELOCITY_ENGINE_LOGGER = "velocity.engine.logger";
 
 	public static final String VELOCITY_ENGINE_LOGGER_CATEGORY = "velocity.engine.logger.category";
-
-	public static final String VELOCITY_ENGINE_RESOURCE_MANAGER = "velocity.engine.resource.manager";
-
-	public static final String VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED = "velocity.engine.resource.manager.cache.enabled";
 
 	public static final String VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL = "velocity.engine.resource.modification.check.interval";
 

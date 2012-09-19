@@ -564,6 +564,10 @@ public class PropsValues {
 
 	public static final boolean DL_STORE_JCR_MOVE_VERSION_LABELS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_STORE_JCR_MOVE_VERSION_LABELS));
 
+	public static final int DL_STORE_S3_TEMPDIR_CLEAN_ACCESS_COUNT_LIMIT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_STORE_S3_TEMPDIR_CLEAN_ACCESS_COUNT_LIMIT));
+
+	public static final int DL_STORE_S3_TEMPDIR_CLEAN_KEEP_LAST_DAYS_COUNT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_STORE_S3_TEMPDIR_CLEAN_KEEP_LAST_DAYS_COUNT));
+
 	public static String[] DOCKBAR_ADD_PORTLETS = PropsUtil.getArray(PropsKeys.DOCKBAR_ADD_PORTLETS);
 
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER);
@@ -757,6 +761,8 @@ public class PropsValues {
 	public static final String JOURNAL_LAR_CREATION_STRATEGY = PropsUtil.get(PropsKeys.JOURNAL_LAR_CREATION_STRATEGY);
 
 	public static final boolean JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT));
+
+	public static final boolean JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT));
 
 	public static final boolean JOURNAL_STRUCTURE_FORCE_AUTOGENERATE_ID = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_STRUCTURE_FORCE_AUTOGENERATE_ID));
 
@@ -1695,8 +1701,6 @@ public class PropsValues {
 	public static final boolean VALUE_OBJECT_FINDER_CACHE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED));
 
 	public static final int VALUE_OBJECT_FINDER_THREAD_LOCAL_CACHE_MAX_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_THREAD_LOCAL_CACHE_MAX_SIZE));
-
-	public static final boolean VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
 
 	public static final int VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL));
 
