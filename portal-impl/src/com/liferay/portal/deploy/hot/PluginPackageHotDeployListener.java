@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
+import com.liferay.util.log4j.Log4JUtil;
 import com.liferay.util.portlet.PortletProps;
 
 import java.lang.reflect.Method;
@@ -118,8 +119,8 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
+		initLogger(classLoader);
 		initPortletProps(classLoader);
-
 		initServiceComponent(servletContext, classLoader);
 
 		registerClpMessageListeners(servletContext, classLoader);
@@ -167,6 +168,11 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 				"Plugin package " + pluginPackage.getModuleId() +
 					" unregistered successfully");
 		}
+	}
+
+	protected void initLogger(ClassLoader classLoader) {
+		Log4JUtil.configureLog4J(
+			classLoader.getResource("META-INF/portal-log4j.xml"));
 	}
 
 	protected void initPortletProps(ClassLoader classLoader) throws Exception {
@@ -301,8 +307,8 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		try {
 			PACLClassLoaderUtil.setContextClassLoader(aggregateClassLoader);
 
-			PortalCacheManager portalCacheManager =
-				(PortalCacheManager)PortalBeanLocatorUtil.locate(
+			PortalCacheManager<?, ?> portalCacheManager =
+				(PortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
 					portalCacheManagerBeanId);
 
 			if (_log.isInfoEnabled()) {
