@@ -286,6 +286,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		boolean appendPath) {
 
 		String parentPath = getRootPath() + webDavRequest.getPath();
+
 		String name = StringPool.BLANK;
 
 		if (appendPath) {
@@ -300,6 +301,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		boolean appendPath) {
 
 		String parentPath = getRootPath() + webDavRequest.getPath();
+
 		String name = StringPool.BLANK;
 
 		if (appendPath) {
@@ -313,6 +315,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		WebDAVRequest webDavRequest, String type, boolean appendPath) {
 
 		String parentPath = getRootPath() + webDavRequest.getPath();
+
 		String name = StringPool.BLANK;
 
 		if (appendPath) {

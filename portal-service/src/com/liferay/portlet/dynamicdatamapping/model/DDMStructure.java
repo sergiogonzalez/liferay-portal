@@ -31,9 +31,9 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public java.util.List<java.lang.String> getAvailableLocales();
+	public java.util.List<java.lang.String> getAvailableLanguageIds();
 
-	public java.lang.String getDefaultLocale();
+	public java.lang.String getDefaultLanguageId();
 
 	public com.liferay.portal.kernel.xml.Document getDocument();
 

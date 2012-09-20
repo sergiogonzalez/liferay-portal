@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.template.TemplateResource;
 
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Reader;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -27,6 +29,13 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Tina Tian
  */
 public class CacheTemplateResource implements TemplateResource {
+
+	/**
+	 * The empty constructor is required by {@link java.io.Externalizable}. Do
+	 * not use this for any other purpose.
+	 */
+	public CacheTemplateResource() {
+	}
 
 	public CacheTemplateResource(TemplateResource templateResource) {
 		if (templateResource == null) {
@@ -103,6 +112,18 @@ public class CacheTemplateResource implements TemplateResource {
 	@Override
 	public int hashCode() {
 		return _templateResource.hashCode();
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
+		_lastModified = objectInput.readLong();
+		_templateResource = (TemplateResource)objectInput.readObject();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(_lastModified);
+		objectOutput.writeObject(_templateResource);
 	}
 
 	private long _lastModified = System.currentTimeMillis();

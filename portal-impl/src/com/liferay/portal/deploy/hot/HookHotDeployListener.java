@@ -146,7 +146,6 @@ import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
-import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -558,13 +557,11 @@ public class HookHotDeployListener
 
 		_servletContextNames.add(servletContextName);
 
-		ClassLoader portletClassLoader = hotDeployEvent.getContextClassLoader();
-
-		initLogger(portletClassLoader);
-
 		Document document = SAXReaderUtil.read(xml, true);
 
 		Element rootElement = document.getRootElement();
+
+		ClassLoader portletClassLoader = hotDeployEvent.getContextClassLoader();
 
 		initPortalProperties(
 			servletContextName, portletClassLoader, rootElement);
@@ -1490,11 +1487,6 @@ public class HookHotDeployListener
 
 			languagesContainer.addLanguage(locale, baseLanguageMap);
 		}
-	}
-
-	protected void initLogger(ClassLoader portletClassLoader) {
-		Log4JUtil.configureLog4J(
-			portletClassLoader.getResource("META-INF/portal-log4j.xml"));
 	}
 
 	@SuppressWarnings("rawtypes")

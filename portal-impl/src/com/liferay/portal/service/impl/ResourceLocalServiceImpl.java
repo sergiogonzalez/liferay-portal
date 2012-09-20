@@ -683,7 +683,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		_log.debug(
 			"Checking user permissions block " + block + " for " + userId +
 				" " + resourceId + " " + actionId + " takes " +
-				stopWatch.getTime() + " ms");
+					stopWatch.getTime() + " ms");
 	}
 
 	protected void updateResourceBlocks(

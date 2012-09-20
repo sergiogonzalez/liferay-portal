@@ -52,9 +52,7 @@ public class CacheUtil {
 
 		key = _encodeKey(companyId, key);
 
-		CacheResponseData data = (CacheResponseData)_portalCache.get(key);
-
-		return data;
+		return _portalCache.get(key);
 	}
 
 	public static void putCacheResponseData(
@@ -79,7 +77,7 @@ public class CacheUtil {
 		return sb.toString();
 	}
 
-	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
-		CACHE_NAME);
+	private static PortalCache<String, CacheResponseData> _portalCache =
+		MultiVMPoolUtil.getCache(CACHE_NAME);
 
 }

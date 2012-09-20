@@ -134,15 +134,12 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 		return null;
 	}
 
-	addPortletURL.setWindowState(LiferayWindowState.POP_UP);
+	PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-	addPortletURL.setPortletMode(PortletMode.VIEW);
-
-	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-	redirectURL.setWindowState(LiferayWindowState.POP_UP);
+	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
 	redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect");
+	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
 	addPortletURL.setParameter("redirect", redirectURL.toString());
 
@@ -152,8 +149,6 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 		addPortletURL.setParameter("referringPortletResource", referringPortletResource);
 	}
 	else {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		addPortletURL.setParameter("referringPortletResource", portletDisplay.getId());
 
 		Map<Long, String> assetVocabularyAssetCategoryIds = new HashMap<Long, String>();
@@ -198,6 +193,9 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 			addPortletURL.setParameter("structureId", structure.getStructureId());
 		}
 	}
+
+	addPortletURL.setPortletMode(PortletMode.VIEW);
+	addPortletURL.setWindowState(LiferayWindowState.POP_UP);
 
 	return addPortletURL;
 }

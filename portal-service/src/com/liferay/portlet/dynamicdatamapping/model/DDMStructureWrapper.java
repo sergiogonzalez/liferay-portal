@@ -776,12 +776,12 @@ public class DDMStructureWrapper implements DDMStructure,
 		_ddmStructure.persist();
 	}
 
-	public java.util.List<java.lang.String> getAvailableLocales() {
-		return _ddmStructure.getAvailableLocales();
+	public java.util.List<java.lang.String> getAvailableLanguageIds() {
+		return _ddmStructure.getAvailableLanguageIds();
 	}
 
-	public java.lang.String getDefaultLocale() {
-		return _ddmStructure.getDefaultLocale();
+	public java.lang.String getDefaultLanguageId() {
+		return _ddmStructure.getDefaultLanguageId();
 	}
 
 	public com.liferay.portal.kernel.xml.Document getDocument() {

@@ -44,6 +44,8 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
+import com.sun.syndication.feed.synd.SyndLink;
+import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
 import java.io.InputStream;
@@ -416,9 +418,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 
-		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
-		syndFeed.setTitle(name);
-		syndFeed.setLink(feedURL);
 		syndFeed.setDescription(description);
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
@@ -426,24 +425,15 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		syndFeed.setEntries(syndEntries);
 
 		for (BlogsEntry entry : blogsEntries) {
+			SyndEntry syndEntry = new SyndEntryImpl();
+
 			String author = PortalUtil.getUserName(entry);
 
-			StringBundler link = new StringBundler(4);
+			syndEntry.setAuthor(author);
 
-			if (entryURL.endsWith("/blogs/rss")) {
-				link.append(entryURL.substring(0, entryURL.length() - 3));
-				link.append(entry.getUrlTitle());
-			}
-			else {
-				link.append(entryURL);
+			SyndContent syndContent = new SyndContentImpl();
 
-				if (!entryURL.endsWith(StringPool.QUESTION)) {
-					link.append(StringPool.AMPERSAND);
-				}
-
-				link.append("entryId=");
-				link.append(entry.getEntryId());
-			}
+			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
 			String value = null;
 
@@ -473,24 +463,65 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					});
 			}
 
-			SyndEntry syndEntry = new SyndEntryImpl();
-
-			syndEntry.setAuthor(author);
-			syndEntry.setTitle(entry.getTitle());
-			syndEntry.setLink(link.toString());
-			syndEntry.setUri(syndEntry.getLink());
-			syndEntry.setPublishedDate(entry.getCreateDate());
-			syndEntry.setUpdatedDate(entry.getModifiedDate());
-
-			SyndContent syndContent = new SyndContentImpl();
-
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 			syndContent.setValue(value);
 
 			syndEntry.setDescription(syndContent);
 
+			StringBundler sb = new StringBundler(4);
+
+			if (entryURL.endsWith("/blogs/rss")) {
+				sb.append(entryURL.substring(0, entryURL.length() - 3));
+				sb.append(entry.getUrlTitle());
+			}
+			else {
+				sb.append(entryURL);
+
+				if (!entryURL.endsWith(StringPool.QUESTION)) {
+					sb.append(StringPool.AMPERSAND);
+				}
+
+				sb.append("entryId=");
+				sb.append(entry.getEntryId());
+			}
+
+			String link = sb.toString();
+
+			syndEntry.setLink(link);
+
+			syndEntry.setPublishedDate(entry.getCreateDate());
+			syndEntry.setTitle(entry.getTitle());
+			syndEntry.setUpdatedDate(entry.getModifiedDate());
+			syndEntry.setUri(link);
+
 			syndEntries.add(syndEntry);
 		}
+
+		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
+
+		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+
+		syndFeed.setLinks(syndLinks);
+
+		SyndLink selfSyndLink = new SyndLinkImpl();
+
+		syndLinks.add(selfSyndLink);
+
+		selfSyndLink.setHref(feedURL);
+		selfSyndLink.setRel("self");
+
+		if (feedURL.endsWith("/-/blogs/rss")) {
+			SyndLink alternateSyndLink = new SyndLinkImpl();
+
+			syndLinks.add(alternateSyndLink);
+
+			alternateSyndLink.setHref(
+				feedURL.substring(0, feedURL.length() - 12));
+			alternateSyndLink.setRel("alternate");
+		}
+
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setTitle(name);
+		syndFeed.setUri(feedURL);
 
 		try {
 			return RSSUtil.export(syndFeed);

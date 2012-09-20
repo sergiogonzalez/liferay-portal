@@ -14,12 +14,39 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+
+import java.util.Locale;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 
 	public DDMTemplateImpl() {
+	}
+
+	public String getDefaultLanguageId() {
+		Document document = null;
+
+		try {
+			document = SAXReaderUtil.read(getName());
+
+			if (document != null) {
+				Element rootElement = document.getRootElement();
+
+				return rootElement.attributeValue("default-locale");
+			}
+		}
+		catch (Exception e) {
+		}
+
+		Locale locale = LocaleUtil.getDefault();
+
+		return locale.toString();
 	}
 
 }

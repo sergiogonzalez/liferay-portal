@@ -70,6 +70,14 @@ public class DLFileEntryMetadataLocalServiceImpl
 			fileEntryId, fileVersionId);
 	}
 
+	public List<DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
+			long fileVersionId)
+		throws SystemException {
+
+		return dlFileEntryMetadataPersistence.findByFileVersionId(
+			fileVersionId);
+	}
+
 	public void updateFileEntryMetadata(
 			long companyId, List<DDMStructure> ddmStructures,
 			long fileEntryTypeId, long fileEntryId, long fileVersionId,

@@ -36,6 +36,7 @@ long licenseId = BeanParamUtil.getLong(license, request, "licenseId");
 />
 
 <liferay-ui:error exception="<%= LicenseNameException.class %>" message="please-enter-a-valid-name" />
+<liferay-ui:error exception="<%= RequiredLicenseException.class %>" message="the-selected-license-is-used-by-at-least-one-product" />
 
 <table class="lfr-table">
 <tr>

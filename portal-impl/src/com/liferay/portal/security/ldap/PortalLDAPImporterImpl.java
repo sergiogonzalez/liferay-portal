@@ -723,7 +723,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 			userGroupIdKey = sb.toString();
 
-			userGroupId = (Long)_portalCache.get(userGroupIdKey);
+			userGroupId = _portalCache.get(userGroupIdKey);
 		}
 
 		if (userGroupId != null) {
@@ -1037,6 +1037,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected void populateExpandoAttributes(
 		ExpandoBridge expandoBridge, Map<String, String[]> expandoAttributes) {
 
+		Map<String, Serializable> serializedExpandoAttributes =
+			new HashMap<String, Serializable>();
+
 		for (Map.Entry<String, String[]> expandoAttribute :
 				expandoAttributes.entrySet()) {
 
@@ -1052,15 +1055,17 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				ExpandoConverterUtil.getAttributeFromStringArray(
 					type, expandoAttribute.getValue());
 
-			try {
-				ExpandoValueLocalServiceUtil.addValue(
-					expandoBridge.getCompanyId(), expandoBridge.getClassName(),
-					ExpandoTableConstants.DEFAULT_TABLE_NAME, name,
-					expandoBridge.getClassPK(), value);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			serializedExpandoAttributes.put(name, value);
+		}
+
+		try {
+			ExpandoValueLocalServiceUtil.addValues(
+				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME,
+				expandoBridge.getClassPK(), serializedExpandoAttributes);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 
@@ -1261,7 +1266,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		PortalLDAPImporterImpl.class);
 
 	private LDAPToPortalConverter _ldapToPortalConverter;
-	private PortalCache _portalCache = SingleVMPoolUtil.getCache(
+	private PortalCache<String, Long> _portalCache = SingleVMPoolUtil.getCache(
 		PortalLDAPImporter.class.getName(), false);
 
 }
