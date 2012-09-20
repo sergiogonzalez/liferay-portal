@@ -19,13 +19,13 @@ $theme.include($body_top_include)
 #end
 
 <div id="wrapper">
-	<a href="#main-content" id="skip-to-content">#language("skip-to-content")</a>
+	<a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
 
 	<header id="banner" role="banner">
 		<div id="heading">
 			<h1 class="company-title">
-				<a class="$logo_css_class" href="$control_panel_url" title="#language("go-to") #language("control-panel")">
-					<span>#language("control-panel")</span>
+				<a class="$logo_css_class" href="$control_panel_url" title="#language ("go-to") #language ("control-panel")">
+					<span>#language ("control-panel")</span>
 				</a>
 			</h1>
 		</div>
@@ -39,7 +39,7 @@ $theme.include($body_top_include)
 		#end
 
 			<h1>
-				<span>#language("breadcrumbs")</span>
+				<span>#language ("breadcrumbs")</span>
 			</h1>
 
 			#breadcrumbs("control_panel")

@@ -549,7 +549,7 @@ public class DLStoreImpl implements DLStore {
 
 			for (String fileExtension : fileExtensions) {
 				if (StringPool.STAR.equals(fileExtension) ||
-					fileName.endsWith(fileExtension)) {
+					StringUtil.endsWith(fileName, fileExtension)) {
 
 					validFileExtension = true;
 

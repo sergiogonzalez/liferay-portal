@@ -29,7 +29,11 @@ if (Validator.isNull(doAsUserId)) {
 
 long doAsGroupId = themeDisplay.getDoAsGroupId();
 
-String ckEditorConfigFileName = ParamUtil.getString(request, "ckEditorConfigFileName", "ckconfig.jsp");
+String ckEditorConfigFileName = ParamUtil.getString(request, "ckEditorConfigFileName");
+
+if (!_ckEditorConfigFileNames.contains(ckEditorConfigFileName)) {
+	ckEditorConfigFileName = "ckconfig.jsp";
+}
 
 boolean useCustomDataProcessor = false;
 
@@ -318,4 +322,6 @@ public String marshallParams(Map<String, String> params) {
 
 	return sb.toString();
 }
+
+private static Set<String> _ckEditorConfigFileNames = SetUtil.fromArray(new String[] {"ckconfig.jsp", "ckconfig_bbcode.jsp", "ckconfig_creole.jsp"});
 %>

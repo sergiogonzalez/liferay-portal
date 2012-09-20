@@ -826,6 +826,10 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		_ddmTemplate.persist();
 	}
 
+	public java.lang.String getDefaultLanguageId() {
+		return _ddmTemplate.getDefaultLanguageId();
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

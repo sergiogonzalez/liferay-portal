@@ -64,7 +64,7 @@
 				<isset property="test.ant.script.social.office" />
 				<then>
 					<property name="test.ant.script.plugin.hooks" value="so-hook" />
-					<property name="test.ant.script.plugin.portlets" value="chat-portlet,contacts-portlet,events-display-portlet,microblogs-portlet,private-messaging-portlet,so-portlet,tasks-portlet,weather-portlet,wysiwyg-portlet" />
+					<property name="test.ant.script.plugin.portlets" value="chat-portlet,contacts-portlet,events-display-portlet,microblogs-portlet,private-messaging-portlet,so-configurations-portlet,so-portlet,tasks-portlet,weather-portlet,wysiwyg-portlet" />
 					<property name="test.ant.script.plugin.themes" value="so-theme" />
 				</then>
 			</elseif>
@@ -281,7 +281,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="7" />
+		<property name="build-test-ant-scripts.version" value="9" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1393,7 +1393,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-test-pacl" />
-			<param name="test.ant.script.plugin.portlets" value="chat-portlet,flash-portlet,test-pacl-portlet" />
+			<param name="test.ant.script.plugin.portlets" value="chat-portlet,flash-portlet,sample-service-builder-portlet,test-pacl-portlet" />
 			<param name="test.ant.script.suite" value="PluginsTestPACLTestSuite" />
 		</antcall>
 
@@ -3088,7 +3088,7 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 127.0.0.1	www.easy.com
 127.0.0.1	www.fox.com</echo>
 
- 		<if>
+		<if>
 			<not>
 				<isset property="build.war" />
 			</not>
@@ -3766,7 +3766,7 @@ file.
 				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 					<property name="plugin.types" value="portlets" />
 					<property name="plugins.deployed" value="${plugins.deployed}" />
-					<property name="plugins.includes" value="chat-portlet,flash-portlet,test-pacl-portlet" />
+					<property name="plugins.includes" value="chat-portlet,flash-portlet,sample-service-builder-portlet,test-pacl-portlet" />
 				</ant>
 
 				<property name="plugins.deployed" value="true" />

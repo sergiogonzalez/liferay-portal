@@ -31,6 +31,8 @@ import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -329,6 +331,14 @@ public class FreeMarkerTemplateTest {
 
 	private class MockTemplateResource implements TemplateResource {
 
+		/**
+		 * The empty constructor is required by {@link java.io.Externalizable}.
+		 * Do not use this for any other purpose.
+		 */
+		@SuppressWarnings("unused")
+		public MockTemplateResource() {
+		}
+
 		public MockTemplateResource(String templateId) {
 			_templateId = templateId;
 		}
@@ -349,6 +359,18 @@ public class FreeMarkerTemplateTest {
 
 		public String getTemplateId() {
 			return _templateId;
+		}
+
+		public void readExternal(ObjectInput objectInput) throws IOException {
+			_lastModified = objectInput.readLong();
+			_templateId = objectInput.readUTF();
+		}
+
+		public void writeExternal(ObjectOutput objectOutput)
+			throws IOException {
+
+			objectOutput.writeLong(_lastModified);
+			objectOutput.writeUTF(_templateId);
 		}
 
 		private long _lastModified = System.currentTimeMillis();

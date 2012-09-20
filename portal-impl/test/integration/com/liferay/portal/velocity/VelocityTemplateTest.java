@@ -28,6 +28,8 @@ import com.liferay.portal.util.PropsUtil;
 import freemarker.core.ParseException;
 
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -62,7 +64,7 @@ public class VelocityTemplateTest {
 
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CLASS,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER));
+			LiferayResourceManager.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
 			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));
@@ -327,6 +329,14 @@ public class VelocityTemplateTest {
 
 	private class MockTemplateResource implements TemplateResource {
 
+		/**
+		 * The empty constructor is required by {@link java.io.Externalizable}.
+		 * Do not use this for any other purpose.
+		 */
+		@SuppressWarnings("unused")
+		public MockTemplateResource() {
+		}
+
 		public MockTemplateResource(String templateId) {
 			_templateId = templateId;
 		}
@@ -347,6 +357,18 @@ public class VelocityTemplateTest {
 
 		public String getTemplateId() {
 			return _templateId;
+		}
+
+		public void readExternal(ObjectInput objectInput) throws IOException {
+			_lastModified = objectInput.readLong();
+			_templateId = objectInput.readUTF();
+		}
+
+		public void writeExternal(ObjectOutput objectOutput)
+			throws IOException {
+
+			objectOutput.writeLong(_lastModified);
+			objectOutput.writeUTF(_templateId);
 		}
 
 		private long _lastModified = System.currentTimeMillis();

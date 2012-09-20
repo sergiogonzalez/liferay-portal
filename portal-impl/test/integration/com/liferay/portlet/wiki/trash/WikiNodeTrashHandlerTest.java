@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.trash;
 
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -42,12 +43,32 @@ import org.junit.runner.RunWith;
 public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
-	public void testTrashAndDelete() throws Exception {
+	public void testTrashAndDeleteDraft() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
 	public void testTrashAndRestoreDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashParentAndDeleteParent() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashParentAndRestoreModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionAndDelete() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionAndRestore() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -77,6 +98,13 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getBaseModelName(ClassedModel classedModel) {
+		WikiNode wikiNode = (WikiNode)classedModel;
+
+		return wikiNode.getName();
+	}
+
+	@Override
 	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
@@ -96,7 +124,7 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isIndexableModel() {
+	protected boolean isIndexableBaseModel() {
 		return false;
 	}
 

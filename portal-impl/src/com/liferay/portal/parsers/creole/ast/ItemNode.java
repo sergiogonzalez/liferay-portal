@@ -23,16 +23,29 @@ public abstract class ItemNode extends BaseParentableNode {
 		super(tokenType);
 	}
 
-	public ItemNode(int level, CollectionNode collectionNode) {
+	public ItemNode(
+		int level, BaseParentableNode baseParentableNode,
+		CollectionNode collectionNode) {
+
 		super(collectionNode);
 
 		_level = level;
+		_baseParentableNode = baseParentableNode;
+	}
+
+	public BaseParentableNode getBaseParentableNode() {
+		return _baseParentableNode;
 	}
 
 	public int getLevel() {
 		return _level;
 	}
 
+	public void setBaseParentableNode(BaseParentableNode baseParentableNode) {
+		_baseParentableNode = baseParentableNode;
+	}
+
+	private BaseParentableNode _baseParentableNode;
 	private int _level;
 
 }
