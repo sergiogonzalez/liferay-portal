@@ -142,6 +142,10 @@ public class StringUtil_IW {
 		return StringUtil.lowerCase(s);
 	}
 
+	public void lowerCase(java.lang.String... array) {
+		StringUtil.lowerCase(array);
+	}
+
 	public boolean matches(java.lang.String s, java.lang.String pattern) {
 		return StringUtil.matches(s, pattern);
 	}

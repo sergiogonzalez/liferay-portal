@@ -172,10 +172,17 @@ public class VelocityManager implements TemplateManager {
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_LOADER, "liferay");
 
+		boolean cacheEnabled = false;
+
+		if (PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL !=
+				0) {
+
+			cacheEnabled = true;
+		}
+
 		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_LOADER + ".cache",
-			String.valueOf(
-				PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
+			String.valueOf(cacheEnabled));
 
 		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
@@ -183,7 +190,7 @@ public class VelocityManager implements TemplateManager {
 
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CLASS,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER));
+			LiferayResourceManager.class.getName());
 
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
@@ -202,14 +209,11 @@ public class VelocityManager implements TemplateManager {
 			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_VELOCIMACRO_LIBRARY));
 
 		extendedProperties.setProperty(
-			VelocityEngine.VM_LIBRARY_AUTORELOAD,
-			String.valueOf(
-				!PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
+			VelocityEngine.VM_LIBRARY_AUTORELOAD, String.valueOf(cacheEnabled));
 
 		extendedProperties.setProperty(
 			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
-			String.valueOf(
-				!PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
+			String.valueOf(cacheEnabled));
 
 		_velocityEngine.setExtendedProperties(extendedProperties);
 

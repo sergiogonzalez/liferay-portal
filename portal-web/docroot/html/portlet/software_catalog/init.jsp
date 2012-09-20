@@ -43,6 +43,7 @@ page import="com.liferay.portlet.softwarecatalog.ProductVersionChangeLogExceptio
 page import="com.liferay.portlet.softwarecatalog.ProductVersionDownloadURLException" %><%@
 page import="com.liferay.portlet.softwarecatalog.ProductVersionFrameworkVersionException" %><%@
 page import="com.liferay.portlet.softwarecatalog.ProductVersionNameException" %><%@
+page import="com.liferay.portlet.softwarecatalog.RequiredLicenseException" %><%@
 page import="com.liferay.portlet.softwarecatalog.UnavailableProductVersionDirectDownloadURLException" %><%@
 page import="com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion" %><%@
 page import="com.liferay.portlet.softwarecatalog.model.SCLicense" %><%@

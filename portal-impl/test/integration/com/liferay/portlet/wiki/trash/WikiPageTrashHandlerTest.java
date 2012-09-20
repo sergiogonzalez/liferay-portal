@@ -27,6 +27,7 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
+import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -46,7 +47,7 @@ import org.junit.runner.RunWith;
 public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
-	public void testTrashAndDelete() throws Exception {
+	public void testTrashAndDeleteDraft() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -65,17 +66,17 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		WikiPage wikiPage = WikiPageLocalServiceUtil.addPage(
+		WikiPage page = WikiPageLocalServiceUtil.addPage(
 			TestPropsValues.getUserId(),
 			(Long)parentBaseModel.getPrimaryKeyObj(), getSearchKeywords(),
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
 			true, serviceContext);
 
 		WikiPageLocalServiceUtil.updateStatus(
-			TestPropsValues.getUserId(), wikiPage.getResourcePrimKey(),
+			TestPropsValues.getUserId(), page.getResourcePrimKey(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		return wikiPage;
+		return page;
 	}
 
 	@Override
@@ -94,11 +95,18 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getBaseModelName(ClassedModel classedModel) {
+		WikiPage page = (WikiPage)classedModel;
+
+		return page.getTitle();
+	}
+
+	@Override
 	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		return WikiPageLocalServiceUtil.getPagesCount(
-			(Long)parentBaseModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), true,
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
@@ -117,23 +125,68 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected Class<?> getParentBaseModelClass() {
+		return WikiNode.class;
+	}
+
+	@Override
 	protected String getSearchKeywords() {
 		return "Title";
 	}
 
 	@Override
-	protected Long getTrashClassPK(ClassedModel classedModel) {
-		return ((WikiPage)classedModel).getResourcePrimKey();
+	protected long getTrashEntryClassPK(ClassedModel classedModel) {
+		WikiPage page = (WikiPage)classedModel;
+
+		return page.getResourcePrimKey();
+	}
+
+	@Override
+	protected boolean isBaseModelMoveableFromTrash() {
+		return false;
+	}
+
+	@Override
+	protected boolean isInTrashFolder(ClassedModel classedModel)
+		throws Exception {
+
+		WikiPage page = (WikiPage)classedModel;
+
+		return page.isInTrashFolder();
 	}
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		WikiPage wikiPage = WikiPageLocalServiceUtil.getPageByPageId(
-			primaryKey);
+		WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
 
 		WikiPageLocalServiceUtil.movePageToTrash(
-			TestPropsValues.getUserId(), wikiPage.getNodeId(),
-			wikiPage.getTitle());
+			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
+	}
+
+	@Override
+	protected void moveParentBaseModelToTrash(long primaryKey)
+		throws Exception {
+
+		WikiNodeLocalServiceUtil.moveNodeToTrash(
+			TestPropsValues.getUserId(), primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
+
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		return WikiPageLocalServiceUtil.updatePage(
+			TestPropsValues.getUserId(), page.getNodeId(), getSearchKeywords(),
+			page.getVersion(), ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), false, page.getFormat(),
+			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 	}
 
 }

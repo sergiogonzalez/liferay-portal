@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Reader;
 
 import java.net.JarURLConnection;
@@ -31,6 +33,13 @@ import java.net.URLConnection;
  * @author Tina Tian
  */
 public class URLTemplateResource implements TemplateResource {
+
+	/**
+	 * The empty constructor is required by {@link java.io.Externalizable}. Do
+	 * not use this for any other purpose.
+	 */
+	public URLTemplateResource() {
+	}
 
 	public URLTemplateResource(String templateId, URL templateURL) {
 		if (Validator.isNull(templateId)) {
@@ -122,6 +131,16 @@ public class URLTemplateResource implements TemplateResource {
 	@Override
 	public int hashCode() {
 		return _templateId.hashCode() * 11 + _templateURL.hashCode();
+	}
+
+	public void readExternal(ObjectInput objectInput) throws IOException {
+		_templateId = objectInput.readUTF();
+		_templateURL = new URL(objectInput.readUTF());
+	}
+
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeUTF(_templateId);
+		objectOutput.writeUTF(_templateURL.toExternalForm());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(URLTemplateResource.class);

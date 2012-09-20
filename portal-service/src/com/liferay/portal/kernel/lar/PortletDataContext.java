@@ -202,6 +202,8 @@ public interface PortletDataContext extends Serializable {
 
 	public InputStream getZipEntryAsInputStream(String path);
 
+	public Object getZipEntryAsObject(Element element, String path);
+
 	public Object getZipEntryAsObject(String path);
 
 	public String getZipEntryAsString(String path);
