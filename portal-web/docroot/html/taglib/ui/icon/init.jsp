@@ -146,5 +146,5 @@ else {
 %>
 
 <%!
-private static String _AUI_PATH = "../aui/";
+private static final String _AUI_PATH = "../aui/";
 %>

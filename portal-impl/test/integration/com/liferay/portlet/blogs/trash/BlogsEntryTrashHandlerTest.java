@@ -30,6 +30,7 @@ import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 
 import java.io.InputStream;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,6 +44,31 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
+
+	@Override
+	public void testTrashDuplicate() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashParentAndDeleteParent() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashParentAndRestoreModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionAndDelete() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionAndRestore() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(
@@ -70,7 +96,7 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), title, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
@@ -79,11 +105,11 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		if (approved) {
 			BlogsEntryLocalServiceUtil.updateStatus(
-				TestPropsValues.getUserId(), blogsEntry.getEntryId(),
+				TestPropsValues.getUserId(), entry.getEntryId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
 
-		return blogsEntry;
+		return entry;
 	}
 
 	@Override

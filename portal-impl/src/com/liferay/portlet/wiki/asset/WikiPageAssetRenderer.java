@@ -49,7 +49,8 @@ public class WikiPageAssetRenderer
 	public static final String TYPE = "wiki_page";
 
 	public static long getClassPK(WikiPage page) {
-		if (!page.isApproved() &&
+		if (!page.isApproved() && !page.isDraft() && !page.isPending() &&
+			!page.isInTrash() &&
 			(page.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
 
 			return page.getPageId();

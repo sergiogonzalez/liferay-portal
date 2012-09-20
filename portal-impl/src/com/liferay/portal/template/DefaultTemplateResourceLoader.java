@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Reader;
 
 import java.util.HashSet;
@@ -78,7 +81,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		_portalCache = MultiVMPoolUtil.getCache(cacheName);
 
-		CacheListener cacheListener = new TemplateResourceCacheListener(name);
+		CacheListener<String, TemplateResource> cacheListener =
+			new TemplateResourceCacheListener(name);
 
 		_portalCache.registerCacheListener(
 			cacheListener, CacheListenerScope.ALL);
@@ -218,12 +222,19 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	private long _modificationCheckInterval;
 	private String _name;
-	private PortalCache _portalCache;
+	private PortalCache<String, TemplateResource> _portalCache;
 	private Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<TemplateResourceParser>();
 
 	private static class NullHolderTemplateResource
 		implements TemplateResource {
+
+		/**
+		 * The empty constructor is required by {@link java.io.Externalizable}.
+		 * Do not use this for any other purpose.
+		 */
+		public NullHolderTemplateResource() {
+		}
 
 		public long getLastModified() {
 			return _lastModified;
@@ -235,6 +246,16 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		public String getTemplateId() {
 			return null;
+		}
+
+		public void readExternal(ObjectInput objectInput) throws IOException {
+			_lastModified = objectInput.readLong();
+		}
+
+		public void writeExternal(ObjectOutput objectOutput)
+			throws IOException {
+
+			objectOutput.writeLong(_lastModified);
 		}
 
 		private long _lastModified = System.currentTimeMillis();

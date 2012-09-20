@@ -60,6 +60,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
@@ -1409,11 +1410,22 @@ public class StagingImpl implements Staging {
 				liveGroup.getDescriptiveName());
 
 			try {
-				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
-					userId, targetGroupId, false,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME, description,
-					true, LayoutSetBranchConstants.ALL_BRANCHES,
-					serviceContext);
+				LayoutSetBranch layoutSetBranch =
+					LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
+						userId, targetGroupId, false,
+						LayoutSetBranchConstants.MASTER_BRANCH_NAME,
+						description, true,
+						LayoutSetBranchConstants.ALL_BRANCHES, serviceContext);
+
+				List<LayoutRevision> layoutRevisions =
+					LayoutRevisionLocalServiceUtil.getLayoutRevisions(
+						layoutSetBranch.getLayoutSetBranchId(), false);
+
+				for (LayoutRevision layoutRevision : layoutRevisions) {
+					LayoutRevisionLocalServiceUtil.updateStatus(
+						userId, layoutRevision.getLayoutRevisionId(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext);
+				}
 			}
 			catch (LayoutSetBranchNameException lsbne) {
 			}
@@ -1428,11 +1440,22 @@ public class StagingImpl implements Staging {
 				liveGroup.getDescriptiveName());
 
 			try {
-				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
-					userId, targetGroupId, true,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME, description,
-					true, LayoutSetBranchConstants.ALL_BRANCHES,
-					serviceContext);
+				LayoutSetBranch layoutSetBranch =
+					LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
+						userId, targetGroupId, true,
+						LayoutSetBranchConstants.MASTER_BRANCH_NAME,
+						description, true,
+						LayoutSetBranchConstants.ALL_BRANCHES, serviceContext);
+
+				List<LayoutRevision> layoutRevisions =
+					LayoutRevisionLocalServiceUtil.getLayoutRevisions(
+						layoutSetBranch.getLayoutSetBranchId(), false);
+
+				for (LayoutRevision layoutRevision : layoutRevisions) {
+					LayoutRevisionLocalServiceUtil.updateStatus(
+						userId, layoutRevision.getLayoutRevisionId(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext);
+				}
 			}
 			catch (LayoutSetBranchNameException lsbne) {
 			}

@@ -136,6 +136,23 @@ if (scriptJSONArray != null) {
 				</aui:layout>
 
 				<aui:input name="description" />
+
+				<c:if test="<%= structure != null %>">
+					<aui:field-wrapper label="url">
+						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
+					</aui:field-wrapper>
+
+					<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
+						<aui:field-wrapper label="webdav-url">
+
+							<%
+							Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+							%>
+
+							<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/webdav" + scopeGroup.getFriendlyURL() + "/dynamic_data_mapping/ddmStructures/" + classPK %>' />
+						</aui:field-wrapper>
+					</c:if>
+				</c:if>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 	</aui:fieldset>

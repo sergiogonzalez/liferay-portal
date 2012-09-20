@@ -292,5 +292,5 @@ else {
 %>
 
 <%!
-private static String[] _CATEGORY_NAMES = {"user-information", "identification", "miscellaneous"};
+private static final String[] _CATEGORY_NAMES = {"user-information", "identification", "miscellaneous"};
 %>

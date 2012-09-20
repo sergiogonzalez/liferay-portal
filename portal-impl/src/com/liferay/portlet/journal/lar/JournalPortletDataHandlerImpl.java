@@ -327,7 +327,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		JournalArticle article =
-			(JournalArticle)portletDataContext.getZipEntryAsObject(path);
+			(JournalArticle)portletDataContext.getZipEntryAsObject(
+				articleElement, path);
 
 		prepareLanguagesForImport(article);
 
@@ -1362,7 +1363,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_articles, _structuresTemplatesAndFeeds, _embeddedAssets
+			_articles, _structuresTemplatesAndFeeds, _embeddedAssets,
+			_versionHistory
 		};
 	}
 
@@ -2537,11 +2539,20 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				new ArticleIDComparator(true));
 
 			for (JournalArticle article : articles) {
-				exportArticle(
-					portletDataContext, articlesElement, structuresElement,
-					templatesElement, dlFileEntryTypesElement, dlFoldersElement,
-					dlFilesElement, dlFileRanksElement, dlRepositoriesElement,
-					dlRepositoryEntriesElement, article, true);
+				if (portletDataContext.getBooleanParameter(
+						_NAMESPACE, "version-history") ||
+					JournalArticleLocalServiceUtil.isLatestVersion(
+						article.getGroupId(), article.getArticleId(),
+						article.getVersion(),
+						WorkflowConstants.STATUS_APPROVED)) {
+
+					exportArticle(
+						portletDataContext, articlesElement, structuresElement,
+						templatesElement, dlFileEntryTypesElement,
+						dlFoldersElement, dlFilesElement, dlFileRanksElement,
+						dlRepositoriesElement, dlRepositoryEntriesElement,
+						article, true);
+				}
 			}
 		}
 
@@ -2632,7 +2643,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		JournalPortletDataHandlerImpl.class);
 
 	private static PortletDataHandlerBoolean _articles =
-		new PortletDataHandlerBoolean(_NAMESPACE, "web-content", true, false);
+		new PortletDataHandlerBoolean(_NAMESPACE, "web-content");
 
 	private static PortletDataHandlerBoolean _embeddedAssets =
 		new PortletDataHandlerBoolean(_NAMESPACE, "embedded-assets");
@@ -2653,8 +2664,13 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
 		};
 
-	private static PortletDataHandlerBoolean
-		_structuresTemplatesAndFeeds = new PortletDataHandlerBoolean(
+	private static PortletDataHandlerBoolean _structuresTemplatesAndFeeds =
+		new PortletDataHandlerBoolean(
 			_NAMESPACE, "structures-templates-and-feeds", true, true);
+
+	private static PortletDataHandlerBoolean _versionHistory =
+		new PortletDataHandlerBoolean(
+			_NAMESPACE, "version-history",
+			PropsValues.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT);
 
 }

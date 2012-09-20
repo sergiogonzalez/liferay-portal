@@ -72,6 +72,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutImpl extends LayoutBaseImpl {
 
+	public static boolean hasFriendlyURLKeyword(String friendlyURL) {
+		String keyword = _getFriendlyURLKeyword(friendlyURL);
+
+		if (Validator.isNotNull(keyword)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static int validateFriendlyURL(String friendlyURL) {
 		if (friendlyURL.length() < 2) {
 			return LayoutFriendlyURLException.TOO_SHORT;
@@ -89,7 +99,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return LayoutFriendlyURLException.ENDS_WITH_SLASH;
 		}
 
-		if (friendlyURL.indexOf(StringPool.DOUBLE_SLASH) != -1) {
+		if (friendlyURL.contains(StringPool.DOUBLE_SLASH)) {
 			return LayoutFriendlyURLException.ADJACENT_SLASHES;
 		}
 
@@ -110,20 +120,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 	public static void validateFriendlyURLKeyword(String friendlyURL)
 		throws LayoutFriendlyURLException {
 
-		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
-			if (StringUtil.endsWith(
-					friendlyURL, StringUtil.quote(keyword, StringPool.SLASH)) ||
-				StringUtil.endsWith(
-					friendlyURL, StringPool.SLASH + keyword)) {
+		String keyword = _getFriendlyURLKeyword(friendlyURL);
 
-				LayoutFriendlyURLException lfurle =
-					new LayoutFriendlyURLException(
-						LayoutFriendlyURLException.KEYWORD_CONFLICT);
+		if (Validator.isNotNull(keyword)) {
+			LayoutFriendlyURLException lfurle =
+				new LayoutFriendlyURLException(
+					LayoutFriendlyURLException.KEYWORD_CONFLICT);
 
-				lfurle.setKeywordConflict(keyword);
+			lfurle.setKeywordConflict(keyword);
 
-				throw lfurle;
-			}
+			throw lfurle;
 		}
 	}
 
@@ -673,6 +679,44 @@ public class LayoutImpl extends LayoutBaseImpl {
 		super.setTypeSettings(_typeSettingsProperties.toString());
 	}
 
+	private static String _getFriendlyURLKeyword(String friendlyURL) {
+		friendlyURL = friendlyURL.toLowerCase();
+
+		for (String keyword : _friendlyURLKeywords) {
+			if (friendlyURL.startsWith(keyword) ||
+				keyword.equals(friendlyURL + StringPool.SLASH)) {
+
+				return keyword;
+			}
+		}
+
+		return null;
+	}
+
+	private static void _initFriendlyURLKeywords() {
+		_friendlyURLKeywords =
+			new String[PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length];
+
+		for (int i = 0; i < PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length;
+				i++) {
+
+			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
+
+			keyword = StringPool.SLASH + keyword;
+
+			if (!keyword.contains(StringPool.PERIOD)) {
+				if (keyword.endsWith(StringPool.STAR)) {
+					keyword = keyword.substring(0, keyword.length() - 1);
+				}
+				else {
+					keyword = keyword + StringPool.SLASH;
+				}
+			}
+
+			_friendlyURLKeywords[i] = keyword.toLowerCase();
+		}
+	}
+
 	private LayoutTypePortlet _getLayoutTypePortletClone(
 			HttpServletRequest request)
 		throws IOException {
@@ -799,8 +843,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutImpl.class);
 
+	private static String[] _friendlyURLKeywords;
+
 	private LayoutSet _layoutSet;
 	private LayoutType _layoutType;
 	private UnicodeProperties _typeSettingsProperties;
+
+	static {
+		_initFriendlyURLKeywords();
+	}
 
 }

@@ -102,6 +102,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Bruno Farache
  * @author Zsigmond Rab
  * @author Douglas Wong
+ * @author Mate Thurzo
  */
 public class PortletExporter {
 
@@ -1392,6 +1393,48 @@ public class PortletExporter {
 		return sb.toString();
 	}
 
+	protected void updateAssetPublisherClassNameIds(
+			javax.portlet.PortletPreferences jxPreferences, String key)
+		throws Exception {
+
+		String[] oldValues = jxPreferences.getValues(key, null);
+
+		if (oldValues == null) {
+			return;
+		}
+
+		String[] newValues = new String[oldValues.length];
+
+		int i = 0;
+
+		for (String oldValue : oldValues) {
+			if (key.equals("anyAssetType") &&
+				(oldValue.equals("false") || oldValue.equals("true"))) {
+
+				newValues[i++] = oldValue;
+
+				continue;
+			}
+
+			try {
+				long classNameId = Long.parseLong(oldValue);
+
+				String className = PortalUtil.getClassName(classNameId);
+
+				newValues[i++] = className;
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to find class name ID for class name " +
+							oldValue);
+				}
+			}
+		}
+
+		jxPreferences.setValues(key, newValues);
+	}
+
 	protected void updateAssetPublisherClassPKs(
 			javax.portlet.PortletPreferences jxPreferences, String key,
 			String className)
@@ -1505,28 +1548,31 @@ public class PortletExporter {
 			String value = GetterUtil.getString(
 				jxPreferences.getValue(name, null));
 
-			String prefix = "queryName";
-
-			if (value.equalsIgnoreCase("assetCategories") &&
-				name.startsWith(prefix)) {
-
-				String index = name.substring(prefix.length());
-
-				updateAssetPublisherClassPKs(
-					jxPreferences, "queryValues" + index,
-					AssetCategory.class.getName());
-			}
-			else if (name.equals(
-						"anyClassTypeJournalArticleAssetRendererFactory") ||
-					 name.equals(
-						"classTypeIdsJournalArticleAssetRendererFactory") ||
-					 name.equals("classTypeIds")) {
+			if (name.equals(
+					"anyClassTypeJournalArticleAssetRendererFactory") ||
+				name.equals(
+					"classTypeIdsJournalArticleAssetRendererFactory") ||
+				name.equals("classTypeIds")) {
 
 				updateAssetPublisherClassPKs(
 					jxPreferences, name, JournalStructure.class.getName());
 			}
+			else if (name.equals("anyAssetType") ||
+					 name.equals("classNameIds")) {
+
+				updateAssetPublisherClassNameIds(jxPreferences, name);
+			}
 			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
 				updateAssetPublisherGlobalScopeId(jxPreferences, name, plid);
+			}
+			else if (name.startsWith("queryName") &&
+					 value.equalsIgnoreCase("assetCategories")) {
+
+				String index = name.substring(9);
+
+				updateAssetPublisherClassPKs(
+					jxPreferences, "queryValues" + index,
+					AssetCategory.class.getName());
 			}
 		}
 

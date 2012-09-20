@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -31,12 +34,27 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		long startTime = 0;
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleting portlet " + portletId);
+
+			startTime = System.currentTimeMillis();
+		}
+
 		try {
 			return doDeleteData(
 				portletDataContext, portletId, portletPreferences);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				long duration = System.currentTimeMillis() - startTime;
+
+				_log.info("Deleted portlet in " + Time.getDuration(duration));
+			}
 		}
 	}
 
@@ -45,12 +63,27 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		long startTime = 0;
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Exporting portlet " + portletId);
+
+			startTime = System.currentTimeMillis();
+		}
+
 		try {
 			return doExportData(
 				portletDataContext, portletId, portletPreferences);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				long duration = System.currentTimeMillis() - startTime;
+
+				_log.info("Exported portlet in " + Time.getDuration(duration));
+			}
 		}
 	}
 
@@ -79,6 +112,14 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException {
 
+		long startTime = 0;
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Importing portlet " + portletId);
+
+			startTime = System.currentTimeMillis();
+		}
+
 		long sourceGroupId = portletDataContext.getSourceGroupId();
 
 		try {
@@ -101,6 +142,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 		finally {
 			portletDataContext.setSourceGroupId(sourceGroupId);
+
+			if (_log.isInfoEnabled()) {
+				long duration = System.currentTimeMillis() - startTime;
+
+				_log.info("Imported portlet in " + Time.getDuration(duration));
+			}
 		}
 	}
 
@@ -151,5 +198,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private static final boolean _DATA_LOCALIZED = false;
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = false;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BasePortletDataHandler.class);
 
 }
