@@ -148,8 +148,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			deletePortletFileEntry(dlFileEntry.getFileEntryId());
 		}
-
-		DLAppHelperThreadLocal.setEnabled(true);
 	}
 
 	public void deletePortletFileEntry(long fileEntryId)
