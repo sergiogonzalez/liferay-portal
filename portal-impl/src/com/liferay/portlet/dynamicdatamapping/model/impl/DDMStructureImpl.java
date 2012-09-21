@@ -52,7 +52,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public DDMStructureImpl() {
 	}
 
-	public List<String> getAvailableLocales() {
+	public List<String> getAvailableLanguageIds() {
 		Document document = getDocument();
 
 		Element rootElement = document.getRootElement();
@@ -63,7 +63,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return ListUtil.fromArray(StringUtil.split(availableLocales));
 	}
 
-	public String getDefaultLocale() {
+	public String getDefaultLanguageId() {
 		Document document = getDocument();
 
 		if (document == null) {
@@ -129,7 +129,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public String getFieldProperty(String fieldName, String property)
 		throws StructureFieldException {
 
-		return getFieldProperty(fieldName, property, getDefaultLocale());
+		return getFieldProperty(fieldName, property, getDefaultLanguageId());
 	}
 
 	public String getFieldProperty(
@@ -157,7 +157,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		String fieldName, String attributeName, String attributeValue) {
 
 		return getFields(
-			fieldName, attributeName, attributeValue, getDefaultLocale());
+			fieldName, attributeName, attributeValue, getDefaultLanguageId());
 	}
 
 	public Map<String, String> getFields(
@@ -192,7 +192,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public Map<String, Map<String, String>> getFieldsMap() {
-		return _getFieldsMap(getDefaultLocale());
+		return _getFieldsMap(getDefaultLanguageId());
 	}
 
 	public Map<String, Map<String, String>> getFieldsMap(String locale) {
@@ -222,7 +222,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		super.prepareLocalizedFieldsForImport(defaultImportLocale);
 
 		Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLocale());
+			getDefaultLanguageId());
 
 		try {
 			setXsd(
@@ -256,10 +256,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	private Map<String, String> _getField(Element element, String locale) {
 		Map<String, String> field = new HashMap<String, String>();
 
-		List<String> availableLocales = getAvailableLocales();
+		List<String> availableLocales = getAvailableLanguageIds();
 
 		if ((locale != null) && !availableLocales.contains(locale)) {
-			locale = getDefaultLocale();
+			locale = getDefaultLanguageId();
 		}
 
 		locale = HtmlUtil.escapeXPathAttribute(locale);

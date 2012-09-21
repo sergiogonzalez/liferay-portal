@@ -18,15 +18,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -80,6 +87,62 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		throws Exception {
 
 		return null;
+	}
+
+	public PortletURL getURLEdit(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState, PortletURL redirectURL)
+		throws Exception {
+
+		LiferayPortletURL editPortletURL =
+			(LiferayPortletURL)getURLEdit(
+				liferayPortletRequest, liferayPortletResponse);
+
+		if (editPortletURL == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isLayout()) {
+			Layout layout = themeDisplay.getLayout();
+
+			group = layout.getGroup();
+		}
+
+		if (group.hasStagingGroup()) {
+			return null;
+		}
+
+		editPortletURL.setDoAsGroupId(getGroupId());
+
+		editPortletURL.setParameter("redirect", redirectURL.toString());
+		editPortletURL.setParameter("originalRedirect", redirectURL.toString());
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletResource = ParamUtil.getString(
+			liferayPortletRequest, "portletResource", portletDisplay.getId());
+
+		if (Validator.isNotNull(portletResource)) {
+			editPortletURL.setParameter(
+				"referringPortletResource", portletResource);
+		}
+		else {
+			editPortletURL.setParameter(
+				"referringPortletResource", portletDisplay.getId());
+		}
+
+		editPortletURL.setPortletMode(PortletMode.VIEW);
+		editPortletURL.setRefererPlid(themeDisplay.getPlid());
+		editPortletURL.setWindowState(windowState);
+
+		return editPortletURL;
 	}
 
 	public PortletURL getURLExport(

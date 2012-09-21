@@ -43,6 +43,8 @@ else {
 
 String keywords = ParamUtil.getString(request, "keywords");
 
+String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
+
 boolean useAssetEntryQuery = false;
 %>
 
@@ -88,10 +90,6 @@ boolean useAssetEntryQuery = false;
 
 		Hits hits = indexer.search(searchContext);
 
-		int total = hits.getLength();
-
-		searchContainer.setTotal(total);
-
 		List results = new ArrayList(hits.getDocs().length);
 
 		for (int i = 0; i < hits.getDocs().length; i++) {
@@ -102,7 +100,9 @@ boolean useAssetEntryQuery = false;
 			try {
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
-				results.add(fileEntry);
+				if (ArrayUtil.contains(mediaGalleryMimeTypes, fileEntry.getMimeType())) {
+					results.add(fileEntry);
+				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -110,6 +110,10 @@ boolean useAssetEntryQuery = false;
 				}
 			}
 		}
+
+		int total = results.size();
+
+		searchContainer.setTotal(total);
 	%>
 
 	<div id="<portlet:namespace />imageGalleryAssetInfo">
@@ -127,8 +131,6 @@ boolean useAssetEntryQuery = false;
 		long defaultFolderId = GetterUtil.getLong(preferences.getValue("rootFolderId", StringPool.BLANK), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
-
-		String[] mediaGalleryMimeTypes = null;
 		%>
 
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>

@@ -54,7 +54,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 	public void clearCache() {
 		clearLocalCache();
 
-		for (PortalCache portalCache : _portalCaches.values()) {
+		for (PortalCache<?, ?> portalCache : _portalCaches.values()) {
 			portalCache.removeAll();
 		}
 	}
@@ -62,7 +62,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 	public void clearCache(String className) {
 		clearLocalCache();
 
-		PortalCache portalCache = _getPortalCache(className, true);
+		PortalCache<?, ?> portalCache = _getPortalCache(className, true);
 
 		if (portalCache != null) {
 			portalCache.removeAll();
@@ -79,7 +79,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		return CACHE_NAME;
 	}
 
-	public Object getResult(
+	public Serializable getResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
 
 		if (!PropsValues.VALUE_OBJECT_ENTITY_CACHE_ENABLED ||
@@ -88,9 +88,9 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			return null;
 		}
 
-		Object result = null;
+		Serializable result = null;
 
-		Map<Serializable, Object> localCache = null;
+		Map<Serializable, Serializable> localCache = null;
 
 		Serializable localCacheKey = null;
 
@@ -103,7 +103,8 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		}
 
 		if (result == null) {
-			PortalCache portalCache = _getPortalCache(clazz.getName(), true);
+			PortalCache<Serializable, Serializable> portalCache =
+				_getPortalCache(clazz.getName(), true);
 
 			Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -125,7 +126,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		clearCache();
 	}
 
-	public Object loadResult(
+	public Serializable loadResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		SessionFactory sessionFactory) {
 
@@ -137,16 +138,16 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			try {
 				session = sessionFactory.openSession();
 
-				return session.load(clazz, primaryKey);
+				return (Serializable)session.load(clazz, primaryKey);
 			}
 			finally {
 				sessionFactory.closeSession(session);
 			}
 		}
 
-		Object result = null;
+		Serializable result = null;
 
-		Map<Serializable, Object> localCache = null;
+		Map<Serializable, Serializable> localCache = null;
 
 		Serializable localCacheKey = null;
 
@@ -158,10 +159,11 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			result = localCache.get(localCacheKey);
 		}
 
-		Object loadResult = null;
+		Serializable loadResult = null;
 
 		if (result == null) {
-			PortalCache portalCache = _getPortalCache(clazz.getName(), true);
+			PortalCache<Serializable, Serializable> portalCache =
+				_getPortalCache(clazz.getName(), true);
 
 			Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -178,7 +180,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 				try {
 					session = sessionFactory.openSession();
 
-					loadResult = session.load(clazz, primaryKey);
+					loadResult = (Serializable)session.load(clazz, primaryKey);
 				}
 				finally {
 					if (loadResult == null) {
@@ -209,7 +211,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 
 	public void putResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		Object result) {
+		Serializable result) {
 
 		if (!PropsValues.VALUE_OBJECT_ENTITY_CACHE_ENABLED ||
 			!entityCacheEnabled || !CacheRegistryUtil.isActive() ||
@@ -221,7 +223,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		result = ((BaseModel<?>)result).toCacheModel();
 
 		if (_localCacheAvailable) {
-			Map<Serializable, Object> localCache = _localCache.get();
+			Map<Serializable, Serializable> localCache = _localCache.get();
 
 			Serializable localCacheKey = _encodeLocalCacheKey(
 				clazz, primaryKey);
@@ -229,7 +231,8 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			localCache.put(localCacheKey, result);
 		}
 
-		PortalCache portalCache = _getPortalCache(clazz.getName(), true);
+		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
+			clazz.getName(), true);
 
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -254,7 +257,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		}
 
 		if (_localCacheAvailable) {
-			Map<Serializable, Object> localCache = _localCache.get();
+			Map<Serializable, Serializable> localCache = _localCache.get();
 
 			Serializable localCacheKey = _encodeLocalCacheKey(
 				clazz, primaryKey);
@@ -262,7 +265,8 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			localCache.remove(localCacheKey);
 		}
 
-		PortalCache portalCache = _getPortalCache(clazz.getName(), true);
+		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
+			clazz.getName(), true);
 
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -284,19 +288,21 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			ShardUtil.getCurrentShardName(), clazz.getName(), primaryKey);
 	}
 
-	private PortalCache _getPortalCache(
+	private PortalCache<Serializable, Serializable> _getPortalCache(
 		String className, boolean createIfAbsent) {
 
-		PortalCache portalCache = _portalCaches.get(className);
+		PortalCache<Serializable, Serializable> portalCache = _portalCaches.get(
+			className);
 
 		if ((portalCache == null) && createIfAbsent) {
 			String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-			portalCache = _multiVMPool.getCache(
-				groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
+			portalCache =
+				(PortalCache<Serializable, Serializable>)_multiVMPool.getCache(
+					groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
-			PortalCache previousPortalCache = _portalCaches.putIfAbsent(
-				className, portalCache);
+			PortalCache<Serializable, Serializable> previousPortalCache =
+				_portalCaches.putIfAbsent(className, portalCache);
 
 			if (previousPortalCache != null) {
 				portalCache = previousPortalCache;
@@ -306,7 +312,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		return portalCache;
 	}
 
-	private Object _toEntityModel(Object result) {
+	private Serializable _toEntityModel(Serializable result) {
 		if (result == StringPool.BLANK) {
 			return null;
 		}
@@ -341,8 +347,10 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 	}
 
 	private MultiVMPool _multiVMPool;
-	private ConcurrentMap<String, PortalCache> _portalCaches =
-		new ConcurrentHashMap<String, PortalCache>();
+	private ConcurrentMap<String, PortalCache<Serializable, Serializable>>
+		_portalCaches =
+			new ConcurrentHashMap
+				<String, PortalCache<Serializable, Serializable>>();
 
 	private static class CacheKey implements Serializable {
 

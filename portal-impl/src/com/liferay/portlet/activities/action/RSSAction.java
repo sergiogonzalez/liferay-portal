@@ -37,6 +37,8 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
+import com.sun.syndication.feed.synd.SyndLink;
+import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
 import java.util.ArrayList;
@@ -92,19 +94,9 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 
-		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
+		String description = ParamUtil.getString(resourceRequest, "feedTitle");
 
-		syndFeed.setDescription(feedTitle);
-
-		syndFeed.setFeedType(RSSUtil.FEED_TYPE_DEFAULT);
-
-		String feedLink =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
-
-		syndFeed.setLink(feedLink);
-
-		syndFeed.setTitle(feedTitle);
+		syndFeed.setDescription(description);
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 
@@ -140,6 +132,35 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 			syndEntries.add(syndEntry);
 		}
+
+		syndFeed.setFeedType(RSSUtil.FEED_TYPE_DEFAULT);
+
+		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+
+		syndFeed.setLinks(syndLinks);
+
+		SyndLink selfSyndLink = new SyndLinkImpl();
+
+		syndLinks.add(selfSyndLink);
+
+		String link =
+			PortalUtil.getLayoutFullURL(themeDisplay) +
+				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
+
+		selfSyndLink.setHref(link);
+
+		selfSyndLink.setRel("self");
+
+		SyndLink alternateSyndLink = new SyndLinkImpl();
+
+		syndLinks.add(alternateSyndLink);
+
+		alternateSyndLink.setHref(PortalUtil.getLayoutFullURL(themeDisplay));
+		alternateSyndLink.setRel("alternate");
+
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setTitle(description);
+		syndFeed.setUri(link);
 
 		String rss = StringPool.BLANK;
 

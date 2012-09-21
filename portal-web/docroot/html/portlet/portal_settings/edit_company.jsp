@@ -84,5 +84,5 @@ request.setAttribute("websites.classPK", company.getAccountId());
 </aui:script>
 
 <%!
-private static String[] _CATEGORY_NAMES = {"configuration", "identification", "miscellaneous"};
+private static final String[] _CATEGORY_NAMES = {"configuration", "identification", "miscellaneous"};
 %>

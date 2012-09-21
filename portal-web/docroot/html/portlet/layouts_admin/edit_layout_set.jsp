@@ -371,5 +371,5 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 </aui:script>
 
 <%!
-private static String[] _CATEGORY_NAMES = {""};
+private static final String[] _CATEGORY_NAMES = {""};
 %>
