@@ -34,8 +34,10 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
@@ -79,6 +81,7 @@ public class GetFileAction extends PortletAction {
 			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 			long folderId = ParamUtil.getLong(actionRequest, "folderId");
+			String name = ParamUtil.getString(actionRequest, "name");
 			String title = ParamUtil.getString(actionRequest, "title");
 			String version = ParamUtil.getString(actionRequest, "version");
 
@@ -97,8 +100,9 @@ public class GetFileAction extends PortletAction {
 				actionRequest, "groupId", themeDisplay.getScopeGroupId());
 
 			getFile(
-				fileEntryId, folderId, title, version, fileShortcutId, uuid,
-				groupId, targetExtension, themeDisplay, request, response);
+				fileEntryId, folderId, name, title, version, fileShortcutId,
+				uuid, groupId, targetExtension, themeDisplay, request,
+				response);
 
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
@@ -125,6 +129,7 @@ public class GetFileAction extends PortletAction {
 			long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 
 			long folderId = ParamUtil.getLong(request, "folderId");
+			String name = ParamUtil.getString(request, "name");
 			String title = ParamUtil.getString(request, "title");
 			String version = ParamUtil.getString(request, "version");
 
@@ -142,8 +147,9 @@ public class GetFileAction extends PortletAction {
 				request, "groupId", themeDisplay.getScopeGroupId());
 
 			getFile(
-				fileEntryId, folderId, title, version, fileShortcutId, uuid,
-				groupId, targetExtension, themeDisplay, request, response);
+				fileEntryId, folderId, name, title, version, fileShortcutId,
+				uuid, groupId, targetExtension, themeDisplay, request,
+				response);
 
 			return null;
 		}
@@ -160,8 +166,8 @@ public class GetFileAction extends PortletAction {
 	}
 
 	protected void getFile(
-			long fileEntryId, long folderId, String title, String version,
-			long fileShortcutId, String uuid, long groupId,
+			long fileEntryId, long folderId, String name, String title,
+			String version, long fileShortcutId, String uuid, long groupId,
 			String targetExtension, ThemeDisplay themeDisplay,
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -182,6 +188,14 @@ public class GetFileAction extends PortletAction {
 			if (Validator.isNotNull(title)) {
 				fileEntry = DLAppServiceUtil.getFileEntry(
 					groupId, folderId, title);
+			}
+			else if (Validator.isNotNull(name)) {
+				DLFileEntry dlFileEntry =
+					DLFileEntryLocalServiceUtil.getFileEntryByName(
+						groupId, folderId, name);
+
+				fileEntry = DLAppServiceUtil.getFileEntry(
+					groupId, folderId, dlFileEntry.getTitle());
 			}
 		}
 		else {
