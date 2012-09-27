@@ -27,7 +27,7 @@ public class WorkflowThreadLocal {
 			return false;
 		}
 
-		return _enabled.get().booleanValue();
+		return _enabled.get();
 	}
 
 	public static void setEnabled(boolean enabled) {

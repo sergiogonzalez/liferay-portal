@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.users.userphonenumber.adduserphonenumber;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,6 +29,7 @@ public class AddUserPhoneNumberTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(AddUserPhoneNumberTest.class);
+		testSuite.addTestSuite(ViewUserPhoneNumberTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
