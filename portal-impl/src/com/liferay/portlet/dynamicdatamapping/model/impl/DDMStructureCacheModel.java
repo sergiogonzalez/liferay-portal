@@ -35,7 +35,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -53,6 +53,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", parentStructureId=");
+		sb.append(parentStructureId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", structureKey=");
@@ -108,6 +110,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 			ddmStructureImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		ddmStructureImpl.setParentStructureId(parentStructureId);
 		ddmStructureImpl.setClassNameId(classNameId);
 
 		if (structureKey == null) {
@@ -151,6 +154,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setDocument(_document);
 
+		ddmStructureImpl.setLocalizedFieldsMap(_localizedFieldsMap);
+
 		return ddmStructureImpl;
 	}
 
@@ -162,6 +167,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long parentStructureId;
 	public long classNameId;
 	public String structureKey;
 	public String name;
@@ -170,4 +176,5 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String storageType;
 	public int type;
 	public com.liferay.portal.kernel.xml.Document _document;
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedFieldsMap;
 }

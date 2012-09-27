@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
 public class WikiCacheThreadLocal {
 
 	public static boolean isClearCache() {
-		return _clearCache.get().booleanValue();
+		return _clearCache.get();
 	}
 
 	public static void setClearCache(boolean clearCache) {

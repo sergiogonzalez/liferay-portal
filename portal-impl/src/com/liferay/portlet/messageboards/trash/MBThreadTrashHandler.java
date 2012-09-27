@@ -96,6 +96,10 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		return CLASS_NAME;
 	}
 
+	public boolean isInTrash(long classPK) {
+		return false;
+	}
+
 	public void restoreTrashEntries(long[] classPKs) {
 	}
 

@@ -69,8 +69,8 @@ import java.util.Map;
  */
 public class DDMStructureServiceSoap {
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap addStructure(
-		long groupId, long classNameId, java.lang.String structureKey,
-		java.lang.String[] nameMapLanguageIds,
+		long groupId, long parentStructureId, long classNameId,
+		java.lang.String structureKey, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String xsd,
@@ -84,9 +84,9 @@ public class DDMStructureServiceSoap {
 					descriptionMapValues);
 
 			com.liferay.portlet.dynamicdatamapping.model.DDMStructure returnValue =
-				DDMStructureServiceUtil.addStructure(groupId, classNameId,
-					structureKey, nameMap, descriptionMap, xsd, storageType,
-					type, serviceContext);
+				DDMStructureServiceUtil.addStructure(groupId,
+					parentStructureId, classNameId, structureKey, nameMap,
+					descriptionMap, xsd, storageType, type, serviceContext);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModel(returnValue);
 		}
@@ -241,33 +241,7 @@ public class DDMStructureServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap updateStructure(
-		long structureId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, java.lang.String xsd,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
-					nameMapValues);
-			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
-					descriptionMapValues);
-
-			com.liferay.portlet.dynamicdatamapping.model.DDMStructure returnValue =
-				DDMStructureServiceUtil.updateStructure(structureId, nameMap,
-					descriptionMap, xsd, serviceContext);
-
-			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap updateStructure(
-		long groupId, java.lang.String structureKey,
+		long structureId, long parentStructureId,
 		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
@@ -281,8 +255,37 @@ public class DDMStructureServiceSoap {
 					descriptionMapValues);
 
 			com.liferay.portlet.dynamicdatamapping.model.DDMStructure returnValue =
-				DDMStructureServiceUtil.updateStructure(groupId, structureKey,
-					nameMap, descriptionMap, xsd, serviceContext);
+				DDMStructureServiceUtil.updateStructure(structureId,
+					parentStructureId, nameMap, descriptionMap, xsd,
+					serviceContext);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap updateStructure(
+		long groupId, long parentStructureId, java.lang.String structureKey,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String xsd,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.dynamicdatamapping.model.DDMStructure returnValue =
+				DDMStructureServiceUtil.updateStructure(groupId,
+					parentStructureId, structureKey, nameMap, descriptionMap,
+					xsd, serviceContext);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModel(returnValue);
 		}
