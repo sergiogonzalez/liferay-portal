@@ -107,8 +107,7 @@ public class AggregateFilter extends BasePortalFilter {
 					importX + _CSS_IMPORT_BEGIN.length());
 
 				int mediaQueryImportY = content.indexOf(
-					CharPool.SEMICOLON,
-					importX + _CSS_IMPORT_BEGIN.length());
+					CharPool.SEMICOLON, importX + _CSS_IMPORT_BEGIN.length());
 
 				String importFileName;
 
