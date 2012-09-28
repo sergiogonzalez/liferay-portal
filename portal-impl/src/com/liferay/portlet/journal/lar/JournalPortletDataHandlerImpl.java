@@ -47,6 +47,7 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -56,7 +57,9 @@ import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.journal.ArticleContentException;
 import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
@@ -1431,13 +1434,20 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		int beginPos = content.length();
 		int currentLocation = -1;
+		boolean isLegacyURL = true;
 
 		while (true) {
 			currentLocation = content.lastIndexOf(
 				"/c/document_library/get_file?", beginPos);
 
 			if (currentLocation == -1) {
+				currentLocation = content.lastIndexOf(
+					"/image/image_gallery?", beginPos);
+			}
+
+			if (currentLocation == -1) {
 				currentLocation = content.lastIndexOf("/documents/", beginPos);
+				isLegacyURL = false;
 			}
 
 			if (currentLocation == -1) {
@@ -1473,7 +1483,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				endPos = endPos5;
 			}
 
-			if ((endPos == -1) || ((endPos6 != -1) && (endPos6 < endPos))) {
+			if ((endPos == -1) ||
+				((endPos6 != -1) && (endPos6 < endPos) && !isLegacyURL)) {
+
 				endPos = endPos6;
 			}
 
@@ -1572,8 +1584,33 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 							groupId = portletDataContext.getScopeGroupId();
 						}
 
-						fileEntry = DLAppLocalServiceUtil.getFileEntry(
-							groupId, folderId, name);
+						DLFileEntry dlFileEntry =
+							DLFileEntryLocalServiceUtil.getFileEntryByName(
+								groupId, folderId, name);
+
+						fileEntry = new LiferayFileEntry(dlFileEntry);
+					}
+					else if (map.containsKey("image_id") ||
+							map.containsKey("img_id") ||
+							map.containsKey("i_id")) {
+
+						long imageId = MapUtil.getLong(map, "image_id");
+
+						if (imageId <= 0) {
+							imageId = MapUtil.getLong(map, "img_id");
+
+							if (imageId <= 0) {
+								imageId = MapUtil.getLong(map, "i_id");
+							}
+						}
+
+						DLFileEntry dlFileEntry =
+							DLFileEntryLocalServiceUtil
+								.fetchFileEntryByAnyImageId(imageId);
+
+						if (dlFileEntry != null) {
+							fileEntry = new LiferayFileEntry(dlFileEntry);
+						}
 					}
 				}
 

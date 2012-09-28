@@ -214,10 +214,12 @@ public class DeployUtil {
 	}
 
 	private String _getResourcePath(String resource) throws IOException {
-		InputStream is = getClass().getResourceAsStream(
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/" + resource);
 
-		if (is == null) {
+		if (inputStream == null) {
 			return null;
 		}
 
@@ -234,7 +236,7 @@ public class DeployUtil {
 				parentFile.mkdirs();
 			}
 
-			StreamUtil.transfer(is, new FileOutputStream(file));
+			StreamUtil.transfer(inputStream, new FileOutputStream(file));
 		//}
 
 		return FileUtil.getAbsolutePath(file);

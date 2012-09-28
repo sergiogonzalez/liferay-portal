@@ -20,7 +20,7 @@ package com.liferay.portal.kernel.util;
 public class NotificationThreadLocal {
 
 	public static boolean isEnabled() {
-		return _enabled.get().booleanValue();
+		return _enabled.get();
 	}
 
 	/**

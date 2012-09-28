@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
 public class PortletPreferencesThreadLocal {
 
 	public static boolean isStrict() {
-		return _strict.get().booleanValue();
+		return _strict.get();
 	}
 
 	public static void setStrict(boolean strict) {

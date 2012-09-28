@@ -1566,6 +1566,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="parentStructureId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="structureKey" type="String">
 			<hint name="upper-case">true</hint>

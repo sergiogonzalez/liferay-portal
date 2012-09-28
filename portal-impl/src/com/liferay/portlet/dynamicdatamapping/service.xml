@@ -77,6 +77,7 @@
 
 		<!-- Other fields -->
 
+		<column name="parentStructureId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="structureKey" type="String" />
 		<column name="name" type="String" localized="true" />
