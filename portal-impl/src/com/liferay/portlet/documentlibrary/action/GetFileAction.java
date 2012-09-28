@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -101,8 +102,7 @@ public class GetFileAction extends PortletAction {
 
 			getFile(
 				fileEntryId, folderId, name, title, version, fileShortcutId,
-				uuid, groupId, targetExtension, themeDisplay, request,
-				response);
+				uuid, groupId, targetExtension, request, response);
 
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
@@ -148,8 +148,7 @@ public class GetFileAction extends PortletAction {
 
 			getFile(
 				fileEntryId, folderId, name, title, version, fileShortcutId,
-				uuid, groupId, targetExtension, themeDisplay, request,
-				response);
+				uuid, groupId, targetExtension, request, response);
 
 			return null;
 		}
@@ -168,8 +167,8 @@ public class GetFileAction extends PortletAction {
 	protected void getFile(
 			long fileEntryId, long folderId, String name, String title,
 			String version, long fileShortcutId, String uuid, long groupId,
-			String targetExtension, ThemeDisplay themeDisplay,
-			HttpServletRequest request, HttpServletResponse response)
+			String targetExtension, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		FileEntry fileEntry = null;
@@ -190,12 +189,19 @@ public class GetFileAction extends PortletAction {
 					groupId, folderId, title);
 			}
 			else if (Validator.isNotNull(name)) {
-				DLFileEntry dlFileEntry =
-					DLFileEntryLocalServiceUtil.getFileEntryByName(
-						groupId, folderId, name);
+				DLFileEntry dlFileEntry = null;
 
-				fileEntry = DLAppServiceUtil.getFileEntry(
-					groupId, folderId, dlFileEntry.getTitle());
+				try {
+					dlFileEntry =
+						DLFileEntryLocalServiceUtil.getFileEntryByName(
+							groupId, folderId, name);
+				}
+				catch (NoSuchFileEntryException nsfee) {
+				}
+
+				if (dlFileEntry != null) {
+					fileEntry = new LiferayFileEntry(dlFileEntry);
+				}
 			}
 		}
 		else {
