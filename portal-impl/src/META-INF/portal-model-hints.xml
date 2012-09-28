@@ -1450,6 +1450,7 @@
 		</field>
 		<field name="lastPostDate" type="Date" />
 		<field name="defaultFileEntryTypeId" type="long" />
+		<field name="hidden" type="boolean" />
 		<field name="overrideFileEntryTypes" type="boolean" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -1566,6 +1567,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="parentStructureId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="structureKey" type="String">
 			<hint name="upper-case">true</hint>

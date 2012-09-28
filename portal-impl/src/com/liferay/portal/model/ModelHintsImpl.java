@@ -32,8 +32,11 @@ import com.liferay.util.PwdGenerator;
 
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,6 +47,7 @@ import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class ModelHintsImpl implements ModelHints {
 
@@ -59,8 +63,31 @@ public class ModelHintsImpl implements ModelHints {
 			String[] configs = StringUtil.split(
 				PropsUtil.get(PropsKeys.MODEL_HINTS_CONFIGS));
 
-			for (int i = 0; i < configs.length; i++) {
-				read(classLoader, configs[i]);
+			for (String config : configs) {
+				if (config.startsWith("classpath*:")) {
+					String name = config.substring("classpath*:".length());
+
+					Enumeration<URL> enu = classLoader.getResources(name);
+
+					if (_log.isDebugEnabled() && !enu.hasMoreElements()) {
+						_log.debug("No resources found for " + name);
+					}
+
+					while (enu.hasMoreElements()) {
+						URL url = enu.nextElement();
+
+						if (_log.isDebugEnabled()) {
+							_log.debug("Loading " + name + " from " + url);
+						}
+
+						InputStream inputStream = url.openStream();
+
+						read(classLoader, url.toString(), inputStream);
+					}
+				}
+				else {
+					read(classLoader, config);
+				}
 			}
 		}
 		catch (Exception e) {
@@ -205,9 +232,14 @@ public class ModelHintsImpl implements ModelHints {
 	}
 
 	public void read(ClassLoader classLoader, String source) throws Exception {
-		InputStream is = classLoader.getResourceAsStream(source);
+		read(classLoader, source, classLoader.getResourceAsStream(source));
+	}
 
-		if (is == null) {
+	public void read(
+			ClassLoader classLoader, String source, InputStream inputStream)
+		throws Exception {
+
+		if (inputStream == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Cannot load " + source);
 			}
@@ -220,7 +252,7 @@ public class ModelHintsImpl implements ModelHints {
 			}
 		}
 
-		Document document = _saxReader.read(is);
+		Document document = _saxReader.read(inputStream);
 
 		Element rootElement = document.getRootElement();
 

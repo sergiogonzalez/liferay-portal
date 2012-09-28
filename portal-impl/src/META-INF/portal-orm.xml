@@ -2029,6 +2029,9 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="defaultFileEntryTypeId" />
+			<basic name="hidden">
+				<column name="HIDDEN_" />
+			</basic>
 			<basic name="overrideFileEntryTypes" />
 			<basic name="status" />
 			<basic name="statusByUserId" />
@@ -2216,6 +2219,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="parentStructureId" />
 			<basic name="classNameId" />
 			<basic name="structureKey" />
 			<basic name="name" />
@@ -2229,6 +2233,7 @@
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />
 			<transient name="document" />
+			<transient name="localizedFieldsMap" />
 			<transient name="modelAttributes" />
 			<transient name="nameCurrentLanguageId" />
 			<transient name="nameMap" />

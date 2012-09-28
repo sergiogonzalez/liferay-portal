@@ -24,7 +24,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 /**
@@ -36,6 +36,7 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Tomas Polesovsky
  */
 public class PortalApplicationContext extends XmlWebApplicationContext {
 
@@ -52,7 +53,8 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 			}
 		}
 
-		xmlBeanDefinitionReader.setResourceLoader(new DefaultResourceLoader());
+		xmlBeanDefinitionReader.setResourceLoader(
+			new PathMatchingResourcePatternResolver());
 
 		if (PropsValues.SPRING_CONFIGS == null) {
 			return;

@@ -232,6 +232,8 @@ update Country set name = 'yemen' where name = 'Yemen';
 update Country set name = 'zambia' where name = 'Zambia';
 update Country set name = 'zimbabwe' where name = 'Zimbabwe';
 
+alter table DDMStructure add parentStructureId LONG;
+
 alter table DLFileRank add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;
@@ -244,6 +246,7 @@ COMMIT_TRANSACTION;
 
 update DLFileShortcut set active_ = TRUE;
 
+alter table DLFolder add hidden BOOLEAN;
 alter table DLFolder add status INTEGER;
 alter table DLFolder add statusByUserId LONG;
 alter table DLFolder add statusByUserName VARCHAR(75) null;
@@ -251,10 +254,13 @@ alter table DLFolder add statusDate DATE null;
 
 COMMIT_TRANSACTION;
 
+update DLFolder set hidden = FALSE;
 update DLFolder set status = 0;
 update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
+
+update Group_ set site = FALSE where name = 'Control Panel';
 
 drop table Groups_Permissions;
 
