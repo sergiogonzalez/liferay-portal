@@ -25,7 +25,6 @@ public class InternationalizationSpanishTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Language Test Page");
 		selenium.clickAt("link=Language Test Page",
 			RuntimeVariables.replace("Language Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -37,7 +36,7 @@ public class InternationalizationSpanishTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("P\u00e1gina de la prueba de lengua"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=P\u00e1gina de la prueba de lengua");
 		assertTrue(selenium.isVisible("link=P\u00e1gina de la prueba de lengua"));

@@ -68,10 +68,10 @@ public class DDMStructureLocalServiceImpl
 	extends DDMStructureLocalServiceBaseImpl {
 
 	public DDMStructure addStructure(
-			long userId, long groupId, long classNameId, String structureKey,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, String storageType, int type,
-			ServiceContext serviceContext)
+			long userId, long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsd, String storageType,
+			int type, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Structure
@@ -104,6 +104,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setUserName(user.getFullName());
 		structure.setCreateDate(serviceContext.getCreateDate(now));
 		structure.setModifiedDate(serviceContext.getModifiedDate(now));
+		structure.setParentStructureId(parentStructureId);
 		structure.setClassNameId(classNameId);
 		structure.setStructureKey(structureKey);
 		structure.setNameMap(nameMap);
@@ -163,9 +164,10 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = getStructure(structureId);
 
 		return addStructure(
-			userId, structure.getGroupId(), structure.getClassNameId(), null,
-			nameMap, descriptionMap, structure.getXsd(),
-			structure.getStorageType(), structure.getType(), serviceContext);
+			userId, structure.getGroupId(), structure.getParentStructureId(),
+			structure.getClassNameId(), null, nameMap, descriptionMap,
+			structure.getXsd(), structure.getStorageType(), structure.getType(),
+			serviceContext);
 	}
 
 	public void deleteStructure(DDMStructure structure)
@@ -385,29 +387,31 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	public DDMStructure updateStructure(
-			long structureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsd,
-			ServiceContext serviceContext)
+			long structureId, long parentStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
 		return doUpdateStructure(
-			nameMap, descriptionMap, xsd, serviceContext, structure);
+			parentStructureId, nameMap, descriptionMap, xsd, serviceContext,
+			structure);
 	}
 
 	public DDMStructure updateStructure(
-			long groupId, String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsd,
-			ServiceContext serviceContext)
+			long groupId, long parentStructureId, String structureKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMStructure structure = ddmStructurePersistence.findByG_S(
 			groupId, structureKey);
 
 		return doUpdateStructure(
-			nameMap, descriptionMap, xsd, serviceContext, structure);
+			parentStructureId, nameMap, descriptionMap, xsd, serviceContext,
+			structure);
 	}
 
 	protected void appendNewStructureRequiredFields(
@@ -453,8 +457,9 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected DDMStructure doUpdateStructure(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, ServiceContext serviceContext, DDMStructure structure)
+			long parentStructureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsd,
+			ServiceContext serviceContext, DDMStructure structure)
 		throws PortalException, SystemException {
 
 		try {
@@ -467,6 +472,7 @@ public class DDMStructureLocalServiceImpl
 		validate(nameMap, xsd);
 
 		structure.setModifiedDate(serviceContext.getModifiedDate(null));
+		structure.setParentStructureId(parentStructureId);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
 		structure.setXsd(xsd);

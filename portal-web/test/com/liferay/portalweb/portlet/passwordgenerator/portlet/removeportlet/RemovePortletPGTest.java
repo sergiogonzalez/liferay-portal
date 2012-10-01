@@ -25,13 +25,12 @@ public class RemovePortletPGTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Password Generator Test Page");
 		selenium.clickAt("link=Password Generator Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Password Generator Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to remove this component?");
 		selenium.waitForElementNotPresent("//section");
 		assertTrue(selenium.isElementNotPresent("//section"));
 	}

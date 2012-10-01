@@ -478,6 +478,7 @@ create table DDMStructure (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	parentStructureId LONG,
 	classNameId LONG,
 	structureKey VARCHAR(75) null,
 	name STRING null,

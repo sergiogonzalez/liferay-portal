@@ -363,6 +363,12 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 				}
 			}
 
+			if ((_excludedMethodNames != null) &&
+				_excludedMethodNames.contains(method.getName())) {
+
+				registerMethod = false;
+			}
+
 			if (registerMethod) {
 				_registerJSONWebServiceAction(actionClass, method);
 			}
@@ -402,6 +408,9 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceConfigurator.class);
+
+	private static Set<String> _excludedMethodNames = SetUtil.fromArray(
+		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
 
 	private ClassLoader _classLoader;
 	private Set<String> _invalidHttpMethods = SetUtil.fromArray(

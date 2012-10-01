@@ -36,6 +36,12 @@ public class GroupFinderUtil {
 		return getFinder().countByKeywords(companyId, keywords, params);
 	}
 
+	public static int countByLayouts(long companyId, long parentGroupId,
+		boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByLayouts(companyId, parentGroupId, site);
+	}
+
 	public static int countByG_U(long groupId, long userId, boolean inherit)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().countByG_U(groupId, userId, inherit);
@@ -100,6 +106,13 @@ public class GroupFinderUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByKeywords(companyId, keywords, params, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> findByLayouts(
+		long companyId, long parentGroupId, boolean site, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByLayouts(companyId, parentGroupId, site, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> findByLiveGroups()

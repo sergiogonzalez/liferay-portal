@@ -374,9 +374,11 @@ AUI.add(
 			function(listItem, options) {
 				var instance = this;
 
+				var id = A.guid();
+
 				var prototypeTemplate = instance._prototypeMenuTemplate || '';
 
-				prototypeTemplate = prototypeTemplate.replace(/name=\"template\"/g, 'name="' + A.guid() + '_template"');
+				prototypeTemplate = prototypeTemplate.replace(/name=\"template\"/g, 'name="' + id + 'Template"');
 
 				var prevVal = options.prevVal;
 
@@ -409,7 +411,7 @@ AUI.add(
 							comboBox.fire('savePage', options);
 						},
 						icon: 'check',
-						id: 'save'
+						id: id + 'Save'
 					}
 				];
 
@@ -418,25 +420,17 @@ AUI.add(
 						{
 							activeState: true,
 							handler: function(event) {
-								var toolItem = this;
-
 								event.halt();
 
-								var action = 'show';
-
-								if (toolItem.StateInteraction.get('active')) {
-									action = 'hide';
-								}
-
-								comboBox._optionsOverlay[action]();
+								comboBox._optionsOverlay.toggle(this.StateInteraction.get('active'));
 							},
 							icon: 'gear',
-							id: 'options'
+							id: id + 'Options'
 						}
 					);
 				}
 
-				var optionsOverlay = new A.Overlay(
+				var optionsOverlay = new A.OverlayBase(
 					{
 						bodyContent: prototypeTemplate,
 						align: {
@@ -487,7 +481,7 @@ AUI.add(
 				).render(listItem);
 
 				if (prototypeTemplate && instance._optionsOpen && !prevVal) {
-					var optionItem = comboBox.icons.item('options');
+					var optionItem = comboBox.icons.item(id + 'Options');
 
 					optionItem.StateInteraction.set('active', true);
 					optionsOverlay.show();
@@ -531,7 +525,7 @@ AUI.add(
 					instance.fire('editPage');
 				}
 			},
-			['aui-form-combobox', 'overlay'],
+			['aui-form-combobox', 'aui-overlay'],
 			true
 		);
 

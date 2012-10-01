@@ -667,6 +667,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			autoScreenName = true;
 		}
 
+		// PLACEHOLDER 01
+
 		long userId = counterLocalService.increment();
 
 		EmailAddressGenerator emailAddressGenerator =
@@ -5330,6 +5332,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
+		// PLACEHOLDER 02
+
 		return authResult;
 	}
 
@@ -5549,7 +5553,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		List<Group> oldGroups = userPersistence.getGroups(userId);
 
-		List<Long> oldGroupIds = new ArrayList<Long>(oldGroups.size());
+		Set<Long> oldGroupIds = new HashSet<Long>(oldGroups.size());
 
 		for (Group oldGroup : oldGroups) {
 			long oldGroupId = oldGroup.getGroupId();
@@ -5589,7 +5593,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		List<Organization> oldOrganizations = userPersistence.getOrganizations(
 			userId);
 
-		List<Long> oldOrganizationIds = new ArrayList<Long>(
+		Set<Long> oldOrganizationIds = new HashSet<Long>(
 			oldOrganizations.size());
 
 		for (Organization oldOrganization : oldOrganizations) {

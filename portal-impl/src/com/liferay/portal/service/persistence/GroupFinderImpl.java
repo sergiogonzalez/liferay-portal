@@ -54,11 +54,17 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GroupFinderImpl
 	extends BasePersistenceImpl<Group> implements GroupFinder {
 
+	public static final String COUNT_BY_LAYOUTS =
+		GroupFinder.class.getName() + ".countByLayouts";
+
 	public static final String COUNT_BY_GROUP_ID =
 		GroupFinder.class.getName() + ".countByGroupId";
 
 	public static final String COUNT_BY_C_N_D =
 		GroupFinder.class.getName() + ".countByC_N_D";
+
+	public static final String FIND_BY_LAYOUTS =
+		GroupFinder.class.getName() + ".findByLayouts";
 
 	public static final String FIND_BY_LIVE_GROUPS =
 		GroupFinder.class.getName() + ".findByLiveGroups";
@@ -172,6 +178,46 @@ public class GroupFinderImpl
 		return countByC_C_N_D(
 			companyId, _getGroupOrganizationClassNameIds(), names, realNames,
 			descriptions, params, andOperator);
+	}
+
+	public int countByLayouts(long companyId, long parentGroupId, boolean site)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_LAYOUTS);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("Group_", GroupImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(parentGroupId);
+			qPos.add(site);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public int countByG_U(long groupId, long userId, boolean inherit)
@@ -393,6 +439,38 @@ public class GroupFinderImpl
 		return findByC_C_N_D(
 			companyId, _getGroupOrganizationClassNameIds(), names, realNames,
 			descriptions, params, andOperator, start, end, obc);
+	}
+
+	public List<Group> findByLayouts(
+			long companyId, long parentGroupId, boolean site, int start,
+			int end)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_LAYOUTS);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("Group_", GroupImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(parentGroupId);
+			qPos.add(site);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public List<Group> findByLiveGroups() throws SystemException {

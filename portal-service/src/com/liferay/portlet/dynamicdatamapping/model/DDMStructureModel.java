@@ -194,6 +194,20 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>, GroupedModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the parent structure ID of this d d m structure.
+	 *
+	 * @return the parent structure ID of this d d m structure
+	 */
+	public long getParentStructureId();
+
+	/**
+	 * Sets the parent structure ID of this d d m structure.
+	 *
+	 * @param parentStructureId the parent structure ID of this d d m structure
+	 */
+	public void setParentStructureId(long parentStructureId);
+
+	/**
 	 * Returns the fully qualified class name of this d d m structure.
 	 *
 	 * @return the fully qualified class name of this d d m structure
