@@ -25,20 +25,13 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
-String defaultBulletStyle = GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots");
-
-String bulletStyle = PrefsParamUtil.getString(preferences, renderRequest, "bulletStyle", defaultBulletStyle);
-
+String bulletStyle = PrefsParamUtil.getString(preferences, renderRequest, "bulletStyle", GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots"));
 String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "relative-with-breadcrumb");
-
 String headerType = PrefsParamUtil.getString(preferences, renderRequest, "headerType", "root-layout");
-
-String rootLayoutType = PrefsParamUtil.getString(preferences, renderRequest, "rootLayoutType", "absolute");
-int rootLayoutLevel = PrefsParamUtil.getInteger(preferences, renderRequest, "rootLayoutLevel", 1);
-
 String includedLayouts = PrefsParamUtil.getString(preferences, renderRequest, "includedLayouts", "current");
-
 boolean nestedChildren = PrefsParamUtil.getBoolean(preferences, renderRequest, "nestedChildren", true);
+int rootLayoutLevel = PrefsParamUtil.getInteger(preferences, renderRequest, "rootLayoutLevel", 1);
+String rootLayoutType = PrefsParamUtil.getString(preferences, renderRequest, "rootLayoutType", "absolute");
 %>
 
 <%@ include file="/html/portlet/navigation/init-ext.jsp" %>

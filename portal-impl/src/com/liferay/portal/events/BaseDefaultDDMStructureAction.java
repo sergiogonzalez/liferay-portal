@@ -100,9 +100,10 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			}
 
 			DDMStructureLocalServiceUtil.addStructure(
-				userId, groupId, classNameId, ddmStructureKey, nameMap,
-				descriptionMap, xsd, "xml", DDMStructureConstants.TYPE_DEFAULT,
-				serviceContext);
+				userId, groupId,
+				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
+				ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
+				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 		}
 	}
 

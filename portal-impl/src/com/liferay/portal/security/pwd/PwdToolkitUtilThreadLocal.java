@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
 public class PwdToolkitUtilThreadLocal {
 
 	public static boolean isValidate() {
-		return _validate.get().booleanValue();
+		return _validate.get();
 	}
 
 	public static void setValidate(boolean validate) {

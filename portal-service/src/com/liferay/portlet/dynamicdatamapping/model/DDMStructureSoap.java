@@ -39,6 +39,7 @@ public class DDMStructureSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setParentStructureId(model.getParentStructureId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setStructureKey(model.getStructureKey());
 		soapModel.setName(model.getName());
@@ -162,6 +163,14 @@ public class DDMStructureSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getParentStructureId() {
+		return _parentStructureId;
+	}
+
+	public void setParentStructureId(long parentStructureId) {
+		_parentStructureId = parentStructureId;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -226,6 +235,7 @@ public class DDMStructureSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _parentStructureId;
 	private long _classNameId;
 	private String _structureKey;
 	private String _name;

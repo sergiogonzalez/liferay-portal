@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
 public class LDAPUserGroupTransactionThreadLocal {
 
 	public static boolean isOriginatesFromLDAP() {
-		return _originatesFromLDAP.get().booleanValue();
+		return _originatesFromLDAP.get();
 	}
 
 	public static void setOriginatesFromLDAP(boolean originatesFromLDAP) {

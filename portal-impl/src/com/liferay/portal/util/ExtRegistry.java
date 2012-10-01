@@ -29,6 +29,7 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class ExtRegistry {
 
@@ -38,30 +39,30 @@ public class ExtRegistry {
 
 		String servletContextName = servletContext.getServletContextName();
 
-		Set<String> files = _readExtFiles(
+		Set<String> fileNames = _readExtFileNames(
 			servletContext, "/WEB-INF/ext-" + servletContextName + ".xml");
 
 		Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
 
 		for (Map.Entry<String, Set<String>> entry : _extMap.entrySet()) {
 			String curServletContextName = entry.getKey();
-			Set<String> curFiles = entry.getValue();
+			Set<String> curFileNames = entry.getValue();
 
-			for (String file : files) {
-				if (!curFiles.contains(file)) {
+			for (String fileName : fileNames) {
+				if (!curFileNames.contains(fileName)) {
 					continue;
 				}
 
-				Set<String> conflictFiles = conflicts.get(
+				Set<String> conflictFileNames = conflicts.get(
 					curServletContextName);
 
-				if (conflictFiles == null) {
-					conflictFiles = new TreeSet<String>();
+				if (conflictFileNames == null) {
+					conflictFileNames = new TreeSet<String>();
 
-					conflicts.put(curServletContextName, conflictFiles);
+					conflicts.put(curServletContextName, conflictFileNames);
 				}
 
-				conflictFiles.add(file);
+				conflictFileNames.add(fileName);
 			}
 		}
 
@@ -70,6 +71,30 @@ public class ExtRegistry {
 
 	public static Set<String> getServletContextNames() {
 		return Collections.unmodifiableSet(_extMap.keySet());
+	}
+
+	public static boolean isIgnoredFileName(String fileName) {
+		if (isMergedFileName(fileName)) {
+			return true;
+		}
+
+		for (String ignoredFileName : _IGNORED_FILE_NAMES) {
+			if (fileName.contains(ignoredFileName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isMergedFileName(String fileName) {
+		for (String mergedFileName : _SUPPORTED_MERGING_FILE_NAMES) {
+			if (fileName.contains(mergedFileName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isRegistered(String servletContextName) {
@@ -86,10 +111,10 @@ public class ExtRegistry {
 
 		String servletContextName = servletContext.getServletContextName();
 
-		Set<String> files = _readExtFiles(
+		Set<String> fileNames = _readExtFileNames(
 			servletContext, "/WEB-INF/ext-" + servletContextName + ".xml");
 
-		_extMap.put(servletContextName, files);
+		_extMap.put(servletContextName, fileNames);
 	}
 
 	public static void registerPortal(ServletContext servletContext)
@@ -108,18 +133,19 @@ public class ExtRegistry {
 				String servletContextName = resourcePath.substring(
 					13, resourcePath.length() - 4);
 
-				Set<String> files = _readExtFiles(servletContext, resourcePath);
+				Set<String> fileNames = _readExtFileNames(
+					servletContext, resourcePath);
 
-				_extMap.put(servletContextName, files);
+				_extMap.put(servletContextName, fileNames);
 			}
 		}
 	}
 
-	private static Set<String> _readExtFiles(
+	private static Set<String> _readExtFileNames(
 			ServletContext servletContext, String resourcePath)
 		throws Exception {
 
-		Set<String> files = new TreeSet<String>();
+		Set<String> fileNames = new TreeSet<String>();
 
 		Document document = SAXReaderUtil.read(
 			servletContext.getResourceAsStream(resourcePath));
@@ -131,11 +157,24 @@ public class ExtRegistry {
 		List<Element> fileElements = filesElement.elements("file");
 
 		for (Element fileElement : fileElements) {
-			files.add(fileElement.getText());
+			String fileName = fileElement.getText();
+
+			if (!isIgnoredFileName(fileName)) {
+				fileNames.add(fileName);
+			}
 		}
 
-		return files;
+		return fileNames;
 	}
+
+	private static final String[] _IGNORED_FILE_NAMES = new String[] {
+		"log4j.dtd", "service.xml", "sql/"
+	};
+
+	private static final String[] _SUPPORTED_MERGING_FILE_NAMES = new String[] {
+		"content/Language-ext", "ext-hbm.xml", "ext-model-hints.xml",
+		"ext-spring.xml", "portal-log4j-ext.xml"
+	};
 
 	private static Map<String, Set<String>> _extMap =
 		new HashMap<String, Set<String>>();

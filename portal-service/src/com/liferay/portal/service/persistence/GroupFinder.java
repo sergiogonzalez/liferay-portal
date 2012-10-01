@@ -27,6 +27,9 @@ public interface GroupFinder {
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByLayouts(long companyId, long parentGroupId, boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int countByG_U(long groupId, long userId, boolean inherit)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -66,6 +69,10 @@ public interface GroupFinder {
 		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Group> findByLayouts(
+		long companyId, long parentGroupId, boolean site, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.Group> findByLiveGroups()

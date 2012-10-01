@@ -84,8 +84,9 @@ public class BaseDDMServiceTestCase {
 
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			classNameId, structureKey, getDefaultLocaleMap(name), null, xsd,
-			storageType, type, ServiceTestUtil.getServiceContext());
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
+			structureKey, getDefaultLocaleMap(name), null, xsd, storageType,
+			type, ServiceTestUtil.getServiceContext());
 	}
 
 	protected DDMTemplate addTemplate(

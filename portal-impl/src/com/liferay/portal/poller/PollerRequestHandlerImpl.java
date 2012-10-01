@@ -177,10 +177,10 @@ public class PollerRequestHandlerImpl
 			Map<String, Object>[] pollerRequestChunks, boolean receiveRequest)
 		throws Exception {
 
-		String[] portletIds = pollerHeader.getPortletIds();
+		Map<String, Boolean> portletIdsMap = pollerHeader.getPortletIdsMap();
 
 		List<PollerRequest> pollerRequests = new ArrayList<PollerRequest>(
-			portletIds.length);
+			portletIdsMap.size());
 
 		Set<String> receiveRequestPortletIds = null;
 
@@ -213,6 +213,8 @@ public class PollerRequestHandlerImpl
 		}
 
 		if (receiveRequest) {
+			Set<String> portletIds = portletIdsMap.keySet();
+
 			for (String portletId : portletIds) {
 				if (receiveRequestPortletIds.contains(portletId)) {
 					continue;
@@ -262,8 +264,6 @@ public class PollerRequestHandlerImpl
 			JSONFactoryUtil.createJSONObject();
 
 		pollerResponseHeaderJSONObject.put("userId", pollerHeader.getUserId());
-		pollerResponseHeaderJSONObject.put(
-			"initialRequest", pollerHeader.isInitialRequest());
 		pollerResponseHeaderJSONObject.put("suspendPolling", suspendPolling);
 
 		return pollerResponseHeaderJSONObject;
@@ -387,18 +387,16 @@ public class PollerRequestHandlerImpl
 
 		Map<String, Object> pollerRequestChunk = pollerRequestChunks[0];
 
-		long companyId = GetterUtil.getLong(
-			String.valueOf(pollerRequestChunk.get("companyId")));
-		String userIdString = GetterUtil.getString(
-			String.valueOf(pollerRequestChunk.get("userId")));
 		long browserKey = GetterUtil.getLong(
 			String.valueOf(pollerRequestChunk.get("browserKey")));
-		String[] portletIds = StringUtil.split(
-			String.valueOf(pollerRequestChunk.get("portletIds")));
-		boolean initialRequest = GetterUtil.getBoolean(
-			String.valueOf(pollerRequestChunk.get("initialRequest")));
+		long companyId = GetterUtil.getLong(
+			String.valueOf(pollerRequestChunk.get("companyId")));
+		Map<String, Boolean> portletIdsMap =
+			(Map<String, Boolean>)pollerRequestChunk.get("portletIdsMap");
 		boolean startPolling = GetterUtil.getBoolean(
 			String.valueOf(pollerRequestChunk.get("startPolling")));
+		String userIdString = GetterUtil.getString(
+			String.valueOf(pollerRequestChunk.get("userId")));
 
 		long userId = getUserId(companyId, userIdString);
 
@@ -407,8 +405,7 @@ public class PollerRequestHandlerImpl
 		}
 
 		return new PollerHeader(
-			companyId, userId, browserKey, portletIds, initialRequest,
-			startPolling);
+			companyId, userId, browserKey, portletIdsMap, startPolling);
 	}
 
 	protected Map<String, Object>[] parsePollerRequestParameters(
