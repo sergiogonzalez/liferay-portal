@@ -746,11 +746,11 @@ public class MBUtil {
 		return true;
 	}
 
-	public static String replaceElements(
-			String oldString, ThemeDisplay themeDisplay) {
+	public static String replaceMessageBodyElements(
+		String messageBody, ThemeDisplay themeDisplay) {
 
 		return StringUtil.replace(
-			oldString,
+			messageBody,
 			new String[] {
 				"@theme_images_path@", "href=\"/", "src=\"/"
 			},

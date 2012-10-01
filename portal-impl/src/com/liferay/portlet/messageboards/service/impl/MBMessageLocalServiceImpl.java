@@ -2066,10 +2066,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				messageBody = BBCodeTranslatorUtil.getHTML(messageBody);
 
 				HttpServletRequest request = serviceContext.getRequest();
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-				messageBody = MBUtil.replaceElements(
-					messageBody,
-					(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY));
+				messageBody = MBUtil.replaceMessageBodyElements(
+					messageBody, themeDisplay);
 			}
 			catch (Exception e) {
 				_log.error(
