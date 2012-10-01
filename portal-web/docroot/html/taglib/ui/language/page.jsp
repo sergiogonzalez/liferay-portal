@@ -143,7 +143,20 @@ for (int i = 0; i < locales.length; i++) {
 							<span class="taglib-language-list-text <%= ((i + 1) < locales.length) ? StringPool.BLANK : "last" %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>">
 						</c:when>
 						<c:otherwise>
-							<a class="taglib-language-list-text <%= ((i + 1) < locales.length) ? StringPool.BLANK : "last" %>" href="<%= HtmlUtil.escape(formAction) %>&amp;<%= name %>=<%= locales[i].getLanguage() + "_" + locales[i].getCountry() %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>">
+
+							<%
+							StringBundler sb = new StringBundler(7);
+
+							sb.append(formAction);
+							sb.append(StringPool.AMPERSAND);
+							sb.append(name);
+							sb.append(StringPool.EQUAL);
+							sb.append(locales[i].getLanguage());
+							sb.append(StringPool.UNDERLINE);
+							sb.append(locales[i].getCountry());
+							%>
+
+							<a class="taglib-language-list-text <%= ((i + 1) < locales.length) ? StringPool.BLANK : "last" %>" href="<%= HtmlUtil.escape(sb.toString()) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>">
 						</c:otherwise>
 					</c:choose>
 
