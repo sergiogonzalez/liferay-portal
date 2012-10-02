@@ -78,9 +78,9 @@ public class DeployManagerUtil {
 	}
 
 	public static void reset() {
-		if (_deployManager != null) {
-			_deployManager = null;
-		}
+		PortalRuntimePermission.checkSetBeanProperty(DeployManagerUtil.class);
+
+		_deployManager = null;
 	}
 
 	public static void undeploy(String context) throws Exception {
