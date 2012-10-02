@@ -232,6 +232,10 @@ update Country set name = 'yemen' where name = 'Yemen';
 update Country set name = 'zambia' where name = 'Zambia';
 update Country set name = 'zimbabwe' where name = 'Zimbabwe';
 
+alter table DDMStructure add parentStructureId LONG;
+
+alter table DLFileEntry add manualCheckInRequired BOOLEAN;
+
 alter table DLFileRank add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;
@@ -256,6 +260,8 @@ update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
 
+update Group_ set site = FALSE where name = 'Control Panel';
+
 drop table Groups_Permissions;
 
 alter table JournalArticle add folderId LONG;
@@ -279,6 +285,8 @@ update MBMessage set status = 2 where status = 9;
 drop table OrgGroupPermission;
 
 drop table Permission_;
+
+alter table RepositoryEntry add manualCheckInRequired BOOLEAN;
 
 drop table Resource_;
 

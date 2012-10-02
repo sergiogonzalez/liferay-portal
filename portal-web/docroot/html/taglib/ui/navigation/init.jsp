@@ -21,29 +21,30 @@ String bulletStyle = ((String)request.getAttribute("liferay-ui:navigation:bullet
 String displayStyle = (String)request.getAttribute("liferay-ui:navigation:displayStyle");
 
 String headerType = null;
-String rootLayoutType = null;
-int rootLayoutLevel = 0;
 String includedLayouts = null;
 boolean nestedChildren = true;
+int rootLayoutLevel = 0;
+String rootLayoutType = null;
 
 String[] displayStyleDefinition = _getDisplayStyleDefinition(displayStyle);
 
 if ((displayStyleDefinition != null) && (displayStyleDefinition.length != 0)) {
 	headerType = displayStyleDefinition[0];
-	rootLayoutType = displayStyleDefinition[1];
-	rootLayoutLevel = GetterUtil.getInteger(displayStyleDefinition[2]);
 	includedLayouts = displayStyleDefinition[3];
 
 	if (displayStyleDefinition.length > 4) {
 		nestedChildren = GetterUtil.getBoolean(displayStyleDefinition[4]);
 	}
+
+	rootLayoutLevel = GetterUtil.getInteger(displayStyleDefinition[2]);
+	rootLayoutType = displayStyleDefinition[1];
 }
 else {
 	headerType = (String)request.getAttribute("liferay-ui:navigation:headerType");
-	rootLayoutType = (String)request.getAttribute("liferay-ui:navigation:rootLayoutType");
-	rootLayoutLevel = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:navigation:rootLayoutLevel"));
 	includedLayouts = (String)request.getAttribute("liferay-ui:navigation:includedLayouts");
 	nestedChildren = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:nestedChildren"));
+	rootLayoutLevel = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:navigation:rootLayoutLevel"));
+	rootLayoutType = (String)request.getAttribute("liferay-ui:navigation:rootLayoutType");
 }
 %>
 

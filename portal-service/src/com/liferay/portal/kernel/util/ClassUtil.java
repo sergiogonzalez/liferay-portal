@@ -74,10 +74,11 @@ public class ClassUtil {
 					st.ordinaryChar(' ');
 					st.wordChars('=', '=');
 
-					String[] las = _processAnnotation(st.sval, st);
+					String[] annotationClasses = _processAnnotation(
+						st.sval, st);
 
-					for (int i = 0; i < las.length; i++) {
-						classes.add(las[i]);
+					for (String annotationClass : annotationClasses) {
+						classes.add(annotationClass);
 					}
 
 					_setupParseTableForAnnotationProcessing(st);
@@ -204,10 +205,10 @@ public class ClassUtil {
 			}
 
 			if (b.isInterface()) {
-				Class<?>[] interfaces = x.getInterfaces();
+				Class<?>[] interfaceClasses = x.getInterfaces();
 
-				for (int i = 0; i < interfaces.length; i++) {
-					if (isSubclass(interfaces[i], b)) {
+				for (Class<?> interfaceClass : interfaceClasses) {
+					if (isSubclass(interfaceClass, b)) {
 						return true;
 					}
 				}
@@ -231,10 +232,10 @@ public class ClassUtil {
 				return true;
 			}
 
-			Class<?>[] interfaces = x.getInterfaces();
+			Class<?>[] interfaceClasses = x.getInterfaces();
 
-			for (int i = 0; i < interfaces.length; i++) {
-				if (isSubclass(interfaces[i], s)) {
+			for (Class<?> interfaceClass : interfaceClasses) {
+				if (isSubclass(interfaceClass, s)) {
 					return true;
 				}
 			}

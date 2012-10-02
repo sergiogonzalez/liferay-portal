@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 public class DLProcessorThreadLocal {
 
 	public static boolean isEnabled() {
-		return _enabled.get().booleanValue();
+		return _enabled.get();
 	}
 
 	public static void setEnabled(boolean enabled) {

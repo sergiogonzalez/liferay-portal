@@ -252,6 +252,8 @@ public class CMISRepository extends BaseCmisRepository {
 		ServiceContext serviceContext) {
 
 		try {
+			clearManualCheckInRequired(fileEntryId, serviceContext);
+
 			Session session = getSession();
 
 			String versionSeriesId = toFileEntryId(fileEntryId);
@@ -285,9 +287,10 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	public void checkInFileEntry(long fileEntryId, String lockUuid) {
-		checkInFileEntry(
-			fileEntryId, false, StringPool.BLANK, new ServiceContext());
+	public void checkInFileEntry(
+		long fileEntryId, String lockUuid, ServiceContext serviceContext) {
+
+		checkInFileEntry(fileEntryId, false, StringPool.BLANK, serviceContext);
 	}
 
 	public FileEntry checkOutFileEntry(
@@ -295,6 +298,8 @@ public class CMISRepository extends BaseCmisRepository {
 		throws PortalException, SystemException {
 
 		try {
+			setManualCheckInRequired(fileEntryId, serviceContext);
+
 			Session session = getSession();
 
 			String versionSeriesId = toFileEntryId(fileEntryId);

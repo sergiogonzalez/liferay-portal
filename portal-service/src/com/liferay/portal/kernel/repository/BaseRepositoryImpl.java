@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository;
 
 import com.liferay.counter.service.CounterLocalService;
+import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
@@ -35,6 +37,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -80,6 +83,15 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @deprecated {@link #checkInFileEntry(long, String, ServiceContext)}
+	 */
+	public void checkInFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
 	}
 
 	public void deleteFileEntry(long folderId, String title)
@@ -389,6 +401,51 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid) {
 		throw new UnsupportedOperationException();
+	}
+
+	protected void clearManualCheckInRequired(
+			long fileEntryId, ServiceContext serviceContext)
+		throws NoSuchRepositoryEntryException, SystemException {
+
+		boolean webDAVCheckInMode = GetterUtil.getBoolean(
+			serviceContext.getAttribute(DLUtil.WEBDAV_CHECK_IN_MODE));
+
+		if (webDAVCheckInMode) {
+			return;
+		}
+
+		RepositoryEntry repositoryEntry = RepositoryEntryUtil.findByPrimaryKey(
+			fileEntryId);
+
+		boolean manualCheckInRequired =
+			repositoryEntry.getManualCheckInRequired();
+
+		if (!manualCheckInRequired) {
+			return;
+		}
+
+		repositoryEntry.setManualCheckInRequired(false);
+
+		RepositoryEntryUtil.update(repositoryEntry, false);
+	}
+
+	protected void setManualCheckInRequired(
+			long fileEntryId, ServiceContext serviceContext)
+		throws NoSuchRepositoryEntryException, SystemException {
+
+		boolean manualCheckInRequired = GetterUtil.getBoolean(
+			serviceContext.getAttribute(DLUtil.MANUAL_CHECK_IN_REQUIRED));
+
+		if (!manualCheckInRequired) {
+			return;
+		}
+
+		RepositoryEntry repositoryEntry = RepositoryEntryUtil.findByPrimaryKey(
+			fileEntryId);
+
+		repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
+
+		RepositoryEntryUtil.update(repositoryEntry, false);
 	}
 
 	protected AssetEntryLocalService assetEntryLocalService;

@@ -338,7 +338,7 @@ public class WebDriverToSeleniumBridge
 	public String getAttribute(String attributeLocator) {
 		int pos = attributeLocator.lastIndexOf(CharPool.AT);
 
-		String locator = attributeLocator.substring(0, pos - 1);
+		String locator = attributeLocator.substring(0, pos);
 
 		WebElement webElement = getWebElement(locator);
 
@@ -930,6 +930,19 @@ public class WebDriverToSeleniumBridge
 			int optionIndex = GetterUtil.getInteger(index);
 
 			optionWebElement = options.get(optionIndex);
+		}
+		else if (optionLocator.startsWith("regexp:")) {
+			String label = optionLocator.substring(10);
+
+			for (WebElement option : options) {
+				String optionText = option.getText();
+
+				if (optionText.contains(label)) {
+					optionWebElement = option;
+
+					break;
+				}
+			}
 		}
 		else if (optionLocator.startsWith("value=")) {
 			String value = optionLocator.substring(6);

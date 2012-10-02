@@ -58,6 +58,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.File;
@@ -399,9 +400,14 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			if (resource instanceof DLFileEntryResourceImpl) {
 				FileEntry fileEntry = (FileEntry)resource.getModel();
 
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setAttribute(
+					DLUtil.MANUAL_CHECK_IN_REQUIRED,
+					webDavRequest.isManualCheckInRequired());
+
 				DLAppServiceUtil.checkOutFileEntry(
-					fileEntry.getFileEntryId(), owner, timeout,
-					new ServiceContext());
+					fileEntry.getFileEntryId(), owner, timeout, serviceContext);
 
 				lock = fileEntry.getLock();
 			}
@@ -781,8 +787,19 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			if (resource instanceof DLFileEntryResourceImpl) {
 				FileEntry fileEntry = (FileEntry)resource.getModel();
 
+				// Do not allow WebDAV to check in a file entry if it requires
+				// a manual check in
+
+				if (fileEntry.isManualCheckInRequired()) {
+					return false;
+				}
+
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setAttribute(DLUtil.WEBDAV_CHECK_IN_MODE, true);
+
 				DLAppServiceUtil.checkInFileEntry(
-					fileEntry.getFileEntryId(), token);
+					fileEntry.getFileEntryId(), token, serviceContext);
 
 				if (webDavRequest.isAppleDoubleRequest()) {
 					DLAppServiceUtil.deleteFileEntry(

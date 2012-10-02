@@ -1568,12 +1568,8 @@ public class ServiceBuilder {
 			return false;
 		}
 
-		String methodName = method.getName();
-
-		for (String txRequired : txRequiredList) {
-			if (methodName.equals(txRequired)) {
-				return true;
-			}
+		if (txRequiredList.contains(method.getName())) {
+			return true;
 		}
 
 		return false;
@@ -4558,11 +4554,16 @@ public class ServiceBuilder {
 				columnElement.attributeValue("localized"));
 			boolean colJsonEnabled = GetterUtil.getBoolean(
 				columnElement.attributeValue("json-enabled"), jsonEnabled);
+			boolean containerModel = GetterUtil.getBoolean(
+				columnElement.attributeValue("container-model"));
+			boolean parentContainerModel = GetterUtil.getBoolean(
+				columnElement.attributeValue("parent-container-model"));
 
 			EntityColumn col = new EntityColumn(
 				columnName, columnDBName, columnType, primary, accessor,
 				filterPrimary, collectionEntity, mappingKey, mappingTable,
-				idType, idParam, convertNull, lazy, localized, colJsonEnabled);
+				idType, idParam, convertNull, lazy, localized, colJsonEnabled,
+				containerModel, parentContainerModel);
 
 			if (primary) {
 				pkList.add(col);

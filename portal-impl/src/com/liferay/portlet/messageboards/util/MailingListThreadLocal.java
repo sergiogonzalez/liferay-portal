@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
 public class MailingListThreadLocal {
 
 	public static boolean isSourceMailingList() {
-		return _sourceMailingList.get().booleanValue();
+		return _sourceMailingList.get();
 	}
 
 	public static void setSourceMailingList(boolean sourceMailingList) {

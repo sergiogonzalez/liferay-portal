@@ -86,6 +86,24 @@
 				(resourceBlockId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByLayouts">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				Group_
+			INNER JOIN
+				LayoutSet ON
+					LayoutSet.groupId = Group_.groupId
+			WHERE
+				(Group_.companyId = ?) AND
+				(Group_.parentGroupId = ?) AND
+				(Group_.site = ?) AND
+				(LayoutSet.pageCount > 0)
+			GROUP BY
+				Group_.groupId
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByGroupId">
 		<![CDATA[
 			SELECT
@@ -100,7 +118,7 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByC_N_D">
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByC_C_PG_N_D">
 		<![CDATA[
 			SELECT
 				Group_.groupId AS groupId
@@ -111,11 +129,30 @@
 				[$WHERE$]
 				(Group_.companyId = ?) AND
 				(Group_.classNameId = ?) AND
+				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.name != 'Control Panel') AND
 				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(lower(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLayouts">
+		<![CDATA[
+			SELECT
+				{Group_.*}
+			FROM
+				Group_
+			INNER JOIN
+				LayoutSet ON
+					LayoutSet.groupId = Group_.groupId
+			WHERE
+				(Group_.companyId = ?) AND
+				(Group_.parentGroupId = ?) AND
+				(Group_.site = ?) AND
+				(LayoutSet.pageCount > 0)
+			GROUP BY
+				Group_.groupId
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLiveGroups">
@@ -207,7 +244,7 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_N_D">
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C_PG_N_D">
 		<![CDATA[
 			SELECT
 				Group_.groupId AS groupId, Group_.name AS groupName, Group_.type_ AS groupType, Group_.friendlyURL AS groupFriendlyURL
@@ -218,6 +255,7 @@
 				[$WHERE$]
 				(Group_.companyId = ?) AND
 				(Group_.classNameId = ?) AND
+				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.name != 'Control Panel') AND
 				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

@@ -338,6 +338,51 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		</#if>
 	</#list>
 
+	<#if entity.isContainerModel()>
+		<#assign hasParentContainerModelId = entity.hasColumn("parentContainerModelId")>
+
+		<#list entity.columnList as column>
+			<#if column.isContainerModel() && (column.name != "containerModelId")>
+				public long getContainerModelId() {
+					return get${column.methodName}();
+				}
+
+				public void setContainerModelId(long containerModelId) {
+					_${column.name} = containerModelId;
+				}
+			</#if>
+
+			<#if column.isParentContainerModel() && (column.name != "parentContainerModelId")>
+				<#assign hasParentContainerModelId = true>
+
+				public long getParentContainerModelId() {
+					return get${column.methodName}();
+				}
+
+				public void setParentContainerModelId(long parentContainerModelId) {
+					_${column.name} = parentContainerModelId;
+				}
+			</#if>
+		</#list>
+
+		public String getContainerModelName() {
+			<#if entity.hasColumn("name")>
+				return String.valueOf(getName());
+			<#else>
+				return String.valueOf(getContainerModelId());
+			</#if>
+		}
+
+		<#if !hasParentContainerModelId>
+			public long getParentContainerModelId() {
+				return 0;
+			}
+
+			public void setParentContainerModelId(long parentContainerModelId) {
+			}
+		</#if>
+	</#if>
+
 	<#if entity.isWorkflowEnabled()>
 		/**
 		 * @deprecated {@link #isApproved}

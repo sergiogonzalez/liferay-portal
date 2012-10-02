@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 public class MergeLayoutPrototypesThreadLocal {
 
 	public static boolean isInProgress() {
-		return _inProgress.get().booleanValue();
+		return _inProgress.get();
 	}
 
 	public static void setInProgress(boolean inProgress) {

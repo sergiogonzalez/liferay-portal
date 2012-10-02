@@ -433,11 +433,24 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				user.getCompanyId(), organizationParams, start, end);
 
 			for (Organization organization : userOrgs) {
-				userPlaces.add(0, organization.getGroup());
+				if (!organization.hasPrivateLayouts() &&
+					!organization.hasPublicLayouts()) {
+
+					userPlaces.remove(organization.getGroup());
+				}
+				else {
+					userPlaces.add(0, organization.getGroup());
+				}
 
 				if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
 					for (Organization ancestorOrganization :
 							organization.getAncestors()) {
+
+						if (!organization.hasPrivateLayouts() &&
+							!organization.hasPublicLayouts()) {
+
+							continue;
+						}
 
 						userPlaces.add(0, ancestorOrganization.getGroup());
 					}
@@ -588,10 +601,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a name ordered range of all the site groups and organization
-	 * groups that match the name and description, optionally including the
-	 * user's inherited organization groups and user groups. System and staged
-	 * groups are not included.
+	 * Returns an ordered range of all the site groups and organization groups
+	 * that match the name and description, optionally including the user's
+	 * inherited organization groups and user groups. System and staged groups
+	 * are not included.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -

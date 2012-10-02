@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -192,23 +193,35 @@ public class LanguageResources {
 
 			ClassLoader classLoader = LanguageResources.class.getClassLoader();
 
-			URL url = classLoader.getResource(name);
+			Enumeration<URL> enu = classLoader.getResources(name);
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Attempting to load " + name);
+			if (_log.isDebugEnabled() && !enu.hasMoreElements()) {
+				_log.debug("No resources found for " + name);
 			}
 
-			if (url != null) {
-				InputStream inputStream = url.openStream();
-
-				properties = PropertiesUtil.load(inputStream, StringPool.UTF8);
-
-				inputStream.close();
+			while (enu.hasMoreElements()) {
+				URL url = enu.nextElement();
 
 				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Loading " + url + " with " + properties.size() +
-							" values");
+					_log.debug("Loading " + name + " from " + url);
+				}
+
+				InputStream inputStream = url.openStream();
+
+				try {
+					Properties inputStreamProperties = PropertiesUtil.load(
+						inputStream, StringPool.UTF8);
+
+					properties.putAll(inputStreamProperties);
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Loading " + url + " with " +
+								inputStreamProperties.size() + " values");
+					}
+				}
+				finally {
+					inputStream.close();
 				}
 			}
 		}

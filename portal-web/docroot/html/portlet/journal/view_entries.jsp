@@ -19,6 +19,8 @@
 <%
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
+String structureName = LanguageUtil.get(pageContext, "basic-web-content");
+
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -83,14 +85,12 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 		<div class="portlet-msg-info">
 
 			<%
-			String name = LanguageUtil.get(pageContext, "basic-web-content");
-
 			String structureId = StringPool.BLANK;
 
 			if (!displayTerms.getStructureId().equals("0")) {
 				JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
 
-				name = structure.getName(locale);
+				structureName = structure.getName(locale);
 
 				structureId = displayTerms.getStructureId();
 			}
@@ -105,7 +105,7 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 				<portlet:param name="structureId" value="<%= structureId %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(name) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= HtmlUtil.escape(name) %>" key="add-new-x" /></a>)
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(structureName) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= HtmlUtil.escape(structureName) %>" key="add-new-x" /></a>)
 		</div>
 	</c:if>
 </c:if>
@@ -228,7 +228,28 @@ request.setAttribute("view.jsp-total", String.valueOf(total));
 
 <c:if test="<%= results.isEmpty() %>">
 	<div class="entries-empty portlet-msg-info">
-		<liferay-ui:message key="no-web-content-were-found" />
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+				<c:choose>
+					<c:when test="<%= total == 0 %>">
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(structureName) %>" key="there-is-no-web-content-with-structure-x" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(structureName) %>" key="there-is-no-web-content-with-structure-x-on-this-page" />
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="<%= total == 0 %>">
+						<liferay-ui:message key="no-web-content-were-found" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="there-is-no-web-content-on-this-page" />
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </c:if>
 

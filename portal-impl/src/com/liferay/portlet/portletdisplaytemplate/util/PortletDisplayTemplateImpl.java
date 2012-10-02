@@ -16,6 +16,7 @@ package com.liferay.portlet.portletdisplaytemplate.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.GenericServletWrapper;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.templateparser.Transformer;
@@ -30,8 +31,16 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.util.DDLTransformer;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.taglib.util.VelocityTaglib;
+import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
+
+import freemarker.ext.servlet.HttpRequestHashModel;
+import freemarker.ext.servlet.ServletContextHashModel;
+
+import freemarker.template.ObjectWrapper;
+import freemarker.template.TemplateHashModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +50,8 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -198,24 +209,90 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		contextObjects.put(
 			PortletDisplayTemplateConstants.RENDER_RESPONSE, renderResponse);
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.TAGLIB_LIFERAY,
-			_getVelocityTaglib(pageContext));
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		contextObjects.put(
 			PortletDisplayTemplateConstants.THEME_DISPLAY, themeDisplay);
 
-		contextObjects.putAll(_getPortletPreferences(renderRequest));
+		// Taglibs
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			ddmTemplateId);
 
+		String language = ddmTemplate.getLanguage();
+
+		if (language.equals(DDMTemplateConstants.LANG_TYPE_FTL)) {
+			_addTaglibSupportFTL(contextObjects, pageContext);
+		}
+		else if (language.equals(DDMTemplateConstants.LANG_TYPE_VM)) {
+			_addTaglibSupportVM(contextObjects, pageContext);
+		}
+
+		contextObjects.putAll(_getPortletPreferences(renderRequest));
+
 		return _transformer.transform(
-			themeDisplay, contextObjects, ddmTemplate.getScript(),
-			ddmTemplate.getLanguage());
+			themeDisplay, contextObjects, ddmTemplate.getScript(), language);
+	}
+
+	private void _addTaglibSupportFTL(
+			Map<String, Object> contextObjects, PageContext pageContext)
+		throws Exception {
+
+		// FreeMarker servlet application
+
+		final Servlet servlet = (Servlet)pageContext.getPage();
+
+		GenericServlet genericServlet = null;
+
+		if (servlet instanceof GenericServlet) {
+			genericServlet = (GenericServlet)servlet;
+		}
+		else {
+			genericServlet = new GenericServletWrapper(servlet);
+
+			genericServlet.init(pageContext.getServletConfig());
+		}
+
+		ServletContextHashModel servletContextHashModel =
+			new ServletContextHashModel(
+				genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
+
+		contextObjects.put(
+			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_APPLICATION,
+			servletContextHashModel);
+
+		// FreeMarker servlet request
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
+		HttpRequestHashModel requestHashModel = new HttpRequestHashModel(
+			request, response, ObjectWrapper.DEFAULT_WRAPPER);
+
+		contextObjects.put(
+			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_REQUEST,
+			requestHashModel);
+
+		// Taglib Liferay hash
+
+		TemplateHashModel taglibLiferayHash =
+			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
+				pageContext.getServletContext());
+
+		contextObjects.put(
+			PortletDisplayTemplateConstants.TAGLIB_LIFERAY_HASH,
+			taglibLiferayHash);
+	}
+
+	private void _addTaglibSupportVM(
+		Map<String, Object> contextObjects, PageContext pageContext) {
+
+		contextObjects.put(
+			PortletDisplayTemplateConstants.TAGLIB_LIFERAY,
+			_getVelocityTaglib(pageContext));
 	}
 
 	private Map<String, Object> _getPortletPreferences(

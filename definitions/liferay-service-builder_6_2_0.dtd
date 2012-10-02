@@ -296,6 +296,12 @@ different values for different locales. The default value is false.
 The json-enabled value specifies whether or not the column should be annotated
 for JSON serialization. By default, if the json-enabled value in the entity
 element is true, then the json-enabled value in the column element is true.
+
+The container-model value specifies whether the column represents the primary
+key of a container model.
+
+The parent-container-model value specifies whether the column represents the
+primary key of a parent container model.
 -->
 <!ATTLIST column
 	name CDATA #REQUIRED
@@ -313,6 +319,8 @@ element is true, then the json-enabled value in the column element is true.
 	lazy CDATA #IMPLIED
 	localized CDATA #IMPLIED
 	json-enabled CDATA #IMPLIED
+	container-model CDATA #IMPLIED
+	parent-container-model CDATA #IMPLIED
 >
 
 <!--

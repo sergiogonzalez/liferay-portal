@@ -256,8 +256,20 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
+
+		boolean webDAVCheckInMode = GetterUtil.getBoolean(
+			serviceContext.getAttribute(DLUtil.WEBDAV_CHECK_IN_MODE));
+
+		boolean manualCheckInRequired = dlFileEntry.getManualCheckInRequired();
+
+		if (!webDAVCheckInMode && manualCheckInRequired) {
+			dlFileEntry.setManualCheckInRequired(false);
+
+			dlFileEntryPersistence.update(dlFileEntry, false);
+		}
 
 		String version = getNextVersion(
 			dlFileEntry, majorVersion, serviceContext.getWorkflowAction());
@@ -297,7 +309,18 @@ public class DLFileEntryLocalServiceImpl
 		lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);
 	}
 
+	/**
+	 * @deprecated {@link #checkInFileEntry(long, long, String, ServiceContext)}
+	 */
 	public void checkInFileEntry(long userId, long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		checkInFileEntry(userId, fileEntryId, lockUuid, new ServiceContext());
+	}
+
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (Validator.isNotNull(lockUuid)) {
@@ -320,7 +343,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		checkInFileEntry(
-			userId, fileEntryId, false, StringPool.BLANK, new ServiceContext());
+			userId, fileEntryId, false, StringPool.BLANK, serviceContext);
 	}
 
 	/**
@@ -379,6 +402,11 @@ public class DLFileEntryLocalServiceImpl
 
 		serviceContext.setCompanyId(user.getCompanyId());
 		serviceContext.setUserId(userId);
+
+		boolean manualCheckinRequired = GetterUtil.getBoolean(
+			serviceContext.getAttribute(DLUtil.MANUAL_CHECK_IN_REQUIRED));
+
+		dlFileEntry.setManualCheckInRequired(manualCheckinRequired);
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 

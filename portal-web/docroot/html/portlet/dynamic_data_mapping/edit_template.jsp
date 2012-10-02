@@ -38,16 +38,17 @@ if ((structure == null) && (template != null)) {
 	structure = DDMTemplateHelperUtil.fetchStructure(template);
 }
 
-String mode = BeanParamUtil.getString(template, request, "mode", "create");
 String type = BeanParamUtil.getString(template, request, "type", "detail");
+String mode = BeanParamUtil.getString(template, request, "mode", "create");
+String language = BeanParamUtil.getString(template, request, "language", DDMTemplateConstants.LANG_TYPE_VM);
 String script = BeanParamUtil.getString(template, request, "script");
 
 if (Validator.isNull(script)) {
 	if (classNameId > 0) {
-		PortletDisplayTemplateHandler portletDislayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
+		PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
-		if (portletDislayTemplateHandler != null) {
-			script = ContentUtil.get(portletDislayTemplateHandler.getHelpTemplatePath());
+		if (portletDisplayTemplateHandler != null) {
+			script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(language));
 		}
 	}
 	else if (!type.equals("detail")) {
@@ -114,8 +115,14 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	}
 	%>
 
+	<portlet:renderURL var="viewTemplatesURL">
+		<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
+		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	</portlet:renderURL>
+
 	<liferay-ui:header
-		backURL="<%= backURL %>"
+		backURL="<%= (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || Validator.isNotNull(portletResource)) ? backURL : viewTemplatesURL %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>

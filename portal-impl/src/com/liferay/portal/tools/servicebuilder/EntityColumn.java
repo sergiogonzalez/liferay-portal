@@ -28,7 +28,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	public EntityColumn(String name) {
 		this(
 			name, null, null, false, false, false, null, null, null, true, true,
-			false, null, null, null, null, true, true, false, false);
+			false, null, null, null, null, true, true, false, false, false,
+			false);
 	}
 
 	public EntityColumn(
@@ -38,7 +39,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		boolean orderByAscending, boolean orderColumn, String comparator,
 		String arrayableOperator, String idType, String idParam,
 		boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled) {
+		boolean jsonEnabled, boolean containerModel,
+		boolean parentContainerModel) {
 
 		_name = name;
 		_dbName = dbName;
@@ -62,6 +64,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_lazy = lazy;
 		_localized = localized;
 		_jsonEnabled = jsonEnabled;
+		_containerModel = containerModel;
+		_parentContainerModel = parentContainerModel;
 	}
 
 	public EntityColumn(
@@ -69,12 +73,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		boolean accessor, boolean filterPrimary, String ejbName,
 		String mappingKey, String mappingTable, String idType, String idParam,
 		boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled) {
+		boolean jsonEnabled, boolean containerModel,
+		boolean parentContainerModel) {
 
 		this(
 			name, dbName, type, primary, accessor, filterPrimary, ejbName,
 			mappingKey, mappingTable, true, true, false, null, null, idType,
-			idParam, convertNull, lazy, localized, jsonEnabled);
+			idParam, convertNull, lazy, localized, jsonEnabled, containerModel,
+			parentContainerModel);
 	}
 
 	@Override
@@ -84,7 +90,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			isFilterPrimary(), getEJBName(), getMappingKey(), getMappingTable(),
 			isCaseSensitive(), isOrderByAscending(), isOrderColumn(),
 			getComparator(), getArrayableOperator(), getIdType(), getIdParam(),
-			isConvertNull(), isLazy(), isLocalized(), isJsonEnabled());
+			isConvertNull(), isLazy(), isLocalized(), isJsonEnabled(),
+			isContainerModel(), isParentContainerModel());
 	}
 
 	public int compareTo(EntityColumn entityColumn) {
@@ -239,6 +246,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		}
 	}
 
+	public boolean isContainerModel() {
+		return _containerModel;
+	}
+
 	public boolean isConvertNull() {
 		return _convertNull;
 	}
@@ -277,6 +288,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public boolean isOrderColumn() {
 		return _orderColumn;
+	}
+
+	public boolean isParentContainerModel() {
+		return _parentContainerModel;
 	}
 
 	public boolean isPrimary() {
@@ -340,6 +355,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_comparator = comparator;
 	}
 
+	public void setContainerModel(boolean containerModel) {
+		_containerModel = containerModel;
+	}
+
 	public void setConvertNull(boolean convertNull) {
 		_convertNull = convertNull;
 	}
@@ -376,6 +395,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_orderColumn = orderColumn;
 	}
 
+	public void setParentContainerModel(boolean parentContainerModel) {
+		_parentContainerModel = parentContainerModel;
+	}
+
 	protected String convertComparatorToHtml(String comparator) {
 		if (comparator.equals(">")) {
 			return "&gt;";
@@ -404,6 +427,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private String _arrayableOperator;
 	private boolean _caseSensitive;
 	private String _comparator;
+	private boolean _containerModel;
 	private boolean _convertNull;
 	private String _dbName;
 	private String _ejbName;
@@ -421,6 +445,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private String _name;
 	private boolean _orderByAscending;
 	private boolean _orderColumn;
+	private boolean _parentContainerModel;
 	private boolean _primary;
 	private String _type;
 
