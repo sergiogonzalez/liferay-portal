@@ -83,6 +83,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.portal.util.PortalUtil;
@@ -325,8 +326,8 @@ public class ServicePreAction extends Action {
 
 				// User previously set their preferred language
 
-				String languageId = CookieKeys.getCookie(
-					request, CookieKeys.GUEST_LANGUAGE_ID, false);
+				String languageId = CookieKeysUtil.getCookie(
+						request, CookieKeys.GUEST_LANGUAGE_ID, false);
 
 				if (Validator.isNotNull(languageId)) {
 					locale = LocaleUtil.fromLanguageId(languageId);
@@ -385,10 +386,10 @@ public class ServicePreAction extends Action {
 
 			// LEP-4069
 
-			CookieKeys.validateSupportCookie(request);
+			CookieKeysUtil.validateSupportCookie(request);
 		}
 		catch (Exception e) {
-			CookieKeys.addSupportCookie(request, response);
+			CookieKeysUtil.addSupportCookie(request, response);
 		}
 
 		// Time zone
@@ -893,7 +894,7 @@ public class ServicePreAction extends Action {
 		// Session
 
 		if (PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID &&
-			!CookieKeys.hasSessionId(request)) {
+			!CookieKeysUtil.hasSessionId(request)) {
 
 			themeDisplay.setAddSessionIdToURL(true);
 			themeDisplay.setSessionId(session.getId());

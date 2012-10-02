@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -84,8 +84,8 @@ public class SessionIdServletRequest extends HttpServletRequestWrapper {
 				cookie.setPath(StringPool.SLASH);
 			}
 
-			CookieKeys.addCookie(
-				(HttpServletRequest)super.getRequest(), _response, cookie);
+			CookieKeysUtil.addCookie(
+					(HttpServletRequest) super.getRequest(), _response, cookie);
 
 			setAttribute(_JESSIONID_ALREADY_SET, Boolean.TRUE);
 		}

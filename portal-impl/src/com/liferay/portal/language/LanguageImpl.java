@@ -35,6 +35,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -565,7 +566,7 @@ public class LanguageImpl implements Language {
 		languageIdCookie.setPath(StringPool.SLASH);
 		languageIdCookie.setMaxAge(CookieKeys.MAX_AGE);
 
-		CookieKeys.addCookie(request, response, languageIdCookie);
+		CookieKeysUtil.addCookie(request, response, languageIdCookie);
 	}
 
 	private static LanguageImpl _getInstance() {

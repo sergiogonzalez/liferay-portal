@@ -47,7 +47,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -1072,7 +1072,7 @@ public class PortletURLImpl
 				}
 			}
 		}
-		else if (!CookieKeys.hasSessionId(_request)) {
+		else if (!CookieKeysUtil.hasSessionId(_request)) {
 			result = PortalUtil.getURLWithSessionId(
 				result, _request.getSession().getId());
 		}

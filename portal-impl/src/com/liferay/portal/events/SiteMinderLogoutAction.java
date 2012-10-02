@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthSettingsUtil;
-import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.Cookie;
@@ -41,7 +41,7 @@ public class SiteMinderLogoutAction extends Action {
 				return;
 			}
 
-			String domain = CookieKeys.getDomain(request);
+			String domain = CookieKeysUtil.getDomain(request);
 
 			Cookie smSessionCookie = new Cookie(_SMSESSION, StringPool.BLANK);
 
@@ -61,8 +61,8 @@ public class SiteMinderLogoutAction extends Action {
 			smIdentityCookie.setMaxAge(0);
 			smIdentityCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(request, response, smSessionCookie);
-			CookieKeys.addCookie(request, response, smIdentityCookie);
+			CookieKeysUtil.addCookie(request, response, smSessionCookie);
+			CookieKeysUtil.addCookie(request, response, smIdentityCookie);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

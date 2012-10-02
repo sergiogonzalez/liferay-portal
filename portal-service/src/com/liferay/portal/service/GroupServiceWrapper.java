@@ -148,7 +148,7 @@ public class GroupServiceWrapper implements GroupService,
 	* <p>
 	* The group is unstaged and its assets and resources including layouts,
 	* membership requests, subscriptions, teams, blogs, bookmarks, calendar
-	* events, image gallery, journals, message boards, polls, shopping related
+	* events, image gallery, journals, message boards, shopping related
 	* entities, software catalog, and wikis are also deleted.
 	* </p>
 	*

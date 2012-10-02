@@ -32,20 +32,20 @@ import org.apache.commons.codec.binary.Hex;
  * @author Brian Wing Shun Chan
  * @author Minhchau Dang
  */
-public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
+public class CookieKeysImpl implements CookieKeys {
 
-	public static final int MAX_AGE = 31536000;
+	public final int MAX_AGE = 31536000;
 
-	public static final int VERSION = 0;
+	public final int VERSION = 0;
 
-	public static void addCookie(
+	public void addCookie(
 		HttpServletRequest request, HttpServletResponse response,
 		Cookie cookie) {
 
 		addCookie(request, response, cookie, request.isSecure());
 	}
 
-	public static void addCookie(
+	public void addCookie(
 		HttpServletRequest request, HttpServletResponse response, Cookie cookie,
 		boolean secure) {
 
@@ -82,7 +82,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		response.addCookie(cookie);
 	}
 
-	public static void addSupportCookie(
+	public void addSupportCookie(
 		HttpServletRequest request, HttpServletResponse response) {
 
 		Cookie cookieSupportCookie = new Cookie(COOKIE_SUPPORT, "true");
@@ -93,11 +93,11 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		addCookie(request, response, cookieSupportCookie);
 	}
 
-	public static String getCookie(HttpServletRequest request, String name) {
+	public String getCookie(HttpServletRequest request, String name) {
 		return getCookie(request, name, true);
 	}
 
-	public static String getCookie(
+	public String getCookie(
 		HttpServletRequest request, String name, boolean toUpperCase) {
 
 		String value = CookieUtil.get(request, name, toUpperCase);
@@ -128,7 +128,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		return value;
 	}
 
-	public static String getDomain(HttpServletRequest request) {
+	public String getDomain(HttpServletRequest request) {
 
 		// See LEP-4602 and	LEP-4618.
 
@@ -141,7 +141,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		return getDomain(host);
 	}
 
-	public static String getDomain(String host) {
+	public String getDomain(String host) {
 
 		// See LEP-4602 and LEP-4645.
 
@@ -181,7 +181,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		return domain;
 	}
 
-	public static boolean hasSessionId(HttpServletRequest request) {
+	public boolean hasSessionId(HttpServletRequest request) {
 		String jsessionid = getCookie(request, JSESSIONID, false);
 
 		if (jsessionid != null) {
@@ -192,7 +192,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		}
 	}
 
-	public static boolean isEncodedCookie(String name) {
+	public boolean isEncodedCookie(String name) {
 		if (name.equals(ID) || name.equals(LOGIN) || name.equals(PASSWORD) ||
 			name.equals(SCREEN_NAME)) {
 
@@ -203,7 +203,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		}
 	}
 
-	public static void validateSupportCookie(HttpServletRequest request)
+	public void validateSupportCookie(HttpServletRequest request)
 		throws CookieNotSupportedException {
 
 		if (PropsValues.SESSION_ENABLE_PERSISTENT_COOKIES &&
@@ -217,6 +217,6 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CookieKeys.class);
+	private Log _log = LogFactoryUtil.getLog(CookieKeysUtil.class);
 
 }

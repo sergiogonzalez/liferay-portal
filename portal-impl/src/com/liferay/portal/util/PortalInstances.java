@@ -42,17 +42,15 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -165,7 +163,7 @@ public class PortalInstances {
 
 		if (companyId <= 0) {
 			long cookieCompanyId = GetterUtil.getLong(
-				CookieKeys.getCookie(request, CookieKeys.COMPANY_ID, false));
+				CookieKeysUtil.getCookie(request, CookieKeys.COMPANY_ID, false));
 
 			if (cookieCompanyId > 0) {
 				try {

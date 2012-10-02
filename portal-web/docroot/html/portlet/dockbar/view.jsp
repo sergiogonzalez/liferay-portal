@@ -233,7 +233,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 
 					backURL = PortalUtil.getLayoutURL(refererLayout, themeDisplay);
 
-					if (!CookieKeys.hasSessionId(request)) {
+					if (!CookieKeysUtil.hasSessionId(request)) {
 						backURL = PortalUtil.getURLWithSessionId(backURL, session.getId());
 					}
 				}

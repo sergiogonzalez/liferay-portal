@@ -36,7 +36,6 @@ public class UpgradeUserName extends UpgradeProcess {
 		updateTable("BookmarksFolder", false);
 		updateTable("IGFolder", false);
 		updateTable("IGImage", false);
-		updateTable("PollsVote", true);
 	}
 
 	protected void updateTable(String tableName, boolean setCompanyId)

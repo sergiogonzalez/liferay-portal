@@ -17,7 +17,7 @@
 <c:if test="<%= themeDisplay.isSignedIn() && !PropsValues.SESSION_DISABLED %>">
 
 	<%
-	String autoRememberMe = CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME);
+	String autoRememberMe = CookieKeysUtil.getCookie(request, CookieKeys.REMEMBER_ME);
 	%>
 
 	<c:if test="<%= Validator.isNull(autoRememberMe) %>">

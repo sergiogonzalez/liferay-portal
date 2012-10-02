@@ -156,6 +156,7 @@ page import="com.liferay.portal.struts.StrutsUtil" %><%@
 page import="com.liferay.portal.theme.PortletDisplay" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.util.CookieKeys" %><%@
+page import="com.liferay.portal.util.CookieKeysUtil" %><%@
 page import="com.liferay.portal.util.JavaScriptBundleUtil" %><%@
 page import="com.liferay.portal.util.Portal" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
