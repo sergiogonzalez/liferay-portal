@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -52,7 +53,7 @@ public class LogoutAction extends Action {
 				PropsKeys.LOGOUT_EVENTS_PRE, PropsValues.LOGOUT_EVENTS_PRE,
 				request, response);
 
-			String domain = CookieKeys.getDomain(request);
+			String domain = CookieKeysUtil.getDomain(request);
 
 			Cookie companyIdCookie = new Cookie(
 				CookieKeys.COMPANY_ID, StringPool.BLANK);
@@ -93,10 +94,10 @@ public class LogoutAction extends Action {
 			rememberMeCookie.setMaxAge(0);
 			rememberMeCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(request, response, companyIdCookie);
-			CookieKeys.addCookie(request, response, idCookie);
-			CookieKeys.addCookie(request, response, passwordCookie);
-			CookieKeys.addCookie(request, response, rememberMeCookie);
+			CookieKeysUtil.addCookie(request, response, companyIdCookie);
+			CookieKeysUtil.addCookie(request, response, idCookie);
+			CookieKeysUtil.addCookie(request, response, passwordCookie);
+			CookieKeysUtil.addCookie(request, response, rememberMeCookie);
 
 			try {
 				session.invalidate();

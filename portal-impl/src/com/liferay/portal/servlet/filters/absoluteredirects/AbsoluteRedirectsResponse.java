@@ -16,14 +16,13 @@ package com.liferay.portal.servlet.filters.absoluteredirects;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 import com.liferay.portal.util.PortalUtil;
-
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import java.io.IOException;
 
 /**
  * @author Jorge Ferrer
@@ -49,7 +48,7 @@ public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 			}
 		}
 
-		if (!CookieKeys.hasSessionId(_request) &&
+		if (!CookieKeysUtil.hasSessionId(_request) &&
 			redirect.startsWith(portalURL)) {
 
 			redirect = PortalUtil.getURLWithSessionId(

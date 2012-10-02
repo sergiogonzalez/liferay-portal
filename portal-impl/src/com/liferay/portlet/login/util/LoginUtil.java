@@ -44,6 +44,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -202,7 +203,7 @@ public class LoginUtil {
 
 		if ((login == null) || login.equals(StringPool.NULL)) {
 			login = GetterUtil.getString(
-				CookieKeys.getCookie(request, CookieKeys.LOGIN, false));
+				CookieKeysUtil.getCookie(request, CookieKeys.LOGIN, false));
 
 			if (PropsValues.COMPANY_LOGIN_PREPOPULATE_DOMAIN &&
 				Validator.isNull(login) &&
@@ -235,7 +236,7 @@ public class LoginUtil {
 			String login, String password, boolean rememberMe, String authType)
 		throws Exception {
 
-		CookieKeys.validateSupportCookie(request);
+		CookieKeysUtil.validateSupportCookie(request);
 
 		HttpSession session = request.getSession();
 
@@ -331,7 +332,7 @@ public class LoginUtil {
 
 		// Set cookies
 
-		String domain = CookieKeys.getDomain(request);
+		String domain = CookieKeysUtil.getDomain(request);
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 
@@ -453,15 +454,15 @@ public class LoginUtil {
 			}
 		}
 
-		CookieKeys.addCookie(request, response, companyIdCookie, secure);
-		CookieKeys.addCookie(request, response, idCookie, secure);
-		CookieKeys.addCookie(request, response, userUUIDCookie, secure);
+		CookieKeysUtil.addCookie(request, response, companyIdCookie, secure);
+		CookieKeysUtil.addCookie(request, response, idCookie, secure);
+		CookieKeysUtil.addCookie(request, response, userUUIDCookie, secure);
 
 		if (rememberMe) {
-			CookieKeys.addCookie(request, response, loginCookie, secure);
-			CookieKeys.addCookie(request, response, passwordCookie, secure);
-			CookieKeys.addCookie(request, response, rememberMeCookie, secure);
-			CookieKeys.addCookie(request, response, screenNameCookie, secure);
+			CookieKeysUtil.addCookie(request, response, loginCookie, secure);
+			CookieKeysUtil.addCookie(request, response, passwordCookie, secure);
+			CookieKeysUtil.addCookie(request, response, rememberMeCookie, secure);
+			CookieKeysUtil.addCookie(request, response, screenNameCookie, secure);
 		}
 
 		AuthenticatedUserUUIDStoreUtil.register(userUUID);

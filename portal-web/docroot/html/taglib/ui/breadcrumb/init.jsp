@@ -220,7 +220,7 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 			}
 		}
 
-		if (!CookieKeys.hasSessionId(request) && Validator.isNotNull(breadcrumbURL)) {
+		if (!CookieKeysUtil.hasSessionId(request) && Validator.isNotNull(breadcrumbURL)) {
 			HttpSession session = request.getSession();
 
 			breadcrumbURL = PortalUtil.getURLWithSessionId(breadcrumbURL, session.getId());

@@ -554,7 +554,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * <p>
 	 * The group is unstaged and its assets and resources including layouts,
 	 * membership requests, subscriptions, teams, blogs, bookmarks, calendar
-	 * events, image gallery, journals, message boards, polls, shopping related
+	 * events, image gallery, journals, message boards, shopping related
 	 * entities, software catalog, and wikis are also deleted.
 	 * </p>
 	 *
@@ -706,10 +706,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		mbThreadLocalService.deleteThreads(
 			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		// Polls
-
-		pollsQuestionLocalService.deleteQuestions(group.getGroupId());
-
 		// Shopping
 
 		shoppingCartLocalService.deleteGroupCarts(group.getGroupId());
@@ -777,7 +773,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * <p>
 	 * The group is unstaged and its assets and resources including layouts,
 	 * membership requests, subscriptions, teams, blogs, bookmarks, calendar
-	 * events, image gallery, journals, message boards, polls, shopping related
+	 * events, image gallery, journals, message boards, shopping related
 	 * entities, software catalog, and wikis are also deleted.
 	 * </p>
 	 *
@@ -3379,7 +3375,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		setRolePermissions(group, role, "com.liferay.portlet.documentlibrary");
 		setRolePermissions(group, role, "com.liferay.portlet.imagegallery");
 		setRolePermissions(group, role, "com.liferay.portlet.messageboards");
-		setRolePermissions(group, role, "com.liferay.portlet.polls");
 		setRolePermissions(group, role, "com.liferay.portlet.wiki");
 	}
 

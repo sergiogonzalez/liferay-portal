@@ -24,6 +24,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.CookieKeys;
+import com.liferay.portal.util.CookieKeysUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.Cookie;
@@ -42,11 +43,11 @@ public class RememberMeAutoLogin implements AutoLogin {
 		try {
 			String[] credentials = null;
 
-			String autoUserId = CookieKeys.getCookie(
+			String autoUserId = CookieKeysUtil.getCookie(
 				request, CookieKeys.ID, false);
-			String autoPassword = CookieKeys.getCookie(
+			String autoPassword = CookieKeysUtil.getCookie(
 				request, CookieKeys.PASSWORD, false);
-			String rememberMe = CookieKeys.getCookie(
+			String rememberMe = CookieKeysUtil.getCookie(
 				request, CookieKeys.REMEMBER_ME, false);
 
 			// LEP-5188
@@ -121,14 +122,14 @@ public class RememberMeAutoLogin implements AutoLogin {
 		cookie.setMaxAge(0);
 		cookie.setPath(StringPool.SLASH);
 
-		CookieKeys.addCookie(request, response, cookie);
+		CookieKeysUtil.addCookie(request, response, cookie);
 
 		cookie = new Cookie(CookieKeys.PASSWORD, StringPool.BLANK);
 
 		cookie.setMaxAge(0);
 		cookie.setPath(StringPool.SLASH);
 
-		CookieKeys.addCookie(request, response, cookie);
+		CookieKeysUtil.addCookie(request, response, cookie);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RememberMeAutoLogin.class);

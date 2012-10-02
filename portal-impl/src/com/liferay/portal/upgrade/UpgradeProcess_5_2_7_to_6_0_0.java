@@ -23,7 +23,6 @@ import com.liferay.portal.upgrade.v6_0_0.UpgradeBlogs;
 import com.liferay.portal.upgrade.v6_0_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v6_0_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v6_0_0.UpgradeJournal;
-import com.liferay.portal.upgrade.v6_0_0.UpgradePolls;
 import com.liferay.portal.upgrade.v6_0_0.UpgradePortletId;
 import com.liferay.portal.upgrade.v6_0_0.UpgradeResourceAction;
 import com.liferay.portal.upgrade.v6_0_0.UpgradeShopping;
@@ -47,7 +46,6 @@ public class UpgradeProcess_5_2_7_to_6_0_0 extends UpgradeProcess {
 		upgrade(UpgradeDocumentLibrary.class);
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeJournal.class);
-		upgrade(UpgradePolls.class);
 		upgrade(UpgradePortletId.class);
 		upgrade(UpgradeResourceAction.class);
 		upgrade(UpgradeShopping.class);
