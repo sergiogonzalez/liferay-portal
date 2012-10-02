@@ -150,10 +150,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		DeployManagerUtil.reset();
 		PortalLifecycleUtil.reset();
-		DBFactoryUtil.setDBFactory(null);
+		DBFactoryUtil.reset();
 
 		ReferenceRegistry.releaseReferences();
-		PortalBeanLocatorUtil.setBeanLocator(null);
+		PortalBeanLocatorUtil.reset();
 
 		InitUtil.init();
 
