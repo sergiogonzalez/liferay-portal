@@ -14,10 +14,57 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.base.ContactServiceBaseImpl;
+import com.liferay.portal.service.permission.UserPermissionUtil;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Vilmos Papp
  */
 public class ContactServiceImpl extends ContactServiceBaseImpl {
+
+	public Contact getContact(long contactId)
+		throws PortalException, SystemException {
+
+		User user = userLocalService.getUserByContactId(contactId);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
+
+		return contactLocalService.getContact(contactId);
+	}
+
+	public List<Contact> getContacts(
+			long classNameId, long classPK, int start, int end,
+			OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		User user = userLocalService.getUserById(classPK);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
+
+		return contactLocalService.getContacts(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
+	public int getContactsCount(long classNameId, long classPK)
+		throws PortalException, SystemException {
+
+		User user = userLocalService.getUserById(classPK);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
+
+		return contactLocalService.getContactsCount(classNameId, classPK);
+	}
+
 }
