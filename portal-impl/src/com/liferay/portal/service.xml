@@ -424,7 +424,6 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBCategory" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBStatsUser" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBThread" />
-		<reference package-path="com.liferay.portlet.polls" entity="PollsQuestion" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCategory" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCoupon" />
@@ -1504,6 +1503,11 @@
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_N_P" return-type="Repository" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+			<finder-column name="portletId" />
 		</finder>
 
 		<!-- References -->

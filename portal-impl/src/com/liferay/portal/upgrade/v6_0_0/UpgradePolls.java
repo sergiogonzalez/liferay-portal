@@ -21,7 +21,7 @@ import com.liferay.portal.upgrade.v6_0_0.util.PollsQuestionTable;
 import java.sql.SQLException;
 
 /**
- * @author Julio Camarero Puras
+ * @author Julio Camarero
  */
 public class UpgradePolls extends UpgradeProcess {
 

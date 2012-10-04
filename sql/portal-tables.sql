@@ -663,6 +663,7 @@ create table DLFolder (
 	description STRING null,
 	lastPostDate DATE null,
 	defaultFileEntryTypeId LONG,
+	hidden_ BOOLEAN,
 	overrideFileEntryTypes BOOLEAN,
 	status INTEGER,
 	statusByUserId LONG,
@@ -1401,41 +1402,6 @@ create table PluginSetting (
 	pluginType VARCHAR(75) null,
 	roles STRING null,
 	active_ BOOLEAN
-);
-
-create table PollsChoice (
-	uuid_ VARCHAR(75) null,
-	choiceId LONG not null primary key,
-	questionId LONG,
-	name VARCHAR(75) null,
-	description STRING null
-);
-
-create table PollsQuestion (
-	uuid_ VARCHAR(75) null,
-	questionId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	title STRING null,
-	description STRING null,
-	expirationDate DATE null,
-	lastVoteDate DATE null
-);
-
-create table PollsVote (
-	voteId LONG not null primary key,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	questionId LONG,
-	choiceId LONG,
-	voteDate DATE null
 );
 
 create table PortalPreferences (

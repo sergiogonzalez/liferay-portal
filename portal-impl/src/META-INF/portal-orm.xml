@@ -2031,6 +2031,9 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="defaultFileEntryTypeId" />
+			<basic name="hidden">
+				<column name="HIDDEN_" />
+			</basic>
 			<basic name="overrideFileEntryTypes" />
 			<basic name="status" />
 			<basic name="statusByUserId" />
@@ -2928,79 +2931,6 @@
 			<basic name="ruleGroupId" />
 			<basic name="priority" />
 			<transient name="className" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.polls.model.impl.PollsChoiceModelImpl">
-		<attributes>
-			<id name="choiceId" />
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
-			<basic name="questionId" />
-			<basic name="name" />
-			<basic name="description" />
-			<transient name="descriptionCurrentLanguageId" />
-			<transient name="descriptionMap" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.polls.model.impl.PollsQuestionModelImpl">
-		<attributes>
-			<id name="questionId" />
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="title" />
-			<basic name="description" />
-			<basic name="expirationDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="lastVoteDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<transient name="descriptionCurrentLanguageId" />
-			<transient name="descriptionMap" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="titleCurrentLanguageId" />
-			<transient name="titleMap" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.polls.model.impl.PollsVoteModelImpl">
-		<attributes>
-			<id name="voteId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="questionId" />
-			<basic name="choiceId" />
-			<basic name="voteDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -4302,18 +4232,6 @@
 	</entity>
 	<entity class="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceImpl" name="MDRRuleGroupInstance">
 		<table name="MDRRuleGroupInstance" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.polls.model.impl.PollsChoiceImpl" name="PollsChoice">
-		<table name="PollsChoice" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.polls.model.impl.PollsQuestionImpl" name="PollsQuestion">
-		<table name="PollsQuestion" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.polls.model.impl.PollsVoteImpl" name="PollsVote">
-		<table name="PollsVote" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.ratings.model.impl.RatingsEntryImpl" name="RatingsEntry">

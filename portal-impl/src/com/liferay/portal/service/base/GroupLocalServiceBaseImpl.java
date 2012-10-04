@@ -263,9 +263,6 @@ import com.liferay.portlet.messageboards.service.persistence.MBCategoryPersisten
 import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadFinder;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
-import com.liferay.portlet.polls.service.PollsQuestionLocalService;
-import com.liferay.portlet.polls.service.PollsQuestionService;
-import com.liferay.portlet.polls.service.persistence.PollsQuestionPersistence;
 import com.liferay.portlet.shopping.service.ShoppingCartLocalService;
 import com.liferay.portlet.shopping.service.ShoppingCategoryLocalService;
 import com.liferay.portlet.shopping.service.ShoppingCategoryService;
@@ -4830,63 +4827,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the polls question local service.
-	 *
-	 * @return the polls question local service
-	 */
-	public PollsQuestionLocalService getPollsQuestionLocalService() {
-		return pollsQuestionLocalService;
-	}
-
-	/**
-	 * Sets the polls question local service.
-	 *
-	 * @param pollsQuestionLocalService the polls question local service
-	 */
-	public void setPollsQuestionLocalService(
-		PollsQuestionLocalService pollsQuestionLocalService) {
-		this.pollsQuestionLocalService = pollsQuestionLocalService;
-	}
-
-	/**
-	 * Returns the polls question remote service.
-	 *
-	 * @return the polls question remote service
-	 */
-	public PollsQuestionService getPollsQuestionService() {
-		return pollsQuestionService;
-	}
-
-	/**
-	 * Sets the polls question remote service.
-	 *
-	 * @param pollsQuestionService the polls question remote service
-	 */
-	public void setPollsQuestionService(
-		PollsQuestionService pollsQuestionService) {
-		this.pollsQuestionService = pollsQuestionService;
-	}
-
-	/**
-	 * Returns the polls question persistence.
-	 *
-	 * @return the polls question persistence
-	 */
-	public PollsQuestionPersistence getPollsQuestionPersistence() {
-		return pollsQuestionPersistence;
-	}
-
-	/**
-	 * Sets the polls question persistence.
-	 *
-	 * @param pollsQuestionPersistence the polls question persistence
-	 */
-	public void setPollsQuestionPersistence(
-		PollsQuestionPersistence pollsQuestionPersistence) {
-		this.pollsQuestionPersistence = pollsQuestionPersistence;
-	}
-
-	/**
 	 * Returns the shopping cart local service.
 	 *
 	 * @return the shopping cart local service
@@ -5877,12 +5817,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected MBThreadPersistence mbThreadPersistence;
 	@BeanReference(type = MBThreadFinder.class)
 	protected MBThreadFinder mbThreadFinder;
-	@BeanReference(type = PollsQuestionLocalService.class)
-	protected PollsQuestionLocalService pollsQuestionLocalService;
-	@BeanReference(type = PollsQuestionService.class)
-	protected PollsQuestionService pollsQuestionService;
-	@BeanReference(type = PollsQuestionPersistence.class)
-	protected PollsQuestionPersistence pollsQuestionPersistence;
 	@BeanReference(type = ShoppingCartLocalService.class)
 	protected ShoppingCartLocalService shoppingCartLocalService;
 	@BeanReference(type = ShoppingCartPersistence.class)
