@@ -19,6 +19,7 @@ import com.liferay.portal.ContactBirthdayException;
 import com.liferay.portal.ContactFirstNameException;
 import com.liferay.portal.ContactFullNameException;
 import com.liferay.portal.ContactLastNameException;
+import com.liferay.portal.DuplicateOpenIdException;
 import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.DuplicateUserScreenNameException;
 import com.liferay.portal.GroupFriendlyURLException;
@@ -4730,8 +4731,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		validate(
-			userId, screenName, emailAddress, firstName, middleName, lastName,
-			smsSn);
+			userId, screenName, emailAddress, openId, firstName, middleName,
+			lastName, smsSn);
 
 		if (Validator.isNotNull(newPassword1) ||
 			Validator.isNotNull(newPassword2)) {
@@ -5741,7 +5742,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	protected void validate(
-			long userId, String screenName, String emailAddress,
+			long userId, String screenName, String emailAddress, String openId,
 			String firstName, String middleName, String lastName, String smsSn)
 		throws PortalException, SystemException {
 
@@ -5752,6 +5753,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		validateEmailAddress(user.getCompanyId(), emailAddress);
+
+		validateOpenId(user.getCompanyId(), userId, openId);
 
 		if (!user.isDefaultUser()) {
 			if (Validator.isNotNull(emailAddress) &&
@@ -5851,6 +5854,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				companyId, firstName, middleName, lastName)) {
 
 			throw new ContactFullNameException();
+		}
+	}
+
+	protected void validateOpenId(long companyId, long userId, String openId)
+		throws PortalException, SystemException {
+
+		if (Validator.isNull(openId)) {
+			return;
+		}
+
+		try {
+			User user = userPersistence.findByC_O(companyId, openId);
+
+			if ((user != null) && (user.getUserId() != userId)) {
+				throw new DuplicateOpenIdException();
+			}
+		}
+		catch (NoSuchUserException nsue) {
 		}
 	}
 
