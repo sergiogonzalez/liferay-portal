@@ -119,7 +119,10 @@
 		</if>
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="jboss" />
+			<and>
+				<equals arg1="${app.server.major.version}" arg2="7" />
+				<equals arg1="${app.server.type}" arg2="jboss" />
+			</and>
 			<then>
 				<echo file="${war.file.dest}.dodeploy" />
 			</then>

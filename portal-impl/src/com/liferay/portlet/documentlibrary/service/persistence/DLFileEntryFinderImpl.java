@@ -384,6 +384,13 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
+	public List<DLFileEntry> findByG_F(
+			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_F(groupId, folderIds, queryDefinition, false);
+	}
+
 	public List<DLFileEntry> findByG_U_F_M(
 			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)

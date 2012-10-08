@@ -205,7 +205,7 @@ public class WikiPageServiceHttp {
 
 	public static void addPageAttachments(HttpPrincipal httpPrincipal,
 		long nodeId, java.lang.String title,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStream)
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -213,7 +213,7 @@ public class WikiPageServiceHttp {
 					"addPageAttachments", _addPageAttachmentsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
-					title, inputStream);
+					title, inputStreamOVPs);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);

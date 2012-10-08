@@ -56,7 +56,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @param  className the class name of the entity
 	 * @param  classPK the primary key of the entity
 	 * @param  status the status of the entity prior to being moved to trash
-	 * @param  versions the primary keys and statuses of any of the entry's
+	 * @param  statusOVPs the primary keys and statuses of any of the entry's
 	 *         versions (e.g., {@link
 	 *         com.liferay.portlet.documentlibrary.model.DLFileVersion})
 	 * @param  typeSettingsProperties the type settings properties
@@ -66,7 +66,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 */
 	public TrashEntry addTrashEntry(
 			long userId, long groupId, String className, long classPK,
-			int status, List<ObjectValuePair<Long, Integer>> versions,
+			int status, List<ObjectValuePair<Long, Integer>> statusOVPs,
 			UnicodeProperties typeSettingsProperties)
 		throws PortalException, SystemException {
 
@@ -93,11 +93,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 		trashEntryPersistence.update(trashEntry, false);
 
-		if (versions != null) {
-			for (ObjectValuePair<Long, Integer> version : versions) {
-				long versionClassPK = version.getKey();
-				int versionStatus = version.getValue();
-
+		if (statusOVPs != null) {
+			for (ObjectValuePair<Long, Integer> statusOVP : statusOVPs) {
 				long versionId = counterLocalService.increment();
 
 				TrashVersion trashVersion = trashVersionPersistence.create(
@@ -105,8 +102,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 				trashVersion.setEntryId(entryId);
 				trashVersion.setClassNameId(classNameId);
-				trashVersion.setClassPK(versionClassPK);
-				trashVersion.setStatus(versionStatus);
+				trashVersion.setClassPK(statusOVP.getKey());
+				trashVersion.setStatus(statusOVP.getValue());
 
 				trashVersionPersistence.update(trashVersion, false);
 			}

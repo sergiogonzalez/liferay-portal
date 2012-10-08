@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.model;
 
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 
 		attributes.put("rowId", getRowId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("tableId", getTableId());
 		attributes.put("classPK", getClassPK());
 
@@ -63,6 +65,12 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");
@@ -130,6 +138,24 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	public void setCompanyId(long companyId) {
 		_expandoRow.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the modified date of this expando row.
+	*
+	* @return the modified date of this expando row
+	*/
+	public java.util.Date getModifiedDate() {
+		return _expandoRow.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this expando row.
+	*
+	* @param modifiedDate the modified date of this expando row
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_expandoRow.setModifiedDate(modifiedDate);
 	}
 
 	/**

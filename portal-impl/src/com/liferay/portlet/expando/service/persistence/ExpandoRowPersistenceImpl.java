@@ -399,6 +399,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 		expandoRowImpl.setRowId(expandoRow.getRowId());
 		expandoRowImpl.setCompanyId(expandoRow.getCompanyId());
+		expandoRowImpl.setModifiedDate(expandoRow.getModifiedDate());
 		expandoRowImpl.setTableId(expandoRow.getTableId());
 		expandoRowImpl.setClassPK(expandoRow.getClassPK());
 

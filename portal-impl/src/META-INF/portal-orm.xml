@@ -2031,6 +2031,9 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="defaultFileEntryTypeId" />
+			<basic name="hidden">
+				<column name="HIDDEN_" />
+			</basic>
 			<basic name="overrideFileEntryTypes" />
 			<basic name="status" />
 			<basic name="statusByUserId" />
@@ -2317,6 +2320,9 @@
 				<column name="ROWID_" />
 			</id>
 			<basic name="companyId" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="tableId" />
 			<basic name="classPK" />
 			<transient name="modelAttributes" />

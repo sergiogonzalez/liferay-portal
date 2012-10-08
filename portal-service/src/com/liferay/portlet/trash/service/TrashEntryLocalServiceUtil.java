@@ -274,7 +274,7 @@ public class TrashEntryLocalServiceUtil {
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
 	* @param status the status of the entity prior to being moved to trash
-	* @param versions the primary keys and statuses of any of the entry's
+	* @param statusOVPs the primary keys and statuses of any of the entry's
 	versions (e.g., {@link
 	com.liferay.portlet.documentlibrary.model.DLFileVersion})
 	* @param typeSettingsProperties the type settings properties
@@ -285,13 +285,13 @@ public class TrashEntryLocalServiceUtil {
 	public static com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
 		long userId, long groupId, java.lang.String className, long classPK,
 		int status,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> versions,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> statusOVPs,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addTrashEntry(userId, groupId, className, classPK, status,
-			versions, typeSettingsProperties);
+			statusOVPs, typeSettingsProperties);
 	}
 
 	public static void checkEntries()

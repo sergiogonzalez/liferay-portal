@@ -20,6 +20,8 @@ import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The base model interface for the ExpandoRow service. Represents a row in the &quot;ExpandoRow&quot; database table, with each column mapped to a property of this class.
  *
@@ -81,6 +83,20 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow> {
 	 * @param companyId the company ID of this expando row
 	 */
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the modified date of this expando row.
+	 *
+	 * @return the modified date of this expando row
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this expando row.
+	 *
+	 * @param modifiedDate the modified date of this expando row
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the table ID of this expando row.

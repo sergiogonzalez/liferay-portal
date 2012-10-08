@@ -106,36 +106,36 @@
 
 			<propertycopy
 				from="app.@{app.server.dir.property}.dir"
-				name="dir.location"
+				name="temp.app.server.dir.location"
 			/>
 
 			<!-- Absolute -->
 
 			<property
-				location="${dir.location}"
-				name="dir.location.absolute"
+				location="${temp.app.server.dir.location}"
+				name="temp.app.server.dir.location.absolute"
 			/>
 
 			<!-- Unix -->
 
-			<pathconvert property="dir.location.unix" targetos="unix">
-				<path location="${dir.location.absolute}" />
+			<pathconvert property="temp.app.server.dir.location.unix" targetos="unix">
+				<path location="${temp.app.server.dir.location.absolute}" />
 			</pathconvert>
 
 			<propertycopy
-				from="dir.location.unix"
+				from="temp.app.server.dir.location.unix"
 				name="app.@{app.server.dir.property}.dir.unix"
 				override="true"
 			/>
 
 			<!-- Windows -->
 
-			<pathconvert property="dir.location.windows" targetos="windows">
-				<path location="${dir.location.absolute}" />
+			<pathconvert property="temp.app.server.dir.location.windows" targetos="windows">
+				<path location="${temp.app.server.dir.location.absolute}" />
 			</pathconvert>
 
 			<propertycopy
-				from="dir.location.windows"
+				from="temp.app.server.dir.location.windows"
 				name="app.@{app.server.dir.property}.dir.windows"
 				override="true"
 			/>
@@ -143,17 +143,56 @@
 			<!-- Override -->
 
 			<propertycopy
-				from="dir.location.unix"
+				from="temp.app.server.dir.location.unix"
 				name="app.@{app.server.dir.property}.dir"
 				override="true"
 			/>
 
 			<!-- Reset -->
 
-			<var name="dir.location" unset="true" />
-			<var name="dir.location.absolute" unset="true" />
-			<var name="dir.location.unix" unset="true" />
-			<var name="dir.location.windows" unset="true" />
+			<var name="temp.app.server.dir.location" unset="true" />
+			<var name="temp.app.server.dir.location.absolute" unset="true" />
+			<var name="temp.app.server.dir.location.unix" unset="true" />
+			<var name="temp.app.server.dir.location.windows" unset="true" />
+		</sequential>
+	</for>
+
+	<propertyselector
+		casesensitive="false"
+		delimiter="," match="app\.(.+)\.version"
+		property="app.server.version.property.list"
+		select="\1"
+	/>
+
+	<for list="${app.server.version.property.list}" param="app.server.version.property">
+		<sequential>
+
+			<!-- Version -->
+
+			<propertycopy
+				from="app.@{app.server.version.property}.version"
+				name="temp.app.server.version"
+			/>
+
+			<antelope:stringutil string="${temp.app.server.version}" property="temp.app.server.major.version.endindex">
+				<antelope:indexof string="." />
+			</antelope:stringutil>
+
+			<antelope:stringutil string="${temp.app.server.version}" property="temp.app.server.major.version">
+				<antelope:substring beginindex="0" endindex="${temp.app.server.major.version.endindex}" />
+			</antelope:stringutil>
+
+			<!-- Major version -->
+
+			<propertycopy
+				from="temp.app.server.major.version"
+				name="app.@{app.server.version.property}.major.version"
+			/>
+
+			<!-- Reset -->
+
+			<var name="temp.app.server.major.version" unset="true" />
+			<var name="temp.app.server.version" unset="true" />
 		</sequential>
 	</for>
 

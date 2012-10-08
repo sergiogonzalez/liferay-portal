@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
@@ -110,6 +111,8 @@ public class ExpandoRowPersistenceTest {
 
 		newExpandoRow.setCompanyId(ServiceTestUtil.nextLong());
 
+		newExpandoRow.setModifiedDate(ServiceTestUtil.nextDate());
+
 		newExpandoRow.setTableId(ServiceTestUtil.nextLong());
 
 		newExpandoRow.setClassPK(ServiceTestUtil.nextLong());
@@ -122,6 +125,9 @@ public class ExpandoRowPersistenceTest {
 			newExpandoRow.getRowId());
 		Assert.assertEquals(existingExpandoRow.getCompanyId(),
 			newExpandoRow.getCompanyId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingExpandoRow.getModifiedDate()),
+			Time.getShortTimestamp(newExpandoRow.getModifiedDate()));
 		Assert.assertEquals(existingExpandoRow.getTableId(),
 			newExpandoRow.getTableId());
 		Assert.assertEquals(existingExpandoRow.getClassPK(),
@@ -264,6 +270,8 @@ public class ExpandoRowPersistenceTest {
 		ExpandoRow expandoRow = _persistence.create(pk);
 
 		expandoRow.setCompanyId(ServiceTestUtil.nextLong());
+
+		expandoRow.setModifiedDate(ServiceTestUtil.nextDate());
 
 		expandoRow.setTableId(ServiceTestUtil.nextLong());
 
