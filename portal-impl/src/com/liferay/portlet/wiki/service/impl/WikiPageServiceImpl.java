@@ -140,14 +140,14 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	public void addPageAttachments(
 			long nodeId, String title,
-			List<ObjectValuePair<String, InputStream>> inputStream)
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException, SystemException {
 
 		WikiNodePermission.check(
 			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
 
 		wikiPageLocalService.addPageAttachments(
-			getUserId(), nodeId, title, inputStream);
+			getUserId(), nodeId, title, inputStreamOVPs);
 	}
 
 	public String addTempPageAttachment(

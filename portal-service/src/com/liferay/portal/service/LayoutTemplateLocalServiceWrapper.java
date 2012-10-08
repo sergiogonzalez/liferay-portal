@@ -96,12 +96,12 @@ public class LayoutTemplateLocalServiceWrapper
 
 	public void readLayoutTemplate(java.lang.String servletContextName,
 		javax.servlet.ServletContext servletContext,
-		java.util.Set<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.lang.Boolean>> layoutTemplateIds,
+		java.util.Set<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.lang.Boolean>> layoutTemplateIdOVPs,
 		com.liferay.portal.kernel.xml.Element element, boolean standard,
 		java.lang.String themeId,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		_layoutTemplateLocalService.readLayoutTemplate(servletContextName,
-			servletContext, layoutTemplateIds, element, standard, themeId,
+			servletContext, layoutTemplateIdOVPs, element, standard, themeId,
 			pluginPackage);
 	}
 

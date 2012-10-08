@@ -28,6 +28,7 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,10 +56,11 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "rowId_", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "tableId", Types.BIGINT },
 			{ "classPK", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ExpandoRow (rowId_ LONG not null primary key,companyId LONG,tableId LONG,classPK LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ExpandoRow (rowId_ LONG not null primary key,companyId LONG,modifiedDate DATE null,tableId LONG,classPK LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ExpandoRow";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -110,6 +112,7 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 		attributes.put("rowId", getRowId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("tableId", getTableId());
 		attributes.put("classPK", getClassPK());
 
@@ -128,6 +131,12 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");
@@ -157,6 +166,14 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public long getTableId() {
@@ -220,6 +237,7 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 		expandoRowImpl.setRowId(getRowId());
 		expandoRowImpl.setCompanyId(getCompanyId());
+		expandoRowImpl.setModifiedDate(getModifiedDate());
 		expandoRowImpl.setTableId(getTableId());
 		expandoRowImpl.setClassPK(getClassPK());
 
@@ -295,6 +313,15 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 		expandoRowCacheModel.companyId = getCompanyId();
 
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			expandoRowCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			expandoRowCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
 		expandoRowCacheModel.tableId = getTableId();
 
 		expandoRowCacheModel.classPK = getClassPK();
@@ -304,12 +331,14 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{rowId=");
 		sb.append(getRowId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", tableId=");
 		sb.append(getTableId());
 		sb.append(", classPK=");
@@ -320,7 +349,7 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.expando.model.ExpandoRow");
@@ -333,6 +362,10 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>tableId</column-name><column-value><![CDATA[");
@@ -354,6 +387,7 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		};
 	private long _rowId;
 	private long _companyId;
+	private Date _modifiedDate;
 	private long _tableId;
 	private long _originalTableId;
 	private boolean _setOriginalTableId;

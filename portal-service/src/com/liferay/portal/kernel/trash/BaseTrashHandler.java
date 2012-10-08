@@ -16,14 +16,20 @@ package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -76,6 +82,33 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		deleteTrashEntries(new long[] {classPK}, checkPermission);
 	}
 
+	@SuppressWarnings("unused")
+	public ContainerModel getContainerModel(long containerModelId)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
+	public String getContainerModelName() {
+		return StringPool.BLANK;
+	}
+
+	@SuppressWarnings("unused")
+	public List<ContainerModel> getContainerModels(
+			long trashEntryId, long parentContainerModelId, int start, int end)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
+	@SuppressWarnings("unused")
+	public int getContainerModelsCount(
+			long trashEntryId, long parentContainerModelId)
+		throws PortalException, SystemException {
+
+		return 0;
+	}
+
 	public String getDeleteMessage() {
 		return "deleted-in-x";
 	}
@@ -91,6 +124,14 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
+		return StringPool.BLANK;
+	}
+
+	public String getRootContainerModelName() {
+		return StringPool.BLANK;
+	}
+
+	public String getSubcontainerModelName() {
 		return StringPool.BLANK;
 	}
 
@@ -111,6 +152,35 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return null;
 	}
 
+	@SuppressWarnings("unused")
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException, SystemException {
+
+		return true;
+	}
+
+	@SuppressWarnings("unused")
+	public boolean isRestorable(long classPK)
+		throws PortalException, SystemException {
+
+		return true;
+	}
+
+	public void moveTrashEntry(
+			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (isRestorable(classPK)) {
+			restoreTrashEntry(classPK);
+		}
+
+		_log.error("moveTrashEntry() is not implemented in " +
+			getClass().getName());
+
+		throw new SystemException();
+	}
+
 	public void restoreTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
@@ -126,5 +196,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(getClassName());
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(BaseTrashHandler.class);
 
 }

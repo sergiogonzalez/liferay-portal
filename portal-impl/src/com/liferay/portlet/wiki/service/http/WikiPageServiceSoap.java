@@ -104,10 +104,11 @@ public class WikiPageServiceSoap {
 	}
 
 	public static void addPageAttachments(long nodeId, java.lang.String title,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStream)
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
 		throws RemoteException {
 		try {
-			WikiPageServiceUtil.addPageAttachments(nodeId, title, inputStream);
+			WikiPageServiceUtil.addPageAttachments(nodeId, title,
+				inputStreamOVPs);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
