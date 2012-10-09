@@ -21,14 +21,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.util.WikiPageAttachmentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,22 +63,8 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			return _attachmentFolderId;
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		long repositoryId = PortletFileRepositoryUtil.getPortletRepository(
-			getGroupId(), PortletKeys.WIKI, serviceContext);
-
-		long nodeFolderId = PortletFileRepositoryUtil.getFolder(
-			getUserId(), repositoryId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			String.valueOf(getNodeId()), serviceContext);
-
-		_attachmentFolderId = PortletFileRepositoryUtil.getFolder(
-			getUserId(), repositoryId, nodeFolderId,
-			String.valueOf(getResourcePrimKey()), serviceContext);
+		_attachmentFolderId = WikiPageAttachmentUtil.getPageFolderId(
+			getGroupId(), getUserId(), getNodeId(), getResourcePrimKey());
 
 		return _attachmentFolderId;
 	}
