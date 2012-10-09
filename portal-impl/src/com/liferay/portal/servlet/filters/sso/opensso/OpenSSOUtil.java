@@ -17,11 +17,11 @@ package com.liferay.portal.servlet.filters.sso.opensso;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.CookieUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -264,7 +264,7 @@ public class OpenSSOUtil {
 
 		String cookieName = _getCookieNames(serviceUrl)[0];
 
-		return CookieUtil.get(request, cookieName);
+		return CookieKeys.getCookie(request, cookieName);
 	}
 
 	private boolean _isAuthenticated(
@@ -278,7 +278,7 @@ public class OpenSSOUtil {
 		String[] cookieNames = _getCookieNames(serviceUrl);
 
 		for (String cookieName : cookieNames) {
-			if (CookieUtil.get(request, cookieName) != null) {
+			if (CookieKeys.getCookie(request, cookieName) != null) {
 				hasCookieNames = true;
 
 				break;
@@ -398,7 +398,7 @@ public class OpenSSOUtil {
 		StringBundler sb = new StringBundler(cookieNames.length * 4);
 
 		for (String cookieName : cookieNames) {
-			String cookieValue = CookieUtil.get(request, cookieName);
+			String cookieValue = CookieKeys.getCookie(request, cookieName);
 
 			sb.append(cookieName);
 			sb.append(StringPool.EQUAL);

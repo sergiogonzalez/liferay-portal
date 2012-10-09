@@ -312,7 +312,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	/**
-	* @deprecated {@link #checkInFileEntry(long, long, String, ServiceContext)
+	* @deprecated {@link #checkInFileEntry(long, long, String, ServiceContext)}
 	*/
 	public void checkInFileEntry(long userId, long fileEntryId,
 		java.lang.String lockUuid)
@@ -442,6 +442,13 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		return _dlFileEntryLocalService.fetchFileEntryByAnyImageId(imageId);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByName(
+		long groupId, long folderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.fetchFileEntryByName(groupId, folderId,
+			name);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getExtraSettingsFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -501,6 +508,14 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileEntries(groupId, folderId,
+			status, start, end, obc);
+	}
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -522,6 +537,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	public int getFileEntriesCount(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getFileEntriesCount(groupId, folderId);
+	}
+
+	public int getFileEntriesCount(long groupId, long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileEntriesCount(groupId, folderId,
+			status);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(

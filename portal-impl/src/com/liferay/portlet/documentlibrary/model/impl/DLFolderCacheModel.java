@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,10 +34,10 @@ import java.util.Date;
  * @see DLFolder
  * @generated
  */
-public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
+public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -66,6 +69,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 		sb.append(lastPostDate);
 		sb.append(", defaultFileEntryTypeId=");
 		sb.append(defaultFileEntryTypeId);
+		sb.append(", hidden=");
+		sb.append(hidden);
 		sb.append(", overrideFileEntryTypes=");
 		sb.append(overrideFileEntryTypes);
 		sb.append(", status=");
@@ -143,6 +148,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 		}
 
 		dlFolderImpl.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
+		dlFolderImpl.setHidden(hidden);
 		dlFolderImpl.setOverrideFileEntryTypes(overrideFileEntryTypes);
 		dlFolderImpl.setStatus(status);
 		dlFolderImpl.setStatusByUserId(statusByUserId);
@@ -166,6 +172,88 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 		return dlFolderImpl;
 	}
 
+	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+		folderId = objectInput.readLong();
+		groupId = objectInput.readLong();
+		companyId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		repositoryId = objectInput.readLong();
+		mountPoint = objectInput.readBoolean();
+		parentFolderId = objectInput.readLong();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
+		lastPostDate = objectInput.readLong();
+		defaultFileEntryTypeId = objectInput.readLong();
+		hidden = objectInput.readBoolean();
+		overrideFileEntryTypes = objectInput.readBoolean();
+		status = objectInput.readInt();
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(folderId);
+		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeLong(repositoryId);
+		objectOutput.writeBoolean(mountPoint);
+		objectOutput.writeLong(parentFolderId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		objectOutput.writeLong(lastPostDate);
+		objectOutput.writeLong(defaultFileEntryTypeId);
+		objectOutput.writeBoolean(hidden);
+		objectOutput.writeBoolean(overrideFileEntryTypes);
+		objectOutput.writeInt(status);
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
+	}
+
 	public String uuid;
 	public long folderId;
 	public long groupId;
@@ -181,6 +269,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 	public String description;
 	public long lastPostDate;
 	public long defaultFileEntryTypeId;
+	public boolean hidden;
 	public boolean overrideFileEntryTypes;
 	public int status;
 	public long statusByUserId;

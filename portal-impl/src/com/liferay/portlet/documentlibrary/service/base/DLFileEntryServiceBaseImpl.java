@@ -90,8 +90,12 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
+import com.liferay.portlet.expando.service.ExpandoRowLocalService;
+import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueService;
+import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
+import com.liferay.portlet.expando.service.persistence.ExpandoTablePersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
 import com.liferay.portlet.trash.service.TrashEntryLocalService;
 import com.liferay.portlet.trash.service.TrashEntryService;
@@ -1361,6 +1365,82 @@ public abstract class DLFileEntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the expando row local service.
+	 *
+	 * @return the expando row local service
+	 */
+	public ExpandoRowLocalService getExpandoRowLocalService() {
+		return expandoRowLocalService;
+	}
+
+	/**
+	 * Sets the expando row local service.
+	 *
+	 * @param expandoRowLocalService the expando row local service
+	 */
+	public void setExpandoRowLocalService(
+		ExpandoRowLocalService expandoRowLocalService) {
+		this.expandoRowLocalService = expandoRowLocalService;
+	}
+
+	/**
+	 * Returns the expando row persistence.
+	 *
+	 * @return the expando row persistence
+	 */
+	public ExpandoRowPersistence getExpandoRowPersistence() {
+		return expandoRowPersistence;
+	}
+
+	/**
+	 * Sets the expando row persistence.
+	 *
+	 * @param expandoRowPersistence the expando row persistence
+	 */
+	public void setExpandoRowPersistence(
+		ExpandoRowPersistence expandoRowPersistence) {
+		this.expandoRowPersistence = expandoRowPersistence;
+	}
+
+	/**
+	 * Returns the expando table local service.
+	 *
+	 * @return the expando table local service
+	 */
+	public ExpandoTableLocalService getExpandoTableLocalService() {
+		return expandoTableLocalService;
+	}
+
+	/**
+	 * Sets the expando table local service.
+	 *
+	 * @param expandoTableLocalService the expando table local service
+	 */
+	public void setExpandoTableLocalService(
+		ExpandoTableLocalService expandoTableLocalService) {
+		this.expandoTableLocalService = expandoTableLocalService;
+	}
+
+	/**
+	 * Returns the expando table persistence.
+	 *
+	 * @return the expando table persistence
+	 */
+	public ExpandoTablePersistence getExpandoTablePersistence() {
+		return expandoTablePersistence;
+	}
+
+	/**
+	 * Sets the expando table persistence.
+	 *
+	 * @param expandoTablePersistence the expando table persistence
+	 */
+	public void setExpandoTablePersistence(
+		ExpandoTablePersistence expandoTablePersistence) {
+		this.expandoTablePersistence = expandoTablePersistence;
+	}
+
+	/**
 	 * Returns the expando value local service.
 	 *
 	 * @return the expando value local service
@@ -1657,6 +1737,14 @@ public abstract class DLFileEntryServiceBaseImpl extends BaseServiceImpl
 	protected DDMStructurePersistence ddmStructurePersistence;
 	@BeanReference(type = DDMStructureFinder.class)
 	protected DDMStructureFinder ddmStructureFinder;
+	@BeanReference(type = ExpandoRowLocalService.class)
+	protected ExpandoRowLocalService expandoRowLocalService;
+	@BeanReference(type = ExpandoRowPersistence.class)
+	protected ExpandoRowPersistence expandoRowPersistence;
+	@BeanReference(type = ExpandoTableLocalService.class)
+	protected ExpandoTableLocalService expandoTableLocalService;
+	@BeanReference(type = ExpandoTablePersistence.class)
+	protected ExpandoTablePersistence expandoTablePersistence;
 	@BeanReference(type = ExpandoValueLocalService.class)
 	protected ExpandoValueLocalService expandoValueLocalService;
 	@BeanReference(type = ExpandoValueService.class)

@@ -639,6 +639,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE = "dl.file.entry.type.ig.image.auto.create.on.upgrade";
 
+	public static final String DL_FILE_ENTRY_VERSION_POLICY = "dl.file.entry.version.policy";
+
 	public static final String DL_FILE_EXTENSIONS = "dl.file.extensions";
 
 	public static final String DL_FILE_EXTENSIONS_STRICT_CHECK = "dl.file.extensions.strict.check";
@@ -704,6 +706,8 @@ public interface PropsKeys {
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER = "dynamic.data.lists.error.template.freemarker";
 
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY = "dynamic.data.lists.error.template.velocity";
+
+	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL = "dynamic.data.lists.error.template.xsl";
 
 	public static final String DYNAMIC_DATA_LISTS_RECORD_SET_FORCE_AUTOGENERATE_KEY = "dynamic.data.lists.record.set.force.autogenerate.key";
 

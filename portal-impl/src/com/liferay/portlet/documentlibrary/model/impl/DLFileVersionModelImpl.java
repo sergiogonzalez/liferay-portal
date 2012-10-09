@@ -87,12 +87,13 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "fileEntryTypeId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
 			{ "size_", Types.BIGINT },
+			{ "checksum", Types.VARCHAR },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersion.fileEntryId DESC, DLFileVersion.createDate DESC";
@@ -150,6 +151,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		model.setFileEntryTypeId(soapModel.getFileEntryTypeId());
 		model.setVersion(soapModel.getVersion());
 		model.setSize(soapModel.getSize());
+		model.setChecksum(soapModel.getChecksum());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -232,6 +234,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		attributes.put("fileEntryTypeId", getFileEntryTypeId());
 		attributes.put("version", getVersion());
 		attributes.put("size", getSize());
+		attributes.put("checksum", getChecksum());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -360,6 +363,12 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		String checksum = (String)attributes.get("checksum");
+
+		if (checksum != null) {
+			setChecksum(checksum);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -699,6 +708,20 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	@JSON
+	public String getChecksum() {
+		if (_checksum == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _checksum;
+		}
+	}
+
+	public void setChecksum(String checksum) {
+		_checksum = checksum;
+	}
+
+	@JSON
 	public int getStatus() {
 		return _status;
 	}
@@ -900,6 +923,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionImpl.setFileEntryTypeId(getFileEntryTypeId());
 		dlFileVersionImpl.setVersion(getVersion());
 		dlFileVersionImpl.setSize(getSize());
+		dlFileVersionImpl.setChecksum(getChecksum());
 		dlFileVersionImpl.setStatus(getStatus());
 		dlFileVersionImpl.setStatusByUserId(getStatusByUserId());
 		dlFileVersionImpl.setStatusByUserName(getStatusByUserName());
@@ -1116,6 +1140,14 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		dlFileVersionCacheModel.size = getSize();
 
+		dlFileVersionCacheModel.checksum = getChecksum();
+
+		String checksum = dlFileVersionCacheModel.checksum;
+
+		if ((checksum != null) && (checksum.length() == 0)) {
+			dlFileVersionCacheModel.checksum = null;
+		}
+
 		dlFileVersionCacheModel.status = getStatus();
 
 		dlFileVersionCacheModel.statusByUserId = getStatusByUserId();
@@ -1142,7 +1174,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1184,6 +1216,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getVersion());
 		sb.append(", size=");
 		sb.append(getSize());
+		sb.append(", checksum=");
+		sb.append(getChecksum());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1198,7 +1232,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(76);
+		StringBundler sb = new StringBundler(79);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileVersion");
@@ -1285,6 +1319,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getSize());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>checksum</column-name><column-value><![CDATA[");
+		sb.append(getChecksum());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -1342,6 +1380,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private String _version;
 	private String _originalVersion;
 	private long _size;
+	private String _checksum;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

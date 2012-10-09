@@ -248,6 +248,9 @@ COMMIT_TRANSACTION;
 
 update DLFileShortcut set active_ = TRUE;
 
+alter table DLFileVersion add checksum VARCHAR(75) null;
+
+alter table DLFolder add hidden BOOLEAN;
 alter table DLFolder add status INTEGER;
 alter table DLFolder add statusByUserId LONG;
 alter table DLFolder add statusByUserName VARCHAR(75) null;
@@ -255,10 +258,17 @@ alter table DLFolder add statusDate DATE null;
 
 COMMIT_TRANSACTION;
 
+update DLFolder set hidden = FALSE;
 update DLFolder set status = 0;
 update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
+
+alter table ExpandoRow add modifiedDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update ExpandoRow set modifiedDate = CURRENT_TIMESTAMP;
 
 update Group_ set site = FALSE where name = 'Control Panel';
 

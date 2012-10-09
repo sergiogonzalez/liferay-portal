@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -30,6 +31,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -42,6 +45,7 @@ import javax.portlet.PortletRequest;
  *
  * @author Alexander Chow
  * @author Manuel de la Peña
+ * @author Zsolt Berentey
  */
 public class DLFileEntryTrashHandler extends BaseTrashHandler {
 
@@ -134,6 +138,21 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		return DLUtil.getAbsolutePath(portletRequest, dlFolder.getFolderId());
 	}
 
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+
+		if (dlFileEntry.isHidden()) {
+			return false;
+		}
+
+		return DLFileEntryPermission.contains(
+			permissionChecker, classPK, actionId);
+	}
+
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -159,7 +178,20 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		throws PortalException, SystemException {
 
 		for (long classPK : classPKs) {
-			DLAppServiceUtil.restoreFileEntryFromTrash(classPK);
+			boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+
+			try {
+				DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+
+				if (dlFileEntry.isHidden()) {
+					DLAppHelperThreadLocal.setEnabled(false);
+				}
+
+				DLAppServiceUtil.restoreFileEntryFromTrash(classPK);
+			}
+			finally {
+				DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+			}
 		}
 	}
 

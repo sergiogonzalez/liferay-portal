@@ -1426,6 +1426,7 @@
 		<field name="fileEntryTypeId" type="long" />
 		<field name="version" type="String" />
 		<field name="size" type="long" />
+		<field name="checksum" type="String" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -1452,6 +1453,7 @@
 		</field>
 		<field name="lastPostDate" type="Date" />
 		<field name="defaultFileEntryTypeId" type="long" />
+		<field name="hidden" type="boolean" />
 		<field name="overrideFileEntryTypes" type="boolean" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -1635,6 +1637,7 @@
 	<model name="com.liferay.portlet.expando.model.ExpandoRow">
 		<field name="rowId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="modifiedDate" type="Date" />
 		<field name="tableId" type="long" />
 		<field name="classPK" type="long" />
 	</model>

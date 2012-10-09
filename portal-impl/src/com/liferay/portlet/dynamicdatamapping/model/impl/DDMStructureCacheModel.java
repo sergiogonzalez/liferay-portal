@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
@@ -154,9 +157,103 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setDocument(_document);
 
-		ddmStructureImpl.setLocalizedFieldsMap(_localizedFieldsMap);
+		ddmStructureImpl.setLocalizedFieldsMap1(_localizedFieldsMap1);
+
+		ddmStructureImpl.setLocalizedFieldsMap2(_localizedFieldsMap2);
 
 		return ddmStructureImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+		structureId = objectInput.readLong();
+		groupId = objectInput.readLong();
+		companyId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		parentStructureId = objectInput.readLong();
+		classNameId = objectInput.readLong();
+		structureKey = objectInput.readUTF();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
+		xsd = objectInput.readUTF();
+		storageType = objectInput.readUTF();
+		type = objectInput.readInt();
+
+		_document = (com.liferay.portal.kernel.xml.Document)objectInput.readObject();
+		_localizedFieldsMap1 = (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>>)objectInput.readObject();
+		_localizedFieldsMap2 = (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>>)objectInput.readObject();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(structureId);
+		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeLong(parentStructureId);
+		objectOutput.writeLong(classNameId);
+
+		if (structureKey == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(structureKey);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (xsd == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(xsd);
+		}
+
+		if (storageType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(storageType);
+		}
+
+		objectOutput.writeInt(type);
+
+		objectOutput.writeObject(_document);
+		objectOutput.writeObject(_localizedFieldsMap1);
+		objectOutput.writeObject(_localizedFieldsMap2);
 	}
 
 	public String uuid;
@@ -176,5 +273,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String storageType;
 	public int type;
 	public com.liferay.portal.kernel.xml.Document _document;
-	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedFieldsMap;
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedFieldsMap1;
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedFieldsMap2;
 }

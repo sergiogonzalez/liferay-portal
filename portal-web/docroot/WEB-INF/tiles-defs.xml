@@ -1697,6 +1697,10 @@
 		<put name="portlet_content" value="/portlet/wiki/move_page.jsp" />
 	</definition>
 
+	<definition name="portlet.wiki.restore_entry" extends="portlet.wiki">
+		<put name="portlet_content" value="/portlet/trash/restore_entry.jsp" />
+	</definition>
+
 	<definition name="portlet.wiki.search" extends="portlet.wiki">
 		<put name="portlet_content" value="/portlet/wiki/search.jsp" />
 	</definition>

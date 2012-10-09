@@ -100,12 +100,21 @@ public class PortalBeanLocatorUtil {
 		}
 	}
 
+	public static void reset() {
+		setBeanLocator(null);
+	}
+
 	public static void setBeanLocator(BeanLocator beanLocator) {
 		PortalRuntimePermission.checkSetBeanProperty(
 			PortalBeanLocatorUtil.class);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Setting BeanLocator " + beanLocator.hashCode());
+			if (beanLocator == null) {
+				_log.debug("Setting BeanLocator " + beanLocator);
+			}
+			else {
+				_log.debug("Setting BeanLocator " + beanLocator.hashCode());
+			}
 		}
 
 		_beanLocator = beanLocator;

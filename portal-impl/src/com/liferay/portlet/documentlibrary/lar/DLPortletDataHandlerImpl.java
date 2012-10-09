@@ -605,7 +605,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 							repository.getName(), repository.getDescription(),
 							repository.getPortletId(),
-							repository.getTypeSettingsProperties(),
+							repository.getTypeSettingsProperties(), false,
 							serviceContext);
 				}
 				else {
@@ -623,7 +623,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					repository.getName(), repository.getDescription(),
 					repository.getPortletId(),
-					repository.getTypeSettingsProperties(), serviceContext);
+					repository.getTypeSettingsProperties(), false,
+					serviceContext);
 			}
 		}
 		catch (Exception e) {
@@ -1064,8 +1065,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 		else if (!folder.isDefaultRepository()) {
-			//no need to export non-Liferay Repository items since they would
-			//be exported as part of repository export
+
+			// No need to export non-Liferay repository items since they would
+			// be exported as part of repository export
+
 			return;
 		}
 

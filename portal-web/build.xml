@@ -5,7 +5,7 @@
 
 	<property name="war.file" value="${ant.project.name}" />
 
-	<property name="alloy.file" value="alloy-1.7.0pr1.zip" />
+	<property name="alloy.file" value="alloy-1.7.0pr2.zip" />
 
 	<!--
 	When upgrading CKEditor, make sure to delete
@@ -1278,6 +1278,21 @@ Please set the property "jdk.6.home" in build.properties.
 		<antcall target="build-css" />
 
 		<antcall target="build-common-web.deploy" />
+
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<equals arg1="${app.server.jboss.major.version}" arg2="5" />
+			</and>
+			<then>
+				<copy
+					file="${app.server.portal.dir}/WEB-INF/jboss-web.xml.5"
+					overwrite="true"
+					preservelastmodified="true"
+					tofile="${app.server.portal.dir}/WEB-INF/jboss-web.xml"
+				/>
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${jsp.precompile}" arg2="on" />

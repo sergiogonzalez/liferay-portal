@@ -51,6 +51,7 @@ public class DLFileVersionSoap implements Serializable {
 		soapModel.setFileEntryTypeId(model.getFileEntryTypeId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setSize(model.getSize());
+		soapModel.setChecksum(model.getChecksum());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -267,6 +268,14 @@ public class DLFileVersionSoap implements Serializable {
 		_size = size;
 	}
 
+	public String getChecksum() {
+		return _checksum;
+	}
+
+	public void setChecksum(String checksum) {
+		_checksum = checksum;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -319,6 +328,7 @@ public class DLFileVersionSoap implements Serializable {
 	private long _fileEntryTypeId;
 	private String _version;
 	private long _size;
+	private String _checksum;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

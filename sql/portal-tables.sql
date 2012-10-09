@@ -641,6 +641,7 @@ create table DLFileVersion (
 	fileEntryTypeId LONG,
 	version VARCHAR(75) null,
 	size_ LONG,
+	checksum VARCHAR(75) null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -663,6 +664,7 @@ create table DLFolder (
 	description STRING null,
 	lastPostDate DATE null,
 	defaultFileEntryTypeId LONG,
+	hidden_ BOOLEAN,
 	overrideFileEntryTypes BOOLEAN,
 	status INTEGER,
 	statusByUserId LONG,
@@ -713,6 +715,7 @@ create table ExpandoColumn (
 create table ExpandoRow (
 	rowId_ LONG not null primary key,
 	companyId LONG,
+	modifiedDate DATE null,
 	tableId LONG,
 	classPK LONG
 );

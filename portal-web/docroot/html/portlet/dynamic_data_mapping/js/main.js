@@ -272,10 +272,16 @@ AUI.add(
 							AArray.each(
 								options,
 								function(item, index, collection) {
+									var name = item.name;
+
+									if (!name) {
+										name = A.FormBuilderField.buildFieldName('option');
+									}
+
 									var typeElementOption = instance._createDynamicNode(
 										'dynamic-element',
 										{
-											name: LiferayFormBuilder.normalizeKey(item.label),
+											name: name,
 											type: 'option',
 											value: Liferay.Util.escapeHTML(item.value)
 										}
@@ -765,6 +771,12 @@ AUI.add(
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-textarea',
 					label: Liferay.Language.get('text-box'),
 					type: 'textarea'
+				},
+				{
+					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+					iconClass: 'aui-form-builder-field-icon lfr-ddm-text-html-icon',
+					label: Liferay.Language.get('html'),
+					type: 'ddm-text-html'
 				}
 			],
 

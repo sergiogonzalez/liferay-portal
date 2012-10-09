@@ -83,6 +83,7 @@
 			'portlet-url': ['aui-base', 'aui-io-request', 'querystring-stringify-simple'],
 			'progress': ['aui-progressbar'],
 			'ratings': ['aui-io-request', 'aui-rating'],
+			'restore-entry': ['aui-dialog', 'aui-io-request', 'liferay-portlet-base'],
 			'search-container': ['aui-base', 'event-mouseenter'],
 			'service-datasource': ['aui-base', 'datasource-local'],
 			'session': ['aui-io-request', 'aui-task-manager', 'cookie', 'liferay-notice'],

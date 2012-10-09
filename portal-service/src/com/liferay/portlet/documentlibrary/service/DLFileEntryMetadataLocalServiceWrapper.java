@@ -272,6 +272,12 @@ public class DLFileEntryMetadataLocalServiceWrapper
 		_dlFileEntryMetadataLocalService.deleteFileEntryMetadata(fileEntryId);
 	}
 
+	public void deleteFileVersionFileEntryMetadata(long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryMetadataLocalService.deleteFileVersionFileEntryMetadata(fileVersionId);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getFileEntryMetadata(
 		long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -287,6 +293,9 @@ public class DLFileEntryMetadataLocalServiceWrapper
 			fileVersionId);
 	}
 
+	/**
+	* @deprecated {@link #getFileVersionFileEntryMetadatasCount(long)}
+	*/
 	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryMetadataLocalService.getFileEntryMetadataCount(fileEntryId,
@@ -297,6 +306,11 @@ public class DLFileEntryMetadataLocalServiceWrapper
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(fileVersionId);
+	}
+
+	public long getFileVersionFileEntryMetadatasCount(long fileVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatasCount(fileVersionId);
 	}
 
 	public void updateFileEntryMetadata(long companyId,

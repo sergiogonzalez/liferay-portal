@@ -270,14 +270,14 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public void updateWorkflowDefinitionLinks(
 			long userId, long companyId, long groupId, String className,
 			long classPK,
-			List<ObjectValuePair<Long, String>> workflowDefinitions)
+			List<ObjectValuePair<Long, String>> workflowDefinitionOVPs)
 		throws PortalException, SystemException {
 
-		for (ObjectValuePair<Long, String> workflowDefinition :
-				workflowDefinitions) {
+		for (ObjectValuePair<Long, String> workflowDefinitionOVP :
+				workflowDefinitionOVPs) {
 
-			long typePK = workflowDefinition.getKey();
-			String workflowDefinitionName = workflowDefinition.getValue();
+			long typePK = workflowDefinitionOVP.getKey();
+			String workflowDefinitionName = workflowDefinitionOVP.getValue();
 
 			if (Validator.isNull(workflowDefinitionName)) {
 				deleteWorkflowDefinitionLink(
