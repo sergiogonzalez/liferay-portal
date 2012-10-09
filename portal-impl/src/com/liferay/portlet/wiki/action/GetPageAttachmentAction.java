@@ -23,7 +23,9 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
@@ -54,13 +56,17 @@ public class GetPageAttachmentAction extends PortletAction {
 			long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 			String title = ParamUtil.getString(actionRequest, "title");
 			String fileName = ParamUtil.getString(actionRequest, "fileName");
+			boolean viewTrashAttachment = ParamUtil.getBoolean(
+				actionRequest, "viewTrashAttachment", false);
 
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(
 				actionResponse);
 
-			getFile(nodeId, title, fileName, request, response);
+			getFile(
+				nodeId, title, fileName, viewTrashAttachment, request,
+				response);
 
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
@@ -79,8 +85,12 @@ public class GetPageAttachmentAction extends PortletAction {
 			long nodeId = ParamUtil.getLong(request, "nodeId");
 			String title = ParamUtil.getString(request, "title");
 			String fileName = ParamUtil.getString(request, "fileName");
+			boolean viewTrashAttachment = ParamUtil.getBoolean(
+				request, "viewTrashAttachment", false);
 
-			getFile(nodeId, title, fileName, request, response);
+			getFile(
+				nodeId, title, fileName, viewTrashAttachment, request,
+				response);
 
 			return null;
 		}
@@ -102,13 +112,26 @@ public class GetPageAttachmentAction extends PortletAction {
 
 	protected void getFile(
 			long nodeId, String title, String fileName,
-			HttpServletRequest request, HttpServletResponse response)
+			boolean viewTrashAttachment, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		WikiPage wikiPage = WikiPageServiceUtil.getPage(nodeId, title);
 
 		DLFileEntry dlFileEntry = DLFileEntryServiceUtil.getFileEntry(
 			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		if (!viewTrashAttachment &&
+			(dlFileVersion.isInTrash() || dlFileEntry.isInTrashFolder())) {
+
+			return;
+		}
+
+		if (viewTrashAttachment) {
+			fileName = TrashUtil.stripTrashNamespace(dlFileEntry.getTitle());
+		}
 
 		ServletResponseUtil.sendFile(
 			request, response, fileName, dlFileEntry.getContentStream(),
