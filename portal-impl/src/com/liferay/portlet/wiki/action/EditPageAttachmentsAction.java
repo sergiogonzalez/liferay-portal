@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -46,6 +48,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -118,7 +123,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 				emptyTrash(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
-				moveAttachmentFromTrash(actionRequest);
+				moveAttachmentFromTrash(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteAttachment(
@@ -395,12 +400,38 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		WikiPageServiceUtil.deletePageAttachmentsInTrash(nodeId, title);
 	}
 
-	protected void moveAttachmentFromTrash(ActionRequest actionRequest)
+	protected void moveAttachmentFromTrash(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 		String attachment = ParamUtil.getString(actionRequest, "fileName");
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
+		String newName = ParamUtil.getString(actionRequest, "newName");
+
+		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(entryId);
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			entry.getClassName());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			trashHandler.checkDuplicateTrashEntry(entry, newName);
+
+			jsonObject.put("success", true);
+		}
+		catch (DuplicateEntryException dee) {
+			jsonObject.put("duplicateEntryId", dee.getDuplicateEntryId());
+			jsonObject.put("oldName", dee.getOldName());
+			jsonObject.put("success", false);
+			jsonObject.put("trashEntryId", dee.getTrashEntryId());
+		}
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
 
 		WikiPageServiceUtil.restorePageAttachmentFromTrash(
 			nodeId, title, attachment);

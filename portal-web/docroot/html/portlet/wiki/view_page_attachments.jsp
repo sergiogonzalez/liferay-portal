@@ -190,3 +190,13 @@ for (int i = 0; i < results.size(); i++) {
 </c:if>
 
 <liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+
+<aui:script use="liferay-restore-entry">
+	new Liferay.RestoreEntry(
+		{
+			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="checkEntry" /><portlet:param name="struts_action" value="/wiki/edit_entry" /></portlet:actionURL>',
+			namespace: '<portlet:namespace />',
+			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/wiki/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="strutsAction" value="/wiki/edit_entry" /></portlet:renderURL>'
+		}
+	);
+</aui:script>
