@@ -378,12 +378,12 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 	public static void updateWorkflowDefinitionLinks(long userId,
 		long companyId, long groupId, java.lang.String className, long classPK,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.String>> workflowDefinitions)
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.String>> workflowDefinitionOVPs)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.updateWorkflowDefinitionLinks(userId, companyId, groupId,
-			className, classPK, workflowDefinitions);
+			className, classPK, workflowDefinitionOVPs);
 	}
 
 	public static WorkflowDefinitionLinkLocalService getService() {

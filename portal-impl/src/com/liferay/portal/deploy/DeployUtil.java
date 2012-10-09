@@ -14,6 +14,7 @@
 
 package com.liferay.portal.deploy;
 
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ant.CopyTask;
 import com.liferay.util.ant.DeleteTask;
@@ -37,6 +39,8 @@ import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 import org.apache.commons.io.FileUtils;
 
@@ -76,7 +80,18 @@ public class DeployUtil {
 
 		String serverId = GetterUtil.getString(ServerDetector.getServerId());
 
-		if (serverId.equals(ServerDetector.TOMCAT_ID)) {
+		if (serverId.equals(ServerDetector.JBOSS_ID) &&
+			ServerDetector.isJBoss5()) {
+
+			String name = "auto.deploy." + serverId + ".dest.dir";
+
+			PortletPreferences preferences = PrefsPropsUtil.getPreferences();
+
+			String value = PropsUtil.get(name, new Filter("5"));
+
+			destDir = preferences.getValue(name, value);
+		}
+		else if (serverId.equals(ServerDetector.TOMCAT_ID)) {
 			destDir = PrefsPropsUtil.getString(
 				PropsKeys.AUTO_DEPLOY_TOMCAT_DEST_DIR,
 				PropsValues.AUTO_DEPLOY_TOMCAT_DEST_DIR);

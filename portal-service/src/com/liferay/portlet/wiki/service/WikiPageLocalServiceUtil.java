@@ -333,10 +333,10 @@ public class WikiPageLocalServiceUtil {
 
 	public static void addPageAttachments(long userId, long nodeId,
 		java.lang.String title,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreams)
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().addPageAttachments(userId, nodeId, title, inputStreams);
+		getService().addPageAttachments(userId, nodeId, title, inputStreamOVPs);
 	}
 
 	public static void addPageResources(long nodeId, java.lang.String title,

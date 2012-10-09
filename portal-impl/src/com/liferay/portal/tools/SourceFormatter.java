@@ -86,6 +86,7 @@ public class SourceFormatter {
 						_formatAntXML();
 						_formatDDLStructuresXML();
 						_formatFriendlyURLRoutesXML();
+						_formatFTL();
 						_formatPortletXML();
 						_formatServiceXML();
 						_formatSH();
@@ -1068,6 +1069,38 @@ public class SourceFormatter {
 		return sb.toString();
 	}
 
+	private static void _formatFTL() throws IOException {
+		String basedir = "./";
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(new String[] {"**\\*.ftl"});
+		directoryScanner.setExcludes(
+			new String[] {
+				"**\\journal\\dependencies\\template.ftl",
+				"**\\servicebuilder\\dependencies\\props.ftl"
+			}
+		);
+
+		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
+			directoryScanner);
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = _fileUtil.read(file);
+
+			String newContent = _trimContent(content);
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				_fileUtil.write(file, newContent);
+
+				_sourceFormatterHelper.printError(fileName, file);
+			}
+		}
+	}
+
 	private static String _formatImports(String imports, int classStartPos)
 		throws IOException {
 
@@ -1243,12 +1276,14 @@ public class SourceFormatter {
 				new String[] {
 					"com.liferay.portal.PortalException",
 					"com.liferay.portal.SystemException",
-					"com.liferay.util.LocalizationUtil"
+					"com.liferay.util.LocalizationUtil",
+					"private static final Log _log"
 				},
 				new String[] {
 					"com.liferay.portal.kernel.exception.PortalException",
 					"com.liferay.portal.kernel.exception.SystemException",
-					"com.liferay.portal.kernel.util.LocalizationUtil"
+					"com.liferay.portal.kernel.util.LocalizationUtil",
+					"private static Log _log"
 				});
 
 			newContent = stripJavaImports(newContent, packagePath, className);
@@ -1723,6 +1758,24 @@ public class SourceFormatter {
 								"line break: " + fileName + " " + lineCount);
 						}
 
+						if (previousLine.endsWith(StringPool.PERIOD)) {
+							int x = trimmedLine.indexOf(
+								StringPool.OPEN_PARENTHESIS);
+
+							if ((x != -1) &&
+								((_getLineLength(previousLine) + x) < 80) &&
+								(trimmedLine.endsWith(
+									StringPool.OPEN_PARENTHESIS) ||
+								 (trimmedLine.charAt(x + 1) !=
+									 CharPool.CLOSE_PARENTHESIS))) {
+
+								_sourceFormatterHelper.printError(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
+							}
+						}
+
 						combinedLines = _getCombinedLines(
 							trimmedLine, previousLine, lineTabCount,
 							previousLineTabCount);
@@ -1780,18 +1833,36 @@ public class SourceFormatter {
 
 					sb.append(previousLine);
 
-					if (previousLine.endsWith(
-							StringPool.TAB + StringPool.CLOSE_CURLY_BRACE) &&
+					if (Validator.isNotNull(previousLine) &&
 						Validator.isNotNull(trimmedLine) &&
-						!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
-						!trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS) &&
-						!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
-						!trimmedLine.startsWith("catch ") &&
-						!trimmedLine.startsWith("else ") &&
-						!trimmedLine.startsWith("finally ") &&
-						!trimmedLine.startsWith("while ")) {
+						!previousLine.contains("/*")) {
 
-						sb.append("\n");
+						String trimmedPreviousLine = StringUtil.trimLeading(
+							previousLine);
+
+						if ((trimmedPreviousLine.startsWith("// ") &&
+							 !trimmedLine.startsWith("// ")) ||
+							(!trimmedPreviousLine.startsWith("// ") &&
+							 trimmedLine.startsWith("// "))) {
+
+							sb.append("\n");
+						}
+						else if (previousLine.endsWith(
+									StringPool.TAB +
+										StringPool.CLOSE_CURLY_BRACE) &&
+								 !trimmedLine.startsWith(
+									 StringPool.CLOSE_CURLY_BRACE) &&
+								 !trimmedLine.startsWith(
+									 StringPool.CLOSE_PARENTHESIS) &&
+								 !trimmedLine.startsWith(
+									 StringPool.DOUBLE_SLASH) &&
+								 !trimmedLine.startsWith("catch ") &&
+								 !trimmedLine.startsWith("else ") &&
+								 !trimmedLine.startsWith("finally ") &&
+								 !trimmedLine.startsWith("while ")) {
+
+							sb.append("\n");
+						}
 					}
 
 					sb.append("\n");
@@ -2013,6 +2084,11 @@ public class SourceFormatter {
 
 		boolean readAttributes = false;
 
+		String currentException = null;
+		String previousException = null;
+
+		boolean hasUnsortedExceptions = false;
+
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -2123,6 +2199,25 @@ public class SourceFormatter {
 				}
 			}
 
+			if (!hasUnsortedExceptions) {
+				int i = line.indexOf("<liferay-ui:error exception=\"<%=");
+
+				if (i != -1) {
+					currentException = line.substring(i + 33);
+
+					if (Validator.isNotNull(previousException) &&
+						(previousException.compareTo(currentException) > 0)) {
+
+						hasUnsortedExceptions = true;
+					}
+				}
+
+				if (!hasUnsortedExceptions) {
+					previousException = currentException;
+					currentException = null;
+				}
+			}
+
 			if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
 				!trimmedLine.startsWith("<%") &&
 				!trimmedLine.startsWith("<!")) {
@@ -2206,6 +2301,22 @@ public class SourceFormatter {
 				content,
 				previousAttributeAndValue + "\n" + currentAttributeAndValue,
 				currentAttributeAndValue + "\n" + previousAttributeAndValue);
+		}
+
+		if (hasUnsortedExceptions) {
+			if ((StringUtil.count(content, currentException) > 1) ||
+				(StringUtil.count(content, previousException) > 1)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "unsorted exceptions: " + fileName);
+			}
+			else {
+				content = StringUtil.replaceFirst(
+					content, previousException, currentException);
+
+				content = StringUtil.replaceLast(
+					content, currentException, previousException);
+			}
 		}
 
 		return content;
@@ -2786,7 +2897,13 @@ public class SourceFormatter {
 		String line, String previousLine, int lineTabCount,
 		int previousLineTabCount) {
 
-		if (Validator.isNull(previousLine)) {
+		if (Validator.isNull(line) || Validator.isNull(previousLine)) {
+			return null;
+		}
+
+		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+		if (line.startsWith("// ") || trimmedPreviousLine.startsWith("// ")) {
 			return null;
 		}
 
@@ -2801,7 +2918,6 @@ public class SourceFormatter {
 		}
 
 		int previousLineLength = _getLineLength(previousLine);
-		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 
 		if ((line.length() + previousLineLength) < 80) {
 			if (trimmedPreviousLine.startsWith("for ") &&
@@ -2812,6 +2928,7 @@ public class SourceFormatter {
 			}
 
 			if ((previousLine.endsWith(StringPool.EQUAL) ||
+				 previousLine.endsWith(StringPool.PERIOD) ||
 				 trimmedPreviousLine.equals("return")) &&
 				line.endsWith(StringPool.SEMICOLON)) {
 

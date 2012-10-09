@@ -368,6 +368,21 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public void setSize(long size);
 
 	/**
+	 * Returns the checksum of this document library file version.
+	 *
+	 * @return the checksum of this document library file version
+	 */
+	@AutoEscape
+	public String getChecksum();
+
+	/**
+	 * Sets the checksum of this document library file version.
+	 *
+	 * @param checksum the checksum of this document library file version
+	 */
+	public void setChecksum(String checksum);
+
+	/**
 	 * Returns the status of this document library file version.
 	 *
 	 * @return the status of this document library file version

@@ -59,7 +59,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			boolean hidden, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Folder
@@ -85,6 +85,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setName(name);
 		dlFolder.setDescription(description);
+		dlFolder.setHidden(hidden);
 		dlFolder.setOverrideFileEntryTypes(false);
 		dlFolder.setExpandoBridgeAttributes(serviceContext);
 
@@ -127,6 +128,22 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			new LiferayFolder(dlFolder), serviceContext);
 
 		return dlFolder;
+	}
+
+	/**
+	 * @deprecated As of 6.2, replaced by more general {@link #addFolder(long,
+	 *             long, long, boolean, long, String, String, boolean,
+	 *             ServiceContext)}
+	 */
+	public DLFolder addFolder(
+			long userId, long groupId, long repositoryId, boolean mountPoint,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFolder(
+			userId, groupId, repositoryId, mountPoint, parentFolderId, name,
+			description, false, serviceContext);
 	}
 
 	public void deleteAll(long groupId)
@@ -189,8 +206,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFileEntriesAndFileShortcuts(long, long,
-	 *             QueryDefinition)}
+	 * @deprecated Replaced by {@link #getFileEntriesAndFileShortcuts(long,
+	 *             long, QueryDefinition)}
 	 */
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, int start, int end)
@@ -212,8 +229,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFileEntriesAndFileShortcutsCount(long, long,
-	 *             QueryDefinition)}
+	 * @deprecated Replaced by {@link #getFileEntriesAndFileShortcutsCount(long,
+	 *             long, QueryDefinition)}
 	 */
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status)
@@ -305,7 +322,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	 * @deprecated Replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -322,8 +340,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	 *             long, String[], boolean, QueryDefinition)}
+	 * @deprecated Replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	 *             String[], boolean, QueryDefinition)}
 	 */
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
@@ -348,8 +367,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	 *             long, String[], boolean, QueryDefinition)}
+	 * @deprecated Replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	 *             String[], boolean, QueryDefinition)}
 	 */
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
@@ -363,8 +383,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	 *             long, String[], boolean, QueryDefinition)}
+	 * @deprecated Replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	 *             String[], boolean, QueryDefinition)}
 	 */
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
@@ -486,7 +507,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		// Workflow definitions
 
-		List<ObjectValuePair<Long, String>> workflowDefinitions =
+		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
 			new ArrayList<ObjectValuePair<Long, String>>();
 
 		if (fileEntryTypeIds.isEmpty()) {
@@ -494,7 +515,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 		}
 		else {
-			workflowDefinitions.add(
+			workflowDefinitionOVPs.add(
 				new ObjectValuePair<Long, String>(
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL,
 					StringPool.BLANK));
@@ -504,7 +525,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			String workflowDefinition = ParamUtil.getString(
 				serviceContext, "workflowDefinition" + fileEntryTypeId);
 
-			workflowDefinitions.add(
+			workflowDefinitionOVPs.add(
 				new ObjectValuePair<Long, String>(
 					fileEntryTypeId, workflowDefinition));
 		}
@@ -512,7 +533,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
 			serviceContext.getUserId(), serviceContext.getCompanyId(),
 			serviceContext.getScopeGroupId(), DLFolder.class.getName(),
-			folderId, workflowDefinitions);
+			folderId, workflowDefinitionOVPs);
 
 		return dlFolder;
 	}

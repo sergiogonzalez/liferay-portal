@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -823,6 +824,8 @@ public class ExpandoValueLocalServiceImpl
 			expandoRowPersistence.update(row, false);
 		}
 
+		boolean rowModified = false;
+
 		for (ExpandoColumn column : columns) {
 			String dataString = data.get(column.getName());
 
@@ -846,9 +849,21 @@ public class ExpandoValueLocalServiceImpl
 				value.setClassPK(classPK);
 			}
 
-			value.setData(dataString);
+			if (value.isNew() ||
+				!Validator.equals(value.getData(), dataString)) {
 
-			expandoValuePersistence.update(value, false);
+				value.setData(dataString);
+
+				expandoValuePersistence.update(value, false);
+
+				rowModified = true;
+			}
+		}
+
+		if (rowModified) {
+			row.setModifiedDate(new Date());
+
+			expandoRowPersistence.update(row, false);
 		}
 	}
 
@@ -2010,9 +2025,15 @@ public class ExpandoValueLocalServiceImpl
 			value.setClassPK(classPK);
 		}
 
-		value.setData(data);
+		if (value.isNew() || !Validator.equals(value.getData(), data)) {
+			value.setData(data);
 
-		expandoValuePersistence.update(value, false);
+			expandoValuePersistence.update(value, false);
+
+			row.setModifiedDate(new Date());
+
+			expandoRowPersistence.update(row, false);
+		}
 
 		return value;
 	}

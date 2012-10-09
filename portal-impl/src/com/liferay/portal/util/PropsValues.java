@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -516,6 +517,8 @@ public class PropsValues {
 
 	public static boolean DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE));
 
+	public static final int DL_FILE_ENTRY_VERSION_POLICY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_VERSION_POLICY));
+
 	public static final String[] DL_FILE_EXTENSIONS = PropsUtil.getArray(PropsKeys.DL_FILE_EXTENSIONS);
 
 	public static final boolean DL_FILE_EXTENSIONS_STRICT_CHECK = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_EXTENSIONS_STRICT_CHECK));
@@ -567,6 +570,8 @@ public class PropsValues {
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER);
 
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY);
+
+	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL);
 
 	public static final boolean DYNAMIC_DATA_LISTS_RECORD_SET_FORCE_AUTOGENERATE_KEY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_RECORD_SET_FORCE_AUTOGENERATE_KEY));
 

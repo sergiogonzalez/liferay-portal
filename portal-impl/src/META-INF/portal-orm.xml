@@ -1993,6 +1993,7 @@
 			<basic name="size">
 				<column name="SIZE_" />
 			</basic>
+			<basic name="checksum" />
 			<basic name="status" />
 			<basic name="statusByUserId" />
 			<basic name="statusByUserName" />
@@ -2031,6 +2032,9 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="defaultFileEntryTypeId" />
+			<basic name="hidden">
+				<column name="HIDDEN_" />
+			</basic>
 			<basic name="overrideFileEntryTypes" />
 			<basic name="status" />
 			<basic name="statusByUserId" />
@@ -2234,7 +2238,8 @@
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />
 			<transient name="document" />
-			<transient name="localizedFieldsMap" />
+			<transient name="localizedFieldsMap1" />
+			<transient name="localizedFieldsMap2" />
 			<transient name="modelAttributes" />
 			<transient name="nameCurrentLanguageId" />
 			<transient name="nameMap" />
@@ -2317,6 +2322,9 @@
 				<column name="ROWID_" />
 			</id>
 			<basic name="companyId" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="tableId" />
 			<basic name="classPK" />
 			<transient name="modelAttributes" />

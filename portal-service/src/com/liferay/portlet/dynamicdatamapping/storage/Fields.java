@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -33,6 +35,21 @@ public class Fields implements Serializable {
 
 	public boolean contains(String name) {
 		return _fieldsMap.containsKey(name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Fields)) {
+			return false;
+		}
+
+		Fields fields = (Fields)obj;
+
+		if (Validator.equals(_fieldsMap, fields._fieldsMap)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public Field get(String name) {

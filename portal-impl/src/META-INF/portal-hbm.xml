@@ -1512,6 +1512,7 @@
 		<property name="fileEntryTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
+		<property name="checksum" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -1536,6 +1537,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
 		<property name="defaultFileEntryTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="hidden" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="hidden_" />
 		<property name="overrideFileEntryTypes" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1714,6 +1716,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="tableId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>

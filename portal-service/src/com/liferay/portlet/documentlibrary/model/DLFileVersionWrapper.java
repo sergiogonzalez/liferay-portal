@@ -66,6 +66,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		attributes.put("fileEntryTypeId", getFileEntryTypeId());
 		attributes.put("version", getVersion());
 		attributes.put("size", getSize());
+		attributes.put("checksum", getChecksum());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -193,6 +194,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		String checksum = (String)attributes.get("checksum");
+
+		if (checksum != null) {
+			setChecksum(checksum);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -616,6 +623,24 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	public void setSize(long size) {
 		_dlFileVersion.setSize(size);
+	}
+
+	/**
+	* Returns the checksum of this document library file version.
+	*
+	* @return the checksum of this document library file version
+	*/
+	public java.lang.String getChecksum() {
+		return _dlFileVersion.getChecksum();
+	}
+
+	/**
+	* Sets the checksum of this document library file version.
+	*
+	* @param checksum the checksum of this document library file version
+	*/
+	public void setChecksum(java.lang.String checksum) {
+		_dlFileVersion.setChecksum(checksum);
 	}
 
 	/**

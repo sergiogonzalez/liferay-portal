@@ -247,6 +247,10 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteFileVersionFileEntryMetadata(long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getFileEntryMetadata(
 		long fileEntryMetadataId)
@@ -259,6 +263,9 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated {@link #getFileVersionFileEntryMetadatasCount(long)}
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -266,6 +273,10 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
 		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getFileVersionFileEntryMetadatasCount(long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateFileEntryMetadata(long companyId,
