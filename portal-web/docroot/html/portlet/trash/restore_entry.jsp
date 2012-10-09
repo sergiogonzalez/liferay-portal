@@ -23,6 +23,8 @@ String trashEntryId = ParamUtil.getString(request, "trashEntryId");
 
 String duplicateEntryId = ParamUtil.getString(request, "duplicateEntryId");
 String oldName = ParamUtil.getString(request, "oldName");
+
+String strutsAction = ParamUtil.getString(request, "strutsAction", "/trash/edit_entry");
 %>
 
 <div class="portlet-msg-alert" id="<portlet:namespace />messageContainer">
@@ -30,7 +32,7 @@ String oldName = ParamUtil.getString(request, "oldName");
 </div>
 
 <portlet:actionURL var="editActionURL">
-	<portlet:param name="struts_action" value="/trash/edit_entry" />
+	<portlet:param name="struts_action" value="<%= strutsAction %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
