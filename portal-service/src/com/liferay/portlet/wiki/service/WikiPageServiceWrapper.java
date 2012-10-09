@@ -134,6 +134,12 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		_wikiPageService.deletePageAttachments(nodeId, title);
 	}
 
+	public void deletePageAttachmentsInTrash(long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.deletePageAttachmentsInTrash(nodeId, title);
+	}
+
 	public void deleteTempPageAttachment(long nodeId,
 		java.lang.String fileName, java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -212,16 +218,8 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		_wikiPageService.movePage(nodeId, title, newTitle, serviceContext);
 	}
 
-	public void movePageAttachmentFromTrash(long nodeId,
-		java.lang.String title, java.lang.String deletedFileName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageService.movePageAttachmentFromTrash(nodeId, title,
-			deletedFileName);
-	}
-
-	public java.lang.String movePageAttachmentToTrash(long nodeId,
-		java.lang.String title, java.lang.String fileName)
+	public long movePageAttachmentToTrash(long nodeId, java.lang.String title,
+		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageService.movePageAttachmentToTrash(nodeId, title,
@@ -239,6 +237,13 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_wikiPageService.movePageToTrash(nodeId, title, version);
+	}
+
+	public void restorePageAttachmentFromTrash(long nodeId,
+		java.lang.String title, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.restorePageAttachmentFromTrash(nodeId, title, fileName);
 	}
 
 	public void restorePageFromTrash(long resourcePrimKey)
