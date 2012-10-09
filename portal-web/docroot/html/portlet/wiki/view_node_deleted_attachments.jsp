@@ -75,11 +75,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 	>
 
 		<%
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(dlFileEntry.getFolderId());
-
-		long resourcePrimKey = GetterUtil.getLong(dlFolder.getName());
-
-		WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(resourcePrimKey);
+		WikiPage wikiPage = WikiPageAttachmentUtil.getPageByFileEntryId(dlFileEntry.getFileEntryId());
 		%>
 
 		<liferay-portlet:actionURL varImpl="rowURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">

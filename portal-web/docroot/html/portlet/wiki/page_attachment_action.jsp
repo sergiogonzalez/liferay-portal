@@ -23,15 +23,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 DLFileEntry dlFileEntry = (DLFileEntry)row.getObject();
 
-long dlFolderId = dlFileEntry.getFolderId();
-
-DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(dlFolderId);
-
-String dlFolderName = dlFolder.getName();
-
-long resourcePrimKey = GetterUtil.getLong(dlFolderName);
-
-WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(resourcePrimKey);
+WikiPage wikiPage = WikiPageAttachmentUtil.getPageByFileEntryId(dlFileEntry.getFileEntryId());
 %>
 
 <liferay-ui:icon-menu>
