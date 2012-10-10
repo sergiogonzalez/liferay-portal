@@ -204,12 +204,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		WikiPagePermission.check(
 			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
 
-		WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(nodeId, title);
-
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
-			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
-
-		wikiPageLocalService.deletePageAttachment(dlFileEntry.getFileEntryId());
+		wikiPageLocalService.deletePageAttachment(nodeId, title, fileName);
 	}
 
 	public void deletePageAttachments(long nodeId, String title)
@@ -221,13 +216,13 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		wikiPageLocalService.deletePageAttachments(nodeId, title);
 	}
 
-	public void deletePageAttachmentsInTrash(long nodeId, String title)
+	public void deleteTrashPageAttachments(long nodeId, String title)
 		throws PortalException, SystemException {
 
 		WikiPagePermission.check(
 			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
 
-		wikiPageLocalService.deletePageAttachmentsInTrash(nodeId, title);
+		wikiPageLocalService.deleteTrashPageAttachments(nodeId, title);
 	}
 
 	public void deleteTempPageAttachment(

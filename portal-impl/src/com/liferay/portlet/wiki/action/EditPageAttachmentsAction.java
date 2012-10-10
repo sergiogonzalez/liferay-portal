@@ -336,7 +336,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			WikiPageServiceUtil.deletePageAttachment(nodeId, title, attachment);
 		}
 
-		if (moveToTrash) {
+		if (moveToTrash && (dlFileEntryId > 0)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
 
 			data.put(
@@ -389,7 +389,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 
-		WikiPageServiceUtil.deletePageAttachmentsInTrash(nodeId, title);
+		WikiPageServiceUtil.deleteTrashPageAttachments(nodeId, title);
 	}
 
 	protected void moveAttachmentFromTrash(

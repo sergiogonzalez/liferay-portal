@@ -166,8 +166,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		throws PortalException, SystemException {
 
 		List<DLFileEntry> dlFileEntries =
-			DLFileEntryLocalServiceUtil.getFileEntries(
-				groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId);
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			deletePortletFileEntry(dlFileEntry.getFileEntryId());
@@ -236,8 +235,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public List<DLFileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException {
 
-		return DLFileEntryLocalServiceUtil.getFileEntries(
-			groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId);
 	}
 
 	public List<DLFileEntry> getPortletFileEntries(
@@ -273,6 +271,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			groupId, folderId, status);
 	}
 
+	public DLFileEntry getPortletFileEntry(
+			long groupId, long folderId, String fileName)
+		throws PortalException, SystemException {
+
+		return DLFileEntryLocalServiceUtil.getFileEntry(
+			groupId, folderId, fileName);
+	}
+
 	public long getPortletRepository(
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -299,7 +305,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			serviceContext);
 	}
 
-	public void movePortletFileEntryFromTrash(long userId, long fileEntryId)
+	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
@@ -315,14 +321,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 	}
 
-	public void movePortletFileEntryFromTrash(
+	public void restorePortletFileEntryFromTrash(
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			groupId, folderId, fileName);
 
-		movePortletFileEntryFromTrash(userId, fileEntry.getFileEntryId());
+		restorePortletFileEntryFromTrash(userId, fileEntry.getFileEntryId());
 	}
 
 	public void movePortletFileEntryToTrash(long userId, long fileEntryId)
