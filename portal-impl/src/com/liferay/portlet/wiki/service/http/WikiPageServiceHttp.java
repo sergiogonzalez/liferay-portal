@@ -444,17 +444,17 @@ public class WikiPageServiceHttp {
 		}
 	}
 
-	public static void deleteTrashPageAttachments(HttpPrincipal httpPrincipal,
-		long nodeId, java.lang.String title)
+	public static void deleteTempPageAttachment(HttpPrincipal httpPrincipal,
+		long nodeId, java.lang.String fileName, java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class.getName(),
-					"deleteTrashPageAttachments",
-					_deleteTrashPageAttachmentsParameterTypes12);
+					"deleteTempPageAttachment",
+					_deleteTempPageAttachmentParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
-					title);
+					fileName, tempFolderName);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -478,17 +478,17 @@ public class WikiPageServiceHttp {
 		}
 	}
 
-	public static void deleteTempPageAttachment(HttpPrincipal httpPrincipal,
-		long nodeId, java.lang.String fileName, java.lang.String tempFolderName)
+	public static void deleteTrashPageAttachments(HttpPrincipal httpPrincipal,
+		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class.getName(),
-					"deleteTempPageAttachment",
-					_deleteTempPageAttachmentParameterTypes13);
+					"deleteTrashPageAttachments",
+					_deleteTrashPageAttachmentsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
-					fileName, tempFolderName);
+					title);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1214,11 +1214,11 @@ public class WikiPageServiceHttp {
 	private static final Class<?>[] _deletePageAttachmentsParameterTypes11 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _deleteTrashPageAttachmentsParameterTypes12 = new Class[] {
-			long.class, java.lang.String.class
-		};
-	private static final Class<?>[] _deleteTempPageAttachmentParameterTypes13 = new Class[] {
+	private static final Class<?>[] _deleteTempPageAttachmentParameterTypes12 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
+		};
+	private static final Class<?>[] _deleteTrashPageAttachmentsParameterTypes13 = new Class[] {
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getDraftPageParameterTypes14 = new Class[] {
 			long.class, java.lang.String.class

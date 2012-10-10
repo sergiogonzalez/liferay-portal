@@ -134,18 +134,18 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		_wikiPageService.deletePageAttachments(nodeId, title);
 	}
 
-	public void deleteTrashPageAttachments(long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageService.deleteTrashPageAttachments(nodeId, title);
-	}
-
 	public void deleteTempPageAttachment(long nodeId,
 		java.lang.String fileName, java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_wikiPageService.deleteTempPageAttachment(nodeId, fileName,
 			tempFolderName);
+	}
+
+	public void deleteTrashPageAttachments(long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.deleteTrashPageAttachments(nodeId, title);
 	}
 
 	public com.liferay.portlet.wiki.model.WikiPage getDraftPage(long nodeId,

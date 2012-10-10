@@ -143,18 +143,18 @@ public class WikiPageServiceUtil {
 		getService().deletePageAttachments(nodeId, title);
 	}
 
-	public static void deleteTrashPageAttachments(long nodeId,
-		java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteTrashPageAttachments(nodeId, title);
-	}
-
 	public static void deleteTempPageAttachment(long nodeId,
 		java.lang.String fileName, java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteTempPageAttachment(nodeId, fileName, tempFolderName);
+	}
+
+	public static void deleteTrashPageAttachments(long nodeId,
+		java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTrashPageAttachments(nodeId, title);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage getDraftPage(
