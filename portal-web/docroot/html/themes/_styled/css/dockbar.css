@@ -107,11 +107,8 @@ html > .lfr-dockbar-pinned {
 	background-image: url(../images/dockbar/unpin.png);
 }
 
-.dockbar .user-portrait {
-	text-decoration: none;
-}
-
 .dockbar .user-avatar img {
+	text-decoration: none;
 	vertical-align: middle;
 	width: 25px;
 }
