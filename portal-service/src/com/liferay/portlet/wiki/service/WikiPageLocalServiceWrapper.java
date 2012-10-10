@@ -398,6 +398,13 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService.deletePage(page);
 	}
 
+	public void deletePageAttachment(long nodeId, java.lang.String title,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.deletePageAttachment(nodeId, title, fileName);
+	}
+
 	public void deletePageAttachment(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -410,10 +417,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService.deletePageAttachments(nodeId, title);
 	}
 
-	public void deletePageAttachmentsInTrash(long nodeId, java.lang.String title)
+	public void deleteTrashPageAttachments(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageLocalService.deletePageAttachmentsInTrash(nodeId, title);
+		_wikiPageLocalService.deleteTrashPageAttachments(nodeId, title);
 	}
 
 	public void deletePages(long nodeId)

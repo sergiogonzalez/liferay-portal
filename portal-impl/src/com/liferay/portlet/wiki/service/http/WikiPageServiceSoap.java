@@ -181,10 +181,10 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static void deletePageAttachmentsInTrash(long nodeId,
+	public static void deleteTrashPageAttachments(long nodeId,
 		java.lang.String title) throws RemoteException {
 		try {
-			WikiPageServiceUtil.deletePageAttachmentsInTrash(nodeId, title);
+			WikiPageServiceUtil.deleteTrashPageAttachments(nodeId, title);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -444,14 +444,14 @@ public class WikiPageServiceHttp {
 		}
 	}
 
-	public static void deletePageAttachmentsInTrash(
-		HttpPrincipal httpPrincipal, long nodeId, java.lang.String title)
+	public static void deleteTrashPageAttachments(HttpPrincipal httpPrincipal,
+		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class.getName(),
-					"deletePageAttachmentsInTrash",
-					_deletePageAttachmentsInTrashParameterTypes12);
+					"deleteTrashPageAttachments",
+					_deleteTrashPageAttachmentsParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
 					title);
@@ -1214,8 +1214,9 @@ public class WikiPageServiceHttp {
 	private static final Class<?>[] _deletePageAttachmentsParameterTypes11 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _deletePageAttachmentsInTrashParameterTypes12 =
-		new Class[] { long.class, java.lang.String.class };
+	private static final Class<?>[] _deleteTrashPageAttachmentsParameterTypes12 = new Class[] {
+			long.class, java.lang.String.class
+		};
 	private static final Class<?>[] _deleteTempPageAttachmentParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
 		};

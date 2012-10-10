@@ -134,10 +134,10 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		_wikiPageService.deletePageAttachments(nodeId, title);
 	}
 
-	public void deletePageAttachmentsInTrash(long nodeId, java.lang.String title)
+	public void deleteTrashPageAttachments(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageService.deletePageAttachmentsInTrash(nodeId, title);
+		_wikiPageService.deleteTrashPageAttachments(nodeId, title);
 	}
 
 	public void deleteTempPageAttachment(long nodeId,

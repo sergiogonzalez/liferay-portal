@@ -143,11 +143,11 @@ public class WikiPageServiceUtil {
 		getService().deletePageAttachments(nodeId, title);
 	}
 
-	public static void deletePageAttachmentsInTrash(long nodeId,
+	public static void deleteTrashPageAttachments(long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deletePageAttachmentsInTrash(nodeId, title);
+		getService().deleteTrashPageAttachments(nodeId, title);
 	}
 
 	public static void deleteTempPageAttachment(long nodeId,
