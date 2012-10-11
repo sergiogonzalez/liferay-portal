@@ -150,6 +150,14 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	</liferay-ui:panel-container>
 </c:if>
 
+<aui:script use="aui-base">
+	var backLink = A.one('.header-back-to a');
+
+	if (backLink) {
+		backLink.focus();
+	}
+</aui:script>
+
 <%
 PortalUtil.setPageSubtitle(entry.getTitle(), request);
 PortalUtil.setPageDescription(entry.getDescription(), request);
