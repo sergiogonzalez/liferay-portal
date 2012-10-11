@@ -12,25 +12,41 @@
  * details.
  */
 
-package com.liferay.portal.messaging.proxy;
-
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+package com.liferay.portal.cluster;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
-public class ProxyModeThreadLocal {
+public class TestBean {
 
-	public static boolean isForceSync() {
-		return _forceSync.get();
+	public static String TIMESTAMP;
+
+	public static String testMethod1(String timeStamp) {
+		if (timeStamp.length() == 0) {
+			return null;
+		}
+
+		TIMESTAMP = timeStamp;
+
+		return timeStamp;
 	}
 
-	public static void setForceSync(boolean forceSync) {
-		_forceSync.set(forceSync);
+	public static Object testMethod2() {
+		return new Object();
 	}
 
-	private static ThreadLocal<Boolean> _forceSync =
-		new AutoResetThreadLocal<Boolean>(
-			ProxyModeThreadLocal.class + "_forceSync", Boolean.FALSE);
+	public static Object testMethod3(String timeStamp) throws Exception {
+		throw new Exception(timeStamp);
+	}
+
+	public void setKey(String key) {
+		_key = key;
+	}
+
+	public String testMethod4() {
+		return _key;
+	}
+
+	private String _key;
 
 }
