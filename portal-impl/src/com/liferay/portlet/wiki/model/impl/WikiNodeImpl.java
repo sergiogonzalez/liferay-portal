@@ -38,14 +38,13 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
 			getNodeId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<DLFileEntry> deletedNodeAttachments = new ArrayList<DLFileEntry>();
+		List<DLFileEntry> deletedAttachments = new ArrayList<DLFileEntry>();
 
 		for (WikiPage wikiPage : wikiPages) {
-			deletedNodeAttachments.addAll(
-				wikiPage.getDeletedAttachmentsFiles());
+			deletedAttachments.addAll(wikiPage.getDeletedAttachmentsFiles());
 		}
 
-		return deletedNodeAttachments;
+		return deletedAttachments;
 	}
 
 }

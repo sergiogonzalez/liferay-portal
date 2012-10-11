@@ -50,6 +50,7 @@ import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -220,15 +221,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return addPage(
 			userId, nodeId, title, version, content, summary, minorEdit, format,
 			head, parentTitle, redirectTitle, serviceContext);
-	}
-
-	public void addPageAttachment(
-			long groupId, long userId, long folderId, String fileName,
-			InputStream inputStream)
-		throws PortalException, SystemException {
-
-		PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, PortletKeys.WIKI, folderId, inputStream, fileName);
 	}
 
 	public void addPageAttachment(
@@ -511,10 +503,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
-	public void deletePageAttachment(long fileEntryId)
+	public void deletePageAttachment(long nodeId, String title, String fileName)
 		throws PortalException, SystemException {
 
-		PortletFileRepositoryUtil.deletePortletFileEntry(fileEntryId);
+		WikiPage wikiPage = getPage(nodeId, title);
+
+		DLFileEntry dlFileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
+
+		deletePageAttachment(dlFileEntry.getFileEntryId());
 	}
 
 	public void deletePageAttachments(long nodeId, String title)
@@ -524,16 +521,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		PortletFileRepositoryUtil.deletePortletFileEntries(
 			page.getGroupId(), page.getAttachmentsFolderId());
-	}
-
-	public void deletePageAttachmentsInTrash(long nodeId, String title)
-		throws PortalException, SystemException {
-
-		WikiPage page = getPage(nodeId, title);
-
-		PortletFileRepositoryUtil.deletePortletFileEntries(
-			page.getGroupId(), page.getAttachmentsFolderId(),
-			WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	public void deletePages(long nodeId)
@@ -559,6 +546,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		TempFileUtil.deleteTempFile(userId, fileName, tempFolderName);
+	}
+
+	public void deleteTrashPageAttachments(long nodeId, String title)
+		throws PortalException, SystemException {
+
+		WikiPage page = getPage(nodeId, title);
+
+		PortletFileRepositoryUtil.deletePortletFileEntries(
+			page.getGroupId(), page.getAttachmentsFolderId(),
+			WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	public WikiPage fetchPage(long nodeId, String title, double version)
@@ -1113,11 +1110,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		movePage(userId, nodeId, title, newTitle, true, serviceContext);
 	}
 
-	public void movePageAttachmentToTrash(long userId, long fileEntryId)
+	public long movePageAttachmentToTrash(
+			long userId, long nodeId, String title, String fileName)
 		throws PortalException, SystemException {
+
+		WikiPage wikiPage = getPage(nodeId, title);
+
+		DLFileEntry dlFileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
+
+		long fileEntryId = dlFileEntry.getFileEntryId();
 
 		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
 			userId, fileEntryId);
+
+		return fileEntryId;
 	}
 
 	public WikiPage movePageToTrash(long userId, long nodeId, String title)
@@ -1164,11 +1171,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			new ServiceContext());
 	}
 
-	public void restorePageAttachmentFromTrash(long userId, long fileEntryId)
+	public void restorePageAttachmentFromTrash(
+			long userId, long nodeId, String title, String fileName)
 		throws PortalException, SystemException {
 
-		PortletFileRepositoryUtil.movePortletFileEntryFromTrash(
-			userId, fileEntryId);
+		WikiPage wikiPage = getPage(nodeId, title);
+
+		DLFileEntry dlFileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
+
+		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+			userId, dlFileEntry.getFileEntryId());
 	}
 
 	public void restorePageFromTrash(long userId, WikiPage page)
@@ -1661,6 +1674,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		WikiCacheUtil.clearCache(page.getNodeId());
+	}
+
+	protected void deletePageAttachment(long fileEntryId)
+		throws PortalException, SystemException {
+
+		PortletFileRepositoryUtil.deletePortletFileEntry(fileEntryId);
 	}
 
 	protected String getParentPageTitle(WikiPage page) {
