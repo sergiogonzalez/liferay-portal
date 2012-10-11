@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.kernel.messaging.proxy;
 
-import com.liferay.portal.kernel.dao.db.DB;
-
-import java.io.IOException;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
- * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public abstract class DBTest {
+public class ProxyModeThreadLocal {
 
-	protected String buildSQL(String query) throws IOException {
-		DB db = getDB();
-
-		return db.buildSQL(query);
+	public static boolean isForceSync() {
+		return _forceSync.get();
 	}
 
-	protected abstract DB getDB();
+	public static void setForceSync(boolean forceSync) {
+		_forceSync.set(forceSync);
+	}
 
-	protected static final String RENAME_TABLE_QUERY = "alter_table_name a b";
+	private static ThreadLocal<Boolean> _forceSync =
+		new AutoResetThreadLocal<Boolean>(
+			ProxyModeThreadLocal.class + "_forceSync", Boolean.FALSE);
 
 }
