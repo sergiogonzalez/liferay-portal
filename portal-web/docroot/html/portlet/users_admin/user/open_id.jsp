@@ -20,9 +20,13 @@
 User selUser = (User)request.getAttribute("user.selUser");
 %>
 
+<liferay-ui:error-marker key="errorSection" value="openId" />
+
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
 <h3><liferay-ui:message key="open-id" /></h3>
+
+<liferay-ui:error exception="<%= DuplicateOpenIdException.class %>" message="an-account-with-that-OpenId-already-exists-in-the-portal" />
 
 <aui:fieldset>
 	<aui:input label="" name="openId" />

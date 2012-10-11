@@ -21,6 +21,7 @@ import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.ContactFirstNameException;
 import com.liferay.portal.ContactFullNameException;
 import com.liferay.portal.ContactLastNameException;
+import com.liferay.portal.DuplicateOpenIdException;
 import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.DuplicateUserScreenNameException;
 import com.liferay.portal.EmailAddressException;
@@ -47,6 +48,8 @@ import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -180,6 +183,15 @@ public class CreateAccountAction extends PortletAction {
 					 e instanceof WebsiteURLException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof DuplicateOpenIdException) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Another user was found with the same OpenId, " +
+								"however there shouldn't be any. (Maybe " +
+									"another thread inserted it?)");
+				}
+
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -474,5 +486,7 @@ public class CreateAccountAction extends PortletAction {
 	private static final boolean _AUTO_SCREEN_NAME = false;
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
+
+	private static Log _log = LogFactoryUtil.getLog(OpenIdAction.class);
 
 }
