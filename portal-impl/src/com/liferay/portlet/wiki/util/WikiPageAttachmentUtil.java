@@ -23,8 +23,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -36,12 +34,13 @@ public class WikiPageAttachmentUtil {
 	public static WikiPage getPageByFileEntryId(long dlFileEntryId)
 		throws PortalException, SystemException {
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+		DLFileEntry dlFileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			dlFileEntryId);
 
 		long dlFolderId = dlFileEntry.getFolderId();
 
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(dlFolderId);
+		DLFolder dlFolder = PortletFileRepositoryUtil.getPortletFolder(
+			dlFolderId);
 
 		String dlFolderName = dlFolder.getName();
 
@@ -62,13 +61,15 @@ public class WikiPageAttachmentUtil {
 		long repositoryId = PortletFileRepositoryUtil.getPortletRepository(
 			groupId, PortletKeys.WIKI, serviceContext);
 
-		long nodeFolderId = PortletFileRepositoryUtil.getFolder(
+		DLFolder nodeFolder = PortletFileRepositoryUtil.getPortletFolder(
 			userId, repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(nodeId), serviceContext);
 
-		return PortletFileRepositoryUtil.getFolder(
-			userId, repositoryId, nodeFolderId, String.valueOf(pageId),
-			serviceContext);
+		DLFolder pageFolder = PortletFileRepositoryUtil.getPortletFolder(
+			userId, repositoryId, nodeFolder.getFolderId(),
+			String.valueOf(pageId), serviceContext);
+
+		return pageFolder.getFolderId();
 	}
 
 }
