@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.trash.action;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -105,7 +103,9 @@ public class EditEntryAction extends PortletAction {
 				entries = restoreOverride(actionRequest);
 			}
 			else if (cmd.equals("checkEntry")) {
-				checkEntry(actionRequest, actionResponse);
+				JSONObject jsonObject = ActionUtil.checkEntry(actionRequest);
+
+				writeJSON(actionRequest, actionResponse, jsonObject);
 
 				return;
 			}
@@ -181,36 +181,6 @@ public class EditEntryAction extends PortletAction {
 			actionRequest,
 			liferayPortletConfig.getPortletId() +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
-	}
-
-	protected void checkEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
-
-		String newName = ParamUtil.getString(actionRequest, "newName");
-
-		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(entryId);
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			entry.getClassName());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			trashHandler.checkDuplicateTrashEntry(entry, newName);
-
-			jsonObject.put("success", true);
-		}
-		catch (DuplicateEntryException dee) {
-			jsonObject.put("duplicateEntryId", dee.getDuplicateEntryId());
-			jsonObject.put("oldName", dee.getOldName());
-			jsonObject.put("success", false);
-			jsonObject.put("trashEntryId", dee.getTrashEntryId());
-		}
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected void deleteEntries(ActionRequest actionRequest) throws Exception {

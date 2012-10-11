@@ -285,9 +285,11 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 					continue;
 				}
 
-				migrateFiles(
-					wikiPage.getCompanyId(), wikiPage.getAttachmentsDir(),
-					wikiPage.getAttachmentsFiles());
+				for (DLFileEntry attachment : wikiPage.getAttachmentsFiles()) {
+					migrateDLFileEntry(
+						wikiPage.getCompanyId(), attachment.getRepositoryId(),
+						attachment);
+				}
 			}
 		}
 	}

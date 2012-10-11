@@ -305,6 +305,15 @@ public class WikiPageLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void addPageAttachment(long groupId, long userId,
+		long folderId, java.lang.String fileName,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addPageAttachment(groupId, userId, folderId, fileName, inputStream);
+	}
+
 	public static void addPageAttachment(long userId, long nodeId,
 		java.lang.String title, java.lang.String fileName, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -319,16 +328,6 @@ public class WikiPageLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.addPageAttachment(userId, nodeId, title, fileName, inputStream);
-	}
-
-	public static void addPageAttachment(long companyId,
-		java.lang.String dirName, java.util.Date modifiedDate,
-		java.lang.String fileName, java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.addPageAttachment(companyId, dirName, modifiedDate, fileName,
-			inputStream);
 	}
 
 	public static void addPageAttachments(long userId, long nodeId,
@@ -411,6 +410,12 @@ public class WikiPageLocalServiceUtil {
 		getService().deletePage(page);
 	}
 
+	public static void deletePageAttachment(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deletePageAttachment(fileEntryId);
+	}
+
 	public static void deletePageAttachment(long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -435,6 +440,13 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteTempPageAttachment(userId, fileName, tempFolderName);
+	}
+
+	public static void deleteTrashPageAttachments(long nodeId,
+		java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTrashPageAttachments(nodeId, title);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage fetchPage(
@@ -697,18 +709,12 @@ public class WikiPageLocalServiceUtil {
 		getService().movePage(userId, nodeId, title, newTitle, serviceContext);
 	}
 
-	public static void movePageAttachmentFromTrash(long nodeId,
-		java.lang.String title, java.lang.String deletedFileName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().movePageAttachmentFromTrash(nodeId, title, deletedFileName);
-	}
-
-	public static java.lang.String movePageAttachmentToTrash(long nodeId,
+	public static long movePageAttachmentToTrash(long userId, long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().movePageAttachmentToTrash(nodeId, title, fileName);
+		return getService()
+				   .movePageAttachmentToTrash(userId, nodeId, title, fileName);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage movePageToTrash(
@@ -730,6 +736,14 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().movePageToTrash(userId, page);
+	}
+
+	public static void restorePageAttachmentFromTrash(long userId, long nodeId,
+		java.lang.String title, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.restorePageAttachmentFromTrash(userId, nodeId, title, fileName);
 	}
 
 	public static void restorePageFromTrash(long userId,

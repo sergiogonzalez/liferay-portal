@@ -2082,6 +2082,10 @@
 			<forward name="portlet.wiki.view_categorized_pages" path="portlet.wiki.view_categorized_pages" />
 		</action>
 
+		<action path="/wiki/edit_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.wiki.view" path="portlet.wiki.view" />
+		</action>
+
 		<action path="/wiki/edit_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
 			<forward name="portlet.wiki.edit_node" path="portlet.wiki.edit_node" />
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
@@ -2132,6 +2136,8 @@
 			<forward name="portlet.wiki.move_page" path="portlet.wiki.move_page" />
 			<forward name="portlet.wiki.view_categorized_pages" path="portlet.wiki.view_categorized_pages" />
 		</action>
+
+		<action path="/wiki/restore_entry" forward="portlet.wiki.restore_entry" />
 
 		<action path="/wiki/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
@@ -2240,6 +2246,10 @@
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 		</action>
 
+		<action path="/wiki_admin/edit_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.wiki.view" path="portlet.wiki.view" />
+		</action>
+
 		<action path="/wiki_admin/edit_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
 			<forward name="portlet.wiki.edit_node" path="portlet.wiki.edit_node" />
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
@@ -2278,6 +2288,8 @@
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 			<forward name="portlet.wiki.move_page" path="portlet.wiki.move_page" />
 		</action>
+
+		<action path="/wiki_admin/restore_entry" forward="portlet.wiki.restore_entry" />
 
 		<action path="/wiki_admin/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
@@ -2371,6 +2383,10 @@
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 		</action>
 
+		<action path="/wiki_display/edit_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.wiki.view" path="portlet.wiki.view" />
+		</action>
+
 		<action path="/wiki_display/edit_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
 			<forward name="portlet.wiki.edit_node" path="portlet.wiki.edit_node" />
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
@@ -2402,6 +2418,8 @@
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 			<forward name="portlet.wiki.move_page" path="portlet.wiki.move_page" />
 		</action>
+
+		<action path="/wiki_display/restore_entry" forward="portlet.wiki.restore_entry" />
 
 		<action path="/wiki_display/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
