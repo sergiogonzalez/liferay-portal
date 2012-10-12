@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.login.action;
 
+import com.liferay.portal.DuplicateOpenIdException;
 import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
@@ -119,7 +120,16 @@ public class OpenIdAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof DuplicateUserEmailAddressException) {
+			if (e instanceof DuplicateOpenIdException) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Another user was found with the same OpenId, " +
+								"however there shouldn't be any. (Maybe " +
+									"another thread inserted it?)");
+				}
+
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof DuplicateUserEmailAddressException) {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof OpenIDException) {

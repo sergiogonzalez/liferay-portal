@@ -55,7 +55,8 @@ import javax.portlet.PortletRequest;
 public abstract class BaseTrashHandler implements TrashHandler {
 
 	@SuppressWarnings("unused")
-	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 	}
 
