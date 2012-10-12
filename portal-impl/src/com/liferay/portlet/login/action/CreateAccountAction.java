@@ -162,6 +162,7 @@ public class CreateAccountAction extends PortletAction {
 					 e instanceof ContactFirstNameException ||
 					 e instanceof ContactFullNameException ||
 					 e instanceof ContactLastNameException ||
+					 e instanceof DuplicateOpenIdException ||
 					 e instanceof EmailAddressException ||
 					 e instanceof GroupFriendlyURLException ||
 					 e instanceof NoSuchCountryException ||
@@ -183,15 +184,6 @@ public class CreateAccountAction extends PortletAction {
 					 e instanceof WebsiteURLException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else if (e instanceof DuplicateOpenIdException) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Another user was found with the same OpenId, " +
-								"however there shouldn't be any. (Maybe " +
-									"another thread inserted it?)");
-				}
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
