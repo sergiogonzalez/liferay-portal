@@ -31,15 +31,8 @@ boolean amPmNullable = GetterUtil.getBoolean((String)request.getAttribute("lifer
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:disabled"));
 
 NumberFormat numberFormat = NumberFormat.getInstance(locale);
+
 numberFormat.setMinimumIntegerDigits(2);
-
-String timeFormatPattern = ((SimpleDateFormat)(DateFormat.getTimeInstance(DateFormat.SHORT, locale))).toPattern();
-
-boolean timeFormatAmPm = true;
-
-if (!timeFormatPattern.contains("a")) {
-	timeFormatAmPm = false;
-}
 %>
 
 <div class="lfr-input-time <%= cssClass %>">
@@ -49,10 +42,10 @@ if (!timeFormatPattern.contains("a")) {
 		</c:if>
 
 		<%
-		for (int i = 0; i < (timeFormatAmPm ? 12 : 24); i++) {
+		for (int i = 0; i < (DateUtil.isFormatAmPm(locale) ? 12 : 24); i++) {
 			String hourString = String.valueOf(i);
 
-			if (timeFormatAmPm && (i == 0)) {
+			if (DateUtil.isFormatAmPm(locale) && (i == 0)) {
 				hourString = "12";
 			}
 		%>
@@ -86,7 +79,7 @@ if (!timeFormatPattern.contains("a")) {
 	</select>
 
 	<c:choose>
-		<c:when test="<%= ! timeFormatAmPm %>">
+		<c:when test="<%= !DateUtil.isFormatAmPm(locale) %>">
 			<input name="<%= amPmParam %>" type="hidden" value="<%= Calendar.AM %>" />
 		</c:when>
 		<c:otherwise>

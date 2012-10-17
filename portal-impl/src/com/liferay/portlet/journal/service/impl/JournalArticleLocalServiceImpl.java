@@ -191,7 +191,8 @@ public class JournalArticleLocalServiceImpl
 		validate(
 			user.getCompanyId(), groupId, classNameId, articleId, autoArticleId,
 			version, titleMap, content, type, structureId, templateId,
-			smallImage, smallImageURL, smallImageFile, smallImageBytes);
+			expirationDate, smallImage, smallImageURL, smallImageFile,
+			smallImageBytes);
 
 		if (autoArticleId) {
 			articleId = String.valueOf(counterLocalService.increment());
@@ -782,7 +783,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		for (JournalArticle article :
-			journalArticlePersistence.findByG_F(groupId, folderId)) {
+				journalArticlePersistence.findByG_F(groupId, folderId)) {
 
 			deleteArticle(article, null, null);
 		}
@@ -2113,8 +2114,8 @@ public class JournalArticleLocalServiceImpl
 
 		validate(
 			user.getCompanyId(), groupId, latestArticle.getClassNameId(),
-			titleMap, content, type, structureId, templateId, smallImage,
-			smallImageURL, smallImageFile, smallImageBytes);
+			titleMap, content, type, structureId, templateId, expirationDate,
+			smallImage, smallImageURL, smallImageFile, smallImageBytes);
 
 		if (addNewVersion) {
 			long id = counterLocalService.increment();
@@ -2409,7 +2410,8 @@ public class JournalArticleLocalServiceImpl
 
 		if (addDraftAssetEntry) {
 			assetEntry = assetEntryLocalService.updateEntry(
-				userId, article.getGroupId(), JournalArticle.class.getName(),
+				userId, article.getGroupId(), article.getCreateDate(),
+				article.getModifiedDate(), JournalArticle.class.getName(),
 				article.getPrimaryKey(), article.getUuid(),
 				getClassTypeId(article), assetCategoryIds, assetTagNames, false,
 				null, null, null, ContentTypes.TEXT_HTML, article.getTitle(),
@@ -2422,7 +2424,8 @@ public class JournalArticleLocalServiceImpl
 					article.getResourcePrimKey());
 
 			assetEntry = assetEntryLocalService.updateEntry(
-				userId, article.getGroupId(), JournalArticle.class.getName(),
+				userId, article.getGroupId(), article.getCreateDate(),
+				article.getModifiedDate(), JournalArticle.class.getName(),
 				journalArticleResource.getResourcePrimKey(),
 				journalArticleResource.getUuid(), getClassTypeId(article),
 				assetCategoryIds, assetTagNames, visible, null, null, null,
@@ -2525,6 +2528,8 @@ public class JournalArticleLocalServiceImpl
 						AssetEntry assetEntry =
 							assetEntryLocalService.updateEntry(
 								userId, article.getGroupId(),
+								article.getCreateDate(),
+								article.getModifiedDate(),
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey(), article.getUuid(),
 								getClassTypeId(article), assetCategoryIds,
@@ -3497,8 +3502,9 @@ public class JournalArticleLocalServiceImpl
 	protected void validate(
 			long companyId, long groupId, long classNameId,
 			Map<Locale, String> titleMap, String content, String type,
-			String structureId, String templateId, boolean smallImage,
-			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
+			String structureId, String templateId, Date expirationDate,
+			boolean smallImage, String smallImageURL, File smallImageFile,
+			byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
@@ -3561,6 +3567,10 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
+		if ((expirationDate != null) && expirationDate.before(new Date())) {
+			throw new ArticleExpirationDateException();
+		}
+
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(
 			PropsKeys.JOURNAL_IMAGE_EXTENSIONS, StringPool.COMMA);
 
@@ -3603,8 +3613,8 @@ public class JournalArticleLocalServiceImpl
 			long companyId, long groupId, long classNameId, String articleId,
 			boolean autoArticleId, double version, Map<Locale, String> titleMap,
 			String content, String type, String structureId, String templateId,
-			boolean smallImage, String smallImageURL, File smallImageFile,
-			byte[] smallImageBytes)
+			Date expirationDate, boolean smallImage, String smallImageURL,
+			File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		if (!autoArticleId) {
@@ -3613,8 +3623,8 @@ public class JournalArticleLocalServiceImpl
 
 		validate(
 			companyId, groupId, classNameId, titleMap, content, type,
-			structureId, templateId, smallImage, smallImageURL, smallImageFile,
-			smallImageBytes);
+			structureId, templateId, expirationDate, smallImage, smallImageURL,
+			smallImageFile, smallImageBytes);
 	}
 
 	protected void validate(long groupId, String articleId)

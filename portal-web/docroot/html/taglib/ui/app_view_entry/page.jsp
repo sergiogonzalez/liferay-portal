@@ -54,7 +54,7 @@ String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 
 			<liferay-util:include page="<%= actionJsp %>" />
 
-			<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> href="<%= url %>" title="<%= HtmlUtil.escapeAttribute(HtmlUtil.unescape(title) + " - " + HtmlUtil.unescape(description)) %>">
+			<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> href="<%= url %>" title="<%= title + " - " + description %>">
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<img alt="" border="no" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
@@ -87,7 +87,7 @@ String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 	</c:when>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<div class="app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= StringUtil.shorten(title, 60) %>">
-			<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" href="<%= url %>" title="<%= HtmlUtil.escape(title) + " - " + HtmlUtil.escape(description) %>">
+			<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" href="<%= url %>" title="<%= title + " - " + description %>">
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<img alt="" border="no" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
@@ -101,7 +101,7 @@ String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 				</div>
 
 				<span class="entry-title">
-					<%= HtmlUtil.escape(title) %>
+					<%= title %>
 
 					<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
 
@@ -116,7 +116,7 @@ String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 				</span>
 
 				<span class="entry-description">
-					<%= HtmlUtil.escape(description) %>
+					<%= description %>
 
 					<c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
 						<div class="categories">

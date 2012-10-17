@@ -42,6 +42,7 @@ hr, .separator {
 	height: auto;
 	margin-top: 1.4em;
 	position: relative;
+	z-index: 210;
 }
 
 .site-title .site-name {
@@ -90,7 +91,8 @@ hr, .separator {
 
 #skip-to-content:focus {
 	clip: rect(auto auto auto auto);
-	right: 0;
+	margin-top: 35px;
+	right: 5px;
 	z-index: 200;
 }
 
@@ -151,7 +153,7 @@ hr, .separator {
 }
 
 #navigation {
-	li .hover .child-menu {
+	li.hover .child-menu {
 		background: #1E2529;
 		display: block;
 		position: absolute;

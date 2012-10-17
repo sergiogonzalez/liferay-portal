@@ -194,10 +194,10 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			_clusterExecutorImpl.generateClusterNodeResponse(
 				clusterRequest, returnValue, exception);
 
-		Channel controlChannel = _clusterExecutorImpl.getControlChannel();
+		Channel channel = _clusterExecutorImpl.getControlChannel();
 
 		try {
-			controlChannel.send(
+			channel.send(
 				(org.jgroups.Address)address.getRealAddress(),
 				clusterNodeResponse);
 		}
@@ -286,7 +286,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			catch (Exception e) {
 				exception = e;
 
-				_log.error("Failed to invoke method " + methodHandler, e);
+				_log.error("Unable to invoke method " + methodHandler, e);
 			}
 			finally {
 				ClusterInvokeThreadLocal.setEnabled(true);

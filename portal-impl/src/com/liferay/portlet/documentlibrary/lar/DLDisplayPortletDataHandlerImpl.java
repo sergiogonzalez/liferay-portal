@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
@@ -93,6 +94,10 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
+
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
 
 		portletPreferences.setValue("rootFolderId", StringPool.BLANK);
 		portletPreferences.setValue("showFoldersSearch", StringPool.BLANK);
@@ -252,7 +257,7 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 			if (defaultRepository) {
 				folderIds =
 					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						Folder.class);
+						DLFolder.class);
 			}
 			else {
 				folderIds =

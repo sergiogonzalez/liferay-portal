@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.lar.PortletDataContextImpl;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -81,13 +84,13 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -665,6 +668,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			FileUtil.deltree(themePath + "-public");
 		}
 
+		// Portlet data
+
+		deletePortletData(group);
+
 		// Asset
 
 		if (group.isRegularSite()) {
@@ -673,42 +680,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		assetVocabularyLocalService.deleteVocabularies(group.getGroupId());
-
-		// Blogs
-
-		blogsEntryLocalService.deleteEntries(group.getGroupId());
-		blogsStatsUserLocalService.deleteStatsUserByGroupId(group.getGroupId());
-
-		// Bookmarks
-
-		bookmarksFolderLocalService.deleteFolders(group.getGroupId());
-
-		// Calendar
-
-		calEventLocalService.deleteEvents(group.getGroupId());
-
-		// Document library
-
-		repositoryLocalService.deleteRepositories(group.getGroupId());
-		dlFileEntryTypeLocalService.deleteFileEntryTypes(group.getGroupId());
-
-		// Journal
-
-		journalArticleLocalService.deleteArticles(group.getGroupId());
-		journalTemplateLocalService.deleteTemplates(group.getGroupId());
-		journalStructureLocalService.deleteStructures(group.getGroupId());
-
-		// Message boards
-
-		mbBanLocalService.deleteBansByGroupId(group.getGroupId());
-		mbCategoryLocalService.deleteCategories(group.getGroupId());
-		mbStatsUserLocalService.deleteStatsUsersByGroupId(group.getGroupId());
-		mbThreadLocalService.deleteThreads(
-			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-
-		// Polls
-
-		pollsQuestionLocalService.deleteQuestions(group.getGroupId());
 
 		// Shopping
 
@@ -727,10 +698,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		scFrameworkVersionLocalService.deleteFrameworkVersions(
 			group.getGroupId());
 		scProductEntryLocalService.deleteProductEntries(group.getGroupId());
-
-		// Wiki
-
-		wikiNodeLocalService.deleteNodes(group.getGroupId());
 
 		// Resources
 
@@ -2864,10 +2831,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Group companyGroup = company.getGroup();
 
 		assetEntryLocalService.updateEntry(
-			userId, companyGroup.getGroupId(), Group.class.getName(),
-			group.getGroupId(), null, 0, assetCategoryIds, assetTagNames, false,
-			null, null, null, null, group.getDescriptiveName(),
-			group.getDescription(), null, null, null, 0, 0, null, false);
+			userId, companyGroup.getGroupId(), null, null,
+			Group.class.getName(), group.getGroupId(), null, 0,
+			assetCategoryIds, assetTagNames, false, null, null, null, null,
+			group.getDescriptiveName(), group.getDescription(), null, null,
+			null, 0, 0, null, false);
 	}
 
 	/**
@@ -3205,6 +3173,47 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		layoutLocalService.importLayouts(
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
+	}
+
+	protected void deletePortletData(Group group)
+		throws PortalException, SystemException {
+
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		for (Portlet portlet : portlets) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if (portletDataHandler == null) {
+				continue;
+			}
+
+			PortletDataContext portletDataContext = new PortletDataContextImpl(
+				group.getCompanyId(), group.getGroupId(), null,
+				new HashSet<String>(), null, null, null);
+
+			// For now, we are going to throw an exception if one portlet data
+			// handler has an exception to ensure that the transaction is
+			// rolled back for data integrity. We may decide that this is not
+			// the best behavior in the future because a bad plugin could
+			// disallow deletion of groups.
+
+			//try {
+				portletDataHandler.deleteData(
+					portletDataContext, portlet.getPortletId(), null);
+			/*}
+			catch (Exception e) {
+				_log.error(
+					"Unable to delete data for portlet " +
+						portlet.getPortletId() + " in group " +
+							group.getGroupId());
+			}*/
+		}
 	}
 
 	protected String getFriendlyURL(
