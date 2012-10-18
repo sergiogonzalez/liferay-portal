@@ -25,18 +25,19 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.Encryptor;
 
@@ -198,54 +199,106 @@ public class LicenseUtil {
 	}
 
 	public static Set<String> getMacAddresses() {
-		if (_macAddresses == null) {
-			_macAddresses = new HashSet<String>();
+		if (_macAddresses != null) {
+			return new HashSet<String>(_macAddresses);
+		}
 
-			try {
-				Process process = null;
+		Set<String> macAddresses = new HashSet<String>();
 
-				Runtime runtime = Runtime.getRuntime();
+		String osName = System.getProperty("os.name");
 
-				File ifconfigFile = new File("/sbin/ifconfig");
+		String executable = null;
+		String arguments = null;
 
-				if (ifconfigFile.exists()) {
-					process = runtime.exec(
-						new String[] {"/sbin/ifconfig", "-a"}, null);
-				}
-				else {
-					process = runtime.exec(
-						new String[] {"ipconfig", "/all"}, null);
-				}
-
-				BufferedReader bufferedReader = new BufferedReader(
-					new InputStreamReader(process.getInputStream()), 128);
-
-				String line = null;
-
-				while ((line = bufferedReader.readLine()) != null) {
-					Matcher matcher = _macAddressPattern.matcher(line);
-
-					if (matcher.find()) {
-						String macAddress = matcher.group(1);
-
-						if (Validator.isNotNull(macAddress)) {
-							macAddress = macAddress.toLowerCase();
-							macAddress = StringUtil.replace(
-								macAddress, "-", ":");
-
-							_macAddresses.add(macAddress);
-						}
-					}
-				}
-
-				bufferedReader.close();
+		if (StringUtil.startsWith(osName, "win")) {
+			executable = "ipconfig";
+			arguments = "/all";
+		}
+		else {
+			if (StringUtil.startsWith(osName, "aix")) {
+				executable = "netstat";
+				arguments = "-ina";
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			else {
+				executable = "ifconfig";
+				arguments = "-a";
+			}
+
+			File sbinDir = new File("/sbin", executable);
+
+			if (sbinDir.exists()) {
+				executable = "/sbin/".concat(executable);
 			}
 		}
 
-		return new HashSet<String>(_macAddresses);
+		try {
+			Runtime runtime = Runtime.getRuntime();
+
+			Process process = runtime.exec(
+				new String[] {executable, arguments});
+
+			macAddresses = getMacAddresses(osName, process.getInputStream());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		_macAddresses = macAddresses;
+
+		return new HashSet<String>(macAddresses);
+	}
+
+	public static Set<String> getMacAddresses(
+			String osName, InputStream processInputStream)
+		throws Exception {
+
+		Set<String> macAddresses = new HashSet<String>();
+
+		Pattern macAddressPattern = _macAddressPattern1;
+
+		if (StringUtil.startsWith(osName, "aix")) {
+			macAddressPattern = _macAddressPattern2;
+		}
+
+		String processOutput = StringUtil.read(processInputStream);
+
+		String[] lines = StringUtil.split(processOutput, CharPool.NEW_LINE);
+
+		for (String line : lines) {
+			Matcher matcher = macAddressPattern.matcher(line);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String macAddress = matcher.group(1);
+
+			macAddress = macAddress.toLowerCase();
+			macAddress = macAddress.replace(CharPool.DASH, CharPool.COLON);
+			macAddress = macAddress.replace(CharPool.PERIOD, CharPool.COLON);
+
+			StringBuilder sb = new StringBuilder(17);
+
+			sb.append(macAddress);
+
+			for (int i = 1; i < 5; ++i) {
+				int pos = (i * 3) - 1;
+
+				if (sb.charAt(pos) != CharPool.COLON) {
+					sb.insert((i - 1) * 3, CharPool.NUMBER_0);
+				}
+			}
+
+			if (sb.length() < 17) {
+				sb.insert(15, CharPool.NUMBER_0);
+			}
+
+			macAddress = sb.toString();
+
+			macAddresses.add(macAddress);
+		}
+
+		return macAddresses;
 	}
 
 	public static byte[] getServerIdBytes() throws Exception {
@@ -584,7 +637,7 @@ public class LicenseUtil {
 	private static void _initKeys() {
 		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
 
-		if (_encryptedSymmetricKey != null) {
+		if ((classLoader == null) || (_encryptedSymmetricKey != null)) {
 			return;
 		}
 
@@ -670,8 +723,10 @@ public class LicenseUtil {
 	private static String _hostName;
 	private static Set<String> _ipAddresses;
 	private static Set<String> _macAddresses;
-	private static Pattern _macAddressPattern = Pattern.compile(
-		"\\s((\\p{XDigit}{1,2}(-|:)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
+	private static Pattern _macAddressPattern1 = Pattern.compile(
+		"\\s((\\p{XDigit}{2}(-|:)){5}(\\p{XDigit}{2}))(?:\\s|$)");
+	private static Pattern _macAddressPattern2 = Pattern.compile(
+		"\\s((\\p{XDigit}{1,2}(\\.)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
 	private static MethodKey _registerOrderMethodKey = new MethodKey(
 		LicenseUtil.class.getName(), "registerOrder", String.class,
 		String.class, int.class);

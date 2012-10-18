@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.MethodParametersResolverImpl;
 
@@ -29,6 +30,7 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.portal.util.PropsImpl;
 import org.powermock.api.mockito.PowerMockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -54,6 +56,8 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
 		methodParametersResolverUtil.setMethodParametersResolver(
 			new MethodParametersResolverImpl());
+
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	protected static void registerActionClass(Class<?> actionClass) {

@@ -28,6 +28,67 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 /**
+ * Serializes data in a ClassLoader-aware manner.
+ *
+ * <p>
+ * The Serializer can perform better than {@link java.io.ObjectOutputStream} and
+ * {@link java.io.DataOutputStream}, with respect to encoding primary types,
+ * because it uses a more compact format (containing no BlockHeader) and simpler
+ * call stack involving {@link BigEndianCodec}, as compared to using an
+ * OutputStream wrapper on top of {@link java.io.Bits}.
+ * </p>
+ *
+ * <p>
+ * For Strings, the UTF encoding for ObjectOutputStream and DataOutputStream has
+ * a 2^16=64K length limitation, which is often too restrictive. Serializer has
+ * a 2^32=4G String length limitation, which is generally more than enough. For
+ * pure ASCII character Strings, the encoding performance is almost the same, if
+ * not better, than ObjectOutputStream and DataOutputStream. For Strings
+ * containing non-ASCII characters, the Serializer encodes each char to two
+ * bytes rather than performing UTF encoding. There is a trade-off between
+ * CPU/memory performance and compression rate.
+ * </p>
+ *
+ * <p>
+ * UTF encoding uses more CPU cycles to detect the unicode range for each char
+ * and the resulting output is variable length, which increases the memory
+ * burden when preparing the decoding buffer. Whereas, encoding each char to two
+ * bytes allows for better CPU/memory performance. Although inefficient with
+ * compression rates in comparison to UTF encoding, the char to two byte
+ * approach significantly simplifies the encoder's logic and the output length
+ * is predictably based on the length of the String, so the decoder can manage
+ * its decoding buffer efficiently. On average, a system uses more ASCII String
+ * scheming than non-ASCII String scheming. In most cases, when all system
+ * internal Strings are ASCII Strings and only Strings holding user input
+ * information can have non-ASCII characters, this Serializer performs best. In
+ * other cases, developers should consider using {@link
+ * java.io.ObjectOutputStream} or {@link java.io.DataOutputStream}.
+ * </p>
+ *
+ * <p>
+ * For ordinary Objects, all primary type wrappers are encoded to their raw
+ * values with one byte type headers. This is much more efficient than
+ * ObjectOutputStream's serialization format for primary type wrappers. Strings
+ * are output in the same way as {@link #writeString(java.lang.String)}, but
+ * also with one byte type headers. Objects are serialized by a new
+ * ObjectOutputStream, so no reference handler can be used across Object
+ * serialization. This is done intentionally to isolate each object. The
+ * Serializer is highly optimized for serializing primary types, but is not as
+ * good as ObjectOutputStream for serializing complex objects.
+ * </p>
+ *
+ * <p>
+ * On object serialization, the Serializer uses the {@link
+ * com.liferay.portal.kernel.util.ClassLoaderPool} to look up the servlet
+ * context name corresponding to the object's ClassLoader. The servlet context
+ * name is written to the serialization stream. On object deserialization, the
+ * {@link Deserializer} uses the ClassLoaderPool to look up the ClassLoader
+ * corresponding to the servlet context name read from the deserialization
+ * stream. ObjectOutputStream and ObjectInputStream lack these features, making
+ * Serializer and Deserializer better choices for ClassLoader-aware Object
+ * serialization/deserialization, especially when plugins are involved.
+ * </p>
+ *
  * @author Shuyang Zhou
  * @see    Deserializer
  */
@@ -244,7 +305,12 @@ public class Serializer {
 	}
 
 	/**
-	 * This method is final so that JIT can inline it.
+	 * Returns the required buffer length. This method is final so JIT can
+	 * perform an inline expansion.
+	 *
+	 * @param  ensureExtraSpace the extra byte space required to meet the
+	 *         buffer's minimum length
+	 * @return the buffer value
 	 */
 	protected final byte[] getBuffer(int ensureExtraSpace) {
 		int minSize = index + ensureExtraSpace;
@@ -274,6 +340,23 @@ public class Serializer {
 		return buffer;
 	}
 
+	/**
+	 * Softens the local thread's pooled buffer memory.
+	 *
+	 * <p>
+	 * Technically, we should soften each pooled buffer individually to achieve
+	 * the best garbage collection (GC) interaction. However, that increases
+	 * complexity of pooled buffer access and also burdens the GC's {@link
+	 * java.lang.ref.SoftReference} process, hurting performance.
+	 * </p>
+	 *
+	 * <p>
+	 * Here, the entire ThreadLocal BufferQueue is softened. For threads that do
+	 * serializing often, its BufferQueue will most likely stay valid. For
+	 * threads that do serializing only occasionally, its BufferQueue will most
+	 * likely be released by GC.
+	 * </p>
+	 */
 	protected static final ThreadLocal<BufferQueue> bufferQueueThreadLocal =
 		new SoftReferenceThreadLocal<BufferQueue>() {
 
@@ -330,6 +413,16 @@ public class Serializer {
 
 	}
 
+	/**
+	 * Represents a descending <code>byte[]</code> queue ordered by array length.
+	 *
+	 * <p>
+	 * The queue is small enough to simply use a linear scan search for
+	 * maintaining its order. The entire queue data is held by a
+	 * {@link java.lang.ref.SoftReference}, so when necessary, GC can release the whole
+	 * buffer cache.
+	 * </p>
+	 */
 	protected static class BufferQueue {
 
 		public void enqueue(byte[] buffer) {

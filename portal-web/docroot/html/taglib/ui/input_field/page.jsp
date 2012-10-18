@@ -71,14 +71,6 @@ if (hints != null) {
 			<%
 			Calendar now = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-			String timeFormatPattern = ((SimpleDateFormat)(DateFormat.getTimeInstance(DateFormat.SHORT, locale))).toPattern();
-
-			boolean timeFormatAmPm = true;
-
-			if (!timeFormatPattern.contains("a")) {
-				timeFormatAmPm = false;
-			}
-
 			boolean checkDefaultDelta = false;
 
 			Calendar cal = null;
@@ -241,7 +233,7 @@ if (hints != null) {
 			if ((hour == -1) && (cal != null)) {
 				hour = cal.get(Calendar.HOUR_OF_DAY);
 
-				if (timeFormatAmPm) {
+				if (DateUtil.isFormatAmPm(locale)) {
 					hour = cal.get(Calendar.HOUR);
 				}
 			}
@@ -265,7 +257,7 @@ if (hints != null) {
 			if ((amPm == -1) && (cal != null)) {
 				amPm = Calendar.AM;
 
-				if (timeFormatAmPm) {
+				if (DateUtil.isFormatAmPm(locale)) {
 					amPm = cal.get(Calendar.AM_PM);
 				}
 			}

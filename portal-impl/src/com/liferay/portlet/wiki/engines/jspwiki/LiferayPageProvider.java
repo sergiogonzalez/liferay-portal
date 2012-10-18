@@ -202,9 +202,10 @@ public class LiferayPageProvider implements WikiPageProvider {
 		}
 
 		try {
-			if (WikiPageLocalServiceUtil.getPagesCount(
-				_nodeId, JSPWikiEngine.decodeJSPWikiName(title), true) > 0) {
+			int count = WikiPageLocalServiceUtil.getPagesCount(
+				_nodeId, JSPWikiEngine.decodeJSPWikiName(title), true);
 
+			if (count > 0) {
 				return true;
 			}
 			else {

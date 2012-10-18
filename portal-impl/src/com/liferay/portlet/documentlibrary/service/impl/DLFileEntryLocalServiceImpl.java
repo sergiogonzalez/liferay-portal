@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -57,6 +58,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetLink;
+import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -89,6 +93,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoRow;
 import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.trash.model.TrashVersion;
 
 import java.awt.image.RenderedImage;
@@ -447,6 +452,18 @@ public class DLFileEntryLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		serviceContext.setCompanyId(user.getCompanyId());
+
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
+
+		long dlFileVersionId = dlFileVersion.getFileVersionId();
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			serviceContext.getCompanyId(), DLFileEntry.class.getName(),
+			dlFileVersionId);
+
+		serviceContext.setExpandoBridgeAttributes(
+			expandoBridge.getAttributes());
 		serviceContext.setUserId(userId);
 
 		boolean manualCheckinRequired = GetterUtil.getBoolean(
@@ -455,11 +472,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setManualCheckInRequired(manualCheckinRequired);
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
-
-		DLFileVersion dlFileVersion =
-			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
-
-		long dlFileVersionId = dlFileVersion.getFileVersionId();
 
 		String version = dlFileVersion.getVersion();
 
@@ -488,6 +500,8 @@ public class DLFileEntryLocalServiceImpl
 					WorkflowConstants.STATUS_DRAFT, new Date(), serviceContext);
 			}
 			else {
+				long oldDLFileVersionId = dlFileVersion.getFileVersionId();
+
 				dlFileVersion = addFileVersion(
 					user, dlFileEntry, new Date(), dlFileVersion.getExtension(),
 					dlFileVersion.getMimeType(), dlFileVersion.getTitle(),
@@ -498,6 +512,10 @@ public class DLFileEntryLocalServiceImpl
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					dlFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
+
+				copyExpandoRowModifiedDate(
+					dlFileEntry.getCompanyId(), oldDLFileVersionId,
+					dlFileVersion.getFileVersionId());
 			}
 
 			try {
@@ -936,6 +954,12 @@ public class DLFileEntryLocalServiceImpl
 
 		return dlFileEntryPersistence.findByG_F(
 			groupId, folderId, start, end, obc);
+	}
+
+	public List<DLFileEntry> getFileEntries(long folderId, String name)
+		throws SystemException {
+
+		return dlFileEntryPersistence.findByF_N(folderId, name);
 	}
 
 	public List<DLFileEntry> getFileEntriesByMimeType(String mimeType)
@@ -1658,6 +1682,45 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	protected void copyExpandoRowModifiedDate(
+			long companyId, long sourceFileVersionId,
+			long destinationFileVersionId)
+		throws PortalException, SystemException {
+
+		ExpandoTable expandoTable = null;
+
+		try {
+			expandoTable = expandoTableLocalService.getDefaultTable(
+				companyId, DLFileEntry.class.getName());
+		}
+		catch (NoSuchTableException nste) {
+			return;
+		}
+
+		Date sourceModifiedDate = null;
+
+		try {
+			ExpandoRow sourceExpandoRow = expandoRowLocalService.getRow(
+				expandoTable.getTableId(), sourceFileVersionId);
+
+			sourceModifiedDate = sourceExpandoRow.getModifiedDate();
+		}
+		catch (NoSuchRowException nsre) {
+			return;
+		}
+
+		try {
+			ExpandoRow destinationExpandoRow = expandoRowLocalService.getRow(
+				expandoTable.getTableId(), destinationFileVersionId);
+
+			destinationExpandoRow.setModifiedDate(sourceModifiedDate);
+
+			expandoRowLocalService.updateExpandoRow(destinationExpandoRow);
+		}
+		catch (NoSuchRowException nsre) {
+		}
+	}
+
 	protected List<ObjectValuePair<Long, Integer>> getDlFileVersionStatuses(
 		List<DLFileVersion> dlFileVersions) {
 
@@ -1776,6 +1839,50 @@ public class DLFileEntryLocalServiceImpl
 				latestDLFileVersion.getDescription()) &&
 			(lastDLFileVersion.getFileEntryTypeId() ==
 				latestDLFileVersion.getFileEntryTypeId())) {
+
+			// Asset
+
+			AssetEntry lastAssetEntry = assetEntryLocalService.getEntry(
+				DLFileEntryConstants.getClassName(),
+				dlFileEntry.getFileEntryId());
+			AssetEntry latestAssetEntry = assetEntryLocalService.getEntry(
+				DLFileEntryConstants.getClassName(),
+				latestDLFileVersion.getFileVersionId());
+
+			if (!Validator.equalsSorted(
+					lastAssetEntry.getCategoryIds(),
+					latestAssetEntry.getCategoryIds())) {
+
+				return false;
+			}
+
+			if (!Validator.equalsSorted(
+					lastAssetEntry.getTagNames(),
+					latestAssetEntry.getTagNames())) {
+
+				return false;
+			}
+
+			List<AssetLink> lastAssetLinks =
+				assetLinkLocalService.getDirectLinks(
+					lastAssetEntry.getEntryId(),
+					AssetLinkConstants.TYPE_RELATED);
+			List<AssetLink> latestAssetLinks =
+				assetLinkLocalService.getDirectLinks(
+					latestAssetEntry.getEntryId(),
+					AssetLinkConstants.TYPE_RELATED);
+
+			if (!Validator.equalsSorted(
+					StringUtil.split(
+						ListUtil.toString(
+							lastAssetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L),
+					StringUtil.split(
+						ListUtil.toString(
+							latestAssetLinks, AssetLink.ENTRY_ID2_ACCESSOR),
+							0L))) {
+
+				return false;
+			}
 
 			// Expando
 

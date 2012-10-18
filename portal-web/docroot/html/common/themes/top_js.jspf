@@ -393,31 +393,54 @@
 	// ]]>
 </script>
 
-<%-- Google Analytics --%>
+<%-- Analytics --%>
 
 <%
 UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
 
-String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
+for (String analyticsType : PropsValues.SITES_FORM_ANALYTICS) {
 %>
 
-<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
-	<script type="text/javascript">
-		var _gaq = _gaq || [];
+	<c:choose>
+		<c:when test='<%= analyticsType.equals("google") %>'>
 
-		_gaq.push(['_setAccount', '<%= googleAnalyticsId %>']);
-		_gaq.push(['_trackPageview']);
+			<%
+			String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
+			%>
 
-		(function() {
-			var ga = document.createElement('script');
+			<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
+				<script type="text/javascript">
+					var _gaq = _gaq || [];
 
-			ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			ga.type = 'text/javascript';
+					_gaq.push(['_setAccount', '<%= googleAnalyticsId %>']);
+					_gaq.push(['_trackPageview']);
 
-			var s = document.getElementsByTagName('script')[0];
+					(function() {
+						var ga = document.createElement('script');
 
-			s.parentNode.insertBefore(ga, s);
-		})();
-	</script>
-</c:if>
+						ga.async = true;
+						ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+						ga.type = 'text/javascript';
+
+						var s = document.getElementsByTagName('script')[0];
+
+						s.parentNode.insertBefore(ga, s);
+					})();
+				</script>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+
+			<%
+			String analyticsScript = groupTypeSettings.getProperty(SitesUtil.ANALYTICS_PREFIX + analyticsType);
+			%>
+
+			<c:if test="<%= Validator.isNotNull(analyticsScript) %>">
+				<%= analyticsScript %>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
+
+<%
+}
+%>
