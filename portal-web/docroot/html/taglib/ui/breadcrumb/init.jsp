@@ -236,7 +236,7 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 			sb.append(">");
 		}
 
-		sb.append(HtmlUtil.escape(breadcrumbTitle));
+		sb.append(HtmlUtil.escape(HtmlUtil.unescape(breadcrumbTitle)));
 
 		if (Validator.isNotNull(breadcrumbURL)) {
 			sb.append("</a>");
