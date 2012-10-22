@@ -46,6 +46,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	 *
 	 * @param  group the group
 	 * @param  date the date from which attachments will be deleted
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -99,8 +100,15 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		return CLASS_NAME;
 	}
 
+	public boolean isInTrash(long classPK) {
+		return false;
+	}
+
+	public void restoreTrashEntries(long[] classPKs) {
+	}
+
 	@Override
-	public boolean hasPermission(
+	protected boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException, SystemException {
 
@@ -108,13 +116,6 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		return MBMessagePermission.contains(
 			permissionChecker, thread.getRootMessageId(), actionId);
-	}
-
-	public boolean isInTrash(long classPK) {
-		return false;
-	}
-
-	public void restoreTrashEntries(long[] classPKs) {
 	}
 
 }

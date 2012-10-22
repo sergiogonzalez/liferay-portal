@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletModeFactory_IW;
+import com.liferay.portal.kernel.portlet.WindowStateFactory_IW;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
@@ -313,6 +315,11 @@ public class TemplateContextHelper {
 			_log.error(se, se);
 		}
 
+		// Portlet mode factory
+
+		variables.put(
+			"portletModeFactory", PortletModeFactory_IW.getInstance());
+
 		// Portlet URL factory
 
 		try {
@@ -404,6 +411,11 @@ public class TemplateContextHelper {
 		catch (SecurityException se) {
 			_log.error(se, se);
 		}
+
+		// Window state factory
+
+		variables.put(
+			"windowStateFactory", WindowStateFactory_IW.getInstance());
 
 		// Permissions
 

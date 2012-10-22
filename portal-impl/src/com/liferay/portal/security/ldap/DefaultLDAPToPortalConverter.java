@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -205,6 +206,13 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		user.setOpenId(StringPool.BLANK);
 		user.setPasswordUnencrypted(password);
 		user.setScreenName(screenName);
+
+		String status = LDAPUtil.getAttributeString(
+			attributes, userMappings, UserConverterKeys.STATUS);
+
+		if (Validator.isNotNull(status)) {
+			user.setStatus(GetterUtil.getInteger(status));
+		}
 
 		ldapUser.setUser(user);
 

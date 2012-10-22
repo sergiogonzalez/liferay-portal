@@ -37,7 +37,8 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 	public static final String CLASS_NAME = WikiNode.class.getName();
 
 	@Override
-	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
 		WikiNode node = WikiNodeLocalServiceUtil.getNode(
@@ -113,15 +114,6 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		return new WikiNodeTrashRenderer(node);
 	}
 
-	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException, SystemException {
-
-		return WikiNodePermission.contains(
-			permissionChecker, classPK, actionId);
-	}
-
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -154,6 +146,15 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		node.setName(name);
 
 		WikiNodeLocalServiceUtil.updateWikiNode(node, false);
+	}
+
+	@Override
+	protected boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException, SystemException {
+
+		return WikiNodePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 }

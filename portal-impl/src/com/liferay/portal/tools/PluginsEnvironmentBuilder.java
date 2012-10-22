@@ -15,6 +15,7 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -100,25 +101,8 @@ public class PluginsEnvironmentBuilder {
 		sb.append("\t\t</attributes>\n\t</classpathentry>\n");
 	}
 
-	protected void setupProject(String dirName, String fileName)
-		throws Exception {
-
-		File propertiesFile = new File(dirName + "/" + fileName);
-
-		File libDir = new File(propertiesFile.getParent() + "/lib");
-
-		File projectDir = new File(propertiesFile.getParent() + "/../..");
-
-		Properties properties = new Properties();
-
-		properties.load(new FileInputStream(propertiesFile));
-
-		String[] dependencyJars = StringUtil.split(
-			properties.getProperty(
-				"portal-dependency-jars",
-				properties.getProperty("portal.dependency.jars")));
-
-		List<String> jars = ListUtil.toList(dependencyJars);
+	protected List<String> getCommonJars() {
+		List<String> jars = new ArrayList<String>();
 
 		jars.add("commons-logging.jar");
 		jars.add("log4j.jar");
@@ -126,7 +110,100 @@ public class PluginsEnvironmentBuilder {
 		jars.add("util-java.jar");
 		jars.add("util-taglib.jar");
 
-		Collections.sort(jars);
+		return jars;
+	}
+
+	protected List<String> getImportSharedJars(File projectDir)
+		throws Exception {
+
+		File buildXmlFile = new File(projectDir, "build.xml");
+
+		String content = _fileUtil.read(buildXmlFile);
+
+		int x = content.indexOf("import.shared");
+
+		if (x == -1) {
+			return Collections.emptyList();
+		}
+
+		x = content.indexOf("value=\"", x);
+		x = content.indexOf("\"", x);
+
+		int y = content.indexOf("\" />", x);
+
+		if ((x == -1) || (y == -1)) {
+			return Collections.emptyList();
+		}
+
+		String[] importShared = StringUtil.split(content.substring(x + 1, y));
+
+		if (importShared.length == 0) {
+			return Collections.emptyList();
+		}
+
+		List<String> jars = new ArrayList<String>();
+
+		for (String currentImportShared : importShared) {
+			jars.add(currentImportShared + ".jar");
+		}
+
+		return jars;
+	}
+
+	protected List<String> getPortalDependencyJars(Properties properties) {
+		String[] dependencyJars = StringUtil.split(
+			properties.getProperty(
+				"portal-dependency-jars",
+				properties.getProperty("portal.dependency.jars")));
+
+		return ListUtil.toList(dependencyJars);
+	}
+
+	protected List<String> getRequiredDeploymentContextsJars(
+			File libDir, Properties properties)
+		throws Exception {
+
+		List<String> jars = new ArrayList<String>();
+
+		String[] requiredDeploymentContexts = StringUtil.split(
+			properties.getProperty("required-deployment-contexts"));
+
+		for (String requiredDeploymentContext : requiredDeploymentContexts) {
+			if (_fileUtil.exists(
+					libDir.getCanonicalPath() + "/" +
+						requiredDeploymentContext + "-service.jar")) {
+
+				jars.add(requiredDeploymentContext + "-service.jar");
+			}
+		}
+
+		return jars;
+	}
+
+	protected void setupProject(String dirName, String fileName)
+		throws Exception {
+
+		File propertiesFile = new File(dirName + "/" + fileName);
+
+		Properties properties = new Properties();
+
+		properties.load(new FileInputStream(propertiesFile));
+
+		List<String> jars = new SortedArrayList<String>();
+
+		jars.addAll(getCommonJars());
+
+		List<String> dependencyJars = getPortalDependencyJars(properties);
+
+		jars.addAll(dependencyJars);
+
+		File projectDir = new File(propertiesFile.getParent() + "/../..");
+
+		jars.addAll(getImportSharedJars(projectDir));
+
+		File libDir = new File(propertiesFile.getParent() + "/lib");
+
+		jars.addAll(getRequiredDeploymentContextsJars(libDir, properties));
 
 		writeEclipseFiles(libDir, projectDir, dependencyJars);
 
@@ -159,7 +236,7 @@ public class PluginsEnvironmentBuilder {
 	}
 
 	protected void writeClasspathFile(
-			File libDir, String[] dependencyJars, String projectDirName,
+			File libDir, List<String> dependencyJars, String projectDirName,
 			String projectName, boolean javaProject)
 		throws Exception {
 
@@ -215,7 +292,7 @@ public class PluginsEnvironmentBuilder {
 		else {
 			globalJars.add("portlet.jar");
 
-			portalJars.addAll(ListUtil.toList(dependencyJars));
+			portalJars.addAll(dependencyJars);
 			portalJars.add("commons-logging.jar");
 			portalJars.add("log4j.jar");
 
@@ -262,7 +339,7 @@ public class PluginsEnvironmentBuilder {
 
 		boolean addJunitJars = false;
 
-		for (String testType :_TEST_TYPES) {
+		for (String testType : _TEST_TYPES) {
 			String testFolder = "test/" + testType;
 
 			if (_fileUtil.exists(projectDirName + "/" + testFolder)) {
@@ -332,7 +409,7 @@ public class PluginsEnvironmentBuilder {
 	}
 
 	protected void writeEclipseFiles(
-			File libDir, File projectDir, String[] dependencyJars)
+			File libDir, File projectDir, List<String> dependencyJars)
 		throws Exception {
 
 		String projectDirName = projectDir.getCanonicalPath();

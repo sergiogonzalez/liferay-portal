@@ -17,11 +17,14 @@ package com.liferay.portal.kernel.util;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -238,6 +241,24 @@ public class DateUtil {
 			pattern, TimeZoneUtil.getTimeZone(StringPool.UTC));
 	}
 
+	public static boolean isFormatAmPm(Locale locale) {
+		Boolean formatAmPm = _formatAmPmMap.get(locale);
+
+		if (formatAmPm == null) {
+			SimpleDateFormat simpleDateFormat =
+				(SimpleDateFormat)DateFormat.getTimeInstance(
+					DateFormat.SHORT, locale);
+
+			String pattern = simpleDateFormat.toPattern();
+
+			formatAmPm = pattern.contains("a");
+
+			_formatAmPmMap.put(locale, formatAmPm);
+		}
+
+		return formatAmPm;
+	}
+
 	public static Date newDate() {
 		return new Date();
 	}
@@ -260,5 +281,8 @@ public class DateUtil {
 
 		return dateFormat.parse(dateString);
 	}
+
+	private static Map<Locale, Boolean> _formatAmPmMap =
+		new HashMap<Locale, Boolean>();
 
 }
