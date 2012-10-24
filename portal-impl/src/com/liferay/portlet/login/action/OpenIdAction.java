@@ -39,6 +39,8 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.util.PwdGenerator;
 
+import java.net.URL;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -170,6 +172,17 @@ public class OpenIdAction extends PortletAction {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
+	protected boolean isYahooOpenId(URL endpoint) {
+		String hostName = endpoint.getHost();
+
+		if (hostName.equals(_YAHOO_OPEN_ID_HOST)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected String readOpenIdResponse(
 			ThemeDisplay themeDisplay, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -219,11 +232,11 @@ public class OpenIdAction extends PortletAction {
 				String fullName = GetterUtil.getString(
 					sregResp.getAttributeValue("fullname"));
 
-				int pos = fullName.indexOf(CharPool.SPACE);
+				String[] names = splitName(fullName);
 
-				if ((pos != -1) && ((pos + 1) < fullName.length())) {
-					firstName = fullName.substring(0, pos);
-					lastName = fullName.substring(pos + 1);
+				if (names != null) {
+					firstName = names[0];
+					lastName = names[1];
 				}
 
 				emailAddress = sregResp.getAttributeValue("email");
@@ -237,19 +250,43 @@ public class OpenIdAction extends PortletAction {
 			if (ext instanceof FetchResponse) {
 				FetchResponse fetchResp = (FetchResponse)ext;
 
-				if (Validator.isNull(firstName)) {
-					firstName = getFirstValue(
-						fetchResp.getAttributeValues("firstName"));
-				}
+				URL endpoint = discovered.getOPEndpoint();
 
-				if (Validator.isNull(lastName)) {
-					lastName = getFirstValue(
-						fetchResp.getAttributeValues("lastName"));
-				}
+				if (isYahooOpenId(endpoint)) {
+					String fullName = fetchResp.getAttributeValue("fullname");
 
-				if (Validator.isNull(emailAddress)) {
-					emailAddress = getFirstValue(
-						fetchResp.getAttributeValues("email"));
+					String[] names = splitName(fullName);
+
+					if (names != null) {
+						if (Validator.isNull(firstName)) {
+							firstName = names[0];
+						}
+
+						if (Validator.isNull(lastName)) {
+							lastName = names[1];
+						}
+					}
+
+					if (Validator.isNull(emailAddress)) {
+						emailAddress = getFirstValue(
+							fetchResp.getAttributeValues("email"));
+					}
+				}
+				else {
+					if (Validator.isNull(firstName)) {
+						firstName = getFirstValue(
+							fetchResp.getAttributeValues("firstName"));
+					}
+
+					if (Validator.isNull(lastName)) {
+						lastName = getFirstValue(
+							fetchResp.getAttributeValues("lastName"));
+					}
+
+					if (Validator.isNull(emailAddress)) {
+						emailAddress = getFirstValue(
+							fetchResp.getAttributeValues("email"));
+					}
 				}
 			}
 		}
@@ -374,14 +411,25 @@ public class OpenIdAction extends PortletAction {
 			catch (NoSuchUserException nsue2) {
 				FetchRequest fetch = FetchRequest.createFetchRequest();
 
-				fetch.addAttribute(
-					"email", "http://schema.openid.net/contact/email", true);
-				fetch.addAttribute(
-					"firstName", "http://schema.openid.net/namePerson/first",
-					true);
-				fetch.addAttribute(
-					"lastName", "http://schema.openid.net/namePerson/last",
-					true);
+				URL endpoint = discovered.getOPEndpoint();
+
+				if (isYahooOpenId(endpoint)) {
+					fetch.addAttribute(
+						"email", "http://axschema.org/contact/email", true);
+					fetch.addAttribute(
+						"name", "http://axschema.org/namePerson", true);
+				}
+				else {
+					fetch.addAttribute(
+						"email", "http://schema.openid.net/contact/email",
+						true);
+					fetch.addAttribute(
+						"firstName",
+						"http://schema.openid.net/namePerson/first", true);
+					fetch.addAttribute(
+						"lastName", "http://schema.openid.net/namePerson/last",
+						true);
+				}
 
 				authRequest.addExtension(fetch);
 
@@ -397,7 +445,28 @@ public class OpenIdAction extends PortletAction {
 		response.sendRedirect(authRequest.getDestinationUrl(true));
 	}
 
+	protected String[] splitName(String fullName) {
+		if (Validator.isNull(fullName)) {
+			return null;
+		}
+
+		String[] names = null;
+
+		int pos = fullName.indexOf(CharPool.SPACE);
+
+		if ((pos != -1) && ((pos + 1) < fullName.length())) {
+			names = new String[2];
+			names[0] = fullName.substring(0, pos);
+			names[1] = fullName.substring(pos + 1);
+		}
+
+		return names;
+	}
+
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
+
+	private static final String _YAHOO_OPEN_ID_HOST =
+		"open.login.yahooapis.com";
 
 	private static Log _log = LogFactoryUtil.getLog(OpenIdAction.class);
 
