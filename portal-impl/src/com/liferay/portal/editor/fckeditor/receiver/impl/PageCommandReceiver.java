@@ -218,16 +218,21 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		throws Exception {
 
 		Layout layout = null;
+
 		try {
 			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 				groupId, false, layoutName);
-		}catch (NoSuchLayoutException e){}
 
-		if (layout == null) {
-			try {
-				layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-					groupId, true, layoutName);
-			}catch (NoSuchLayoutException e){}
+			return layout;
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		try {
+			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				groupId, true, layoutName);
+		}
+		catch (NoSuchLayoutException nsle) {
 		}
 
 		return layout;
