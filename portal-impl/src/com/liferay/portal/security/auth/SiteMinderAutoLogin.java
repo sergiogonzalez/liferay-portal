@@ -85,18 +85,13 @@ public class SiteMinderAutoLogin implements AutoLogin {
 			}
 
 			if (user == null) {
-				try {
-					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-						user = UserLocalServiceUtil.getUserByEmailAddress(
-							companyId, siteMinderUserHeader);
-					}
-					else {
-						user = UserLocalServiceUtil.getUserByScreenName(
-							companyId, siteMinderUserHeader);
-					}
+				if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+					user = UserLocalServiceUtil.getUserByEmailAddress(
+						companyId, siteMinderUserHeader);
 				}
-				catch (NoSuchUserException nsue) {
-					return credentials;
+				else {
+					user = UserLocalServiceUtil.getUserByScreenName(
+						companyId, siteMinderUserHeader);
 				}
 			}
 
@@ -108,8 +103,15 @@ public class SiteMinderAutoLogin implements AutoLogin {
 
 			return credentials;
 		}
+		catch (NoSuchUserException nsue) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsue.getMessage());
+			}
+		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isErrorEnabled()) {
+				_log.error(e, e);
+			}
 		}
 
 		return credentials;
