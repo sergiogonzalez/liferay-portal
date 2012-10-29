@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -102,8 +103,15 @@ public class SiteMinderAutoLogin implements AutoLogin {
 
 			return credentials;
 		}
+		catch (NoSuchUserException nsue) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsue.getMessage());
+			}
+		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isErrorEnabled()) {
+				_log.error(e, e);
+			}
 		}
 
 		return credentials;
