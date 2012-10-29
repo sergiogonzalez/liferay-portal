@@ -643,6 +643,11 @@ public interface Portal {
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
+	public String getGroupFriendlyURL(
+			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
+			Locale locale)
+		throws PortalException, SystemException;
+
 	public String[] getGroupPermissions(HttpServletRequest request);
 
 	public String[] getGroupPermissions(PortletRequest portletRequest);

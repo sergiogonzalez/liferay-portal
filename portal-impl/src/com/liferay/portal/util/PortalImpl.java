@@ -2100,6 +2100,38 @@ public class PortalImpl implements Portal {
 			group, privateLayoutSet, themeDisplay, false);
 	}
 
+	public String getGroupFriendlyURL(
+			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
+			Locale locale)
+		throws PortalException, SystemException {
+
+		String i18nLanguageId = themeDisplay.getI18nLanguageId();
+		String i18nPath = themeDisplay.getI18nPath();
+
+		try {
+			String tempI18nLanguageId = null;
+			String tempI18nPath = null;
+
+			if ((I18nFilter.getLanguageIds().contains(locale.toString()) &&
+				 ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
+				  !locale.equals(LocaleUtil.getDefault()))) ||
+				(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
+
+				tempI18nLanguageId = locale.toString();
+				tempI18nPath = buildI18NPath(locale);
+			}
+
+			themeDisplay.setI18nLanguageId(tempI18nLanguageId);
+			themeDisplay.setI18nPath(tempI18nPath);
+
+			return getGroupFriendlyURL(group, privateLayoutSet, themeDisplay);
+		}
+		finally {
+			themeDisplay.setI18nLanguageId(i18nLanguageId);
+			themeDisplay.setI18nPath(i18nPath);
+		}
+	}
+
 	public String[] getGroupPermissions(HttpServletRequest request) {
 		return request.getParameterValues("groupPermissions");
 	}
