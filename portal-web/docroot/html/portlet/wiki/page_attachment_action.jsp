@@ -67,7 +67,7 @@ String fileName = (String)objArray[2];
 			<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage.getNodeId(), wikiPage.getTitle(), ActionKeys.DELETE) %>">
 				<portlet:actionURL var="deleteURL">
 					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_TO_TRASH %>" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
@@ -75,7 +75,7 @@ String fileName = (String)objArray[2];
 				</portlet:actionURL>
 
 				<liferay-ui:icon-delete
-					message="delete"
+					message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
 					trash="<%= true %>"
 					url="<%= deleteURL %>"
 				/>
