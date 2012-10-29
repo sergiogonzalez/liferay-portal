@@ -230,13 +230,13 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 
 		if (Validator.isNotNull(breadcrumbURL)) {
 			sb.append("<a href=\"");
-			sb.append(HtmlUtil.escape(breadcrumbURL));
+			sb.append(HtmlUtil.escape(HtmlUtil.unescape(breadcrumbURL)));
 			sb.append("\"");
 			sb.append(AUIUtil.buildData(data));
 			sb.append(">");
 		}
 
-		sb.append(HtmlUtil.escape(breadcrumbTitle));
+		sb.append(HtmlUtil.escape(HtmlUtil.unescape(breadcrumbTitle)));
 
 		if (Validator.isNotNull(breadcrumbURL)) {
 			sb.append("</a>");
