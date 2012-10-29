@@ -106,6 +106,8 @@ public class ViewAction extends PortletAction {
 
 		String queryString = StringPool.BLANK;
 
+		String originalFriendlyURL = StringPool.BLANK;
+
 		int pos = redirect.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
 
 		if (pos == -1) {
@@ -114,18 +116,34 @@ public class ViewAction extends PortletAction {
 
 		if (pos != -1) {
 			queryString = redirect.substring(pos);
+
+			originalFriendlyURL = redirect.substring(0, pos);
 		}
 
+		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+			themeDisplay.getScopeGroup(), false, themeDisplay);
+
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
-			redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
+			if (groupFriendlyURL.equals(originalFriendlyURL)) {
+				redirect = groupFriendlyURL;
+			}
+			else {
+				redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
+			}
 
 			if (themeDisplay.isI18n()) {
 				redirect = layout.getFriendlyURL();
 			}
 		}
 		else {
-			redirect = PortalUtil.getLayoutFriendlyURL(
-				layout, themeDisplay, locale);
+			if (groupFriendlyURL.equals(originalFriendlyURL)) {
+				redirect = PortalUtil.getGroupFriendlyURL(
+					themeDisplay.getScopeGroup(), false, themeDisplay, locale);
+			}
+			else {
+				redirect = PortalUtil.getLayoutFriendlyURL(
+					layout, themeDisplay, locale);
+			}
 		}
 
 		redirect = redirect + queryString;
