@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,6 +73,13 @@ public class JSONWebServiceServlet extends JSONServlet {
 		String path = GetterUtil.getString(request.getPathInfo());
 
 		if (!path.equals(StringPool.SLASH) && !path.equals(StringPool.BLANK)) {
+			try {
+				_servicePreAction(request, response);
+			}
+			catch (Exception e) {
+				throw new ServletException(e);
+			}
+
 			super.service(request, response);
 
 			return;
@@ -165,6 +174,18 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		return _jsonWebServiceServiceAction;
 	}
+
+	private void _servicePreAction(
+		HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		ServicePreAction servicePreAction =
+			(ServicePreAction)InstancePool.get(
+				ServicePreAction.class.getName());
+
+		servicePreAction.initApiService(request, response);
+	}
+
 
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceServlet.class);
