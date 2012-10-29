@@ -178,9 +178,8 @@ public class OpenIdAction extends PortletAction {
 		if (hostName.equals(_YAHOO_OPEN_ID_HOST)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected String readOpenIdResponse(
@@ -450,17 +449,18 @@ public class OpenIdAction extends PortletAction {
 			return null;
 		}
 
-		String[] names = null;
-
 		int pos = fullName.indexOf(CharPool.SPACE);
 
 		if ((pos != -1) && ((pos + 1) < fullName.length())) {
-			names = new String[2];
+			String[] names = new String[2];
+
 			names[0] = fullName.substring(0, pos);
 			names[1] = fullName.substring(pos + 1);
+
+			return names;
 		}
 
-		return names;
+		return null;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
