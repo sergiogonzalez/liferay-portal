@@ -1409,19 +1409,20 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 			com.liferay.portlet.journal.NoSuchArticleException;
 
 	/**
-	* Returns all the journal articles where groupId = &#63; and userId = &#63;.
+	* Returns all the journal articles where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @return the matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
-		long groupId, long userId)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
+		long groupId, long userId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the journal articles where groupId = &#63; and userId = &#63;.
+	* Returns a range of all the journal articles where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1429,17 +1430,18 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
-		long groupId, long userId, int start, int end)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
+		long groupId, long userId, long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the journal articles where groupId = &#63; and userId = &#63;.
+	* Returns an ordered range of all the journal articles where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1447,108 +1449,115 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
-		long groupId, long userId, int start, int end,
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
+		long groupId, long userId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first journal article in the ordered set where groupId = &#63; and userId = &#63;.
+	* Returns the first journal article in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle findByG_U_First(
-		long groupId, long userId,
+	public com.liferay.portlet.journal.model.JournalArticle findByG_U_C_First(
+		long groupId, long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException;
 
 	/**
-	* Returns the first journal article in the ordered set where groupId = &#63; and userId = &#63;.
+	* Returns the first journal article in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle fetchByG_U_First(
-		long groupId, long userId,
+	public com.liferay.portlet.journal.model.JournalArticle fetchByG_U_C_First(
+		long groupId, long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last journal article in the ordered set where groupId = &#63; and userId = &#63;.
+	* Returns the last journal article in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle findByG_U_Last(
-		long groupId, long userId,
+	public com.liferay.portlet.journal.model.JournalArticle findByG_U_C_Last(
+		long groupId, long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException;
 
 	/**
-	* Returns the last journal article in the ordered set where groupId = &#63; and userId = &#63;.
+	* Returns the last journal article in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle fetchByG_U_Last(
-		long groupId, long userId,
+	public com.liferay.portlet.journal.model.JournalArticle fetchByG_U_C_Last(
+		long groupId, long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and userId = &#63;.
+	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param id the primary key of the current journal article
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle[] findByG_U_PrevAndNext(
-		long id, long groupId, long userId,
+	public com.liferay.portlet.journal.model.JournalArticle[] findByG_U_C_PrevAndNext(
+		long id, long groupId, long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException;
 
 	/**
-	* Returns all the journal articles that the user has permission to view where groupId = &#63; and userId = &#63;.
+	* Returns all the journal articles that the user has permission to view where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @return the matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
-		long groupId, long userId)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
+		long groupId, long userId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and userId = &#63;.
+	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1556,17 +1565,18 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
-		long groupId, long userId, int start, int end)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
+		long groupId, long userId, long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and userId = &#63;.
+	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1574,30 +1584,32 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
-		long groupId, long userId, int start, int end,
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
+		long groupId, long userId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and userId = &#63;.
+	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param id the primary key of the current journal article
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_U_PrevAndNext(
-		long id, long groupId, long userId,
+	public com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_U_C_PrevAndNext(
+		long id, long groupId, long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException;
@@ -5154,13 +5166,14 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the journal articles where groupId = &#63; and userId = &#63; from the database.
+	* Removes all the journal articles where groupId = &#63; and userId = &#63; and classNameId = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_U(long groupId, long userId)
+	public void removeByG_U_C(long groupId, long userId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -5492,25 +5505,27 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of journal articles where groupId = &#63; and userId = &#63;.
+	* Returns the number of journal articles where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @return the number of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_U(long groupId, long userId)
+	public int countByG_U_C(long groupId, long userId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and userId = &#63;.
+	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param classNameId the class name ID
 	* @return the number of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_U(long groupId, long userId)
+	public int filterCountByG_U_C(long groupId, long userId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

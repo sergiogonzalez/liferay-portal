@@ -130,6 +130,8 @@ String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, l
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+long defaultClassNameId = 0;
 %>
 
 <%@ include file="/html/portlet/journal/init-ext.jsp" %>
