@@ -2118,26 +2118,12 @@ public class PortalImpl implements Portal {
 		String i18nPath = themeDisplay.getI18nPath();
 
 		try {
-			String tempI18nLanguageId = null;
-			String tempI18nPath = null;
-
-			if ((I18nFilter.getLanguageIds().contains(locale.toString()) &&
-				 ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
-				  !locale.equals(LocaleUtil.getDefault()))) ||
-				(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
-
-				tempI18nLanguageId = locale.toString();
-				tempI18nPath = buildI18NPath(locale);
-			}
-
-			themeDisplay.setI18nLanguageId(tempI18nLanguageId);
-			themeDisplay.setI18nPath(tempI18nPath);
+			setThemeDisplayI18n(themeDisplay, locale);
 
 			return getGroupFriendlyURL(group, privateLayoutSet, themeDisplay);
 		}
 		finally {
-			themeDisplay.setI18nLanguageId(i18nLanguageId);
-			themeDisplay.setI18nPath(i18nPath);
+			resetThemeDisplayI18n(themeDisplay, i18nLanguageId, i18nPath);
 		}
 	}
 
@@ -2444,26 +2430,12 @@ public class PortalImpl implements Portal {
 		String i18nPath = themeDisplay.getI18nPath();
 
 		try {
-			String tempI18nLanguageId = null;
-			String tempI18nPath = null;
-
-			if ((I18nFilter.getLanguageIds().contains(locale.toString()) &&
-				 ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
-				  !locale.equals(LocaleUtil.getDefault()))) ||
-				(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
-
-				tempI18nLanguageId = locale.toString();
-				tempI18nPath = buildI18NPath(locale);
-			}
-
-			themeDisplay.setI18nLanguageId(tempI18nLanguageId);
-			themeDisplay.setI18nPath(tempI18nPath);
+			setThemeDisplayI18n(themeDisplay, locale);
 
 			return getLayoutFriendlyURL(layout, themeDisplay);
 		}
 		finally {
-			themeDisplay.setI18nLanguageId(i18nLanguageId);
-			themeDisplay.setI18nPath(i18nPath);
+			resetThemeDisplayI18n(themeDisplay, i18nLanguageId, i18nPath);
 		}
 	}
 
@@ -6333,6 +6305,32 @@ public class PortalImpl implements Portal {
 		}
 
 		return url;
+	}
+
+	protected void resetThemeDisplayI18n(
+		ThemeDisplay themeDisplay, String languageId, String path) {
+
+		themeDisplay.setI18nLanguageId(languageId);
+		themeDisplay.setI18nPath(path);
+	}
+
+	protected void setThemeDisplayI18n(
+		ThemeDisplay themeDisplay, Locale locale) {
+
+		String i18nLanguageId = null;
+		String i18nPath = null;
+
+		if ((I18nFilter.getLanguageIds().contains(locale.toString()) &&
+			((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
+				!locale.equals(LocaleUtil.getDefault()))) ||
+			(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
+
+			i18nLanguageId = locale.toString();
+			i18nPath = buildI18NPath(locale);
+		}
+
+		themeDisplay.setI18nLanguageId(i18nLanguageId);
+		themeDisplay.setI18nPath(i18nPath);
 	}
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";
