@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<im_commands>
+<block name="transform">
+	<command name="rotate90" nargs="0" process="standard" resize="true">
+	<option><![CDATA[-rotate 90]]></option>
+	<icon><![CDATA[rotate2.gif]]></icon>
+	</command>
+
+	<command name="rotate270" nargs="0" process="standard" resize="true">
+	<option><![CDATA[-rotate 270]]></option>
+	<icon><![CDATA[rotate1.gif]]></icon>
+	</command>
+
+	<command name="flop" nargs="0" process="standard">
+	<option><![CDATA[-flop]]></option>
+	<icon><![CDATA[fliph.gif]]></icon>
+	</command>
+
+	<command name="flip" nargs="0" process="standard">
+	<option><![CDATA[-flip]]></option>
+	<icon><![CDATA[flipv.gif]]></icon>
+	</command>
+
+	<command name="crop" nargs="4" process="custom" resize="true">
+	<option><![CDATA[-crop #1x#2+#3+#4 +repage]]></option>
+	<icon><![CDATA[crop.gif]]></icon>
+	</command>
+
+	<command name="transform" nargs="3" process="custom" resize="true">
+	<option><![CDATA[-resize #1x#2]]></option>
+	<icon><![CDATA[resize.gif]]></icon>
+	</command>
+</block>
+
+<block name="text">
+	<command name="label" nargs="0" process="not_implement">
+	</command>
+
+	<command name="text" nargs="0" process="not_implement">
+	</command>
+
+	<command name="watermark" nargs="0" process="not_implement">
+	</command>
+</block>
+
+<block name="adjust">
+	<command name="modulate" nargs="3" process="standard">
+	<option><![CDATA[-modulate #1,#2,#3]]></option>
+	<icon><![CDATA[default.gif]]></icon>
+	<argument id="1" name="brightness" default="100">
+		<descr><![CDATA[(%)]]></descr>
+	</argument>
+	<argument id="2" name="saturation" default="100">
+		<descr><![CDATA[(%)]]></descr>
+	</argument>
+	<argument id="3" name="tone" default="100">
+		<descr><![CDATA[(%)]]></descr>
+	</argument>
+	</command>
+	<command name="contrast" nargs="2" process="standard">
+	<option><![CDATA[-contrast-stretch #1%]]></option>
+	<icon><![CDATA[default.gif]]></icon>
+	<argument id="1" name="value" default="0">
+		<descr><![CDATA[(0% - 100%)]]></descr>
+	</argument>
+	</command>
+</block>
+
+<block name="effects">
+
+	<command name="blur" nargs="1" process="standard">
+	<option><![CDATA[-blur 0x#1]]></option>
+	<icon><![CDATA[blur.gif]]></icon>
+	<argument id="1" name="deviation" default="0">
+		<descr><![CDATA[(0-10)]]></descr>
+	</argument>
+	</command>
+
+	<command name="colorspace" nargs="0" process="standard">
+	<option><![CDATA[-colorspace gray]]></option>
+	<icon><![CDATA[greys.gif]]></icon>
+	</command>
+
+	<command name="sepia" nargs="0" process="standard">
+	<option><![CDATA[-sepia-tone 80%]]></option>
+	<icon><![CDATA[sepia.gif]]></icon>
+	</command>
+
+	<command name="monochrome" nargs="0" process="standard">
+	<option><![CDATA[-monochrome]]></option>
+	<icon><![CDATA[monocrome.gif]]></icon>
+	</command>
+
+	<command name="invert" nargs="0" process="standard">
+	<option><![CDATA[-negate]]></option>
+	<icon><![CDATA[invert.gif]]></icon>
+	</command>
+
+</block>
+
+<block name="more">
+	<command name="noise" nargs="1" process="standard">
+	<option><![CDATA[-noise #1]]></option>
+	<icon><![CDATA[default.gif]]></icon>
+	<argument id="1" name="value" default="0">
+		<descr><![CDATA[(0-10)]]></descr>
+	</argument>
+	</command>
+
+	<command name="unsharp" nargs="2" process="standard">
+	<option><![CDATA[-unsharp #1x#2]]></option>
+	<icon><![CDATA[default.gif]]></icon>
+	<argument id="1" name="radius" default="0">
+		<descr><![CDATA[(0-10)]]></descr>
+	</argument>
+	<argument id="2" name="deviation" default="0">
+		<descr><![CDATA[(0-10)]]></descr>
+	</argument>
+	</command>
+
+	<command name="normalize" nargs="0" process="standard">
+	<option><![CDATA[-normalize]]></option>
+	<icon><![CDATA[default.gif]]></icon>
+	</command>
+	
+	<command name="add-ctrt" nargs="0" process="standard">
+	<option><![CDATA[+contrast]]></option>
+	<icon><![CDATA[default.gif]]></icon>
+	</command>
+	
+	<command name="sub-ctrt" nargs="0" process="standard">
+	<option><![CDATA[-contrast]]></option>
+	<icon><![CDATA[default.gif]]></icon>
+	</command>
+	
+	<command name="level" nargs="3" process="standard">
+	<option><![CDATA[-level #1%,#2%,#3]]></option>
+	<icon><![CDATA[default.gif]]></icon>
+	<argument id="1" name="black" default="0">
+		<descr><![CDATA[(%)]]></descr>
+	</argument>
+	<argument id="2" name="white" default="100">
+		<descr><![CDATA[(%)]]></descr>
+	</argument>
+	<argument id="3" name="gamma" default="1">
+		<descr><![CDATA[(0-10)]]></descr>
+	</argument>
+	</command>
+</block>
+
+</im_commands>

@@ -424,6 +424,10 @@
 		<put name="portlet_content" value="/portlet/document_library/edit_repository.jsp" />
 	</definition>
 
+	<definition name="portlet.document_library.edit_image_inline" extends="portlet.document_library">
+		<put name="portlet_content" value="/portlet/document_library/edit_image_inline.jsp" />
+	</definition>
+	
 	<definition name="portlet.document_library.error" extends="portlet.document_library">
 		<put name="portlet_content" value="/portlet/document_library/error.jsp" />
 	</definition>

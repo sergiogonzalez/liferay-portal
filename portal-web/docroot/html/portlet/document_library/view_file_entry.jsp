@@ -86,6 +86,8 @@ boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
 boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
 boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
+boolean enableImageInlineEdit = ImageProcessorUtil.isImageSupported(fileVersion) &&
+	PropsValues.IMAGEMAGICK_ENABLED && (fileEntry.getModel() instanceof DLFileEntry);
 
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
@@ -902,6 +904,25 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					icon: 'unlock',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>'
 				}
+			);
+		</c:if>
+		
+		<c:if test="<%= enableImageInlineEdit %>">
+ 			fileEntryToolbarChildren.push(
+				{
+
+				<portlet:renderURL var="imageEditURL">
+					<portlet:param name="struts_action" value="/document_library/edit_image_inline" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+				</portlet:renderURL>
+
+				handler: function(event) {
+					location.href = '<%= imageEditURL.toString() %>';
+				},
+				icon: 'edit',
+				label: '<%= UnicodeLanguageUtil.get(pageContext, "edit-inline") %>'
+			  }
 			);
 		</c:if>
 	</c:if>
