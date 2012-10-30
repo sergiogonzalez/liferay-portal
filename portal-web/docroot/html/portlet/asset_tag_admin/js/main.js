@@ -142,7 +142,12 @@ AUI.add(
 						var namespace = instance._prefixedPortletId;
 
 						A.one('#' + namespace + 'addTagButton').on(EVENT_CLICK, instance._onShowTagPanel, instance, ACTION_ADD);
-						A.one('#' + namespace + 'tagsPermissionsButton').on(EVENT_CLICK, instance._onTagChangePermissions, instance);
+						
+						var tagsPermissionsButton = A.one('#' + namespace + 'tagsPermissionsButton');
+						if (tagsPermissionsButton) {
+							tagsPermissionsButton.on(EVENT_CLICK, instance._onTagChangePermissions, instance);
+						}
+						
 						A.one('#' + namespace + 'deleteSelectedTags').on(EVENT_CLICK, instance._deleteSelectedTags, instance);
 						A.one('#' + namespace + 'mergeSelectedTags').on(EVENT_CLICK, instance._mergeSelectedTags, instance);
 
