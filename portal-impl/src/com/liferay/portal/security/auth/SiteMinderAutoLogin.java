@@ -14,10 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,9 +37,8 @@ import javax.servlet.http.HttpServletResponse;
 public class SiteMinderAutoLogin implements AutoLogin {
 
 	public String[] login(
-		HttpServletRequest request, HttpServletResponse response) {
-
-		String[] credentials = null;
+			HttpServletRequest request, HttpServletResponse response)
+		throws AutoLoginException {
 
 		try {
 			Company company = PortalUtil.getCompany(request);
@@ -50,7 +46,7 @@ public class SiteMinderAutoLogin implements AutoLogin {
 			long companyId = company.getCompanyId();
 
 			if (!AuthSettingsUtil.isSiteMinderEnabled(companyId)) {
-				return credentials;
+				return null;
 			}
 
 			String siteMinderUserHeader = request.getHeader(
@@ -59,7 +55,7 @@ public class SiteMinderAutoLogin implements AutoLogin {
 					PropsValues.SITEMINDER_USER_HEADER));
 
 			if (Validator.isNull(siteMinderUserHeader)) {
-				return credentials;
+				return null;
 			}
 
 			String authType = company.getAuthType();
@@ -85,22 +81,17 @@ public class SiteMinderAutoLogin implements AutoLogin {
 			}
 
 			if (user == null) {
-				try {
-					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-						user = UserLocalServiceUtil.getUserByEmailAddress(
-							companyId, siteMinderUserHeader);
-					}
-					else {
-						user = UserLocalServiceUtil.getUserByScreenName(
-							companyId, siteMinderUserHeader);
-					}
+				if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+					user = UserLocalServiceUtil.getUserByEmailAddress(
+						companyId, siteMinderUserHeader);
 				}
-				catch (NoSuchUserException nsue) {
-					return credentials;
+				else {
+					user = UserLocalServiceUtil.getUserByScreenName(
+						companyId, siteMinderUserHeader);
 				}
 			}
 
-			credentials = new String[3];
+			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
@@ -109,12 +100,8 @@ public class SiteMinderAutoLogin implements AutoLogin {
 			return credentials;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new AutoLoginException(e);
 		}
-
-		return credentials;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(SiteMinderAutoLogin.class);
 
 }
