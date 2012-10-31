@@ -2085,7 +2085,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = latestArticle;
 
-		boolean imported = ParamUtil.getBoolean(serviceContext, "imported");
+		boolean imported = ImportExportThreadLocal.isImportInProcess();
 
 		double latestVersion = latestArticle.getVersion();
 
