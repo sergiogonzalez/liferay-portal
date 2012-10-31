@@ -214,5 +214,7 @@ _sass_cache_*.css
 /util-taglib/*.ipr
 /util-taglib/*.iws
 /util-taglib/classes
+/util-taglib/src/META-INF/liferay-aui.tld
+/util-taglib/src/META-INF/liferay-portlet_2_0.tld
 /util-taglib/util-taglib*.asc
 /util-taglib/util-taglib*.jar

@@ -16,7 +16,7 @@ package com.liferay.portal.convert;
 
 import com.liferay.mail.model.CyrusUser;
 import com.liferay.mail.model.CyrusVirtual;
-import com.liferay.portal.events.StartupHelper;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -173,7 +173,7 @@ public class ConvertDatabase extends ConvertProcess {
 				_log.debug("Migrating database indexes");
 			}
 
-			StartupHelper.updateIndexes(db, connection, false);
+			StartupHelperUtil.updateIndexes(db, connection, false);
 
 			List<ServiceComponent> serviceComponents =
 				ServiceComponentLocalServiceUtil.getServiceComponents(

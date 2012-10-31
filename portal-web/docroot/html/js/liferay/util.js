@@ -793,7 +793,17 @@
 		Util,
 		'afterIframeLoaded',
 		function(event) {
-			var iframeDocument = A.one(event.doc);
+			var nodeInstances = A.Node._instances;
+
+			var docEl = event.doc;
+
+			var docUID = docEl._yuid;
+
+			if (docUID in nodeInstances) {
+				delete nodeInstances[docUID];
+			}
+
+			var iframeDocument = A.one(docEl);
 
 			var iframeBody = iframeDocument.one('body');
 
@@ -801,47 +811,54 @@
 
 			iframeBody.addClass('aui-dialog-iframe-popup');
 
-			iframeBody.delegate(
-				EVENT_CLICK,
-				function() {
-					iframeDocument.purge(true);
+			var detachEventHandles = function() {
+				AArray.invoke(eventHandles, 'detach');
 
-					dialog.close();
-				},
-				'.aui-button-input-cancel'
-			);
+				iframeDocument.purge(true);
+			};
 
-			iframeBody.delegate(
-				'submit',
-				function(event) {
-					iframeDocument.purge(true);
-				},
-				'form'
-			);
+			var eventHandles = [
+				iframeBody.delegate('submit', detachEventHandles, 'form'),
 
-			iframeBody.delegate(
-				EVENT_CLICK,
-				function() {
-					dialog.set('visible', false, SRC_HIDE_LINK);
+				iframeBody.delegate(
+					EVENT_CLICK,
+					function() {
+						dialog.set('visible', false, SRC_HIDE_LINK);
 
-					iframeDocument.purge(true);
-				},
-				'.lfr-hide-dialog'
-			);
+						detachEventHandles();
+					},
+					'.lfr-hide-dialog'
+				)
+			];
+
+			var cancelButton = iframeBody.one('.aui-button-input-cancel');
+
+			if (cancelButton) {
+				cancelButton.after(
+					EVENT_CLICK,
+					function() {
+						detachEventHandles();
+
+						dialog.close();
+					}
+				);
+			}
 
 			var rolesSearchContainer = iframeBody.one('#rolesSearchContainerSearchContainer');
 
 			if (rolesSearchContainer) {
-				rolesSearchContainer.delegate(
-					EVENT_CLICK,
-					function(event) {
-						event.preventDefault();
+				eventHandles.push(
+					rolesSearchContainer.delegate(
+						EVENT_CLICK,
+						function(event) {
+							event.preventDefault();
 
-						iframeDocument.purge(true);
+							detachEventHandles();
 
-						submitForm(document.hrefFm, event.currentTarget.attr('href'));
-					},
-					'a'
+							submitForm(document.hrefFm, event.currentTarget.attr('href'));
+						},
+						'a'
+					)
 				);
 			}
 		},
