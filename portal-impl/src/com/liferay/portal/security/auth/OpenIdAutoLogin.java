@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.OpenIdUtil;
@@ -32,15 +30,14 @@ import javax.servlet.http.HttpSession;
 public class OpenIdAutoLogin implements AutoLogin {
 
 	public String[] login(
-		HttpServletRequest request, HttpServletResponse response) {
-
-		String[] credentials = null;
+			HttpServletRequest request, HttpServletResponse response)
+		throws AutoLoginException {
 
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			if (!OpenIdUtil.isEnabled(companyId)) {
-				return credentials;
+				return null;
 			}
 
 			HttpSession session = request.getSession();
@@ -48,26 +45,24 @@ public class OpenIdAutoLogin implements AutoLogin {
 			Long userId = (Long)session.getAttribute(WebKeys.OPEN_ID_LOGIN);
 
 			if (userId == null) {
-				return credentials;
+				return null;
 			}
 
 			session.removeAttribute(WebKeys.OPEN_ID_LOGIN);
 
 			User user = UserLocalServiceUtil.getUserById(userId);
 
-			credentials = new String[3];
+			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
 			credentials[2] = Boolean.TRUE.toString();
+
+			return credentials;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new AutoLoginException(e);
 		}
-
-		return credentials;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(OpenIdAutoLogin.class);
 
 }

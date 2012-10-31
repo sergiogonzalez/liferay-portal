@@ -14,10 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -35,15 +32,14 @@ import javax.servlet.http.HttpSession;
 public class FacebookAutoLogin implements AutoLogin {
 
 	public String[] login(
-		HttpServletRequest request, HttpServletResponse response) {
-
-		String[] credentials = null;
+			HttpServletRequest request, HttpServletResponse response)
+		throws AutoLoginException {
 
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			if (!FacebookConnectUtil.isEnabled(companyId)) {
-				return credentials;
+				return null;
 			}
 
 			HttpSession session = request.getSession();
@@ -56,44 +52,33 @@ public class FacebookAutoLogin implements AutoLogin {
 			if (Validator.isNotNull(emailAddress)) {
 				session.removeAttribute(WebKeys.FACEBOOK_USER_EMAIL_ADDRESS);
 
-				try {
-					user = UserLocalServiceUtil.getUserByEmailAddress(
-						companyId, emailAddress);
-				}
-				catch (NoSuchUserException nsue) {
-				}
+				user = UserLocalServiceUtil.getUserByEmailAddress(
+					companyId, emailAddress);
 			}
 			else {
 				long facebookId = GetterUtil.getLong(
 					(String)session.getAttribute(WebKeys.FACEBOOK_USER_ID));
 
 				if (facebookId > 0) {
-					try {
-						user = UserLocalServiceUtil.getUserByFacebookId(
-							companyId, facebookId);
-					}
-					catch (NoSuchUserException nsue) {
-						return credentials;
-					}
+					user = UserLocalServiceUtil.getUserByFacebookId(
+						companyId, facebookId);
 				}
 				else {
-					return credentials;
+					return null;
 				}
 			}
 
-			credentials = new String[3];
+			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
 			credentials[2] = Boolean.FALSE.toString();
+
+			return credentials;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new AutoLoginException(e);
 		}
-
-		return credentials;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(FacebookAutoLogin.class);
 
 }

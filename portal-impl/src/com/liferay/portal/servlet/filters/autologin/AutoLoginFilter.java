@@ -213,10 +213,6 @@ public class AutoLoginFilter extends BasePortalFilter {
 					}
 				}
 				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(e, e);
-					}
-
 					String currentURL = PortalUtil.getCurrentURL(request);
 
 					if (currentURL.endsWith(_PATH_CHAT_LATEST)) {
@@ -227,9 +223,12 @@ public class AutoLoginFilter extends BasePortalFilter {
 						}
 					}
 					else {
-						_log.error(
-							"Current URL " + currentURL +
-								" generates exception: " + e.getMessage());
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Current URL " + currentURL +
+									" generates exception: " + e.getMessage(),
+								e);
+						}
 					}
 				}
 			}
