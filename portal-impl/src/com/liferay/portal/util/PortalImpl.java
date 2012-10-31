@@ -912,7 +912,7 @@ public class PortalImpl implements Portal {
 				i18nPath.concat(_PUBLIC_GROUP_SERVLET_MAPPING));
 		}
 
-		// www.liferay.com:8080/page to www.liferay.com:8080/es/page
+		// www.liferay.com:8080/ctx/page to www.liferay.com:8080/ctx/es/page
 
 		int pos = canonicalURL.indexOf(virtualHost);
 
@@ -920,6 +920,10 @@ public class PortalImpl implements Portal {
 			pos += virtualHost.length();
 
 			pos = canonicalURL.indexOf(CharPool.SLASH, pos);
+
+			if (!Validator.isBlank(_pathContext)) {
+				pos = canonicalURL.indexOf(CharPool.SLASH, pos+1);
+			}
 
 			if ((pos > 0) && (pos < canonicalURL.length())) {
 				return canonicalURL.substring(0, pos).concat(
