@@ -19,26 +19,60 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ClassLoaderObjectInputStream extends ObjectInputStream {
 
-	public ClassLoaderObjectInputStream(InputStream is, ClassLoader classLoader)
+	public ClassLoaderObjectInputStream(
+			InputStream inputStream, ClassLoader classLoader)
 		throws IOException {
 
-		super(is);
+		super(inputStream);
 
 		_classLoader = classLoader;
 	}
 
 	@Override
-	protected Class<?> resolveClass(ObjectStreamClass osc)
+	protected Class<?> resolveClass(ObjectStreamClass objectStreamClass)
 		throws ClassNotFoundException {
 
-		return Class.forName(osc.getName(), true, _classLoader);
+		String name = objectStreamClass.getName();
+
+		try {
+			return Class.forName(name, false, _classLoader);
+		}
+		catch (ClassNotFoundException cnfe) {
+			Class<?> clazz = _primitiveClasses.get(name);
+
+			if (clazz != null) {
+				return clazz;
+			}
+			else {
+				throw cnfe;
+			}
+		}
 	}
 
+	private static final Map<String, Class<?>> _primitiveClasses =
+		new HashMap<String, Class<?>>(9, 1.0F);
+
 	private ClassLoader _classLoader;
+
+	static {
+		_primitiveClasses.put("boolean", boolean.class);
+		_primitiveClasses.put("byte", byte.class);
+		_primitiveClasses.put("char", char.class);
+		_primitiveClasses.put("short", short.class);
+		_primitiveClasses.put("int", int.class);
+		_primitiveClasses.put("long", long.class);
+		_primitiveClasses.put("float", float.class);
+		_primitiveClasses.put("double", double.class);
+		_primitiveClasses.put("void", void.class);
+	}
 
 }

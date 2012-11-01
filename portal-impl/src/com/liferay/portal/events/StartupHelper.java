@@ -40,8 +40,44 @@ import java.sql.Connection;
  */
 public class StartupHelper {
 
-	public static void updateIndexes(
-		DB db, Connection con, boolean dropIndexes) {
+	public boolean isUpgraded() {
+		return _upgraded;
+	}
+
+	public boolean isVerified() {
+		return _verified;
+	}
+
+	public void setDropIndexes(boolean dropIndexes) {
+		_dropIndexes = dropIndexes;
+	}
+
+	public void updateIndexes() {
+		updateIndexes(_dropIndexes);
+	}
+
+	public void updateIndexes(boolean dropIndexes) {
+		DB db = DBFactoryUtil.getDB();
+
+		Connection connection = null;
+
+		try {
+			connection = DataAccess.getConnection();
+
+			updateIndexes(db, connection, dropIndexes);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(connection);
+		}
+	}
+
+	public void updateIndexes(
+		DB db, Connection connection, boolean dropIndexes) {
 
 		try {
 			ClassLoader classLoader =
@@ -60,40 +96,13 @@ public class StartupHelper {
 				"com/liferay/portal/tools/sql/dependencies/indexes.properties");
 
 			db.updateIndexes(
-				con, tablesSQL, indexesSQL, indexesProperties, dropIndexes);
+				connection, tablesSQL, indexesSQL, indexesProperties,
+				dropIndexes);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	public boolean isUpgraded() {
-		return _upgraded;
-	}
-
-	public boolean isVerified() {
-		return _verified;
-	}
-
-	public void setDropIndexes(boolean dropIndexes) {
-		_dropIndexes = dropIndexes;
-	}
-
-	public void updateIndexes() {
-		DB db = DBFactoryUtil.getDB();
-
-		Connection con = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			updateIndexes(db, con, _dropIndexes);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-		finally {
-			DataAccess.cleanUp(con);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 	}
 
