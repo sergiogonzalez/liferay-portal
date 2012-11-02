@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +28,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Igor Spasic
  */
 public class JSONWebServiceActionsManagerUtil {
+
+	public static Set<String> getContextPaths() {
+		return _jsonWebServiceActionsManager. getContextPaths();
+	}
 
 	public static JSONWebServiceAction getJSONWebServiceAction(
 		HttpServletRequest request) {

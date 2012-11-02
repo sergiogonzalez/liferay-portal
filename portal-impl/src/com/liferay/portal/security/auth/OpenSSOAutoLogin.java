@@ -61,14 +61,14 @@ public class OpenSSOAutoLogin implements AutoLogin {
 					companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
 					PropsValues.OPEN_SSO_AUTH_ENABLED)) {
 
-				return credentials;
+				return null;
 			}
 
 			String serviceUrl = PrefsPropsUtil.getString(
 				companyId, PropsKeys.OPEN_SSO_SERVICE_URL);
 
 			if (!OpenSSOUtil.isAuthenticated(request, serviceUrl)) {
-				return credentials;
+				return null;
 			}
 
 			boolean ldapImportEnabled = PrefsPropsUtil.getBoolean(
@@ -191,7 +191,9 @@ public class OpenSSOAutoLogin implements AutoLogin {
 			credentials[2] = Boolean.TRUE.toString();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isErrorEnabled()) {
+				_log.error(e, e);
+			}
 		}
 
 		return credentials;

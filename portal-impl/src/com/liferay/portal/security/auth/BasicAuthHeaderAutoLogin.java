@@ -74,20 +74,19 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 		throws AutoLoginException {
 
 		try {
-			String[] credentials = null;
 
 			// Get the Authorization header, if one was supplied
 
 			String authorization = request.getHeader("Authorization");
 
 			if (authorization == null) {
-				return credentials;
+				return null;
 			}
 
 			StringTokenizer st = new StringTokenizer(authorization);
 
 			if (!st.hasMoreTokens()) {
-				return credentials;
+				return null;
 			}
 
 			String basic = st.nextToken();
@@ -95,7 +94,7 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 			// We only handle HTTP Basic authentication
 
 			if (!basic.equalsIgnoreCase(HttpServletRequest.BASIC_AUTH)) {
-				return credentials;
+				return null;
 			}
 
 			String encodedCredentials = st.nextToken();
@@ -114,28 +113,21 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 			int pos = decodedCredentials.indexOf(CharPool.COLON);
 
 			if (pos == -1) {
-				return credentials;
+				return null;
 			}
 
 			String login = GetterUtil.getString(
 				decodedCredentials.substring(0, pos));
 			String password = decodedCredentials.substring(pos + 1);
 
-			try {
-				long userId = LoginUtil.getAuthenticatedUserId(
-					request, login, password, null);
+			long userId = LoginUtil.getAuthenticatedUserId(
+				request, login, password, null);
 
-				credentials = new String[3];
+			String[] credentials = new String[3];
 
-				credentials[0] = String.valueOf(userId);
-				credentials[1] = password;
-				credentials[2] = Boolean.TRUE.toString();
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(login + " is not a valid login", e);
-				}
-			}
+			credentials[0] = String.valueOf(userId);
+			credentials[1] = password;
+			credentials[2] = Boolean.TRUE.toString();
 
 			return credentials;
 		}
