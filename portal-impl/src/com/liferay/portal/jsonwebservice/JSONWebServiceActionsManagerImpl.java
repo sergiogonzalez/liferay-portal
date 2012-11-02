@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +50,20 @@ import javax.servlet.http.HttpSession;
  */
 public class JSONWebServiceActionsManagerImpl
 	implements JSONWebServiceActionsManager {
+
+	public Set<String> getContextPaths() {
+		Set<String> contextPaths = new TreeSet<String>();
+
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				_jsonWebServiceActionConfigs) {
+
+			String contextPath = jsonWebServiceActionConfig.getContextPath();
+
+			contextPaths.add(contextPath);
+		}
+
+		return contextPaths;
+	}
 
 	public JSONWebServiceAction getJSONWebServiceAction(
 		HttpServletRequest request) {
@@ -187,7 +203,7 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
-		String servletContextPath) {
+		String contextPath) {
 
 		List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
 			new ArrayList<JSONWebServiceActionMapping>(
@@ -196,10 +212,10 @@ public class JSONWebServiceActionsManagerImpl
 		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
 				_jsonWebServiceActionConfigs) {
 
-			String jsonWebServiceServletContextPath =
-				jsonWebServiceActionConfig.getServletContextPath();
+			String jsonWebServiceContextPath =
+				jsonWebServiceActionConfig.getContextPath();
 
-			if (servletContextPath.equals(jsonWebServiceServletContextPath)) {
+			if (contextPath.equals(jsonWebServiceContextPath)) {
 				jsonWebServiceActionMappings.add(jsonWebServiceActionConfig);
 			}
 		}
@@ -218,19 +234,20 @@ public class JSONWebServiceActionsManagerImpl
 		_jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
 	}
 
-	public int unregisterJSONWebServiceActions(String servletContextPath) {
+	public int unregisterJSONWebServiceActions(String contextPath) {
 		int count = 0;
 
-		Iterator<JSONWebServiceActionConfig> itr =
+		Iterator<JSONWebServiceActionConfig> iterator =
 			_jsonWebServiceActionConfigs.iterator();
 
-		while (itr.hasNext()) {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig = itr.next();
+		while (iterator.hasNext()) {
+			JSONWebServiceActionConfig jsonWebServiceActionConfig =
+				iterator.next();
 
-			if (servletContextPath.equals(
-					jsonWebServiceActionConfig.getServletContextPath())) {
+			if (contextPath.equals(
+					jsonWebServiceActionConfig.getContextPath())) {
 
-				itr.remove();
+				iterator.remove();
 
 				count++;
 			}
