@@ -96,14 +96,13 @@ public class UserServiceSoapTest {
 	}
 
 	protected UserServiceSoap getUserServiceSoap() throws Exception {
-		UserServiceSoapServiceLocator locator =
+		UserServiceSoapServiceLocator userServiceSoapServiceLocator =
 			new UserServiceSoapServiceLocator();
 
-		UserServiceSoap service = locator.getPortal_UserService(
+		return userServiceSoapServiceLocator.getPortal_UserService(
 			TestPropsValues.getSoapURL(
-				locator.getPortal_UserServiceWSDDServiceName()));
-
-		return service;
+				userServiceSoapServiceLocator.
+					getPortal_UserServiceWSDDServiceName()));
 	}
 
 }

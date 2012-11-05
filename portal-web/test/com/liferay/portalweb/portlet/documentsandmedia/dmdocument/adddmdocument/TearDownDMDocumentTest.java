@@ -37,51 +37,53 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				selenium.waitForVisible("//button[@title='Icon View']");
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
-				selenium.waitForVisible(
-					"//div[@class='aui-loadingmask-message']");
-				selenium.waitForNotVisible(
-					"//div[@class='aui-loadingmask-message']");
+				Thread.sleep(5000);
 				selenium.waitForVisible(
 					"//button[contains(@class,'aui-state-active') and @title='Icon View']");
 				assertTrue(selenium.isVisible(
 						"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 
 				boolean dmDocumentNotRecycled = selenium.isElementPresent(
-						"//div[@id='_20_entriesContainer']//a[@class='entry-link']");
+						"//a[contains(@class,'entry-link')]/span[@class='entry-title']");
 
 				if (!dmDocumentNotRecycled) {
+					label = 3;
+
+					continue;
+				}
+
+				boolean allEntriesNotChecked = selenium.isChecked(
+						"//input[@id='_20_allRowIdsCheckbox']");
+
+				if (allEntriesNotChecked) {
 					label = 2;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
 					RuntimeVariables.replace("All Entries Check Box"));
+
+			case 2:
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.waitForVisible(
-					"//div[@id='_20_entries']/div[contains(@class,'selected')]");
+					"//div[contains(@class,'display-icon selectable selected')]");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-			case 2:
-				assertEquals(RuntimeVariables.replace(
-						"There are no documents or media files in this folder."),
-					selenium.getText(
-						"//div[@class='entries-empty portlet-msg-info']"));
+			case 3:
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
@@ -98,24 +100,24 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean recycleBinPresent = selenium.isElementPresent(
-						"//form[@id='_182_emptyForm']/a");
+				boolean dmFolderNotDeleted = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a");
 
-				if (!recycleBinPresent) {
-					label = 3;
+				if (!dmFolderNotDeleted) {
+					label = 4;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
-					selenium.getText("//form[@id='_182_emptyForm']/a"));
-				selenium.clickAt("//form[@id='_182_emptyForm']/a",
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
 					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
 
-			case 3:
+			case 4:
 			case 100:
 				label = -1;
 			}
