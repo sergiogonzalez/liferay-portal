@@ -921,8 +921,10 @@ public class PortalImpl implements Portal {
 
 			pos = canonicalURL.indexOf(CharPool.SLASH, pos);
 
-			if (!Validator.isBlank(_pathContext)) {
-				pos = canonicalURL.indexOf(CharPool.SLASH, pos+1);
+			if (!Validator.isNotNull(_pathContext) &&
+				StringUtil.contains(canonicalURL, _pathContext)) {
+
+				pos = canonicalURL.indexOf(CharPool.SLASH, pos + 1);
 			}
 
 			if ((pos > 0) && (pos < canonicalURL.length())) {
