@@ -45,6 +45,12 @@ public class ClassLoaderPool {
 			classLoader = PortalClassLoaderUtil.getClassLoader();
 		}
 
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
+		}
+
 		return classLoader;
 	}
 

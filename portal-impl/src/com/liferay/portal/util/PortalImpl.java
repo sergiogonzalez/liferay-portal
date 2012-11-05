@@ -912,7 +912,7 @@ public class PortalImpl implements Portal {
 				i18nPath.concat(_PUBLIC_GROUP_SERVLET_MAPPING));
 		}
 
-		// www.liferay.com:8080/page to www.liferay.com:8080/es/page
+		// www.liferay.com:8080/ctx/page to www.liferay.com:8080/ctx/es/page
 
 		int pos = canonicalURL.indexOf(virtualHost);
 
@@ -920,6 +920,12 @@ public class PortalImpl implements Portal {
 			pos += virtualHost.length();
 
 			pos = canonicalURL.indexOf(CharPool.SLASH, pos);
+
+			if (!Validator.isNotNull(_pathContext) &&
+				StringUtil.contains(canonicalURL, _pathContext)) {
+
+				pos = canonicalURL.indexOf(CharPool.SLASH, pos + 1);
+			}
 
 			if ((pos > 0) && (pos < canonicalURL.length())) {
 				return canonicalURL.substring(0, pos).concat(
@@ -3166,10 +3172,14 @@ public class PortalImpl implements Portal {
 
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
+		String portletName = portletDisplay.getPortletName();
+
 		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!portletName.equals(PortletKeys.BREADCRUMB) &&
 			!portletDisplay.isFocused()) {
 
-			name += StringPool.UNDERLINE + portletDisplay.getId();
+			name = name.concat(
+				StringPool.UNDERLINE.concat(portletDisplay.getId()));
 		}
 
 		return (List<BreadcrumbEntry>)request.getAttribute(name);

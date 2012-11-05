@@ -14,8 +14,11 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.verify.VerifyException;
+
+import java.sql.Connection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,6 +45,16 @@ public class StartupHelperUtil {
 
 	public static void updateIndexes() {
 		getStartupHelper().updateIndexes();
+	}
+
+	public static void updateIndexes(boolean dropIndexes) {
+		getStartupHelper().updateIndexes(dropIndexes);
+	}
+
+	public static void updateIndexes(
+		DB db, Connection connection, boolean dropIndexes) {
+
+		getStartupHelper().updateIndexes(db, connection, dropIndexes);
 	}
 
 	public static void upgradeProcess(int buildNumber) throws UpgradeException {
