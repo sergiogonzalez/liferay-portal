@@ -185,6 +185,19 @@ public class Serializer {
 
 			return;
 		}
+		else if (serializable instanceof Class) {
+			Class<?> clazz = (Class<?>)serializable;
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			String contextName = ClassLoaderPool.getContextName(classLoader);
+
+			writeByte(SerializationConstants.TC_CLASS);
+			writeString(contextName);
+			writeString(clazz.getName());
+
+			return;
+		}
 		else if (serializable instanceof Short) {
 			writeByte(SerializationConstants.TC_SHORT);
 			writeShort((Short)serializable);
@@ -216,18 +229,12 @@ public class Serializer {
 			return;
 		}
 		else {
-			writeByte(SerializationConstants.TC_CONTEXT_NAME);
+			writeByte(SerializationConstants.TC_OBJECT);
 		}
 
-		ClassLoader classLoader = serializable.getClass().getClassLoader();
-
-		String contextName = ClassLoaderPool.getContextName(classLoader);
-
-		writeString(contextName);
-
 		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				new BufferOutputStream());
+			ObjectOutputStream objectOutputStream =
+				new AnnotatedObjectOutputStream(new BufferOutputStream());
 
 			objectOutputStream.writeObject(serializable);
 

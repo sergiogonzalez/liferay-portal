@@ -28,6 +28,24 @@
 		</java>
 	</target>
 
+	<target name="compile">
+		<copy file="src/META-INF/aui.tld" tofile="src/META-INF/liferay-aui.tld" />
+
+		<replace file="src/META-INF/liferay-aui.tld">
+			<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/aui</uri>]]></replacetoken>
+			<replacevalue><![CDATA[<uri>http://liferay.com/tld/aui</uri>]]></replacevalue>
+		</replace>
+
+		<copy file="src/META-INF/liferay-portlet.tld" tofile="src/META-INF/liferay-portlet_2_0.tld" />
+
+		<replace file="src/META-INF/liferay-portlet_2_0.tld">
+			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
+			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
+		</replace>
+
+		<antcall target="build-common-java.compile" />
+	</target>
+
 	<target name="deploy" depends="jar">
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -42,20 +60,6 @@
 	</target>
 
 	<target name="jar">
-		<copy file="src/META-INF/aui.tld" tofile="classes/META-INF/liferay-aui.tld" />
-
-		<replace file="classes/META-INF/liferay-aui.tld">
-			<replacetoken>&lt;uri&gt;http://alloy.liferay.com/tld/aui&lt;/uri&gt;</replacetoken>
-			<replacevalue>&lt;uri&gt;http://liferay.com/tld/aui&lt;/uri&gt;</replacevalue>
-		</replace>
-
-		<copy file="src/META-INF/liferay-portlet.tld" tofile="classes/META-INF/liferay-portlet_2_0.tld" />
-
-		<replace file="classes/META-INF/liferay-portlet_2_0.tld">
-			<replacetoken>&lt;uri&gt;http://java.sun.com/portlet&lt;/uri&gt;</replacetoken>
-			<replacevalue>&lt;uri&gt;http://java.sun.com/portlet_2_0&lt;/uri&gt;</replacevalue>
-		</replace>
-
 		<antcall target="build-common-java.jar" />
 
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
@@ -69,12 +73,6 @@
 		<copy todir="${project.dir}/portal-web/docroot/WEB-INF/tld">
 			<fileset dir="classes/META-INF" includes="*.tld" />
 		</copy>
-
-		<copy file="classes/META-INF/aui.tld" tofile="${project.dir}/portal-web/docroot/WEB-INF/tld/liferay-aui.tld" />
-
-		<replace file="${project.dir}/portal-web/docroot/WEB-INF/tld/liferay-aui.tld">
-			<replacefilter token="http://alloy.liferay.com/tld/aui" value="http://liferay.com/tld/aui" />
-		</replace>
 	</target>
 
 	<target name="taglibdoc">

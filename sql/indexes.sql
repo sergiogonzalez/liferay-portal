@@ -659,6 +659,7 @@ create index IX_8D83D0CE on ResourcePermission (companyId, name, scope, primKey,
 create index IX_D2E2B644 on ResourcePermission (companyId, name, scope, primKey, roleId, actionIds);
 create index IX_4A1F4402 on ResourcePermission (companyId, name, scope, primKey, roleId, ownerId, actionIds);
 create index IX_26284944 on ResourcePermission (companyId, primKey);
+create index IX_8DB864A9 on ResourcePermission (companyId, primKey, roleId);
 create index IX_A37A0588 on ResourcePermission (roleId);
 create index IX_F4555981 on ResourcePermission (scope);
 
@@ -905,6 +906,7 @@ create index IX_EA22A30C on WikiPage (nodeId, title, head, status);
 create index IX_BEA33AB8 on WikiPage (nodeId, title, status);
 create unique index IX_3D4AF476 on WikiPage (nodeId, title, version);
 create index IX_B771D67 on WikiPage (resourcePrimKey, nodeId);
+create index IX_E1F55FB on WikiPage (resourcePrimKey, nodeId, head);
 create index IX_94D1054D on WikiPage (resourcePrimKey, nodeId, status);
 create unique index IX_2CD67C81 on WikiPage (resourcePrimKey, nodeId, version);
 create index IX_FBBE7C96 on WikiPage (userId, nodeId, status);

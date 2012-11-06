@@ -14,20 +14,19 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/input_time_zone/init.jsp" %>
 
 <%
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time-zone:cssClass"));
-String name = namespace + request.getAttribute("liferay-ui:input-time-zone:name");
-String value = (String)request.getAttribute("liferay-ui:input-time-zone:value");
-boolean nullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:nullable"));
 boolean daylight = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:daylight"));
-int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time-zone:displayStyle"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:disabled"));
-
-String[] timeZones = PropsUtil.getArray(PropsKeys.TIME_ZONES);
+int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time-zone:displayStyle"));
+String name = namespace + request.getAttribute("liferay-ui:input-time-zone:name");
+boolean nullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:nullable"));
+String value = (String)request.getAttribute("liferay-ui:input-time-zone:value");
 
 NumberFormat numberFormat = NumberFormat.getInstance(locale);
+
 numberFormat.setMinimumIntegerDigits(2);
 %>
 
@@ -37,11 +36,18 @@ numberFormat.setMinimumIntegerDigits(2);
 	</c:if>
 
 	<%
-	for (int i = 0; i < timeZones.length; i++) {
-		TimeZone curTimeZone = TimeZoneUtil.getTimeZone(timeZones[i]);
+	Set<TimeZone> timeZones = new TreeSet<TimeZone>(new TimeZoneComparator(locale));
+
+	for (String timeZoneId : PropsUtil.getArray(PropsKeys.TIME_ZONES)) {
+		TimeZone curTimeZone = TimeZoneUtil.getTimeZone(timeZoneId);
+
+		timeZones.add(curTimeZone);
+	}
+
+	for (TimeZone curTimeZone : timeZones) {
+		String offset = StringPool.BLANK;
 
 		int rawOffset = curTimeZone.getRawOffset();
-		String offset = StringPool.BLANK;
 
 		if (rawOffset > 0) {
 			offset = "+";

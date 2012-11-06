@@ -27,13 +27,13 @@ public interface JSONWebServiceActionMapping {
 
 	public Method getActionMethod();
 
+	public String getContextPath();
+
 	public String getMethod();
 
 	public MethodParameter[] getMethodParameters();
 
 	public String getPath();
-
-	public String getServletContextPath();
 
 	public String getSignature();
 
