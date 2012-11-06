@@ -25,7 +25,7 @@ public class SerializationConstants {
 
 	public static final byte TC_CHARACTER = 2;
 
-	public static final byte TC_CONTEXT_NAME = 3;
+	public static final byte TC_CLASS = 3;
 
 	public static final byte TC_DOUBLE = 4;
 
@@ -37,8 +37,10 @@ public class SerializationConstants {
 
 	public static final byte TC_NULL = 8;
 
-	public static final byte TC_SHORT = 9;
+	public static final byte TC_OBJECT = 9;
 
-	public static final byte TC_STRING = 10;
+	public static final byte TC_SHORT = 10;
+
+	public static final byte TC_STRING = 11;
 
 }

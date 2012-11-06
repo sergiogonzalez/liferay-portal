@@ -14,8 +14,6 @@
 
 package com.liferay.portal.monitoring.jmx;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.monitoring.statistics.service.ServerStatistics;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 
@@ -31,32 +29,28 @@ public class ServiceManager implements ServiceManagerMBean {
 	}
 
 	public void addMonitoredMethod(
-			String className, String methodName, String[] parameterTypes)
-		throws SystemException {
+		String className, String methodName, String[] parameterTypes) {
 
 		_serviceMonitorAdvice.addMonitoredMethod(
 			className, methodName, parameterTypes);
 	}
 
 	public long getErrorCount(
-			String className, String methodName, String[] parameterTypes)
-		throws SystemException {
+		String className, String methodName, String[] parameterTypes) {
 
 		return _serverStatistics.getErrorCount(
 			className, methodName, parameterTypes);
 	}
 
 	public long getMaxTime(
-			String className, String methodName, String[] parameterTypes)
-		throws SystemException {
+		String className, String methodName, String[] parameterTypes) {
 
 		return _serverStatistics.getMaxTime(
 			className, methodName, parameterTypes);
 	}
 
 	public long getMinTime(
-			String className, String methodName, String[] parameterTypes)
-		throws SystemException {
+		String className, String methodName, String[] parameterTypes) {
 
 		return _serverStatistics.getMinTime(
 			className, methodName, parameterTypes);
@@ -66,13 +60,12 @@ public class ServiceManager implements ServiceManagerMBean {
 		return _serviceMonitorAdvice.getMonitoredClasses();
 	}
 
-	public Set<MethodKey> getMonitoredMethods() {
+	public Set<MethodSignature> getMonitoredMethods() {
 		return _serviceMonitorAdvice.getMonitoredMethods();
 	}
 
 	public long getRequestCount(
-			String className, String methodName, String[] parameterTypes)
-		throws SystemException {
+		String className, String methodName, String[] parameterTypes) {
 
 		return _serverStatistics.getRequestCount(
 			className, methodName, parameterTypes);
