@@ -30,10 +30,10 @@ public class JSONWebServiceActionConfig
 	JSONWebServiceActionMapping {
 
 	public JSONWebServiceActionConfig(
-		String servletContextPath, Class<?> actionClass, Method actionMethod,
+		String contextPath, Class<?> actionClass, Method actionMethod,
 		String path, String method) {
 
-		_servletContextPath = servletContextPath;
+		_contextPath = contextPath;
 		_actionClass = actionClass;
 		_actionMethod = actionMethod;
 		_path = path;
@@ -42,7 +42,7 @@ public class JSONWebServiceActionConfig
 		_methodParameters =
 			MethodParametersResolverUtil.resolveMethodParameters(actionMethod);
 
-		_fullPath = _servletContextPath + _path;
+		_fullPath = _contextPath + _path;
 
 		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
 
@@ -72,6 +72,10 @@ public class JSONWebServiceActionConfig
 		return _actionMethod;
 	}
 
+	public String getContextPath() {
+		return _contextPath;
+	}
+
 	public String getFullPath() {
 		return _fullPath;
 	}
@@ -88,10 +92,6 @@ public class JSONWebServiceActionConfig
 		return _path;
 	}
 
-	public String getServletContextPath() {
-		return _servletContextPath;
-	}
-
 	public String getSignature() {
 		return _signature;
 	}
@@ -104,6 +104,8 @@ public class JSONWebServiceActionConfig
 		sb.append(_actionClass);
 		sb.append(", actionMethod=");
 		sb.append(_actionMethod);
+		sb.append(", contextPath=");
+		sb.append(_contextPath);
 		sb.append(", fullPath=");
 		sb.append(_fullPath);
 		sb.append(", method=");
@@ -112,8 +114,6 @@ public class JSONWebServiceActionConfig
 		sb.append(_methodParameters);
 		sb.append(", path=");
 		sb.append(_path);
-		sb.append(", servletContextPath=");
-		sb.append(_servletContextPath);
 		sb.append(", signature=");
 		sb.append(_signature);
 		sb.append("}");
@@ -123,11 +123,11 @@ public class JSONWebServiceActionConfig
 
 	private Class<?> _actionClass;
 	private Method _actionMethod;
+	private String _contextPath;
 	private String _fullPath;
 	private String _method;
 	private MethodParameter[] _methodParameters;
 	private String _path;
-	private String _servletContextPath;
 	private String _signature;
 
 }

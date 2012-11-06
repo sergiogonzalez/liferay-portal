@@ -659,6 +659,7 @@ create index IX_8D83D0CE on ResourcePermission (companyId, name, scope, primKey,
 create index IX_D2E2B644 on ResourcePermission (companyId, name, scope, primKey, roleId, actionIds);
 create index IX_4A1F4402 on ResourcePermission (companyId, name, scope, primKey, roleId, ownerId, actionIds);
 create index IX_26284944 on ResourcePermission (companyId, primKey);
+create index IX_8DB864A9 on ResourcePermission (companyId, primKey, roleId);
 create index IX_A37A0588 on ResourcePermission (roleId);
 create index IX_F4555981 on ResourcePermission (scope);
 

@@ -64,6 +64,10 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 		User user = UserLocalServiceUtil.getUserByContactId(
 			contact.getContactId());
 
+		if (user.isDefaultUser()) {
+			return;
+		}
+
 		long ldapServerId = PortalLDAPUtil.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 
@@ -191,7 +195,7 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 			Attribute groupMembers = attributes.get(
 				groupMappings.getProperty(GroupConverterKeys.USER));
 
-			if (groupMembers.size() == 1) {
+			if ((groupMembers != null) && (groupMembers.size() == 1)) {
 				ldapContext.unbind(fullGroupDN);
 			}
 		}

@@ -3166,10 +3166,14 @@ public class PortalImpl implements Portal {
 
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
+		String portletName = portletDisplay.getPortletName();
+
 		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!portletName.equals(PortletKeys.BREADCRUMB) &&
 			!portletDisplay.isFocused()) {
 
-			name += StringPool.UNDERLINE + portletDisplay.getId();
+			name = name.concat(
+				StringPool.UNDERLINE.concat(portletDisplay.getId()));
 		}
 
 		return (List<BreadcrumbEntry>)request.getAttribute(name);
@@ -6283,8 +6287,7 @@ public class PortalImpl implements Portal {
 	private static Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<Long, String>();
 	private static MethodHandler _resetCDNHostsMethodHandler =
-		new MethodHandler(
-			new MethodKey(PortalUtil.class.getName(), "resetCDNHosts"));
+		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static Date _upTime = new Date();
 
 	private String[] _allSystemGroups;
