@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.repository.cmis;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassInvoker;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -34,7 +35,7 @@ public class CMISRepositoryUtil {
 
 		try {
 			PortalClassInvoker.invoke(
-				false, _checkRepository, repositoryId, parameters,
+				false, _checkRepositoryMethodKey, repositoryId, parameters,
 				typeSettingsProperties, typeSettingsKey);
 		}
 		catch (Exception e) {
@@ -49,7 +50,7 @@ public class CMISRepositoryUtil {
 
 		try {
 			Object returnObj = PortalClassInvoker.invoke(
-				false, _createSession, parameters);
+				false, _createSessionMethodKey, parameters);
 
 			if (returnObj != null) {
 				session = (Session)returnObj;
@@ -72,7 +73,7 @@ public class CMISRepositoryUtil {
 
 		try {
 			Object returnObj = PortalClassInvoker.invoke(
-				false, _getTypeSettingsValue, typeSettingsProperties,
+				false, _getTypeSettingsValueMethodKey, typeSettingsProperties,
 				typeSettingsKey);
 
 			if (returnObj != null) {
@@ -91,15 +92,15 @@ public class CMISRepositoryUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(CMISRepositoryUtil.class);
 
-	private static MethodKey _checkRepository = new MethodKey(
-		_CLASS_NAME, "checkRepository", long.class, Map.class,
-		UnicodeProperties.class, String.class);
-
-	private static MethodKey _createSession = new MethodKey(
-		_CLASS_NAME, "createSession", Map.class);
-
-	private static MethodKey _getTypeSettingsValue = new MethodKey(
-		_CLASS_NAME, "getTypeSettingsValue", UnicodeProperties.class,
+	private static MethodKey _checkRepositoryMethodKey = new MethodKey(
+		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
+		"checkRepository", long.class, Map.class, UnicodeProperties.class,
 		String.class);
+	private static MethodKey _createSessionMethodKey = new MethodKey(
+		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
+		"createSession", Map.class);
+	private static MethodKey _getTypeSettingsValueMethodKey = new MethodKey(
+		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
+		"getTypeSettingsValue", UnicodeProperties.class, String.class);
 
 }

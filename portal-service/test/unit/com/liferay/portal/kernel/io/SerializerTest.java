@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.io.Serializer.BufferQueue;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -585,6 +587,31 @@ public class SerializerTest {
 	}
 
 	@Test
+	public void testWriteObjectClass() throws UnsupportedEncodingException {
+		Serializer serializer = new Serializer();
+
+		Class<?> clazz = getClass();
+
+		serializer.writeObject(clazz);
+
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+		String className = clazz.getName();
+
+		Assert.assertEquals(className.length() + 11, byteBuffer.limit());
+		Assert.assertEquals(SerializationConstants.TC_CLASS, byteBuffer.get());
+		Assert.assertEquals(1, byteBuffer.get());
+		Assert.assertEquals(0, byteBuffer.getInt());
+		Assert.assertEquals(1, byteBuffer.get());
+		Assert.assertEquals(className.length(), byteBuffer.getInt());
+		Assert.assertEquals(
+			className,
+			new String(
+				byteBuffer.array(), byteBuffer.position(),
+				byteBuffer.remaining(), StringPool.UTF8));
+	}
+
+	@Test
 	public void testWriteObjectDouble() {
 		Serializer serializer = new Serializer();
 
@@ -659,11 +686,14 @@ public class SerializerTest {
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
+		Assert.assertEquals(SerializationConstants.TC_OBJECT, byteBuffer.get());
+
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(
-				byteBuffer.array(), 6, byteBuffer.remaining());
+				byteBuffer.array(), byteBuffer.position(),
+				byteBuffer.remaining());
 
-		ObjectInputStream objectInputStream = new ObjectInputStream(
+		ObjectInputStream objectInputStream = new AnnotatedObjectInputStream(
 			unsyncByteArrayInputStream);
 
 		Object object = objectInputStream.readObject();

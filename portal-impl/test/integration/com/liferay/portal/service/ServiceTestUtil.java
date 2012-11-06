@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -49,6 +51,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
@@ -231,20 +234,32 @@ public class ServiceTestUtil {
 	}
 
 	public static SearchContext getSearchContext() throws Exception {
+		return getSearchContext(TestPropsValues.getGroupId());
+	}
+
+	public static SearchContext getSearchContext(long groupId)
+		throws Exception {
+
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
-		searchContext.setGroupIds(new long[] {TestPropsValues.getGroupId()});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setUserId(TestPropsValues.getUserId());
 
 		return searchContext;
 	}
 
 	public static ServiceContext getServiceContext() throws Exception {
+		return getServiceContext(TestPropsValues.getGroupId());
+	}
+
+	public static ServiceContext getServiceContext(long groupId)
+		throws Exception {
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
+		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(TestPropsValues.getUserId());
 
 		return serviceContext;
@@ -284,6 +299,15 @@ public class ServiceTestUtil {
 
 		try {
 			JCRFactoryUtil.prepare();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// Template manager
+
+		try {
+			TemplateManagerUtil.init();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -341,6 +365,10 @@ public class ServiceTestUtil {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		// Class names
+
+		_checkClassNames();
 
 		// Resource actions
 
@@ -425,6 +453,10 @@ public class ServiceTestUtil {
 
 	public static String randomString() throws Exception {
 		return PwdGenerator.getPassword();
+	}
+
+	private static void _checkClassNames() {
+		PortalUtil.getClassNameId(LiferayRepository.class.getName());
 	}
 
 	private static void _checkResourceActions() throws Exception {
