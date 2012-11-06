@@ -329,7 +329,8 @@ public class Validator {
 
 		Arrays.sort(longArray2);
 
-		return Arrays.equals(longArray1, longArray2); }
+		return Arrays.equals(longArray1, longArray2);
+	}
 
 	/**
 	 * Returns <code>true</code> if the object arrays are equal.
@@ -348,7 +349,8 @@ public class Validator {
 
 		Arrays.sort(objArray2);
 
-		return Arrays.equals(objArray1, objArray2); }
+		return Arrays.equals(objArray1, objArray2);
+	}
 
 	/**
 	 * Returns <code>true</code> if the short arrays are equal.

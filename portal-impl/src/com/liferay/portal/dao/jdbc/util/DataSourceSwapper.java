@@ -211,20 +211,19 @@ public class DataSourceSwapper {
 		for (PortletSessionFactoryImpl portletSessionFactoryImpl :
 				portletSessionFactoryImpls) {
 
-			ClassLoader oldPortletClassLoader =
-				PortletClassLoaderUtil.getClassLoader();
-
-			ClassLoader portletClassLoader =
-				portletSessionFactoryImpl.getSessionFactoryClassLoader();
-
-			PortletClassLoaderUtil.setClassLoader(portletClassLoader);
-
+			ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
 			ClassLoader contextClassLoader =
 				PACLClassLoaderUtil.getContextClassLoader();
 
-			PACLClassLoaderUtil.setContextClassLoader(portletClassLoader);
-
 			try {
+				ClassLoader sessionFactoryClassLoader =
+					portletSessionFactoryImpl.getSessionFactoryClassLoader();
+
+				PortletClassLoaderUtil.setClassLoader(
+					sessionFactoryClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(
+					sessionFactoryClassLoader);
+
 				PortletHibernateConfiguration portletHibernateConfiguration =
 					new PortletHibernateConfiguration();
 
@@ -240,8 +239,7 @@ public class DataSourceSwapper {
 					sessionFactoryImplementor);
 			}
 			finally {
-				PortletClassLoaderUtil.setClassLoader(oldPortletClassLoader);
-
+				PortletClassLoaderUtil.setClassLoader(classLoader);
 				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}

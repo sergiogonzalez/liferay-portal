@@ -1672,6 +1672,11 @@
 			<finder-column name="name" />
 			<finder-column name="scope" />
 		</finder>
+		<finder name="C_P_R" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="primKey" />
+			<finder-column name="roleId" />
+		</finder>
 		<finder name="C_N_S_P" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
@@ -2137,6 +2142,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="UserGroupGroupRole" local-service="true" remote-service="true">
 
@@ -2519,6 +2528,7 @@
 		<exception>CountryNumber</exception>
 		<exception>DuplicateGroup</exception>
 		<exception>DuplicateLock</exception>
+		<exception>DuplicateOpenId</exception>
 		<exception>DuplicateOrganization</exception>
 		<exception>DuplicatePasswordPolicy</exception>
 		<exception>DuplicateRole</exception>

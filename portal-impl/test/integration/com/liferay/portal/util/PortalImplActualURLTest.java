@@ -59,7 +59,8 @@ public class PortalImplActualURLTest {
 
 		UserGroup userGroup = UserGroupLocalServiceUtil.addUserGroup(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			"Test " + ServiceTestUtil.nextInt(), StringPool.BLANK);
+			"Test " + ServiceTestUtil.nextInt(), StringPool.BLANK,
+			serviceContext);
 
 		Group group = userGroup.getGroup();
 

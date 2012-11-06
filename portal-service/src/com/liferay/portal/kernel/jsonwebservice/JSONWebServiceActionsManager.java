@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Igor Spasic
  */
 public interface JSONWebServiceActionsManager {
+
+	public Set<String> getContextPaths();
 
 	public JSONWebServiceAction getJSONWebServiceAction(
 		HttpServletRequest request);

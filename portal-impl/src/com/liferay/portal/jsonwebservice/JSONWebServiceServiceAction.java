@@ -19,13 +19,21 @@ import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceConfigurator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ServiceLoader;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.List;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,20 +42,31 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Igor Spasic
+ * @author Raymond Augé
  */
 public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 	public JSONWebServiceServiceAction(
-		String servletContextPath, ClassLoader classLoader) {
+		ServletContext servletContext, ClassLoader classLoader) {
 
-		_jsonWebServiceConfigurator = new JSONWebServiceConfigurator(
-			servletContextPath);
+		String contextPath = ContextPathUtil.getContextPath(servletContext);
+
+		if ((classLoader == null) &&
+			contextPath.equals(PortalUtil.getPathContext())) {
+
+			classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		}
+
+		_jsonWebServiceConfigurator = getJSONWebServiceConfigurator(
+			classLoader);
+
+		_jsonWebServiceConfigurator.init(servletContext, classLoader);
 
 		_jsonWebServiceConfigurator.clean();
 
 		if (PropsValues.JSON_WEB_SERVICE_ENABLED) {
 			try {
-				_jsonWebServiceConfigurator.configure(classLoader);
+				_jsonWebServiceConfigurator.configure();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -109,6 +128,31 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 			return JSONFactoryUtil.serializeException(e);
 		}
+	}
+
+	protected JSONWebServiceConfigurator getJSONWebServiceConfigurator(
+		ClassLoader classLoader) {
+
+		JSONWebServiceConfigurator jsonWebServiceConfigurator = null;
+
+		try {
+			List<JSONWebServiceConfigurator> jsonWebServiceConfigurators =
+				ServiceLoader.load(
+					classLoader, JSONWebServiceConfigurator.class);
+
+			if (!jsonWebServiceConfigurators.isEmpty()) {
+				jsonWebServiceConfigurator = jsonWebServiceConfigurators.get(0);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (jsonWebServiceConfigurator == null) {
+			jsonWebServiceConfigurator = new JSONWebServiceConfiguratorImpl();
+		}
+
+		return jsonWebServiceConfigurator;
 	}
 
 	@Override

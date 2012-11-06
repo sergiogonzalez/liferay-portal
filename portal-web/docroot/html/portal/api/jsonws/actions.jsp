@@ -18,7 +18,28 @@
 
 <%
 String signature = ParamUtil.getString(request, "signature");
+
+Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 %>
+
+<c:if test="<%= contextPaths.size() > 1 %>">
+	<aui:select cssClass="lfr-api-context" label="context-path" name="contextPath">
+
+		<%
+		for (String curContextPath : contextPaths) {
+			if (Validator.isNull(curContextPath)) {
+				curContextPath = StringPool.SLASH;
+			}
+		%>
+
+			<aui:option label="<%= curContextPath %>" selected="<%= contextPath.equals(curContextPath) %>" value="<%= curContextPath %>" />
+
+		<%
+		}
+		%>
+
+	</aui:select>
+</c:if>
 
 <aui:input cssClass="lfr-api-service-search" label="" name="serviceSearch" placeholder="search" />
 
@@ -68,7 +89,12 @@ String signature = ParamUtil.getString(request, "signature");
 				%>
 
 					<li class="lfr-api-signature <%= (serviceSignature.equals(signature)) ? "selected" : StringPool.BLANK %>">
-						<a class="method-name lfr-api-service-result" data-metaData="<%= jsonWebServiceClassName %>" href="?signature=<%= serviceSignature %>">
+
+						<%
+						String methodURL = HttpUtil.addParameter(jsonWSContextPath, "signature", serviceSignature);
+						%>
+
+						<a class="method-name lfr-api-service-result" data-metaData="<%= jsonWebServiceClassName %>" href="<%= methodURL %>">
 							<%= path %>
 						</a>
 					</li>
@@ -94,6 +120,21 @@ String signature = ParamUtil.getString(request, "signature");
 	var Lang = A.Lang;
 
 	var AArray = A.Array;
+
+	A.one('#<portlet:namespace />contextPath').on(
+		'change',
+		function(event){
+			var contextPath = event.currentTarget.val();
+
+			var location = '<%= jsonWSPath %>';
+
+			if (contextPath && (contextPath != '/')) {
+				location = Liferay.Util.addParams('contextPath=' + contextPath, location);
+			}
+
+			window.location.href = location;
+		}
+	);
 
 	var ServiceFilter = A.Component.create(
 		{
