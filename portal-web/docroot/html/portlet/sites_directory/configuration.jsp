@@ -32,13 +32,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<aui:select name="preferences--sites--">
 
 					<%
-						for (String sitesSelectionOption : selectionOptions.keySet()) {
+					for (String sitesSelectionOption : selectionOptions.keySet()) {
 					%>
 
-					<aui:option label="<%= sitesSelectionOption %>" selected="<%= sitesSelection.equals(sitesSelectionOption) %>" />
+						<aui:option label="<%= sitesSelectionOption %>" selected="<%= sitesSelection.equals(sitesSelectionOption) %>" />
 
 					<%
-						}
+					}
 					%>
 
 				</aui:select>

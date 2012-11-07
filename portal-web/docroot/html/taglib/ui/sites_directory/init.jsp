@@ -18,7 +18,7 @@
 
 <%
 String displayStyle = (String)request.getAttribute("liferay-ui:sites-directory:displayStyle");
-int level = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:sites-directory:level"), 0);
+int level = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:sites-directory:level"));
 String levelType = (String)request.getAttribute("liferay-ui:sites-directory:levelType");
 
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
