@@ -121,6 +121,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 	var AArray = A.Array;
 
+ 	<c:if test="<%= contextPaths.size() > 1 %>">
 	A.one('#<portlet:namespace />contextPath').on(
 		'change',
 		function(event){
@@ -135,6 +136,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 			window.location.href = location;
 		}
 	);
+ 	</c:if>
 
 	var ServiceFilter = A.Component.create(
 		{
