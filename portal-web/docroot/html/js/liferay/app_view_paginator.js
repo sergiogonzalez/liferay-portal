@@ -156,7 +156,11 @@ AUI.add(
 								prevPageLinkLabel: '&lt;',
 								rowsPerPage: entryRowsPerPage,
 								rowsPerPageOptions: instance.get('entryRowsPerPageOptions'),
-								total: entriesTotal
+								total: entriesTotal,
+								TPL: {
+									pageReportLabel: '({page} ' + Liferay.Language.get('of') + ' {totalPages})',
+									totalLabel: '(' + Liferay.Language.get('total') + ' {total})'
+								}
 							}
 						).render();
 
