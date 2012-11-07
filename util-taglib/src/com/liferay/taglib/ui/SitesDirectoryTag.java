@@ -31,7 +31,7 @@ public class SitesDirectoryTag extends IncludeTag {
 		_level = level;
 	}
 
-	public void setRootGroupType(String levelType) {
+	public void setLevelType(String levelType) {
 		_levelType = levelType;
 	}
 
