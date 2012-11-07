@@ -32,7 +32,7 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
-String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "icon");
+String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "descriptive");
 String sitesSelection = PrefsParamUtil.getString(preferences, renderRequest, "sites", "top-level");
 
 String[] sitesSelectionDefinition = StringUtil.split(selectionOptions.get(sitesSelection));

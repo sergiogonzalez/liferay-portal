@@ -38,7 +38,7 @@ public class SitesDirectoryTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_displayStyle = "descriptive";
-		_level = 1;
+		_level = 0;
 		_levelType = "absolute";
 	}
 
@@ -61,7 +61,7 @@ public class SitesDirectoryTag extends IncludeTag {
 		"/html/taglib/ui/sites_directory/page.jsp";
 
 	private String _displayStyle = "descriptive";
-	private int _level = 1;
+	private int _level = 0;
 	private String _levelType = "absolute";
 
 }
