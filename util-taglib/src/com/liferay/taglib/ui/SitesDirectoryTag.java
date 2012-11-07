@@ -23,43 +23,23 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SitesDirectoryTag extends IncludeTag {
 
-	public void setBulletStyle(String bulletStyle) {
-		_bulletStyle = bulletStyle;
-	}
-
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
 
-	public void setHeaderType(String headerType) {
-		_headerType = headerType;
+	public void setLevel(int level) {
+		_level = level;
 	}
 
-	public void setIncludedGroups(String includedGroups) {
-		_includedGroups = includedGroups;
-	}
-
-	public void setNestedChildren(boolean nestedChildren) {
-		_nestedChildren = nestedChildren;
-	}
-
-	public void setRootGroupLevel(int rootGroupLevel) {
-		_rootGroupLevel = rootGroupLevel;
-	}
-
-	public void setRootGroupType(String rootGroupType) {
-		_rootGroupType = rootGroupType;
+	public void setRootGroupType(String levelType) {
+		_levelType = levelType;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_bulletStyle = "1";
 		_displayStyle = "descriptive";
-		_headerType = "none";
-		_includedGroups = "auto";
-		_nestedChildren = true;
-		_rootGroupLevel = 1;
-		_rootGroupType = "absolute";
+		_level = 1;
+		_levelType = "absolute";
 	}
 
 	@Override
@@ -70,32 +50,18 @@ public class SitesDirectoryTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:sites-directory:bulletStyle", _bulletStyle);
-		request.setAttribute(
 			"liferay-ui:sites-directory:displayStyle", _displayStyle);
 		request.setAttribute(
-			"liferay-ui:sites-directory:headerType", _headerType);
+			"liferay-ui:sites-directory:level", String.valueOf(_level));
 		request.setAttribute(
-			"liferay-ui:sites-directory:includedGroups", _includedGroups);
-		request.setAttribute(
-			"liferay-ui:sites-directory:nestedChildren",
-			String.valueOf(_nestedChildren));
-		request.setAttribute(
-			"liferay-ui:sites-directory:rootGroupLevel",
-			String.valueOf(_rootGroupLevel));
-		request.setAttribute(
-			"liferay-ui:sites-directory:rootGroupType", _rootGroupType);
+			"liferay-ui:sites-directory:levelType", _levelType);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/sites_directory/page.jsp";
 
-	private String _bulletStyle = "1";
 	private String _displayStyle = "descriptive";
-	private String _headerType = "none";
-	private String _includedGroups = "auto";
-	private boolean _nestedChildren = true;
-	private int _rootGroupLevel = 1;
-	private String _rootGroupType = "absolute";
+	private int _level = 1;
+	private String _levelType = "absolute";
 
 }
