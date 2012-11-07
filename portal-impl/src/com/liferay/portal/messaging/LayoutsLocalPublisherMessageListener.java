@@ -107,7 +107,7 @@ public class LayoutsLocalPublisherMessageListener
 				settingsProperties.getProperty("last-publish-date"));
 
 			if (lastPublishDate > 0) {
-				endDate = new Date(System.currentTimeMillis());
+				endDate = new Date();
 
 				startDate = new Date(lastPublishDate);
 			}
