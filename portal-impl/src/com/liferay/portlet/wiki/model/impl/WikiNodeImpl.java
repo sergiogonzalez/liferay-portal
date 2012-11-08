@@ -17,7 +17,7 @@ package com.liferay.portlet.wiki.model.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -32,26 +32,19 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 	public WikiNodeImpl() {
 	}
 
-	public List<Tuple> getDeletedAttachmentsFiles()
+	public List<FileEntry> getDeletedAttachmentsFiles()
 		throws PortalException, SystemException {
 
 		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
-			getNodeId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			getNodeId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<Tuple> deletedNodeAttachments = new ArrayList<Tuple>();
+		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
 
 		for (WikiPage wikiPage : wikiPages) {
-			String[] deletedPageAttachments =
-				wikiPage.getDeletedAttachmentsFiles();
-
-			for (String deletedPageAttachment : deletedPageAttachments) {
-				deletedNodeAttachments.add(
-					new Tuple(
-						wikiPage.getResourcePrimKey(), deletedPageAttachment));
-			}
+			fileEntries.addAll(wikiPage.getDeletedAttachmentsFileEntries());
 		}
 
-		return deletedNodeAttachments;
+		return fileEntries;
 	}
 
 }

@@ -20,10 +20,10 @@
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
-String[] attachments = new String[0];
+List<FileEntry> attachmentsFileEntries = null;
 
 if (wikiPage != null) {
-	attachments = wikiPage.getAttachmentsFiles();
+	attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
 }
 
 int numOfVersions = WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle());
@@ -106,7 +106,7 @@ int count = 0;
 		<liferay-ui:message key="attachments" />
 	</th>
 	<td>
-		<%= attachments.length %>
+		<%= (attachmentsFileEntries != null) ? attachmentsFileEntries.size() : 0 %>
 	</td>
 </tr>
 

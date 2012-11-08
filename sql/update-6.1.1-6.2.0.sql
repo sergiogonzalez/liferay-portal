@@ -339,6 +339,12 @@ create table TrashVersion (
 	status INTEGER
 );
 
+alter table User_ add ldapServerId LONG;
+
+COMMIT_TRANSACTION;
+
+update User_ set ldapServerId = -1;
+
 drop table Users_Permissions;
 
 alter table WikiNode add status INTEGER;

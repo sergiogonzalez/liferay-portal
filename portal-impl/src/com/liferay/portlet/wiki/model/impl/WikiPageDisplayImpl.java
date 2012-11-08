@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portlet.wiki.model.WikiPageDisplay;
+
+import java.util.List;
 
 /**
  * @author Jorge Ferrer
@@ -24,7 +27,7 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 	public WikiPageDisplayImpl(
 		long userId, long nodeId, String title, double version, String content,
 		String formattedContent, String format, boolean head,
-		String[] attachments) {
+		List<FileEntry> attachmentsFileEntries) {
 
 		_userId = userId;
 		_nodeId = nodeId;
@@ -34,11 +37,11 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 		_formattedContent = formattedContent;
 		_format = format;
 		_head = head;
-		_attachments = attachments;
+		_attachmentsFileEntries = attachmentsFileEntries;
 	}
 
-	public String[] getAttachments() {
-		return _attachments;
+	public List<FileEntry> getAttachmentsFileEntries() {
+		return _attachmentsFileEntries;
 	}
 
 	public String getContent() {
@@ -77,8 +80,10 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 		return _head;
 	}
 
-	public void setAttachments(String[] attachments) {
-		_attachments = attachments;
+	public void setAttachmentsFileEntries(
+		List<FileEntry> attachmentsFileEntries) {
+
+		_attachmentsFileEntries = attachmentsFileEntries;
 	}
 
 	public void setContent(String content) {
@@ -113,7 +118,7 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 		_version = version;
 	}
 
-	private String[] _attachments;
+	private List<FileEntry> _attachmentsFileEntries;
 	private String _content;
 	private String _format;
 	private String _formattedContent;

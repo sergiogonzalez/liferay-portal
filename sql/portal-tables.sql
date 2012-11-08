@@ -2035,6 +2035,7 @@ create table User_ (
 	screenName VARCHAR(75) null,
 	emailAddress VARCHAR(75) null,
 	facebookId LONG,
+	ldapServerId LONG,
 	openId VARCHAR(1024) null,
 	portraitId LONG,
 	languageId VARCHAR(75) null,

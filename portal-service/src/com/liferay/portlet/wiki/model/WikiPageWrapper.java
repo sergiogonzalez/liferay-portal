@@ -867,28 +867,38 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		_wikiPage.persist();
 	}
 
-	public java.lang.String getAttachmentsDir() {
-		return _wikiPage.getAttachmentsDir();
-	}
-
-	public java.lang.String[] getAttachmentsFiles()
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _wikiPage.getAttachmentsFiles();
+		return _wikiPage.getAttachmentsFileEntries();
+	}
+
+	public int getAttachmentsFilesCount()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.getAttachmentsFilesCount();
+	}
+
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.getAttachmentsFolderId();
 	}
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildPages() {
 		return _wikiPage.getChildPages();
 	}
 
-	public java.lang.String getDeletedAttachmentsDir() {
-		return _wikiPage.getDeletedAttachmentsDir();
-	}
-
-	public java.lang.String[] getDeletedAttachmentsFiles()
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _wikiPage.getDeletedAttachmentsFiles();
+		return _wikiPage.getDeletedAttachmentsFileEntries();
+	}
+
+	public int getDeletedAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.getDeletedAttachmentsFileEntriesCount();
 	}
 
 	public com.liferay.portlet.wiki.model.WikiNode getNode() {
@@ -911,12 +921,8 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.isInTrashFolder();
 	}
 
-	public void setAttachmentsDir(java.lang.String attachmentsDir) {
-		_wikiPage.setAttachmentsDir(attachmentsDir);
-	}
-
-	public void setDeletedAttachmentsDir(java.lang.String deletedAttachmentsDir) {
-		_wikiPage.setDeletedAttachmentsDir(deletedAttachmentsDir);
+	public void setAttachmentsFolderId(long attachmentsFolderId) {
+		_wikiPage.setAttachmentsFolderId(attachmentsFolderId);
 	}
 
 	/**

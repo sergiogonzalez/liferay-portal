@@ -129,10 +129,10 @@ public class BaseDDMServiceTestCase {
 		throws Exception {
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			classNameId, classPK, templateKey, getDefaultLocaleMap(name), null,
-			type, mode, language, script, cacheable, smallImage, smallImageURL,
-			smallFile, ServiceTestUtil.getServiceContext());
+			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+			classPK, templateKey, getDefaultLocaleMap(name), null, type, mode,
+			language, script, cacheable, smallImage, smallImageURL, smallFile,
+			ServiceTestUtil.getServiceContext());
 	}
 
 	protected Map<Locale, String> getDefaultLocaleMap(String defaultValue) {

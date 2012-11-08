@@ -14,11 +14,10 @@
 
 package com.liferay.portlet.wiki.engines.mediawiki.matchers;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CallbackMatcher;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.regex.MatchResult;
@@ -54,14 +53,10 @@ public class DirectURLMatcher extends CallbackMatcher {
 			String url = _attachmentURLPrefix + HttpUtil.encodeURL(fileName);
 
 			try {
-				String[] attachments = _page.getAttachmentsFiles();
-
-				String link =
-					StringPool.SLASH + _page.getAttachmentsDir() +
-						StringPool.SLASH + fileName;
-
-				if (!ArrayUtil.contains(attachments, link)) {
-					return null;
+				for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {
+					if (fileName.equals(fileEntry.getTitle())) {
+						return null;
+					}
 				}
 			}
 			catch (Exception e) {

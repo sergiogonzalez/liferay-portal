@@ -22,7 +22,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiAttachmentProvider;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -63,12 +63,10 @@ public class LiferayAttachmentProvider implements WikiAttachmentProvider {
 			wikiPage = WikiPageLocalServiceUtil.getPage(
 				_nodeId, page.getName());
 
-			String[] attachments = wikiPage.getAttachmentsFiles();
+			for (FileEntry fileEntry : wikiPage.getAttachmentsFileEntries()) {
+				String title = fileEntry.getTitle();
 
-			for (int i = 0; i < attachments.length; i++) {
-				String fileName = FileUtil.getShortFileName(attachments[i]);
-
-				if (fileName.equals(name)) {
+				if (title.equals(name)) {
 					return new Attachment(_engine, page.getName(), name);
 				}
 			}

@@ -36,7 +36,7 @@ import java.util.Date;
 public class UserCacheModel implements CacheModel<User>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(81);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -74,6 +74,8 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		sb.append(emailAddress);
 		sb.append(", facebookId=");
 		sb.append(facebookId);
+		sb.append(", ldapServerId=");
+		sb.append(ldapServerId);
 		sb.append(", openId=");
 		sb.append(openId);
 		sb.append(", portraitId=");
@@ -206,6 +208,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		}
 
 		userImpl.setFacebookId(facebookId);
+		userImpl.setLdapServerId(ldapServerId);
 
 		if (openId == null) {
 			userImpl.setOpenId(StringPool.BLANK);
@@ -345,6 +348,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		screenName = objectInput.readUTF();
 		emailAddress = objectInput.readUTF();
 		facebookId = objectInput.readLong();
+		ldapServerId = objectInput.readLong();
 		openId = objectInput.readUTF();
 		portraitId = objectInput.readLong();
 		languageId = objectInput.readUTF();
@@ -433,6 +437,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		}
 
 		objectOutput.writeLong(facebookId);
+		objectOutput.writeLong(ldapServerId);
 
 		if (openId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -544,6 +549,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 	public String screenName;
 	public String emailAddress;
 	public long facebookId;
+	public long ldapServerId;
 	public String openId;
 	public long portraitId;
 	public String languageId;

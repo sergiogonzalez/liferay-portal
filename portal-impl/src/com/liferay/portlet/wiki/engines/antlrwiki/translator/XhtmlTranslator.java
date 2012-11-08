@@ -16,7 +16,7 @@ package com.liferay.portlet.wiki.engines.antlrwiki.translator;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -275,23 +275,16 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	protected String searchLinkInAttachments(LinkNode linkNode) {
-		String[] attachments = null;
-
 		try {
-			attachments = _page.getAttachmentsFiles();
+			for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {
+				String title = fileEntry.getTitle();
+
+				if (title.equals(linkNode.getLink())) {
+					return title;
+				}
+			}
 		}
 		catch (Exception e) {
-			return null;
-		}
-
-		String link =
-			StringPool.SLASH + _page.getAttachmentsDir() + StringPool.SLASH +
-				linkNode.getLink();
-
-		if (ArrayUtil.contains(attachments, link)) {
-			int pos = link.lastIndexOf(StringPool.SLASH);
-
-			return link.substring(pos + 1);
 		}
 
 		return null;
