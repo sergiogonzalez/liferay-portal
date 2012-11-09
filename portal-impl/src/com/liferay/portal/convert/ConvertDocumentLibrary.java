@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -155,12 +156,12 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 	}
 
 	protected void migrateDLFileEntry(
-			long companyId, long repositoryId, DLFileEntry fileEntry)
+			long companyId, long repositoryId, DLFileEntry dlFileEntry)
 		throws SystemException {
 
-		String fileName = fileEntry.getName();
+		String fileName = dlFileEntry.getName();
 
-		List<DLFileVersion> dlFileVersions = getDLFileVersions(fileEntry);
+		List<DLFileVersion> dlFileVersions = getDLFileVersions(dlFileEntry);
 
 		if (dlFileVersions.isEmpty()) {
 			String versionNumber = Store.VERSION_DEFAULT;
@@ -297,9 +298,15 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 
 				WikiPage wikiPage = (WikiPage)object;
 
-				migrateFiles(
-					wikiPage.getCompanyId(), wikiPage.getAttachmentsDir(),
-					wikiPage.getAttachmentsFiles());
+				for (FileEntry fileEntry :
+						wikiPage.getAttachmentsFileEntries()) {
+
+					DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+					migrateDLFileEntry(
+						wikiPage.getCompanyId(), dlFileEntry.getRepositoryId(),
+						dlFileEntry);
+				}
 			}
 
 		};

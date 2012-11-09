@@ -1761,14 +1761,9 @@ public class StagingImpl implements Staging {
 				settingsProperties.getProperty("last-publish-date"));
 
 			if (lastPublishDate > 0) {
-				Calendar cal = Calendar.getInstance(
-					themeDisplay.getTimeZone(), themeDisplay.getLocale());
+				endDate = new Date();
 
-				endDate = cal.getTime();
-
-				cal.setTimeInMillis(lastPublishDate);
-
-				startDate = cal.getTime();
+				startDate = new Date(lastPublishDate);
 			}
 		}
 		else if (range.equals("last")) {
@@ -1971,14 +1966,9 @@ public class StagingImpl implements Staging {
 				layoutTypeSettingsProperties.getProperty("last-publish-date"));
 
 			if (lastPublishDate > 0) {
-				Calendar cal = Calendar.getInstance(
-					themeDisplay.getTimeZone(), themeDisplay.getLocale());
+				endDate = new Date();
 
-				endDate = cal.getTime();
-
-				cal.setTimeInMillis(lastPublishDate);
-
-				startDate = cal.getTime();
+				startDate = new Date(lastPublishDate);
 			}
 		}
 		else if (range.equals("last")) {

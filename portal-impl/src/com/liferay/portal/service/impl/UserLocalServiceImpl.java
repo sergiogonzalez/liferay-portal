@@ -787,6 +787,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
 		user.setFacebookId(facebookId);
+
+		Long ldapServerId = (Long)serviceContext.getAttribute("ldapServerId");
+
+		if (ldapServerId != null) {
+			user.setLdapServerId(ldapServerId);
+		}
+		else {
+			user.setLdapServerId(-1);
+		}
+
 		user.setOpenId(openId);
 		user.setLanguageId(locale.toString());
 		user.setTimeZoneId(defaultUser.getTimeZoneId());
@@ -4853,6 +4863,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setFacebookId(facebookId);
+
+		Long ldapServerId = (Long)serviceContext.getAttribute("ldapServerId");
+
+		if (ldapServerId != null) {
+			user.setLdapServerId(ldapServerId);
+		}
+
 		user.setOpenId(openId);
 		user.setLanguageId(languageId);
 		user.setTimeZoneId(timeZoneId);

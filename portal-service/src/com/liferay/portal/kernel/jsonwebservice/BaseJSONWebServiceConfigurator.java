@@ -286,6 +286,12 @@ public abstract class BaseJSONWebServiceConfigurator
 				continue;
 			}
 
+			if ((_excludedMethodNames != null) &&
+				_excludedMethodNames.contains(method.getName())) {
+
+				continue;
+			}
+
 			boolean registerMethod = false;
 
 			JSONWebService methodJSONWebService = method.getAnnotation(
@@ -356,6 +362,9 @@ public abstract class BaseJSONWebServiceConfigurator
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseJSONWebServiceConfigurator.class);
+
+	private static Set<String> _excludedMethodNames = SetUtil.fromArray(
+		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
 
 	private ClassLoader _classLoader;
 	private String _contextPath;

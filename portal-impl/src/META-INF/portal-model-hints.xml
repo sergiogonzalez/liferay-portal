@@ -830,6 +830,7 @@
 			<validator name="email" />
 		</field>
 		<field name="facebookId" type="long" />
+		<field name="ldapServerId" type="long" />
 		<field name="openId" type="String">
 			<hint name="max-length">1024</hint>
 			<hint name="display-width">400</hint>

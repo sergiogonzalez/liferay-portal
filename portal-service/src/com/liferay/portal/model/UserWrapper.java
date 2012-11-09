@@ -61,6 +61,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("screenName", getScreenName());
 		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("facebookId", getFacebookId());
+		attributes.put("ldapServerId", getLdapServerId());
 		attributes.put("openId", getOpenId());
 		attributes.put("portraitId", getPortraitId());
 		attributes.put("languageId", getLanguageId());
@@ -195,6 +196,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (facebookId != null) {
 			setFacebookId(facebookId);
+		}
+
+		Long ldapServerId = (Long)attributes.get("ldapServerId");
+
+		if (ldapServerId != null) {
+			setLdapServerId(ldapServerId);
 		}
 
 		String openId = (String)attributes.get("openId");
@@ -714,6 +721,24 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	*/
 	public void setFacebookId(long facebookId) {
 		_user.setFacebookId(facebookId);
+	}
+
+	/**
+	* Returns the ldap server ID of this user.
+	*
+	* @return the ldap server ID of this user
+	*/
+	public long getLdapServerId() {
+		return _user.getLdapServerId();
+	}
+
+	/**
+	* Sets the ldap server ID of this user.
+	*
+	* @param ldapServerId the ldap server ID of this user
+	*/
+	public void setLdapServerId(long ldapServerId) {
+		_user.setLdapServerId(ldapServerId);
 	}
 
 	/**

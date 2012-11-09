@@ -167,10 +167,15 @@ public class AssetCategoryLocalServiceImpl
 	public void deleteCategory(AssetCategory category)
 		throws PortalException, SystemException {
 
-		// Entries
+		// Categories
 
-		List<AssetEntry> entries = assetTagPersistence.getAssetEntries(
-			category.getCategoryId());
+		List<AssetCategory> categories =
+			assetCategoryPersistence.findByParentCategoryId(
+				category.getCategoryId());
+
+		for (AssetCategory curCategory : categories) {
+			deleteCategory(curCategory.getCategoryId());
+		}
 
 		// Category
 
@@ -182,15 +187,10 @@ public class AssetCategoryLocalServiceImpl
 			category.getCompanyId(), AssetCategory.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, category.getCategoryId());
 
-		// Categories
+		// Entries
 
-		List<AssetCategory> categories =
-			assetCategoryPersistence.findByParentCategoryId(
-				category.getCategoryId());
-
-		for (AssetCategory curCategory : categories) {
-			deleteCategory(curCategory);
-		}
+		List<AssetEntry> entries = assetTagPersistence.getAssetEntries(
+			category.getCategoryId());
 
 		// Properties
 
@@ -218,7 +218,11 @@ public class AssetCategoryLocalServiceImpl
 			assetCategoryPersistence.findByVocabularyId(vocabularyId);
 
 		for (AssetCategory category : categories) {
-			deleteCategory(category);
+			if (category.getParentCategoryId() ==
+					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+				deleteCategory(category.getCategoryId());
+			}
 		}
 	}
 

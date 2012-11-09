@@ -17,11 +17,10 @@ package com.liferay.portal.portletfilerepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 import java.io.File;
 import java.io.InputStream;
@@ -65,14 +64,14 @@ public interface PortletFileRepository {
 			long groupId, long folderId, String fileName)
 		throws PortalException, SystemException;
 
-	public List<DLFileEntry> getPortletFileEntries(long groupId, long folderId)
+	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException;
 
-	public List<DLFileEntry> getPortletFileEntries(
+	public List<FileEntry> getPortletFileEntries(
 			long groupId, long folderId, int status)
 		throws SystemException;
 
-	public List<DLFileEntry> getPortletFileEntries(
+	public List<FileEntry> getPortletFileEntries(
 			long groupId, long folderId, int status, int start, int end,
 			OrderByComparator obc)
 		throws SystemException;
@@ -84,17 +83,17 @@ public interface PortletFileRepository {
 			long groupId, long folderId, int status)
 		throws SystemException;
 
-	public DLFileEntry getPortletFileEntry(long fileEntryId)
+	public FileEntry getPortletFileEntry(long fileEntryId)
 		throws PortalException, SystemException;
 
-	public DLFileEntry getPortletFileEntry(
+	public FileEntry getPortletFileEntry(
 			long groupId, long folderId, String fileName)
 		throws PortalException, SystemException;
 
-	public DLFolder getPortletFolder(long folderId)
+	public Folder getPortletFolder(long folderId)
 		throws PortalException, SystemException;
 
-	public DLFolder getPortletFolder(
+	public Folder getPortletFolder(
 			long userId, long repositoryId, long parentFolderId,
 			String folderName, ServiceContext serviceContext)
 		throws PortalException, SystemException;

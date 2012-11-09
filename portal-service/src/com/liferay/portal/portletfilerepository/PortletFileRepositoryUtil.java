@@ -17,12 +17,11 @@ package com.liferay.portal.portletfilerepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 import java.io.File;
 import java.io.InputStream;
@@ -95,7 +94,7 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId, fileName);
 	}
 
-	public static List<DLFileEntry> getPortletFileEntries(
+	public static List<FileEntry> getPortletFileEntries(
 			long groupId, long folderId)
 		throws SystemException {
 
@@ -103,7 +102,7 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId);
 	}
 
-	public static List<DLFileEntry> getPortletFileEntries(
+	public static List<FileEntry> getPortletFileEntries(
 			long groupId, long folderId, int status)
 		throws SystemException {
 
@@ -111,7 +110,7 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId, status);
 	}
 
-	public static List<DLFileEntry> getPortletFileEntries(
+	public static List<FileEntry> getPortletFileEntries(
 			long groupId, long folderId, int status, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
@@ -135,13 +134,13 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId, status);
 	}
 
-	public static DLFileEntry getPortletFileEntry(long fileEntryId)
+	public static FileEntry getPortletFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().getPortletFileEntry(fileEntryId);
 	}
 
-	public static DLFileEntry getPortletFileEntry(
+	public static FileEntry getPortletFileEntry(
 			long groupId, long folderId, String fileName)
 		throws PortalException, SystemException {
 
@@ -156,13 +155,13 @@ public class PortletFileRepositoryUtil {
 		return _portletFileRepository;
 	}
 
-	public static DLFolder getPortletFolder(long folderId)
+	public static Folder getPortletFolder(long folderId)
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().getPortletFolder(folderId);
 	}
 
-	public static DLFolder getPortletFolder(
+	public static Folder getPortletFolder(
 			long userId, long repositoryId, long parentFolderId,
 			String folderName, ServiceContext serviceContext)
 		throws PortalException, SystemException {

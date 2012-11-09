@@ -44,8 +44,6 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 String format = BeanParamUtil.getString(wikiPage, request, "format", WikiPageConstants.DEFAULT_FORMAT);
 String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
-String[] attachments = new String[0];
-
 boolean preview = ParamUtil.getBoolean(request, "preview");
 
 boolean newPage = ParamUtil.getBoolean(request, "newPage");
@@ -56,8 +54,10 @@ if (wikiPage == null) {
 
 boolean editable = false;
 
+List<FileEntry> attachmentsFileEntries = null;
+
 if (wikiPage != null) {
-	attachments = wikiPage.getAttachmentsFiles();
+	attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
 
 	if (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
 		editable = true;
@@ -95,15 +95,15 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 		templatePage = WikiPageServiceUtil.getPage(templateNodeId, templateTitle);
 
 		if (Validator.isNull(parentTitle)) {
-			parentTitle = templatePage.getParentTitle();
+	parentTitle = templatePage.getParentTitle();
 
-			if (wikiPage.isNew()) {
-				format = templatePage.getFormat();
+	if (wikiPage.isNew()) {
+		format = templatePage.getFormat();
 
-				wikiPage.setContent(templatePage.getContent());
-				wikiPage.setFormat(format);
-				wikiPage.setParentTitle(parentTitle);
-			}
+		wikiPage.setContent(templatePage.getContent());
+		wikiPage.setFormat(format);
+		wikiPage.setParentTitle(parentTitle);
+	}
 		}
 	}
 	catch (Exception e) {
@@ -284,23 +284,22 @@ if (Validator.isNull(redirect)) {
 			</c:if>
 
 			<aui:fieldset>
-				<c:if test="<%= attachments.length > 0 %>">
+				<c:if test="<%= (attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty() %>">
 					<aui:field-wrapper label="attachments">
 
 						<%
-						for (int i = 0; i < attachments.length; i++) {
-							String fileName = FileUtil.getShortFileName(attachments[i]);
-							long fileSize = DLStoreUtil.getFileSize(company.getCompanyId(), CompanyConstants.SYSTEM, attachments[i]);
+						for (int i = 0; i < attachmentsFileEntries.size(); i++) {
+							FileEntry attachmentsFileEntry = attachmentsFileEntries.get(i);
 						%>
 
 							<portlet:actionURL var="getPageAttachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 								<portlet:param name="struts_action" value="/wiki/get_page_attachment" />
 								<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 								<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-								<portlet:param name="fileName" value="<%= fileName %>" />
+								<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
 							</portlet:actionURL>
 
-							<aui:a href="<%= getPageAttachmentURL %>"><%= fileName %></aui:a> (<%=TextFormatter.formatStorageSize(fileSize, locale) %>)<%= (i < (attachments.length - 1)) ? ", " : "" %>
+							<aui:a href="<%= getPageAttachmentURL %>"><%= attachmentsFileEntry.getTitle() %></aui:a> (<%= TextFormatter.formatStorageSize(attachmentsFileEntry.getSize(), locale) %>)<%= (i < (attachmentsFileEntries.size() - 1)) ? ", " : "" %>
 
 						<%
 						}

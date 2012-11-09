@@ -239,6 +239,11 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.wiki.model.WikiPageResource fetchPageResource(
+		long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.wiki.model.WikiPageResource getPageResource(
 		long pageResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

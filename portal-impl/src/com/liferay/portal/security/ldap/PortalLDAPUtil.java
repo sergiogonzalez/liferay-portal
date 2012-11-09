@@ -279,6 +279,18 @@ public class PortalLDAPUtil {
 			long companyId, String screenName, String emailAddress)
 		throws Exception {
 
+		long preferredLDAPServerId = LDAPSettingsUtil.getPreferredLDAPServerId(
+			companyId, screenName);
+
+		if (preferredLDAPServerId >= 0) {
+			if (hasUser(
+					preferredLDAPServerId, companyId, screenName,
+					emailAddress)) {
+
+				return preferredLDAPServerId;
+			}
+		}
+
 		long[] ldapServerIds = StringUtil.split(
 			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
 
