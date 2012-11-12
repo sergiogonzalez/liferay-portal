@@ -121,7 +121,8 @@ public class ViewAction extends PortletAction {
 		}
 
 		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-			themeDisplay.getScopeGroup(), false, themeDisplay);
+			themeDisplay.getScopeGroup(), layout.isPrivateLayout(),
+			themeDisplay);
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 			if (groupFriendlyURL.equals(friendlyURL)) {
@@ -138,7 +139,8 @@ public class ViewAction extends PortletAction {
 		else {
 			if (groupFriendlyURL.equals(friendlyURL)) {
 				redirect = PortalUtil.getGroupFriendlyURL(
-					themeDisplay.getScopeGroup(), false, themeDisplay, locale);
+					themeDisplay.getScopeGroup(), layout.isPrivateLayout(),
+					themeDisplay, locale);
 			}
 			else {
 				redirect = PortalUtil.getLayoutFriendlyURL(
