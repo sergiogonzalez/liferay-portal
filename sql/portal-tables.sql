@@ -2196,7 +2196,7 @@ create table WikiNode (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(75) null,
+	name VARCHAR(255) null,
 	description STRING null,
 	lastPostDate DATE null,
 	status INTEGER,
