@@ -82,7 +82,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table WikiNode (uuid_ VARCHAR(75) null,nodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPostDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table WikiNode (uuid_ VARCHAR(75) null,nodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table WikiNode";
 	public static final String ORDER_BY_JPQL = " ORDER BY wikiNode.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WikiNode.name ASC";
