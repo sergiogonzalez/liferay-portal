@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelHintsConstants;
+import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -395,6 +397,14 @@ public class WikiUtil {
 		return orderByComparator;
 	}
 
+	public static int getPageTitleMaxLength() {
+		String value = ModelHintsUtil.getValue(
+				WikiPage.class.getName(), "title", "max-length",
+				ModelHintsConstants.TEXT_MAX_LENGTH);
+
+		return GetterUtil.getInteger(value) - _RESERVED_TRASH_TIMESTAMP_SPACE;
+	}
+
 	public static List<WikiNode> orderNodes(
 		List<WikiNode> nodes, String[] visibleNodeNames) {
 
@@ -615,6 +625,10 @@ public class WikiUtil {
 
 		return _getEngine(format).validate(nodeId, content);
 	}
+
+	// The space reserved to add the Trash Timestamp to the title
+
+	private static final int _RESERVED_TRASH_TIMESTAMP_SPACE = 20;
 
 	private static WikiUtil _instance = new WikiUtil();
 

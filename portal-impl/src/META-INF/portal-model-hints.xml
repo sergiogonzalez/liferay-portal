@@ -2577,6 +2577,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+			<validator name="maxLength">235</validator>
 			<validator name="required" />
 		</field>
 		<field name="description" type="String">
@@ -2602,6 +2604,7 @@
 		<field name="title" type="String">
 			<hint name="max-length">255</hint>
 			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="maxLength">235</validator>
 			<validator name="required" />
 		</field>
 		<field name="version" type="double" />
