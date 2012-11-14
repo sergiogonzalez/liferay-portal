@@ -17,6 +17,13 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%
+Map<String, String> selectionOptions = new HashMap<String, String>();
+
+selectionOptions.put("top-level", "absolute,0");
+selectionOptions.put("children", "relative,0");
+selectionOptions.put("siblings", "relative,1");
+selectionOptions.put("parent-level", "relative,2");
+
 PortletPreferences preferences = renderRequest.getPreferences();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
@@ -25,13 +32,13 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
-String bulletStyle = PrefsParamUtil.getString(preferences, renderRequest, "bulletStyle", GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots"));
-String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", PropsValues.SITES_DIRECTORY_DISPLAY_STYLE_DEFAULT);
-String headerType = PrefsParamUtil.getString(preferences, renderRequest, "headerType", "none");
-String includedGroups = PrefsParamUtil.getString(preferences, renderRequest, "includedGroups", "current");
-int rootGroupLevel = PrefsParamUtil.getInteger(preferences, renderRequest, "rootGroupLevel", 1);
-String rootGroupType = PrefsParamUtil.getString(preferences, renderRequest, "rootGroupType", "absolute");
-boolean nestedChildren = PrefsParamUtil.getBoolean(preferences, renderRequest, "nestedChildren", true);
+String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "descriptive");
+String sitesSelection = PrefsParamUtil.getString(preferences, renderRequest, "sites", "top-level");
+
+String[] sitesSelectionDefinition = StringUtil.split(selectionOptions.get(sitesSelection));
+
+int level = GetterUtil.getInteger(sitesSelectionDefinition[1]);
+String levelType = sitesSelectionDefinition[0];
 %>
 
 <%@ include file="/html/portlet/sites_directory/init-ext.jsp" %>
