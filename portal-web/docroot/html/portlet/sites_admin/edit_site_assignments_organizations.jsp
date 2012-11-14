@@ -77,6 +77,7 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 	if (tabs1.equals("summary") || tabs2.equals("current")) {
+		organizationParams.put("groupOrganization", new Long(group.getGroupId()));
 		organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
 	}
 	%>
@@ -191,21 +192,6 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 			<div class="separator"><!-- --></div>
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
-
-			<%
-			Organization groupOrganization = null;
-
-			if (group.isOrganization()) {
-				groupOrganization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
-			}
-			%>
-
-			<c:if test='<%= tabs2.equals("current") && (groupOrganization != null) %>'>
-				<div class="organizations-msg-info portlet-msg">
-					<liferay-ui:message arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(pageContext, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" />
-				</div>
-			</c:if>
-
 			<c:if test="<%= total > organizationSearch.getDelta() %>">
 				<%= formButton %>
 			</c:if>
