@@ -1451,6 +1451,12 @@ public class PortalUtil {
 		return getPortal().isLayoutFriendliable(type);
 	}
 
+	public static boolean isLayoutFriendlyURL(
+		String friendlyURL, Layout layout) {
+
+		return getPortal().isLayoutFriendlyURL(friendlyURL, layout);
+	}
+
 	public static boolean isLayoutParentable(Layout layout) {
 		return getPortal().isLayoutParentable(layout);
 	}

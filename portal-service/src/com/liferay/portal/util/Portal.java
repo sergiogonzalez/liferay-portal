@@ -1090,6 +1090,8 @@ public interface Portal {
 
 	public boolean isLayoutFriendliable(String type);
 
+	public boolean isLayoutFriendlyURL(String friendlyURL, Layout layout);
+
 	public boolean isLayoutParentable(Layout layout);
 
 	public boolean isLayoutParentable(String type);

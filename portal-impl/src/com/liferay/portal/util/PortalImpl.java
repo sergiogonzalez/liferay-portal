@@ -4990,6 +4990,29 @@ public class PortalImpl implements Portal {
 		return layoutSettings.isURLFriendliable();
 	}
 
+	public boolean isLayoutFriendlyURL(String friendlyURL, Layout layout) {
+		if (Validator.isNull(friendlyURL) || (layout == null)) {
+			return true;
+		}
+
+		try {
+			String groupFriendlyURL = layout.getGroup().getFriendlyURL();
+			String groupLayoutFriendlyURL = groupFriendlyURL.concat(
+				layout.getFriendlyURL());
+
+			if (friendlyURL.endsWith(groupFriendlyURL) &&
+				!friendlyURL.endsWith(groupLayoutFriendlyURL)) {
+
+				return false;
+			}
+
+			return true;
+		}
+		catch (Exception e) {
+			return true;
+		}
+	}
+
 	public boolean isLayoutParentable(Layout layout) {
 		return isLayoutParentable(layout.getType());
 	}
