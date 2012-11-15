@@ -539,6 +539,15 @@ public class PortalUtil {
 			group, privateLayoutSet, themeDisplay);
 	}
 
+	public static String getGroupFriendlyURL(
+			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
+			Locale locale)
+		throws PortalException, SystemException {
+
+		return getPortal().getGroupFriendlyURL(
+			group, privateLayoutSet, themeDisplay, locale);
+	}
+
 	public static String[] getGroupPermissions(HttpServletRequest request) {
 		return getPortal().getGroupPermissions(request);
 	}
@@ -1440,6 +1449,12 @@ public class PortalUtil {
 
 	public static boolean isLayoutFriendliable(String type) {
 		return getPortal().isLayoutFriendliable(type);
+	}
+
+	public static boolean isLayoutFriendlyURL(
+		String friendlyURL, Layout layout) {
+
+		return getPortal().isLayoutFriendlyURL(friendlyURL, layout);
 	}
 
 	public static boolean isLayoutParentable(Layout layout) {
