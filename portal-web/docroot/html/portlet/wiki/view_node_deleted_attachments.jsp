@@ -126,7 +126,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 		{
 			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/wiki/restore_page_attachment" /></portlet:actionURL>',
 			namespace: '<portlet:namespace />',
-			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/wiki/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="restoryEntryURL" value="<%= restoreEntryURL %>" /></portlet:renderURL>'
+			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/wiki/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="restoryEntryURL" value="<%= restoreEntryURL %>" /><portlet:param name="overrideLabel" value="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin" /><portlet:param name="renameLabel" value="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as" /></portlet:renderURL>'
 		}
 	);
 </aui:script>
