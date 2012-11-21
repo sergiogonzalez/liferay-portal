@@ -211,16 +211,29 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 </liferay-ui:search-container>
 
 <aui:script use="liferay-restore-entry">
+	<portlet:actionURL var="checkEntryURL">
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />
+		<portlet:param name="struts_action" value="/wiki/restore_page_attachment" />
+	</portlet:actionURL>
+
 	<portlet:actionURL var="restoreEntryURL">
 		<portlet:param name="struts_action" value="/wiki/restore_page_attachment" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 	</portlet:actionURL>
 
+	<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="restoreEntryRenderURL">
+		<portlet:param name="struts_action" value="/wiki/restore_entry" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="overrideLabel" value="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin" />
+		<portlet:param name="restoreEntryURL" value="<%= restoreEntryURL %>" />
+		<portlet:param name="renameLabel" value="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as" />
+	</portlet:renderURL>
+
 	new Liferay.RestoreEntry(
 		{
-			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/wiki/restore_page_attachment" /></portlet:actionURL>',
+			checkEntryURL: '<%= checkEntryURL %>',
 			namespace: '<portlet:namespace />',
-			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/wiki/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="restoreEntryURL" value="<%= restoreEntryURL %>" /><portlet:param name="overrideLabel" value="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin" /><portlet:param name="renameLabel" value="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as" /></portlet:renderURL>'
+			restoreEntryURL: '<%= restoreEntryRenderURL %>'
 		}
 	);
 </aui:script>
