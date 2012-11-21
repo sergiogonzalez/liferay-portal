@@ -20,48 +20,34 @@
 
 	<%
 		Group rootGroup = null;
-		boolean hidden = false;
 
 		List<Group> branchGroups = new ArrayList<Group>();
+		List<Group> visibleGroups = new UniqueList<Group>();
 
 		branchGroups.add(group);
 		branchGroups.addAll(group.getAncestors());
 
-		if (sites.equals(SitesDirectoryTag.SITES_TOP_LEVEL)) {
-			rootGroup = null;
+		if (sites.equals(SitesDirectoryTag.SITES_TOP_LEVEL) || (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && (branchGroups.size() ==1))) {
+			visibleGroups= SitesUtil.createVisibleGroups(rootGroup,group, user);
 		}
 		else if (sites.equals(SitesDirectoryTag.SITES_CHILDREN) && (branchGroups.size() > 0)) {
-			rootGroup = branchGroups.get(0);
+			rootGroup= branchGroups.get(0);
+			visibleGroups= SitesUtil.createVisibleGroups(rootGroup,group, user);
 		}
 		else if (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && (branchGroups.size() > 1)) {
-			rootGroup = branchGroups.get(1);
+			rootGroup= branchGroups.get(1);
+			visibleGroups= SitesUtil.createVisibleGroups(rootGroup,group, user);
 		}
 		else if (sites.equals(SitesDirectoryTag.SITES_PARENT) && (branchGroups.size() > 2)) {
-			rootGroup = branchGroups.get(2);
+			rootGroup= branchGroups.get(2);
+			visibleGroups= SitesUtil.createVisibleGroups(rootGroup,group, user);
 		}
-		else {
-			hidden = true;
-		}
+		else if (sites.equals(SitesDirectoryTag.SITES_PARENT) && (branchGroups.size() ==2)) {
+			Group parentGroup= group.getParentGroup();
 
-		List<Group> visibleGroups = new UniqueList<Group>();
-
-		if (!hidden) {
-			List<Group> childGroups = null;
-
-			if (rootGroup != null) {
-				childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			}
-			else {
-				childGroups = GroupLocalServiceUtil.getLayoutsGroups(group.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			}
-
-			for (Group childGroup : childGroups) {
-				if (childGroup.hasPublicLayouts()) {
-					visibleGroups.add(childGroup);
-				}
-				else if (GroupLocalServiceUtil.hasUserGroup(user.getUserId(), childGroup.getGroupId())) {
-					visibleGroups.add(childGroup);
-				}
+			if (parentGroup.hasPublicLayouts()){
+				visibleGroups.clear();
+				visibleGroups.add(parentGroup);
 			}
 		}
 	%>
@@ -153,6 +139,7 @@
 </c:if>
 
 <%!
+
 	private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branchGroups, ThemeDisplay themeDisplay, int groupLevel, boolean showHierarchy, boolean nestedChildren, StringBundler sb) throws Exception {
 		List<Group> childGroups = null;
 
