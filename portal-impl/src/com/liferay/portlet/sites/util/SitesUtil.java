@@ -95,6 +95,7 @@ import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -375,6 +376,31 @@ public class SitesUtil {
 
 		GroupServiceUtil.updateGroup(
 			targetGroup.getGroupId(), sourceGroup.getTypeSettings());
+	}
+
+	public static List<Group> createVisibleGroups(
+		Group rootGroup, Group group, User user) throws Exception {
+
+		List<Group> childGroups = null;
+		List<Group> visibleGroups= new ArrayList<Group>();
+
+		if (rootGroup != null) {
+			childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+		else {
+			childGroups = GroupLocalServiceUtil.getLayoutsGroups(group.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		for (Group childGroup : childGroups) {
+			if (childGroup.hasPublicLayouts()) {
+				visibleGroups.add(childGroup);
+			}
+			else if (GroupLocalServiceUtil.hasUserGroup(user.getUserId(), childGroup.getGroupId())) {
+				visibleGroups.add(childGroup);
+			}
+		}
+
+		return visibleGroups;
 	}
 
 	public static Object[] deleteLayout(
