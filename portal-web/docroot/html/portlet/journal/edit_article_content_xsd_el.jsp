@@ -189,12 +189,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						</span>
 
 						<div class="journal-image-preview aui-helper-hidden">
-
-							<%
-							String journalImageContentInputName = "journalImageContent_" + elName + elRepeatCount;
-							%>
-
-							<aui:input name="<%= HtmlUtil.escapeAttribute(journalImageContentInputName) %>" type="hidden" value="<%= elContent %>" />
+							<aui:input name="journalImageContent" type="hidden" value="<%= elContent %>" />
 
 							<aui:input name="journalImageDelete" type="hidden" value="" />
 
