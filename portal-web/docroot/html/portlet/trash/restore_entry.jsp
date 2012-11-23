@@ -25,6 +25,16 @@ String trashEntryId = ParamUtil.getString(request, "trashEntryId");
 
 String duplicateEntryId = ParamUtil.getString(request, "duplicateEntryId");
 String oldName = ParamUtil.getString(request, "oldName");
+
+String overrideLabelMessage= (String)request.getAttribute("overrideLabelMessage");
+String renameLabelMessage= (String)request.getAttribute("overrideLabelMessage");
+
+if(overrideLabelMessage!=null && overrideLabelMessage.length()>0){
+	String overrideLabel= "overwrite-the-existing-entry-with-the-one-from-the-recycle-bin";
+}
+if(renameLabelMessage!=null && renameLabelMessage.length()>0 ){
+	String renameLabel= "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as";
+}
 %>
 
 <div class="portlet-msg-alert" id="<portlet:namespace />messageContainer">
@@ -43,11 +53,11 @@ String oldName = ParamUtil.getString(request, "oldName");
 	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
 
 	<aui:fieldset>
-		<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+		<aui:input checked="<%= true %>" id="override" label="<%= overrideLabelMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
-		<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+		<aui:input id="rename" label="<%= renameLabelMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
 
-		<aui:input cssClass="new-file-name" label="" name="newName" title="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" value="<%= TrashUtil.getNewName(themeDisplay, oldName) %>" />
+		<aui:input cssClass="new-file-name" label="" name="newName" title="<%= renameLabelMessage %>" value="<%= TrashUtil.getNewName(themeDisplay, oldName) %>" />
 	</aui:fieldset>
 
 	<aui:button-row>
