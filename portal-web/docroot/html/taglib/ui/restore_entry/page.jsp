@@ -21,6 +21,13 @@ String currentURL= (String)request.getAttribute("liferay-ui:restore-entry:curren
 
 String overrideLabelMessage= (String)request.getAttribute("liferay-ui:restore-entry:overrideLabelMessage");
 String renameLabelMessage= (String)request.getAttribute("liferay-ui:restore-entry:renameLabelMessage");
+
+if (overrideLabelMessage==null || overrideLabelMessage.length()==0){
+	overrideLabelMessage= "overwrite-the-existing-entry-with-the-one-from-the-recycle-bin";
+}
+if (renameLabelMessage==null || renameLabelMessage.length()==0){
+	renameLabelMessage= "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as";
+}
 %>
 
 <aui:script use="liferay-restore-entry">
