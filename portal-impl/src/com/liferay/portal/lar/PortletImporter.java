@@ -489,7 +489,7 @@ public class PortletImporter {
 	 */
 	protected String getAssetCategoryName(
 			String uuid, long groupId, long parentCategoryId, String name,
-			int count)
+			long vocabularyId, int count)
 		throws Exception {
 
 		AssetCategory assetCategory = null;
@@ -506,10 +506,17 @@ public class PortletImporter {
 			return name;
 		}
 
+		if ((parentCategoryId ==
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
+			(assetCategory.getVocabularyId() != vocabularyId)) {
+
+			return name;
+		}
+
 		name = StringUtil.appendParentheticalSuffix(name, count);
 
 		return getAssetCategoryName(
-			uuid, groupId, parentCategoryId, name, ++count);
+			uuid, groupId, parentCategoryId, name, vocabularyId, ++count);
 	}
 
 	protected String getAssetCategoryPath(
@@ -686,7 +693,8 @@ public class PortletImporter {
 			if (existingAssetCategory == null) {
 				String name = getAssetCategoryName(
 					null, portletDataContext.getGroupId(),
-					parentAssetCategoryId, assetCategory.getName(), 2);
+					parentAssetCategoryId, assetCategory.getName(),
+					assetCategory.getVocabularyId(), 2);
 
 				serviceContext.setUuid(assetCategory.getUuid());
 
@@ -721,7 +729,8 @@ public class PortletImporter {
 			else {
 				String name = getAssetCategoryName(
 					assetCategory.getUuid(), assetCategory.getGroupId(),
-					parentAssetCategoryId, assetCategory.getName(), 2);
+					parentAssetCategoryId, assetCategory.getName(),
+					assetCategory.getVocabularyId(), 2);
 
 				boolean updateAssetCategory = true;
 
