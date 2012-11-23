@@ -26,15 +26,8 @@ String trashEntryId = ParamUtil.getString(request, "trashEntryId");
 String duplicateEntryId = ParamUtil.getString(request, "duplicateEntryId");
 String oldName = ParamUtil.getString(request, "oldName");
 
-String overrideLabelMessage= (String)request.getAttribute("overrideLabelMessage");
-String renameLabelMessage= (String)request.getAttribute("overrideLabelMessage");
-
-if(overrideLabelMessage!=null && overrideLabelMessage.length()>0){
-	String overrideLabel= "overwrite-the-existing-entry-with-the-one-from-the-recycle-bin";
-}
-if(renameLabelMessage!=null && renameLabelMessage.length()>0 ){
-	String renameLabel= "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as";
-}
+String overrideLabelMessage= ParamUtil.getString(request, "overrideLabelMessage", "overwrite-the-existing-entry-with-the-one-from-the-recycle-bin");
+String renameLabelMessage= ParamUtil.getString(request, "renameLabelMessage", "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as");
 %>
 
 <div class="portlet-msg-alert" id="<portlet:namespace />messageContainer">

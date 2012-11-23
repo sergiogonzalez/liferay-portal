@@ -13,11 +13,11 @@ public class RestoreEntryTag extends IncludeTag {
 		_currentURL= currentURL;
 	}
 
-	public void setOverrideLabelMessage(String overrideLabelMessage){
+	public void setOverrideLabelMessage(String overrideLabelMessage) {
 		_overrideLabelMessage= overrideLabelMessage;
 	}
 
-	public void setRenameLabelMessage(String renameLabelMessage){
+	public void setRenameLabelMessage(String renameLabelMessage) {
 		_renameLabelMessage= renameLabelMessage;
 	}
 
@@ -36,8 +36,7 @@ public class RestoreEntryTag extends IncludeTag {
 			"liferay-ui:restore-entry:overrideLabelMessage",
 			_overrideLabelMessage);
 		request.setAttribute(
-			"liferay-ui:restore-entry:renameLabelMessage",
-			_renameLabelMessage);
+			"liferay-ui:restore-entry:renameLabelMessage", _renameLabelMessage);
 	}
 
 	private static final String _PAGE =

@@ -209,5 +209,4 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
-
-<liferay-ui:restore-entry currentURL="<%= currentURL %>" overrideLabelMessage="HOLA" renameLabelMessage="ADIOS"/>
+<liferay-ui:restore-entry currentURL="<%= currentURL %>" overrideLabelMessage="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin" renameLabelMessage="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as" />
