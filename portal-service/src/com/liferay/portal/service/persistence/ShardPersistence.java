@@ -36,6 +36,124 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	 */
 
 	/**
+	* Returns the shard where name = &#63; or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
+	*
+	* @param name the name
+	* @return the matching shard
+	* @throws com.liferay.portal.NoSuchShardException if a matching shard could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Shard findByName(java.lang.String name)
+		throws com.liferay.portal.NoSuchShardException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the shard where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param name the name
+	* @return the matching shard, or <code>null</code> if a matching shard could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Shard fetchByName(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the shard where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching shard, or <code>null</code> if a matching shard could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Shard fetchByName(java.lang.String name,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the shard where name = &#63; from the database.
+	*
+	* @param name the name
+	* @return the shard that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Shard removeByName(java.lang.String name)
+		throws com.liferay.portal.NoSuchShardException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of shards where name = &#63;.
+	*
+	* @param name the name
+	* @return the number of matching shards
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByName(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the shard where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching shard
+	* @throws com.liferay.portal.NoSuchShardException if a matching shard could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Shard findByC_C(long classNameId,
+		long classPK)
+		throws com.liferay.portal.NoSuchShardException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the shard where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching shard, or <code>null</code> if a matching shard could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Shard fetchByC_C(long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the shard where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching shard, or <code>null</code> if a matching shard could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Shard fetchByC_C(long classNameId,
+		long classPK, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the shard where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the shard that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Shard removeByC_C(long classNameId,
+		long classPK)
+		throws com.liferay.portal.NoSuchShardException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of shards where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching shards
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the shard in the entity cache if it is enabled.
 	*
 	* @param shard the shard
@@ -97,79 +215,6 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the shard where name = &#63; or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
-	*
-	* @param name the name
-	* @return the matching shard
-	* @throws com.liferay.portal.NoSuchShardException if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Shard findByName(java.lang.String name)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the shard where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param name the name
-	* @return the matching shard, or <code>null</code> if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Shard fetchByName(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the shard where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param name the name
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching shard, or <code>null</code> if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Shard fetchByName(java.lang.String name,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the shard where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching shard
-	* @throws com.liferay.portal.NoSuchShardException if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Shard findByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the shard where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching shard, or <code>null</code> if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Shard fetchByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the shard where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching shard, or <code>null</code> if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Shard fetchByC_C(long classNameId,
-		long classPK, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the shards.
 	*
 	* @return the shards
@@ -182,7 +227,7 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* Returns a range of all the shards.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ShardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shards
@@ -197,7 +242,7 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* Returns an ordered range of all the shards.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ShardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shards
@@ -212,56 +257,11 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the shard where name = &#63; from the database.
-	*
-	* @param name the name
-	* @return the shard that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Shard removeByName(java.lang.String name)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the shard where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the shard that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Shard removeByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the shards from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of shards where name = &#63;.
-	*
-	* @param name the name
-	* @return the number of matching shards
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByName(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of shards where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching shards
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
