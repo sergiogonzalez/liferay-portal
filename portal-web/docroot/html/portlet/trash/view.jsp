@@ -272,7 +272,6 @@ portletURL.setParameter("tabs1", tabs1);
 </liferay-ui:search-container>
 
 <liferay-ui:restore-entry currentURL="<%= currentURL %>" />
-
 <%
 if (Validator.isNotNull(keywords)) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);

@@ -18,34 +18,34 @@
 
 <div class="asset-content">
 
-	<%
-	String redirect = ParamUtil.getString(request, "redirect");
+<%
+String redirect = ParamUtil.getString(request, "redirect");
 
-	long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
+long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
 
-	String className = ParamUtil.getString(request, "className");
-	long classPK = ParamUtil.getLong(request, "classPK");
+String className = ParamUtil.getString(request, "className");
+long classPK = ParamUtil.getLong(request, "classPK");
 
-	TrashEntry entry = null;
+TrashEntry entry = null;
 
-	if (trashEntryId > 0) {
-		entry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
-	}
-	else if (Validator.isNotNull(className) && (classPK > 0)) {
-		entry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
-	}
+if (trashEntryId > 0) {
+	entry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
+}
+else if (Validator.isNotNull(className) && (classPK > 0)) {
+	entry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
+}
 
-	if (entry != null) {
-		className = entry.getClassName();
-		classPK = entry.getClassPK();
-	}
+if (entry != null) {
+	className = entry.getClassName();
+	classPK = entry.getClassPK();
+}
 
-	TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
+TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 
-	TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
+TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
-	String path = trashRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_FULL_CONTENT);
-	%>
+String path = trashRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_FULL_CONTENT);
+%>
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
