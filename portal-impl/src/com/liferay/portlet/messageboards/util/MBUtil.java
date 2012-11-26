@@ -254,14 +254,14 @@ public class MBUtil {
 
 		List<MBCategory> categories = mbCategory.getAncestors();
 
+		Collections.reverse(categories);
+
 		StringBundler sb = new StringBundler((categories.size() * 3) + 6);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
 
-		for (int i = categories.size() - 1; i >= 0; i--) {
-			MBCategory curCategory = categories.get(i);
-
+		for (MBCategory curCategory : categories) {
 			sb.append(StringPool.RAQUO);
 			sb.append(StringPool.SPACE);
 			sb.append(curCategory.getName());

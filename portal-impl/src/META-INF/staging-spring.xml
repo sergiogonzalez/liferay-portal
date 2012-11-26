@@ -8,6 +8,21 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
+	<bean id="com.liferay.portal.kernel.staging.LayoutStagingUtil" class="com.liferay.portal.kernel.staging.LayoutStagingUtil">
+		<property name="layoutStaging">
+			<bean class="com.liferay.portal.staging.LayoutStagingImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.staging.StagingUtil" class="com.liferay.portal.kernel.staging.StagingUtil">
+		<property name="staging">
+			<bean class="com.liferay.portal.staging.StagingImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.staging.permission.StagingPermissionUtil" class="com.liferay.portal.kernel.staging.permission.StagingPermissionUtil">
+		<property name="stagingPermission">
+			<bean class="com.liferay.portal.staging.permission.StagingPermissionImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" />

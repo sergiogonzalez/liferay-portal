@@ -468,9 +468,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		if (group.isCompany()) {
 			role = getRole(group.getCompanyId(), RoleConstants.USER);
 		}
-		else if (group.isControlPanel() || group.isLayoutPrototype() ||
-				 group.isLayoutSetPrototype() || group.isRegularSite() ||
-				 group.isSite()) {
+		else if (group.isLayoutPrototype() || group.isLayoutSetPrototype() ||
+				 group.isRegularSite() || group.isSite()) {
 
 			role = getRole(group.getCompanyId(), RoleConstants.SITE_MEMBER);
 		}
@@ -1289,7 +1288,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			setRolePermissions(
 				role, portletId,
 				new String[] {
-					ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW
+					ActionKeys.ACCESS_IN_CONTROL_PANEL
 				});
 		}
 	}
