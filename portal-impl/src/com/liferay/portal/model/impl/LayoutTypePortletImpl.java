@@ -1590,7 +1590,7 @@ public class LayoutTypePortletImpl
 		Layout layout = getLayout();
 
 		if (layout.isTypeControlPanel()) {
-			return true;
+			return false;
 		}
 
 		if (!strict &&

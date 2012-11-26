@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.myaccount;
+package com.liferay.portal.kernel.lar;
 
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.BaseControlPanelEntry;
+import java.util.List;
 
 /**
- * @author Jorge Ferrer
+ * @author Mate Thurzo
  */
-public class MyAccountControlPanelEntry extends BaseControlPanelEntry {
+public interface StagedModelDataHandlerRegistry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
+	public StagedModelDataHandler<?> getStagedModelDataHandler(
+		String className);
 
-		return false;
-	}
+	public List<StagedModelDataHandler<?>> getStagedModelDataHandlers();
+
+	public void register(StagedModelDataHandler<?> stagedModelDataHandler);
+
+	public void unregister(StagedModelDataHandler<?> stagedModelDataHandler);
 
 }

@@ -5739,10 +5739,6 @@ public class PortalImpl implements Portal {
 			boolean portletActions)
 		throws PortalException, SystemException {
 
-		if ((layout != null) && layout.isTypeControlPanel()) {
-			groupId = layout.getGroupId();
-		}
-
 		String rootPortletId = portlet.getRootPortletId();
 
 		String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
@@ -5870,7 +5866,7 @@ public class PortalImpl implements Portal {
 						DefaultControlPanelEntryFactory.getInstance();
 				}
 
-				if (!controlPanelEntry.isVisible(
+				if (!controlPanelEntry.hasPermission(
 						portlet, category, themeDisplay)) {
 
 					itr.remove();
