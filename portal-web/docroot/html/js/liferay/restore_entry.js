@@ -1,230 +1,244 @@
 AUI.add(
-	'liferay-restore-entry',
-	function(A) {
-		var Lang = A.Lang;
+    'liferay-restore-entry',
+    function(A) {
+        var Lang = A.Lang;
 
-		var isString = Lang.isString;
+        var isString = Lang.isString;
 
-		var RESPONSE_DATA = 'responseData';
+        var RESPONSE_DATA = 'responseData';
 
-		var STR_CHECKENTRY_URL = 'checkEntryURL';
+        var STR_CHECKENTRY_URL = 'checkEntryURL';
 
-		var RestoreEntry = A.Component.create(
-			{
-				ATTRS: {
-					checkEntryURL: {
-						validator: isString
-					},
+        var STR_OVERRIDE_LABEL_MESSAGE =  "overrideLabelMessage";
 
-					namespace: {
-						validator: isString
-					},
+        var STR_RENAME_LABEL_MESSAGE = 'renameLabelMessage';
 
-					restoreEntryURL: {
-						validator: isString
-					}
-				},
+        var RestoreEntry = A.Component.create(
+            {
+                ATTRS: {
+                    checkEntryURL: {
+                        validator: isString
+                    },
 
-				AUGMENTS: [Liferay.PortletBase],
+                    namespace: {
+                        validator: isString
+                    },
 
-				EXTENDS: A.Base,
+                    overrideLabelMessage:{
+                        validator:isString
+                    },
 
-				NAME: 'restoreentry',
+                    renameLabelMessage:{
+                        validator: isString
+                    },
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+                    restoreEntryURL: {
+                        validator: isString
+                    }
+                },
 
-						instance._eventCheckEntry = instance.ns('checkEntry');
+                AUGMENTS: [Liferay.PortletBase],
 
-						instance._hrefFm = A.one('#hrefFm');
+                EXTENDS: A.Base,
 
-						var eventHandles = [
-							Liferay.on(instance._eventCheckEntry, instance._checkEntry, instance)
-						];
+                NAME: 'restoreentry',
 
-						instance._eventHandles = eventHandles;
-					},
+                prototype: {
+                    initializer: function(config) {
+                        var instance = this;
 
-					destructor: function() {
-						var instance = this;
+                        instance._eventCheckEntry = instance.ns('checkEntry');
 
-						A.Array.invoke(instance._eventHandles, 'detach');
-					},
+                        instance._hrefFm = A.one('#hrefFm');
 
-					_afterCheckEntryFailure: function(event, uri) {
-						var instance = this;
+                        var eventHandles = [
+                            Liferay.on(instance._eventCheckEntry, instance._checkEntry, instance)
+                        ];
 
-						submitForm(instance._hrefFm, uri);
-					},
+                        instance._eventHandles = eventHandles;
+                    },
 
-					_afterCheckEntrySuccess: function(event, id, xhr, uri) {
-						var instance = this;
+                    destructor: function() {
+                        var instance = this;
 
-						var responseData = event.currentTarget.get(RESPONSE_DATA);
+                        A.Array.invoke(instance._eventHandles, 'detach');
+                    },
 
-						if (responseData.success) {
-							submitForm(instance._hrefFm, uri);
-						}
-						else {
-							var data = {
-								duplicateEntryId: responseData.duplicateEntryId,
-								oldName: responseData.oldName,
-								trashEntryId: responseData.trashEntryId
-							};
+                    _afterCheckEntryFailure: function(event, uri) {
+                        var instance = this;
 
-							instance._showPopup(data, instance.get('restoreEntryURL'));
-						}
-					},
+                        submitForm(instance._hrefFm, uri);
+                    },
 
-					_afterPopupCheckEntryFailure: function(event, id, xhr, form) {
-						var instance = this;
+                    _afterCheckEntrySuccess: function(event, id, xhr, uri) {
+                        var instance = this;
 
-						submitForm(form);
-					},
+                        var responseData = event.currentTarget.get(RESPONSE_DATA);
 
-					_afterPopupCheckEntrySuccess: function(event, id, xhr, form) {
-						var instance = this;
+                        if (responseData.success) {
+                            submitForm(instance._hrefFm, uri);
+                        }
+                        else {
+                            var data = {
+                                duplicateEntryId: responseData.duplicateEntryId,
+                                oldName: responseData.oldName,
+                                overrideLabelMessage: instance.get(STR_OVERRIDE_LABEL_MESSAGE),
+                                renameLabelMessage: instance.get(STR_RENAME_LABEL_MESSAGE),
+                                trashEntryId: responseData.trashEntryId
+                            };
 
-						var responseData = event.currentTarget.get(RESPONSE_DATA);
+                            instance._showPopup(data, instance.get('restoreEntryURL'));
+                        }
+                    },
 
-						if (responseData.success) {
-							submitForm(form);
-						}
-						else {
-							var newName = instance.byId('newName');
-							var messageContainer = instance.byId('messageContainer');
+                    _afterPopupCheckEntryFailure: function(event, id, xhr, form) {
+                        var instance = this;
 
-							messageContainer.html(Lang.sub(Liferay.Language.get('an-entry-with-name-x-already-exists'), [newName.val()]));
-						}
-					},
+                        submitForm(form);
+                    },
 
-					_checkEntry: function(event) {
-						var instance = this;
+                    _afterPopupCheckEntrySuccess: function(event, id, xhr, form) {
+                        var instance = this;
 
-						var uri = event.uri;
+                        var responseData = event.currentTarget.get(RESPONSE_DATA);
 
-						A.io.request(
-							instance.get(STR_CHECKENTRY_URL),
-							{
-								after: {
-									failure: A.rbind(instance._afterCheckEntryFailure, instance),
-									success: A.rbind(instance._afterCheckEntrySuccess, instance)
-								},
-								arguments: uri,
-								data: {
-									trashEntryId: event.trashEntryId
-								},
-								dataType: 'json'
-							}
-						);
-					},
+                        if (responseData.success) {
+                            submitForm(form);
+                        }
+                        else {
+                            var newName = instance.byId('newName');
+                            var messageContainer = instance.byId('messageContainer');
 
-					_getPopup: function() {
-						var instance = this;
+                            messageContainer.html(Lang.sub(Liferay.Language.get('an-entry-with-name-x-already-exists'), [newName.val()]));
+                        }
+                    },
 
-						var popup = instance._popup;
+                    _checkEntry: function(event) {
+                        var instance = this;
 
-						if (!popup) {
-							popup = new A.Dialog(
-								{
-									align: Liferay.Util.Window.ALIGN_CENTER,
-									cssClass: 'trash-restore-popup',
-									modal: true,
-									title: Liferay.Language.get('warning'),
-									width: 500
-								}
-							).plug(
-								A.Plugin.IO,
-								{
-									after: {
-										success: A.bind(instance._initializeRestorePopup, instance)
-									},
-									autoLoad: false
-								}
-							).render();
+                        var uri = event.uri;
 
-							instance._popup = popup;
-						}
+                        A.io.request(
+                            instance.get(STR_CHECKENTRY_URL),
+                            {
+                                after: {
+                                    failure: A.rbind(instance._afterCheckEntryFailure, instance),
+                                    success: A.rbind(instance._afterCheckEntrySuccess, instance)
+                                },
+                                arguments: uri,
+                                data: {
+                                    trashEntryId: event.trashEntryId
+                                },
+                                dataType: 'json'
+                            }
+                        );
+                    },
 
-						return popup;
-					},
+                    _getPopup: function() {
+                        var instance = this;
 
-					_initializeRestorePopup: function() {
-						var instance = this;
+                        var popup = instance._popup;
 
-						var restoreTrashEntryFm = instance.byId('restoreTrashEntryFm');
+                        if (!popup) {
+                            popup = new A.Dialog(
+                                {
+                                    align: Liferay.Util.Window.ALIGN_CENTER,
+                                    cssClass: 'trash-restore-popup',
+                                    modal: true,
+                                    title: Liferay.Language.get('warning'),
+                                    width: 500
+                                }
+                            ).plug(
+                                A.Plugin.IO,
+                                {
+                                    after: {
+                                        success: A.bind(instance._initializeRestorePopup, instance)
+                                    },
+                                    autoLoad: false
+                                }
+                            ).render();
 
-						restoreTrashEntryFm.on('submit', instance._onRestoreTrashEntryFmSubmit, instance, restoreTrashEntryFm);
+                            instance._popup = popup;
+                        }
 
-						var closeButton = restoreTrashEntryFm.one('.aui-button-input-cancel');
+                        return popup;
+                    },
 
-						closeButton.on('click', instance._popup.hide, instance._popup);
+                    _initializeRestorePopup: function() {
+                        var instance = this;
 
-						var rename = instance.byId('rename');
-						var newName = instance.byId('newName');
+                        var restoreTrashEntryFm = instance.byId('restoreTrashEntryFm');
 
-						rename.on('click', Liferay.Util.focusFormField, Liferay.Util, newName);
+                        restoreTrashEntryFm.on('submit', instance._onRestoreTrashEntryFmSubmit, instance, restoreTrashEntryFm);
 
-						newName.on(
-							'focus',
-							function(event) {
-								rename.attr('checked', true);
-							}
-						);
-					},
+                        var closeButton = restoreTrashEntryFm.one('.aui-button-input-cancel');
 
-					_onRestoreTrashEntryFmSubmit: function(event, form) {
-						var instance = this;
+                        closeButton.on('click', instance._popup.hide, instance._popup);
 
-						var newName = instance.byId('newName');
-						var override = instance.byId('override');
-						var trashEntryId = instance.byId('trashEntryId');
+                        var rename = instance.byId('rename');
+                        var newName = instance.byId('newName');
 
-						if (override.attr('checked') || (!override.attr('checked') && !newName.val())) {
-							submitForm(form);
-						}
-						else {
-							A.io.request(
-								instance.get(STR_CHECKENTRY_URL),
-								{
-									after: {
-										failure: A.rbind(instance._afterPopupCheckEntryFailure, instance),
-										success: A.rbind(instance._afterPopupCheckEntrySuccess, instance)
-									},
-									arguments: form,
-									data: {
-										trashEntryId: trashEntryId.val(),
-										newName: newName.val()
-									},
-									dataType: 'json'
-								}
-							);
-						}
-					},
+                        rename.on('click', Liferay.Util.focusFormField, Liferay.Util, newName);
 
-					_showPopup: function(data, uri) {
-						var instance = this;
+                        newName.on(
+                            'focus',
+                            function(event) {
+                                rename.attr('checked', true);
+                            }
+                        );
+                    },
 
-						var popup = instance._getPopup();
+                    _onRestoreTrashEntryFmSubmit: function(event, form) {
+                        var instance = this;
 
-						popup.show();
+                        var newName = instance.byId('newName');
+                        var override = instance.byId('override');
+                        var trashEntryId = instance.byId('trashEntryId');
 
-						var popupIO = popup.io;
+                        if (override.attr('checked') || (!override.attr('checked') && !newName.val())) {
+                            submitForm(form);
+                        }
+                        else {
+                            A.io.request(
+                                instance.get(STR_CHECKENTRY_URL),
+                                {
+                                    after: {
+                                        failure: A.rbind(instance._afterPopupCheckEntryFailure, instance),
+                                        success: A.rbind(instance._afterPopupCheckEntrySuccess, instance)
+                                    },
+                                    arguments: form,
+                                    data: {
+                                        trashEntryId: trashEntryId.val(),
+                                        newName: newName.val()
+                                    },
+                                    dataType: 'json'
+                                }
+                            );
+                        }
+                    },
 
-						popupIO.set('data', data);
-						popupIO.set('uri', uri);
+                    _showPopup: function(data, uri) {
+                        var instance = this;
 
-						popupIO.start();
-					}
-				}
-			}
-		);
+                        var popup = instance._getPopup();
 
-		Liferay.RestoreEntry = RestoreEntry;
-	},
-	'',
-	{
-		requires: ['aui-dialog', 'aui-io-request', 'liferay-portlet-base']
-	}
+                        popup.show();
+
+                        var popupIO = popup.io;
+
+                        popupIO.set('data', data);
+                        popupIO.set('uri', uri);
+
+                        popupIO.start();
+                    }
+                }
+            }
+        );
+
+        Liferay.RestoreEntry = RestoreEntry;
+    },
+    '',
+    {
+        requires: ['aui-dialog', 'aui-io-request', 'liferay-portlet-base']
+    }
 );

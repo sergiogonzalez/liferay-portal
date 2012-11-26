@@ -3904,6 +3904,7 @@
 			<transient name="showPortletInactive" />
 			<transient name="socialActivityInterpreterClass" />
 			<transient name="socialRequestInterpreterClass" />
+			<transient name="stagedModelDataHandlerClasses" />
 			<transient name="static" />
 			<transient name="staticStart" />
 			<transient name="strutsPath" />

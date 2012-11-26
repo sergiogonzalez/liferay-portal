@@ -29,6 +29,7 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -182,6 +183,16 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ContainerModel> getParentContainerModels(long containerModelId)
+		throws PortalException, SystemException {
+
+		return Collections.emptyList();
+	}
+
+	/**
 	 * Returns the link to the location to which the trash entry was restored.
 	 *
 	 * @param  portletRequest the portlet request
@@ -220,6 +231,56 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	public String getSubcontainerModelName() {
 		return StringPool.BLANK;
+	}
+
+	public String getTrashContainedModelName() {
+		return StringPool.BLANK;
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getTrashContainedModelsCount(long classPK)
+		throws PortalException, SystemException {
+
+		return 0;
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
+			long classPK, int start, int end)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
+	public String getTrashContainerModelName() {
+		return StringPool.BLANK;
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getTrashContainerModelsCount(long classPK)
+		throws PortalException, SystemException {
+
+		return 0;
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
+			long classPK, int start, int end)
+		throws PortalException, SystemException {
+
+		return null;
 	}
 
 	public TrashRenderer getTrashRenderer(long classPK)
@@ -263,6 +324,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		}
 
 		return hasPermission(permissionChecker, classPK, actionId);
+	}
+
+	public boolean isContainerModel() {
+		return false;
 	}
 
 	/**

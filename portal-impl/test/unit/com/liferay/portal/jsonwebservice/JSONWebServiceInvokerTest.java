@@ -17,6 +17,7 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -355,6 +356,63 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertEquals("Welcome 173 to null", result);
 		Assert.assertEquals("\"Welcome 173 to null\"", toJSON(invokerResult));
+	}
+
+	@Test
+	public void testTypeConversion1() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/hey", params);
+
+		params.put("calendar", "1330419334285");
+		params.put("userIds", "1,2,3");
+		params.put("locales", "en,fr");
+		params.put("ids", "173,-7,007");
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		result = invokerResult.getResult();
+
+		Assert.assertEquals("2012, 1/3, en/2, 173/3", result);
+	}
+
+	@Test
+	public void testTypeConversion2() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/hey", params);
+
+		params.put("calendar", "1330419334285");
+		params.put("userIds", "[1,2,3]");
+		params.put("locales", "[en,fr]");
+		params.put("ids", "[173,-7,007]");
+
+		String json = toJSON(map);
+
+		json = StringUtil.replace(json, "\"[", "[");
+		json = StringUtil.replace(json, "]\"", "]");
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		result = invokerResult.getResult();
+
+		Assert.assertEquals("2012, 1/3, en/2, 173/3", result);
 	}
 
 	protected JSONWebServiceAction prepareInvokerAction(String content)

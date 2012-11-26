@@ -19,6 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+boolean viewTrashAttachments = ParamUtil.getBoolean(request, "viewTrashAttachments");
+
+if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
+	viewTrashAttachments = false;
+}
+
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 
 List<FileEntry> attachmentsFileEntries = node.getDeletedAttachmentsFiles();
@@ -71,12 +77,23 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portlet.documentlibrary.model.DLFileEntry"
-		modelVar="dlFileEntry"
-	>
+		className="com.liferay.portal.kernel.repository.model.FileEntry"
+		escapedModel="<%= true %>"
+		keyProperty="fileEntryId"
+		modelVar="fileEntry"
+		rowVar="row"
+		>
 
 		<%
-		WikiPage wikiPage = WikiPageAttachmentUtil.getPageByFileEntryId(dlFileEntry.getFileEntryId());
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (viewTrashAttachments) {
+				status = WorkflowConstants.STATUS_IN_TRASH;
+			}
+
+			WikiPage wikiPage = WikiPageAttachmentUtil.getPageByFileEntryId(dlFileEntry.getFileEntryId());
 		%>
 
 		<liferay-portlet:actionURL varImpl="rowURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
@@ -85,48 +102,38 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 			<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 			<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
-			<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_IN_TRASH) %>" />
+			<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="file-name"
-		>
-			<img align="left" alt="" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(dlFileEntry.getExtension()) %>.png"> <%= TrashUtil.stripTrashNamespace(dlFileEntry.getTitle()) %>
-		</liferay-ui:search-container-column-text>
+			>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="page"
-			value="<%= wikiPage.getTitle() %>"
-		/>
+			<%
+				String fileName = dlFileEntry.getTitle();
+
+				if (viewTrashAttachments) {
+					fileName = TrashUtil.stripTrashNamespace(fileName);
+				}
+			%>
+
+			<img align="left" alt="" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(dlFileEntry.getExtension()) %>.png"> <%= fileName %>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="size"
 			value="<%= TextFormatter.formatStorageSize(dlFileEntry.getSize(), locale) %>"
-		/>
+			/>
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
 			path="/html/portlet/wiki/page_attachment_action.jsp"
-		/>
+			/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<aui:script use="liferay-restore-entry">
-	<portlet:actionURL var="restoreEntryURL">
-		<portlet:param name="struts_action" value="/wiki/restore_page_attachment" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
-	</portlet:actionURL>
-
-	new Liferay.RestoreEntry(
-		{
-			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/wiki/restore_page_attachment" /></portlet:actionURL>',
-			namespace: '<portlet:namespace />',
-			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/wiki/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="restoryEntryURL" value="<%= restoreEntryURL %>" /></portlet:renderURL>'
-		}
-	);
-</aui:script>
+<liferay-ui:restore-entry currentURL="<%= currentURL %>" overrideLabelMessage="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin" renameLabelMessage="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as"/>
