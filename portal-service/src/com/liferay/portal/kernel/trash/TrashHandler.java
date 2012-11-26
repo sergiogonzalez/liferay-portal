@@ -269,6 +269,9 @@ public interface TrashHandler {
 	 */
 	public String getDeleteMessage();
 
+	public List<ContainerModel> getParentContainerModels(long containerModelId)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the link to the location to which the model entity was restored.
 	 *
@@ -311,6 +314,24 @@ public interface TrashHandler {
 	 */
 	public String getSubcontainerModelName();
 
+	public String getTrashContainedModelName();
+
+	public int getTrashContainedModelsCount(long classPK)
+		throws PortalException, SystemException;
+
+	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
+			long classPK, int start, int end)
+		throws PortalException, SystemException;
+
+	public String getTrashContainerModelName();
+
+	public int getTrashContainerModelsCount(long classPK)
+		throws PortalException, SystemException;
+
+	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
+			long classPK, int start, int end)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the trash renderer associated to the model entity with the
 	 * primary key.
@@ -348,6 +369,8 @@ public interface TrashHandler {
 			PermissionChecker permissionChecker, long groupId, long classPK,
 			String trashActionId)
 		throws PortalException, SystemException;
+
+	public boolean isContainerModel();
 
 	/**
 	 * Returns <code>true</code> if the model entity with the primary key is in

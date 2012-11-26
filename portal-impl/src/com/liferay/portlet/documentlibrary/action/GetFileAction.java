@@ -27,7 +27,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -286,15 +285,7 @@ public class GetFileAction extends PortletAction {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long userId = permissionChecker.getUserId();
-
-		User user = null;
-
-		try {
-			user = UserLocalServiceUtil.getUser(userId);
-		}
-		catch (Exception e) {
-		}
+		User user = permissionChecker.getUser();
 
 		if ((user != null) && !user.isDefaultUser()) {
 			PortalUtil.sendError(
