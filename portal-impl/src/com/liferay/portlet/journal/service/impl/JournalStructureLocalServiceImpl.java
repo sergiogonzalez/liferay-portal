@@ -390,9 +390,9 @@ public class JournalStructureLocalServiceImpl
 
 		if (groupId == 0) {
 			_log.error(
-				"No group id was passed for " + structureId + ". Group id is " +
+				"No group ID was passed for " + structureId + ". Group ID is " +
 					"required since 4.2.0. Please update all custom code and " +
-						"data that references structures without a group id.");
+						"data that references structures without a group ID.");
 
 			List<JournalStructure> structures =
 				journalStructurePersistence.findByStructureId(structureId);
@@ -402,7 +402,7 @@ public class JournalStructureLocalServiceImpl
 			}
 
 			throw new NoSuchStructureException(
-				"No JournalStructure exists with the structure id " +
+				"No JournalStructure exists with the structure ID " +
 					structureId);
 		}
 
@@ -415,7 +415,7 @@ public class JournalStructureLocalServiceImpl
 
 		if (!includeGlobalStructures) {
 			throw new NoSuchStructureException(
-				"No JournalStructure exists with the structure id " +
+				"No JournalStructure exists with the structure ID " +
 					structureId);
 		}
 

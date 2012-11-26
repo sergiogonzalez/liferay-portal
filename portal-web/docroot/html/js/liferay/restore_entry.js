@@ -9,6 +9,10 @@ AUI.add(
 
 		var STR_CHECKENTRY_URL = 'checkEntryURL';
 
+		var STR_OVERRIDE_LABEL_MESSAGE =  "overrideLabelMessage";
+
+		var STR_RENAME_LABEL_MESSAGE = 'renameLabelMessage';
+
 		var RestoreEntry = A.Component.create(
 			{
 				ATTRS: {
@@ -17,6 +21,14 @@ AUI.add(
 					},
 
 					namespace: {
+						validator: isString
+					},
+
+					overrideLabelMessage:{
+						validator:isString
+					},
+
+					renameLabelMessage:{
 						validator: isString
 					},
 
@@ -70,6 +82,8 @@ AUI.add(
 							var data = {
 								duplicateEntryId: responseData.duplicateEntryId,
 								oldName: responseData.oldName,
+								overrideLabelMessage: instance.get(STR_OVERRIDE_LABEL_MESSAGE),
+								renameLabelMessage: instance.get(STR_RENAME_LABEL_MESSAGE),
 								trashEntryId: responseData.trashEntryId
 							};
 

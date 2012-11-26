@@ -27,7 +27,6 @@ import java.net.InetAddress;
 public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
 	public ClusterNode(String clusterNodeId, InetAddress inetAddress) {
-
 		if (clusterNodeId == null) {
 			throw new IllegalArgumentException("Cluster node ID is null");
 		}

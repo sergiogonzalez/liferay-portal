@@ -81,7 +81,6 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.service.http.LayoutServiceHttp;
@@ -223,7 +222,7 @@ public class StagingImpl implements Staging {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		User user = UserLocalServiceUtil.getUser(permissionChecker.getUserId());
+		User user = permissionChecker.getUser();
 
 		StringBundler sb = new StringBundler(4);
 
@@ -2213,7 +2212,7 @@ public class StagingImpl implements Staging {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		User user = UserLocalServiceUtil.getUser(permissionChecker.getUserId());
+		User user = permissionChecker.getUser();
 
 		String url = buildRemoteURL(
 			remoteAddress, remotePort, remotePathContext, secureConnection,
