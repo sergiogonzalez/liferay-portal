@@ -3904,6 +3904,7 @@
 			<transient name="showPortletInactive" />
 			<transient name="socialActivityInterpreterClass" />
 			<transient name="socialRequestInterpreterClass" />
+			<transient name="stagedModelDataHandlerClasses" />
 			<transient name="static" />
 			<transient name="staticStart" />
 			<transient name="strutsPath" />
@@ -4288,7 +4289,7 @@
 	<entity class="com.liferay.portlet.messageboards.model.impl.MBMessageImpl" name="MBMessage">
 		<table name="MBMessage" />
 		<attributes>
-			<transient name="attachmentsDir" />
+			<transient name="attachmentsFolderId" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl" name="MBStatsUser">

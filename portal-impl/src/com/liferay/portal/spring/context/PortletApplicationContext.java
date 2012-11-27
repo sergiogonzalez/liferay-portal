@@ -171,8 +171,8 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 			try {
 				clazz = Class.forName(className);
 			}
-			catch (ClassNotFoundException e) {
-				_log.error(e, e);
+			catch (ClassNotFoundException cnfe) {
+				_log.error(cnfe, cnfe);
 			}
 
 			_classes.put(clazz.getName(), clazz);

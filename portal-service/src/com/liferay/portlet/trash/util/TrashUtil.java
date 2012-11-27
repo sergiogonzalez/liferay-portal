@@ -18,13 +18,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
@@ -44,6 +50,15 @@ public class TrashUtil {
 	public static final int TRASH_ENABLED_BY_DEFAULT = 2;
 
 	public static final String TRASH_TIME_SEPARATOR = "_TRASH_TIME_";
+
+	public static void addContainerModelBreadcrumbEntries(
+			HttpServletRequest request, TrashHandler trashHandler,
+			ContainerModel containerModel, PortletURL containerModelURL)
+		throws PortalException, SystemException {
+
+		getTrash().addContainerModelBreadcrumbEntries(
+			request, trashHandler, containerModel, containerModelURL);
+	}
 
 	public static String appendTrashNamespace(String title) {
 		return getTrash().appendTrashNamespace(title);
@@ -104,44 +119,6 @@ public class TrashUtil {
 		throws PortalException, SystemException {
 
 		return getTrash().isTrashEnabled(groupId);
-	}
-
-	public static void moveAttachmentFromTrash(
-			long companyId, long repositoryId, String deletedFileName,
-			String attachmentsDir)
-		throws PortalException, SystemException {
-
-		getTrash().moveAttachmentFromTrash(
-			companyId, repositoryId, deletedFileName, attachmentsDir);
-	}
-
-	public static void moveAttachmentFromTrash(
-			long companyId, long repositoryId, String deletedFileName,
-			String attachmentsDir, String separator)
-		throws PortalException, SystemException {
-
-		getTrash().moveAttachmentFromTrash(
-			companyId, repositoryId, deletedFileName, attachmentsDir,
-			separator);
-	}
-
-	public static String moveAttachmentToTrash(
-			long companyId, long repositoryId, String fileName,
-			String deletedAttachmentsDir)
-		throws PortalException, SystemException {
-
-		return getTrash().moveAttachmentToTrash(
-			companyId, repositoryId, fileName, deletedAttachmentsDir);
-	}
-
-	public static String moveAttachmentToTrash(
-			long companyId, long repositoryId, String fileName,
-			String deletedAttachmentsDir, String separator)
-		throws PortalException, SystemException {
-
-		return getTrash().moveAttachmentToTrash(
-			companyId, repositoryId, fileName, deletedAttachmentsDir,
-			separator);
 	}
 
 	public static String stripTrashNamespace(String title) {

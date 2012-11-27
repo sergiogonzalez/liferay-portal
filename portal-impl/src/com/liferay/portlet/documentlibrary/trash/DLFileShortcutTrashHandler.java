@@ -16,11 +16,11 @@ package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -36,7 +36,7 @@ import javax.portlet.PortletRequest;
  *
  * @author Zsolt Berentey
  */
-public class DLFileShortcutTrashHandler extends BaseTrashHandler {
+public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	public static final String CLASS_NAME = DLFileShortcut.class.getName();
 
@@ -117,12 +117,48 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 		return false;
 	}
 
+	@Override
+	public boolean isRestorable(long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
+
+		return !dlFileShortcut.isInTrashFolder();
+	}
+
+	@Override
+	public void moveEntry(
+			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
+
+		DLAppServiceUtil.updateFileShortcut(
+			classPK, containerModelId, dlFileShortcut.getToFileEntryId(),
+			serviceContext);
+	}
+
+	@Override
+	public void moveTrashEntry(
+			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DLAppServiceUtil.moveFileShortcutFromTrash(
+			classPK, containerModelId, serviceContext);
+	}
+
 	public void restoreTrashEntries(long[] classPKs)
 		throws PortalException, SystemException {
 
 		for (long classPK : classPKs) {
 			DLAppServiceUtil.restoreFileShortcutFromTrash(classPK);
 		}
+	}
+
+	protected DLFileShortcut getDLFileShortcut(long classPK)
+		throws PortalException, SystemException {
+
+		return DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
 	}
 
 	@Override

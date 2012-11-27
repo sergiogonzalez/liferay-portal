@@ -37,9 +37,9 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 	}
 
 	@Override
-	protected long getContainerFolderId(
+	protected long getContainerModelFolderId(
 			long groupId, long companyId, long resourcePrimKey,
-			long containerId, long userId, String userName,
+			long containerModelId, long userId, String userName,
 			Timestamp createDate)
 		throws Exception {
 
@@ -53,7 +53,7 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 
 		long nodeFolderId = getFolderId(
 			groupId, companyId, userId, userName, createDate, repositoryId,
-			repositoryFolderId, String.valueOf(containerId), false);
+			repositoryFolderId, String.valueOf(containerModelId), false);
 
 		long pageFolderId = getFolderId(
 			groupId, companyId, userId, userName, createDate, repositoryId,
@@ -63,7 +63,7 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 	}
 
 	@Override
-	protected String getDirName(long resourcePrimKey) {
+	protected String getDirName(long containerModelId, long resourcePrimKey) {
 		return "wiki/" + resourcePrimKey;
 	}
 

@@ -40,12 +40,12 @@ public class PortalProfileFactory {
 			request, ValidationMode.VALIDATIONMODE_NONE);
 
 		if (profile == null) {
-			profile = _EMPTY_PROFILE;
+			profile = _profile;
 		}
 
 		return profile;
 	}
 
-	private static final Profile _EMPTY_PROFILE = new EmptyProfile();
+	private static final Profile _profile = new EmptyProfile();
 
 }

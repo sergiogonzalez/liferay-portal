@@ -17,12 +17,10 @@ package com.liferay.portal.kernel.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ContainerModel;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -106,18 +104,6 @@ public interface TrashHandler {
 	 */
 	public void checkDuplicateTrashEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
-		throws PortalException, SystemException;
-
-	/**
-	 * Deletes the group's attachments that were trashed before the given date.
-	 *
-	 * @param  group ID the primary key of the group
-	 * @param  date the date from which attachments will be deleted
-	 * @throws PortalException if any one of the attachment file paths were
-	 *         invalid
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void deleteTrashAttachments(Group group, Date date)
 		throws PortalException, SystemException;
 
 	/**
@@ -269,6 +255,9 @@ public interface TrashHandler {
 	 */
 	public String getDeleteMessage();
 
+	public List<ContainerModel> getParentContainerModels(long containerModelId)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the link to the location to which the model entity was restored.
 	 *
@@ -311,6 +300,24 @@ public interface TrashHandler {
 	 */
 	public String getSubcontainerModelName();
 
+	public String getTrashContainedModelName();
+
+	public int getTrashContainedModelsCount(long classPK)
+		throws PortalException, SystemException;
+
+	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
+			long classPK, int start, int end)
+		throws PortalException, SystemException;
+
+	public String getTrashContainerModelName();
+
+	public int getTrashContainerModelsCount(long classPK)
+		throws PortalException, SystemException;
+
+	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
+			long classPK, int start, int end)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the trash renderer associated to the model entity with the
 	 * primary key.
@@ -349,6 +356,8 @@ public interface TrashHandler {
 			String trashActionId)
 		throws PortalException, SystemException;
 
+	public boolean isContainerModel();
+
 	/**
 	 * Returns <code>true</code> if the model entity with the primary key is in
 	 * the Recycle Bin.
@@ -362,6 +371,8 @@ public interface TrashHandler {
 	 */
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException;
+
+	public boolean isMovable();
 
 	/**
 	 * Returns <code>true</code> if the model entity can be restored to its
@@ -383,6 +394,10 @@ public interface TrashHandler {
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException;
 
+	public void moveEntry(
+			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Moves the model entity with the primary key out of the Recycle Bin to a
 	 * new destination identified by the container model ID.
@@ -397,7 +412,7 @@ public interface TrashHandler {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public TrashEntry moveTrashEntry(
+	public void moveTrashEntry(
 			long classPK, long containerModelId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

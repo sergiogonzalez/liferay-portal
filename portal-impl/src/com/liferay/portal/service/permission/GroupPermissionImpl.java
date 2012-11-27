@@ -48,6 +48,14 @@ public class GroupPermissionImpl implements GroupPermission {
 		}
 	}
 
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, actionId)) {
+			throw new PrincipalException();
+		}
+	}
+
 	public boolean contains(
 			PermissionChecker permissionChecker, Group group, String actionId)
 		throws PortalException, SystemException {
@@ -149,6 +157,13 @@ public class GroupPermissionImpl implements GroupPermission {
 		else {
 			return false;
 		}
+	}
+
+	public boolean contains(
+		PermissionChecker permissionChecker, String actionId) {
+
+		return permissionChecker.hasPermission(
+			0, Group.class.getName(), 0, actionId);
 	}
 
 }
