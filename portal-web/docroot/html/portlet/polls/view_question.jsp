@@ -27,7 +27,7 @@ List<PollsChoice> choices = PollsChoiceLocalServiceUtil.getChoices(question.getQ
 
 boolean hasVoted = PollsUtil.hasVoted(request, question.getQuestionId());
 
-boolean viewResults = ParamUtil.getBoolean(request, "viewResults", false);
+boolean viewResults = ParamUtil.getBoolean(request, "viewResults");
 
 if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE)) {
 	viewResults = false;

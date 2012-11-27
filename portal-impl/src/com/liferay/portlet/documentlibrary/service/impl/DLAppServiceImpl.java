@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -1077,19 +1077,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			return repository.getFileEntryByUuid(uuid);
 		}
 		catch (NoSuchFileEntryException nsfee) {
-			List<com.liferay.portal.model.Repository> repositories =
-				repositoryPersistence.findByGroupId(groupId);
+		}
+		catch (RepositoryException re) {
+			throw new NoSuchFileEntryException(re);
+		}
 
-			for (int i = 0; i < repositories.size(); i++) {
-				try {
-					long repositoryId = repositories.get(i).getRepositoryId();
+		List<com.liferay.portal.model.Repository> repositories =
+			repositoryPersistence.findByGroupId(groupId);
 
-					Repository repository = getRepository(repositoryId);
+		for (int i = 0; i < repositories.size(); i++) {
+			try {
+				long repositoryId = repositories.get(i).getRepositoryId();
 
-					return repository.getFileEntryByUuid(uuid);
-				}
-				catch (NoSuchFileEntryException nsfee2) {
-				}
+				Repository repository = getRepository(repositoryId);
+
+				return repository.getFileEntryByUuid(uuid);
+			}
+			catch (NoSuchFileEntryException nsfee) {
 			}
 		}
 
@@ -2692,10 +2696,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			boolean majorVersion, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
-
-		if (Validator.isNotNull(sourceFileName) && (is == null)) {
-			is = new UnsyncByteArrayInputStream(new byte[0]);
-		}
 
 		mimeType = DLAppUtil.getMimeType(
 			sourceFileName, mimeType, title, null, is);

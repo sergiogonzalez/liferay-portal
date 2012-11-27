@@ -279,10 +279,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		updateAttachments();
 	}
 
-	protected String[] getAttachments(long companyId, long resourcePrimKey)
+	protected String[] getAttachments(
+			long companyId, long containerModelId, long resourcePrimKey)
 		throws Exception {
 
-		String dirName = getDirName(resourcePrimKey);
+		String dirName = getDirName(containerModelId, resourcePrimKey);
 
 		String[] attachments = null;
 
@@ -298,16 +299,17 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 	protected abstract long getClassNameId();
 
-	protected long getContainerFolderId(
+	protected long getContainerModelFolderId(
 			long groupId, long companyId, long resourcePrimKey,
-			long containerId, long userId, String userName,
+			long containerModelId, long userId, String userName,
 			Timestamp createDate)
 		throws Exception {
 
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
-	protected abstract String getDirName(long resourcePrimKey);
+	protected abstract String getDirName(
+		long containerModelId, long resourcePrimKey);
 
 	protected long getFolderId(
 			long groupId, long companyId, long userId, String userName,
@@ -390,10 +392,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 	protected void updateEntryAttachments(
 			long companyId, long groupId, long resourcePrimKey,
-			long containerId, long userId, String userName)
+			long containerModelId, long userId, String userName)
 		throws Exception {
 
-		String[] attachments = getAttachments(companyId, resourcePrimKey);
+		String[] attachments = getAttachments(
+			companyId, containerModelId, resourcePrimKey);
 
 		if ((attachments == null) || (attachments.length == 0)) {
 			return;
@@ -404,9 +407,9 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		long repositoryId = getRepositoryId(
 			groupId, companyId, userId, userName, createDate, getClassNameId(),
 			getPortletId());
-		long containerFolderId = getContainerFolderId(
-			groupId, companyId, resourcePrimKey, containerId, userId, userName,
-			createDate);
+		long containerModelFolderId = getContainerModelFolderId(
+			groupId, companyId, resourcePrimKey, containerModelId, userId,
+			userName, createDate);
 
 		for (String attachment : attachments) {
 			String name = String.valueOf(
@@ -423,18 +426,18 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			long fileEntryId = addDLFileEntry(
 				groupId, companyId, userId, userName, createDate, repositoryId,
-				containerFolderId, name, extension, mimeType, title, size);
+				containerModelFolderId, name, extension, mimeType, title, size);
 
 			addDLFileVersion(
 				increment(), groupId, companyId, userId, userName, createDate,
-				repositoryId, containerFolderId, fileEntryId, extension,
+				repositoryId, containerModelFolderId, fileEntryId, extension,
 				mimeType, title, size);
 
 			byte[] bytes = DLStoreUtil.getFileAsBytes(
 				companyId, CompanyConstants.SYSTEM, attachment);
 
 			DLStoreUtil.addFile(
-				companyId, containerFolderId, name, false, bytes);
+				companyId, containerModelFolderId, name, false, bytes);
 
 			try {
 				DLStoreUtil.deleteFile(
@@ -445,20 +448,6 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 					_log.warn(
 						"Unable to delete the attachment " + attachment, e);
 				}
-			}
-		}
-
-		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, CompanyConstants.SYSTEM,
-				getDirName(resourcePrimKey));
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to delete the directory " +
-						getDirName(resourcePrimKey),
-					e);
 			}
 		}
 	}

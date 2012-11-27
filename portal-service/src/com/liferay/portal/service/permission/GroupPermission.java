@@ -32,6 +32,9 @@ public interface GroupPermission {
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException, SystemException;
 
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException;
+
 	public boolean contains(
 			PermissionChecker permissionChecker, Group group, String actionId)
 		throws PortalException, SystemException;
@@ -39,5 +42,8 @@ public interface GroupPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException, SystemException;
+
+	public boolean contains(
+		PermissionChecker permissionChecker, String actionId);
 
 }

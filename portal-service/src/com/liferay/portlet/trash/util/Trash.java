@@ -17,7 +17,9 @@ package com.liferay.portlet.trash.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -25,10 +27,19 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import java.util.Date;
 import java.util.List;
 
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Julio Camarero
  */
 public interface Trash {
+
+	public void addContainerModelBreadcrumbEntries(
+			HttpServletRequest request, TrashHandler trashHandler,
+			ContainerModel containerModel, PortletURL containerModelURL)
+		throws PortalException, SystemException;
 
 	public String appendTrashNamespace(String title);
 
@@ -55,26 +66,6 @@ public interface Trash {
 		throws PortalException, SystemException;
 
 	public boolean isTrashEnabled(long groupId)
-		throws PortalException, SystemException;
-
-	public void moveAttachmentFromTrash(
-			long companyId, long repositoryId, String deletedFileName,
-			String attachmentsDir)
-		throws PortalException, SystemException;
-
-	public void moveAttachmentFromTrash(
-			long companyId, long repositoryId, String deletedFileName,
-			String attachmentsDir, String separator)
-		throws PortalException, SystemException;
-
-	public String moveAttachmentToTrash(
-			long companyId, long repositoryId, String fileName,
-			String deletedAttachmentsDir)
-		throws PortalException, SystemException;
-
-	public String moveAttachmentToTrash(
-			long companyId, long repositoryId, String fileName,
-			String deletedAttachmentsDir, String separator)
 		throws PortalException, SystemException;
 
 	public String stripTrashNamespace(String title);

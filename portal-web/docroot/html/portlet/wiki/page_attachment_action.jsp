@@ -17,13 +17,13 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-boolean viewTrashAttachments = ParamUtil.getBoolean(request, "viewTrashAttachments");
+	boolean viewTrashAttachments = ParamUtil.getBoolean(request, "viewTrashAttachments");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 FileEntry attachmentsFileEntry = (FileEntry)row.getObject();
 
-WikiPage wikiPage = WikiPageAttachmentUtil.getPageByFileEntryId(attachmentsFileEntry.getFileEntryId());
+WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFileEntryId());
 %>
 
 <liferay-ui:icon-menu>
@@ -55,13 +55,18 @@ WikiPage wikiPage = WikiPageAttachmentUtil.getPageByFileEntryId(attachmentsFileE
 			</c:if>
 
 			<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage.getNodeId(), wikiPage.getTitle(), ActionKeys.DELETE) %>">
+
+				<%
+				DLFileEntry dlFileEntry = (DLFileEntry)attachmentsFileEntry.getModel();
+				%>
+
 				<portlet:actionURL var="deleteURL">
 					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
+					<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
 				</portlet:actionURL>
 
 				<liferay-ui:icon-delete

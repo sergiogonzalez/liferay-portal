@@ -27,7 +27,7 @@ import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.portlet.wiki.util.WikiPageAttachmentUtil;
+import com.liferay.portlet.wiki.util.WikiPageAttachmentsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			WorkflowConstants.STATUS_APPROVED, start, end, null);
 	}
 
-	public int getAttachmentsFilesCount()
+	public int getAttachmentsFileEntriesCount()
 		throws PortalException, SystemException {
 
 		return PortletFileRepositoryUtil.getPortletFileEntriesCount(
@@ -70,7 +70,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			return _attachmentsFolderId;
 		}
 
-		_attachmentsFolderId = WikiPageAttachmentUtil.getPageFolderId(
+		_attachmentsFolderId = WikiPageAttachmentsUtil.getFolderId(
 			getGroupId(), getUserId(), getNodeId(), getResourcePrimKey());
 
 		return _attachmentsFolderId;

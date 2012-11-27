@@ -245,8 +245,9 @@ public class SourceFormatter {
 
 			if ((includeFileName.endsWith("jsp") ||
 				 includeFileName.endsWith("jspf")) &&
-				!includeFileNames.contains(includeFileName) &&
-				!includeFileName.contains("html/portlet/init.jsp")) {
+				!includeFileName.endsWith("html/portlet/init.jsp") &&
+				!includeFileName.endsWith("html/taglib/init.jsp") &&
+				!includeFileNames.contains(includeFileName)) {
 
 				includeFileNames.add(includeFileName);
 			}
@@ -332,12 +333,6 @@ public class SourceFormatter {
 			if (parameterType.endsWith("...")) {
 				parameterType = StringUtil.replaceLast(
 					parameterType, "...", StringPool.BLANK);
-			}
-
-			int pos = parameterType.lastIndexOf(StringPool.PERIOD);
-
-			if (pos != -1) {
-				parameterType = parameterType.substring(pos + 1);
 			}
 
 			parameterTypes.add(parameterType);

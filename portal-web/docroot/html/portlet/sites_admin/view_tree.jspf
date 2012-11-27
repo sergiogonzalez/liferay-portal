@@ -93,7 +93,7 @@ if ((group != null) && !group.isRoot()) {
 
 			groupParams.put("site", Boolean.TRUE);
 
-			if (!permissionChecker.isCompanyAdmin()) {
+			if (!permissionChecker.isCompanyAdmin() && !GroupPermissionUtil.contains(permissionChecker, ActionKeys.VIEW)) {
 				groupParams.put("usersGroups", new Long(user.getUserId()));
 				//groupParams.put("active", Boolean.TRUE);
 			}
@@ -182,5 +182,10 @@ if ((group != null) && !group.isRoot()) {
 
 			<liferay-util:include page="/html/portlet/sites_admin/site_action.jsp" />
 		</aui:column>
+
+		<%
+		SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
+		%>
+
 	</c:if>
 </aui:layout>

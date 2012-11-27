@@ -416,9 +416,9 @@ public class JournalTemplateLocalServiceImpl
 
 		if (groupId == 0) {
 			_log.error(
-				"No group id was passed for " + templateId + ". Group id is " +
+				"No group ID was passed for " + templateId + ". Group ID is " +
 					"required since 4.2.0. Please update all custom code and " +
-						"data that references templates without a group id.");
+						"data that references templates without a group ID.");
 
 			List<JournalTemplate> templates =
 				journalTemplatePersistence.findByTemplateId(templateId);
@@ -428,7 +428,7 @@ public class JournalTemplateLocalServiceImpl
 			}
 
 			throw new NoSuchTemplateException(
-				"No JournalTemplate exists with the template id " + templateId);
+				"No JournalTemplate exists with the template ID " + templateId);
 		}
 
 		JournalTemplate template = journalTemplatePersistence.fetchByG_T(
@@ -440,7 +440,7 @@ public class JournalTemplateLocalServiceImpl
 
 		if (!includeGlobalTemplates) {
 			throw new NoSuchTemplateException(
-				"No JournalTemplate exists with the template id " + templateId);
+				"No JournalTemplate exists with the template ID " + templateId);
 		}
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);

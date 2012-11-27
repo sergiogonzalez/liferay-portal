@@ -93,8 +93,7 @@ public class LiferayPortlet extends GenericPortlet {
 			Throwable cause = pe.getCause();
 
 			if (isSessionErrorException(cause)) {
-				SessionErrors.add(
-					actionRequest, cause.getClass().getName(), cause);
+				SessionErrors.add(actionRequest, cause.getClass(), cause);
 			}
 			else {
 				throw pe;
@@ -320,9 +319,8 @@ public class LiferayPortlet extends GenericPortlet {
 		if (cause instanceof PortalException) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void sendRedirect(

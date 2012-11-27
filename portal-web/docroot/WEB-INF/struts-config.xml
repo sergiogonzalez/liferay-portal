@@ -952,8 +952,6 @@
 
 		<action path="/journal_content/export_article" type="com.liferay.portlet.journalcontent.action.ExportArticleAction" />
 
-		<action path="/journal_content/update_article_field" type="com.liferay.portlet.journalcontent.action.UpdateArticleFieldAction" />
-
 		<action path="/journal_content/view" type="com.liferay.portlet.journalcontent.action.ViewAction">
 			<forward name="portlet.journal_content.view" path="portlet.journal_content.view" />
 		</action>
@@ -1173,6 +1171,12 @@
 			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
 		</action>
 
+		<action path="/message_boards/restore_entry" forward="portlet.trash.restore_entry" />
+
+		<action path="/message_boards/restore_message_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
+		</action>
+
 		<action path="/message_boards/restore_thread" type="com.liferay.portlet.messageboards.action.RestoreThreadAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
@@ -1249,6 +1253,12 @@
 		<action path="/message_boards_admin/move_thread" type="com.liferay.portlet.messageboards.action.MoveThreadAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
+		</action>
+
+		<action path="/message_boards_admin/restore_entry" forward="portlet.trash.restore_entry" />
+
+		<action path="/message_boards_admin/restore_message_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
 		</action>
 
 		<action path="/message_boards_admin/restore_thread" type="com.liferay.portlet.messageboards.action.RestoreThreadAction">
