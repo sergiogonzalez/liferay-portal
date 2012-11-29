@@ -19,35 +19,41 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String restoreEntryURL = ParamUtil.getString(request, "restoreEntryURL");
+String restoreURLAction = ParamUtil.getString(request, "restoreURLAction");
+if(restoreURLAction==null || restoreURLAction.length()==0){
+	restoreURLAction= "/trash/edit_entry";
+}
 
 String trashEntryId = ParamUtil.getString(request, "trashEntryId");
 
 String duplicateEntryId = ParamUtil.getString(request, "duplicateEntryId");
 String oldName = ParamUtil.getString(request, "oldName");
+
+String overrideLabelMessage= ParamUtil.getString(request, "overrideLabelMessage");
+String renameLabelMessage= ParamUtil.getString(request, "renameLabelMessage");
 %>
 
 <div class="portlet-msg-alert" id="<portlet:namespace />messageContainer">
 	<liferay-ui:message arguments="<%= new String[] {oldName} %>" key="an-entry-with-name-x-already-exists" />
 </div>
 
-<portlet:actionURL var="editActionURL">
-	<portlet:param name="struts_action" value="/trash/edit_entry" />
+<portlet:actionURL var="restoreActionURL">
+	<portlet:param name="struts_action" value="<%= restoreURLAction %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= Validator.isNotNull(restoreEntryURL) ? restoreEntryURL : editActionURL %>" enctype="multipart/form-data" method="post" name="restoreTrashEntryFm" onSubmit="event.preventDefault();">
+<aui:form action="<%= restoreActionURL %>" enctype="multipart/form-data" method="post" name="restoreTrashEntryFm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="trashEntryId" type="hidden" value="<%= trashEntryId %>" />
 	<aui:input name="duplicateEntryId" type="hidden" value="<%= duplicateEntryId %>" />
 	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
 
 	<aui:fieldset>
-		<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+		<aui:input checked="<%= true %>" id="override" label="<%= overrideLabelMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
-		<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+		<aui:input id="rename" label="<%= renameLabelMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
 
-		<aui:input cssClass="new-file-name" label="" name="newName" title="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" value="<%= TrashUtil.getNewName(themeDisplay, oldName) %>" />
+		<aui:input cssClass="new-file-name" label="" name="newName" title="<%= renameLabelMessage %>" value="<%= TrashUtil.getNewName(themeDisplay, oldName) %>" />
 	</aui:fieldset>
 
 	<aui:button-row>
