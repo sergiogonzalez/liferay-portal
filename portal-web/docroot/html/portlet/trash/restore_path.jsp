@@ -62,15 +62,7 @@
 	<aui:input name="containerModelId" type="hidden" value="" />
 </aui:form>
 
-<aui:script use="aui-dialog-iframe,liferay-restore-entry,liferay-util-window">
-	new Liferay.RestoreEntry(
-		{
-			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>',
-			namespace: '<portlet:namespace />',
-			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/trash/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
-		}
-	);
-
+<aui:script use="aui-dialog-iframe,liferay-util-window">
 	A.getBody().delegate(
 		'click',
 		function(event) {
@@ -115,3 +107,10 @@
 		['aui-base']
 	);
 </aui:script>
+
+<liferay-ui:restore-entry currentURL="<%= currentURL %>"
+	duplicationCheckURLAction="/trash/restore_entry"
+	restoreURLAction="/trash/edit_entry"
+	overrideLabelMessage="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin"
+	renameLabelMessage="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as"
+/>
