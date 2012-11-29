@@ -391,6 +391,47 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			int max)
 		throws PortalException, SystemException {
 
+		return getUserPlaces(
+			userId, classNames, null, true, includeControlPanel,
+			QueryUtil.ALL_POS, max);
+	}
+
+	/**
+	 * Returns the user's group &quot;places&quot; associated with the group
+	 * entity class names, including the control panel group if the user is
+	 * permitted to view the control panel.
+	 *
+	 * <p>
+	 * <ul> <li> Class name &quot;User&quot; includes the user's layout set
+	 * group. </li> <li> Class name &quot;Organization&quot; includes the user's
+	 * immediate organization groups and inherited organization groups. </li>
+	 * <li> Class name &quot;Group&quot; includes the user's immediate
+	 * organization groups and site groups. </li> <li> A <code>classNames</code>
+	 * value of <code>null</code> includes the user's layout set group,
+	 * organization groups, inherited organization groups, and site groups.
+	 * </li> </ul>
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  classNames the group entity class names (optionally
+	 *         <code>null</code>). For more information see {@link
+	 *         #getUserPlaces(long, String[], int)}
+	 * @param  max the maximum number of groups to return
+	 * @return the user's group &quot;places&quot;
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Group> getUserPlaces(long userId, String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getUserPlaces(userId, classNames, false, max);
+	}
+
+	public List<Group> getUserPlaces(
+			long userId, String[] classNames, String name, boolean active,
+			boolean includeControlPanel, int start, int end)
+		throws PortalException, SystemException {
+
 		User user = userPersistence.fetchByPrimaryKey(userId);
 
 		if (user.isDefaultUser()) {
@@ -399,26 +440,18 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		List<Group> userPlaces = new UniqueList<Group>();
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (max != QueryUtil.ALL_POS) {
-			start = 0;
-			end = max;
-		}
-
 		if ((classNames == null) ||
 			ArrayUtil.contains(classNames, Group.class.getName())) {
 
 			LinkedHashMap<String, Object> groupParams =
 				new LinkedHashMap<String, Object>();
 
-			groupParams.put("active", Boolean.TRUE);
+			groupParams.put("active", active);
 			groupParams.put("usersGroups", new Long(userId));
 
 			userPlaces.addAll(
 				groupLocalService.search(
-					user.getCompanyId(), groupParams, start, end));
+					user.getCompanyId(), name, groupParams, start, end));
 		}
 
 		if ((classNames == null) ||
@@ -491,42 +524,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			userPlaces.add(0, controlPanelGroup);
 		}
 
-		if ((max != QueryUtil.ALL_POS) && (userPlaces.size() > max)) {
+		if ((end != QueryUtil.ALL_POS) && (userPlaces.size() > end)) {
 			userPlaces = ListUtil.subList(userPlaces, start, end);
 		}
 
 		return Collections.unmodifiableList(userPlaces);
-	}
-
-	/**
-	 * Returns the user's group &quot;places&quot; associated with the group
-	 * entity class names, including the control panel group if the user is
-	 * permitted to view the control panel.
-	 *
-	 * <p>
-	 * <ul> <li> Class name &quot;User&quot; includes the user's layout set
-	 * group. </li> <li> Class name &quot;Organization&quot; includes the user's
-	 * immediate organization groups and inherited organization groups. </li>
-	 * <li> Class name &quot;Group&quot; includes the user's immediate
-	 * organization groups and site groups. </li> <li> A <code>classNames</code>
-	 * value of <code>null</code> includes the user's layout set group,
-	 * organization groups, inherited organization groups, and site groups.
-	 * </li> </ul>
-	 * </p>
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  classNames the group entity class names (optionally
-	 *         <code>null</code>). For more information see {@link
-	 *         #getUserPlaces(long, String[], int)}
-	 * @param  max the maximum number of groups to return
-	 * @return the user's group &quot;places&quot;
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Group> getUserPlaces(long userId, String[] classNames, int max)
-		throws PortalException, SystemException {
-
-		return getUserPlaces(userId, classNames, false, max);
 	}
 
 	/**
