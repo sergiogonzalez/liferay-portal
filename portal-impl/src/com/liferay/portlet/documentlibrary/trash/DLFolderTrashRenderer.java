@@ -95,16 +95,6 @@ public class DLFolderTrashRenderer extends BaseTrashRenderer {
 		return TYPE;
 	}
 
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			String template)
-		throws Exception {
-
-		renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, _folder);
-
-		return "/html/portlet/document_library/trash/folder.jsp";
-	}
-
 	@Override
 	public String renderActions(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
