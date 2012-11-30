@@ -14,19 +14,9 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
-
 /**
  * @author Brian Wing Shun Chan
+ * @author Jorge Ferrer
  */
 public class DefaultControlPanelEntry extends BaseControlPanelEntry {
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
-	}
-
 }

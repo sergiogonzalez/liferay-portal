@@ -50,6 +50,8 @@
 	</div>
 </c:if>
 
+<liferay-ui:restore-entry />
+
 <portlet:actionURL var="selectContainerURL">
 	<portlet:param name="struts_action" value="/trash/edit_entry" />
 </portlet:actionURL>
@@ -62,20 +64,21 @@
 	<aui:input name="containerModelId" type="hidden" value="" />
 </aui:form>
 
-<aui:script use="aui-dialog-iframe,liferay-restore-entry,liferay-util-window">
-	new Liferay.RestoreEntry(
-		{
-			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>',
-			namespace: '<portlet:namespace />',
-			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/trash/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
-		}
-	);
-
+<aui:script use="aui-dialog-iframe,liferay-util-window">
 	A.getBody().delegate(
 		'click',
 		function(event) {
 			var target = event.target;
 
+			<portlet:namespace />restoreDialog(target.attr('data-uri'));
+		},
+		'.trash-restore-link'
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />restoreDialog',
+		function(uri) {
 			Liferay.Util.openWindow(
 				{
 					dialog: {
@@ -85,17 +88,18 @@
 						width: 700
 					},
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "warning") %>',
-					uri: target.attr('data-uri')
+					uri: uri
 				}
 			);
 		},
-		'.trash-restore-link'
+		['aui-base']
 	);
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />submitForm',
-		function(className, classPK, containerModelId) {
+		function(redirect, className, classPK, containerModelId) {
+			document.<portlet:namespace />selectContainerForm.<portlet:namespace />redirect.value = redirect;
 			document.<portlet:namespace />selectContainerForm.<portlet:namespace />className.value = className;
 			document.<portlet:namespace />selectContainerForm.<portlet:namespace />classPK.value = classPK;
 			document.<portlet:namespace />selectContainerForm.<portlet:namespace />containerModelId.value = containerModelId;
