@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.taglib.ui;
 
 import com.liferay.taglib.util.IncludeTag;
@@ -9,24 +23,30 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RestoreEntryTag extends IncludeTag {
 
-	public void setCurrentURL(String currentURL) {
-		_currentURL= currentURL;
+	public void setDuplicateCheckEntryAction(String duplicateCheckEntryAction) {
+		_duplicateCheckEntryAction = duplicateCheckEntryAction;
 	}
 
-	public void setDuplicationCheckURLAction(String duplicationCheckURLAction) {
-		_duplicationCheckURLAction= duplicationCheckURLAction;
+	public void setOverrideMessage(String overrideMessage) {
+		_overrideMessage = overrideMessage;
 	}
 
-	public void setOverrideLabelMessage(String overrideLabelMessage) {
-		_overrideLabelMessage= overrideLabelMessage;
+	public void setRenameMessage(String renameMessage) {
+		_renameMessage = renameMessage;
 	}
 
-	public void setRenameLabelMessage(String renameLabelMessage) {
-		_renameLabelMessage= renameLabelMessage;
+	public void setRestoreEntryAction( String restoreEntryAction) {
+		_restoreEntryAction = restoreEntryAction;
 	}
 
-	public void setRestoreURLAction( String restoreURLAction) {
-		_restoreURLAction= restoreURLAction;
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_duplicateCheckEntryAction = _DUPLICATE_CHECK_ENTRY_ACTION;
+		_overrideMessage = _OVERRIDE_MESSAGE;
+		_renameMessage = _RENAME_MESSAGE;
+		_restoreEntryAction = _RESTORE_ENTRY_ACTION;
 	}
 
 	@Override
@@ -35,30 +55,44 @@ public class RestoreEntryTag extends IncludeTag {
 	}
 
 	@Override
+	protected boolean isCleanUpSetAttributes() {
+		return _CLEAN_UP_SET_ATTRIBUTES;
+	}
+
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
 		request.setAttribute(
-			"liferay-ui:restore-entry:currentURL", _currentURL);
+			"liferay-ui:restore-entry:duplicateCheckEntryAction",
+			_duplicateCheckEntryAction);
 		request.setAttribute(
-			"liferay-ui:restore-entry:duplicationCheckURLAction",
-			_duplicationCheckURLAction);
+			"liferay-ui:restore-entry:overrideMessage", _overrideMessage);
 		request.setAttribute(
-			"liferay-ui:restore-entry:overrideLabelMessage",
-			_overrideLabelMessage);
+			"liferay-ui:restore-entry:renameMessage", _renameMessage);
 		request.setAttribute(
-			"liferay-ui:restore-entry:renameLabelMessage", _renameLabelMessage);
-		request.setAttribute(
-			"liferay-ui:restore-entry:restoreURLAction", _restoreURLAction);
+			"liferay-ui:restore-entry:restoreEntryAction", _restoreEntryAction);
 	}
+
+	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private static final String _DUPLICATE_CHECK_ENTRY_ACTION =
+		"/trash/restore_entry";
+
+	private static final String _OVERRIDE_MESSAGE =
+		"overwrite-the-existing-entry-with-the-one-from-the-recycle-bin";
 
 	private static final String _PAGE =
 		"/html/taglib/ui/restore_entry/page.jsp";
 
-	private String _currentURL;
-	private String _duplicationCheckURLAction;
-	private String _overrideLabelMessage;
-	private String _renameLabelMessage;
-	private String _restoreURLAction;
+	private static final String _RENAME_MESSAGE =
+		"keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as";
+
+	private static final String _RESTORE_ENTRY_ACTION = "/trash/edit_entry";
+
+	private String _duplicateCheckEntryAction = _DUPLICATE_CHECK_ENTRY_ACTION;
+	private String _overrideMessage = _OVERRIDE_MESSAGE;
+	private String _renameMessage = _RENAME_MESSAGE;
+	private String _restoreEntryAction = _RESTORE_ENTRY_ACTION;
 
 }

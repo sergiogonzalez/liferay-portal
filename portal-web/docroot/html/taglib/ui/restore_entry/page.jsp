@@ -17,47 +17,32 @@
 <%@ include file="/html/common/init.jsp" %>
 
 <%
-String currentURL= (String)request.getAttribute("liferay-ui:restore-entry:currentURL");
-
-String duplicationCheckURLAction= (String)request.getAttribute("liferay-ui:restore-entry:duplicationCheckURLAction");
-String overrideLabelMessage= (String)request.getAttribute("liferay-ui:restore-entry:overrideLabelMessage");
-String renameLabelMessage= (String)request.getAttribute("liferay-ui:restore-entry:renameLabelMessage");
-String restoreURLAction= (String)request.getAttribute("liferay-ui:restore-entry:restoreURLAction");
-
-if (duplicationCheckURLAction== null || duplicationCheckURLAction.length()==0){
-	duplicationCheckURLAction= "/trash/edit_entry";
-}
-if (overrideLabelMessage==null || overrideLabelMessage.length()==0){
-	overrideLabelMessage= "overwrite-the-existing-entry-with-the-one-from-the-recycle-bin";
-}
-if (renameLabelMessage==null || renameLabelMessage.length()==0){
-	renameLabelMessage= "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as";
-}
-if (restoreURLAction== null || restoreURLAction.length()==0){
-	restoreURLAction= "/trash/restore_entry";
-}
+String duplicateCheckEntryAction = (String)request.getAttribute("liferay-ui:restore-entry:duplicateCheckEntryAction");
+String overrideMessage = (String)request.getAttribute("liferay-ui:restore-entry:overrideMessage");
+String renameMessage = (String)request.getAttribute("liferay-ui:restore-entry:renameMessage");
+String restoreEntryAction = (String)request.getAttribute("liferay-ui:restore-entry:restoreEntryAction");
 %>
 
 <aui:script use="liferay-restore-entry">
 
-	<portlet:actionURL var="restoreURL">
+	<portlet:actionURL var="restoreEntryURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />
-		<portlet:param name="struts_action" value="<%= restoreURLAction %>" />
+		<portlet:param name="struts_action" value="<%= restoreEntryAction %>" />
 	</portlet:actionURL>
 
-	<portlet:renderURL var="duplicationCheckURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-		<portlet:param name="struts_action" value="<%= duplicationCheckURLAction %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="restoreURLAction" value="<%= restoreURLAction %>" />
+	<portlet:renderURL var="duplicateCheckEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+		<portlet:param name="struts_action" value="<%= duplicateCheckEntryAction %>" />
+		<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
+		<portlet:param name="restoreEntryAction" value="<%= restoreEntryAction %>" />
 	</portlet:renderURL>
 
 	new Liferay.RestoreEntry(
 		{
-			duplicationCheckURL: '<%= duplicationCheckURL %>',
-			restoreURL: '<%= restoreURL %>',
-			renameLabelMessage: '<%= renameLabelMessage %>',
+			duplicateCheckEntryURL: '<%= duplicateCheckEntryURL %>',
 			namespace: '<portlet:namespace />',
-			overrideLabelMessage: '<%= overrideLabelMessage %>'
+			overrideMessage: '<%= overrideMessage %>',
+			renameMessage: '<%= renameMessage %>',
+			restoreEntryURL: '<%= restoreEntryURL %>'
 		}
 	);
 </aui:script>

@@ -19,18 +19,15 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String restoreURLAction = ParamUtil.getString(request, "restoreURLAction");
-if(restoreURLAction==null || restoreURLAction.length()==0){
-	restoreURLAction= "/trash/edit_entry";
-}
+String restoreEntryAction = ParamUtil.getString(request, "restoreEntryAction", "/trash/edit_entry");
 
 String trashEntryId = ParamUtil.getString(request, "trashEntryId");
 
 String duplicateEntryId = ParamUtil.getString(request, "duplicateEntryId");
 String oldName = ParamUtil.getString(request, "oldName");
 
-String overrideLabelMessage= ParamUtil.getString(request, "overrideLabelMessage");
-String renameLabelMessage= ParamUtil.getString(request, "renameLabelMessage");
+String overrideMessage = ParamUtil.getString(request, "overrideMessage");
+String renameMessage = ParamUtil.getString(request, "renameMessage");
 %>
 
 <div class="portlet-msg-alert" id="<portlet:namespace />messageContainer">
@@ -38,7 +35,7 @@ String renameLabelMessage= ParamUtil.getString(request, "renameLabelMessage");
 </div>
 
 <portlet:actionURL var="restoreActionURL">
-	<portlet:param name="struts_action" value="<%= restoreURLAction %>" />
+	<portlet:param name="struts_action" value="<%= restoreEntryAction %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
@@ -49,11 +46,11 @@ String renameLabelMessage= ParamUtil.getString(request, "renameLabelMessage");
 	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
 
 	<aui:fieldset>
-		<aui:input checked="<%= true %>" id="override" label="<%= overrideLabelMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+		<aui:input checked="<%= true %>" id="override" label="<%= overrideMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
-		<aui:input id="rename" label="<%= renameLabelMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+		<aui:input id="rename" label="<%= renameMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
 
-		<aui:input cssClass="new-file-name" label="" name="newName" title="<%= renameLabelMessage %>" value="<%= TrashUtil.getNewName(themeDisplay, oldName) %>" />
+		<aui:input cssClass="new-file-name" label="" name="newName" title="<%= renameMessage %>" value="<%= TrashUtil.getNewName(themeDisplay, oldName) %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

@@ -115,9 +115,9 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<liferay-ui:restore-entry currentURL="<%= currentURL %>"
-	duplicationCheckURLAction="/message_boards/restore_entry"
-	restoreURLAction="/message_boards/restore_message_attachment"
-	overrideLabelMessage="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin"
-	renameLabelMessage="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as"
+<liferay-ui:restore-entry
+	duplicateCheckEntryAction="/message_boards/restore_entry"
+	overrideMessage="overwrite-the-existing-attachment-with-the-removed-one"
+	renameMessage="keep-both-attachments-and-rename-the-removed-attachment-as"
+	restoreEntryAction="/message_boards/restore_message_attachment"
 />

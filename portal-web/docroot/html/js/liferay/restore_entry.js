@@ -7,16 +7,12 @@ AUI.add(
 
 		var RESPONSE_DATA = 'responseData';
 
-		var STR_RESTORE_URL = 'restoreURL';
-
-		var STR_OVERRIDE_LABEL_MESSAGE =  "overrideLabelMessage";
-
-		var STR_RENAME_LABEL_MESSAGE = 'renameLabelMessage';
+		var STR_RESTORE_ENTRY_URL = 'restoreEntryURL';
 
 		var RestoreEntry = A.Component.create(
 			{
 				ATTRS: {
-					duplicationCheckURL: {
+					duplicateCheckEntryURL: {
 						validator: isString
 					},
 
@@ -24,15 +20,15 @@ AUI.add(
 						validator: isString
 					},
 
-					overrideLabelMessage:{
+					overrideMessage:{
 						validator:isString
 					},
 
-					renameLabelMessage:{
+					renameMessage:{
 						validator: isString
 					},
 
-					restoreURL: {
+					restoreEntryURL: {
 						validator: isString
 					}
 				},
@@ -82,12 +78,12 @@ AUI.add(
 							var data = {
 								duplicateEntryId: responseData.duplicateEntryId,
 								oldName: responseData.oldName,
-								overrideLabelMessage: instance.get(STR_OVERRIDE_LABEL_MESSAGE),
-								renameLabelMessage: instance.get(STR_RENAME_LABEL_MESSAGE),
+								overrideMessage: instance.get('overrideMessage'),
+								renameMessage: instance.get('renameMessage'),
 								trashEntryId: responseData.trashEntryId
 							};
 
-							instance._showPopup(data, instance.get('duplicationCheckURL'));
+							instance._showPopup(data, instance.get('duplicateCheckEntryURL'));
 						}
 					},
 
@@ -119,7 +115,7 @@ AUI.add(
 						var uri = event.uri;
 
 						A.io.request(
-							instance.get(STR_RESTORE_URL),
+							instance.get(STR_RESTORE_ENTRY_URL),
 							{
 								after: {
 									failure: A.rbind(instance._afterCheckEntryFailure, instance),
@@ -200,7 +196,7 @@ AUI.add(
 						}
 						else {
 							A.io.request(
-								instance.get(STR_RESTORE_URL),
+								instance.get(STR_RESTORE_ENTRY_URL),
 								{
 									after: {
 										failure: A.rbind(instance._afterPopupCheckEntryFailure, instance),

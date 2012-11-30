@@ -201,10 +201,9 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<liferay-ui:restore-entry currentURL="<%= currentURL %>"
-	duplicationCheckURLAction="/wiki/restore_entry"
-	restoreURLAction="/wiki/restore_page_attachment"
-	overrideLabelMessage="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin"
-	renameLabelMessage="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as"
+<liferay-ui:restore-entry
+	duplicateCheckEntryAction="/wiki/restore_entry"
+	overrideMessage="overwrite-the-existing-attachment-with-the-removed-one"
+	renameMessage="keep-both-attachments-and-rename-the-removed-attachment-as"
+	restoreEntryAction="/wiki/restore_page_attachment"
 />
-

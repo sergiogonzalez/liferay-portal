@@ -50,6 +50,8 @@
 	</div>
 </c:if>
 
+<liferay-ui:restore-entry />
+
 <portlet:actionURL var="selectContainerURL">
 	<portlet:param name="struts_action" value="/trash/edit_entry" />
 </portlet:actionURL>
@@ -107,10 +109,3 @@
 		['aui-base']
 	);
 </aui:script>
-
-<liferay-ui:restore-entry currentURL="<%= currentURL %>"
-	duplicationCheckURLAction="/trash/restore_entry"
-	restoreURLAction="/trash/edit_entry"
-	overrideLabelMessage="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin"
-	renameLabelMessage="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as"
-/>

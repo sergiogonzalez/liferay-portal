@@ -2481,27 +2481,22 @@
         <tag-class>com.liferay.taglib.ui.RestoreEntryTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
-            <name>duplicationCheckURLAction</name>
+            <name>duplicateCheckEntryAction</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>currentURL</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <name>overrideLabelMessage</name>
+			<name>overrideMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+            <name>renameMessage</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>renameLabelMessage</name>
-            <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <name>restoreURLAction</name>
+            <name>restoreEntryAction</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
