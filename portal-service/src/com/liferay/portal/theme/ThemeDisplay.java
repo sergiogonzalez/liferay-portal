@@ -505,10 +505,11 @@ public class ThemeDisplay
 		return _urlHome;
 	}
 
-	/**
-	 * @deprecated Use <code>getURLPageSettings().toString() + "#layout"</code>.
-	 */
 	public String getURLLayoutTemplates() {
+		if (Validator.isNull(_urlLayoutTemplates)) {
+			return _urlPageSettings + "#layout";
+		}
+
 		return _urlLayoutTemplates;
 	}
 

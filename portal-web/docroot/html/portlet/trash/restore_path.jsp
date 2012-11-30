@@ -68,6 +68,15 @@
 		function(event) {
 			var target = event.target;
 
+			<portlet:namespace />restoreDialog(target.attr('data-uri'));
+		},
+		'.trash-restore-link'
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />restoreDialog',
+		function(uri) {
 			Liferay.Util.openWindow(
 				{
 					dialog: {
@@ -77,17 +86,18 @@
 						width: 700
 					},
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "warning") %>',
-					uri: target.attr('data-uri')
+					uri: uri
 				}
 			);
 		},
-		'.trash-restore-link'
+		['aui-base']
 	);
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />submitForm',
-		function(className, classPK, containerModelId) {
+		function(redirect, className, classPK, containerModelId) {
+			document.<portlet:namespace />selectContainerForm.<portlet:namespace />redirect.value = redirect;
 			document.<portlet:namespace />selectContainerForm.<portlet:namespace />className.value = className;
 			document.<portlet:namespace />selectContainerForm.<portlet:namespace />classPK.value = classPK;
 			document.<portlet:namespace />selectContainerForm.<portlet:namespace />containerModelId.value = containerModelId;

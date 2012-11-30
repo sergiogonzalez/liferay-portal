@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
@@ -90,9 +92,11 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Check to see if user " + from + " exists");
 			}
 
-			if (from.equalsIgnoreCase(
-					PropsValues.MAIL_SESSION_MAIL_POP3_USER)) {
+			String pop3User = PrefsPropsUtil.getString(
+				PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
+				PropsValues.MAIL_SESSION_MAIL_POP3_USER);
 
+			if (from.equalsIgnoreCase(pop3User)) {
 				return false;
 			}
 
