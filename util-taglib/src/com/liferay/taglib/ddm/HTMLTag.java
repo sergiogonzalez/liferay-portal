@@ -12,22 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.myaccount;
+package com.liferay.taglib.ddm;
 
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.taglib.ddm.base.BaseHTMLTag;
 
 /**
- * @author Jorge Ferrer
+ * @author Bruno Basto
  */
-public class MyAccountControlPanelEntry extends BaseControlPanelEntry {
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
-	}
-
+public class HTMLTag extends BaseHTMLTag {
 }

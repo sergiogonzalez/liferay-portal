@@ -152,19 +152,7 @@ public class PortletBagFactory {
 			portlet);
 
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
-			new ArrayList<StagedModelDataHandler<?>>();
-
-		for (String stagedModelDataHandlerClass :
-				portlet.getStagedModelDataHandlerClasses()) {
-
-			StagedModelDataHandler<?> stagedModelDataHandler =
-				(StagedModelDataHandler<?>)newInstance(
-					StagedModelDataHandler.class, stagedModelDataHandlerClass);
-
-			stagedModelDataHandlerInstances.add(stagedModelDataHandler);
-
-			StagedModelDataHandlerRegistryUtil.register(stagedModelDataHandler);
-		}
+			newStagedModelDataHandler(portlet);
 
 		PortletDisplayTemplateHandler portletDisplayTemplateHandlerInstance =
 			newPortletDisplayTemplateHandler(portlet);
@@ -873,6 +861,31 @@ public class PortletBagFactory {
 		return (PortletLayoutListener)newInstance(
 			PortletLayoutListener.class,
 			portlet.getPortletLayoutListenerClass());
+	}
+
+	protected List<StagedModelDataHandler<?>> newStagedModelDataHandler(
+			Portlet portlet)
+		throws Exception {
+
+		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
+			new ArrayList<StagedModelDataHandler<?>>();
+
+		List<String> stagedModelDataHandlerClasses =
+			portlet.getStagedModelDataHandlerClasses();
+
+		for (String stagedModelDataHandlerClass :
+				stagedModelDataHandlerClasses) {
+
+			StagedModelDataHandler<?> stagedModelDataHandler =
+				(StagedModelDataHandler<?>)newInstance(
+					StagedModelDataHandler.class, stagedModelDataHandlerClass);
+
+			stagedModelDataHandlerInstances.add(stagedModelDataHandler);
+
+			StagedModelDataHandlerRegistryUtil.register(stagedModelDataHandler);
+		}
+
+		return stagedModelDataHandlerInstances;
 	}
 
 	protected URLEncoder newURLEncoder(Portlet portlet) throws Exception {

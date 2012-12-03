@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
@@ -28,19 +30,61 @@ import com.liferay.portal.util.PortletCategoryKeys;
  */
 public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
+
+		if (hasAccessPermissionDenied(permissionChecker, group, portlet)) {
+			return false;
+		}
+
+		if (hasAccessPermissionExplicitlyGranted(
+				permissionChecker, group, portlet)) {
+
+			return true;
+		}
+
+		return hasPermissionImplicitlyGranted(
+			permissionChecker, group, portlet);
+	}
+
+	/**
+	 * @deprecated As of 6.2, with no direct replacement.<p>This method was
+	 *             originally defined to determine if a portlet should be
+	 *             displayed in the Control Panel. In this version, this method
+	 *             should always return <code>false</code> and remains only to
+	 *             preserve binary compatibility. This method will be
+	 *             permanently removed in a future version.</p><p>In lieu of
+	 *             this method, the Control Panel now uses {@link
+	 *             #hasAccessPermission} to determine if a portlet should be
+	 *             displayed in the Control Panel.</p>
+	 */
+	public boolean isVisible(
+			PermissionChecker permissionChecker, Portlet portlet)
+		throws Exception {
+
+		return false;
+	}
+
+	/**
+	 * @deprecated As of 6.2, with no direct replacement.<p>This method was
+	 *             originally defined to determine if a portlet should be
+	 *             displayed in the Control Panel. In this version, this method
+	 *             should always return <code>false</code> and remains only to
+	 *             preserve binary compatibility. This method will be
+	 *             permanently removed in a future version.</p><p>In lieu of
+	 *             this method, the Control Panel now uses {@link
+	 *             #hasAccessPermission} to determine if a portlet should be
+	 *             displayed in the Control Panel.</p>
+	 */
 	public boolean isVisible(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
+		return false;
+	}
 
-		if (permissionChecker.isCompanyAdmin()) {
-			return true;
-		}
-
-		Group group = themeDisplay.getScopeGroup();
-
+	protected long getDefaultPlid(Group group, String category) {
 		long plid = LayoutConstants.DEFAULT_PLID;
 
 		if (category.equals(PortletCategoryKeys.CONTENT)) {
@@ -50,6 +94,26 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 				plid = group.getDefaultPrivatePlid();
 			}
 		}
+
+		return plid;
+	}
+
+	protected boolean hasAccessPermissionDenied(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
+
+		return false;
+	}
+
+	protected boolean hasAccessPermissionExplicitlyGranted(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws PortalException, SystemException {
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return true;
+		}
+
+		String category = portlet.getControlPanelEntryCategory();
 
 		if (category.equals(PortletCategoryKeys.CONTENT) &&
 			permissionChecker.isGroupAdmin(group.getGroupId()) &&
@@ -67,13 +131,21 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 		}
 
 		if (PortletPermissionUtil.contains(
-				permissionChecker, groupId, plid, portlet.getPortletId(),
-				ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
+				permissionChecker, groupId, getDefaultPlid(group, category),
+				portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL,
+				true)) {
 
 			return true;
 		}
 
-		return isVisible(themeDisplay.getPermissionChecker(), portlet);
+		return false;
+	}
+
+	protected boolean hasPermissionImplicitlyGranted(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
+
+		return false;
 	}
 
 }

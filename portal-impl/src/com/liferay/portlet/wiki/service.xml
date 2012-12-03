@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
 <service-builder package-path="com.liferay.portlet.wiki">
 	<namespace>Wiki</namespace>
@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="nodeId" type="long" primary="true" />
+		<column name="nodeId" type="long" primary="true" container-model="true" />
 
 		<!-- Group instance -->
 
@@ -72,7 +72,7 @@
 
 		<!-- Resource -->
 
-		<column name="resourcePrimKey" type="long" />
+		<column name="resourcePrimKey" type="long" filter-primary="true" />
 
 		<!-- Group instance -->
 
@@ -158,6 +158,16 @@
 			<finder-column name="nodeId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_N_H" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+		</finder>
+		<finder name="G_N_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="nodeId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="U_N_S" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="nodeId" />
@@ -184,6 +194,18 @@
 			<finder-column name="parentTitle" case-sensitive="false" />
 		</finder>
 		<finder name="N_H_S" return-type="Collection">
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_U_N_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="nodeId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_N_H_S" return-type="Collection">
+			<finder-column name="groupId" />
 			<finder-column name="nodeId" />
 			<finder-column name="head" />
 			<finder-column name="status" />

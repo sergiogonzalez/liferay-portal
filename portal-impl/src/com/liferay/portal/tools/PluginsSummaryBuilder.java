@@ -27,7 +27,9 @@ import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -50,6 +52,8 @@ public class PluginsSummaryBuilder {
 	public PluginsSummaryBuilder(File pluginsDir) {
 		try {
 			_pluginsDir = pluginsDir;
+
+			_latestHASH = _getLatestHASH(pluginsDir);
 
 			_createPluginsSummary();
 		}
@@ -239,6 +243,20 @@ public class PluginsSummaryBuilder {
 		return sb.toString();
 	}
 
+	private String _getLatestHASH(File pluginDir) throws Exception {
+		Runtime runtime = Runtime.getRuntime();
+
+		String command = "git rev-parse HEAD";
+
+		if (OSDetector.isWindows()) {
+			command = "cmd /c " + command;
+		}
+
+		Process process = runtime.exec(command, null, pluginDir);
+
+		return StringUtil.read(process.getInputStream());
+	}
+
 	private String _readProperty(Properties properties, String key) {
 		return GetterUtil.getString(properties.getProperty(key));
 	}
@@ -352,16 +370,18 @@ public class PluginsSummaryBuilder {
 			pluginPackageProperties.getProperty("module-incremental-version"));
 
 		if (!relengChangeLogFile.exists()) {
-			FileUtil.write(relengChangeLogFile, "HEAD=");
+			FileUtil.write(relengChangeLogFile, "TEMP=");
 		}
 
 		String relengChangeLogContent = FileUtil.read(relengChangeLogFile);
 
-		String[] relengChangeLogEntries = StringUtil.split(
+		List<String> relengChangeLogEntries = new ArrayList<String>();
+
+		String[] relengChangeLogEntriesArray = StringUtil.split(
 			relengChangeLogContent, "\n");
 
-		for (int i = 0; i < relengChangeLogEntries.length; i++) {
-			String relengChangeLogEntry = relengChangeLogEntries[i];
+		for (int i = 0; i < relengChangeLogEntriesArray.length; i++) {
+			String relengChangeLogEntry = relengChangeLogEntriesArray[i];
 
 			if (Validator.isNull(relengChangeLogEntry) ||
 				relengChangeLogEntry.startsWith("#")) {
@@ -369,19 +389,43 @@ public class PluginsSummaryBuilder {
 				continue;
 			}
 
+			relengChangeLogEntries.add(relengChangeLogEntry);
+
+			if (((i + 1) == relengChangeLogEntriesArray.length) &&
+				!relengChangeLogEntry.contains("HEAD=") &&
+				!relengChangeLogEntry.contains("TEMP=") &&
+				!relengChangeLogEntry.contains(_latestHASH) &&
+				!relengChangeLogEntries.isEmpty()) {
+
+				int x = relengChangeLogEntry.indexOf("..");
+				int y = relengChangeLogEntry.indexOf("=", x);
+
+				String range =
+					relengChangeLogEntry.substring(x + 2, y) + "^.." +
+						_latestHASH;
+
+				relengChangeLogEntries.add(range);
+
+				continue;
+			}
+		}
+
+		for (int i = 0; i < relengChangeLogEntries.size(); i++) {
+			String relengChangeLogEntry = relengChangeLogEntries.get(i);
+
 			String[] relengChangeLogEntryParts = StringUtil.split(
 				relengChangeLogEntry, "=");
 
 			String range = relengChangeLogEntryParts[0];
 
-			if (range.equals("HEAD")) {
+			if (range.equals("TEMP")) {
 				changeLogVersion++;
 
 				sb.append(
 					_getChangeLogEntry(
 						changeLogVersion, range, StringPool.BLANK));
 
-				continue;
+				break;
 			}
 
 			File webInfDir = relengChangeLogFile.getParentFile();
@@ -392,11 +436,24 @@ public class PluginsSummaryBuilder {
 
 			Set<String> ticketIds = _extractTicketIds(pluginDir, range);
 
+			if (range.endsWith("^.." + _latestHASH) && ticketIds.isEmpty()) {
+				continue;
+			}
+
+			if (ticketIds.isEmpty()) {
+				System.out.println(
+					pluginDir + " does not have changes for range " + range);
+			}
+
 			String[] dependentApps = StringUtil.split(
 				relengProperties.getProperty("dependent-apps"));
 
 			for (String dependentApp : dependentApps) {
 				dependentApp = dependentApp.trim();
+
+				if (dependentApp.equals("resources-impoter-web")) {
+					continue;
+				}
 
 				String dependentAppDirName = null;
 
@@ -521,6 +578,7 @@ public class PluginsSummaryBuilder {
 
 	private Set<String> _distinctAuthors = new TreeSet<String>();
 	private Set<String> _distinctLicenses = new TreeSet<String>();
+	private String _latestHASH;
 	private File _pluginsDir;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.usersadmin;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
@@ -34,8 +35,9 @@ import java.util.List;
  */
 public class UsersControlPanelEntry extends BaseControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	@Override
+	protected boolean hasPermissionImplicitlyGranted(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		List<UserGroupRole> userGroupRoles =

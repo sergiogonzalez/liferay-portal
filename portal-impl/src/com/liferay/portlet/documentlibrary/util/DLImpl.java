@@ -471,7 +471,7 @@ public class DLImpl implements DL {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		if (themeDisplay != null) {
 			if (absoluteURL) {
@@ -842,8 +842,7 @@ public class DLImpl implements DL {
 		String[] fileIcons = null;
 
 		try {
-			fileIcons = PrefsPropsUtil.getStringArray(
-				PropsKeys.DL_FILE_ICONS, StringPool.COMMA);
+			fileIcons = PropsUtil.getArray(PropsKeys.DL_FILE_ICONS);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

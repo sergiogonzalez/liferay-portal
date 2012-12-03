@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.googleadsense;
+package com.liferay.portalweb.plugins.ipgeocoder;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,24 +20,30 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageTest extends BaseTestCase {
-	public void testAddPage() throws Exception {
+public class AddPageIPGTest extends BaseTestCase {
+	public void testAddPageIPG() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//nav[@id='navigation']",
-			RuntimeVariables.replace("Navigation"));
-		selenium.waitForElementPresent("//a[@id='addPage']");
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='addPage']");
+		assertEquals(RuntimeVariables.replace("Page"),
+			selenium.getText("//a[@id='addPage']"));
+		selenium.clickAt("//a[@id='addPage']", RuntimeVariables.replace("Page"));
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Google Adsense Test Page"));
+			RuntimeVariables.replace("IP Geocoder Test Page"));
 		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("link=Google Adsense Test Page");
-		selenium.clickAt("link=Google Adsense Test Page",
-			RuntimeVariables.replace("Google Adsense Test Page"));
+		selenium.waitForVisible("link=IP Geocoder Test Page");
+		selenium.clickAt("link=IP Geocoder Test Page",
+			RuntimeVariables.replace("IP Geocoder Test Page"));
 		selenium.waitForPageToLoad("30000");
 	}
 }

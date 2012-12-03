@@ -80,7 +80,11 @@ if (record != null) {
 		}
 		%>
 
-		<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getCompleteXsd(), fields, locale) %>
+		<liferay-ddmddm:html
+			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+			classPK="<%= ddmStructure.getStructureId() %>"
+			fields="<%= fields %>"
+		/>
 
 		<%
 		boolean pending = false;
