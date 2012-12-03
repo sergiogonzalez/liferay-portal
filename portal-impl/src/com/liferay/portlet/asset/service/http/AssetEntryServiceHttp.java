@@ -118,6 +118,149 @@ public class AssetEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getBookmarkedEntries(
+		HttpPrincipal httpPrincipal, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
+					"getBookmarkedEntries", _getBookmarkedEntriesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.asset.model.AssetEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getBookmarkedEntries(
+		HttpPrincipal httpPrincipal, long userId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
+					"getBookmarkedEntries", _getBookmarkedEntriesParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					className);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.asset.model.AssetEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getBookmarkedEntries(
+		HttpPrincipal httpPrincipal, long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
+					"getBookmarkedEntries", _getBookmarkedEntriesParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.asset.model.AssetEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getBookmarkedEntries(
+		HttpPrincipal httpPrincipal, long userId, java.lang.String className,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
+					"getBookmarkedEntries", _getBookmarkedEntriesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					className, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.asset.model.AssetEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getEntries(
 		HttpPrincipal httpPrincipal,
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery)
@@ -125,7 +268,7 @@ public class AssetEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
-					"getEntries", _getEntriesParameterTypes2);
+					"getEntries", _getEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					entryQuery);
@@ -162,7 +305,7 @@ public class AssetEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
-					"getEntriesCount", _getEntriesCountParameterTypes3);
+					"getEntriesCount", _getEntriesCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					entryQuery);
@@ -199,7 +342,7 @@ public class AssetEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
-					"getEntry", _getEntryParameterTypes4);
+					"getEntry", _getEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -235,7 +378,7 @@ public class AssetEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
-					"incrementViewCounter", _incrementViewCounterParameterTypes5);
+					"incrementViewCounter", _incrementViewCounterParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK);
@@ -280,7 +423,7 @@ public class AssetEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes6);
+					"updateEntry", _updateEntryParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					createDate, modifiedDate, className, classPK, classUuid,
@@ -328,7 +471,7 @@ public class AssetEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes7);
+					"updateEntry", _updateEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					className, classPK, classUuid, classTypeId, categoryIds,
@@ -376,7 +519,7 @@ public class AssetEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes8);
+					"updateEntry", _updateEntryParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					className, classPK, classUuid, classTypeId, categoryIds,
@@ -417,19 +560,31 @@ public class AssetEntryServiceHttp {
 	private static final Class<?>[] _getCompanyEntriesCountParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getEntriesParameterTypes2 = new Class[] {
-			com.liferay.portlet.asset.service.persistence.AssetEntryQuery.class
-		};
-	private static final Class<?>[] _getEntriesCountParameterTypes3 = new Class[] {
-			com.liferay.portlet.asset.service.persistence.AssetEntryQuery.class
-		};
-	private static final Class<?>[] _getEntryParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getBookmarkedEntriesParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _incrementViewCounterParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getBookmarkedEntriesParameterTypes3 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getBookmarkedEntriesParameterTypes4 = new Class[] {
+			long.class, int.class, int.class
+		};
+	private static final Class<?>[] _getBookmarkedEntriesParameterTypes5 = new Class[] {
+			long.class, java.lang.String.class, int.class, int.class
+		};
+	private static final Class<?>[] _getEntriesParameterTypes6 = new Class[] {
+			com.liferay.portlet.asset.service.persistence.AssetEntryQuery.class
+		};
+	private static final Class<?>[] _getEntriesCountParameterTypes7 = new Class[] {
+			com.liferay.portlet.asset.service.persistence.AssetEntryQuery.class
+		};
+	private static final Class<?>[] _getEntryParameterTypes8 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _incrementViewCounterParameterTypes9 = new Class[] {
 			java.lang.String.class, long.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes6 = new Class[] {
+	private static final Class<?>[] _updateEntryParameterTypes10 = new Class[] {
 			long.class, java.util.Date.class, java.util.Date.class,
 			java.lang.String.class, long.class, java.lang.String.class,
 			long.class, long[].class, java.lang.String[].class, boolean.class,
@@ -439,7 +594,7 @@ public class AssetEntryServiceHttp {
 			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			java.lang.Integer.class, boolean.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes7 = new Class[] {
+	private static final Class<?>[] _updateEntryParameterTypes11 = new Class[] {
 			long.class, java.lang.String.class, long.class,
 			java.lang.String.class, long.class, long[].class,
 			java.lang.String[].class, boolean.class, java.util.Date.class,
@@ -449,7 +604,7 @@ public class AssetEntryServiceHttp {
 			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			java.lang.Integer.class, boolean.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateEntryParameterTypes12 = new Class[] {
 			long.class, java.lang.String.class, long.class,
 			java.lang.String.class, long.class, long[].class,
 			java.lang.String[].class, boolean.class, java.util.Date.class,

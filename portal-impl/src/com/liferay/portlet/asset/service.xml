@@ -3,6 +3,37 @@
 
 <service-builder package-path="com.liferay.portlet.asset">
 	<namespace>Asset</namespace>
+	<entity name="AssetBookmark" local-service="true" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="bookmarkId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="userId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection" >
+			<finder-column name="userId" />
+		</finder>
+		<finder name="U_CNI" return-type="Collection" >
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="U_CPK" return-type="AssetBookmark" >
+			<finder-column name="userId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="U_C_C" return-type="AssetBookmark" >
+			<finder-column name="userId" />
+			<finder-column name="classNameId"  />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
 	<entity name="AssetCategory" uuid="true" uuid-accessor="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->

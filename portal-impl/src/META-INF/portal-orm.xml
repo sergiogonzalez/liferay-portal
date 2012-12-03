@@ -1429,6 +1429,22 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.asset.model.impl.AssetBookmarkModelImpl">
+		<attributes>
+			<id name="bookmarkId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="userId" />
+			<basic name="classNameId" />
+			<basic name="classPK" />
+			<transient name="className" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl">
 		<attributes>
 			<id name="categoryId" />
@@ -4061,6 +4077,10 @@
 	</entity>
 	<entity class="com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl" name="AnnouncementsFlag">
 		<table name="AnnouncementsFlag" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.asset.model.impl.AssetBookmarkImpl" name="AssetBookmark">
+		<table name="AssetBookmark" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.asset.model.impl.AssetCategoryImpl" name="AssetCategory">

@@ -189,6 +189,9 @@
 	<bean id="com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl" />
 	<bean id="com.liferay.portlet.announcements.service.AnnouncementsFlagService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl" />
 	<bean id="com.liferay.portlet.announcements.service.persistence.AnnouncementsFlagPersistence" class="com.liferay.portlet.announcements.service.persistence.AnnouncementsFlagPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.asset.service.AssetBookmarkLocalService" class="com.liferay.portlet.asset.service.impl.AssetBookmarkLocalServiceImpl" />
+	<bean id="com.liferay.portlet.asset.service.AssetBookmarkService" class="com.liferay.portlet.asset.service.impl.AssetBookmarkServiceImpl" />
+	<bean id="com.liferay.portlet.asset.service.persistence.AssetBookmarkPersistence" class="com.liferay.portlet.asset.service.persistence.AssetBookmarkPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.asset.service.AssetCategoryLocalService" class="com.liferay.portlet.asset.service.impl.AssetCategoryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.AssetCategoryService" class="com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetCategoryPersistence" class="com.liferay.portlet.asset.service.persistence.AssetCategoryPersistenceImpl" parent="basePersistence" />

@@ -66,6 +66,33 @@ public class AssetEntryServiceUtil {
 		return getService().getCompanyEntriesCount(companyId);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getBookmarkedEntries(
+		long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getBookmarkedEntries(userId);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getBookmarkedEntries(
+		long userId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getBookmarkedEntries(userId, className);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getBookmarkedEntries(
+		long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getBookmarkedEntries(userId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getBookmarkedEntries(
+		long userId, java.lang.String className, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getBookmarkedEntries(userId, className, start, end);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getEntries(
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery)
 		throws com.liferay.portal.kernel.exception.PortalException,

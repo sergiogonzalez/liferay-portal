@@ -29,6 +29,8 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.service.AssetBookmarkLocalService;
+import com.liferay.portlet.asset.service.AssetBookmarkService;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
 import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalService;
 import com.liferay.portlet.asset.service.AssetCategoryPropertyService;
@@ -43,6 +45,7 @@ import com.liferay.portlet.asset.service.AssetTagService;
 import com.liferay.portlet.asset.service.AssetTagStatsLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyService;
+import com.liferay.portlet.asset.service.persistence.AssetBookmarkPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyFinder;
@@ -81,6 +84,63 @@ public abstract class AssetCategoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.asset.service.AssetCategoryServiceUtil} to access the asset category remote service.
 	 */
+
+	/**
+	 * Returns the asset bookmark local service.
+	 *
+	 * @return the asset bookmark local service
+	 */
+	public AssetBookmarkLocalService getAssetBookmarkLocalService() {
+		return assetBookmarkLocalService;
+	}
+
+	/**
+	 * Sets the asset bookmark local service.
+	 *
+	 * @param assetBookmarkLocalService the asset bookmark local service
+	 */
+	public void setAssetBookmarkLocalService(
+		AssetBookmarkLocalService assetBookmarkLocalService) {
+		this.assetBookmarkLocalService = assetBookmarkLocalService;
+	}
+
+	/**
+	 * Returns the asset bookmark remote service.
+	 *
+	 * @return the asset bookmark remote service
+	 */
+	public AssetBookmarkService getAssetBookmarkService() {
+		return assetBookmarkService;
+	}
+
+	/**
+	 * Sets the asset bookmark remote service.
+	 *
+	 * @param assetBookmarkService the asset bookmark remote service
+	 */
+	public void setAssetBookmarkService(
+		AssetBookmarkService assetBookmarkService) {
+		this.assetBookmarkService = assetBookmarkService;
+	}
+
+	/**
+	 * Returns the asset bookmark persistence.
+	 *
+	 * @return the asset bookmark persistence
+	 */
+	public AssetBookmarkPersistence getAssetBookmarkPersistence() {
+		return assetBookmarkPersistence;
+	}
+
+	/**
+	 * Sets the asset bookmark persistence.
+	 *
+	 * @param assetBookmarkPersistence the asset bookmark persistence
+	 */
+	public void setAssetBookmarkPersistence(
+		AssetBookmarkPersistence assetBookmarkPersistence) {
+		this.assetBookmarkPersistence = assetBookmarkPersistence;
+	}
 
 	/**
 	 * Returns the asset category local service.
@@ -805,6 +865,12 @@ public abstract class AssetCategoryServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
+	@BeanReference(type = AssetBookmarkLocalService.class)
+	protected AssetBookmarkLocalService assetBookmarkLocalService;
+	@BeanReference(type = AssetBookmarkService.class)
+	protected AssetBookmarkService assetBookmarkService;
+	@BeanReference(type = AssetBookmarkPersistence.class)
+	protected AssetBookmarkPersistence assetBookmarkPersistence;
 	@BeanReference(type = AssetCategoryLocalService.class)
 	protected AssetCategoryLocalService assetCategoryLocalService;
 	@BeanReference(type = AssetCategoryService.class)

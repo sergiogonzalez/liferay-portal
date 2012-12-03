@@ -66,6 +66,8 @@
 		<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
 	</c:if>
 
+	<aui:input name="preferences--enableFavorites--" type="checkbox" value="<%= enableFavorites %>" />
+
 	<aui:fieldset>
 		<aui:input name="preferences--enableSocialBookmarks--" type="checkbox" value="<%= enableSocialBookmarks %>" />
 

@@ -53,6 +53,9 @@ public class AssetEntryFinderImpl
 	public static final String FIND_BY_AND_TAG_IDS =
 		AssetEntryFinder.class.getName() + ".findByAndTagIds";
 
+	public static final String FIND_BOOKMARKED_ENTRIES =
+		AssetEntryFinder.class.getName() + ".findBookmarkedEntries";
+
 	public int countEntries(AssetEntryQuery entryQuery) throws SystemException {
 		Session session = null;
 
@@ -93,6 +96,35 @@ public class AssetEntryFinderImpl
 
 			return (List<AssetEntry>)QueryUtil.list(
 				q, getDialect(), entryQuery.getStart(), entryQuery.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<AssetEntry> findBookmarkedEntries(
+			long userId, long classNameId, int start, int end)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BOOKMARKED_ENTRIES);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("AssetEntry", AssetEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

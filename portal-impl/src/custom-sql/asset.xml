@@ -176,6 +176,18 @@
 				([$TAG_ID$])
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.findBookmarkedEntries">
+		<![CDATA[
+			SELECT
+				{AssetEntry.*}
+			FROM
+				AssetEntry
+			INNER JOIN
+				AssetBookmark ON (AssetEntry.classPK = AssetBookmark.classPK)
+			WHERE
+				(AssetBookmark.userId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetLinkFinder.findByE1_V">
 		<![CDATA[
 			SELECT

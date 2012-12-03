@@ -207,6 +207,7 @@ boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enable
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null));
 boolean enableComments = GetterUtil.getBoolean(preferences.getValue("enableComments", null));
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null));
+boolean enableFavorites = GetterUtil.getBoolean(preferences.getValue("enableFavorites", null), true);
 boolean enableTagBasedNavigation = GetterUtil.getBoolean(preferences.getValue("enableTagBasedNavigation", null));
 
 String[] conversions = DocumentConversionUtil.getConversions("html");

@@ -47,7 +47,15 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<c:if test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
 					<div class="entry-title">
-						<h2><aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></h2>
+						<h2><aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
+							<c:if test="<%= themeDisplay.isSignedIn() && enableFavorites %>">
+								<liferay-ui:asset-bookmark
+									userId="<%= themeDisplay.getUserId() %>"
+									className="<%= BlogsEntry.class.getName() %>"
+									classPK="<%= entry.getEntryId() %>"
+								/>
+							</c:if>
+						</h2>
 					</div>
 				</c:if>
 

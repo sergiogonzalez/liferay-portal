@@ -93,6 +93,68 @@ public class AssetEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.asset.model.AssetEntrySoap[] getBookmarkedEntries(
+		long userId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.asset.model.AssetEntry> returnValue =
+				AssetEntryServiceUtil.getBookmarkedEntries(userId);
+
+			return com.liferay.portlet.asset.model.AssetEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetEntrySoap[] getBookmarkedEntries(
+		long userId, java.lang.String className) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.asset.model.AssetEntry> returnValue =
+				AssetEntryServiceUtil.getBookmarkedEntries(userId, className);
+
+			return com.liferay.portlet.asset.model.AssetEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetEntrySoap[] getBookmarkedEntries(
+		long userId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.asset.model.AssetEntry> returnValue =
+				AssetEntryServiceUtil.getBookmarkedEntries(userId, start, end);
+
+			return com.liferay.portlet.asset.model.AssetEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetEntrySoap[] getBookmarkedEntries(
+		long userId, java.lang.String className, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.asset.model.AssetEntry> returnValue =
+				AssetEntryServiceUtil.getBookmarkedEntries(userId, className,
+					start, end);
+
+			return com.liferay.portlet.asset.model.AssetEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.asset.model.AssetEntrySoap[] getEntries(
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery)
 		throws RemoteException {

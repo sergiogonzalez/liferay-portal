@@ -17,6 +17,12 @@ create index IX_F2949120 on AnnouncementsEntry (uuid_, companyId);
 create index IX_9C7EB9F on AnnouncementsFlag (entryId);
 create unique index IX_4539A99C on AnnouncementsFlag (userId, entryId, value);
 
+create index IX_5D65F2A6 on AssetBookmark (userId);
+create index IX_57DD0468 on AssetBookmark (userId, classNameId);
+create index IX_8EB6447B on AssetBookmark (userId, classNameId, classPK);
+create index IX_B3227BFD on AssetBookmark (userId, classPK);
+create index IX_ABC891C8 on AssetBookmark (uuid_);
+
 create index IX_E639E2F6 on AssetCategory (groupId);
 create index IX_852EA801 on AssetCategory (groupId, parentCategoryId, name, vocabularyId);
 create index IX_2008FACB on AssetCategory (groupId, vocabularyId);
@@ -300,6 +306,12 @@ create index IX_1BD3F4C on ExpandoValue (tableId, classPK);
 create index IX_CA9AFB7C on ExpandoValue (tableId, columnId);
 create unique index IX_D27B03E7 on ExpandoValue (tableId, columnId, classPK);
 create index IX_B71E92D5 on ExpandoValue (tableId, rowId_);
+
+create index IX_D2060F94 on FavoriteAsset (userId);
+create index IX_A57BDA3A on FavoriteAsset (userId, classNameId);
+create index IX_3235DAE9 on FavoriteAsset (userId, classNameId, classPK);
+create index IX_97290ACF on FavoriteAsset (userId, classPK);
+create index IX_E95A1F1A on FavoriteAsset (uuid_);
 
 create index IX_ABA5CEC2 on Group_ (companyId);
 create unique index IX_D0D5E397 on Group_ (companyId, classNameId, classPK);

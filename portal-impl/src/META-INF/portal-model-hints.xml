@@ -1034,6 +1034,13 @@
 		<field name="entryId" type="long" />
 		<field name="value" type="int" />
 	</model>
+	<model name="com.liferay.portlet.asset.model.AssetBookmark">
+		<field name="uuid" type="String" />
+		<field name="bookmarkId" type="long" />
+		<field name="userId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+	</model>
 	<model name="com.liferay.portlet.asset.model.AssetCategory">
 		<field name="uuid" type="String" />
 		<field name="categoryId" type="long" />

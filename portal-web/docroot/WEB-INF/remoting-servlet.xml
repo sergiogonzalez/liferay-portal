@@ -505,6 +505,18 @@
 		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsFlagService" />
 		<property name="serviceInterface" value="com.liferay.portlet.announcements.service.AnnouncementsFlagService" />
 	</bean>
+	<bean name="/com_liferay_portlet_asset_service_spring_AssetBookmarkService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.asset.service.AssetBookmarkService" />
+		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetBookmarkService" />
+	</bean>
+	<bean name="/com_liferay_portlet_asset_service_spring_AssetBookmarkService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.asset.service.AssetBookmarkService" />
+		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetBookmarkService" />
+	</bean>
+	<bean name="/com_liferay_portlet_asset_service_spring_AssetBookmarkService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.asset.service.AssetBookmarkService" />
+		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetBookmarkService" />
+	</bean>
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetCategoryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetCategoryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetCategoryService" />

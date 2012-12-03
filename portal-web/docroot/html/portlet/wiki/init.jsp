@@ -85,6 +85,7 @@ boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enable
 boolean enablePageRatings = PropsValues.WIKI_PAGE_RATINGS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enablePageRatings", null), true);
 boolean enableComments = PropsValues.WIKI_PAGE_COMMENTS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableComments", null), true);
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
+boolean enableFavorites = GetterUtil.getBoolean(preferences.getValue("enableFavorites", null), true);
 
 List<WikiNode> allNodes = WikiNodeLocalServiceUtil.getNodes(scopeGroupId);
 List<String> allNodeNames = WikiUtil.getNodeNames(allNodes);

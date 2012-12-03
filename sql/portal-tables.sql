@@ -76,6 +76,14 @@ create table AnnouncementsFlag (
 	value INTEGER
 );
 
+create table AssetBookmark (
+	uuid_ VARCHAR(75) null,
+	bookmarkId LONG not null primary key,
+	userId LONG,
+	classNameId LONG,
+	classPK LONG
+);
+
 create table AssetCategory (
 	uuid_ VARCHAR(75) null,
 	categoryId LONG not null primary key,
@@ -740,6 +748,14 @@ create table ExpandoValue (
 	classNameId LONG,
 	classPK LONG,
 	data_ STRING null
+);
+
+create table FavoriteAsset (
+	uuid_ VARCHAR(75) null,
+	favoriteId LONG not null primary key,
+	userId LONG,
+	classNameId LONG,
+	classPK LONG
 );
 
 create table Group_ (

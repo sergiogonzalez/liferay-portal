@@ -86,6 +86,13 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 					<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /> <%= HtmlUtil.escape(title) %>
 				</c:otherwise>
 			</c:choose>
+			<c:if test="<%= themeDisplay.isSignedIn() && enableFavorites %>">
+				<liferay-ui:asset-bookmark
+					userId="<%= themeDisplay.getUserId() %>"
+					className="<%= assetEntry.getClassName() %>"
+					classPK="<%= assetEntry.getClassPK() %>"
+				/>
+			</c:if>
 		</h3>
 
 		<div class="asset-content">

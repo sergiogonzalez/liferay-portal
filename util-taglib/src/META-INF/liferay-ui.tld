@@ -826,6 +826,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>asset-bookmark</name>
+		<tag-class>com.liferay.taglib.ui.AssetBookmarkTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>userId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>className</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>classPK</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>flags</name>
 		<tag-class>com.liferay.taglib.ui.FlagsTag</tag-class>
 		<body-content>JSP</body-content>

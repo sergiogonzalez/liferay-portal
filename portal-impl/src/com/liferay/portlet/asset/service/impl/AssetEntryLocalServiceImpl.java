@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -172,6 +174,35 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	public int getCompanyEntriesCount(long companyId) throws SystemException {
 		return assetEntryPersistence.countByCompanyId(companyId);
+	}
+
+	public List<AssetEntry> getBookmarkedEntries(long userId)
+		throws PortalException, SystemException {
+
+		return getBookmarkedEntries(
+			userId, StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<AssetEntry> getBookmarkedEntries(long userId, String className)
+		throws PortalException, SystemException {
+
+		return getBookmarkedEntries(
+			userId, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<AssetEntry> getBookmarkedEntries(
+			long userId, int start, int end)
+		throws PortalException, SystemException {
+
+		return getBookmarkedEntries(userId, StringPool.BLANK, start, end);
+	}
+
+	public List<AssetEntry> getBookmarkedEntries(
+			long userId, String className, int start, int end)
+		throws SystemException {
+
+		return assetEntryFinder.findBookmarkedEntries(
+			userId, PortalUtil.getClassNameId(className), start, end);
 	}
 
 	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)

@@ -172,6 +172,14 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 	</c:when>
 	<c:otherwise>
 
+		<c:if test="<%= themeDisplay.isSignedIn() && enableFavorites %>">
+			<liferay-ui:asset-bookmark
+				userId="<%= themeDisplay.getUserId() %>"
+				className="<%= WikiPage.class.getName() %>"
+				classPK="<%= wikiPage.getResourcePrimKey() %>"
+			/>
+		</c:if>
+
 		<liferay-ui:header
 			backLabel="<%= parentTitle %>"
 			backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"

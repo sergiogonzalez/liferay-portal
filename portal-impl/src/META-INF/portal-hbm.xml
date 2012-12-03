@@ -74,6 +74,7 @@
 	<import class="com.liferay.portlet.announcements.model.AnnouncementsDelivery" />
 	<import class="com.liferay.portlet.announcements.model.AnnouncementsEntry" />
 	<import class="com.liferay.portlet.announcements.model.AnnouncementsFlag" />
+	<import class="com.liferay.portlet.asset.model.AssetBookmark" />
 	<import class="com.liferay.portlet.asset.model.AssetCategory" />
 	<import class="com.liferay.portlet.asset.model.AssetCategoryProperty" />
 	<import class="com.liferay.portlet.asset.model.AssetEntry" />
@@ -1135,6 +1136,16 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="entryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="value" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.portlet.asset.model.impl.AssetBookmarkImpl" table="AssetBookmark">
+		<cache usage="read-write" />
+		<id name="bookmarkId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetCategoryImpl" table="AssetCategory">
 		<cache usage="read-write" />

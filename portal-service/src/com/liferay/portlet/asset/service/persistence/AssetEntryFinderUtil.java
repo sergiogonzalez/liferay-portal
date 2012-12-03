@@ -33,6 +33,12 @@ public class AssetEntryFinderUtil {
 		return getFinder().findEntries(entryQuery);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findBookmarkedEntries(
+		long userId, long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findBookmarkedEntries(userId, classNameId, start, end);
+	}
+
 	public static AssetEntryFinder getFinder() {
 		if (_finder == null) {
 			_finder = (AssetEntryFinder)PortalBeanLocatorUtil.locate(AssetEntryFinder.class.getName());

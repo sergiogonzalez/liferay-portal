@@ -47,6 +47,14 @@ request.setAttribute("view.jsp-showIconLabel", true);
 %>
 
 <c:if test="<%= showAssetTitle %>">
+	<c:if test="<%= themeDisplay.isSignedIn() && enableFavorites %>">
+		<liferay-ui:asset-bookmark
+			userId="<%= themeDisplay.getUserId() %>"
+			className="<%= assetEntry.getClassName() %>"
+			classPK="<%= assetEntry.getClassPK() %>"
+		/>
+	</c:if>
+
 	<liferay-ui:header
 		backURL="<%= print ? null : redirect %>"
 		localizeTitle="<%= false %>"
