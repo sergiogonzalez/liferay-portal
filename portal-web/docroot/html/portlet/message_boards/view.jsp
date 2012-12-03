@@ -184,11 +184,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<div class="thread-actions">
 				<liferay-ui:icon-list>
-					<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+					<c:if test="<%= enableRSS %>">
 
 						<%
-						rssURL.setParameter("p_l_id", String.valueOf(plid));
-
 						if (category.getCategoryId() > 0) {
 							rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
 						}
@@ -197,12 +195,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						}
 						%>
 
-						<liferay-ui:icon
-							image="rss"
-							label="<%= true %>"
-							method="get"
-							target="_blank"
-							url="<%= rssURL.toString() %>"
+						<liferay-ui:rss
+							delta="<%= rssDelta %>"
+							displayStyle="<%= rssDisplayStyle %>"
+							feedType="<%= rssFeedType %>"
+							resourceURL="<%= rssURL %>"
 						/>
 					</c:if>
 
