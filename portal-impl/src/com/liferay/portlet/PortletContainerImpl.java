@@ -467,8 +467,8 @@ public class PortletContainerImpl implements PortletContainer {
 					(PortletConfigImpl)invokerPortlet.getPortletConfig();
 
 				if (invokerPortlet.isStrutsPortlet() ||
-					((invokerPortletConfigImpl != null) &&
-						!invokerPortletConfigImpl.isWARFile())) {
+					invokerPortletConfigImpl.isCopyRequestParameters() ||
+					!invokerPortletConfigImpl.isWARFile()) {
 
 					uploadServletRequest = new UploadServletRequestImpl(
 						request);

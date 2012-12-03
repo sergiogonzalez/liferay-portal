@@ -79,6 +79,7 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 		return TYPE;
 	}
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

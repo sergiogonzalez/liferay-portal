@@ -108,6 +108,7 @@ public class PortletImpl extends PortletBaseImpl {
 		setActive(true);
 		_indexerClasses = new ArrayList<String>();
 		_schedulerEntries = new ArrayList<SchedulerEntry>();
+		_stagedModelDataHandlerClasses = new ArrayList<String>();
 		_assetRendererFactoryClasses = new ArrayList<String>();
 		_atomCollectionAdapterClasses = new ArrayList<String>();
 		_customAttributesDisplayClasses = new ArrayList<String>();
