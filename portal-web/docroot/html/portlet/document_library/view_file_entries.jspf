@@ -54,27 +54,22 @@
 
 				assetEntryQuery.setExcludeZeroViewCount(false);
 
-				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-				total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+				searchContainer.setTotal(AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
+				searchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
 			}
 			else {
 				if (mergedView) {
-					results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, true, searchContainer.getStart(), searchContainer.getEnd());
+					searchContainer.setTotal(DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true));
+					searchContainer.setResults(DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, true, searchContainer.getStart(), searchContainer.getEnd()));
 				}
 				else {
-					results = DLAppServiceUtil.getFileEntriesAndFileShortcuts(repositoryId, folderId, status, searchContainer.getStart(), searchContainer.getEnd());
-				}
-
-				if (mergedView) {
-					total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
-				}
-				else {
-					total = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
+					searchContainer.setTotal(DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status));
+					searchContainer.setResults(DLAppServiceUtil.getFileEntriesAndFileShortcuts(repositoryId, folderId, status, searchContainer.getStart(), searchContainer.getEnd()));
 				}
 			}
 
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
+			pageContext.setAttribute("results", searchContainer.getResults());
+			pageContext.setAttribute("total", searchContainer.getTotal());
 			%>
 
 		</liferay-ui:search-container-results>
