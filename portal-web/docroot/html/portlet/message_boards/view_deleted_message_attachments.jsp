@@ -115,17 +115,9 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<aui:script use="liferay-restore-entry">
-	<portlet:actionURL var="restoreEntryURL">
-		<portlet:param name="struts_action" value="/message_boards/restore_message_attachment" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
-	</portlet:actionURL>
-
-	new Liferay.RestoreEntry(
-		{
-			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/message_boards/restore_message_attachment" /></portlet:actionURL>',
-			namespace: '<portlet:namespace />',
-			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/message_boards/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="restoreEntryURL" value="<%= restoreEntryURL %>" /></portlet:renderURL>'
-		}
-	);
-</aui:script>
+<liferay-ui:restore-entry currentURL="<%= currentURL %>"
+	duplicationCheckURLAction="/message_boards/restore_entry"
+	restoreURLAction="/message_boards/restore_message_attachment"
+	overrideLabelMessage="overwrite-the-existing-attachment-with-the-one-from-the-recycle-bin"
+	renameLabelMessage="keep-both-attachments-and-rename-the-attachment-from-the-recycle-bin-as"
+/>

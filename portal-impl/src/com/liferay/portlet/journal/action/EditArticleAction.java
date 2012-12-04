@@ -239,7 +239,7 @@ public class EditArticleAction extends PortletAction {
 				redirect = PortalUtil.escapeRedirect(redirect);
 
 				if (Validator.isNotNull(redirect)) {
-					actionResponse.sendRedirect(redirect);
+					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 			}
 		}
