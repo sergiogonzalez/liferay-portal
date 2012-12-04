@@ -60,14 +60,6 @@ public class TrashUtil {
 			request, trashHandler, containerModel, containerModelURL);
 	}
 
-	public static String appendTrashNamespace(String title) {
-		return getTrash().appendTrashNamespace(title);
-	}
-
-	public static String appendTrashNamespace(String title, String separator) {
-		return getTrash().appendTrashNamespace(title, separator);
-	}
-
 	public static void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)

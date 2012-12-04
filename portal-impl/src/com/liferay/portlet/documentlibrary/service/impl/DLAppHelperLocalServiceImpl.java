@@ -467,15 +467,6 @@ public class DLAppHelperLocalServiceImpl
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		// File entry
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		dlFileEntry.setTitle(
-			TrashUtil.appendTrashNamespace(dlFileEntry.getTitle()));
-
-		dlFileEntryPersistence.update(dlFileEntry);
-
 		List<DLFileVersion> dlFileVersions =
 			dlFileVersionLocalService.getFileVersions(
 				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
@@ -498,6 +489,17 @@ public class DLAppHelperLocalServiceImpl
 			userId, fileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_IN_TRASH, workflowContext,
 			new ServiceContext());
+
+		// File entry
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId());
+
+		dlFileEntry.setTitle(String.valueOf(trashEntry.getEntryId()));
+
+		dlFileEntryPersistence.update(dlFileEntry);
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return fileEntry;
@@ -624,7 +626,10 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
-		dlFolder.setName(TrashUtil.appendTrashNamespace(dlFolder.getName()));
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			DLFolderConstants.getClassName(), dlFolder.getFolderId());
+
+		dlFolder.setName(String.valueOf(trashEntry.getEntryId()));
 
 		dlFolderPersistence.update(dlFolder);
 

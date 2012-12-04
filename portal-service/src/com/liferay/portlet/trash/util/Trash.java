@@ -41,10 +41,6 @@ public interface Trash {
 			ContainerModel containerModel, PortletURL containerModelURL)
 		throws PortalException, SystemException;
 
-	public String appendTrashNamespace(String title);
-
-	public String appendTrashNamespace(String title, String separator);
-
 	public void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
