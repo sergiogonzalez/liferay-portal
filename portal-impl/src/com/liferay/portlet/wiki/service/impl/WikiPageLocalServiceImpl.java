@@ -467,7 +467,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Trash
 
 		if (page.isInTrash()) {
-			page.setTitle(TrashUtil.stripTrashNamespace(page.getTitle()));
+			page.setTitle(TrashUtil.getOriginalTitle(page.getTitle()));
 
 			trashEntryLocalService.deleteEntry(
 				WikiPage.class.getName(), page.getResourcePrimKey());
@@ -1190,7 +1190,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public void restorePageFromTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
 
-		String title = TrashUtil.stripTrashNamespace(page.getTitle());
+		String title = TrashUtil.getOriginalTitle(page.getTitle());
 
 		page.setTitle(title);
 
@@ -1607,7 +1607,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			String oldTitle = page.getTitle();
 
-			page.setTitle(TrashUtil.stripTrashNamespace(oldTitle));
+			page.setTitle(TrashUtil.getOriginalTitle(oldTitle));
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				WikiPage.class);

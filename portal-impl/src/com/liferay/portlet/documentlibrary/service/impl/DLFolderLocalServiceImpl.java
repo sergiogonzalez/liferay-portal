@@ -620,7 +620,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		if (dlFolder.isInTrash() &&
 			(status == WorkflowConstants.STATUS_APPROVED)) {
 
-			dlFolder.setName(TrashUtil.stripTrashNamespace(dlFolder.getName()));
+			dlFolder.setName(TrashUtil.getOriginalTitle(dlFolder.getName()));
 		}
 
 		dlFolder.setStatus(status);

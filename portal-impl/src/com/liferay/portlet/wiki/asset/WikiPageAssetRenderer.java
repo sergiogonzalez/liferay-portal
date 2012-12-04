@@ -108,11 +108,17 @@ public class WikiPageAssetRenderer
 	}
 
 	public String getTitle(Locale locale) {
+		String title = _page.getTitle();
+
 		if (!_page.isInTrash()) {
-			return _page.getTitle();
+			try {
+				title = TrashUtil.getOriginalTitle(title);
+			}
+			catch (Exception e) {
+			}
 		}
 
-		return TrashUtil.stripTrashNamespace(_page.getTitle());
+		return title;
 	}
 
 	public String getType() {

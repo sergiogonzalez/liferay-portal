@@ -200,7 +200,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			node.getCompanyId(), WikiNode.class.getName(), node.getNodeId());
 
 		if (node.isInTrash()) {
-			node.setName(TrashUtil.stripTrashNamespace(node.getName()));
+			node.setName(TrashUtil.getOriginalTitle(node.getName()));
 
 			// Trash
 
@@ -362,7 +362,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	public void restoreNodeFromTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
-		String name = TrashUtil.stripTrashNamespace(node.getName());
+		String name = TrashUtil.getOriginalTitle(node.getName());
 
 		node.setName(name);
 
@@ -463,7 +463,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			String oldName = node.getName();
 
-			node.setName(TrashUtil.stripTrashNamespace(oldName));
+			node.setName(TrashUtil.getOriginalTitle(oldName));
 
 			indexer.reindex(node);
 

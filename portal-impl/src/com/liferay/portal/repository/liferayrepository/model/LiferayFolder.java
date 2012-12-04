@@ -109,7 +109,17 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	public String getName() {
-		return TrashUtil.stripTrashNamespace(_dlFolder.getName());
+		String name = _dlFolder.getName();
+
+		if (_dlFolder.isInTrash()) {
+			try {
+				name = TrashUtil.getOriginalTitle(name);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return name;
 	}
 
 	public Folder getParentFolder() throws PortalException, SystemException {
