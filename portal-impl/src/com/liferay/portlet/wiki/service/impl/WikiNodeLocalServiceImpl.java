@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -445,9 +446,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 				WikiNode.class.getName(), node.getNodeId());
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+			typeSettingsProperties.put("title", node.getName());
+
 			trashEntryLocalService.addTrashEntry(
 				userId, node.getGroupId(), WikiNode.class.getName(),
-				node.getNodeId(), oldStatus, null, null);
+				node.getNodeId(), oldStatus, null, typeSettingsProperties);
 		}
 
 		// Indexer

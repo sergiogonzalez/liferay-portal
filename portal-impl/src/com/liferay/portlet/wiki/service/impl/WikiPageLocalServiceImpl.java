@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1591,9 +1592,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			// Trash
 
 			if (nodeStatus != WorkflowConstants.STATUS_IN_TRASH) {
+				UnicodeProperties typeSettingsProperties =
+					new UnicodeProperties();
+
+				typeSettingsProperties.put("title", page.getTitle());
+
 				trashEntryLocalService.addTrashEntry(
 					userId, page.getGroupId(), WikiPage.class.getName(),
-					page.getResourcePrimKey(), oldStatus, null, null);
+					page.getResourcePrimKey(), oldStatus, null,
+					typeSettingsProperties);
 			}
 
 			// Indexer
