@@ -107,6 +107,8 @@ public abstract class BaseTrashHandlerTestCase {
 		trashVersionBaseModel(false);
 	}
 
+	protected abstract String getUniqueTitle(BaseModel<?> baseModel);
+
 	protected abstract BaseModel<?> addBaseModel(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
@@ -288,6 +290,8 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> baseModel = addBaseModel(
 			parentBaseModel, approved, serviceContext);
 
+		String uniqueField = getUniqueTitle(baseModel);
+
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
 			getBaseModelsNotInTrashCount(parentBaseModel));
@@ -338,6 +342,10 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertEquals(
 				initialTrashEntriesSearchCount + 1,
 				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
+		}
+
+		if (uniqueField != null) {
+			Assert.assertEquals(uniqueField, getUniqueTitle(baseModel));
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
@@ -415,6 +423,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 			if (isAssetableModel()) {
 				Assert.assertEquals(approved, isAssetEntryVisible(baseModel));
+			}
+
+			if (uniqueField != null) {
+				Assert.assertEquals(uniqueField, getUniqueTitle(baseModel));
 			}
 		}
 	}
