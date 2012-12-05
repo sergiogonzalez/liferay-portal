@@ -470,6 +470,10 @@ public class ServiceTestUtil {
 		return PwdGenerator.getPassword();
 	}
 
+	public static String randomString(int lenght) throws Exception {
+		return PwdGenerator.getPassword(lenght);
+	}
+
 	private static void _checkClassNames() {
 		PortalUtil.getClassNameId(LiferayRepository.class.getName());
 	}

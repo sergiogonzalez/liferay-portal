@@ -84,7 +84,7 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return WikiNodeLocalServiceUtil.addNode(
 			TestPropsValues.getUserId(), getSearchKeywords(),
-			ServiceTestUtil.randomString(), serviceContext);
+			ServiceTestUtil.randomString(256), serviceContext);
 	}
 
 	@Override
@@ -116,6 +116,13 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		WikiNode wikiNode = (WikiNode)baseModel;
+
+		return wikiNode.getName();
 	}
 
 	@Override
