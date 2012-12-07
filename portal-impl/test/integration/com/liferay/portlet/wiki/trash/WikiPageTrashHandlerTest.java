@@ -66,9 +66,12 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
+		String pageTitle = getSearchKeywords().concat(
+			ServiceTestUtil.randomString(255 - getSearchKeywords().length()));
+
 		WikiPage page = WikiPageLocalServiceUtil.addPage(
 			TestPropsValues.getUserId(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), getSearchKeywords(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), pageTitle,
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
 			true, serviceContext);
 
@@ -120,7 +123,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
 
 		return WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+			TestPropsValues.getUserId(), ServiceTestUtil.randomString(75),
 			ServiceTestUtil.randomString(), serviceContext);
 	}
 
@@ -132,6 +135,13 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		WikiPage page = (WikiPage)baseModel;
+
+		return page.getTitle();
 	}
 
 	@Override
