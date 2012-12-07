@@ -155,6 +155,9 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 </div>
 
 <%
+int entriesEnd = GetterUtil.getInteger((String)request.getAttribute("view_entries.jsp-entryEnd"), entryEnd);
+int entriesStart = GetterUtil.getInteger((String)request.getAttribute("view_entries.jsp-entryStart"), entryStart);
+
 int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
 int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_folders.jsp-total"));
 
@@ -223,10 +226,10 @@ if (folder != null) {
 			},
 			paginator: {
 				entriesTotal: <%= entriesTotal %>,
-				entryEnd: <%= entryEnd %>,
+				entryEnd: <%= entriesEnd %>,
 				entryRowsPerPage: <%= entryRowsPerPage %>,
 				entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-				entryStart: <%= entryStart %>,
+				entryStart: <%= entriesStart %>,
 				folderEnd: <%= folderEnd %>,
 				folderId: <%= folderId %>,
 				folderRowsPerPage: <%= folderRowsPerPage %>,
