@@ -109,20 +109,6 @@ public class TrashImpl implements Trash {
 			request, containerModel.getContainerModelName(), null);
 	}
 
-	public String appendTrashNamespace(String title) {
-		return appendTrashNamespace(title, StringPool.SLASH);
-	}
-
-	public String appendTrashNamespace(String title, String separator) {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(title);
-		sb.append(separator);
-		sb.append(System.currentTimeMillis());
-
-		return sb.toString();
-	}
-
 	public void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
@@ -256,6 +242,17 @@ public class TrashImpl implements Trash {
 		return sb.toString();
 	}
 
+	public String getOriginalTitle(String title)
+		throws PortalException, SystemException {
+
+		long trashEntryId = GetterUtil.getLong(title);
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
+			trashEntryId);
+
+		return trashEntry.getTypeSettingsProperty("title");
+	}
+
 	public String getTrashTime(String title, String separator) {
 		int index = title.lastIndexOf(separator);
 
@@ -306,20 +303,6 @@ public class TrashImpl implements Trash {
 		}
 
 		return false;
-	}
-
-	public String stripTrashNamespace(String title) {
-		return stripTrashNamespace(title, StringPool.SLASH);
-	}
-
-	public String stripTrashNamespace(String title, String separator) {
-		int index = title.lastIndexOf(separator);
-
-		if (index < 0) {
-			return title;
-		}
-
-		return title.substring(0, index);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(TrashImpl.class);

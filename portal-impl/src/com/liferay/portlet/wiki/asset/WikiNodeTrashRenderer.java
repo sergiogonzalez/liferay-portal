@@ -56,11 +56,17 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 	}
 
 	public String getTitle(Locale locale) {
+		String name = _node.getName();
+
 		if (!_node.isInTrash()) {
-			return _node.getName();
+			try {
+				name = TrashUtil.getOriginalTitle(name);
+			}
+			catch (Exception e) {
+			}
 		}
 
-		return TrashUtil.stripTrashNamespace(_node.getName());
+		return name;
 	}
 
 	public String getType() {

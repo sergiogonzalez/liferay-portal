@@ -96,7 +96,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 			<liferay-ui:icon
 				image='<%= "../file_system/small/" + DLUtil.getFileIcon(dlFileEntry.getExtension()) %>'
 				label="<%= true %>"
-				message="<%= TrashUtil.stripTrashNamespace(dlFileEntry.getTitle()) %>"
+				message="<%= TrashUtil.getOriginalTitle(dlFileEntry.getTitle()) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 

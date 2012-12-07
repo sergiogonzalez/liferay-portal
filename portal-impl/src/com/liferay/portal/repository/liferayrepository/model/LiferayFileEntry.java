@@ -207,7 +207,19 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	public String getTitle() {
-		return TrashUtil.stripTrashNamespace(_dlFileEntry.getTitle());
+		String title = _dlFileEntry.getTitle();
+
+		try {
+			DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
+
+			if (dlFileVersion.isInTrash()) {
+				title = TrashUtil.getOriginalTitle(title);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return title;
 	}
 
 	public long getUserId() {

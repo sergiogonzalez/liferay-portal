@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -199,7 +200,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			node.getCompanyId(), WikiNode.class.getName(), node.getNodeId());
 
 		if (node.isInTrash()) {
-			node.setName(TrashUtil.stripTrashNamespace(node.getName()));
+			node.setName(TrashUtil.getOriginalTitle(node.getName()));
 
 			// Trash
 
@@ -344,19 +345,24 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	public WikiNode moveNodeToTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
-		node.setName(TrashUtil.appendTrashNamespace(node.getName()));
-
-		wikiNodePersistence.update(node);
-
-		return updateStatus(
+		WikiNode updatedNode = updateStatus(
 			userId, node, WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
+
+		// File entry
+
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			WikiNode.class.getName(), updatedNode.getNodeId());
+
+		updatedNode.setName(String.valueOf(trashEntry.getEntryId()));
+
+		return wikiNodePersistence.update(updatedNode);
 	}
 
 	public void restoreNodeFromTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
-		String name = TrashUtil.stripTrashNamespace(node.getName());
+		String name = TrashUtil.getOriginalTitle(node.getName());
 
 		node.setName(name);
 
@@ -440,9 +446,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 				WikiNode.class.getName(), node.getNodeId());
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+			typeSettingsProperties.put("title", node.getName());
+
 			trashEntryLocalService.addTrashEntry(
 				userId, node.getGroupId(), WikiNode.class.getName(),
-				node.getNodeId(), oldStatus, null, null);
+				node.getNodeId(), oldStatus, null, typeSettingsProperties);
 		}
 
 		// Indexer
@@ -453,7 +463,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			String oldName = node.getName();
 
-			node.setName(TrashUtil.stripTrashNamespace(oldName));
+			node.setName(TrashUtil.getOriginalTitle(oldName));
 
 			indexer.reindex(node);
 

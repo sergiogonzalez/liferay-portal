@@ -129,6 +129,13 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		DLFolder dlFolder = (DLFolder)baseModel;
+
+		return dlFolder.getName();
+	}
+
+	@Override
 	protected boolean isAssetableModel() {
 		return false;
 	}

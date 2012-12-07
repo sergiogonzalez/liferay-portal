@@ -129,6 +129,11 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		return null;
+	}
+
+	@Override
 	protected String getSearchKeywords() {
 		return _SUBJECT;
 	}

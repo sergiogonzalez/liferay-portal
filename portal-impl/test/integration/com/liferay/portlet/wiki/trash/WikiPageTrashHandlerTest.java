@@ -121,7 +121,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return WikiNodeLocalServiceUtil.addNode(
 			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), serviceContext);
+			ServiceTestUtil.randomString(256), serviceContext);
 	}
 
 	@Override
@@ -132,6 +132,13 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		WikiPage page = (WikiPage)baseModel;
+
+		return page.getTitle();
 	}
 
 	@Override

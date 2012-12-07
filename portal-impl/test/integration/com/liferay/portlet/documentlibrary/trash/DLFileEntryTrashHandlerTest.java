@@ -168,6 +168,13 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		DLFileEntry dlFileEntry = (DLFileEntry)baseModel;
+
+		return dlFileEntry.getTitle();
+	}
+
+	@Override
 	protected WorkflowedModel getWorkflowedModel(ClassedModel baseModel)
 		throws Exception {
 

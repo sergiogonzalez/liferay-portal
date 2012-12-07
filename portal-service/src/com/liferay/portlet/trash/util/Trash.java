@@ -41,10 +41,6 @@ public interface Trash {
 			ContainerModel containerModel, PortletURL containerModelURL)
 		throws PortalException, SystemException;
 
-	public String appendTrashNamespace(String title);
-
-	public String appendTrashNamespace(String title, String separator);
-
 	public void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
@@ -60,6 +56,9 @@ public interface Trash {
 
 	public String getNewName(ThemeDisplay themeDisplay, String oldName);
 
+	public String getOriginalTitle(String title)
+		throws PortalException, SystemException;
+
 	public String getTrashTime(String title, String separator);
 
 	public boolean isInTrash(String className, long classPK)
@@ -67,9 +66,5 @@ public interface Trash {
 
 	public boolean isTrashEnabled(long groupId)
 		throws PortalException, SystemException;
-
-	public String stripTrashNamespace(String title);
-
-	public String stripTrashNamespace(String title, String separator);
 
 }
