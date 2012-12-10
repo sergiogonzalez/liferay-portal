@@ -1350,6 +1350,13 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.countByG_F(groupId, folderId);
 	}
 
+	public int getArticlesCount(long groupId, long folderId, int notStatus)
+		throws SystemException {
+
+		return journalArticlePersistence.countByG_F_notST(
+			groupId, folderId, notStatus);
+	}
+
 	public List<JournalArticle> getCompanyArticles(
 			long companyId, double version, int status, int start, int end)
 		throws SystemException {
