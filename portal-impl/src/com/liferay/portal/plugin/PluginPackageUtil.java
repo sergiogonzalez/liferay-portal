@@ -915,15 +915,18 @@ public class PluginPackageUtil {
 			properties.getProperty("module-group-id"));
 		String moduleArtifactId = displayPrefix + "-" + pluginType;
 
-		String moduleVersion = null;
+		String moduleVersion = GetterUtil.getString(
+			properties.getProperty("module-version"), null);
 
-		int moduleVersionPos = pos + pluginType.length() + 2;
+		if (moduleVersion == null) {
+			int moduleVersionPos = pos + pluginType.length() + 2;
 
-		if (displayName.length() > moduleVersionPos) {
-			moduleVersion = displayName.substring(moduleVersionPos);
-		}
-		else {
-			moduleVersion = ReleaseInfo.getVersion();
+			if (displayName.length() > moduleVersionPos) {
+				moduleVersion = displayName.substring(moduleVersionPos);
+			}
+			else {
+				moduleVersion = ReleaseInfo.getVersion();
+			}
 		}
 
 		String moduleId =
