@@ -84,6 +84,10 @@ public class Fields implements Serializable {
 		return _fieldsMap.remove(name);
 	}
 
+	public int size() {
+		return _fieldsMap.size();
+	}
+
 	private Map<String, Field> _fieldsMap = new HashMap<String, Field>();
 
 }

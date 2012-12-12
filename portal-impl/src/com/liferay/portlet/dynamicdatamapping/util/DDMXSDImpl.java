@@ -125,7 +125,7 @@ public class DDMXSDImpl implements DDMXSD {
 		Map<String, Object> fieldStructure =
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
 
-		if (fields != null) {
+		if ((fields != null) && (fields.size() != 0)) {
 			freeMarkerContext.put("fields", fields);
 
 			String name = element.attributeValue("name");
