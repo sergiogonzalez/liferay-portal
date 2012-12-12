@@ -17,6 +17,16 @@
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
 <%
+Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), PortletKeys.STAGING_BAR);
+
+for (String headerCssPath : PortalUtil.getHeaderPortletCssProcessed(portlet, request)) {
+%>
+
+	<link href="<%= HtmlUtil.escape(headerCssPath) %>" rel="stylesheet" type="text/css" />
+
+<%
+}
+
 boolean branchingEnabled = false;
 
 LayoutRevision layoutRevision = null;
