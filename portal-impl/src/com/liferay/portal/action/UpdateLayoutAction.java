@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -387,16 +386,8 @@ public class UpdateLayoutAction extends JSONAction {
 			}
 
 			for (String footerPortalJavaScript :
-					portlet.getFooterPortalJavaScript()) {
-
-				if (!HttpUtil.hasProtocol(footerPortalJavaScript)) {
-					footerPortalJavaScript =
-						PortalUtil.getPathContext() + footerPortalJavaScript;
-
-					footerPortalJavaScript = PortalUtil.getStaticResourceURL(
-						request, footerPortalJavaScript,
-						rootPortlet.getTimestamp());
-				}
+					PortalUtil.getFooterPortalJavascriptProcessed(
+						portlet, request)) {
 
 				footerJavaScriptSet.add(footerPortalJavaScript);
 			}
@@ -408,17 +399,8 @@ public class UpdateLayoutAction extends JSONAction {
 			}
 
 			for (String footerPortletJavaScript :
-					portlet.getFooterPortletJavaScript()) {
-
-				if (!HttpUtil.hasProtocol(footerPortletJavaScript)) {
-					footerPortletJavaScript =
-						portlet.getStaticResourcePath() +
-							footerPortletJavaScript;
-
-					footerPortletJavaScript = PortalUtil.getStaticResourceURL(
-						request, footerPortletJavaScript,
-						rootPortlet.getTimestamp());
-				}
+					PortalUtil.getFooterPortletJavascriptProcessed(
+						portlet, request)) {
 
 				footerJavaScriptSet.add(footerPortletJavaScript);
 			}
@@ -430,16 +412,8 @@ public class UpdateLayoutAction extends JSONAction {
 			}
 
 			for (String headerPortalJavaScript :
-					portlet.getHeaderPortalJavaScript()) {
-
-				if (!HttpUtil.hasProtocol(headerPortalJavaScript)) {
-					headerPortalJavaScript =
-						PortalUtil.getPathContext() + headerPortalJavaScript;
-
-					headerPortalJavaScript = PortalUtil.getStaticResourceURL(
-						request, headerPortalJavaScript,
-						rootPortlet.getTimestamp());
-				}
+					PortalUtil.getHeaderPortalJavascriptProcessed(
+						portlet, request)) {
 
 				headerJavaScriptSet.add(headerPortalJavaScript);
 			}
@@ -451,17 +425,8 @@ public class UpdateLayoutAction extends JSONAction {
 			}
 
 			for (String headerPortletJavaScript :
-					portlet.getHeaderPortletJavaScript()) {
-
-				if (!HttpUtil.hasProtocol(headerPortletJavaScript)) {
-					headerPortletJavaScript =
-						portlet.getStaticResourcePath() +
-							headerPortletJavaScript;
-
-					headerPortletJavaScript = PortalUtil.getStaticResourceURL(
-						request, headerPortletJavaScript,
-						rootPortlet.getTimestamp());
-				}
+					PortalUtil.getHeaderPortletJavascriptProcessed(
+						portlet, request)) {
 
 				headerJavaScriptSet.add(headerPortletJavaScript);
 			}

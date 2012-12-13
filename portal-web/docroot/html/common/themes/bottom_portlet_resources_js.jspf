@@ -26,19 +26,7 @@
 	}
 
 	for (Portlet curPortlet : portlets) {
-		for (String footerPortalJavaScript : curPortlet.getFooterPortalJavaScript()) {
-			if (!HttpUtil.hasProtocol(footerPortalJavaScript)) {
-				Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-				footerPortalJavaScript = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + footerPortalJavaScript, curRootPortlet.getTimestamp());
-			}
-
-			if (!footerPortalJavaScript.contains(Http.PROTOCOL_DELIMITER)) {
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				footerPortalJavaScript = cdnBaseURL.concat(footerPortalJavaScript);
-			}
-
+		for (String footerPortalJavaScript : PortalUtil.getFooterPortalJavascriptProcessed(curPortlet, request)) {
 			if (!portletResourceStaticURLs.contains(footerPortalJavaScript) && !themeDisplay.isIncludedJs(footerPortalJavaScript)) {
 				portletResourceStaticURLs.add(footerPortalJavaScript);
 	%>
@@ -51,19 +39,7 @@
 	}
 
 	for (Portlet curPortlet : portlets) {
-		for (String footerPortletJavaScript : curPortlet.getFooterPortletJavaScript()) {
-			if (!HttpUtil.hasProtocol(footerPortletJavaScript)) {
-				Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-				footerPortletJavaScript = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + footerPortletJavaScript, curRootPortlet.getTimestamp());
-			}
-
-			if (!footerPortletJavaScript.contains(Http.PROTOCOL_DELIMITER)) {
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				footerPortletJavaScript = cdnBaseURL.concat(footerPortletJavaScript);
-			}
-
+		for (String footerPortletJavaScript : PortalUtil.getFooterPortletJavascriptProcessed(curPortlet, request)) {
 			if (!portletResourceStaticURLs.contains(footerPortletJavaScript)) {
 				portletResourceStaticURLs.add(footerPortletJavaScript);
 	%>
