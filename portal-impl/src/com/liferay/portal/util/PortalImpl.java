@@ -2097,11 +2097,25 @@ public class PortalImpl implements Portal {
 			portlet, request, portlet.getFooterPortalCss(), true);
 	}
 
+	public List<String> getFooterPortalJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return processFooterHeaderUrls(
+			portlet, request, portlet.getFooterPortalJavaScript(), true);
+	}
+
 	public List<String> getFooterPortletCssProcessed(
 		Portlet portlet, HttpServletRequest request) {
 
 		return processFooterHeaderUrls(
 			portlet, request, portlet.getFooterPortletCss(), false);
+	}
+
+	public List<String> getFooterPortletJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return processFooterHeaderUrls(
+			portlet, request, portlet.getFooterPortletJavaScript(), false);
 	}
 
 	public String getGlobalLibDir() {
@@ -2190,11 +2204,25 @@ public class PortalImpl implements Portal {
 			portlet, request, portlet.getHeaderPortalCss(), true);
 	}
 
+	public List<String> getHeaderPortalJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return processFooterHeaderUrls(
+			portlet, request, portlet.getHeaderPortalJavaScript(), true);
+	}
+
 	public List<String> getHeaderPortletCssProcessed(
 		Portlet portlet, HttpServletRequest request) {
 
 		return processFooterHeaderUrls(
 			portlet, request, portlet.getHeaderPortletCss(), false);
+	}
+
+	public List<String> getHeaderPortletJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return processFooterHeaderUrls(
+			portlet, request, portlet.getHeaderPortletJavaScript(), false);
 	}
 
 	public String getHomeURL(HttpServletRequest request)

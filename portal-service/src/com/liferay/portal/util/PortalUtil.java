@@ -526,10 +526,23 @@ public class PortalUtil {
 		return getPortal().getFooterPortalCssProcessed(portlet, request);
 	}
 
+	public static List<String> getFooterPortalJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return getPortal().getFooterPortalJavascriptProcessed(portlet, request);
+	}
+
 	public static List<String> getFooterPortletCssProcessed(
 		Portlet portlet, HttpServletRequest request) {
 
 		return getPortal().getFooterPortletCssProcessed(portlet, request);
+	}
+
+	public static List<String> getFooterPortletJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return getPortal().getFooterPortletJavascriptProcessed(
+			portlet, request);
 	}
 
 	public static String getGlobalLibDir() {
@@ -606,10 +619,23 @@ public class PortalUtil {
 		return getPortal().getHeaderPortalCssProcessed(portlet, request);
 	}
 
+	public static List<String> getHeaderPortalJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return getPortal().getHeaderPortalJavascriptProcessed(portlet, request);
+	}
+
 	public static List<String> getHeaderPortletCssProcessed(
 		Portlet portlet, HttpServletRequest request) {
 
 		return getPortal().getHeaderPortletCssProcessed(portlet, request);
+	}
+
+	public static List<String> getHeaderPortletJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return getPortal().getHeaderPortletJavascriptProcessed(
+			portlet, request);
 	}
 
 	public static String getHomeURL(HttpServletRequest request)

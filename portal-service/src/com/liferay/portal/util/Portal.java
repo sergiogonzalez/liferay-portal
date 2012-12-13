@@ -638,7 +638,13 @@ public interface Portal {
 	public List<String> getFooterPortalCssProcessed(
 		Portlet portlet, HttpServletRequest request);
 
+	public List<String> getFooterPortalJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request);
+
 	public List<String> getFooterPortletCssProcessed(
+		Portlet portlet, HttpServletRequest request);
+
+	public List<String> getFooterPortletJavascriptProcessed(
 		Portlet portlet, HttpServletRequest request);
 
 	public String getGlobalLibDir();
@@ -678,7 +684,13 @@ public interface Portal {
 	public List<String> getHeaderPortalCssProcessed(
 		Portlet portlet, HttpServletRequest request);
 
+	public List<String> getHeaderPortalJavascriptProcessed(
+		Portlet portlet, HttpServletRequest request);
+
 	public List<String> getHeaderPortletCssProcessed(
+		Portlet portlet, HttpServletRequest request);
+
+	public List<String> getHeaderPortletJavascriptProcessed(
 		Portlet portlet, HttpServletRequest request);
 
 	public String getHomeURL(HttpServletRequest request)
