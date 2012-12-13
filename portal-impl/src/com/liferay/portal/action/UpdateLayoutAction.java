@@ -380,14 +380,8 @@ public class UpdateLayoutAction extends JSONAction {
 		if (!portletOnLayout && portlet.isAjaxable()) {
 			Portlet rootPortlet = portlet.getRootPortlet();
 
-			for (String footerPortalCss : portlet.getFooterPortalCss()) {
-				if (!HttpUtil.hasProtocol(footerPortalCss)) {
-					footerPortalCss =
-						PortalUtil.getPathContext() + footerPortalCss;
-
-					footerPortalCss = PortalUtil.getStaticResourceURL(
-						request, footerPortalCss, rootPortlet.getTimestamp());
-				}
+			for (String footerPortalCss :
+					PortalUtil.getFooterPortalCssProcessed(portlet, request)) {
 
 				footerCssSet.add(footerPortalCss);
 			}
@@ -407,14 +401,8 @@ public class UpdateLayoutAction extends JSONAction {
 				footerJavaScriptSet.add(footerPortalJavaScript);
 			}
 
-			for (String footerPortletCss : portlet.getFooterPortletCss()) {
-				if (!HttpUtil.hasProtocol(footerPortletCss)) {
-					footerPortletCss =
-						portlet.getStaticResourcePath() + footerPortletCss;
-
-					footerPortletCss = PortalUtil.getStaticResourceURL(
-						request, footerPortletCss, rootPortlet.getTimestamp());
-				}
+			for (String footerPortletCss :
+					PortalUtil.getFooterPortletCssProcessed(portlet, request)) {
 
 				footerCssSet.add(footerPortletCss);
 			}
@@ -435,14 +423,8 @@ public class UpdateLayoutAction extends JSONAction {
 				footerJavaScriptSet.add(footerPortletJavaScript);
 			}
 
-			for (String headerPortalCss : portlet.getHeaderPortalCss()) {
-				if (!HttpUtil.hasProtocol(headerPortalCss)) {
-					headerPortalCss =
-						PortalUtil.getPathContext() + headerPortalCss;
-
-					headerPortalCss = PortalUtil.getStaticResourceURL(
-						request, headerPortalCss, rootPortlet.getTimestamp());
-				}
+			for (String headerPortalCss :
+					PortalUtil.getHeaderPortalCssProcessed(portlet, request)) {
 
 				headerCssSet.add(headerPortalCss);
 			}
@@ -462,14 +444,8 @@ public class UpdateLayoutAction extends JSONAction {
 				headerJavaScriptSet.add(headerPortalJavaScript);
 			}
 
-			for (String headerPortletCss : portlet.getHeaderPortletCss()) {
-				if (!HttpUtil.hasProtocol(headerPortletCss)) {
-					headerPortletCss =
-						portlet.getStaticResourcePath() + headerPortletCss;
-
-					headerPortletCss = PortalUtil.getStaticResourceURL(
-						request, headerPortletCss, rootPortlet.getTimestamp());
-				}
+			for (String headerPortletCss :
+					PortalUtil.getHeaderPortletCssProcessed(portlet, request)) {
 
 				headerCssSet.add(headerPortletCss);
 			}

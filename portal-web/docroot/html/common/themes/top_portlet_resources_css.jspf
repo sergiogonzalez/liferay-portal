@@ -26,19 +26,7 @@
 	}
 
 	for (Portlet curPortlet : portlets) {
-		for (String headerPortalCss : curPortlet.getHeaderPortalCss()) {
-			if (!HttpUtil.hasProtocol(headerPortalCss)) {
-				Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-				headerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalCss, curRootPortlet.getTimestamp());
-			}
-
-			if (!headerPortalCss.contains(Http.PROTOCOL_DELIMITER)) {
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				headerPortalCss = cdnBaseURL.concat(headerPortalCss);
-			}
-
+		for (String headerPortalCss : PortalUtil.getHeaderPortalCssProcessed(curPortlet, request)) {
 			if (!portletResourceStaticURLs.contains(headerPortalCss)) {
 				portletResourceStaticURLs.add(headerPortalCss);
 	%>
@@ -51,19 +39,7 @@
 	}
 
 	for (Portlet curPortlet : portlets) {
-		for (String headerPortletCss : curPortlet.getHeaderPortletCss()) {
-			if (!HttpUtil.hasProtocol(headerPortletCss)) {
-				Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-				headerPortletCss = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + headerPortletCss, curRootPortlet.getTimestamp());
-			}
-
-			if (!headerPortletCss.contains(Http.PROTOCOL_DELIMITER)) {
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				headerPortletCss = cdnBaseURL.concat(headerPortletCss);
-			}
-
+		for (String headerPortletCss : PortalUtil.getHeaderPortletCssProcessed(curPortlet, request)) {
 			if (!portletResourceStaticURLs.contains(headerPortletCss)) {
 				portletResourceStaticURLs.add(headerPortletCss);
 	%>
