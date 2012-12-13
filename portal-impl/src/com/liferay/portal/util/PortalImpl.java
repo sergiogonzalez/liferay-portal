@@ -2090,6 +2090,20 @@ public class PortalImpl implements Portal {
 		return sb.toString();
 	}
 
+	public List<String> getFooterPortalCssProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return processFooterHeaderUrls(
+			portlet, request, portlet.getFooterPortalCss(), true);
+	}
+
+	public List<String> getFooterPortletCssProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return processFooterHeaderUrls(
+			portlet, request, portlet.getFooterPortletCss(), false);
+	}
+
 	public String getGlobalLibDir() {
 		return PropsValues.LIFERAY_LIB_GLOBAL_DIR;
 	}
@@ -2167,6 +2181,20 @@ public class PortalImpl implements Portal {
 
 		return portletRequest.getParameterValues(
 			"guestPermissions_" + className);
+	}
+
+	public List<String> getHeaderPortalCssProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return processFooterHeaderUrls(
+			portlet, request, portlet.getHeaderPortalCss(), true);
+	}
+
+	public List<String> getHeaderPortletCssProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return processFooterHeaderUrls(
+			portlet, request, portlet.getHeaderPortletCss(), false);
 	}
 
 	public String getHomeURL(HttpServletRequest request)
@@ -6322,6 +6350,44 @@ public class PortalImpl implements Portal {
 
 			portalPortEventListener.portalPortConfigured(portalPort);
 		}
+	}
+
+	protected List<String> processFooterHeaderUrls(
+		Portlet portlet, HttpServletRequest request, List<String> urls,
+		boolean portal) {
+
+		List<String> processedUrls = new ArrayList<String>();
+
+		for (String url : urls) {
+			if (!HttpUtil.hasProtocol(url)) {
+				Portlet rootPortlet = portlet.getRootPortlet();
+
+				String uri = null;
+
+				if (portal) {
+					uri = getPathContext() + url;
+				}
+				else {
+					uri = portlet.getStaticResourcePath() + url;
+				}
+
+				url = PortalUtil.getStaticResourceURL(
+					request, uri, rootPortlet.getTimestamp());
+			}
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if (!url.contains(Http.PROTOCOL_DELIMITER)) {
+				String cdnBaseURL = themeDisplay.getCDNBaseURL();
+
+				url = cdnBaseURL.concat(url);
+			}
+
+			processedUrls.add(url);
+		}
+
+		return processedUrls;
 	}
 
 	protected String removeRedirectParameter(String url) {

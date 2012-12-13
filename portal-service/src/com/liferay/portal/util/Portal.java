@@ -635,6 +635,12 @@ public interface Portal {
 
 	public String getFirstPageLayoutTypes(PageContext pageContext);
 
+	public List<String> getFooterPortalCssProcessed(
+		Portlet portlet, HttpServletRequest request);
+
+	public List<String> getFooterPortletCssProcessed(
+		Portlet portlet, HttpServletRequest request);
+
 	public String getGlobalLibDir();
 
 	public String getGoogleGadgetURL(Portlet portlet, ThemeDisplay themeDisplay)
@@ -668,6 +674,12 @@ public interface Portal {
 
 	public String[] getGuestPermissions(
 		PortletRequest portletRequest, String className);
+
+	public List<String> getHeaderPortalCssProcessed(
+		Portlet portlet, HttpServletRequest request);
+
+	public List<String> getHeaderPortletCssProcessed(
+		Portlet portlet, HttpServletRequest request);
 
 	public String getHomeURL(HttpServletRequest request)
 		throws PortalException, SystemException;

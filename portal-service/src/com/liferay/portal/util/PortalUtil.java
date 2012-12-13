@@ -520,6 +520,18 @@ public class PortalUtil {
 		return getPortal().getFirstPageLayoutTypes(pageContext);
 	}
 
+	public static List<String> getFooterPortalCssProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return getPortal().getFooterPortalCssProcessed(portlet, request);
+	}
+
+	public static List<String> getFooterPortletCssProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return getPortal().getFooterPortletCssProcessed(portlet, request);
+	}
+
 	public static String getGlobalLibDir() {
 		return getPortal().getGlobalLibDir();
 	}
@@ -586,6 +598,18 @@ public class PortalUtil {
 		PortletRequest portletRequest, String className) {
 
 		return getPortal().getGuestPermissions(portletRequest, className);
+	}
+
+	public static List<String> getHeaderPortalCssProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return getPortal().getHeaderPortalCssProcessed(portlet, request);
+	}
+
+	public static List<String> getHeaderPortletCssProcessed(
+		Portlet portlet, HttpServletRequest request) {
+
+		return getPortal().getHeaderPortletCssProcessed(portlet, request);
 	}
 
 	public static String getHomeURL(HttpServletRequest request)
