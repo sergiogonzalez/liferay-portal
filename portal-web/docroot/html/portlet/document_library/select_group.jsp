@@ -67,12 +67,20 @@
 				groupName = LanguageUtil.get(pageContext, "my-site");
 			}
 
+			long groupId = group.getGroupId();
+
+			if (group.hasStagingGroup() && !group.isStagedRemotely()) {
+				Group stagingGroup = group.getStagingGroup();
+
+				groupId = stagingGroup.getGroupId();
+			}
+
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("javascript:opener.");
 			sb.append(renderResponse.getNamespace());
 			sb.append("selectGroup('");
-			sb.append(group.getGroupId());
+			sb.append(groupId);
 			sb.append("', '");
 			sb.append(UnicodeFormatter.toString(groupName));
 			sb.append("'); window.close();");
