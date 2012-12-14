@@ -42,6 +42,7 @@ portletURL.setParameter("callback", callback);
 	</liferay-portlet:renderURL>
 
 	<aui:form action="<%= searchURL %>" method="post" name="searchFm">
+		<aui:input name="parentGroupId" type="hidden" value="<%= scopeGroupId %>" />
 		<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />
 
 		<%
