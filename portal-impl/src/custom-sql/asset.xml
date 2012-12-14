@@ -18,7 +18,8 @@
 						AssetEntry
 					WHERE
 						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?)
+						(AssetEntry.classNameId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetCategory.name LIKE ? OR ? IS NULL)
 		]]>
@@ -221,7 +222,9 @@
 					FROM
 						AssetEntry
 					WHERE
-						(AssetEntry.groupId = ?)
+						(AssetEntry.groupId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
+
 				)) AND
 				(AssetTag.name LIKE ?)
 		]]>
@@ -243,7 +246,8 @@
 						AssetEntry
 					WHERE
 						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?)
+						(AssetEntry.classNameId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetTag.name LIKE ? OR ? IS NULL)
 		]]>
@@ -270,6 +274,29 @@
 				AssetEntries_AssetTags ON
 					(AssetEntries_AssetTags.tagId = AssetTag.tagId) AND
 					(AssetEntries_AssetTags.entryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByGroupId">
+		<![CDATA[
+			SELECT
+				DISTINCT {AssetTag.*}
+			FROM
+				AssetTag
+			INNER JOIN
+				AssetEntries_AssetTags ON
+					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+			WHERE
+				AssetEntries_AssetTags.entryId IN (
+					SELECT
+						entryId
+					FROM
+						AssetEntry
+					WHERE
+						(AssetEntry.groupId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
+				)
+			ORDER BY
+				AssetTag.name ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N">
@@ -313,7 +340,8 @@
 						AssetEntry
 					WHERE
 						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?)
+						(AssetEntry.classNameId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetTag.name LIKE ? OR ? IS NULL)
 			ORDER BY

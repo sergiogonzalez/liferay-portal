@@ -37,6 +37,11 @@ public interface AssetTagFinder {
 		java.lang.String[] tagProperties)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.asset.model.AssetTag filterFindByG_N(
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -54,6 +59,11 @@ public interface AssetTagFinder {
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByEntryId(
 		long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.asset.model.AssetTag findByG_N(long groupId,
