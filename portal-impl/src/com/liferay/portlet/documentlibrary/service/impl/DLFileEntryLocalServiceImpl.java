@@ -1839,12 +1839,6 @@ public class DLFileEntryLocalServiceImpl
 		if ((lastDLFileVersion.getFolderId() ==
 				latestDLFileVersion.getFolderId()) &&
 			Validator.equals(
-				lastDLFileVersion.getExtension(),
-				latestDLFileVersion.getExtension()) &&
-			Validator.equals(
-				lastDLFileVersion.getMimeType(),
-				latestDLFileVersion.getMimeType()) &&
-			Validator.equals(
 				lastDLFileVersion.getTitle(), latestDLFileVersion.getTitle()) &&
 			Validator.equals(
 				lastDLFileVersion.getDescription(),
