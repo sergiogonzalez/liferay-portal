@@ -37,7 +37,11 @@ public class LocaleUtil {
 	}
 
 	public static Locale fromLanguageId(String languageId) {
-		return getInstance()._fromLanguageId(languageId);
+		return getInstance()._fromLanguageId(languageId, true);
+	}
+
+	public static Locale fromLanguageId(String languageId, boolean validate) {
+		return getInstance()._fromLanguageId(languageId, validate);
 	}
 
 	public static Locale[] fromLanguageIds(List<String> languageIds) {
@@ -117,7 +121,7 @@ public class LocaleUtil {
 		return languageId1.equalsIgnoreCase(languageId2);
 	}
 
-	private Locale _fromLanguageId(String languageId) {
+	private Locale _fromLanguageId(String languageId, boolean validate) {
 		if (languageId == null) {
 			return _locale;
 		}
@@ -153,6 +157,15 @@ public class LocaleUtil {
 				else {
 					locale = new Locale(languageCode, countryCode);
 				}
+
+				if (validate) {
+					if (!LanguageUtil.isAvailableLocale(locale) ||
+						!LanguageUtil.isDuplicateLanguageCode(languageId)) {
+
+						throw new IllegalArgumentException(
+							"Invalid locale: " + locale);
+					}
+				}
 			}
 
 			if (_locales.size() < _LOCALES_MAX) {
@@ -181,7 +194,7 @@ public class LocaleUtil {
 		Locale[] locales = new Locale[languageIds.size()];
 
 		for (int i = 0; i < languageIds.size(); i++) {
-			locales[i] = _fromLanguageId(languageIds.get(i));
+			locales[i] = _fromLanguageId(languageIds.get(i), true);
 		}
 
 		return locales;
@@ -191,7 +204,7 @@ public class LocaleUtil {
 		Locale[] locales = new Locale[languageIds.length];
 
 		for (int i = 0; i < languageIds.length; i++) {
-			locales[i] = _fromLanguageId(languageIds[i]);
+			locales[i] = _fromLanguageId(languageIds[i], true);
 		}
 
 		return locales;
@@ -212,7 +225,7 @@ public class LocaleUtil {
 			String.CASE_INSENSITIVE_ORDER);
 
 		for (String isoLanguageId : Locale.getISOLanguages()) {
-			Locale isoLocale = _fromLanguageId(isoLanguageId);
+			Locale isoLocale = _fromLanguageId(isoLanguageId, true);
 
 			isoLanguages.put(
 				isoLocale.getDisplayLanguage(locale), isoLanguageId);
