@@ -168,14 +168,7 @@ public class LocaleUtil {
 				}
 			}
 
-			if (_locales.size() < _LOCALES_MAX) {
-				_locales.put(languageId, locale);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn("There are too many entries in the locales map");
-				}
-			}
+			_locales.put(languageId, locale);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -392,8 +385,6 @@ public class LocaleUtil {
 	}
 
 	private static final String _BETA_SUFFIX = " [Beta]";
-
-	private static final int _LOCALES_MAX = 1000;
 
 	private static Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
 
