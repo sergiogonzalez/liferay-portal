@@ -3670,7 +3670,7 @@ public class PortalImpl implements Portal {
 
 				if ((doAsGroupId <= 0) || (doAsGroup == null)) {
 					long parentGroupId = GetterUtil.getLong(
-							getPortletParam(request, "parentGroupId"));
+						getPortletParam(request, "parentGroupId"));
 
 					doAsGroupId = getDefaultScopeGroupId(
 						group.getCompanyId(), parentGroupId);
@@ -5925,7 +5925,7 @@ public class PortalImpl implements Portal {
 			groups.add(GroupServiceUtil.getGroup(parentGroupId));
 		}
 		else {
-			groups = GroupServiceUtil.getManageableSites(portlets, 1);
+			groups.addAll(GroupServiceUtil.getManageableSites(portlets, 1));
 		}
 
 		if (!groups.isEmpty()) {
