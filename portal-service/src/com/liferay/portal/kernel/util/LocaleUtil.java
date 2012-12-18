@@ -157,14 +157,14 @@ public class LocaleUtil {
 				else {
 					locale = new Locale(languageCode, countryCode);
 				}
+			}
 
-				if (validate) {
-					if (!LanguageUtil.isAvailableLocale(locale) ||
-						!LanguageUtil.isDuplicateLanguageCode(languageId)) {
+			if (validate) {
+				if (!LanguageUtil.isAvailableLocale(locale) &&
+					!LanguageUtil.isDuplicateLanguageCode(languageId)) {
 
-						throw new IllegalArgumentException(
-							"Invalid locale: " + locale);
-					}
+					throw new IllegalArgumentException(
+						"Invalid locale: " + locale);
 				}
 			}
 
