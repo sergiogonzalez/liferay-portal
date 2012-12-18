@@ -171,6 +171,8 @@ public class LocaleUtil {
 			_locales.put(languageId, locale);
 		}
 		catch (Exception e) {
+			locale = null;
+
 			if (_log.isWarnEnabled()) {
 				_log.warn(languageId + " is not a valid language id");
 			}
