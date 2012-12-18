@@ -37,6 +37,14 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	<%
 	UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
+	LinkedHashMap countParams = new LinkedHashMap<String, Object>();
+
+	countParams.put("usersOrgs", searchTerms.getOrganizationId());
+
+	int totalUsers = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), countParams);
+
+	userSearch.setTotal(totalUsers);
+
 	if ((searchTerms.getOrganizationId() > 0) && !OrganizationPermissionUtil.contains(permissionChecker, searchTerms.getOrganizationId(), ActionKeys.MANAGE_USERS)) {
 		inactiveUsersCount = 0;
 
