@@ -39,6 +39,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		escapeXml="<%= true %>"
 		localizeTitle="<%= false %>"
 		title='<%= LanguageUtil.format(pageContext, "request-membership-for-x", group.getDescriptiveName(locale)) %>'
 	/>
@@ -50,7 +51,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	<aui:fieldset>
 		<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 			<aui:field-wrapper label="description">
-				<%= group.getDescription() %>
+				<%= HtmlUtil.escape(group.getDescription()) %>
 			</aui:field-wrapper>
 		</c:if>
 
