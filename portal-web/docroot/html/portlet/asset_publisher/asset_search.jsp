@@ -38,6 +38,10 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 		<aui:select label="my-sites" name="<%= displayTerms.GROUP_ID %>" showEmptyOption="<%= false %>">
 
+			<c:if test="<%= themeDisplay.getCompanyGroupId() != groupId %>">
+				<aui:option label="global" selected="<%= displayTerms.getGroupId() == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
+			</c:if>
+
 			<%
 			if (groupId > 0) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -47,15 +51,18 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 			<%
 			}
-			else {
-				for (long curGroupId : groupIds) {
-					Group group = GroupLocalServiceUtil.getGroup(curGroupId);
-				%>
 
-					<aui:option label="<%= group.getDescriptiveName(locale) %>" selected="<%= displayTerms.getGroupId() == curGroupId %>" value="<%= curGroupId %>" />
-
-				<%
+			for (long curGroupId : groupIds) {
+				if (curGroupId == groupId) {
+					continue;
 				}
+
+				Group group = GroupLocalServiceUtil.getGroup(curGroupId);
+			%>
+
+				<aui:option label="<%= group.getDescriptiveName(locale) %>" selected="<%= displayTerms.getGroupId() == curGroupId %>" value="<%= curGroupId %>" />
+
+			<%
 			}
 			%>
 

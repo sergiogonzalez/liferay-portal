@@ -60,6 +60,7 @@ assetBrowserURL.setPortletMode(PortletMode.VIEW);
 
 assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
 assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
+assetBrowserURL.setParameter("parentGroupId", String.valueOf(themeDisplay.getParentGroupId()));
 %>
 
 <liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' id='<%= randomNamespace + "inputAssetLinks" %>' message="select" showWhenSingleIcon="<%= true %>">
