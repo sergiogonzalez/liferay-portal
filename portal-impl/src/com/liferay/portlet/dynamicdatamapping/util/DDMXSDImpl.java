@@ -137,27 +137,29 @@ public class DDMXSDImpl implements DDMXSD {
 
 			Field field = fields.get(name);
 
-			List<Serializable> values = field.getValues(
-				themeDisplay.getLocale());
+			if (field!=null) {
 
-			StringBuffer sb = new StringBuffer(values.size());
+				List<Serializable> values = field.getValues(
+					themeDisplay.getLocale());
+				StringBundler sb = new StringBundler(values.size());
 
-			for (int i = 0; i < values.size(); i++) {
-				fieldStructure.put("repeatableIndex", String.valueOf(i));
+				for (int i = 0; i < values.size(); i++) {
+					fieldStructure.put("repeatableIndex", String.valueOf(i));
 
-				String childrenHTML = getHTML(
-					pageContext, element, fields, namespace, mode, readOnly,
-					locale);
+					String childrenHTML = getHTML(
+						pageContext, element, fields, namespace, mode, readOnly,
+						locale);
 
-				fieldStructure.put("children", childrenHTML);
+					fieldStructure.put("children", childrenHTML);
 
-				sb.append(
-					processFTL(
-						pageContext, element, mode, readOnly,
-						freeMarkerContext));
+					sb.append(
+						processFTL(
+							pageContext, element, mode, readOnly,
+							freeMarkerContext));
+				}
+
+				return sb.toString();
 			}
-
-			return sb.toString();
 		}
 
 		String childrenHTML = getHTML(
