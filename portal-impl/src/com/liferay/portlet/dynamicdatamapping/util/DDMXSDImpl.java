@@ -147,7 +147,7 @@ public class DDMXSDImpl implements DDMXSD {
 			}
 		}
 
-		StringBuffer sb = new StringBuffer(valuesSize);
+		StringBundler sb = new StringBundler(valuesSize);
 
 		for (int i = 0; i < valuesSize; i++) {
 			fieldStructure.put("repeatableIndex", String.valueOf(i));
