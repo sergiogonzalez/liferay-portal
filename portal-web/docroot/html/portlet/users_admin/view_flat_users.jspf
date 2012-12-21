@@ -37,11 +37,16 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	<%
 	UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
+	int totalUsers = 0;
 	LinkedHashMap countParams = new LinkedHashMap<String, Object>();
 
-	countParams.put("usersOrgs", searchTerms.getOrganizationId());
-
-	int totalUsers = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), countParams);
+	if (searchTerms.isAdvancedSearch()) {
+		totalUsers = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), countParams, searchTerms.isAndOperator());
+	}
+	else {
+		countParams.put("usersOrgs", searchTerms.getOrganizationId());
+		totalUsers = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), countParams);
+	}
 
 	userSearch.setTotal(totalUsers);
 
