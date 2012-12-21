@@ -231,11 +231,14 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
 					groupFileEntriesUserId = user.getUserId();
 				}
+
+				searchContainer.setTotal(DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status));
+				searchContainer.setResults(DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, searchContainer.getStart(), searchContainer.getEnd(), null));
 				%>
 
 				<liferay-ui:search-container-results
-					results="<%= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, defaultFolderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-					total="<%= DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, defaultFolderId) %>"
+					total="<%= searchContainer.getTotal() %>"
+					results="<%= searchContainer.getResults() %>"
 				/>
 
 				<liferay-ui:search-container-row
