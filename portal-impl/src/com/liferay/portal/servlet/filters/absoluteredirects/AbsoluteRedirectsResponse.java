@@ -14,8 +14,10 @@
 
 package com.liferay.portal.servlet.filters.absoluteredirects;
 
+import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
@@ -36,7 +38,11 @@ public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 
 		super(response);
 
-		_request = request;
+		if (ServerDetector.isWebLogic()) {
+			_request = new NonSerializableObjectRequestWrapper(request);
+		} else {
+			_request = request;
+		}
 	}
 
 	@Override
