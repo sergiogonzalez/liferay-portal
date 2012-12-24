@@ -16,6 +16,7 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +37,6 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			if (_results == null) {
-				_results = (List<R>)pageContext.getAttribute(_resultsVar);
-				_total = (Integer)pageContext.getAttribute(_totalVar);
-			}
-
-			if (_results != null) {
-				if (_total < _results.size()) {
-					_total = _results.size();
-				}
-			}
-
 			SearchContainerTag<R> searchContainerTag =
 				(SearchContainerTag<R>)findAncestorWithClass(
 					this, SearchContainerTag.class);
@@ -54,10 +44,26 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 			SearchContainer<R> searchContainer =
 				searchContainerTag.getSearchContainer();
 
+			searchContainerTag.setHasResults(true);
+
+			if (_results == null) {
+				_results = searchContainer.getResults();
+				_total = searchContainer.getTotal();
+			}
+
+			if (_results.isEmpty()) {
+				_results = (List<R>)pageContext.getAttribute(_resultsVar);
+				_total = (Integer)pageContext.getAttribute(_totalVar);
+
+				if (_results.isEmpty()) {
+					if (_total < _results.size()) {
+						_total = _results.size();
+					}
+				}
+			}
+
 			searchContainer.setResults(_results);
 			searchContainer.setTotal(_total);
-
-			searchContainerTag.setHasResults(true);
 
 			pageContext.setAttribute(_resultsVar, _results);
 			pageContext.setAttribute(_totalVar, _total);
