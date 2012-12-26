@@ -38,6 +38,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
 	int totalUsers = 0;
+
 	LinkedHashMap countParams = new LinkedHashMap<String, Object>();
 
 	if (searchTerms.isAdvancedSearch()) {
@@ -45,6 +46,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	}
 	else {
 		countParams.put("usersOrgs", searchTerms.getOrganizationId());
+
 		totalUsers = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), countParams);
 	}
 
