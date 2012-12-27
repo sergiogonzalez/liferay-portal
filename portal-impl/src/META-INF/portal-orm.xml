@@ -264,9 +264,6 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="text">
-				<column name="TEXT_" />
-			</basic>
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>
@@ -2751,7 +2748,6 @@
 			<basic name="subject" />
 			<basic name="body" />
 			<basic name="format" />
-			<basic name="attachments" />
 			<basic name="anonymous" />
 			<basic name="priority" />
 			<basic name="allowPingbacks" />
