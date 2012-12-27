@@ -2058,9 +2058,22 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Repository fromRepository = getRepository(0, fileEntryId, 0);
-		Repository toRepository = getRepository(newFolderId, serviceContext);
+		Repository toRepository = null;
 
-		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (newFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			FileEntry fileEntry = fromRepository.getFileEntry(fileEntryId);
+
+			long scopeGroupId = fileEntry.getGroupId();
+
+			toRepository = getRepository(scopeGroupId);
+
+			if (serviceContext.getScopeGroupId() == 0) {
+				serviceContext.setScopeGroupId(scopeGroupId);
+			}
+		}
+		else {
+			toRepository = getRepository(newFolderId, 0, 0);
+
 			Folder toFolder = toRepository.getFolder(newFolderId);
 
 			if (toFolder.isMountPoint()) {
@@ -2205,9 +2218,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Repository fromRepository = getRepository(folderId, 0, 0);
-		Repository toRepository = getRepository(parentFolderId, serviceContext);
+		Repository toRepository = null;
 
-		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder folder = fromRepository.getFolder(folderId);
+
+			toRepository = getRepository(folder.getGroupId());
+		}
+		else {
+			toRepository = getRepository(parentFolderId, 0, 0);
+
 			Folder toFolder = toRepository.getFolder(parentFolderId);
 
 			if (toFolder.isMountPoint()) {
@@ -3057,22 +3077,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return repositoryService.getRepositoryImpl(
 			folderId, fileEntryId, fileVersionId);
-	}
-
-	protected Repository getRepository(
-			long folderId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Repository repository = null;
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = getRepository(serviceContext.getScopeGroupId());
-		}
-		else {
-			repository = getRepository(folderId, 0, 0);
-		}
-
-		return repository;
 	}
 
 	protected FileEntry moveFileEntries(
