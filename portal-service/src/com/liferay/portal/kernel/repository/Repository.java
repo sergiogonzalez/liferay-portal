@@ -247,7 +247,8 @@ public interface Repository {
 		throws PortalException, SystemException;
 
 	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long groupId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public Folder moveFolder(
@@ -292,7 +293,7 @@ public interface Repository {
 		throws PortalException, SystemException;
 
 	public Folder updateFolder(
-			long folderId, String title, String description,
+			long groupId, long folderId, String title, String description,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

@@ -240,19 +240,21 @@ public class EditFolderAction extends PortletAction {
 			// Update folder
 
 			DLAppServiceUtil.updateFolder(
-				folderId, name, description, serviceContext);
+				repositoryId, folderId, name, description, serviceContext);
 		}
 	}
 
 	protected void updateWorkflowDefinitions(ActionRequest actionRequest)
 		throws Exception {
 
+		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
 		DLAppServiceUtil.updateFolder(
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
-			serviceContext);
+			repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
+			null, serviceContext);
 	}
 
 }

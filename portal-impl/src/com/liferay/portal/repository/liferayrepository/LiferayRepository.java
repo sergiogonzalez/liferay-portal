@@ -614,11 +614,12 @@ public class LiferayRepository
 	}
 
 	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long groupId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = dlFileEntryService.moveFileEntry(
-			fileEntryId, toFolderId(newFolderId), serviceContext);
+			groupId, fileEntryId, toFolderId(newFolderId), serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -731,7 +732,7 @@ public class LiferayRepository
 	}
 
 	public Folder updateFolder(
-			long folderId, String title, String description,
+			long groupId, long folderId, String title, String description,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -743,8 +744,9 @@ public class LiferayRepository
 			serviceContext, "overrideFileEntryTypes");
 
 		DLFolder dlFolder = dlFolderService.updateFolder(
-			toFolderId(folderId), title, description, defaultFileEntryTypeId,
-			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
+			groupId, toFolderId(folderId), title, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
+			serviceContext);
 
 		return new LiferayFolder(dlFolder);
 	}

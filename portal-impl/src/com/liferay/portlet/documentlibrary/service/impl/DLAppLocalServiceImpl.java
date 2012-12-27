@@ -1011,6 +1011,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	/**
 	 * Updates the folder.
 	 *
+	 * @param  groupId the primary key of the folder's group
 	 * @param  folderId the primary key of the folder
 	 * @param  parentFolderId the primary key of the folder's new parent folder
 	 * @param  name the folder's new name
@@ -1033,14 +1034,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Folder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LocalRepository localRepository = getLocalRepository(folderId, 0, 0);
 
 		return localRepository.updateFolder(
-			folderId, parentFolderId, name, description, serviceContext);
+			groupId, folderId, parentFolderId, name, description,
+			serviceContext);
 	}
 
 	protected FileEntry copyFileEntry(

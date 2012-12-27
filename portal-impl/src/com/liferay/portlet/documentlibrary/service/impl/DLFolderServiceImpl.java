@@ -404,7 +404,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			permissionChecker, dlFolder, ActionKeys.UPDATE);
 
 		DLFolderPermission.check(
-			permissionChecker, serviceContext.getScopeGroupId(), parentFolderId,
+			permissionChecker, dlFolder.getGroupId(), parentFolderId,
 			ActionKeys.ADD_FOLDER);
 
 		boolean hasLock = hasFolderLock(folderId);
@@ -464,14 +464,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	public DLFolder updateFolder(
-			long folderId, String name, String description,
+			long groupId, long folderId, String name, String description,
 			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
 			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFolderPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(), folderId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), groupId, folderId, ActionKeys.UPDATE);
 
 		boolean hasLock = hasFolderLock(folderId);
 
@@ -487,7 +486,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		try {
 			return dlFolderLocalService.updateFolder(
-				folderId, name, description, defaultFileEntryTypeId,
+				groupId, folderId, name, description, defaultFileEntryTypeId,
 				fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 		}
 		finally {
@@ -495,8 +494,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 				// Unlock
 
-				unlockFolder(
-					serviceContext.getScopeGroupId(), folderId, lock.getUuid());
+				unlockFolder(groupId, folderId, lock.getUuid());
 			}
 		}
 	}

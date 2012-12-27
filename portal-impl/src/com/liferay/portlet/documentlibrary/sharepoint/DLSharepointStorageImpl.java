@@ -306,7 +306,7 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 
 			if (!newName.equals(folder.getName())) {
 				DLAppServiceUtil.updateFolder(
-					folderId, newName, description, serviceContext);
+					groupId, folderId, newName, description, serviceContext);
 			}
 
 			Tree folderTree = getFolderTree(folder, newParentFolderPath);

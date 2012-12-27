@@ -532,7 +532,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	public DLFileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long groupId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -541,8 +542,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			permissionChecker, fileEntryId, ActionKeys.UPDATE);
 
 		DLFolderPermission.check(
-			permissionChecker, serviceContext.getScopeGroupId(), newFolderId,
-			ActionKeys.ADD_DOCUMENT);
+			permissionChecker, groupId, newFolderId, ActionKeys.ADD_DOCUMENT);
 
 		return dlFileEntryLocalService.moveFileEntry(
 			getUserId(), fileEntryId, newFolderId, serviceContext);

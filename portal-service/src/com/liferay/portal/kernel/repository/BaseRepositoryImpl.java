@@ -305,6 +305,18 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return fileEntry.getLock();
 	}
 
+	public FileEntry moveFileEntry(
+			long groupId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return moveFileEntry(fileEntryId, newFolderId, serviceContext);
+	}
+
+	public abstract FileEntry moveFileEntry(
+			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	public Hits search(SearchContext searchContext) throws SearchException {
 		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);
 
@@ -398,6 +410,19 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 			}
 		}
 	}
+
+	public Folder updateFolder(
+			long groupId, long folderId, String title, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFolder(folderId, title, description, serviceContext);
+	}
+
+	public abstract Folder updateFolder(
+			long folderId, String title, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid) {
 		throw new UnsupportedOperationException();

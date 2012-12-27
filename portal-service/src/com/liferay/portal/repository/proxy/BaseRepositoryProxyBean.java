@@ -525,11 +525,12 @@ public class BaseRepositoryProxyBean
 	}
 
 	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long groupId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = _baseRepository.moveFileEntry(
-			fileEntryId, newFolderId, serviceContext);
+			groupId, fileEntryId, newFolderId, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}
@@ -668,12 +669,12 @@ public class BaseRepositoryProxyBean
 	}
 
 	public Folder updateFolder(
-			long folderId, String title, String description,
+			long groupId, long folderId, String title, String description,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Folder folder = _baseRepository.updateFolder(
-			folderId, title, description, serviceContext);
+			groupId, folderId, title, description, serviceContext);
 
 		return newFolderProxyBean(folder);
 	}

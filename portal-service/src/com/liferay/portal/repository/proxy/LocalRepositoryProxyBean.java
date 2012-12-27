@@ -193,12 +193,13 @@ public class LocalRepositoryProxyBean
 	}
 
 	public Folder updateFolder(
-			long folderId, long parentFolderId, String title,
+			long groupId, long folderId, long parentFolderId, String title,
 			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return _localRepository.updateFolder(
-			folderId, parentFolderId, title, description, serviceContext);
+			groupId, folderId, parentFolderId, title, description,
+			serviceContext);
 	}
 
 	private LocalRepository _localRepository;
