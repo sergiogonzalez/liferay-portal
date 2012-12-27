@@ -339,12 +339,13 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry moveFileEntry(
-		long fileEntryId, long newFolderId,
+		long groupId, long fileEntryId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .moveFileEntry(fileEntryId, newFolderId, serviceContext);
+				   .moveFileEntry(groupId, fileEntryId, newFolderId,
+			serviceContext);
 	}
 
 	public static com.liferay.portal.model.Lock refreshFileEntryLock(

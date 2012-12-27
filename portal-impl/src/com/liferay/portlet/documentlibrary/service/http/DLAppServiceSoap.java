@@ -2411,12 +2411,13 @@ public class DLAppServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.kernel.repository.model.FolderSoap updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
+		long groupId, long folderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.updateFolder(folderId,
-					name, description, serviceContext);
+			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.updateFolder(groupId,
+					folderId, name, description, serviceContext);
 
 			return com.liferay.portal.kernel.repository.model.FolderSoap.toSoapModel(returnValue);
 		}

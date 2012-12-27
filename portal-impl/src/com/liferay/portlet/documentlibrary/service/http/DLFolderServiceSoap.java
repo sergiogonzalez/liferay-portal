@@ -458,14 +458,14 @@ public class DLFolderServiceSoap {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolderSoap updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
-		long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
-		boolean overrideFileEntryTypes,
+		long groupId, long folderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		Long[] fileEntryTypeIds, boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.documentlibrary.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,
-					name, description, defaultFileEntryTypeId,
+			com.liferay.portlet.documentlibrary.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(groupId,
+					folderId, name, description, defaultFileEntryTypeId,
 					ListUtil.toList(fileEntryTypeIds), overrideFileEntryTypes,
 					serviceContext);
 

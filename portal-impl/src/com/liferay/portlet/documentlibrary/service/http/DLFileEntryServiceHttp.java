@@ -1327,7 +1327,8 @@ public class DLFileEntryServiceHttp {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry moveFileEntry(
-		HttpPrincipal httpPrincipal, long fileEntryId, long newFolderId,
+		HttpPrincipal httpPrincipal, long groupId, long fileEntryId,
+		long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1335,7 +1336,7 @@ public class DLFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
 					"moveFileEntry", _moveFileEntryParameterTypes35);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					fileEntryId, newFolderId, serviceContext);
 
 			Object returnObj = null;
@@ -1679,7 +1680,7 @@ public class DLFileEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _moveFileEntryParameterTypes35 = new Class[] {
-			long.class, long.class,
+			long.class, long.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _refreshFileEntryLockParameterTypes36 = new Class[] {

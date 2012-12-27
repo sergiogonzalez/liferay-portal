@@ -1201,8 +1201,9 @@ public class DLFolderServiceHttp {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
-		HttpPrincipal httpPrincipal, long folderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
+		HttpPrincipal httpPrincipal, long groupId, long folderId,
+		java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1212,7 +1213,7 @@ public class DLFolderServiceHttp {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"updateFolder", _updateFolderParameterTypes32);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId, name, description, defaultFileEntryTypeId,
 					fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 
@@ -1390,9 +1391,9 @@ public class DLFolderServiceHttp {
 			java.lang.String.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes32 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			long.class, java.util.List.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			long.class, long.class, java.lang.String.class,
+			java.lang.String.class, long.class, java.util.List.class,
+			boolean.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _verifyInheritableLockParameterTypes33 = new Class[] {
 			long.class, java.lang.String.class

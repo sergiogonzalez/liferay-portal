@@ -2276,11 +2276,12 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
+		long groupId, long folderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlAppService.updateFolder(folderId, name, description,
+		return _dlAppService.updateFolder(groupId, folderId, name, description,
 			serviceContext);
 	}
 

@@ -2077,7 +2077,8 @@ public interface DLAppService extends BaseService {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
+		long groupId, long folderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

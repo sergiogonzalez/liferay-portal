@@ -326,12 +326,12 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry moveFileEntry(
-		long fileEntryId, long newFolderId,
+		long groupId, long fileEntryId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryService.moveFileEntry(fileEntryId, newFolderId,
-			serviceContext);
+		return _dlFileEntryService.moveFileEntry(groupId, fileEntryId,
+			newFolderId, serviceContext);
 	}
 
 	public com.liferay.portal.model.Lock refreshFileEntryLock(
