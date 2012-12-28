@@ -649,8 +649,23 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository fromLocalRepository = getLocalRepository(
 			0, fileEntryId, 0);
-		LocalRepository toLocalRepository = getLocalRepository(
-			newFolderId, serviceContext);
+		LocalRepository toLocalRepository = null;
+
+		if (newFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			FileEntry fileEntry = fromLocalRepository.getFileEntry(fileEntryId);
+
+			toLocalRepository = getLocalRepository(fileEntry.getGroupId());
+		}
+		else {
+			toLocalRepository = getLocalRepository(newFolderId, 0, 0);
+
+			Folder toFolder = toLocalRepository.getFolder(newFolderId);
+
+			if (toFolder.isMountPoint()) {
+				toLocalRepository = getLocalRepository(
+					toFolder.getRepositoryId());
+			}
+		}
 
 		if (fromLocalRepository.getRepositoryId() ==
 				toLocalRepository.getRepositoryId()) {
@@ -996,6 +1011,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	/**
 	 * Updates the folder.
 	 *
+	 * @param  groupId the primary key of the folder's group
 	 * @param  folderId the primary key of the folder
 	 * @param  parentFolderId the primary key of the folder's new parent folder
 	 * @param  name the folder's new name
@@ -1018,14 +1034,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Folder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LocalRepository localRepository = getLocalRepository(folderId, 0, 0);
 
 		return localRepository.updateFolder(
-			folderId, parentFolderId, name, description, serviceContext);
+			groupId, folderId, parentFolderId, name, description,
+			serviceContext);
 	}
 
 	protected FileEntry copyFileEntry(
@@ -1114,23 +1131,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		return repositoryLocalService.getLocalRepositoryImpl(
 			folderId, fileEntryId, fileVersionId);
-	}
-
-	protected LocalRepository getLocalRepository(
-			long folderId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		LocalRepository localRepository = null;
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			localRepository = getLocalRepository(
-				serviceContext.getScopeGroupId());
-		}
-		else {
-			localRepository = getLocalRepository(folderId, 0, 0);
-		}
-
-		return localRepository;
 	}
 
 	protected FileEntry moveFileEntries(

@@ -2058,10 +2058,22 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Repository fromRepository = getRepository(0, fileEntryId, 0);
-		Repository toRepository = getRepository(newFolderId, serviceContext);
+		Repository toRepository = null;
+		long groupId = 0;
 
-		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (newFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			FileEntry fileEntry = fromRepository.getFileEntry(fileEntryId);
+
+			groupId = fileEntry.getGroupId();
+
+			toRepository = getRepository(groupId);
+		}
+		else {
+			toRepository = getRepository(newFolderId, 0, 0);
+
 			Folder toFolder = toRepository.getFolder(newFolderId);
+
+			groupId = toFolder.getGroupId();
 
 			if (toFolder.isMountPoint()) {
 				toRepository = getRepository(toFolder.getRepositoryId());
@@ -2074,7 +2086,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			// Move file entries within repository
 
 			FileEntry fileEntry = fromRepository.moveFileEntry(
-				fileEntryId, newFolderId, serviceContext);
+				groupId, fileEntryId, newFolderId, serviceContext);
 
 			return fileEntry;
 		}
@@ -2205,9 +2217,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Repository fromRepository = getRepository(folderId, 0, 0);
-		Repository toRepository = getRepository(parentFolderId, serviceContext);
+		Repository toRepository = null;
 
-		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder folder = fromRepository.getFolder(folderId);
+
+			toRepository = getRepository(folder.getGroupId());
+		}
+		else {
+			toRepository = getRepository(parentFolderId, 0, 0);
+
 			Folder toFolder = toRepository.getFolder(parentFolderId);
 
 			if (toFolder.isMountPoint()) {
@@ -2813,6 +2832,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	/**
 	 * Updates the folder.
 	 *
+	 * @param  groupId the primary key of the folder's group
 	 * @param  folderId the primary key of the folder
 	 * @param  name the folder's new name
 	 * @param  description the folder's new description
@@ -2834,21 +2854,21 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Folder updateFolder(
-			long folderId, String name, String description,
+			long groupId, long folderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Repository repository = null;
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = getRepository(serviceContext.getScopeGroupId());
+			repository = getRepository(groupId);
 		}
 		else {
 			repository = getRepository(folderId, 0, 0);
 		}
 
 		return repository.updateFolder(
-			folderId, name, description, serviceContext);
+			groupId, folderId, name, description, serviceContext);
 	}
 
 	/**
@@ -3057,22 +3077,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return repositoryService.getRepositoryImpl(
 			folderId, fileEntryId, fileVersionId);
-	}
-
-	protected Repository getRepository(
-			long folderId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Repository repository = null;
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = getRepository(serviceContext.getScopeGroupId());
-		}
-		else {
-			repository = getRepository(folderId, 0, 0);
-		}
-
-		return repository;
 	}
 
 	protected FileEntry moveFileEntries(

@@ -304,7 +304,7 @@ public class LiferayLocalRepository
 	}
 
 	public Folder updateFolder(
-			long folderId, long parentFolderId, String title,
+			long groupId, long folderId, long parentFolderId, String title,
 			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -316,7 +316,7 @@ public class LiferayLocalRepository
 			serviceContext, "overrideFileEntryTypes");
 
 		DLFolder dlFolder = dlFolderLocalService.updateFolder(
-			toFolderId(folderId), toFolderId(parentFolderId), title,
+			groupId, toFolderId(folderId), toFolderId(parentFolderId), title,
 			description, defaultFileEntryTypeId, fileEntryTypeIds,
 			overrideFileEntryTypes, serviceContext);
 

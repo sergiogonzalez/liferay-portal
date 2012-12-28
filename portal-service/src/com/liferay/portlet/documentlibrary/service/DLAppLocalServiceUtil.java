@@ -843,14 +843,14 @@ public class DLAppLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.kernel.repository.model.Folder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateFolder(folderId, parentFolderId, name, description,
-			serviceContext);
+				   .updateFolder(groupId, folderId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	public static DLAppLocalService getService() {

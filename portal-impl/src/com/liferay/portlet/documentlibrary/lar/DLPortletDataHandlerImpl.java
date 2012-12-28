@@ -1658,6 +1658,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					parentFolderId, folder.getName(), 2);
 
 				importedFolder = DLAppLocalServiceUtil.updateFolder(
+					portletDataContext.getScopeGroupId(),
 					existingFolder.getFolderId(), parentFolderId, name,
 					folder.getDescription(), serviceContext);
 			}

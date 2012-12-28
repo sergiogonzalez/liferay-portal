@@ -488,9 +488,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	public DLFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-			boolean overrideFileEntryTypes, ServiceContext serviceContext)
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, long defaultFileEntryTypeId,
+			List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// File entry types
@@ -533,22 +534,22 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
-			serviceContext.getUserId(), serviceContext.getCompanyId(),
-			serviceContext.getScopeGroupId(), DLFolder.class.getName(),
-			folderId, workflowDefinitionOVPs);
+			serviceContext.getUserId(), serviceContext.getCompanyId(), groupId,
+			DLFolder.class.getName(), folderId, workflowDefinitionOVPs);
 
 		return dlFolder;
 	}
 
 	public DLFolder updateFolder(
-			long folderId, String name, String description,
+			long groupId, long folderId, String name, String description,
 			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
 			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return updateFolder(
-			folderId, folderId, name, description, defaultFileEntryTypeId,
-			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
+			groupId, folderId, folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
+			serviceContext);
 	}
 
 	public DLFolder updateFolderAndFileEntryTypes(

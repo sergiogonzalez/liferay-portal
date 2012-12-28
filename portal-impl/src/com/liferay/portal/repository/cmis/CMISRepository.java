@@ -974,6 +974,7 @@ public class CMISRepository extends BaseCmisRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public FileEntry moveFileEntry(
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1380,6 +1381,7 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
+	@Override
 	public Folder updateFolder(
 			long folderId, String title, String description,
 			ServiceContext serviceContext)

@@ -823,13 +823,13 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlAppLocalService.updateFolder(folderId, parentFolderId, name,
-			description, serviceContext);
+		return _dlAppLocalService.updateFolder(groupId, folderId,
+			parentFolderId, name, description, serviceContext);
 	}
 
 	/**

@@ -99,7 +99,7 @@ public interface LocalRepository {
 		throws PortalException, SystemException;
 
 	public Folder updateFolder(
-			long folderId, long parentFolderId, String title,
+			long groupId, long folderId, long parentFolderId, String title,
 			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

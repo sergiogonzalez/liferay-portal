@@ -3813,8 +3813,8 @@ public class DLAppServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.repository.model.Folder updateFolder(
-		HttpPrincipal httpPrincipal, long folderId, java.lang.String name,
-		java.lang.String description,
+		HttpPrincipal httpPrincipal, long groupId, long folderId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -3822,7 +3822,7 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"updateFolder", _updateFolderParameterTypes100);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId, name, description, serviceContext);
 
 			Object returnObj = null;
@@ -4326,7 +4326,8 @@ public class DLAppServiceHttp {
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes100 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, long.class, java.lang.String.class,
+			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes101 = new Class[] {

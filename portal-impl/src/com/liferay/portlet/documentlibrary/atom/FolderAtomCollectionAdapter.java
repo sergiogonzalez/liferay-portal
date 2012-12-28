@@ -173,7 +173,8 @@ public class FolderAtomCollectionAdapter
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLAppServiceUtil.updateFolder(
-			folder.getFolderId(), title, summary, serviceContext);
+			folder.getGroupId(), folder.getFolderId(), title, summary,
+			serviceContext);
 	}
 
 	private static final String _COLLECTION_NAME = "folders";

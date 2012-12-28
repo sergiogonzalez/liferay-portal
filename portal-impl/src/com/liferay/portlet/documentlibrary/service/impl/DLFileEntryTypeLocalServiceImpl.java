@@ -287,14 +287,13 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLFileEntry dlFileEntry, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long groupId = serviceContext.getScopeGroupId();
+		long groupId = dlFileEntry.getGroupId();
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		DLFolder dlFolder = dlFolderPersistence.fetchByPrimaryKey(
 			dlFileEntry.getFolderId());
 
 		if (dlFolder != null) {
-			groupId = dlFolder.getGroupId();
 			folderId = dlFolder.getFolderId();
 		}
 
