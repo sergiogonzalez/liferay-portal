@@ -21,7 +21,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
 
@@ -109,7 +108,7 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	public String getName() {
-		return TrashUtil.stripTrashNamespace(_dlFolder.getName());
+		return _dlFolder.getName();
 	}
 
 	public Folder getParentFolder() throws PortalException, SystemException {
@@ -277,6 +276,11 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		else {
 			return new LiferayFolder(_dlFolder.toEscapedModel(), true);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return _dlFolder.toString();
 	}
 
 	public Folder toUnescapedModel() {

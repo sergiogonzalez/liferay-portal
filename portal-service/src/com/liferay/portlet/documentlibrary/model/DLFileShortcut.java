@@ -35,7 +35,7 @@ public interface DLFileShortcut extends DLFileShortcutModel, PersistedModel {
 
 	public java.lang.String getToTitle();
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder();
+	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer();
 
-	public boolean isInTrashFolder();
+	public boolean isInTrashContainer();
 }

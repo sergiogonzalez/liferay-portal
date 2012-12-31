@@ -946,8 +946,8 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.getLuceneProperties();
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder() {
-		return _dlFileEntry.getTrashFolder();
+	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer() {
+		return _dlFileEntry.getTrashContainer();
 	}
 
 	public boolean hasLock() {
@@ -962,8 +962,8 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.isInHiddenFolder();
 	}
 
-	public boolean isInTrashFolder() {
-		return _dlFileEntry.isInTrashFolder();
+	public boolean isInTrashContainer() {
+		return _dlFileEntry.isInTrashContainer();
 	}
 
 	public void setExtraSettingsProperties(

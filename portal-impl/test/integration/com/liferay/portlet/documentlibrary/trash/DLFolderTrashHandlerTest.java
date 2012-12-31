@@ -22,8 +22,8 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -31,6 +31,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -39,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Alexander Chow
  * @author Eudaldo Alonso
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
@@ -54,6 +55,16 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	public void testTrashAssetTagsApproved() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashAssetTagsDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testTrashVersionAndDelete() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
@@ -64,12 +75,17 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(
+	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
+
+		String name = getSearchKeywords();
+
+		name += ServiceTestUtil.randomString(
+			_FOLDER_NAME_MAX_LENGTH - name.length());
 
 		serviceContext = (ServiceContext)serviceContext.clone();
 
@@ -78,7 +94,7 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		DLFolder dlFolder = DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), parentDLFolder.getGroupId(),
 			parentDLFolder.getGroupId(), false, parentDLFolder.getFolderId(),
-			getSearchKeywords(), StringPool.BLANK, false, serviceContext);
+			name, StringPool.BLANK, false, serviceContext);
 
 		return dlFolder;
 	}
@@ -129,6 +145,15 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		DLFolder dlFolder = (DLFolder)baseModel;
+
+		String name = dlFolder.getName();
+
+		return TrashUtil.getOriginalTitle(name);
+	}
+
+	@Override
 	protected boolean isAssetableModel() {
 		return false;
 	}
@@ -139,12 +164,12 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isInTrashFolder(ClassedModel classedModel)
+	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
 		DLFolder dLFolder = (DLFolder)classedModel;
 
-		return dLFolder.isInTrashFolder();
+		return dLFolder.isInTrashContainer();
 	}
 
 	@Override
@@ -174,5 +199,7 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
 	}
+
+	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
 }

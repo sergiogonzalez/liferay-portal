@@ -164,7 +164,7 @@ public class ImageMagickImpl implements ImageMagick {
 			sb.append("Ghostscript. For better quality document and image ");
 			sb.append("previews, install ImageMagick and Ghostscript. Enable ");
 			sb.append("ImageMagick in portal-ext.properties or in the Server ");
-			sb.append("Administration control panel at: ");
+			sb.append("Administration section of the Control Panel at: ");
 			sb.append("http://<server>/group/control_panel/manage/-/server/");
 			sb.append("external-services");
 
@@ -184,7 +184,7 @@ public class ImageMagickImpl implements ImageMagick {
 				_resourceLimitsProperties = getResourceLimitsProperties();
 			}
 			catch (Exception e) {
-				_log.warn(e, e);
+				_log.error(e, e);
 			}
 		}
 	}

@@ -256,14 +256,14 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return sb.toString();
 	}
 
-	public DLFolder getTrashFolder() {
+	public DLFolder getTrashContainer() {
 		DLFolder dlFolder = getFolder();
 
 		if (dlFolder.isInTrash()) {
 			return dlFolder;
 		}
 
-		return dlFolder.getTrashFolder();
+		return dlFolder.getTrashContainer();
 	}
 
 	public boolean hasLock() {
@@ -306,8 +306,8 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return false;
 	}
 
-	public boolean isInTrashFolder() {
-		if (getTrashFolder() != null) {
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
 			return true;
 		}
 		else {

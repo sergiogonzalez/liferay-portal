@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="common" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="build-common" xmlns:antelope="antlib:ise.antelope.tasks">
 	<property name="project.dir" value=".." />
 
 	<property name="test.properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
@@ -439,9 +439,19 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</target>
 
 	<target name="compile-test">
-		<antcall target="compile-test-functional" inheritall="false" />
-		<antcall target="compile-test-integration" inheritall="false" />
-		<antcall target="compile-test-unit" inheritall="false" />
+		<if>
+			<or>
+				<available file="test/integration" type="dir" />
+				<available file="test/unit" type="dir" />
+			</or>
+			<then>
+				<antcall target="compile-test-integration" inheritall="false" />
+				<antcall target="compile-test-unit" inheritall="false" />
+			</then>
+			<else>
+				<antcall target="compile-test-functional" inheritall="false" />
+			</else>
+		</if>
 	</target>
 
 	<target name="compile-test-cmd">

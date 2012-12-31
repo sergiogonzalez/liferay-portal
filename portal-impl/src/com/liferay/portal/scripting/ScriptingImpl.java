@@ -56,7 +56,7 @@ import org.python.core.PySyntaxError;
  */
 public class ScriptingImpl implements Scripting {
 
-	public void addScriptionExecutor(
+	public void addScriptingExecutor(
 		String language, ScriptingExecutor scriptingExecutor) {
 
 		_scriptingExecutors.put(language, scriptingExecutor);

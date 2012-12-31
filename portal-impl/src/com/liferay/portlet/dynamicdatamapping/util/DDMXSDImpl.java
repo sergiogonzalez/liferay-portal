@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -112,6 +114,9 @@ public class DDMXSDImpl implements DDMXSD {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String portletId = PortalUtil.getPortletId(request);
 
 		String portletNamespace = PortalUtil.getPortletNamespace(portletId);
@@ -125,6 +130,8 @@ public class DDMXSDImpl implements DDMXSD {
 		Map<String, Object> fieldStructure =
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
 
+		int valuesSize = 1;
+
 		if (fields != null) {
 			freeMarkerContext.put("fields", fields);
 
@@ -132,35 +139,31 @@ public class DDMXSDImpl implements DDMXSD {
 
 			Field field = fields.get(name);
 
-			List<Serializable> values = field.getValues();
+			if (field != null) {
+				List<Serializable> values = field.getValues(
+					themeDisplay.getLocale());
 
-			StringBuffer sb = new StringBuffer(values.size());
-
-			for (int i = 0; i < values.size(); i++) {
-				fieldStructure.put("repeatableIndex", String.valueOf(i));
-
-				String childrenHTML = getHTML(
-					pageContext, element, fields, namespace, mode, readOnly,
-					locale);
-
-				fieldStructure.put("children", childrenHTML);
-
-				sb.append(
-					processFTL(
-						pageContext, element, mode, readOnly,
-						freeMarkerContext));
+				valuesSize = values.size();
 			}
-
-			return sb.toString();
 		}
 
-		String childrenHTML = getHTML(
-			pageContext, element, fields, namespace, mode, readOnly, locale);
+		StringBuffer sb = new StringBuffer(valuesSize);
 
-		fieldStructure.put("children", childrenHTML);
+		for (int i = 0; i < valuesSize; i++) {
+			fieldStructure.put("repeatableIndex", String.valueOf(i));
 
-		return processFTL(
-			pageContext, element, mode, readOnly, freeMarkerContext);
+			String childrenHTML = getHTML(
+				pageContext, element, fields, namespace, mode, readOnly,
+				locale);
+
+			fieldStructure.put("children", childrenHTML);
+
+			sb.append(
+				processFTL(
+					pageContext, element, mode, readOnly, freeMarkerContext));
+		}
+
+		return sb.toString();
 	}
 
 	public String getFieldHTMLByName(
@@ -511,6 +514,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		freeMarkerContext.put("fieldStructure", fieldContext);
 		freeMarkerContext.put("parentFieldStructure", parentFieldContext);
+		freeMarkerContext.put("requestedLocale", locale);
 
 		return freeMarkerContext;
 	}

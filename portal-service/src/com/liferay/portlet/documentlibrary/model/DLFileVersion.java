@@ -49,9 +49,9 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel {
 
 	public java.lang.String getIcon();
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder();
+	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer();
 
-	public boolean isInTrashFolder();
+	public boolean isInTrashContainer();
 
 	public void setExtraSettings(java.lang.String extraSettings);
 

@@ -1166,7 +1166,7 @@
 						</antelope:stringutil>
 
 						<fail>
-The following JSPs may be too large for some application servers. Ssee LPS-27841
+The following JSPs may be too large for some application servers. See LPS-27841
 for more information.
 
 ${oversize.files.jsp}</fail>

@@ -81,7 +81,6 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				<liferay-ui:message key="delete-portlet-data-warning" />
 			</div>
 		</li>
-
 		<li class="tree-item">
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="false" />
 
@@ -134,7 +133,6 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 									/>
 								</aui:field-wrapper>
 							</li>
-
 							<li>
 								<aui:field-wrapper label="end-date">
 									<liferay-ui:input-date
@@ -176,7 +174,6 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 						</aui:select>
 					</aui:fieldset>
 				</li>
-
 				<li class="tree-item">
 					<aui:fieldset cssClass="portlet-data-section" label="applications">
 						<ul id="<portlet:namespace />portletDataList">

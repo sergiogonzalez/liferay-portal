@@ -22,14 +22,17 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -59,7 +62,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,23 +105,37 @@ public class DDMImpl implements DDM {
 		DDMStructure ddmStructure = getDDMStructure(
 			ddmStructureId, ddmTemplateId);
 
-		JSONObject repeatabaleFieldsMapJSONObject =
-			getRepeatableFieldsMapJSONObject(serviceContext);
-
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
 		Fields fields = new Fields();
 
 		for (String fieldName : fieldNames) {
+			JSONObject repeatabaleFieldsMapJSONObject =
+				getRepeatableFieldsMapJSONObject(serviceContext);
+
 			List<Serializable> fieldValues = getFieldValues(
 				ddmStructure, repeatabaleFieldsMapJSONObject, fieldName,
 				fieldNamespace, serviceContext);
 
-			if (fieldValues.isEmpty()) {
+			if ((fieldValues == null) || fieldValues.isEmpty()) {
 				continue;
 			}
 
-			Field field = new Field(ddmStructureId, fieldName, fieldValues);
+			String languageId = GetterUtil.getString(
+				serviceContext.getAttribute("languageId"),
+				serviceContext.getLanguageId());
+
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+			Field field = new Field(
+				ddmStructureId, fieldName, fieldValues, locale);
+
+			String defaultLanguageId = GetterUtil.getString(
+				serviceContext.getAttribute("defaultLanguageId"));
+
+			Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+			field.setDefaultLocale(defaultLocale);
 
 			fields.put(field);
 		}
@@ -223,6 +242,30 @@ public class DDMImpl implements DDM {
 		return orderByComparator;
 	}
 
+	public Fields mergeFields(Fields newFields, Fields existingFields) {
+		Iterator<Field> itr = newFields.iterator();
+
+		while (itr.hasNext()) {
+			Field newField = itr.next();
+
+			Field existingField = existingFields.get(newField.getName());
+
+			if (existingField == null) {
+				existingFields.put(newField);
+			}
+			else {
+				for (Locale locale : newField.getAvailableLocales()) {
+					existingField.setValues(locale, newField.getValues(locale));
+				}
+
+				existingField.setDefaultLocale(newField.getDefaultLocale());
+			}
+
+		}
+
+		return existingFields;
+	}
+
 	public void sendFieldFile(
 			HttpServletRequest request, HttpServletResponse response,
 			Field field, int valueIndex)
@@ -232,9 +275,13 @@ public class DDMImpl implements DDM {
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		DDMStructure structure = field.getDDMStructure();
 
-		Serializable fieldValue = field.getValue(valueIndex);
+		Serializable fieldValue = field.getValue(
+			themeDisplay.getLocale(), valueIndex);
 
 		JSONObject fileJSONObject = JSONFactoryUtil.createJSONObject(
 			String.valueOf(fieldValue));
@@ -279,7 +326,7 @@ public class DDMImpl implements DDM {
 		Fields fields = StorageEngineUtil.getFields(storageId);
 
 		List<String> fieldNames = getFieldNames(
-			structureId, fieldName, fieldNamespace, serviceContext);
+			structureId, fieldNamespace, fieldName, serviceContext);
 
 		List<Serializable> fieldValues = new ArrayList<Serializable>(
 			fieldNames.size());
@@ -320,7 +367,8 @@ public class DDMImpl implements DDM {
 			}
 		}
 
-		Field field = new Field(structureId, fieldName, fieldValues);
+		Field field = new Field(
+			structureId, fieldName, fieldValues, serviceContext.getLocale());
 
 		fields.put(field);
 
@@ -379,14 +427,14 @@ public class DDMImpl implements DDM {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.getDDMStructure(structureId);
+		DDMStructure structure = DDMStructureLocalServiceUtil.getDDMStructure(
+			structureId);
 
 		JSONObject repeatableFieldsMapJSONObject =
 			getRepeatableFieldsMapJSONObject(serviceContext);
 
 		return getFieldNames(
-			ddmStructure, fieldName, fieldNamespace,
+			structure, fieldName, fieldNamespace,
 			repeatableFieldsMapJSONObject);
 	}
 
@@ -408,7 +456,7 @@ public class DDMImpl implements DDM {
 
 		for (String fieldNameValue : fieldNames) {
 			Serializable fieldValue = serviceContext.getAttribute(
-					fieldNameValue);
+				fieldNameValue);
 
 			if (fieldDataType.equals(FieldConstants.DATE)) {
 				int fieldValueMonth = GetterUtil.getInteger(

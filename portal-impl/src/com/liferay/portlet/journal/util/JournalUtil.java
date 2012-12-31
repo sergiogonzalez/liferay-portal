@@ -61,18 +61,18 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.StructureXsdException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalStructureConstants;
-import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleCreateDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
@@ -360,23 +360,23 @@ public class JournalUtil {
 		}
 	}
 
-	public static void addRecentStructure(
-		PortletRequest portletRequest, JournalStructure structure) {
+	public static void addRecentDDMStructure(
+		PortletRequest portletRequest, DDMStructure ddmStructure) {
 
-		if (structure != null) {
-			Stack<JournalStructure> stack = getRecentStructures(portletRequest);
+		if (ddmStructure != null) {
+			Stack<DDMStructure> stack = getRecentDDMStructures(portletRequest);
 
-			stack.push(structure);
+			stack.push(ddmStructure);
 		}
 	}
 
-	public static void addRecentTemplate(
-		PortletRequest portletRequest, JournalTemplate template) {
+	public static void addRecentDDMTemplate(
+		PortletRequest portletRequest, DDMTemplate ddmTemplate) {
 
-		if (template != null) {
-			Stack<JournalTemplate> stack = getRecentTemplates(portletRequest);
+		if (ddmTemplate != null) {
+			Stack<DDMTemplate> stack = getRecentDDMTemplates(portletRequest);
 
-			stack.push(template);
+			stack.push(ddmTemplate);
 		}
 	}
 
@@ -824,51 +824,53 @@ public class JournalUtil {
 		return recentArticles;
 	}
 
-	public static Stack<JournalStructure> getRecentStructures(
+	public static Stack<DDMStructure> getRecentDDMStructures(
 		PortletRequest portletRequest) {
 
 		PortletSession portletSession = portletRequest.getPortletSession();
 
-		Stack<JournalStructure> recentStructures =
-			(Stack<JournalStructure>)portletSession.getAttribute(
-				WebKeys.JOURNAL_RECENT_STRUCTURES);
+		Stack<DDMStructure> recentDDMStructures =
+			(Stack<DDMStructure>)portletSession.getAttribute(
+				WebKeys.JOURNAL_RECENT_DYNAMIC_DATA_MAPPING_STRUCTURES);
 
-		if (recentStructures == null) {
-			recentStructures = new FiniteUniqueStack<JournalStructure>(
+		if (recentDDMStructures == null) {
+			recentDDMStructures = new FiniteUniqueStack<DDMStructure>(
 				MAX_STACK_SIZE);
 
 			portletSession.setAttribute(
-				WebKeys.JOURNAL_RECENT_STRUCTURES, recentStructures);
+				WebKeys.JOURNAL_RECENT_DYNAMIC_DATA_MAPPING_STRUCTURES,
+				recentDDMStructures);
 		}
 
-		return recentStructures;
+		return recentDDMStructures;
 	}
 
-	public static Stack<JournalTemplate> getRecentTemplates(
+	public static Stack<DDMTemplate> getRecentDDMTemplates(
 		PortletRequest portletRequest) {
 
 		PortletSession portletSession = portletRequest.getPortletSession();
 
-		Stack<JournalTemplate> recentTemplates =
-			(Stack<JournalTemplate>)portletSession.getAttribute(
-				WebKeys.JOURNAL_RECENT_TEMPLATES);
+		Stack<DDMTemplate> recentDDMTemplates =
+			(Stack<DDMTemplate>)portletSession.getAttribute(
+				WebKeys.JOURNAL_RECENT_DYNAMIC_DATA_MAPPING_TEMPLATES);
 
-		if (recentTemplates == null) {
-			recentTemplates = new FiniteUniqueStack<JournalTemplate>(
+		if (recentDDMTemplates == null) {
+			recentDDMTemplates = new FiniteUniqueStack<DDMTemplate>(
 				MAX_STACK_SIZE);
 
 			portletSession.setAttribute(
-				WebKeys.JOURNAL_RECENT_TEMPLATES, recentTemplates);
+				WebKeys.JOURNAL_RECENT_DYNAMIC_DATA_MAPPING_TEMPLATES,
+				recentDDMTemplates);
 		}
 
-		return recentTemplates;
+		return recentDDMTemplates;
 	}
 
 	public static String getTemplateScript(
-		JournalTemplate template, Map<String, String> tokens, String languageId,
+		DDMTemplate ddmTemplate, Map<String, String> tokens, String languageId,
 		boolean transform) {
 
-		String script = template.getXsl();
+		String script = ddmTemplate.getScript();
 
 		if (transform) {
 
@@ -916,10 +918,10 @@ public class JournalUtil {
 			String languageId, boolean transform)
 		throws PortalException, SystemException {
 
-		JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			groupId, templateId);
 
-		return getTemplateScript(template, tokens, languageId, transform);
+		return getTemplateScript(ddmTemplate, tokens, languageId, transform);
 	}
 
 	public static Map<String, String> getTokens(
@@ -1117,17 +1119,17 @@ public class JournalUtil {
 		}
 	}
 
-	public static void removeRecentStructure(
+	public static void removeRecentDDMStructure(
 		PortletRequest portletRequest, String structureId) {
 
-		Stack<JournalStructure> stack = getRecentStructures(portletRequest);
+		Stack<DDMStructure> stack = getRecentDDMStructures(portletRequest);
 
-		Iterator<JournalStructure> itr = stack.iterator();
+		Iterator<DDMStructure> itr = stack.iterator();
 
 		while (itr.hasNext()) {
-			JournalStructure journalStructure = itr.next();
+			DDMStructure ddmStructure = itr.next();
 
-			if (journalStructure.getStructureId().equals(structureId)) {
+			if (structureId.equals(ddmStructure.getStructureKey())) {
 				itr.remove();
 
 				break;
@@ -1135,17 +1137,17 @@ public class JournalUtil {
 		}
 	}
 
-	public static void removeRecentTemplate(
+	public static void removeRecentDDMTemplate(
 		PortletRequest portletRequest, String templateId) {
 
-		Stack<JournalTemplate> stack = getRecentTemplates(portletRequest);
+		Stack<DDMTemplate> stack = getRecentDDMTemplates(portletRequest);
 
-		Iterator<JournalTemplate> itr = stack.iterator();
+		Iterator<DDMTemplate> itr = stack.iterator();
 
 		while (itr.hasNext()) {
-			JournalTemplate journalTemplate = itr.next();
+			DDMTemplate ddmTemplate = itr.next();
 
-			if (journalTemplate.getTemplateId().equals(templateId)) {
+			if (templateId.equals(ddmTemplate.getTemplateKey())) {
 				itr.remove();
 
 				break;

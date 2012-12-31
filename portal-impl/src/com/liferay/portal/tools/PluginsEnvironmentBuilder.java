@@ -162,6 +162,17 @@ public class PluginsEnvironmentBuilder {
 
 		for (String currentImportShared : importShared) {
 			jars.add(currentImportShared + ".jar");
+
+			File currentImportSharedLibDir = new File(
+				projectDir, "/../../shared/" + currentImportShared + "/lib");
+
+			if (!currentImportSharedLibDir.exists()) {
+				continue;
+			}
+
+			for (File f : currentImportSharedLibDir.listFiles()) {
+				jars.add(f.getName());
+			}
 		}
 
 		return jars;
@@ -423,8 +434,11 @@ public class PluginsEnvironmentBuilder {
 			if (libDirPath.contains("/tmp/WEB-INF/lib")) {
 				addClasspathEntry(sb, "tmp/WEB-INF/lib/" + jar);
 			}
-			else {
+			else if (libDirPath.contains("/docroot/WEB-INF/lib")) {
 				addClasspathEntry(sb, "docroot/WEB-INF/lib/" + jar);
+			}
+			else {
+				addClasspathEntry(sb, "lib/" + jar);
 			}
 		}
 

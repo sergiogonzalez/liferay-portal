@@ -41,7 +41,7 @@ if (Validator.isNull(redirect)) {
 }
 
 String extension = fileEntry.getExtension();
-String title = fileEntry.getTitle();
+String title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
 
 Folder folder = fileEntry.getFolder();
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
@@ -107,12 +107,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 <portlet:actionURL var="editFileEntry">
 	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-	<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editFileEntry %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="fileEntryId" type="hidden" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 </aui:form>
 
 <c:if test="<%= showHeader && (folder != null) %>">
@@ -131,7 +131,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= false %>"
-		title="<%= fileEntry.getTitle() %>"
+		title="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
 	/>
 </c:if>
 
@@ -143,6 +143,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 				</liferay-ui:app-view-toolbar>
 			</c:if>
+
+			<div class="portlet-msg-error aui-helper-hidden" id="<portlet:namespace />openMSOfficeError"></div>
 
 			<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 				<c:choose>
@@ -459,9 +461,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
 						</div>
 
-						<div class="lfr-asset-summary">
-							<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
-						</div>
+						<c:if test="<%= !portletId.equals(PortletKeys.TRASH) %>">
+							<div class="lfr-asset-summary">
+								<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
+							</div>
+						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
 							<blockquote class="lfr-asset-description">
@@ -809,6 +813,33 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		},
 		['aui-base', 'selector-css3']
 	);
+
+	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request) %>">
+		Liferay.provide(
+			window,
+			'<portlet:namespace />openDocument',
+			function(webDavUrl) {
+				var A = AUI();
+
+				Liferay.Util.openDocument(
+					webDavUrl,
+					null,
+					function(exception) {
+						var errorMessage = A.Lang.sub(
+							Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
+							[exception.message]
+						);
+
+						var openMSOfficeError = A.one('#<portlet:namespace />openMSOfficeError');
+
+						openMSOfficeError.html(errorMessage);
+						openMSOfficeError.show();
+					}
+				);
+			},
+			['aui-base']
+		);
+	</c:if>
 </aui:script>
 
 <aui:script use="aui-base,aui-toolbar">
@@ -852,6 +883,25 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
 				}
 			);
+
+			<%
+			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
+			%>
+
+				fileEntryToolbarChildren.push(
+					{
+						handler: function(event) {
+							<portlet:namespace />openDocument('<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED) %>');
+						},
+						icon: 'msoffice',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>'
+					}
+				);
+
+			<%
+			}
+			%>
+
 		</c:if>
 
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">

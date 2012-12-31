@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Converter;
+import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,8 +33,10 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.WeakHashMap;
 
 import javassist.util.proxy.ProxyFactory;
 
@@ -55,15 +58,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 	@Override
 	public SessionFactory buildSessionFactory() throws Exception {
-		ProxyFactory.classLoaderProvider =
-			new ProxyFactory.ClassLoaderProvider() {
-
-				public ClassLoader get(ProxyFactory proxyFactory) {
-					return PACLClassLoaderUtil.getContextClassLoader();
-				}
-
-			};
-
 		setBeanClassLoader(getConfigurationClassLoader());
 
 		return super.buildSessionFactory();
@@ -80,6 +74,26 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		Converter<String> hibernateConfigurationConverter) {
 
 		_hibernateConfigurationConverter = hibernateConfigurationConverter;
+	}
+
+	protected static Map<String, Class<?>> getPreloadClassLoaderClasses() {
+		try {
+			Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
+
+			for (String className : _PRELOAD_CLASS_NAMES) {
+				ClassLoader portalClassLoader =
+					PACLClassLoaderUtil.getPortalClassLoader();
+
+				Class<?> clazz = portalClassLoader.loadClass(className);
+
+				classes.put(className, clazz);
+			}
+
+			return classes;
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new RuntimeException(cnfe);
+		}
 	}
 
 	protected Dialect determineDialect() {
@@ -229,8 +243,49 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		DBFactoryUtil.setDB(dialect);
 	}
 
+	private static final String[] _PRELOAD_CLASS_NAMES =
+		PropsValues.SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
+
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);
+
+	private static Map<ProxyFactory, ClassLoader> _proxyFactoryClassLoaders =
+		new WeakHashMap<ProxyFactory, ClassLoader>();
+
+	static {
+		ProxyFactory.classLoaderProvider =
+			new ProxyFactory.ClassLoaderProvider() {
+
+				public ClassLoader get(ProxyFactory proxyFactory) {
+					synchronized (_proxyFactoryClassLoaders) {
+						ClassLoader classLoader = _proxyFactoryClassLoaders.get(
+							proxyFactory);
+
+						if (classLoader != null) {
+							return classLoader;
+						}
+
+						classLoader =
+							PACLClassLoaderUtil.getPortalClassLoader();
+
+						ClassLoader contextClassLoader =
+							PACLClassLoaderUtil.getContextClassLoader();
+
+						if (classLoader != contextClassLoader) {
+							classLoader = new PreloadClassLoader(
+								contextClassLoader,
+								getPreloadClassLoaderClasses());
+						}
+
+						_proxyFactoryClassLoaders.put(
+							proxyFactory, classLoader);
+
+						return classLoader;
+					}
+				}
+
+			};
+	}
 
 	private Converter<String> _hibernateConfigurationConverter;
 

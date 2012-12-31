@@ -71,7 +71,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return null;
 	}
 
-	public MBCategory getTrashCategory() {
+	public MBCategory getTrashContainer() {
 		try {
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 				getCategoryId());
@@ -80,7 +80,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 				return category;
 			}
 
-			return category.getTrashCategory();
+			return category.getTrashContainer();
 		}
 		catch (Exception e) {
 			return null;
@@ -98,8 +98,8 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return false;
 	}
 
-	public boolean isInTrashCategory() {
-		if (getTrashCategory() != null) {
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
 			return true;
 		}
 		else {

@@ -14,11 +14,15 @@
 
 package com.liferay.portlet.dynamicdatamapping.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -40,6 +44,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Locale;
 import java.util.Map;
@@ -205,6 +211,28 @@ public class EditTemplateAction extends PortletAction {
 		return portletURL.toString();
 	}
 
+	protected String getScript(UploadPortletRequest uploadPortletRequest) {
+		InputStream inputStream = null;
+
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream("script");
+
+			if (inputStream != null) {
+				return new String(FileUtil.getBytes(inputStream));
+			}
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+
+		return null;
+	}
+
 	protected DDMTemplate updateTemplate(ActionRequest actionRequest)
 		throws Exception {
 
@@ -227,7 +255,7 @@ public class EditTemplateAction extends PortletAction {
 			uploadPortletRequest, "language",
 			DDMTemplateConstants.LANG_TYPE_VM);
 
-		String script = ParamUtil.getString(uploadPortletRequest, "script");
+		String script = getScript(uploadPortletRequest);
 		String scriptContent = ParamUtil.getString(
 			uploadPortletRequest, "scriptContent");
 
@@ -285,5 +313,7 @@ public class EditTemplateAction extends PortletAction {
 
 		return template;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(EditTemplateAction.class);
 
 }

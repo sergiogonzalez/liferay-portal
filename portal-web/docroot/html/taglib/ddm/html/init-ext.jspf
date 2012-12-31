@@ -20,4 +20,8 @@
 String containerId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 
 String xsd = DDMXSDUtil.getXSD(classNameId, classPK);
+
+if (requestedLocale == null) {
+	requestedLocale = locale;
+}
 %>

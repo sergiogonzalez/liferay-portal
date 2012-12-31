@@ -468,7 +468,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	/**
 	 * Creates systems groups and other related data needed by the system on the
-	 * very first startup. Also takes care of creating the control panel groups
+	 * very first startup. Also takes care of creating the Control Panel groups
 	 * and layouts.
 	 *
 	 * @param  companyId the primary key of the company

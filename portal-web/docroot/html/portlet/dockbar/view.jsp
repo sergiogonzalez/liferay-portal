@@ -404,12 +404,13 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 
 		<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
 			<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="reset_prototype" />
-			<portlet:param name="redirect" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
 		</liferay-portlet:actionURL>
 
 		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
+			<input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
+			<input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
+			<input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
+
 			<aui:button name="submit" type="submit" value="reset" />
 		</aui:form>
 	</div>
@@ -483,30 +484,38 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 		</span>
 	</div>
 
+	<aui:script>
+		Liferay.provide(
+			window,
+			'<portlet:namespace />toggleCustomizedView',
+			function(event) {
+				var A = AUI();
+
+				A.io.request(
+					themeDisplay.getPathMain() + '/portal/update_layout',
+					{
+						data: {
+							cmd: 'toggle_customized_view',
+							customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
+							p_auth: '<%= AuthTokenUtil.getToken(request) %>'
+						},
+						on: {
+							success: function(event, id, obj) {
+								window.location.href = themeDisplay.getLayoutURL();
+							}
+						}
+					}
+				);
+			},
+			['aui-io-request']
+		);
+	</aui:script>
+
 	<aui:script use="aui-base">
 		var toggleCustomizedView = A.one('#<portlet:namespace />toggleCustomizedView');
 
 		if (toggleCustomizedView) {
-			toggleCustomizedView.on(
-				'click',
-				function(event) {
-					A.io.request(
-						themeDisplay.getPathMain() + '/portal/update_layout',
-						{
-							data: {
-								cmd: 'toggle_customized_view',
-								customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
-								p_auth: '<%= AuthTokenUtil.getToken(request) %>'
-							},
-							on: {
-								success: function(event, id, obj) {
-									window.location.href = themeDisplay.getLayoutURL();
-								}
-							}
-						}
-					);
-				}
-			);
+			toggleCustomizedView.on('click', <portlet:namespace />toggleCustomizedView);
 		}
 	</aui:script>
 </c:if>

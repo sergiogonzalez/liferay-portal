@@ -71,6 +71,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -530,7 +531,8 @@ public class EditGroupAction extends PortletAction {
 		int trashEnabled = ParamUtil.getInteger(
 			actionRequest, "trashEnabled",
 			GetterUtil.getInteger(
-				typeSettingsProperties.getProperty("trashEnabled")));
+				typeSettingsProperties.getProperty("trashEnabled"),
+				TrashUtil.TRASH_DEFAULT_VALUE));
 
 		typeSettingsProperties.setProperty(
 			"trashEnabled", String.valueOf(trashEnabled));

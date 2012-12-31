@@ -898,8 +898,8 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.getPathArray();
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder() {
-		return _dlFolder.getTrashFolder();
+	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer() {
+		return _dlFolder.getTrashContainer();
 	}
 
 	public boolean hasInheritableLock() {
@@ -910,8 +910,8 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.hasLock();
 	}
 
-	public boolean isInTrashFolder() {
-		return _dlFolder.isInTrashFolder();
+	public boolean isInTrashContainer() {
+		return _dlFolder.isInTrashContainer();
 	}
 
 	public boolean isLocked() {

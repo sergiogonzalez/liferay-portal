@@ -12,33 +12,45 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test;
+package com.liferay.portal.json;
 
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.util.PropsImpl;
+import com.liferay.portal.kernel.json.JSON;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Igor Spasic
  */
-public class BaseTestCase extends TestCase {
+@JSON(strict = true)
+public class Four {
 
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		Class<?> clazz = getClass();
-
-		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
-
-		PropsUtil.setProps(new PropsImpl());
+	@JSON
+	public int getNumber() {
+		return _number;
 	}
 
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		PortalClassLoaderUtil.setClassLoader(null);
+	public long getPrivate() {
+		return _private;
 	}
+
+	public String getValue() {
+		return _value;
+	}
+
+	public void setNumber(int number) {
+		_number = number;
+	}
+
+	public void setPrivate(long aPrivate) {
+		_private = aPrivate;
+	}
+
+	public void setValue(String value) {
+		_value = value;
+	}
+
+	private int _number = 173;
+	private long _private = 0xCAFEBABE;
+
+	@JSON
+	private String _value = "something";
 
 }

@@ -31,7 +31,7 @@ import javax.portlet.PortletResponse;
  */
 public class ScriptingProxyBean extends BaseProxyBean implements Scripting {
 
-	public void addScriptionExecutor(
+	public void addScriptingExecutor(
 		String language, ScriptingExecutor scriptingExecutor) {
 
 		throw new UnsupportedOperationException();

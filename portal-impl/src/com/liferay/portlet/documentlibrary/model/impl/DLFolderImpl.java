@@ -94,7 +94,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		return StringUtil.split(path, CharPool.SLASH);
 	}
 
-	public DLFolder getTrashFolder() {
+	public DLFolder getTrashContainer() {
 		DLFolder dlFolder = null;
 
 		try {
@@ -140,8 +140,8 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		return false;
 	}
 
-	public boolean isInTrashFolder() {
-		if (getTrashFolder() != null) {
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
 			return true;
 		}
 		else {

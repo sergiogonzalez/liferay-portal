@@ -382,6 +382,8 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 		resetBuffer(true);
 
+		setStatus(SC_FOUND);
+
 		_metaData._location = location;
 
 		_committed = true;

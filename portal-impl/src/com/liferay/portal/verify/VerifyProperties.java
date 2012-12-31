@@ -248,8 +248,8 @@ public class VerifyProperties extends VerifyProcess {
 		"lucene.store.jdbc.dialect.mysql", "lucene.store.jdbc.dialect.oracle",
 		"lucene.store.jdbc.dialect.postgresql",
 		"message.boards.thread.locking.enabled",
-		"portal.security.manager.enable", "shard.available.names",
-		"velocity.engine.resource.manager",
+		"portal.security.manager.enable", "scheduler.classes",
+		"shard.available.names", "velocity.engine.resource.manager",
 		"velocity.engine.resource.manager.cache.enabled",
 		"webdav.storage.class", "webdav.storage.show.edit.url",
 		"webdav.storage.show.view.url", "webdav.storage.tokens", "xss.allow"

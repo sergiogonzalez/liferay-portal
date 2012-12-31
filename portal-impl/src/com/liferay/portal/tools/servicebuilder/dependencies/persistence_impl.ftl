@@ -611,7 +611,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				${entity.varName}.setNew(false);
 			}
 			else {
-				session.merge(${entity.varName});
+				<#if entity.hasLazyBlobColumn()>
+
+					<#-- Workaround for HHH-2680 -->
+
+					session.evict(${entity.varName});
+					session.saveOrUpdate(${entity.varName});
+				<#else>
+					session.merge(${entity.varName});
+				</#if>
 			}
 
 			<#if entity.hasLazyBlobColumn()>

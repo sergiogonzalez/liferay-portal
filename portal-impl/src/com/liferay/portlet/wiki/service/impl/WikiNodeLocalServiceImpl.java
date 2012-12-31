@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -40,6 +41,8 @@ import com.liferay.portlet.wiki.importers.WikiImporter;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.base.WikiNodeLocalServiceBaseImpl;
+import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
+import com.liferay.portlet.wiki.util.WikiCacheUtil;
 
 import java.io.InputStream;
 
@@ -199,7 +202,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			node.getCompanyId(), WikiNode.class.getName(), node.getNodeId());
 
 		if (node.isInTrash()) {
-			node.setName(TrashUtil.stripTrashNamespace(node.getName()));
+			node.setName(TrashUtil.getOriginalTitle(node.getName()));
 
 			// Trash
 
@@ -344,19 +347,24 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	public WikiNode moveNodeToTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
-		node.setName(TrashUtil.appendTrashNamespace(node.getName()));
-
-		wikiNodePersistence.update(node);
-
-		return updateStatus(
+		node = updateStatus(
 			userId, node, WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
+
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			WikiNode.class.getName(), node.getNodeId());
+
+		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
+
+		node.setName(trashTitle);
+
+		return wikiNodePersistence.update(node);
 	}
 
 	public void restoreNodeFromTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
-		String name = TrashUtil.stripTrashNamespace(node.getName());
+		String name = TrashUtil.getOriginalTitle(node.getName());
 
 		node.setName(name);
 
@@ -425,13 +433,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Pages
 
-		List<WikiPage> pages = wikiPagePersistence.findByNodeId(
-			node.getNodeId());
-
-		for (WikiPage page : pages) {
-			wikiPageLocalService.updateStatus(
-				userId, page, status, status, serviceContext);
-		}
+		updateDependentStatus(node.getNodeId(), status);
 
 		// Trash
 
@@ -440,9 +442,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 				WikiNode.class.getName(), node.getNodeId());
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+			typeSettingsProperties.put("title", node.getName());
+
 			trashEntryLocalService.addTrashEntry(
 				userId, node.getGroupId(), WikiNode.class.getName(),
-				node.getNodeId(), oldStatus, null, null);
+				node.getNodeId(), oldStatus, null, typeSettingsProperties);
 		}
 
 		// Indexer
@@ -451,13 +457,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			WikiNode.class);
 
 		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			String oldName = node.getName();
-
-			node.setName(TrashUtil.stripTrashNamespace(oldName));
-
 			indexer.reindex(node);
-
-			node.setName(oldName);
 		}
 		else {
 			indexer.delete(node);
@@ -513,6 +513,72 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		}
 
 		return wikiImporter;
+	}
+
+	protected void updateDependentStatus(long nodeId, int status)
+		throws PortalException, SystemException {
+
+		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
+
+		for (WikiPage page : pages) {
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						WikiPage.class.getName(), page.getResourcePrimKey(),
+						false);
+				}
+
+				// Social
+
+				socialActivityCounterLocalService.disableActivityCounters(
+					WikiPage.class.getName(), page.getResourcePrimKey());
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					WikiPage.class);
+
+				indexer.reindex(page);
+
+				// Cache
+
+				if (WikiCacheThreadLocal.isClearCache()) {
+					WikiCacheUtil.clearCache(page.getNodeId());
+				}
+
+				if (page.getStatus() == WorkflowConstants.STATUS_PENDING) {
+					page.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+					wikiPagePersistence.update(page);
+
+					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+						page.getCompanyId(), page.getGroupId(),
+						WikiPage.class.getName(), page.getResourcePrimKey());
+				}
+			}
+			else {
+
+				// Asset
+
+				if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						WikiPage.class.getName(), page.getResourcePrimKey(),
+						true);
+				}
+
+				// Social
+
+				socialActivityCounterLocalService.enableActivityCounters(
+					WikiPage.class.getName(), page.getResourcePrimKey());
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					WikiPage.class);
+
+				indexer.reindex(page);
+			}
+		}
 	}
 
 	protected void validate(long nodeId, long groupId, String name)

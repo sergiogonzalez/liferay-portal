@@ -1219,6 +1219,7 @@
 			ddmURL.setParameter('scopeStructureType', config.structureType);
 			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
+			ddmURL.setParameter('scopeTitle', config.title);
 
 			if ('showGlobalScope' in config) {
 				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
@@ -1262,6 +1263,31 @@
 			Util.openWindow(config, callback);
 		},
 		['liferay-portlet-url']
+	);
+
+	Liferay.provide(
+		Util,
+		'openDocument',
+		function(webDavUrl, onSuccess, onError) {
+			if (A.UA.ie) {
+				try {
+					var executor = new A.config.win.ActiveXObject('SharePoint.OpenDocuments');
+
+					executor.EditDocument(webDavUrl);
+
+					if (Lang.isFunction(onSuccess)) {
+						onSuccess();
+					}
+
+				}
+				catch (exception) {
+					if (Lang.isFunction(onError)) {
+						onError(exception);
+					}
+				}
+			}
+		},
+		['aui-base']
 	);
 
 	Liferay.provide(

@@ -130,11 +130,21 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		DLFileShortcut fileShortcut =
 			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
 
-		if (fileShortcut.isInTrash() || fileShortcut.isInTrashFolder()) {
+		if (fileShortcut.isInTrash() || fileShortcut.isInTrashContainer()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut fileShortcut =
+			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+
+		return fileShortcut.isInTrashContainer();
 	}
 
 	@Override
@@ -143,7 +153,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return !dlFileShortcut.isInTrashFolder();
+		return !dlFileShortcut.isInTrashContainer();
 	}
 
 	@Override

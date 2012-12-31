@@ -161,7 +161,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		portletURL.setParameter("struts_action", "/message_boards_admin/view");
 		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(category.getCategoryId()));
+			"mbCategoryId", String.valueOf(category.getParentCategoryId()));
 
 		return portletURL.toString();
 	}
@@ -172,7 +172,8 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		return MBUtil.getAbsolutePath(portletRequest, category.getCategoryId());
+		return MBUtil.getAbsolutePath(
+			portletRequest, category.getParentCategoryId());
 	}
 
 	@Override
@@ -298,11 +299,20 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		if (category.isInTrash() || category.isInTrashCategory()) {
+		if (category.isInTrash() || category.isInTrashContainer()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+
+		return category.isInTrashContainer();
 	}
 
 	@Override
@@ -316,7 +326,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		return !category.isInTrashCategory();
+		return !category.isInTrashContainer();
 	}
 
 	@Override

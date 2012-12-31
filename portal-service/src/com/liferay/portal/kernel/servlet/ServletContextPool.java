@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
 import java.util.Set;
@@ -98,6 +99,15 @@ public class ServletContextPool {
 	}
 
 	private ServletContext _remove(String servletContextName) {
+
+		// We should never remove the portal context. See LPS-12683.
+
+		String contextPath = PortalUtil.getPathContext();
+
+		if (contextPath.equals(servletContextName)) {
+			return null;
+		}
+
 		ServletContext servletContext = _servletContexts.remove(
 			servletContextName);
 

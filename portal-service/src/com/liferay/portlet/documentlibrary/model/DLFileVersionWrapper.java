@@ -925,12 +925,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		return _dlFileVersion.getIcon();
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder() {
-		return _dlFileVersion.getTrashFolder();
+	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer() {
+		return _dlFileVersion.getTrashContainer();
 	}
 
-	public boolean isInTrashFolder() {
-		return _dlFileVersion.isInTrashFolder();
+	public boolean isInTrashContainer() {
+		return _dlFileVersion.isInTrashContainer();
 	}
 
 	public void setExtraSettingsProperties(

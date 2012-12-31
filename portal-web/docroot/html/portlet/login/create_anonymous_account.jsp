@@ -17,11 +17,11 @@
 <%@ include file="/html/portlet/login/init.jsp" %>
 
 <portlet:actionURL var="createAnonymousAccountURL">
-	<portlet:param name="saveLastPath" value="0" />
 	<portlet:param name="struts_action" value="/login/create_anonymous_account" />
 </portlet:actionURL>
 
 <aui:form action="<%= createAnonymousAccountURL %>" method="post" name="fm">
+	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />

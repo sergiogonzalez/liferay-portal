@@ -813,12 +813,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		return _mbCategory.getParentCategory();
 	}
 
-	public com.liferay.portlet.messageboards.model.MBCategory getTrashCategory() {
-		return _mbCategory.getTrashCategory();
+	public com.liferay.portlet.messageboards.model.MBCategory getTrashContainer() {
+		return _mbCategory.getTrashContainer();
 	}
 
-	public boolean isInTrashCategory() {
-		return _mbCategory.isInTrashCategory();
+	public boolean isInTrashContainer() {
+		return _mbCategory.isInTrashContainer();
 	}
 
 	public boolean isRoot() {

@@ -714,16 +714,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return _mbThread.getLock();
 	}
 
-	public com.liferay.portlet.messageboards.model.MBCategory getTrashCategory() {
-		return _mbThread.getTrashCategory();
+	public com.liferay.portlet.messageboards.model.MBCategory getTrashContainer() {
+		return _mbThread.getTrashContainer();
 	}
 
 	public boolean hasLock(long userId) {
 		return _mbThread.hasLock(userId);
 	}
 
-	public boolean isInTrashCategory() {
-		return _mbThread.isInTrashCategory();
+	public boolean isInTrashContainer() {
+		return _mbThread.isInTrashContainer();
 	}
 
 	public boolean isLocked() {

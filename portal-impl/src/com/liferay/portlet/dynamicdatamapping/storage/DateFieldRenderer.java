@@ -39,14 +39,12 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 
 		List<String> values = new ArrayList<String>();
 
-		for (Serializable value : field.getValues()) {
-			String valueString = String.valueOf(value);
-
-			if (Validator.isNull(valueString)) {
+		for (Serializable value : field.getValues(locale)) {
+			if (Validator.isNull(value)) {
 				continue;
 			}
 
-			values.add(format.format(valueString));
+			values.add(format.format(value));
 		}
 
 		return StringUtil.merge(values, StringPool.COMMA_AND_SPACE);
@@ -54,7 +52,7 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale, int valueIndex) {
-		String value = String.valueOf(field.getValue(valueIndex));
+		Serializable value = field.getValue(locale, valueIndex);
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;

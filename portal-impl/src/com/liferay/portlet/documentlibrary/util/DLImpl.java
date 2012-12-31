@@ -46,6 +46,7 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -698,6 +699,58 @@ public class DLImpl implements DL {
 			boolean manualCheckInRequired)
 		throws PortalException, SystemException {
 
+		return getWebDavURL(
+			themeDisplay, folder, fileEntry, manualCheckInRequired, false);
+	}
+
+	public String getWebDavURL(
+			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
+			boolean manualCheckInRequired, boolean openDocumentUrl)
+		throws PortalException, SystemException {
+
+		StringBundler webDavURL = new StringBundler(8);
+
+		boolean secure = false;
+
+		if (themeDisplay.isSecure() ||
+			PropsValues.WEBDAV_SERVLET_HTTPS_REQUIRED) {
+
+			secure = true;
+		}
+
+		String portalURL = PortalUtil.getPortalURL(
+			themeDisplay.getServerName(), themeDisplay.getServerPort(), secure);
+
+		webDavURL.append(portalURL);
+
+		webDavURL.append(themeDisplay.getPathContext());
+		webDavURL.append("/webdav");
+
+		if (manualCheckInRequired) {
+			webDavURL.append(DLUtil.MANUAL_CHECK_IN_REQUIRED_PATH);
+		}
+
+		String fileEntryTitle = null;
+
+		if (fileEntry != null) {
+			String extension = fileEntry.getExtension();
+
+			fileEntryTitle = fileEntry.getTitle();
+
+			if (openDocumentUrl && DLUtil.isOfficeExtension(extension) &&
+				!fileEntryTitle.endsWith(StringPool.PERIOD + extension)) {
+
+				webDavURL.append(DLUtil.OFFICE_EXTENSION_PATH);
+
+				fileEntryTitle += StringPool.PERIOD + extension;
+			}
+		}
+
+		Group group = themeDisplay.getScopeGroup();
+
+		webDavURL.append(group.getFriendlyURL());
+		webDavURL.append("/document_library");
+
 		StringBuilder sb = new StringBuilder();
 
 		if (folder != null) {
@@ -721,23 +774,9 @@ public class DLImpl implements DL {
 
 		if (fileEntry != null) {
 			sb.append(StringPool.SLASH);
-			sb.append(HttpUtil.encodeURL(fileEntry.getTitle(), true));
+			sb.append(HttpUtil.encodeURL(fileEntryTitle, true));
 		}
 
-		Group group = themeDisplay.getScopeGroup();
-
-		StringBundler webDavURL = new StringBundler(7);
-
-		webDavURL.append(themeDisplay.getPortalURL());
-		webDavURL.append(themeDisplay.getPathContext());
-		webDavURL.append("/webdav");
-
-		if (manualCheckInRequired) {
-			webDavURL.append(DLUtil.MANUAL_CHECK_IN_REQUIRED_PATH);
-		}
-
-		webDavURL.append(group.getFriendlyURL());
-		webDavURL.append("/document_library");
 		webDavURL.append(sb.toString());
 
 		return webDavURL.toString();
@@ -779,6 +818,21 @@ public class DLImpl implements DL {
 		String ddmStructureKey) {
 
 		if (ddmStructureKey.startsWith("auto_")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isOfficeExtension(String extension) {
+		if (extension.equalsIgnoreCase("doc") ||
+			extension.equalsIgnoreCase("docx") ||
+			extension.equalsIgnoreCase("dot") ||
+			extension.equalsIgnoreCase("ppt") ||
+			extension.equalsIgnoreCase("pptx") ||
+			extension.equalsIgnoreCase("xls") ||
+			extension.equalsIgnoreCase("xlsx")) {
+
 			return true;
 		}
 

@@ -81,12 +81,12 @@
 			</tr>
 
 			<%
-			Stack recentStructures = JournalUtil.getRecentStructures(renderRequest);
+			Stack recentDDMStructures = JournalUtil.getRecentDDMStructures(renderRequest);
 
-			int recentStructuresSize = recentStructures.size();
+			int recentDDMStructuresSize = recentDDMStructures.size();
 
-			for (int i = recentStructuresSize - 1; i >= 0; i--) {
-				DDMStructure ddmStructure = (DDMStructure)recentStructures.get(i);
+			for (int i = recentDDMStructuresSize - 1; i >= 0; i--) {
+				DDMStructure ddmStructure = (DDMStructure)recentDDMStructures.get(i);
 
 				ddmStructure = ddmStructure.toEscapedModel();
 
@@ -120,19 +120,19 @@
 			</tr>
 
 			<%
-			Stack recentTemplates = JournalUtil.getRecentTemplates(renderRequest);
+			Stack recentDDMTemplates = JournalUtil.getRecentDDMTemplates(renderRequest);
 
-			int recentTemplatesSize = recentTemplates.size();
+			int recentDDMTemplatesSize = recentDDMTemplates.size();
 
-			for (int i = recentTemplatesSize - 1; i >= 0; i--) {
-				DDMTemplate ddmTemplate = (DDMTemplate)recentTemplates.get(i);
+			for (int i = recentDDMTemplatesSize - 1; i >= 0; i--) {
+				DDMTemplate ddmTemplate = (DDMTemplate)recentDDMTemplates.get(i);
 
 				ddmTemplate = ddmTemplate.toEscapedModel();
 
 				String className = "portlet-section-body results-row";
 				String classHoverName = "portlet-section-body-hover results-row hover";
 
-				if (MathUtil.isEven(recentTemplatesSize - i - 1)) {
+				if (MathUtil.isEven(recentDDMTemplatesSize - i - 1)) {
 					className = "portlet-section-alternate results-row alt";
 					classHoverName = "portlet-section-alternate-hover results-row alt hover";
 				}

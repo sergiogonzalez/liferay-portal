@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.action;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -132,7 +133,8 @@ public class EditMessageAction extends PortletAction {
 					 e instanceof FileSizeException ||
 					 e instanceof LockedThreadException ||
 					 e instanceof MessageBodyException ||
-					 e instanceof MessageSubjectException) {
+					 e instanceof MessageSubjectException ||
+					 e instanceof SanitizerException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
@@ -142,7 +144,14 @@ public class EditMessageAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
-				throw e;
+				Throwable cause = e.getCause();
+
+				if (cause instanceof SanitizerException) {
+					SessionErrors.add(actionRequest, SanitizerException.class);
+				}
+				else {
+					throw e;
+				}
 			}
 		}
 	}
@@ -305,33 +314,28 @@ public class EditMessageAction extends PortletAction {
 			preferences.getValue("messageFormat", null),
 			MBMessageConstants.DEFAULT_FORMAT);
 
-		boolean attachments = ParamUtil.getBoolean(
-			actionRequest, "attachments");
-
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<ObjectValuePair<String, InputStream>>(5);
 
 		try {
-			if (attachments) {
-				UploadPortletRequest uploadPortletRequest =
-					PortalUtil.getUploadPortletRequest(actionRequest);
+			UploadPortletRequest uploadPortletRequest =
+				PortalUtil.getUploadPortletRequest(actionRequest);
 
-				for (int i = 1; i <= 5; i++) {
-					String fileName = uploadPortletRequest.getFileName(
-						"msgFile" + i);
-					InputStream inputStream =
-						uploadPortletRequest.getFileAsStream("msgFile" + i);
+			for (int i = 1; i <= 5; i++) {
+				String fileName = uploadPortletRequest.getFileName(
+					"msgFile" + i);
+				InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"msgFile" + i);
 
-					if ((inputStream == null) || Validator.isNull(fileName)) {
-						continue;
-					}
-
-					ObjectValuePair<String, InputStream> inputStreamOVP =
-						new ObjectValuePair<String, InputStream>(
-							fileName, inputStream);
-
-					inputStreamOVPs.add(inputStreamOVP);
+				if ((inputStream == null) || Validator.isNull(fileName)) {
+					continue;
 				}
+
+				ObjectValuePair<String, InputStream> inputStreamOVP =
+					new ObjectValuePair<String, InputStream>(
+						fileName, inputStream);
+
+				inputStreamOVPs.add(inputStreamOVP);
 			}
 
 			boolean question = ParamUtil.getBoolean(actionRequest, "question");
@@ -420,14 +424,12 @@ public class EditMessageAction extends PortletAction {
 			return message;
 		}
 		finally {
-			if (attachments) {
-				for (ObjectValuePair<String, InputStream> inputStreamOVP :
-						inputStreamOVPs) {
+			for (ObjectValuePair<String, InputStream> inputStreamOVP :
+					inputStreamOVPs) {
 
-					InputStream inputStream = inputStreamOVP.getValue();
+				InputStream inputStream = inputStreamOVP.getValue();
 
-					StreamUtil.cleanUp(inputStream);
-				}
+				StreamUtil.cleanUp(inputStream);
 			}
 		}
 	}

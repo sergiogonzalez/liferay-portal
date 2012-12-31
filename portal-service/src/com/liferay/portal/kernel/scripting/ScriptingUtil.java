@@ -30,6 +30,12 @@ import javax.portlet.PortletResponse;
  */
 public class ScriptingUtil {
 
+	public static void addScriptingExecutor(
+		String language, ScriptingExecutor scriptingExecutor) {
+
+		getScripting().addScriptingExecutor(language, scriptingExecutor);
+	}
+
 	public static void clearCache(String language) throws ScriptingException {
 		getScripting().clearCache(language);
 	}

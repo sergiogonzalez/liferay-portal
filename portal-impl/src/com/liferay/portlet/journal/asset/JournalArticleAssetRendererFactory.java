@@ -72,7 +72,7 @@ public class JournalArticleAssetRendererFactory
 		try {
 			article = JournalArticleLocalServiceUtil.getArticle(classPK);
 		}
-		catch (NoSuchArticleException nsae) {
+		catch (NoSuchArticleException nsae1) {
 			JournalArticleResource articleResource =
 				JournalArticleResourceLocalServiceUtil.getArticleResource(
 					classPK);
@@ -85,7 +85,7 @@ public class JournalArticleAssetRendererFactory
 						articleResource.getGroupId(),
 						articleResource.getArticleId());
 				}
-				catch (NoSuchArticleException nsae1) {
+				catch (NoSuchArticleException nsae2) {
 					approvedArticleAvailable = false;
 				}
 			}

@@ -26,6 +26,10 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.NoSuchStructureException;
@@ -34,14 +38,10 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureServiceUtil;
-import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
 
@@ -177,10 +177,10 @@ public class ActionUtil {
 				groupId, className, classPK);
 		}
 		else if (Validator.isNotNull(structureId)) {
-			JournalStructure structure = null;
+			DDMStructure ddmStructure = null;
 
 			try {
-				structure = JournalStructureServiceUtil.getStructure(
+				ddmStructure = DDMStructureServiceUtil.getStructure(
 					groupId, structureId);
 			}
 			catch (NoSuchStructureException nsse1) {
@@ -189,7 +189,7 @@ public class ActionUtil {
 				}
 
 				try {
-					structure = JournalStructureServiceUtil.getStructure(
+					ddmStructure = DDMStructureServiceUtil.getStructure(
 						themeDisplay.getCompanyGroupId(), structureId);
 				}
 				catch (NoSuchStructureException nsse2) {
@@ -198,7 +198,8 @@ public class ActionUtil {
 			}
 
 			article = JournalArticleServiceUtil.getArticle(
-				groupId, JournalStructure.class.getName(), structure.getId());
+				groupId, DDMStructure.class.getName(),
+				ddmStructure.getStructureId());
 
 			article.setNew(true);
 
@@ -347,14 +348,14 @@ public class ActionUtil {
 		long groupId = ParamUtil.getLong(request, "groupId");
 		String structureId = ParamUtil.getString(request, "structureId");
 
-		JournalStructure structure = null;
+		DDMStructure ddmStructure = null;
 
 		if (Validator.isNotNull(structureId)) {
-			structure = JournalStructureServiceUtil.getStructure(
+			ddmStructure = DDMStructureServiceUtil.getStructure(
 				groupId, structureId);
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_STRUCTURE, structure);
+		request.setAttribute(WebKeys.JOURNAL_STRUCTURE, ddmStructure);
 	}
 
 	public static void getStructure(PortletRequest portletRequest)
@@ -365,11 +366,11 @@ public class ActionUtil {
 
 		getStructure(request);
 
-		JournalStructure structure =
-			(JournalStructure)portletRequest.getAttribute(
+		DDMStructure ddmStructure =
+			(DDMStructure)portletRequest.getAttribute(
 				WebKeys.JOURNAL_STRUCTURE);
 
-		JournalUtil.addRecentStructure(portletRequest, structure);
+		JournalUtil.addRecentDDMStructure(portletRequest, ddmStructure);
 	}
 
 	public static void getTemplate(HttpServletRequest request)
@@ -378,14 +379,14 @@ public class ActionUtil {
 		long groupId = ParamUtil.getLong(request, "groupId");
 		String templateId = ParamUtil.getString(request, "templateId");
 
-		JournalTemplate template = null;
+		DDMTemplate ddmTemplate = null;
 
 		if (Validator.isNotNull(templateId)) {
-			template = JournalTemplateServiceUtil.getTemplate(
+			ddmTemplate = DDMTemplateServiceUtil.getTemplate(
 				groupId, templateId);
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_TEMPLATE, template);
+		request.setAttribute(WebKeys.JOURNAL_TEMPLATE, ddmTemplate);
 	}
 
 	public static void getTemplate(PortletRequest portletRequest)
@@ -396,10 +397,10 @@ public class ActionUtil {
 
 		getTemplate(request);
 
-		JournalTemplate template = (JournalTemplate)portletRequest.getAttribute(
+		DDMTemplate ddmTemplate = (DDMTemplate)portletRequest.getAttribute(
 			WebKeys.JOURNAL_TEMPLATE);
 
-		JournalUtil.addRecentTemplate(portletRequest, template);
+		JournalUtil.addRecentDDMTemplate(portletRequest, ddmTemplate);
 	}
 
 	protected static boolean hasArticle(ActionRequest actionRequest)
@@ -409,6 +410,23 @@ public class ActionUtil {
 			WebKeys.THEME_DISPLAY);
 
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
+
+		if (Validator.isNull(articleId)) {
+			String[] articleIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "articleIds"));
+
+			if (articleIds.length <= 0) {
+				return false;
+			}
+
+			articleId = articleIds[0];
+		}
+
+		int pos = articleId.lastIndexOf(EditArticleAction.VERSION_SEPARATOR);
+
+		if (pos != -1) {
+			articleId = articleId.substring(0, pos);
+		}
 
 		try {
 			JournalArticleLocalServiceUtil.getArticle(

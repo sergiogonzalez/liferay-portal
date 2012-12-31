@@ -72,7 +72,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		return toTitle;
 	}
 
-	public DLFolder getTrashFolder() {
+	public DLFolder getTrashContainer() {
 		Folder folder = getFolder();
 
 		DLFolder dlFolder = (DLFolder)folder.getModel();
@@ -81,11 +81,11 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 			return dlFolder;
 		}
 
-		return dlFolder.getTrashFolder();
+		return dlFolder.getTrashContainer();
 	}
 
-	public boolean isInTrashFolder() {
-		if (getTrashFolder() != null) {
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
 			return true;
 		}
 		else {

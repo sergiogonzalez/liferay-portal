@@ -283,7 +283,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return false;
 	}
 
-	public boolean isInTrashFolder() {
+	public boolean isInTrashContainer() {
 		return false;
 	}
 

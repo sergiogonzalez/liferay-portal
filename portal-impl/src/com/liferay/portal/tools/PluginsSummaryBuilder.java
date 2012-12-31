@@ -436,7 +436,9 @@ public class PluginsSummaryBuilder {
 
 			Set<String> ticketIds = _extractTicketIds(pluginDir, range);
 
-			if (range.endsWith("^.." + _latestHASH) && ticketIds.isEmpty()) {
+			if (range.endsWith("^.." + _latestHASH) && ticketIds.isEmpty() &&
+				(relengChangeLogEntries.size() > 1)) {
+
 				continue;
 			}
 

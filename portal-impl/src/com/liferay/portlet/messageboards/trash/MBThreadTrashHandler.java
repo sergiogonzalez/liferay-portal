@@ -148,11 +148,20 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
 
-		if (thread.isInTrash() || thread.isInTrashCategory()) {
+		if (thread.isInTrash() || thread.isInTrashContainer()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isInTrashContainer(long classPK)
+			throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		return thread.isInTrashContainer();
 	}
 
 	@Override

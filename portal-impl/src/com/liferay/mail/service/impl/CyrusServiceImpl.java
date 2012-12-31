@@ -31,17 +31,13 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 	public void addUser(long userId, String emailAddress, String password)
 		throws SystemException {
 
-		// User
+		CyrusUser cyrusUser = new CyrusUser(userId, password);
 
-		CyrusUser user = new CyrusUser(userId, password);
+		CyrusUserUtil.update(cyrusUser);
 
-		CyrusUserUtil.update(user);
+		CyrusVirtual cyrusVirtual = new CyrusVirtual(emailAddress, userId);
 
-		// Virtual
-
-		CyrusVirtual virtual = new CyrusVirtual(emailAddress, userId);
-
-		CyrusVirtualUtil.update(virtual);
+		CyrusVirtualUtil.update(cyrusVirtual);
 	}
 
 	public void deleteEmailAddress(long companyId, long userId)
@@ -51,16 +47,11 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 	}
 
 	public void deleteUser(long userId) throws SystemException {
-
-		// User
-
 		try {
 			CyrusUserUtil.remove(userId);
 		}
 		catch (NoSuchCyrusUserException nscue) {
 		}
-
-		// Virtual
 
 		CyrusVirtualUtil.removeByUserId(userId);
 	}
@@ -79,26 +70,26 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 
 		CyrusVirtualUtil.removeByUserId(userId);
 
-		CyrusVirtual virtual = new CyrusVirtual(emailAddress, userId);
+		CyrusVirtual cyrusVirtual = new CyrusVirtual(emailAddress, userId);
 
-		CyrusVirtualUtil.update(virtual);
+		CyrusVirtualUtil.update(cyrusVirtual);
 	}
 
 	public void updatePassword(long companyId, long userId, String password)
 		throws SystemException {
 
-		CyrusUser user = null;
+		CyrusUser cyrusUser = null;
 
 		try {
-			user = CyrusUserUtil.findByPrimaryKey(userId);
+			cyrusUser = CyrusUserUtil.findByPrimaryKey(userId);
 		}
 		catch (NoSuchCyrusUserException nscue) {
-			user = new CyrusUser(userId, password);
+			cyrusUser = new CyrusUser(userId, password);
 		}
 
-		user.setPassword(password);
+		cyrusUser.setPassword(password);
 
-		CyrusUserUtil.update(user);
+		CyrusUserUtil.update(cyrusUser);
 	}
 
 	private String _beanIdentifier;

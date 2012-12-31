@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
@@ -38,6 +39,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
@@ -214,6 +216,16 @@ public class GetFileAction extends PortletAction {
 				}
 
 				if (dlFileEntry != null) {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)request.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					PermissionChecker permissionChecker =
+						themeDisplay.getPermissionChecker();
+
+					DLFileEntryPermission.check(
+						permissionChecker, dlFileEntry, ActionKeys.VIEW);
+
 					fileEntry = new LiferayFileEntry(dlFileEntry);
 				}
 			}
@@ -228,7 +240,9 @@ public class GetFileAction extends PortletAction {
 		}
 
 		if (Validator.isNull(version)) {
-			if (Validator.isNotNull(fileEntry.getVersion())) {
+			if ((fileEntry != null) &&
+				Validator.isNotNull(fileEntry.getVersion())) {
+
 				version = fileEntry.getVersion();
 			}
 			else {

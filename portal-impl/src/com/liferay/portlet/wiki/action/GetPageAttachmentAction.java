@@ -123,13 +123,13 @@ public class GetPageAttachmentAction extends PortletAction {
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
-			(dlFileVersion.isInTrash() || dlFileEntry.isInTrashFolder())) {
+			(dlFileVersion.isInTrash() || dlFileEntry.isInTrashContainer())) {
 
 			return;
 		}
 
 		if (dlFileVersion.isInTrash()) {
-			fileName = TrashUtil.stripTrashNamespace(dlFileEntry.getTitle());
+			fileName = TrashUtil.getOriginalTitle(dlFileEntry.getTitle());
 		}
 
 		ServletResponseUtil.sendFile(

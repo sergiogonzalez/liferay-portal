@@ -544,6 +544,10 @@
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/copy_structure.jsp" />
 	</definition>
 
+	<definition name="portlet.dynamic_data_mapping.copy_template" extends="portlet.dynamic_data_mapping">
+		<put name="portlet_content" value="/portlet/dynamic_data_mapping/copy_template.jsp" />
+	</definition>
+
 	<definition name="portlet.dynamic_data_mapping.edit_structure" extends="portlet.dynamic_data_mapping">
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/edit_structure.jsp" />
 	</definition>
@@ -962,6 +966,10 @@
 
 	<definition name="portlet.monitoring.edit_session" extends="portlet.monitoring">
 		<put name="portlet_content" value="/portlet/monitoring/edit_session.jsp" />
+	</definition>
+
+	<definition name="portlet.monitoring.error" extends="portlet.monitoring">
+		<put name="portlet_content" value="/portlet/monitoring/error.jsp" />
 	</definition>
 
 	<definition name="portlet.monitoring.view" extends="portlet.monitoring">

@@ -32,7 +32,7 @@ import javax.portlet.PortletResponse;
 @MessagingProxy(mode = ProxyMode.SYNC)
 public interface Scripting {
 
-	public void addScriptionExecutor(
+	public void addScriptingExecutor(
 		String language, ScriptingExecutor scriptingExecutor);
 
 	public void clearCache(String language) throws ScriptingException;

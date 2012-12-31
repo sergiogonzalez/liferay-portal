@@ -46,7 +46,12 @@ JSONArray scriptJSONArray = null;
 
 if (Validator.isNotNull(script)) {
 	if (structure != null) {
-		scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
+		try {
+			scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
+		}
+		catch (Exception e) {
+			scriptJSONArray = DDMXSDUtil.getJSONArray(structure.getDocument());
+		}
 	}
 	else {
 		scriptJSONArray = DDMXSDUtil.getJSONArray(script);
@@ -156,7 +161,7 @@ if (Validator.isNotNull(script)) {
 
 				<aui:input name="description" />
 
-				<aui:field-wrapper label="parent-data-definition">
+				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", scopeStructureName) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 					<c:choose>
@@ -214,6 +219,7 @@ if (Validator.isNotNull(script)) {
 	function <portlet:namespace />openParentStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 		{
+			classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 			ddmResource: '<%= ddmResource %>',
 			dialog: {
 				width: 820
@@ -221,11 +227,11 @@ if (Validator.isNotNull(script)) {
 			saveCallback: '<%= renderResponse.getNamespace() + "selectParentStructure" %>',
 			showGlobalScope: true,
 			showManageTemplates: false,
-			storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
-			structureName: 'data-definition',
-			structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
+			storageType: '<%= scopeStorageType %>',
+			structureName: '<%= scopeStructureName %>',
+			structureType: '<%= scopeStructureType %>',
 			struts_action: '/dynamic_data_mapping/select_structure',
-			title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
+			title: '<%= scopeTitle %>'
 		}
 		);
 	}
@@ -266,13 +272,11 @@ if (Validator.isNotNull(script)) {
 		window,
 		'<portlet:namespace />saveStructure',
 		function() {
-			if (window.<portlet:namespace />formBuilder) {
-				document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
-			}
+			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getContentXSD();
 
 			submitForm(document.<portlet:namespace />fm);
 		},
-		['aui-base']
+		['aui-base', 'liferay-portlet-dynamic-data-mapping']
 	);
 
 	<c:if test="<%= Validator.isNotNull(saveCallback) && (classPK != 0) %>">

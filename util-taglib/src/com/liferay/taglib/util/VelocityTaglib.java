@@ -719,7 +719,7 @@ public class VelocityTaglib {
 
 	public void permissionsURL(
 			String redirect, String modelResource,
-			String modelResourceDescription, long resourceGroupId,
+			String modelResourceDescription, Object resourceGroupId,
 			String resourcePrimKey, String windowState, int[] roleTypes)
 		throws Exception {
 
@@ -739,7 +739,7 @@ public class VelocityTaglib {
 		throws Exception {
 
 		permissionsURL(
-			redirect, modelResourceDescription, modelResourceDescription, 0,
+			redirect, modelResourceDescription, modelResourceDescription, null,
 			resourcePrimKey, windowState, roleTypes);
 	}
 

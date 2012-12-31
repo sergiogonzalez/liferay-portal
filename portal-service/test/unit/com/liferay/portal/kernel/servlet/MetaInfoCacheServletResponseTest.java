@@ -1131,6 +1131,9 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 	public void testSendRedirect() throws IOException {
 		final AtomicReference<String> locationReference =
 			new AtomicReference<String>();
+		final AtomicReference<String> messageReference =
+			new AtomicReference<String>();
+		final AtomicInteger statusReference = new AtomicInteger();
 
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
@@ -1149,6 +1152,11 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 					locationReference.set(location);
 				}
 
+				@Override
+				public void setStatus(int status, String message) {
+					statusReference.set(status);
+					messageReference.set(message);
+				}
 			};
 
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =

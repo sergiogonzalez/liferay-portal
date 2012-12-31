@@ -291,6 +291,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 					<liferay-ui:form-navigator
 						categoryNames="<%= _CATEGORY_NAMES %>"
 						categorySections="<%= categorySections %>"
+						formName="fm1"
 						htmlBottom="<%= htmlBottom %>"
 						htmlTop="<%= htmlTop %>"
 						jspPath="/html/portlet/journal/article/"
@@ -358,7 +359,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	}
 
 	function <portlet:namespace />saveArticle() {
-		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.SAVE %>";
+		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (article != null) ? Constants.UPDATE : Constants.ADD %>";
 	}
 
 	function <portlet:namespace />selectDocumentLibrary(url) {
