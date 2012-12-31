@@ -155,6 +155,14 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		}
 	}
 
+	public boolean isNavigationRecent() {
+		if (navigation.equals("recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void setDisplayDateGT(Date displayDateGT) {
 		this.displayDateGT = displayDateGT;
 	}

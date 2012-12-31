@@ -407,9 +407,9 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 		</liferay-portlet:actionURL>
 
 		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
-			<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
+			<input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
+			<input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
+			<input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
 
 			<aui:button name="submit" type="submit" value="reset" />
 		</aui:form>
@@ -489,6 +489,8 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 			window,
 			'<portlet:namespace />toggleCustomizedView',
 			function(event) {
+				var A = AUI();
+
 				A.io.request(
 					themeDisplay.getPathMain() + '/portal/update_layout',
 					{
