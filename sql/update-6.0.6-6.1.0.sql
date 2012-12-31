@@ -298,6 +298,7 @@ alter table Layout add robots STRING null;
 alter table Layout add layoutPrototypeUuid VARCHAR(75) null;
 alter table Layout add layoutPrototypeLinkEnabled BOOLEAN null;
 alter table Layout add sourcePrototypeLayoutUuid VARCHAR(75) null;
+
 alter table Layout drop column layoutPrototypeId;
 alter table Layout drop column dlFolderId;
 
@@ -359,6 +360,7 @@ alter table LayoutSet add createDate DATE null;
 alter table LayoutSet add modifiedDate DATE null;
 alter table LayoutSet add layoutSetPrototypeUuid VARCHAR(75) null;
 alter table LayoutSet add layoutSetPrototypeLinkEnabled BOOLEAN null;
+
 alter table LayoutSet drop column layoutSetPrototypeId;
 
 drop index IX_5ABC2905 on LayoutSet;
@@ -480,6 +482,7 @@ create table MDRRuleGroupInstance (
 );
 
 alter table Organization_ add treePath STRING null;
+
 alter table Organization_ drop column leftOrganizationId;
 alter table Organization_ drop column rightOrganizationId;
 
