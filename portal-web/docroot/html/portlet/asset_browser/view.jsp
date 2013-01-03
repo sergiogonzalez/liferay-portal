@@ -104,7 +104,7 @@ portletURL.setParameter("callback", callback);
 				sb.append("', '");
 				sb.append(assetEntry.getTitle(locale));
 				sb.append("', '");
-				sb.append(group.getDescriptiveName(locale));
+				sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
 				sb.append("');Liferay.Util.getWindow().close();");
 
 				rowHREF = sb.toString();
@@ -128,7 +128,7 @@ portletURL.setParameter("callback", callback);
 
 			// Scope
 
-			row.addText(group.getDescriptiveName(locale), rowHREF);
+			row.addText(HtmlUtil.escape(group.getDescriptiveName(locale)), rowHREF);
 
 			// Add result row
 
