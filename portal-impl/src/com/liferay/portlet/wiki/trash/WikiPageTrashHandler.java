@@ -147,9 +147,9 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			page.getGroupId(), PortletKeys.WIKI);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-
 			portletId = PortletKeys.WIKI_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -157,7 +157,13 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		WikiNode node = page.getNode();
 
-		portletURL.setParameter("struts_action", "/wiki/view");
+		if (portletId.equals(PortletKeys.WIKI)) {
+			portletURL.setParameter("struts_action", "/wiki/view");
+		}
+		else {
+			portletURL.setParameter("struts_action", "/wiki_admin/view");
+		}
+
 		portletURL.setParameter("nodeName", node.getName());
 		portletURL.setParameter("title", HtmlUtil.unescape(page.getTitle()));
 

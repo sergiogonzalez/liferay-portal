@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -463,8 +462,9 @@ public class AnnouncementsEntryLocalServiceImpl
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(entry.getCompanyId());
+		subscriptionSender.setContextAttribute(
+			"[$ENTRY_CONTENT$]", entry.getContent(), false);
 		subscriptionSender.setContextAttributes(
-			"[$ENTRY_CONTENT$]", HtmlUtil.extractText(entry.getContent()),
 			"[$ENTRY_ID$]", entry.getEntryId(), "[$ENTRY_TITLE$]",
 			entry.getTitle(), "[$ENTRY_TYPE$]",
 			LanguageUtil.get(company.getLocale(), entry.getType()),

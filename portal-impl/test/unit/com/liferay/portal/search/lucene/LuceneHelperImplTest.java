@@ -452,7 +452,7 @@ public class LuceneHelperImplTest {
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[]{Boolean.FALSE});
+			return proceedingJoinPoint.proceed(new Object[] {Boolean.FALSE});
 		}
 
 	}
@@ -466,7 +466,7 @@ public class LuceneHelperImplTest {
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[]{Boolean.FALSE});
+			return proceedingJoinPoint.proceed(new Object[] {Boolean.FALSE});
 		}
 
 	}
@@ -479,7 +479,7 @@ public class LuceneHelperImplTest {
 		public Object enableClusterLink(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[]{Boolean.TRUE});
+			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
 		}
 
 	}
@@ -493,7 +493,7 @@ public class LuceneHelperImplTest {
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[]{Boolean.TRUE});
+			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
 		}
 
 	}

@@ -235,7 +235,7 @@ public class EditPageAction extends PortletAction {
 
 			data.put(
 				"restoreEntryIds",
-				new String[]{String.valueOf(wikiPage.getResourcePrimKey())});
+				new String[] {String.valueOf(wikiPage.getResourcePrimKey())});
 
 			SessionMessages.add(
 				actionRequest,

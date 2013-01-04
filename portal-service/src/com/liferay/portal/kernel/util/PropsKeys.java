@@ -745,6 +745,12 @@ public interface PropsKeys {
 
 	public static final String DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY = "dynamic.data.mapping.structure.force.autogenerate.key";
 
+	public static final String DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_DATATYPE = "dynamic.data.mapping.structure.private.field.datatype";
+
+	public static final String DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_NAMES = "dynamic.data.mapping.structure.private.field.names";
+
+	public static final String DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_REPEATABLE = "dynamic.data.mapping.structure.private.field.repeatable";
+
 	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT = "dynamic.data.mapping.template.language.content";
 
 	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_TYPES = "dynamic.data.mapping.template.language.types";
@@ -1912,6 +1918,8 @@ public interface PropsKeys {
 	public static final String ROLES_SITE_SUBTYPES = "roles.site.subtypes";
 
 	public static final String RSS_CONNECTION_TIMEOUT = "rss.connection.timeout";
+
+	public static final String RSS_FEED_DISPLAY_STYLE_DEFAULT = "rss.feed.display.style.default";
 
 	public static final String RSS_FEED_TYPE_DEFAULT = "rss.feed.type.default";
 

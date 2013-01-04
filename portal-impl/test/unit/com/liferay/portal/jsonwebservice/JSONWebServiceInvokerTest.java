@@ -566,9 +566,9 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		map.put("/foo/hey", params);
 
 		params.put("calendar", "1330419334285");
-		params.put("userIds", new long[]{1,2,3});
-		params.put("locales", new String[]{"en","fr"});
-		params.put("ids", new long[]{173, -7, 7});
+		params.put("userIds", new long[] {1,2,3});
+		params.put("locales", new String[] {"en","fr"});
+		params.put("ids", new long[] {173, -7, 7});
 
 		String json = toJSON(map, "*.userIds", "*.locales", "*.ids");
 

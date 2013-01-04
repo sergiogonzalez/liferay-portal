@@ -151,9 +151,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			category.getGroupId(), PortletKeys.MESSAGE_BOARDS);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-
 			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(

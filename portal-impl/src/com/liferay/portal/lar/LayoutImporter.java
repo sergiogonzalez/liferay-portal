@@ -832,7 +832,8 @@ public class LayoutImporter {
 				layoutSet.getSettingsProperties();
 
 			settingsProperties.setProperty(
-				"last-merge-time", String.valueOf(System.currentTimeMillis()));
+				SitesUtil.LAST_MERGE_TIME,
+				String.valueOf(System.currentTimeMillis()));
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
@@ -1192,7 +1193,7 @@ public class LayoutImporter {
 		if (layout.isTypeArticle()) {
 			importJournalArticle(portletDataContext, layout, layoutElement);
 
-			importedLayout.setTypeSettings(layout.getTypeSettings());
+			updateTypeSettings(importedLayout, layout);
 		}
 		else if (layout.isTypePortlet() &&
 				 Validator.isNotNull(layout.getTypeSettings()) &&
@@ -1248,10 +1249,10 @@ public class LayoutImporter {
 				}
 			}
 
-			importedLayout.setTypeSettings(layout.getTypeSettings());
+			updateTypeSettings(importedLayout, layout);
 		}
 		else {
-			importedLayout.setTypeSettings(layout.getTypeSettings());
+			updateTypeSettings(importedLayout, layout);
 		}
 
 		importedLayout.setHidden(layout.isHidden());
@@ -1557,6 +1558,30 @@ public class LayoutImporter {
 		catch (IOException ioe) {
 			layout.setTypeSettings(newTypeSettings);
 		}
+	}
+
+	protected void updateTypeSettings(Layout importedLayout, Layout layout)
+		throws PortalException, SystemException {
+
+		LayoutTypePortlet importedLayoutType =
+			(LayoutTypePortlet)importedLayout.getLayoutType();
+
+		List<String> importedPortletIds = importedLayoutType.getPortletIds();
+
+		LayoutTypePortlet layoutType =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		importedPortletIds.removeAll(layoutType.getPortletIds());
+
+		if (!importedPortletIds.isEmpty()) {
+			PortletLocalServiceUtil.deletePortlets(
+				importedLayout.getCompanyId(),
+				importedPortletIds.toArray(
+					new String[importedPortletIds.size()]),
+				importedLayout.getPlid());
+		}
+
+		importedLayout.setTypeSettings(layout.getTypeSettings());
 	}
 
 	protected void validateLayoutPrototypes(

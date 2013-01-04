@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.dao.db.SybaseDB;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
@@ -24,6 +24,8 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
+import java.sql.BatchUpdateException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -31,9 +33,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.exception.LockAcquisitionException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,6 +48,11 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class LockLocalServiceTest {
 
+	@Before
+	public void setUp() throws SystemException {
+		LockLocalServiceUtil.unlock("className", "key");
+	}
+
 	@Test
 	public void testMutualExcludeLockingParallel() throws Exception {
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -52,7 +61,7 @@ public class LockLocalServiceTest {
 
 		for (int i = 0; i < 10; i++) {
 			LockingJob lockingJob = new LockingJob(
-				"className", "key", "owner", 10);
+				"className", "key", "owner-" + i, 10);
 
 			lockingJobs.add(lockingJob);
 
@@ -71,6 +80,8 @@ public class LockLocalServiceTest {
 				Assert.fail(systemException.getMessage());
 			}
 		}
+
+		Assert.assertFalse(LockLocalServiceUtil.isLocked("className", "key"));
 	}
 
 	@Test
@@ -126,35 +137,37 @@ public class LockLocalServiceTest {
 						_className, _key, _owner, false);
 
 					if (lock.isNew()) {
-						LockLocalServiceUtil.unlock(_className, _key);
 
-						if (++count >= _requiredSuccessCount) {
-							break;
+						// The lock creator is responsible for unlocking. Try
+						// to unlock many times because some databases like SQL
+						// Server may randomly choke and rollback an unlock.
+
+						while (true) {
+							try {
+								LockLocalServiceUtil.unlock(
+									_className, _key, _owner, false);
+
+								if (++count >= _requiredSuccessCount) {
+									return;
+								}
+
+								break;
+							}
+							catch (SystemException se) {
+								if (_isExpectedException(se)) {
+									continue;
+								}
+
+								_systemException = se;
+
+								return;
+							}
 						}
 					}
 				}
 				catch (SystemException se) {
-					Throwable cause = se.getCause();
-
-					if (cause instanceof ORMException) {
-						cause = cause.getCause();
-
-						if (cause instanceof LockAcquisitionException) {
-							continue;
-						}
-
-						// PostgreSQL fails to do row or table level locking.
-						// A unique index is required to enforce mutual exclude
-						// locking, but it may do so by violating a unique index
-						// constraint.
-
-						DB db = DBFactoryUtil.getDB();
-
-						if ((db instanceof PostgreSQLDB) &&
-							(cause instanceof ConstraintViolationException)) {
-
-							continue;
-						}
+					if (_isExpectedException(se)) {
+						continue;
 					}
 
 					_systemException = se;
@@ -162,6 +175,42 @@ public class LockLocalServiceTest {
 					break;
 				}
 			}
+		}
+
+		private boolean _isExpectedException(SystemException se) {
+			Throwable cause = se.getCause();
+
+			if (!(cause instanceof ORMException)) {
+				return false;
+			}
+
+			cause = cause.getCause();
+
+			if ((cause instanceof ConstraintViolationException) ||
+				(cause instanceof LockAcquisitionException)) {
+
+				return true;
+			}
+
+			DB db = DBFactoryUtil.getDB();
+
+			if ((db instanceof SybaseDB) &&
+				(cause instanceof GenericJDBCException)) {
+
+				cause = cause.getCause();
+
+				String message = cause.getMessage();
+
+				if ((cause instanceof BatchUpdateException) &&
+					message.equals(
+						"Attempt to insert duplicate key row in object " +
+							"'Lock_' with unique index 'IX_228562AD'\n")) {
+
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		private String _className;

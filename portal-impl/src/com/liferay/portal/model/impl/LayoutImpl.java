@@ -364,6 +364,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return value;
 		}
 
+		if (!isInheritLookAndFeel()) {
+			try {
+				Theme theme = _getTheme(device);
+
+				return theme.getSetting(key);
+			}
+			catch (Exception e) {
+			}
+		}
+
 		try {
 			LayoutSet layoutSet = getLayoutSet();
 
@@ -745,6 +755,17 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		return layoutTypePortlet;
+	}
+
+	private Theme _getTheme(String device)
+		throws PortalException, SystemException {
+
+		if (device.equals("regular")) {
+			return getTheme();
+		}
+		else {
+			return getWapTheme();
+		}
 	}
 
 	private String _getURL(

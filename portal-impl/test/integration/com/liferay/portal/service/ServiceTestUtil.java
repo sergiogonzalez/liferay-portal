@@ -143,6 +143,14 @@ public class ServiceTestUtil {
 			long groupId, String name, boolean privateLayout)
 		throws Exception {
 
+		return addLayout(groupId, name, privateLayout, null, false);
+	}
+
+	public static Layout addLayout(
+			long groupId, String name, boolean privateLayout,
+			LayoutPrototype layoutPrototype, boolean linkEnabled)
+		throws Exception {
+
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
@@ -159,11 +167,19 @@ public class ServiceTestUtil {
 
 		String description = "This is a test page.";
 
+		ServiceContext serviceContext = getServiceContext();
+
+		if (layoutPrototype != null) {
+			serviceContext.setAttribute(
+				"layoutPrototypeLinkEnabled", linkEnabled);
+			serviceContext.setAttribute(
+				"layoutPrototypeUuid", layoutPrototype.getUuid());
+		}
+
 		return LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), groupId, privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
-			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			getServiceContext());
+			LayoutConstants.TYPE_PORTLET, false, friendlyURL, serviceContext);
 	}
 
 	public static LayoutPrototype addLayoutPrototype(String name)

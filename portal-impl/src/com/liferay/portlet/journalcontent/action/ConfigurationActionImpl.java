@@ -14,7 +14,8 @@
 
 package com.liferay.portlet.journalcontent.action;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -22,20 +23,17 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.lang.reflect.Method;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -43,14 +41,28 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
-import org.aopalliance.intercept.MethodInterceptor;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Douglas Wong
  * @author Raymond Augé
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
+
+	public ConfigurationActionImpl() {
+		try {
+			Class<?> clazz = getClass();
+
+			_doProcessActionMethod = clazz.getDeclaredMethod(
+				"doProcessAction",
+				new Class<?>[] {
+					PortletConfig.class, ActionRequest.class,
+					ActionResponse.class
+				});
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
 
 	@Override
 	public void processAction(
@@ -61,23 +73,10 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		// This logic has to run in a transaction which we will invoke directly
 		// since this is not a Spring bean
 
-		Method doProcessActionMethod = getDoProcessActionMethod();
-
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(
-				this, ConfigurationActionImpl.class, doProcessActionMethod,
-				new Object[] {portletConfig, actionRequest, actionResponse});
-
-		List<MethodInterceptor> methodInterceptors = getMethodInterceptors();
-
-		serviceBeanMethodInvocation.setMethodInterceptors(methodInterceptors);
-
-		try {
-			serviceBeanMethodInvocation.proceed();
-		}
-		catch (Throwable t) {
-			throw new Exception(t);
-		}
+		ServiceBeanMethodInvocationFactoryUtil.proceed(
+			this, ConfigurationActionImpl.class, _doProcessActionMethod,
+			new Object[] {portletConfig, actionRequest, actionResponse},
+			new String[] {"transactionAdvice"});
 	}
 
 	/**
@@ -150,47 +149,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		return articleId.toUpperCase();
 	}
 
-	protected Method getDoProcessActionMethod() {
-		if (_doProcessActionMethod != null) {
-			return _doProcessActionMethod;
-		}
-
-		Class<?> clazz = getClass();
-
-		try {
-			_doProcessActionMethod = clazz.getDeclaredMethod(
-				"doProcessAction",
-				new Class<?>[] {
-					PortletConfig.class, ActionRequest.class,
-					ActionResponse.class});
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
-
-		return _doProcessActionMethod;
-	}
-
-	protected List<MethodInterceptor> getMethodInterceptors() {
-		if (_methodInterceptors != null) {
-			return _methodInterceptors;
-		}
-
-		List<MethodInterceptor> methodInterceptors =
-			new ArrayList<MethodInterceptor>();
-
-		MethodInterceptor methodInterceptor =
-			(MethodInterceptor)PortalBeanLocatorUtil.locate(
-				"transactionAdvice");
-
-		methodInterceptors.add(methodInterceptor);
-
-		_methodInterceptors = methodInterceptors;
-
-		return _methodInterceptors;
-	}
+	private static Log _log = LogFactoryUtil.getLog(
+		ConfigurationActionImpl.class);
 
 	private Method _doProcessActionMethod;
-	private List<MethodInterceptor> _methodInterceptors;
 
 }

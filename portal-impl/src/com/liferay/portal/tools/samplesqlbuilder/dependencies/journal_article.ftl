@@ -32,7 +32,17 @@ ${sampleSQLBuilder.insertMBMessage(mbMessage)}
 
 insert into MBThread values (${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, 0, ${mbThread.lastPostByUserId}, CURRENT_TIMESTAMP, 0, FALSE, 0, ${mbThread.lastPostByUserId}, '', CURRENT_TIMESTAMP);
 
-<#list journalArticleLayouts as layout>
+<#assign publicLayoutsSize = publicLayouts?size>
+
+<#list 1..maxJournalArticleCount as journalArticleCount>
+	<#assign friendlyURL = "/" + groupId + "_journal_article_" + journalArticleCount>
+
+	<#assign layout = dataFactory.addLayout(publicLayoutsSize + journalArticleCount, "Web Content " + journalArticleCount, friendlyURL, "", "56,")>
+
+	${writerLayoutCSV.write(friendlyURL + "\n")}
+
+	<#assign publicLayouts = publicLayouts + [layout]>
+
 	<#assign preferences = "<portlet-preferences><preference><name>articleId</name><value>" + journalArticleResource.articleId + "</value></preference><preference><name>enableCommentRatings</name><value>false</value></preference><preference><name>enableComments</name><value>false</value></preference><preference><name>enablePrint</name><value>false</value></preference><preference><name>enableRatings</name><value>false</value></preference><preference><name>enableRelatedAssets</name><value>true</value></preference><preference><name>enableViewCountIncrement</name><value>false</value></preference><preference><name>extensions</name><value>NULL_VALUE</value></preference><preference><name>groupId</name><value>" + groupId + "</value></preference><preference><name>showAvailableLocales</name><value>false</value></preference><preference><name>templateId</name><value></value></preference></portlet-preferences>">
 
 	<#assign portletPreferences = dataFactory.addPortletPreferences(defaultUserId, layout.plid, "86", preferences)>

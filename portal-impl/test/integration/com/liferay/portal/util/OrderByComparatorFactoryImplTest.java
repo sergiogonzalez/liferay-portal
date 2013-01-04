@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Wesley Gong
+ * @see    ServiceBeanMethodInvocationFactoryImplTest
  */
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class OrderByComparatorFactoryImplTest {

@@ -18,7 +18,8 @@
 						AssetEntry
 					WHERE
 						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?)
+						(AssetEntry.classNameId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetCategory.name LIKE ? OR ? IS NULL)
 		]]>
@@ -221,7 +222,8 @@
 					FROM
 						AssetEntry
 					WHERE
-						(AssetEntry.groupId = ?)
+						(AssetEntry.groupId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetTag.name LIKE ?)
 		]]>
@@ -243,7 +245,8 @@
 						AssetEntry
 					WHERE
 						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?)
+						(AssetEntry.classNameId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetTag.name LIKE ? OR ? IS NULL)
 		]]>
@@ -313,7 +316,8 @@
 						AssetEntry
 					WHERE
 						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?)
+						(AssetEntry.classNameId = ?) AND
+						(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetTag.name LIKE ? OR ? IS NULL)
 			ORDER BY

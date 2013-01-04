@@ -105,9 +105,9 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 			node.getGroupId(), PortletKeys.WIKI);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-
 			portletId = PortletKeys.WIKI_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(

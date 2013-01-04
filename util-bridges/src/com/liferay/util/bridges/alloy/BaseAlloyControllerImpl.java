@@ -44,11 +44,15 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -122,7 +126,14 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 
 		if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-			executeAction(method);
+			Class<?> superClass = clazz.getSuperclass();
+
+			Method executeActionMethod = superClass.getDeclaredMethod(
+				"executeAction", new Class<?>[] {Method.class});
+
+			ServiceBeanMethodInvocationFactoryUtil.proceed(
+				this, BaseAlloyControllerImpl.class, executeActionMethod,
+				new Object[] {method}, new String[] {"transactionAdvice"});
 		}
 		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 			executeRender(method);
@@ -202,6 +213,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return null;
 	}
 
+	@Transactional(
+		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
+		rollbackFor = {Exception.class}
+	)
 	protected void executeAction(Method method) throws Exception {
 		if (method != null) {
 			method.invoke(this);

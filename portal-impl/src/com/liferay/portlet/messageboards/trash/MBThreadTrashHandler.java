@@ -67,6 +67,16 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getContainerModelClassName() {
+		return MBCategory.class.getName();
+	}
+
+	@Override
+	public String getContainerModelName() {
+		return "category";
+	}
+
+	@Override
 	public List<ContainerModel> getContainerModels(
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException, SystemException {
@@ -110,9 +120,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			thread.getGroupId(), PortletKeys.MESSAGE_BOARDS);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-
 			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(

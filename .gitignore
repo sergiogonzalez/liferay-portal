@@ -1,7 +1,8 @@
 *~
-*.ant-*
 *.bak
 *.iml
+*.ipr
+*.iws
 *.swp
 .ant_targets
 .sass-cache/
@@ -37,6 +38,8 @@ _sass_cache_*.css
 /benchmarks/log
 
 /classes/Test.class
+
+/intellij
 
 /lib/development/db2jcc.jar
 /lib/development/db2jcc_license_cu.jar

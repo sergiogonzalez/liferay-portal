@@ -60,30 +60,29 @@ public class DB2DialectTest {
 	}
 
 	protected void testPaging(String sql, int offset, int limit) {
-		SessionFactory sessionFactory =
-			(SessionFactory)PortalBeanLocatorUtil.locate(
-				"liferaySessionFactory");
-
 		Session session = null;
 
 		try {
-			session = sessionFactory.openSession();
+			session = _sessionFactory.openSession();
 
 			SQLQuery q = session.createSQLQuery(sql);
 
 			List<?> result = QueryUtil.list(
-				q, sessionFactory.getDialect(), offset, offset + limit);
+				q, _sessionFactory.getDialect(), offset, offset + limit);
 
 			Assert.assertNotNull(result);
 			Assert.assertEquals(limit, result.size());
 		}
 		finally {
-			sessionFactory.closeSession(session);
+			_sessionFactory.closeSession(session);
 		}
 	}
 
 	private static final String _SQL =
 		"SELECT tabname FROM syscat.tables WHERE tabschema = 'SYSIBM' ORDER " +
 			"BY tabname";
+
+	private SessionFactory _sessionFactory =
+		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
 
 }

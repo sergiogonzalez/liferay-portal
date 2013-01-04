@@ -17,7 +17,9 @@
 <%@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
 
 <%
-String containerId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ddm_init-ext");
+
+String fieldsDisplayInputName = fieldsNamespace + "_fieldsDisplay";
 
 String xsd = DDMXSDUtil.getXSD(classNameId, classPK);
 

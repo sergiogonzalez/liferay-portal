@@ -307,6 +307,8 @@ update Group_ set site = FALSE where name = 'Control Panel';
 
 drop table Groups_Permissions;
 
+alter table Image drop column text_;
+
 alter table JournalArticle add folderId LONG;
 
 create table JournalFolder (
@@ -323,6 +325,9 @@ create table JournalFolder (
 	description STRING null
 );
 
+drop index IX_228562AD on Lock_;
+drop index IX_DD635956 on Lock_;
+
 alter table MBCategory add status INTEGER;
 alter table MBCategory add statusByUserId LONG;
 alter table MBCategory add statusByUserName VARCHAR(75) null;
@@ -336,6 +341,8 @@ update MBCategory set statusByUserName = userName;
 update MBCategory set statusDate = modifiedDate;
 
 update MBMessage set status = 2 where status = 9;
+
+alter table MBMessage drop column attachments;
 
 drop table OrgGroupPermission;
 

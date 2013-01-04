@@ -70,9 +70,9 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			entry.getGroupId(), PortletKeys.BLOGS);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-
 			portletId = PortletKeys.BLOGS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(

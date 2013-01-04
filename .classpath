@@ -42,7 +42,6 @@
 	<classpathentry kind="lib" path="lib/development/interbase.jar"/>
 	<classpathentry kind="lib" path="lib/development/j2h.jar"/>
 	<classpathentry kind="lib" path="lib/development/jaas.jar"/>
-	<classpathentry kind="lib" path="lib/development/jakarta-regexp.jar"/>
 	<classpathentry kind="lib" path="lib/development/jalopy.jar"/>
 	<classpathentry kind="lib" path="lib/development/jargs.jar"/>
 	<classpathentry kind="lib" path="lib/development/jarjar.jar"/>
@@ -187,6 +186,7 @@
 	<classpathentry kind="lib" path="lib/portal/jackrabbit-spi-commons.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jai_codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jai_core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jakarta-regexp.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jamwiki-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/java-diff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/javassist.jar"/>
@@ -197,6 +197,7 @@
 	<classpathentry kind="lib" path="lib/portal/jazzy.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jcifs.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jcommon.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jcl-over-slf4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jcr.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jdom.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jempbox.jar"/>
@@ -225,10 +226,18 @@
 	<classpathentry kind="lib" path="lib/portal/liferay-icu4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/liferay-yui-compressor.jar"/>
 	<classpathentry kind="lib" path="lib/portal/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/portal/log4j-over-slf4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-analyzers.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-grouping.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-highlighter.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-icu.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-join.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-memory.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-misc.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-queries.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-queryparser.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-spellchecker.jar"/>
 	<classpathentry kind="lib" path="lib/portal/memcached.jar"/>
 	<classpathentry kind="lib" path="lib/portal/metadata-extractor.jar"/>
 	<classpathentry kind="lib" path="lib/portal/mimepull.jar"/>

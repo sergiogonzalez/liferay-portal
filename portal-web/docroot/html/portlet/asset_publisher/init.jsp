@@ -148,9 +148,9 @@ String assetTagName = ParamUtil.getString(request, "tag");
 if (Validator.isNotNull(assetTagName)) {
 	allAssetTagNames = new String[] {assetTagName};
 
-	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(scopeGroupId, allAssetTagNames);
+	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, allAssetTagNames);
 
-	assetEntryQuery.setAllTagIds(assetTagIds);
+	assetEntryQuery.setAnyTagIds(assetTagIds);
 
 	PortalUtil.setPageKeywords(assetTagName, request);
 }
@@ -184,7 +184,7 @@ String orderByColumn2 = GetterUtil.getString(preferences.getValue("orderByColumn
 String orderByType1 = GetterUtil.getString(preferences.getValue("orderByType1", "DESC"));
 String orderByType2 = GetterUtil.getString(preferences.getValue("orderByType2", "ASC"));
 boolean excludeZeroViewCount = GetterUtil.getBoolean(preferences.getValue("excludeZeroViewCount", null));
-int delta = GetterUtil.getInteger(preferences.getValue("delta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+int delta = GetterUtil.getInteger(preferences.getValue("delta", null), SearchContainer.DEFAULT_DELTA);
 String paginationType = GetterUtil.getString(preferences.getValue("paginationType", "none"));
 boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showAvailableLocales", null));
 boolean showMetadataDescriptions = GetterUtil.getBoolean(preferences.getValue("showMetadataDescriptions", null), true);
@@ -225,7 +225,7 @@ String allMetadataFields = "create-date,modified-date,publish-date,expiration-da
 String[] metadataFields = StringUtil.split(preferences.getValue("metadataFields", defaultMetadataFields));
 
 boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRss", null));
-int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", "20"));
+int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
 String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
 String rssFeedType = preferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 String rssName = preferences.getValue("rssName", portletDisplay.getTitle());

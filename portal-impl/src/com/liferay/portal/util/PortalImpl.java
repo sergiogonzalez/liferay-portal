@@ -714,9 +714,9 @@ public class PortalImpl implements Portal {
 
 		String domain = HttpUtil.getDomain(url);
 
-		int pos = -1;
+		int pos = domain.indexOf(CharPool.COLON);
 
-		if ((pos = domain.indexOf(CharPool.COLON)) != -1) {
+		if (pos != -1) {
 			domain = domain.substring(0, pos);
 		}
 
@@ -5796,7 +5796,16 @@ public class PortalImpl implements Portal {
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 				primaryKey);
 
-		if (count == 0) {
+		if (count > 0) {
+			return;
+		}
+
+		if (layout.isTypeControlPanel()) {
+			ResourceLocalServiceUtil.addResources(
+				companyId, groupId, 0, name, primaryKey, portletActions, true,
+				true);
+		}
+		else {
 			ResourceLocalServiceUtil.addResources(
 				companyId, groupId, 0, name, primaryKey, portletActions, true,
 				!layout.isPrivateLayout());

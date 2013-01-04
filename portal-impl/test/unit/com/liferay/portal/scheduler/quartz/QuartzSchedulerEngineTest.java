@@ -688,7 +688,7 @@ public class QuartzSchedulerEngineTest {
 		public Object enableScheduler(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[]{Boolean.TRUE});
+			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
 		}
 
 	}

@@ -160,7 +160,7 @@ public class EditNodeAction extends PortletAction {
 		if (moveToTrash) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
 
-			data.put("restoreEntryIds", new String[]{String.valueOf(nodeId)});
+			data.put("restoreEntryIds", new String[] {String.valueOf(nodeId)});
 
 			SessionMessages.add(
 				actionRequest,

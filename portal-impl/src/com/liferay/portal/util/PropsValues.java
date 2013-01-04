@@ -599,6 +599,8 @@ public class PropsValues {
 
 	public static final boolean DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY));
 
+	public static final String[] DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_NAMES = PropsUtil.getArray(PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_NAMES);
+
 	public static final String[] DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS = PropsUtil.getArray(PropsKeys.DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS);
 
 	public static final String EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(PropsKeys.EDITOR_WYSIWYG_DEFAULT);
@@ -1422,6 +1424,8 @@ public class PropsValues {
 	public static final String[] ROLES_SITE_SUBTYPES = PropsUtil.getArray(PropsKeys.ROLES_SITE_SUBTYPES);
 
 	public static final int RSS_CONNECTION_TIMEOUT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RSS_CONNECTION_TIMEOUT));
+
+	public static String RSS_FEED_DISPLAY_STYLE_DEFAULT = PropsUtil.get(PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
 
 	public static String RSS_FEED_TYPE_DEFAULT = PropsUtil.get(PropsKeys.RSS_FEED_TYPE_DEFAULT);
 
