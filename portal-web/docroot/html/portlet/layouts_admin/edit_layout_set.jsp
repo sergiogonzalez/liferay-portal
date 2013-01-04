@@ -352,13 +352,13 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 			var ok = false;
 
 			if (currentValue == 0) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName(locale)) %>');
+				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-deactivate-staging-for-x", HtmlUtil.escape(liveGroup.getDescriptiveName(locale))) %>');
 			}
 			else if (currentValue == 1) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName(locale)) %>');
+				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-local-staging-for-x", HtmlUtil.escape(liveGroup.getDescriptiveName(locale))) %>');
 			}
 			else if (currentValue == 2) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-remote-staging-for-x", liveGroup.getDescriptiveName(locale)) %>');
+				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-remote-staging-for-x", HtmlUtil.escape(liveGroup.getDescriptiveName(locale))) %>');
 			}
 
 			if (ok) {

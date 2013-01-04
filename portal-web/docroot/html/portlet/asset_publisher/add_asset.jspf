@@ -52,7 +52,7 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 		align="left"
 		icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
 		id='<%= taglibId %>'
-		message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {(GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)}) %>'
+		message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'
 		showWhenSingleIcon="<%= true %>"
 	>
 
