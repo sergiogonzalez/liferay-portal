@@ -39,6 +39,7 @@ import javax.servlet.jsp.tagext.BodyTag;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Sampsa Sohlman
  */
 public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
@@ -144,6 +145,9 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		}
 
 		request.setAttribute("liferay-ui:icon-menu:id", _id);
+
+		request.setAttribute("liferay-ui:icon-menu:row-no", new IntegerWrapper(
+			0));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
