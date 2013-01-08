@@ -54,10 +54,24 @@
 
 				assetEntryQuery.setExcludeZeroViewCount(false);
 
-				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 				total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+				searchContainer.setTotal(total);
+
+				results =  AssetEntryServiceUtil.getEntries(assetEntryQuery);
+
+				searchContainer.setResults(results);
 			}
 			else {
+				if (mergedView) {
+					total =  DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
+				}
+				else {
+					total = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
+				}
+
+				searchContainer.setTotal(total);
+
 				if (mergedView) {
 					results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, true, searchContainer.getStart(), searchContainer.getEnd());
 				}
@@ -65,16 +79,8 @@
 					results = DLAppServiceUtil.getFileEntriesAndFileShortcuts(repositoryId, folderId, status, searchContainer.getStart(), searchContainer.getEnd());
 				}
 
-				if (mergedView) {
-					total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
-				}
-				else {
-					total = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
-				}
+				searchContainer.setResults(results);
 			}
-
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
 			%>
 
 		</liferay-ui:search-container-results>
