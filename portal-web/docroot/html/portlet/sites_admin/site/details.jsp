@@ -100,7 +100,7 @@ if (showPrototypes && (group != null)) {
 		</c:when>
 		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
 			<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name">
-				<%= liveGroup.getDescriptiveName(locale) %>
+				<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>
@@ -413,7 +413,7 @@ if (parentGroup != null) {
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="name"
-			value="<%= curGroup.getDescriptiveName(locale) %>"
+			value="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
