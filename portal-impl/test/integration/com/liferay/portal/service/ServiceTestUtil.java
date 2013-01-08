@@ -69,6 +69,8 @@ import com.liferay.portlet.documentlibrary.trash.DLFileShortcutTrashHandler;
 import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
 import com.liferay.portlet.documentlibrary.util.DLIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
+import com.liferay.portlet.journal.trash.JournalArticleTrashHandler;
+import com.liferay.portlet.journal.util.JournalIndexer;
 import com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler;
 import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
 import com.liferay.portlet.messageboards.trash.MBThreadTrashHandler;
@@ -355,6 +357,7 @@ public class ServiceTestUtil {
 		IndexerRegistryUtil.register(new TrashIndexer());
 		IndexerRegistryUtil.register(new WikiNodeIndexer());
 		IndexerRegistryUtil.register(new WikiPageIndexer());
+		IndexerRegistryUtil.register(new JournalIndexer());
 
 		// Upgrade
 
@@ -427,6 +430,7 @@ public class ServiceTestUtil {
 		TrashHandlerRegistryUtil.register(new MBThreadTrashHandler());
 		TrashHandlerRegistryUtil.register(new WikiNodeTrashHandler());
 		TrashHandlerRegistryUtil.register(new WikiPageTrashHandler());
+		TrashHandlerRegistryUtil.register(new JournalArticleTrashHandler());
 
 		// Workflow
 
