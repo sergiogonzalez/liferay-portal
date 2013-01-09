@@ -982,7 +982,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		for (int i = 0; i < dlFileEntryTypes.size(); i++) {
 			DLFileEntryType dlFileEntryType = dlFileEntryTypes.get(i);
 
-			fileEntryTypeUuids[i] = dlFileEntryType.getUuid();
+			if (dlFileEntryType.getFileEntryTypeId() == 0) {
+				fileEntryTypeUuids[i] = "@basic_document@";
+			}
+			else {
+				fileEntryTypeUuids[i] = dlFileEntryType.getUuid();
+			}
 
 			if (defaultFileEntryTypeId ==
 				dlFileEntryType.getFileEntryTypeId()) {
@@ -1701,9 +1706,16 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				fileEntryTypeUuid, portletDataContext.getScopeGroupId());
 
 			if (dlFileEntryType == null) {
-				dlFileEntryType = DLFileEntryTypeUtil.fetchByUUID_G(
-					fileEntryTypeUuid,GroupLocalServiceUtil.getCompanyGroup(
-					folder.getCompanyId()).getGroupId());
+
+				if (fileEntryTypeUuid.equals("@basic_document@")) {
+					dlFileEntryType = DLFileEntryTypeLocalServiceUtil.
+						fetchDLFileEntryType(0);
+				}
+				else {
+					dlFileEntryType = DLFileEntryTypeUtil.fetchByUUID_G(
+						fileEntryTypeUuid,GroupLocalServiceUtil.getCompanyGroup(
+						folder.getCompanyId()).getGroupId());
+				}
 			}
 
 			if (dlFileEntryType == null) {
