@@ -162,7 +162,7 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 				</div>
 			</c:if>
 
-			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" searchContainer="<%= searchContainer %>" />
 
 			<%
 			classNameIds = availableClassNameIds;
