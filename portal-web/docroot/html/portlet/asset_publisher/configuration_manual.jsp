@@ -30,7 +30,7 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 			<%= selectScope %>
 		</aui:fieldset>
 
-		<aui:fieldset>
+		<aui:fieldset label="model.resource.com.liferay.portlet.asset">
 
 			<%
 			classNameIds = availableClassNameIds;
@@ -44,7 +44,7 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 					<div class="lfr-meta-actions edit-controls">
 						<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
 
-						<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' message="select-existing" showWhenSingleIcon="<%= true %>">
+						<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", new Object[] {(GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)}) %>' showWhenSingleIcon="<%= true %>">
 
 							<%
 							for (AssetRendererFactory curRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
