@@ -300,6 +300,20 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 			classPK);
 	}
 
+	/**
+	* Subscriptions' primary keys keys by userId and className
+	*
+	* @param userId primary key of user
+	* @param className entity's className
+	* @throws
+	*/
+	public java.util.Set<java.lang.Long> getUserSubscriptionClassPks(
+		long userId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _subscriptionLocalService.getUserSubscriptionClassPks(userId,
+			className);
+	}
+
 	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

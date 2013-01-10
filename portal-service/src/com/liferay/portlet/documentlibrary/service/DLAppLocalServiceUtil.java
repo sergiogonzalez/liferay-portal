@@ -577,6 +577,35 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
+	* Subscribe folder for user
+	*
+	* @param userId the primary key of the user who is subscribing
+	* @param folderId
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	public static void subscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeFolder(userId, groupId, folderId);
+	}
+
+	/**
+	* Unsubscribe folder from user
+	*
+	* @param userId the primary key of the user who is unsubscribing
+	* @param groupId the primary key of the file entry's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the subscription entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void unsubscribeFolder(long userId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeFolder(userId, folderId);
+	}
+
+	/**
 	* Updates the file entry's asset replacing its asset categories, tags, and
 	* links.
 	*
