@@ -176,7 +176,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 	Liferay.provide(
 		window,
 		'<%= randomNamespace %>addAssetLink',
-		function(entryId, entryType, entryTitle, entryScope) {
+		function(entryId, entryClassName, entryType, entryTitle, entryScope) {
 			var A = AUI();
 
 			var searchContainerName = '<%= portletResponse.getNamespace() %>assetLinksSearchContainer';

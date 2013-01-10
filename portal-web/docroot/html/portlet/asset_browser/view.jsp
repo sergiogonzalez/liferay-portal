@@ -100,6 +100,8 @@ portletURL.setParameter("callback", callback);
 				sb.append("('");
 				sb.append(assetEntry.getEntryId());
 				sb.append("', '");
+				sb.append(assetEntry.getClassName());
+				sb.append("', '");
 				sb.append(ResourceActionsUtil.getModelResource(locale, assetEntry.getClassName()));
 				sb.append("', '");
 				sb.append(assetEntry.getTitle(locale));
