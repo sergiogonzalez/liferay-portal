@@ -118,6 +118,7 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 					<%
 					boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
 					boolean hasUpdatePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE);
+					boolean hasSubscripePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE);
 					%>
 
 					<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
@@ -176,6 +177,37 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 							image="permissions"
 							url="<%= permissionsURL %>"
 						/>
+					</c:if>
+
+					<c:if test="<%= hasSubscripePermission %>">
+						<c:choose>
+							<c:when test="<%= ActionUtil.getUserSubscriptionClassPks(request).contains(folder.getFolderId()) %>">
+								<portlet:actionURL var="unsubscribeURL">
+									<portlet:param name="struts_action" value="/document_library/edit_folder" />
+									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+									<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+								</portlet:actionURL>
+								<liferay-ui:icon
+									image="unsubscribe"
+									url="<%= unsubscribeURL %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<portlet:actionURL var="subscribeURL">
+									<portlet:param name="struts_action" value="/document_library/edit_folder" />
+									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+									<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+								</portlet:actionURL>
+								<liferay-ui:icon
+									image="subscribe"
+									url="<%= subscribeURL %>"
+								/>
+							</c:otherwise>
+						</c:choose>
 					</c:if>
 
 					<c:if test="<%= hasDeletePermission && !folder.isMountPoint() %>">

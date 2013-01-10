@@ -66,6 +66,7 @@ import java.util.List;
  *
  * @author Alexander Chow
  * @author Mika Koivisto
+ * @author Sampsa Sohlman
  * @see    DLAppServiceImpl
  */
 public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
@@ -442,6 +443,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getLocalRepository(folderId, 0, 0);
 
 		localRepository.deleteFolder(folderId);
+
+		Folder folder = getFolder(folderId);
+
+		subscriptionLocalService.deleteSubscriptions(
+				folder.getCompanyId(), Folder.class.getName(), folderId);
 	}
 
 	/**
@@ -702,6 +708,42 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
 		dlAppHelperLocalService.restoreFileEntryFromTrash(userId, fileEntry);
+	}
+
+	/**
+	 * Subscribe folder for user
+	 *
+	 * @param userId the primary key of the user who is subscribing
+	 * @param groupId the primary key of the folder's group
+	 * @param folderId the primary key of folder
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
+	public void subscribeFolder(long userId, long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			subscriptionLocalService.addSubscription(
+					userId, groupId, Folder.class.getName(), folderId);
+		}
+	}
+
+	/**
+	 * Unsubscribe folder from user
+	 *
+	 * @param userId the primary key of the user who is unsubscribing
+	 * @param groupId the primary key of the folder's group
+	 * @param folderId the primary key of the folder
+	 * @throws PortalException if the subscription entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void unsubscribeFolder(long userId, long folderId)
+		throws PortalException, SystemException {
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			subscriptionLocalService.deleteSubscription(
+					userId, Folder.class.getName(), folderId);
+		}
 	}
 
 	/**
