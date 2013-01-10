@@ -74,7 +74,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 			assetBrowserURL.setParameter("typeSelection", assetRendererFactory.getClassName());
 			assetBrowserURL.setParameter("callback", randomNamespace + "addAssetLink");
 
-			String href = "javascript:" + randomNamespace + "openAssetBrowser('" + assetBrowserURL.toString() + "')";
+			String href = "javascript:" + randomNamespace + "openAssetBrowser('" + assetBrowserURL.toString() + "', '" + UnicodeLanguageUtil.format(pageContext, "select-x", ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName())) + "')";
 		%>
 
 			<liferay-ui:icon
@@ -159,7 +159,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 <aui:input name="assetLinkEntryIds" type="hidden" />
 
 <aui:script>
-	function <%= randomNamespace %>openAssetBrowser(url) {
+	function <%= randomNamespace %>openAssetBrowser(url, title) {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
@@ -167,7 +167,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 					width: 820
 				},
 				id: '<portlet:namespace />assetBrowser',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "asset-browser") %>',
+				title: title,
 				uri: url
 			}
 		);

@@ -179,7 +179,7 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 
 								assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 
-								String taglibURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectAsset', title: '" + ResourceActionsUtil.getModelResource(locale, curRendererFactory.getClassName()) + "', uri:'" + HtmlUtil.escapeURL(assetBrowserURL.toString()) + "'});";
+								String taglibURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectAsset', title: '" + LanguageUtil.format(pageContext, "select-x", ResourceActionsUtil.getModelResource(locale, curRendererFactory.getClassName())) + "', uri:'" + HtmlUtil.escapeURL(assetBrowserURL.toString()) + "'});";
 							%>
 
 								<liferay-ui:icon message="<%= ResourceActionsUtil.getModelResource(locale, curRendererFactory.getClassName()) %>" src="<%= curRendererFactory.getIconPath(renderRequest) %>" url="<%= taglibURL %>" />
