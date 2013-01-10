@@ -175,46 +175,52 @@ public class AssetUtil {
 			addPortletURL.setParameter(
 				"referringPortletResource", portletDisplay.getId());
 
-			Map<Long, String> assetVocabularyAssetCategoryIds =
-				new HashMap<Long, String>();
+			if (allAssetCategoryIds != null) {
+				Map<Long, String> assetVocabularyAssetCategoryIds =
+					new HashMap<Long, String>();
 
-			for (long assetCategoryId : allAssetCategoryIds) {
-				AssetCategory assetCategory =
-					AssetCategoryLocalServiceUtil.getAssetCategory(
-						assetCategoryId);
+				for (long assetCategoryId : allAssetCategoryIds) {
+					AssetCategory assetCategory =
+						AssetCategoryLocalServiceUtil.getAssetCategory(
+							assetCategoryId);
 
-				long assetVocabularyId = assetCategory.getVocabularyId();
+					long assetVocabularyId = assetCategory.getVocabularyId();
 
-				if (assetVocabularyAssetCategoryIds.containsKey(
-						assetVocabularyId)) {
+					if (assetVocabularyAssetCategoryIds.containsKey(
+							assetVocabularyId)) {
 
-					String assetCategoryIds =
-						assetVocabularyAssetCategoryIds.get(assetVocabularyId);
+						String assetCategoryIds =
+							assetVocabularyAssetCategoryIds.get(
+								assetVocabularyId);
 
-					assetVocabularyAssetCategoryIds.put(
-						assetVocabularyId,
-						assetCategoryIds + StringPool.COMMA + assetCategoryId);
+						assetVocabularyAssetCategoryIds.put(
+							assetVocabularyId,
+							assetCategoryIds + StringPool.COMMA +
+								assetCategoryId);
+					}
+					else {
+						assetVocabularyAssetCategoryIds.put(
+							assetVocabularyId, String.valueOf(assetCategoryId));
+					}
 				}
-				else {
-					assetVocabularyAssetCategoryIds.put(
-						assetVocabularyId, String.valueOf(assetCategoryId));
+
+				for (Map.Entry<Long, String> entry :
+						assetVocabularyAssetCategoryIds.entrySet()) {
+
+					long assetVocabularyId = entry.getKey();
+					String assetCategoryIds = entry.getValue();
+
+					addPortletURL.setParameter(
+						"assetCategoryIds".concat(
+							StringPool.UNDERLINE + assetVocabularyId),
+						assetCategoryIds);
 				}
 			}
 
-			for (Map.Entry<Long, String> entry :
-					assetVocabularyAssetCategoryIds.entrySet()) {
-
-				long assetVocabularyId = entry.getKey();
-				String assetCategoryIds = entry.getValue();
-
+			if (allAssetTagNames != null) {
 				addPortletURL.setParameter(
-					"assetCategoryIds".concat(
-						StringPool.UNDERLINE + assetVocabularyId),
-					assetCategoryIds);
+					"assetTagNames", StringUtil.merge(allAssetTagNames));
 			}
-
-			addPortletURL.setParameter(
-				"assetTagNames", StringUtil.merge(allAssetTagNames));
 		}
 
 		if (classTypeId > 0) {
