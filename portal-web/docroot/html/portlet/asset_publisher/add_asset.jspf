@@ -116,6 +116,14 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 
 	Map<String, PortletURL> addPortletURLs = new TreeMap<String, PortletURL>(new ModelResourceComparator(themeDisplay.getLocale()));
 
+	PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
+
+	redirectURL.setParameter(
+		"struts_action", "/asset_publisher/add_asset_redirect");
+	redirectURL.setWindowState(LiferayWindowState.POP_UP);
+
 	for (long classNameId : classNameIds) {
 		String className = PortalUtil.getClassName(classNameId);
 
@@ -130,7 +138,7 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 		Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()}, themeDisplay.getLocale());
 
 		if ((classTypeIds.length == 0) || (classTypes == null)) {
-			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, 0, allAssetCategoryIds, allAssetTagNames);
+			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, 0, allAssetCategoryIds, allAssetTagNames, redirectURL.toString());
 
 			if (addPortletURL != null) {
 				addPortletURLs.put(className, addPortletURL);
@@ -140,7 +148,7 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 		if (classTypes != null) {
 			for (long classTypeId : classTypes.keySet()) {
 				if (ArrayUtil.contains(classTypeIds, classTypeId) || (classTypeIds.length == 0)) {
-					PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, classTypeId, allAssetCategoryIds, allAssetTagNames);
+					PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, classTypeId, allAssetCategoryIds, allAssetTagNames, redirectURL.toString());
 
 					if (addPortletURL != null) {
 						String mesage = className + AssetUtil.CLASSNAME_SEPARATOR + classTypes.get(classTypeId);

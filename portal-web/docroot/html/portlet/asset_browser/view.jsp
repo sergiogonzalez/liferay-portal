@@ -26,10 +26,18 @@ String callback = ParamUtil.getString(request, "callback");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/asset_browser/view");
+portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
 portletURL.setParameter("typeSelection", typeSelection);
 portletURL.setParameter("callback", callback);
+
+request.setAttribute("view.jsp-portletURL", portletURL);
 %>
+
+<liferay-util:include page="/html/portlet/asset_browser/toolbar.jsp">
+	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />
+</liferay-util:include>
 
 <div class="asset-search">
 	<liferay-portlet:renderURL varImpl="searchURL">
