@@ -138,47 +138,24 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 
 				ResultRow row = new ResultRow(doc, null, assetEntryOrder);
 
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("struts_action", "/portlet_configuration/edit_configuration");
-				rowURL.setParameter("redirect", redirect);
-				rowURL.setParameter("backURL", redirect);
-				rowURL.setParameter("portletResource", portletResource);
-				rowURL.setParameter("typeSelection", assetEntryClassName);
-				rowURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
-				rowURL.setParameter("assetEntryOrder", String.valueOf(assetEntryOrder));
-
 				// Title
 
 				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
 				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-				String title = HtmlUtil.escape(assetRenderer.getTitle(locale));
+				StringBundler sb = new StringBundler(6);
 
-				if (assetEntryClassName.equals(DLFileEntryConstants.getClassName())) {
-					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(assetEntry.getClassPK());
+				sb.append("<img alt=\"\" src=\"");
+				sb.append(assetRenderer.getIconPath(renderRequest));
+				sb.append("\" />");
+				sb.append(HtmlUtil.escape(assetRenderer.getTitle(locale)));
 
-					fileEntry = fileEntry.toEscapedModel();
-
-					StringBundler sb = new StringBundler(6);
-
-					sb.append("<img alt=\"\" class=\"dl-file-icon\" src=\"");
-					sb.append(themeDisplay.getPathThemeImages());
-					sb.append("/file_system/small/");
-					sb.append(fileEntry.getIcon());
-					sb.append(".png\" />");
-					sb.append(title);
-
-					row.addText(sb.toString(), rowURL);
-				}
-				else {
-					row.addText(title, rowURL);
-				}
+				row.addText(sb.toString());
 
 				// Type
 
-				row.addText(ResourceActionsUtil.getModelResource(locale, assetEntryClassName), rowURL);
+				row.addText(ResourceActionsUtil.getModelResource(locale, assetEntryClassName));
 
 				// Modified Date
 
