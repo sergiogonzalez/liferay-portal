@@ -72,8 +72,9 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 
 			List<String> headerNames = new ArrayList<String>();
 
-			headerNames.add("type");
 			headerNames.add("title");
+			headerNames.add("type");
+			headerNames.add("modified-date");
 			headerNames.add(StringPool.BLANK);
 
 			SearchContainer searchContainer = new SearchContainer(renderRequest, new DisplayTerms(renderRequest), new DisplayTerms(renderRequest), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, configurationRenderURL, headerNames, LanguageUtil.get(pageContext, "no-assets-selected"));
@@ -147,10 +148,6 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 				rowURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
 				rowURL.setParameter("assetEntryOrder", String.valueOf(assetEntryOrder));
 
-				// Type
-
-				row.addText(ResourceActionsUtil.getModelResource(locale, assetEntryClassName), rowURL);
-
 				// Title
 
 				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
@@ -178,6 +175,16 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 				else {
 					row.addText(title, rowURL);
 				}
+
+				// Type
+
+				row.addText(ResourceActionsUtil.getModelResource(locale, assetEntryClassName), rowURL);
+
+				// Modified Date
+
+				Date modifiedDate = assetEntry.getModifiedDate();
+
+				row.addText(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - modifiedDate.getTime(), true)));
 
 				// Action
 
