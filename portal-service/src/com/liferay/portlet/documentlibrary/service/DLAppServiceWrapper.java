@@ -2005,6 +2005,21 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
+	* Subscribe folder for user
+	*
+	* @param userId the primary key of the user who is subscribing
+	* @param groupId
+	* @param folderId
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	public void subscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.subscribeFolder(userId, groupId, folderId);
+	}
+
+	/**
 	* @deprecated Use {@link #checkInFileEntry(long, boolean, String,
 	ServiceContext)}.
 	*/
@@ -2054,6 +2069,21 @@ public class DLAppServiceWrapper implements DLAppService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppService.unlockFolder(repositoryId, parentFolderId, name, lockUuid);
+	}
+
+	/**
+	* Unsubscribe folder from user
+	*
+	* @param userId the primary key of the user who is unsubscribing
+	* @param groupId the primary key of the file entry's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the subscription entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public void unsubscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.unsubscribeFolder(userId, groupId, folderId);
 	}
 
 	/**

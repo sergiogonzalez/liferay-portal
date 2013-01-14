@@ -231,6 +231,43 @@ request.setAttribute("view.jsp-total", String.valueOf(total));
 </c:if>
 
 <%
+boolean hasSubscripePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE);
+%>
+
+<c:if test="<%= ( hasSubscripePermission ) && folderId!=DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+	<div class="taglib-header">
+	<c:choose>
+		<c:when test="<%= ActionUtil.getUserSubscriptionClassPks(request).contains(folderId) %>">
+			<portlet:actionURL var="unsubscribeURL">
+				<portlet:param name="struts_action" value="/document_library/edit_folder" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+			</portlet:actionURL>
+			<liferay-ui:icon
+				image="unsubscribe"
+				label="true"
+				url="<%= unsubscribeURL %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<portlet:actionURL var="subscribeURL">
+				<portlet:param name="struts_action" value="/document_library/edit_folder" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+			</portlet:actionURL>
+			<liferay-ui:icon
+				image="subscribe"
+				label="true"
+				url="<%= subscribeURL %>"
+			/>
+		</c:otherwise>
+	</c:choose>
+	</div>
+</c:if>
+
+<%
 for (int i = 0; i < results.size(); i++) {
 	Object result = results.get(i);
 %>
@@ -423,7 +460,7 @@ for (int i = 0; i < results.size(); i++) {
 							data="<%= data %>"
 							displayStyle="list"
 							folder="<%= true %>"
-							locked="<%= fileEntry.isCheckedOut() %>"
+							locked="<%= curFolder.isLocked() %>"
 							showCheckbox="<%= false %>"
 							thumbnailSrc="<%= folderImage %>"
 							title="<%= curFolder.getName() %>"

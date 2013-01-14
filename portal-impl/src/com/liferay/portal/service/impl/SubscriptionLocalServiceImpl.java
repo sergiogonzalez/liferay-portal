@@ -31,11 +31,14 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Charles May
  * @author Zsolt Berentey
+ * @author Sampsa Sohlman
  */
 public class SubscriptionLocalServiceImpl
 	extends SubscriptionLocalServiceBaseImpl {
@@ -214,6 +217,29 @@ public class SubscriptionLocalServiceImpl
 
 		return subscriptionPersistence.findByC_C_C(
 			companyId, classNameId, classPK);
+	}
+
+	/**
+	 * Subscriptions' primary keys keys by userId and className
+	 *
+	 * @param  userId primary key of user
+	 * @param  className entity's className
+	 * @throws
+	 */
+	public Set<Long> getUserSubscriptionClassPks(
+			long userId, String className) throws SystemException {
+
+		List<Subscription> subscriptions = getUserSubscriptions(
+			userId, className);
+
+		Set<Long> subscriptionClassPKs = new HashSet<Long>(
+			subscriptions.size());
+
+		for (Subscription subscription : subscriptions) {
+			subscriptionClassPKs.add(subscription.getClassPK());
+		}
+
+		return subscriptionClassPKs;
 	}
 
 	public List<Subscription> getUserSubscriptions(

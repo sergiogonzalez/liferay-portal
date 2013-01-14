@@ -2223,6 +2223,27 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* Subscribe folder for user
+	*
+	* @param userId the primary key of the user who is subscribing
+	* @param groupId
+	* @param folderId
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	public static void subscribeFolder(long userId, long groupId, long folderId)
+		throws RemoteException {
+		try {
+			DLAppServiceUtil.subscribeFolder(userId, groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* @deprecated Use {@link #checkInFileEntry(long, boolean, String,
 	ServiceContext)}.
 	*/
@@ -2290,6 +2311,27 @@ public class DLAppServiceSoap {
 		try {
 			DLAppServiceUtil.unlockFolder(repositoryId, parentFolderId, name,
 				lockUuid);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Unsubscribe folder from user
+	*
+	* @param userId the primary key of the user who is unsubscribing
+	* @param groupId the primary key of the file entry's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the subscription entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void unsubscribeFolder(long userId, long groupId,
+		long folderId) throws RemoteException {
+		try {
+			DLAppServiceUtil.unsubscribeFolder(userId, groupId, folderId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.RepositoryServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -36,7 +38,9 @@ import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -45,6 +49,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Sergio González
+ * @author Sampsa Sohlman
  */
 public class ActionUtil {
 
@@ -201,6 +206,8 @@ public class ActionUtil {
 		}
 
 		request.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
+
+		getUserSubscriptionClassPks(request);
 	}
 
 	public static void getFolder(PortletRequest portletRequest)
@@ -269,6 +276,42 @@ public class ActionUtil {
 			portletRequest);
 
 		getRepository(request);
+	}
+
+	public static Set<Long> getUserSubscriptionClassPks(
+			PortletRequest portletRequest) throws SystemException {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				portletRequest);
+
+		return getUserSubscriptionClassPks(request);
+	}
+
+	public static Set<Long> getUserSubscriptionClassPks(HttpServletRequest
+			request) throws SystemException {
+
+		Set<Long> subscriptionClassPks = (Set<Long>)request.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_SUBSCRIPTION_CLASSPKS);
+
+		if (subscriptionClassPks!=null) {
+			return subscriptionClassPks;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		subscriptionClassPks = Collections.emptySet();
+
+		if (themeDisplay.isSignedIn()) {
+			subscriptionClassPks =
+				SubscriptionLocalServiceUtil.getUserSubscriptionClassPks(
+					themeDisplay.getUserId(), Folder.class.getName());
+		}
+
+		request.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_SUBSCRIPTION_CLASSPKS,
+			subscriptionClassPks);
+
+		return subscriptionClassPks;
 	}
 
 }

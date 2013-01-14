@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -21,10 +23,13 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -53,6 +58,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Alexander Chow
  * @author Sergio González
  * @author Levente Hudák
+ * @author Sampsa Sohlman
  */
 public class EditFolderAction extends PortletAction {
 
@@ -68,6 +74,9 @@ public class EditFolderAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateFolder(actionRequest);
 			}
+			else if (cmd.equals(Constants.SUBSCRIBE)) {
+				subscribeFolders(actionRequest);
+			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteFolders(
 					(LiferayPortletConfig)portletConfig, actionRequest, false);
@@ -81,6 +90,9 @@ public class EditFolderAction extends PortletAction {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFolders(
 					(LiferayPortletConfig)portletConfig, actionRequest, true);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				unSubscribeFolders(actionRequest);
 			}
 			else if (cmd.equals("updateWorkflowDefinitions")) {
 				updateWorkflowDefinitions(actionRequest);
@@ -215,6 +227,28 @@ public class EditFolderAction extends PortletAction {
 		}
 	}
 
+	protected void subscribeFolders(ActionRequest actionRequest)
+			throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+		DLAppServiceUtil.subscribeFolder(
+			user.getUserId(), themeDisplay.getScopeGroupId(), folderId);
+	}
+
+	protected void unSubscribeFolders(ActionRequest actionRequest)
+			throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		DLAppServiceUtil.unsubscribeFolder(
+			user.getUserId(), themeDisplay.getScopeGroupId(), folderId);
+	}
+
 	protected void updateFolder(ActionRequest actionRequest) throws Exception {
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
@@ -254,5 +288,7 @@ public class EditFolderAction extends PortletAction {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
 			serviceContext);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(EditFolderAction.class);
 
 }

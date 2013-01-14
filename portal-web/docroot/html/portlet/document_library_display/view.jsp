@@ -122,6 +122,44 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 							</div>
 
+
+<%
+					boolean hasSubscripePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE);
+%>
+
+							<c:if test="<%= ( hasSubscripePermission ) && folderId!=DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+								<div class="lfr-asset-icon">
+								<c:choose>
+									<c:when test="<%= ActionUtil.getUserSubscriptionClassPks(request).contains(folderId) %>">
+										<portlet:actionURL var="unsubscribeURL">
+											<portlet:param name="struts_action" value="/document_library/edit_folder" />
+											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+											<portlet:param name="redirect" value="<%= currentURL %>" />
+											<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+										</portlet:actionURL>
+										<liferay-ui:icon
+											image="unsubscribe"
+											label="true"
+											url="<%= unsubscribeURL %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<portlet:actionURL var="subscribeURL">
+											<portlet:param name="struts_action" value="/document_library/edit_folder" />
+											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+											<portlet:param name="redirect" value="<%= currentURL %>" />
+											<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+										</portlet:actionURL>
+										<liferay-ui:icon
+											image="subscribe"
+											label="true"
+											url="<%= subscribeURL %>"
+										/>
+									</c:otherwise>
+								</c:choose>
+								</div>
+							</c:if>
+							</div>
 							<div class="lfr-asset-icon lfr-asset-items last">
 								<%= fileEntriesCount %> <liferay-ui:message key='<%= (fileEntriesCount == 1) ? "document" : "documents" %>' />
 							</div>

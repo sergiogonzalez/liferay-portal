@@ -266,6 +266,18 @@ public interface SubscriptionLocalService extends BaseLocalService,
 		long companyId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Subscriptions' primary keys keys by userId and className
+	*
+	* @param userId primary key of user
+	* @param className entity's className
+	* @throws
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Set<java.lang.Long> getUserSubscriptionClassPks(
+		long userId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
 		long userId, int start, int end,
