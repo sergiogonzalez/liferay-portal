@@ -63,27 +63,21 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 		for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
 			String className = entry.getKey();
 
-			String message = StringPool.BLANK;
+			String message = null;
 
-			if (className.equals(DLFileEntry.class.getName())) {
-				message = hasDLFileEntrySubtype ? "basic-document" : "document";
-			}
-			else if (className.equals(JournalArticle.class.getName())) {
-				message = hasJournalArticleSubtype ? "basic-web-content" : "web-content";
-			}
-			else {
-				message = ResourceActionsUtil.getModelResourceNamePrefix() + className;
+			int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
 
-				int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+			if (pos != -1) {
+				message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
 
-				if (pos != -1) {
-					message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
-
-					className = className.substring(0, pos);
-				}
+				className = className.substring(0, pos);
 			}
 
 			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+			if (pos == -1) {
+				message = assetRendererFactory.getTypeName(locale, hasSubtype(className, addPortletURLs));
+			}
 
 			PortletURL addPortletURL = entry.getValue();
 
