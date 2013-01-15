@@ -921,6 +921,10 @@ public interface PropsKeys {
 
 	public static final String INDEX_SEARCH_LIMIT = "index.search.limit";
 
+	public static final String INDEX_SEARCH_QUERY_SUGGESTION_ENABLED = "index.search.query.suggestion.enabled";
+
+	public static final String INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD = "index.search.query.suggestion.scoring.threshold";
+
 	public static final String INDEX_SEARCH_SCORING_ENABLED = "index.search.scoring.enabled";
 
 	public static final String INDEX_SORTABLE_TEXT_FIELDS = "index.sortable.text.fields";
@@ -1542,6 +1546,8 @@ public interface PropsKeys {
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
 
 	public static final String MODULE_FRAMEWORK_BEGINNING_START_LEVEL = "module.framework.beginning.start.level";
+
+	public static final String MODULE_FRAMEWORK_CORE_DIR = "module.framework.core.dir";
 
 	public static final String MODULE_FRAMEWORK_ENABLED = "module.framework.enabled";
 

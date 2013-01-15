@@ -4514,7 +4514,6 @@ public class ServiceBuilder {
 			boolean filterPrimary = GetterUtil.getBoolean(
 				columnElement.attributeValue("filter-primary"));
 			String collectionEntity = columnElement.attributeValue("entity");
-			String mappingKey = columnElement.attributeValue("mapping-key");
 
 			String mappingTable = columnElement.attributeValue("mapping-table");
 
@@ -4546,9 +4545,9 @@ public class ServiceBuilder {
 
 			EntityColumn col = new EntityColumn(
 				columnName, columnDBName, columnType, primary, accessor,
-				filterPrimary, collectionEntity, mappingKey, mappingTable,
-				idType, idParam, convertNull, lazy, localized, colJsonEnabled,
-				containerModel, parentContainerModel);
+				filterPrimary, collectionEntity, mappingTable, idType, idParam,
+				convertNull, lazy, localized, colJsonEnabled, containerModel,
+				parentContainerModel);
 
 			if (primary) {
 				pkList.add(col);
@@ -4663,7 +4662,13 @@ public class ServiceBuilder {
 			if (columnList.contains(new EntityColumn("groupId"))) {
 				Element finderElement = SAXReaderUtil.createElement("finder");
 
-				finderElement.addAttribute("name", "UUID_G");
+				if (ejbName.equals("Layout")) {
+					finderElement.addAttribute("name", "UUID_G_P");
+				}
+				else {
+					finderElement.addAttribute("name", "UUID_G");
+				}
+
 				finderElement.addAttribute("return-type", ejbName);
 				finderElement.addAttribute("unique", "true");
 
@@ -4675,6 +4680,13 @@ public class ServiceBuilder {
 				finderColumnElement = finderElement.addElement("finder-column");
 
 				finderColumnElement.addAttribute("name", "groupId");
+
+				if (ejbName.equals("Layout")) {
+					finderColumnElement = finderElement.addElement(
+						"finder-column");
+
+					finderColumnElement.addAttribute("name", "privateLayout");
+				}
 
 				finderElements.add(0, finderElement);
 			}

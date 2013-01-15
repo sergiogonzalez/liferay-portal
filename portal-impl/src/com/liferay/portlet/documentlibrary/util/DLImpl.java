@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Subscription;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -325,7 +327,7 @@ public class DLImpl implements DL {
 
 		Collections.reverse(dlFolders);
 
-		StringBundler sb = new StringBundler((dlFolders.size() * 3) + 6);
+		StringBundler sb = new StringBundler((dlFolders.size() * 3) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
@@ -422,6 +424,22 @@ public class DLImpl implements DL {
 		}
 
 		return extension;
+	}
+
+	public Set<Long> getFolderSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		List<Subscription> subscriptions =
+			SubscriptionLocalServiceUtil.getUserSubscriptions(
+				userId, Folder.class.getName());
+
+		Set<Long> classPKs = new HashSet<Long>(subscriptions.size());
+
+		for (Subscription subscription : subscriptions) {
+			classPKs.add(subscription.getClassPK());
+		}
+
+		return classPKs;
 	}
 
 	public String getGenericName(String extension) {
