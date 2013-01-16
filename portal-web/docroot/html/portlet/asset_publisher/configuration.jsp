@@ -74,10 +74,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 				layoutScopeGroupId = layoutScopeGroup.getGroupId();
 				%>
 
-				<aui:option label="<%= _getName(themeDisplay, layoutScopeGroup, locale) %>" selected="<%= (groupIds.length == 1) && (layoutScopeGroupId == groupIds[0]) %>" value="<%= _getScopeId(layoutScopeGroup, themeDisplay.getScopeGroupId()) %>" />
+				<aui:option label="<%= _getName(themeDisplay, layoutScopeGroup, locale) %>" selected="<%= (groupIds.length == 1) && (layoutScopeGroupId == groupIds[0]) %>" value="<%= AssetPublisherUtil.getScopeId(layoutScopeGroup, themeDisplay.getScopeGroupId()) %>" />
 			</c:if>
 
-			<aui:option label="<%= _getName(themeDisplay, company.getGroup(), locale) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getCompanyGroupId() == groupIds[0]) %>" value="<%= _getScopeId(company.getGroup(), themeDisplay.getScopeGroupId()) %>" />
+			<aui:option label="<%= _getName(themeDisplay, company.getGroup(), locale) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getCompanyGroupId() == groupIds[0]) %>" value="<%= AssetPublisherUtil.getScopeId(company.getGroup(), themeDisplay.getScopeGroupId()) %>" />
 
 			<optgroup label="----------"></optgroup>
 
@@ -103,7 +103,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		for (long groupId : groupIds) {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			scopesLeftList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
+			scopesLeftList.add(new KeyValuePair(AssetPublisherUtil.getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
 		}
 
 		// Right list
@@ -114,7 +114,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 		for (Group group : groups) {
 			if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-				scopesRightList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
+				scopesRightList.add(new KeyValuePair(AssetPublisherUtil.getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
 			}
 		}
 
@@ -287,23 +287,5 @@ private String _getName(ThemeDisplay themeDisplay, Group group, Locale locale) t
 	}
 
 	return name;
-}
-
-private String _getScopeId(Group group, long scopeGroupId) throws Exception {
-	String key = null;
-
-	if (group.isLayout()) {
-		Layout layout = LayoutLocalServiceUtil.getLayout(group.getClassPK());
-
-		key = AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId();
-	}
-	else if (group.isLayoutPrototype() || (group.getGroupId() == scopeGroupId)) {
-		key = AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT;
-	}
-	else {
-		key = AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + group.getGroupId();
-	}
-
-	return key;
 }
 %>
