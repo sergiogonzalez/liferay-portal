@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -100,16 +101,18 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			long groupId, List<Long> folderIds, int status)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
 		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
-			return journalArticleFinder.filterCountByG_F_S(
-				groupId, folderIds, status);
+			return journalArticleFinder.filterCountByG_F(
+				groupId, folderIds, queryDefinition);
 		}
 		else {
 			int start = 0;
 			int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
 
-			int articlesCount = journalArticleFinder.filterCountByG_F_S(
-				groupId, folderIds.subList(start, end), status);
+			int articlesCount = journalArticleFinder.filterCountByG_F(
+				groupId, folderIds.subList(start, end), queryDefinition);
 
 			folderIds.subList(start, end).clear();
 
