@@ -17,6 +17,13 @@ package com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
+import com.liferay.portalweb.socialoffice.users.user.removeregularrolessouser.SOUs_ViewMyPrivatePagesNoSORoleTest;
+import com.liferay.portalweb.socialoffice.users.user.removeregularrolessouser.SOUs_ViewMyPublicPagesNoSORoleTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +35,21 @@ public class SelectRegularRolesSOUserTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
+		testSuite.addTestSuite(EditSOUserPasswordTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
+		testSuite.addTestSuite(SOUs_ViewMyPublicPagesNoSORoleTest.class);
+		testSuite.addTestSuite(SOUs_ViewMyPrivatePagesNoSORoleTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
+		testSuite.addTestSuite(SOUs_ViewWelcomePageTest.class);
+		testSuite.addTestSuite(SOUs_ViewSitesDirectoryTest.class);
+		testSuite.addTestSuite(SOUs_ViewMyProfileTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;

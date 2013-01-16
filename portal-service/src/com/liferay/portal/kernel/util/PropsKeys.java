@@ -585,6 +585,22 @@ public interface PropsKeys {
 
 	public static final String DL_DISPLAY_VIEWS = "dl.display.views";
 
+	public static final String DL_EMAIL_FILE_ENTRY_ADDED_BODY = "dl.email.file.entry.added.body";
+
+	public static final String DL_EMAIL_FILE_ENTRY_ADDED_ENABLED = "dl.email.file.entry.added.enabled";
+
+	public static final String DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT = "dl.email.file.entry.added.subject";
+
+	public static final String DL_EMAIL_FILE_ENTRY_UPDATED_BODY = "dl.email.file.entry.updated.body";
+
+	public static final String DL_EMAIL_FILE_ENTRY_UPDATED_ENABLED = "dl.email.file.entry.updated.enabled";
+
+	public static final String DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT = "dl.email.file.entry.updated.subject";
+
+	public static final String DL_EMAIL_FROM_ADDRESS = "dl.email.from.address";
+
+	public static final String DL_EMAIL_FROM_NAME = "dl.email.from.name";
+
 	public static final String DL_FILE_ENTRY_COMMENTS_ENABLED = "dl.file.entry.comments.enabled";
 
 	public static final String DL_FILE_ENTRY_CONVERSIONS_ENABLED = "dl.file.entry.conversions.enabled";
@@ -920,6 +936,10 @@ public interface PropsKeys {
 	public static final String INDEX_SEARCH_HIGHLIGHT_SNIPPET_SIZE = "index.search.highlight.snippet.size";
 
 	public static final String INDEX_SEARCH_LIMIT = "index.search.limit";
+
+	public static final String INDEX_SEARCH_QUERY_SUGGESTION_ENABLED = "index.search.query.suggestion.enabled";
+
+	public static final String INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD = "index.search.query.suggestion.scoring.threshold";
 
 	public static final String INDEX_SEARCH_SCORING_ENABLED = "index.search.scoring.enabled";
 
@@ -1543,6 +1563,8 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_BEGINNING_START_LEVEL = "module.framework.beginning.start.level";
 
+	public static final String MODULE_FRAMEWORK_CORE_DIR = "module.framework.core.dir";
+
 	public static final String MODULE_FRAMEWORK_ENABLED = "module.framework.enabled";
 
 	public static final String MODULE_FRAMEWORK_LIB_DIR = "module.framework.lib.dir";
@@ -2102,6 +2124,8 @@ public interface PropsKeys {
 	public static final String SITEMINDER_IMPORT_FROM_LDAP = "siteminder.import.from.ldap";
 
 	public static final String SITEMINDER_USER_HEADER = "siteminder.user.header";
+
+	public static final String SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED = "sites.content.sharing.with.children.enabled";
 
 	public static final String SITES_CONTROL_PANEL_MEMBERS_VISIBLE = "sites.control.panel.members.visible";
 

@@ -154,6 +154,32 @@ public class DLUtil {
 		return getDL().getDLControlPanelLink(portletRequest, folderId);
 	}
 
+	public static boolean getEmailFileEntryAddedEnabled(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryAddedEnabled(preferences);
+	}
+
+	public static boolean getEmailFileEntryUpdatedEnabled(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryUpdatedEnabled(preferences);
+	}
+
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return getDL().getEmailFromAddress(preferences, companyId);
+	}
+
+	public static String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return getDL().getEmailFromName(preferences, companyId);
+	}
+
 	public static String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay) {
 
@@ -162,6 +188,12 @@ public class DLUtil {
 
 	public static String getFileIcon(String extension) {
 		return getDL().getFileIcon(extension);
+	}
+
+	public static Set<Long> getFolderSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		return getDL().getFolderSubscriptionClassPKs(userId);
 	}
 
 	public static String getGenericName(String extension) {

@@ -420,6 +420,8 @@ public abstract class BaseIndexer implements Indexer {
 				hits = filterSearch(hits, permissionChecker, searchContext);
 			}
 
+			processHits(searchContext, hits);
+
 			return hits;
 		}
 		catch (SearchException se) {
@@ -1327,6 +1329,17 @@ public abstract class BaseIndexer implements Indexer {
 	protected void postProcessFullQuery(
 			BooleanQuery fullQuery, SearchContext searchContext)
 		throws Exception {
+	}
+
+	protected void processHits(SearchContext searchContext, Hits hits)
+		throws SearchException {
+
+		HitsProcessor hitsProcessor =
+			HitsProcessorRegistryUtil.getDefaultHitsProcessor();
+
+		if (hitsProcessor != null) {
+			hitsProcessor.process(searchContext, hits);
+		}
 	}
 
 	protected void setFilterSearch(boolean filterSearch) {

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
  * @author Raymond Augé
  */
 @MessagingProxy(mode = ProxyMode.SYNC)
-public interface IndexSearcher {
+public interface IndexSearcher extends QuerySuggester {
 
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException;

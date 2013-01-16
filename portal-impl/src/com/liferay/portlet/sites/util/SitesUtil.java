@@ -121,6 +121,18 @@ public class SitesUtil {
 
 	public static final String ANALYTICS_PREFIX = "analytics_";
 
+	public static final int CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE = -1;
+
+	public static final int CONTENT_SHARING_WITH_CHILDREN_DISABLED = 0;
+
+	public static final int CONTENT_SHARING_WITH_CHILDREN_DISABLED_BY_DEFAULT =
+		1;
+
+	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED = 3;
+
+	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT =
+		2;
+
 	public static final String LAST_MERGE_TIME = "last-merge-time";
 
 	public static final String LAST_RESET_TIME = "last-reset-time";
@@ -500,7 +512,7 @@ public class SitesUtil {
 
 		if (newPlid <= 0) {
 			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				layoutSet.getGroupId(), layoutSet.getPrivateLayout(),
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (firstLayout != null) {
@@ -555,7 +567,8 @@ public class SitesUtil {
 			Group group = layoutSetPrototype.getGroup();
 
 			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getSourcePrototypeLayoutUuid(), group.getGroupId());
+				layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
+				layout.isPrivateLayout());
 		}
 		catch (Exception e) {
 			_log.error(
@@ -665,8 +678,9 @@ public class SitesUtil {
 
 			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
 					layoutSet.getLayoutSetPrototypeUuid(),
+					layout.getCompanyId(),
 					layout.getSourcePrototypeLayoutUuid(),
-					layout.getCompanyId())) {
+					layout.isPrivateLayout())) {
 
 				return false;
 			}
@@ -884,7 +898,7 @@ public class SitesUtil {
 			Layout sourcePrototypeLayout =
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 					sourcePrototypeLayoutUuid,
-					layoutSetPrototypeGroup.getGroupId());
+					layoutSetPrototypeGroup.getGroupId(), true);
 
 			doMergeLayoutPrototypeLayout(
 				layoutSetPrototypeGroup, sourcePrototypeLayout);
@@ -1075,7 +1089,8 @@ public class SitesUtil {
 
 		Layout targetScopeLayout =
 			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				targetLayout.getUuid(), targetLayout.getGroupId());
+				targetLayout.getUuid(), targetLayout.getGroupId(),
+				targetLayout.isPrivateLayout());
 
 		if (!targetScopeLayout.hasScopeGroup()) {
 			GroupLocalServiceUtil.addGroup(

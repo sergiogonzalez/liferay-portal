@@ -90,6 +90,12 @@ if ((analyticsTypes.length == 0) && ArrayUtil.contains(advancedSections, "analyt
 	advancedSections = ArrayUtil.remove(advancedSections, "analytics");
 }
 
+int contentSharingWithChildrenEnabledEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
+
+if ((contentSharingWithChildrenEnabledEnabled == 0) && ArrayUtil.contains(advancedSections, "content-sharing")) {
+	advancedSections = ArrayUtil.remove(advancedSections, "content-sharing");
+}
+
 int trashEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENABLED);
 
 if ((trashEnabled == 0) && ArrayUtil.contains(advancedSections, "recycle-bin")) {
