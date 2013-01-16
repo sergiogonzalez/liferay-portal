@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -178,8 +179,11 @@ public class JournalFolderLocalServiceImpl
 			OrderByComparator obc)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY, start, end, obc);
+
 		return journalFolderFinder.findF_AByG_F(
-			groupId, folderId, start, end, obc);
+			groupId, folderId, queryDefinition);
 	}
 
 	public int getFoldersAndArticlesCount(
@@ -211,7 +215,9 @@ public class JournalFolderLocalServiceImpl
 	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
-		return journalFolderFinder.countF_A_ByG_F(groupId, folderId);
+		return journalFolderFinder.countF_A_ByG_F(
+			groupId, folderId,
+			new QueryDefinition(WorkflowConstants.STATUS_ANY));
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)

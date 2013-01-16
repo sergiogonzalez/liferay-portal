@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
@@ -93,8 +94,11 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY, start, end, obc);
+
 		return journalFolderFinder.filterFindF_AByG_F(
-			groupId, folderId, start, end, obc);
+			groupId, folderId, queryDefinition);
 	}
 
 	public int getFoldersAndArticlesCount(
@@ -126,7 +130,9 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
-		return journalFolderFinder.filterCountF_A_ByG_F(groupId, folderId);
+		return journalFolderFinder.filterCountF_A_ByG_F(
+			groupId, folderId,
+			new QueryDefinition(WorkflowConstants.STATUS_ANY));
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
