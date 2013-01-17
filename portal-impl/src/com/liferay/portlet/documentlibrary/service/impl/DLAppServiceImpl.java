@@ -49,6 +49,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
@@ -2471,6 +2472,25 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
+	public void subscribeFileEntryType(long groupId, long fileEntryTypeId)
+		throws PortalException, SystemException {
+
+		DLPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		dlAppLocalService.subscribeFileEntryType(
+			getUserId(), groupId, fileEntryTypeId);
+	}
+
+	public void subscribeFolder(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		DLPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		dlAppLocalService.subscribeFolder(getUserId(), groupId, folderId);
+	}
+
 	/**
 	 * @deprecated Use {@link #checkInFileEntry(long, boolean, String,
 	 *             ServiceContext)}.
@@ -2526,6 +2546,25 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		repository.unlockFolder(parentFolderId, name, lockUuid);
+	}
+
+	public void unsubscribeFileEntryType(long groupId, long fileEntryTypeId)
+		throws PortalException, SystemException {
+
+		DLPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		dlAppLocalService.unsubscribeFileEntryType(
+			getUserId(), groupId, fileEntryTypeId);
+	}
+
+	public void unsubscribeFolder(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		DLPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		dlAppLocalService.unsubscribeFolder(getUserId(), groupId, folderId);
 	}
 
 	/**

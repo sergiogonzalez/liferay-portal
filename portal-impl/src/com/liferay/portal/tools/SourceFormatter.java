@@ -1589,7 +1589,7 @@ public class SourceFormatter {
 								}
 
 								if (excluded == null) {
-									excluded = 
+									excluded =
 										_javaTermSortExclusions.getProperty(
 											fileNameWithForwardSlashes);
 								}
@@ -3973,7 +3973,8 @@ public class SourceFormatter {
 			"**\\portal-web\\classes\\**\\*.java",
 			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portal-web\\test\\**\\*Tests.java",
-			"**\\portlet\\**\\service\\**", "**\\tmp\\**", "**\\tools\\tck\\**"
+			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
+			"**\\tmp\\**", "**\\tools\\tck\\**"
 		};
 
 		excludes = ArrayUtil.append(excludes, _excludes);

@@ -27,6 +27,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
@@ -154,14 +156,76 @@ public class DLUtil {
 		return getDL().getDLControlPanelLink(portletRequest, folderId);
 	}
 
+	public static Map<Locale, String> getEmailFileEntryAddedBodyMap(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryAddedBodyMap(preferences);
+	}
+
+	public static boolean getEmailFileEntryAddedEnabled(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryAddedEnabled(preferences);
+	}
+
+	public static Map<Locale, String> getEmailFileEntryAddedSubjectMap(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryAddedSubjectMap(preferences);
+	}
+
+	public static Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryUpdatedBodyMap(preferences);
+	}
+
+	public static boolean getEmailFileEntryUpdatedEnabled(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryUpdatedEnabled(preferences);
+	}
+
+	public static Map<Locale, String> getEmailFileEntryUpdatedSubjectMap(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryUpdatedSubjectMap(preferences);
+	}
+
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return getDL().getEmailFromAddress(preferences, companyId);
+	}
+
+	public static String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return getDL().getEmailFromName(preferences, companyId);
+	}
+
 	public static String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay) {
 
 		return getDL().getFileEntryImage(fileEntry, themeDisplay);
 	}
 
+	public static Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		return getDL().getFileEntryTypeSubscriptionClassPKs(userId);
+	}
+
 	public static String getFileIcon(String extension) {
 		return getDL().getFileIcon(extension);
+	}
+
+	public static Set<Long> getFolderSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		return getDL().getFolderSubscriptionClassPKs(userId);
 	}
 
 	public static String getGenericName(String extension) {

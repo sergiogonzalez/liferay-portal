@@ -915,7 +915,7 @@
 		</if>
 	</target>
 
-	<target name="build-selenium">
+	<target name="build-selenium-old">
 		<delete dir="test-classes" />
 
 		<!--
@@ -930,8 +930,72 @@
 			newenvironment="true"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test --minimize ${minimize} --reportDuplicates ${reportDuplicates}" />
+			<arg line="--basedir test/functional --minimize ${minimize} --reportDuplicates ${reportDuplicates}" />
 		</java>
+	</target>
+
+	<target name="build-selenium-new">
+		<if>
+			<not>
+				<isset property="selenium.types" />
+			</not>
+			<then>
+				<property name="selenium.types" value="actions,functions,macros,paths,testcases,testplans,testsuites" />
+			</then>
+		</if>
+
+		<java
+			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test  --type ${selenium.types}" />
+		</java>
+	</target>
+
+	<target name="build-selenium-new-actions">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="actions" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-new-functions">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="functions" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-new-macros">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="macros" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-new-paths">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="paths" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-new-test-cases">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="testcases" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-new-test-plans">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="testplans" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-new-test-suites">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="testsuites" />
+		</antcall>
 	</target>
 
 	<target name="build-themes">

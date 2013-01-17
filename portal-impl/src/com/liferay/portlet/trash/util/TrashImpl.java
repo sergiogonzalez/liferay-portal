@@ -278,20 +278,20 @@ public class TrashImpl implements Trash {
 		UnicodeProperties typeSettingsProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
-		int trashEnabledCompany = PrefsPropsUtil.getInteger(
+		int companyTrashEnabled = PrefsPropsUtil.getInteger(
 			group.getCompanyId(), PropsKeys.TRASH_ENABLED);
 
-		if (trashEnabledCompany == TrashUtil.TRASH_DISABLED) {
+		if (companyTrashEnabled == TrashUtil.TRASH_DISABLED) {
 			return false;
 		}
 
-		int trashEnabledGroup = GetterUtil.getInteger(
+		int groupTrashEnabled = GetterUtil.getInteger(
 			typeSettingsProperties.getProperty("trashEnabled"),
 			TrashUtil.TRASH_DEFAULT_VALUE);
 
-		if ((trashEnabledGroup == TrashUtil.TRASH_ENABLED) ||
-			((trashEnabledCompany == TrashUtil.TRASH_ENABLED_BY_DEFAULT) &&
-			 (trashEnabledGroup == TrashUtil.TRASH_DEFAULT_VALUE))) {
+		if ((groupTrashEnabled == TrashUtil.TRASH_ENABLED) ||
+			((companyTrashEnabled == TrashUtil.TRASH_ENABLED_BY_DEFAULT) &&
+			 (groupTrashEnabled == TrashUtil.TRASH_DEFAULT_VALUE))) {
 
 			return true;
 		}

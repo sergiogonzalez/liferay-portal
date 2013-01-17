@@ -29,6 +29,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -38,6 +39,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
+import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -190,14 +192,17 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			(rootMessage.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-				thread.getCategoryId());
+			try {
+				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+					thread.getCategoryId());
 
-			category.setThreadCount(category.getThreadCount() - 1);
-			category.setMessageCount(
-				category.getMessageCount() - thread.getMessageCount());
-
-			mbCategoryPersistence.update(category);
+				MBUtil.updateCategoryStatistics(category);
+			}
+			catch (NoSuchCategoryException nsce) {
+				if (!thread.isInTrash()) {
+					throw nsce;
+				}
+			}
 		}
 
 		// Thread Asset
@@ -620,19 +625,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		// Category
 
 		if ((oldCategory != null) && (categoryId != oldCategoryId)) {
-			oldCategory.setThreadCount(oldCategory.getThreadCount() - 1);
-			oldCategory.setMessageCount(
-				oldCategory.getMessageCount() - thread.getMessageCount());
-
-			mbCategoryPersistence.update(oldCategory);
+			MBUtil.updateCategoryStatistics(oldCategory);
 		}
 
 		if ((category != null) && (categoryId != oldCategoryId)) {
-			category.setThreadCount(category.getThreadCount() + 1);
-			category.setMessageCount(
-				category.getMessageCount() + thread.getMessageCount());
-
-			mbCategoryPersistence.update(category);
+			MBUtil.updateCategoryStatistics(category);
 		}
 
 		return thread;
@@ -784,22 +781,15 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Update children
 
-		int messagesMoved = 1;
-
-		messagesMoved += moveChildrenMessages(
-			message, category, oldThread.getThreadId());
+		moveChildrenMessages(message, category, oldThread.getThreadId());
 
 		// Update new thread
 
-		thread.setMessageCount(messagesMoved);
-
-		mbThreadPersistence.update(thread);
+		MBUtil.updateThreadMessageCount(thread);
 
 		// Update old thread
 
-		oldThread.setMessageCount(oldThread.getMessageCount() - messagesMoved);
-
-		mbThreadPersistence.update(oldThread);
+		MBUtil.updateThreadMessageCount(oldThread);
 
 		// Category
 
@@ -808,9 +798,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			(message.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			category.setThreadCount(category.getThreadCount() + 1);
-
-			mbCategoryPersistence.update(category);
+			MBUtil.updateCategoryThreadCount(category);
 		}
 
 		return thread;
@@ -881,18 +869,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 					thread.getCategoryId());
 
-				if (status == WorkflowConstants.STATUS_IN_TRASH) {
-					category.setThreadCount(category.getThreadCount() - 1);
-					category.setMessageCount(
-						category.getMessageCount() - thread.getMessageCount());
-				}
-				else {
-					category.setThreadCount(category.getThreadCount() + 1);
-					category.setMessageCount(
-						category.getMessageCount() + thread.getMessageCount());
-				}
-
-				mbCategoryPersistence.update(category);
+				MBUtil.updateCategoryStatistics(category);
 			}
 
 			// Stats
@@ -954,11 +931,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
-	protected int moveChildrenMessages(
+	protected void moveChildrenMessages(
 			MBMessage parentMessage, MBCategory category, long oldThreadId)
 		throws PortalException, SystemException {
-
-		int messagesMoved = 0;
 
 		List<MBMessage> messages = mbMessagePersistence.findByT_P(
 			oldThreadId, parentMessage.getMessageId());
@@ -977,13 +952,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				indexer.reindex(message);
 			}
 
-			messagesMoved++;
-
-			messagesMoved += moveChildrenMessages(
-				message, category, oldThreadId);
+			moveChildrenMessages(message, category, oldThreadId);
 		}
-
-		return messagesMoved;
 	}
 
 	protected void updateDependentStatus(long threadId, int status)

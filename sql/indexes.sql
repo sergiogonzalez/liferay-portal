@@ -350,6 +350,7 @@ create index IX_22882D02 on JournalArticle (groupId, urlTitle);
 create index IX_D2D249E8 on JournalArticle (groupId, urlTitle, status);
 create index IX_D19C1B9F on JournalArticle (groupId, userId);
 create index IX_43A0F80F on JournalArticle (groupId, userId, classNameId);
+create index IX_2769B7F5 on JournalArticle (groupId, userId, classNameId, status);
 create index IX_3F1EA19E on JournalArticle (layoutUuid);
 create index IX_33F49D16 on JournalArticle (resourcePrimKey);
 create index IX_3E2765FC on JournalArticle (resourcePrimKey, status);
@@ -426,7 +427,7 @@ create index IX_B529BFD3 on Layout (layoutPrototypeUuid);
 create index IX_39A18ECC on Layout (sourcePrototypeLayoutUuid);
 create index IX_D0822724 on Layout (uuid_);
 create index IX_2CE4BE84 on Layout (uuid_, companyId);
-create unique index IX_CED31606 on Layout (uuid_, groupId);
+create unique index IX_E118C537 on Layout (uuid_, groupId, privateLayout);
 
 create index IX_6C226433 on LayoutBranch (layoutSetBranchId);
 create index IX_2C42603E on LayoutBranch (layoutSetBranchId, plid);

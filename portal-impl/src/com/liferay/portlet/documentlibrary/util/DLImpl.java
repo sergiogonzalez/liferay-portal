@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -41,6 +43,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Subscription;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -61,6 +65,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
+import com.liferay.util.ContentUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -68,6 +73,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -325,7 +331,7 @@ public class DLImpl implements DL {
 
 		Collections.reverse(dlFolders);
 
-		StringBundler sb = new StringBundler((dlFolders.size() * 3) + 6);
+		StringBundler sb = new StringBundler((dlFolders.size() * 3) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
@@ -402,6 +408,138 @@ public class DLImpl implements DL {
 		return portletURL.toString();
 	}
 
+	public Map<Locale, String> getEmailFileEntryAddedBodyMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailFileEntryAddedBody");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY)));
+
+		return map;
+	}
+
+	public boolean getEmailFileEntryAddedEnabled(
+		PortletPreferences preferences) {
+
+		String emailFileEntryAddedEnabled = preferences.getValue(
+			"emailFileEntryAddedEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailFileEntryAddedEnabled)) {
+			return GetterUtil.getBoolean(emailFileEntryAddedEnabled);
+		}
+		else {
+			return PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_ENABLED;
+		}
+	}
+
+	public Map<Locale, String> getEmailFileEntryAddedSubjectMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailFileEntryAddedSubject");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT)));
+
+		return map;
+	}
+
+	public Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailFileEntryUpdatedBody");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_BODY)));
+
+		return map;
+	}
+
+	public boolean getEmailFileEntryUpdatedEnabled(
+		PortletPreferences preferences) {
+
+		String emailFileEntryUpdatedEnabled = preferences.getValue(
+			"emailFileEntryUpdatedEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailFileEntryUpdatedEnabled)) {
+			return GetterUtil.getBoolean(emailFileEntryUpdatedEnabled);
+		}
+		else {
+			return PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_ENABLED;
+		}
+	}
+
+	public Map<Locale, String> getEmailFileEntryUpdatedSubjectMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailFileEntryUpdatedSubject");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT)));
+
+		return map;
+	}
+
+	public String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId, PropsValues.DL_EMAIL_FROM_ADDRESS);
+	}
+
+	public String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromName(
+			preferences, companyId, PropsValues.DL_EMAIL_FROM_NAME);
+	}
+
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay) {
 
@@ -416,12 +554,44 @@ public class DLImpl implements DL {
 		return sb.toString();
 	}
 
+	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		List<Subscription> subscriptions =
+			SubscriptionLocalServiceUtil.getUserSubscriptions(
+				userId, DLFileEntryType.class.getName());
+
+		Set<Long> classPKs = new HashSet<Long>(subscriptions.size());
+
+		for (Subscription subscription : subscriptions) {
+			classPKs.add(subscription.getClassPK());
+		}
+
+		return classPKs;
+	}
+
 	public String getFileIcon(String extension) {
 		if (!_fileIcons.contains(extension)) {
 			extension = _DEFAULT_FILE_ICON;
 		}
 
 		return extension;
+	}
+
+	public Set<Long> getFolderSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		List<Subscription> subscriptions =
+			SubscriptionLocalServiceUtil.getUserSubscriptions(
+				userId, Folder.class.getName());
+
+		Set<Long> classPKs = new HashSet<Long>(subscriptions.size());
+
+		for (Subscription subscription : subscriptions) {
+			classPKs.add(subscription.getClassPK());
+		}
+
+		return classPKs;
 	}
 
 	public String getGenericName(String extension) {

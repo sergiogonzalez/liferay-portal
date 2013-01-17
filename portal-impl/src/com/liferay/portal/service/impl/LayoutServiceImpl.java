@@ -413,6 +413,16 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			plid, groupId, portletId, parameterMap, startDate, endDate);
 	}
 
+	public List<Layout> getAncestorLayouts(long plid)
+		throws PortalException, SystemException {
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		List<Layout> ancestors = layout.getAncestors();
+
+		return filterLayouts(ancestors);
+	}
+
 	/**
 	 * Returns the primary key of the default layout for the group.
 	 *
@@ -520,21 +530,21 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the layout matching the UUID and group.
-	 *
 	 * @param  uuid the layout's UUID
 	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
 	 * @return the matching layout
 	 * @throws PortalException if a matching layout could not be found, if the
 	 *         user did not have permission to view the layout, or if some other
 	 *         portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId)
+	public Layout getLayoutByUuidAndGroupId(
+			String uuid, long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
 		Layout layout = layoutLocalService.getLayoutByUuidAndGroupId(
-			uuid, groupId);
+			uuid, groupId, privateLayout);
 
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), layout, ActionKeys.VIEW);
@@ -586,20 +596,26 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	public List<Layout> getLayouts(long groupId, boolean privateLayout)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout);
-
-		return filterLayouts(layouts);
+		return layoutPersistence.filterFindByG_P(groupId, privateLayout);
 	}
 
 	public List<Layout> getLayouts(
 			long groupId, boolean privateLayout, long parentLayoutId)
+		throws SystemException {
+
+		return layoutPersistence.filterFindByG_P_P(
+			groupId, privateLayout, parentLayoutId);
+	}
+
+	public List<Layout> getLayouts(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			boolean incomplete, int start, int end)
 		throws PortalException, SystemException {
 
 		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout, parentLayoutId);
+			groupId, privateLayout, parentLayoutId, incomplete, start, end);
 
 		return filterLayouts(layouts);
 	}

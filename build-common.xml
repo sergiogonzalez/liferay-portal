@@ -43,6 +43,7 @@
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+		<fileset dir="${project.dir}/osgi/lib/common/core" includes="*.jar" />
 	</path>
 
 	<path id="project.classpath">
@@ -483,7 +484,11 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 	<target name="compile-test-functional">
 		<ant target="compile-test-cmd">
-			<property name="test.type" value="" />
+			<property name="test.type" value="functional" />
+		</ant>
+
+		<ant target="compile-test-cmd">
+			<property name="test.type" value="functional-generated" />
 		</ant>
 	</target>
 
@@ -754,8 +759,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<sysproperty key="junit.debug" value="${junit.debug}" />
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 					<jvmarg line="${junit.debug.jpda}" />
-					<jvmarg value="-Xmx1024m" />
-					<jvmarg value="-XX:MaxPermSize=256m" />
+					<jvmarg value="-Xmx${junit.java.mx}" />
+					<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
 					<jvmarg value="-Dexternal-properties=${test.properties}" />
 					<jvmarg value="-Dfile.encoding=UTF-8" />
 					<jvmarg value="-Djava.net.preferIPv4Stack=true" />
@@ -803,8 +808,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<sysproperty key="junit.debug" value="${junit.debug}" />
 			<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 			<jvmarg line="${junit.debug.jpda}" />
-			<jvmarg value="-Xmx1024m" />
-			<jvmarg value="-XX:MaxPermSize=256m" />
+			<jvmarg value="-Xmx${junit.java.mx}" />
+			<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
 			<jvmarg value="-Dexternal-properties=${test.properties}" />
 			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<jvmarg value="-Djava.net.preferIPv4Stack=true" />

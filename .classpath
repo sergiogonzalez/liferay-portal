@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="definitions"/>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="osgi/bootstrap/src"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-impl/src"/>
-	<classpathentry excluding="**/.svn/**|.svn/|integration/|unit/" kind="src" path="portal-impl/test"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-impl/test/integration"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-impl/test/unit"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-service/src"/>
 	<!--<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-service/test/integration"/>-->
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-service/test/unit"/>
-	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-web/test"/>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-web/test/functional"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="support-tomcat/src"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="util-bridges/src"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="util-java/src"/>
@@ -71,8 +71,6 @@
 	<classpathentry kind="lib" path="lib/development/mysql.jar"/>
 	<classpathentry kind="lib" path="lib/development/objenesis.jar"/>
 	<classpathentry kind="lib" path="lib/development/orangevolt-ant-tasks.jar"/>
-	<classpathentry kind="lib" path="lib/development/osgi.cmpn.jar"/>
-	<classpathentry kind="lib" path="lib/development/osgi.core.jar"/>
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
 	<classpathentry kind="lib" path="lib/development/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/development/postgresql.jar"/>
@@ -160,8 +158,8 @@
 	<classpathentry kind="lib" path="lib/portal/ecs.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-jgroupsreplication.jar"/>
-	<classpathentry kind="lib" path="lib/portal/equinox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fastutil.jar"/>
+	<classpathentry kind="lib" path="lib/portal/felix-fileinstall.jar"/>
 	<classpathentry kind="lib" path="lib/portal/flexjson.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fontbox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/freemarker.jar"/>
@@ -316,5 +314,14 @@
 	<classpathentry kind="lib" path="lib/portal/xpp3.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xstream.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler-noarch.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/common/core/osgi.cmpn.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/common/core/osgi.core.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/common/portal/osgi.enterprise.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/equinox/core/org.eclipse.osgi.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/equinox/portal/org.eclipse.osgi.services.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/equinox/portal/org.eclipse.osgi.util.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/felix/core/org.apache.felix.framework.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/felix/portal/org.apache.felix.framework.security.jar"/>
+	<classpathentry kind="lib" path="osgi/lib/felix/portal/org.apache.felix.log.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

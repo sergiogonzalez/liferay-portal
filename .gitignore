@@ -50,6 +50,9 @@ _sass_cache_*.css
 
 /nbproject/private
 
+/osgi/bootstrap/classes
+/osgi/bootstrap/bootstrap*.jar
+
 /portal-client/*.iml
 /portal-client/*.ipr
 /portal-client/*.iws
@@ -86,6 +89,7 @@ _sass_cache_*.css
 /portal-service/classes
 /portal-service/portal-service*.asc
 /portal-service/portal-service*.jar
+/portal-service/test/functional-generated
 /portal-service/test-classes
 /portal-service/test-coverage
 /portal-service/test-results

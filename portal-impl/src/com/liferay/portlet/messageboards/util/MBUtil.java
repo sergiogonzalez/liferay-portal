@@ -14,11 +14,16 @@
 
 package com.liferay.portlet.messageboards.util;
 
+import com.liferay.portal.kernel.concurrent.PortalCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -30,15 +35,18 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -53,18 +61,25 @@ import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.mail.JavaMailUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Callable;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -254,7 +269,7 @@ public class MBUtil {
 
 		Collections.reverse(categories);
 
-		StringBundler sb = new StringBundler((categories.size() * 3) + 6);
+		StringBundler sb = new StringBundler((categories.size() * 3) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
@@ -298,6 +313,22 @@ public class MBUtil {
 		categoryId = ParamUtil.getLong(request, "mbCategoryId", categoryId);
 
 		return categoryId;
+	}
+
+	public static Set<Long> getCategorySubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		List<Subscription> subscriptions =
+			SubscriptionLocalServiceUtil.getUserSubscriptions(
+				userId, MBCategory.class.getName());
+
+		Set<Long> classPKs = new HashSet<Long>(subscriptions.size());
+
+		for (Subscription subscription : subscriptions) {
+			classPKs.add(subscription.getClassPK());
+		}
+
+		return classPKs;
 	}
 
 	public static String getEmailFromAddress(
@@ -446,6 +477,65 @@ public class MBUtil {
 				PropsValues.
 					MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT_PREFIX);
 		}
+	}
+
+	public static List<MBMessage> getEntries(Hits hits) {
+		List<MBMessage> messages = new ArrayList<MBMessage>();
+
+		for (Document document : hits.getDocs()) {
+			long categoryId = GetterUtil.getLong(
+				document.get(Field.CATEGORY_ID));
+
+			try {
+				MBCategoryLocalServiceUtil.getCategory(categoryId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message boards search index is stale and contains " +
+							"category " + categoryId);
+				}
+
+				continue;
+			}
+
+			long threadId = GetterUtil.getLong(document.get("threadId"));
+
+			try {
+				MBThreadLocalServiceUtil.getThread(threadId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message boards search index is stale and contains " +
+							"thread " + threadId);
+				}
+
+				continue;
+			}
+
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			MBMessage message = null;
+
+			try {
+				message = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+
+				messages.add(message);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message boards search index is stale and contains " +
+							"message " + entryClassPK);
+				}
+
+				continue;
+			}
+		}
+
+		return messages;
 	}
 
 	public static String getMailingListAddress(
@@ -620,6 +710,22 @@ public class MBUtil {
 		}
 
 		return priorityPair;
+	}
+
+	public static Set<Long> getThreadSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		List<Subscription> subscriptions =
+			SubscriptionLocalServiceUtil.getUserSubscriptions(
+				userId, MBThread.class.getName());
+
+		Set<Long> classPKs = new HashSet<Long>(subscriptions.size());
+
+		for (Subscription subscription : subscriptions) {
+			classPKs.add(subscription.getClassPK());
+		}
+
+		return classPKs;
 	}
 
 	public static Date getUnbanDate(MBBan ban, int expireInterval) {
@@ -797,6 +903,100 @@ public class MBUtil {
 				"href=\"" + themeDisplay.getURLPortal() + "/",
 				"src=\"" + themeDisplay.getURLPortal() + "/"
 			});
+	}
+
+	public static void updateCategoryMessageCount(final MBCategory category) {
+		Callable<Void> callable = new PortalCallable<Void>(
+			category.getCompanyId()) {
+
+			@Override
+			protected Void doCall() throws Exception {
+				int messageCount =
+					MBMessageLocalServiceUtil.getCategoryMessagesCount(
+						category.getGroupId(), category.getCategoryId(),
+						WorkflowConstants.STATUS_APPROVED);
+
+				category.setMessageCount(messageCount);
+
+				MBCategoryLocalServiceUtil.updateMBCategory(category);
+
+				return null;
+			}
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+	}
+
+	public static void updateCategoryStatistics(final MBCategory category) {
+		Callable<Void> callable = new PortalCallable<Void>(
+			category.getCompanyId()) {
+
+			@Override
+			protected Void doCall() throws Exception {
+				int messageCount =
+					MBMessageLocalServiceUtil.getCategoryMessagesCount(
+						category.getGroupId(), category.getCategoryId(),
+						WorkflowConstants.STATUS_APPROVED);
+
+				int threadCount =
+					MBThreadLocalServiceUtil.getCategoryThreadsCount(
+						category.getGroupId(), category.getCategoryId(),
+						WorkflowConstants.STATUS_APPROVED);
+
+				category.setMessageCount(messageCount);
+				category.setThreadCount(threadCount);
+
+				MBCategoryLocalServiceUtil.updateMBCategory(category);
+
+				return null;
+			}
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+	}
+
+	public static void updateCategoryThreadCount(final MBCategory category) {
+		Callable<Void> callable = new PortalCallable<Void>(
+			category.getCompanyId()) {
+
+			@Override
+			protected Void doCall() throws Exception {
+				int threadCount =
+					MBThreadLocalServiceUtil.getCategoryThreadsCount(
+						category.getGroupId(), category.getCategoryId(),
+						WorkflowConstants.STATUS_APPROVED);
+
+				category.setThreadCount(threadCount);
+
+				MBCategoryLocalServiceUtil.updateMBCategory(category);
+
+				return null;
+			}
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+	}
+
+	public static void updateThreadMessageCount(final MBThread thread) {
+		Callable<Void> callable = new PortalCallable<Void>(
+			thread.getCompanyId()) {
+
+			@Override
+			protected Void doCall() throws Exception {
+				int messageCount =
+					MBMessageLocalServiceUtil.getThreadMessagesCount(
+						thread.getThreadId(),
+						WorkflowConstants.STATUS_APPROVED);
+
+				thread.setMessageCount(messageCount);
+
+				MBThreadLocalServiceUtil.updateMBThread(thread);
+
+				return null;
+			}
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
 	private static String[] _findThreadPriority(

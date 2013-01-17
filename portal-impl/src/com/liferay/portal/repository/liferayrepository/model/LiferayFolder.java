@@ -50,6 +50,12 @@ public class LiferayFolder extends LiferayModel implements Folder {
 			permissionChecker, _dlFolder, actionId);
 	}
 
+	public List<Long> getAncestorFolderIds()
+		throws PortalException, SystemException {
+
+		return _dlFolder.getAncestorFolderIds();
+	}
+
 	public List<Folder> getAncestors() throws PortalException, SystemException {
 		return toFolders(_dlFolder.getAncestors());
 	}
@@ -225,6 +231,15 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	public boolean isSupportsSocial() {
+		if (isMountPoint()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	public boolean isSupportsSubscribing() {
 		if (isMountPoint()) {
 			return false;
 		}

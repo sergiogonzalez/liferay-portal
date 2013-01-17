@@ -288,7 +288,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="8" />
+		<property name="build-test-ant-scripts.version" value="9" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1920,6 +1920,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="social-office-home-announcements" />
+			<param name="test.ant.script.social.office" value="true" />
+			<param name="test.ant.script.suite" value="SocialOfficeHomeAnnouncementsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="social-office-home-activities" />
 			<param name="test.ant.script.social.office" value="true" />
 			<param name="test.ant.script.suite" value="SocialOfficeHomeActivitiesTestSuite" />
@@ -3277,17 +3283,22 @@ file.
 			</then>
 			<else>
 				<if>
-					<or>
+					<and>
 						<not>
-							<available file="sql/legacy" />
+							<isset property="skip.rebuild-legacy" />
 						</not>
-						<not>
-							<uptodate
-								srcfile="${sql.legacy.zip}"
-								targetfile="sql/legacy"
-							/>
-						</not>
-					</or>
+						<or>
+							<not>
+								<available file="sql/legacy" />
+							</not>
+							<not>
+								<uptodate
+									srcfile="${sql.legacy.zip}"
+									targetfile="sql/legacy"
+								/>
+							</not>
+						</or>
+					</and>
 					<then>
 						<delete dir="sql/legacy" failonerror="false" />
 

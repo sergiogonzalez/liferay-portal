@@ -275,6 +275,20 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.LayoutSoap[] getAncestorLayouts(
+		long plid) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.model.Layout> returnValue = LayoutServiceUtil.getAncestorLayouts(plid);
+
+			return com.liferay.portal.model.LayoutSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the primary key of the default layout for the group.
 	*
@@ -306,10 +320,9 @@ public class LayoutServiceSoap {
 	}
 
 	/**
-	* Returns the layout matching the UUID and group.
-	*
 	* @param uuid the layout's UUID
 	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
 	* @return the matching layout
 	* @throws PortalException if a matching layout could not be found, if the
 	user did not have permission to view the layout, or if some other
@@ -317,10 +330,11 @@ public class LayoutServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSoap getLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws RemoteException {
+		java.lang.String uuid, long groupId, boolean privateLayout)
+		throws RemoteException {
 		try {
 			com.liferay.portal.model.Layout returnValue = LayoutServiceUtil.getLayoutByUuidAndGroupId(uuid,
-					groupId);
+					groupId, privateLayout);
 
 			return com.liferay.portal.model.LayoutSoap.toSoapModel(returnValue);
 		}
@@ -408,6 +422,22 @@ public class LayoutServiceSoap {
 		try {
 			java.util.List<com.liferay.portal.model.Layout> returnValue = LayoutServiceUtil.getLayouts(groupId,
 					privateLayout, parentLayoutId);
+
+			return com.liferay.portal.model.LayoutSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.model.LayoutSoap[] getLayouts(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean incomplete, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.model.Layout> returnValue = LayoutServiceUtil.getLayouts(groupId,
+					privateLayout, parentLayoutId, incomplete, start, end);
 
 			return com.liferay.portal.model.LayoutSoap.toSoapModels(returnValue);
 		}

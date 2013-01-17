@@ -41,6 +41,18 @@
 	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil">
 		<property name="repositorySearchQueryBuilder" ref="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.search.HitsProcessorRegistryUtil" class="com.liferay.portal.kernel.search.HitsProcessorRegistryUtil">
+		<property name="defaultHitsProcessor">
+			<bean class="com.liferay.portal.kernel.search.CompositeHitsProcessor">
+				<property name="hitsProcessors">
+					<util:list>
+						<bean class="com.liferay.portal.kernel.search.CollatedSpellCheckHitsProcessor" />
+						<bean class="com.liferay.portal.kernel.search.QuerySuggestionHitsProcessor" />
+					</util:list>
+				</property>
+			</bean>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.search.QueryTranslator" class="com.liferay.portal.search.lucene.QueryTranslatorImpl" />
 	<bean id="com.liferay.portal.kernel.search.QueryTranslatorUtil" class="com.liferay.portal.kernel.search.QueryTranslatorUtil">
 		<property name="queryTranslator" ref="com.liferay.portal.kernel.search.QueryTranslator" />
