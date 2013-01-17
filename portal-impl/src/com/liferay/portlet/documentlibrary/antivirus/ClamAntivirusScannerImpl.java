@@ -39,23 +39,17 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 		try {
 			process = processBuilder.start();
 
-			InputStream inputStream = process.getInputStream();
-
-			String scanResult = StringUtil.read(inputStream);
-
 			process.waitFor();
 
 			int exitValue = process.exitValue();
 
-			if (exitValue != 0) {
+			if (exitValue == 1) {
+				throw new AntivirusScannerException(
+					"Virus detected in " + file.getAbsolutePath());
+			} else if (exitValue >= 2) {
 				throw new AntivirusScannerException(
 					"Unable to scan file due to inability to execute " +
 						"antivirus process");
-			}
-
-			if (scanResult.contains("FOUND")) {
-				throw new AntivirusScannerException(
-					"Virus detected in " + file.getAbsolutePath());
 			}
 		}
 		catch (IOException ioe) {
