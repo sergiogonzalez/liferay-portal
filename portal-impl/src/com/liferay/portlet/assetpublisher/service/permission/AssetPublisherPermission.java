@@ -32,7 +32,6 @@ public class AssetPublisherPermission {
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException();
 		}
-
 	}
 
 	public static boolean contains(
@@ -48,7 +47,6 @@ public class AssetPublisherPermission {
 
 		return permissionChecker.hasPermission(
 			groupId, _CLASS_NAME, groupId, actionId);
-
 	}
 
 	private static final String _CLASS_NAME =

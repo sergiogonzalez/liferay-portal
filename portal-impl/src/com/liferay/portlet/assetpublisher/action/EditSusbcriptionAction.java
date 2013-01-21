@@ -14,17 +14,23 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.PortletPreferences;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherSubscriptionUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -41,46 +47,66 @@ public class EditSusbcriptionAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.SUBSCRIBE)) {
-			subscribeAssetPublisher(actionRequest);
-		}
-		else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-			unsubscribeAssetPublisher(actionRequest);
-		}
+		try {
+			if (cmd.equals(Constants.SUBSCRIBE)) {
+				subscribe(actionRequest);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				unsubscribe(actionRequest);
+			}
 
-		sendRedirect(actionRequest, actionResponse);
+			sendRedirect(actionRequest, actionResponse);
+		}
+		catch (Exception e) {
+			if (e instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, e.getClass());
+
+				setForward(actionRequest, "portlet.asset_publisher.error");
+			}
+			else {
+				throw e;
+			}
+		}
 	}
 
-	private void subscribeAssetPublisher(ActionRequest actionRequest)
+	private void subscribe(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long portletPreferencesId =
-			AssetPublisherSubscriptionUtil.getPortletPreferencesId(
-				themeDisplay.getPlid(),
-				themeDisplay.getPortletDisplay().getInstanceId());
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		AssetPublisherSubscriptionUtil.subscribe(
+		PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				portletDisplay.getId());
+
+		AssetPublisherUtil.subscribe(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-			portletPreferencesId);
-
+			portletPreferences.getPortletPreferencesId(),
+			themeDisplay.getPermissionChecker());
 	}
 
-	private void unsubscribeAssetPublisher(ActionRequest actionRequest)
+	private void unsubscribe(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long portletPreferencesId =
-			AssetPublisherSubscriptionUtil.getPortletPreferencesId(
-				themeDisplay.getPlid(),
-				themeDisplay.getPortletDisplay().getInstanceId());
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		AssetPublisherSubscriptionUtil.unsubscribe(
+		PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				portletDisplay.getId());
+
+		AssetPublisherUtil.unsubscribe(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-			portletPreferencesId);
+			portletPreferences.getPortletPreferencesId(),
+			themeDisplay.getPermissionChecker());
 	}
+
 }
