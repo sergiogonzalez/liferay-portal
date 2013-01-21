@@ -15,6 +15,8 @@
 package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -32,10 +34,16 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -45,6 +53,7 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.assetpublisher.service.permission.AssetPublisherPermission;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.IOException;
@@ -495,6 +504,20 @@ public class AssetPublisherUtil {
 		return key;
 	}
 
+	public static boolean isSubscribed(
+			long companyId, long userId, long plid, String portletId)
+		throws Exception {
+
+		com.liferay.portal.model.PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			companyId, userId, PortletPreferences.class.getName(),
+			portletPreferences.getPortletPreferencesId());
+	}
+
 	public static void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
@@ -537,6 +560,31 @@ public class AssetPublisherUtil {
 		if (getRecentFolderId(portletRequest, className) == classPK) {
 			_getRecentFolderIds(portletRequest).remove(className);
 		}
+	}
+
+	public static void subscribe(
+			long userId, long groupId, long portletPreferencesId,
+			PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		AssetPublisherPermission.check(
+			permissionChecker, groupId, ActionKeys.SUBSCRIBE);
+
+		SubscriptionLocalServiceUtil.addSubscription(
+			userId, groupId, PortletPreferences.class.getName(),
+			portletPreferencesId);
+	}
+
+	public static void unsubscribe(
+			long userId, long groupId, long portletPreferencesId,
+			PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		AssetPublisherPermission.check(
+			permissionChecker, groupId, ActionKeys.SUBSCRIBE);
+
+		SubscriptionLocalServiceUtil.deleteSubscription(
+			userId, PortletPreferences.class.getName(), portletPreferencesId);
 	}
 
 	private static String _getAssetEntryXml(
