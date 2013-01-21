@@ -269,7 +269,7 @@
 
 		<action path="/asset_publisher/edit_query_rule" forward="portlet.asset_publisher.edit_query_rule" />
 
-		<action path="/asset_publisher/edit_subscription" type="com.liferay.portlet.assetpublisher.action.EditSusbcriptionAction" />
+		<action path="/asset_publisher/edit_subscription" type="com.liferay.portlet.assetpublisher.action.EditSubscriptionAction" />
 
 		<action path="/asset_publisher/export_journal_article" type="com.liferay.portlet.journalcontent.action.ExportArticleAction" />
 

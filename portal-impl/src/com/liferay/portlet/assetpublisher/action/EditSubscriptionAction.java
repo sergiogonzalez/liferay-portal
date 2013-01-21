@@ -37,7 +37,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Roberto Diaz
  */
-public class EditSusbcriptionAction extends PortletAction {
+public class EditSubscriptionAction extends PortletAction {
 
 	@Override
 	public void processAction(
