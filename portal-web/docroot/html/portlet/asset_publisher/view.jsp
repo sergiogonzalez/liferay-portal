@@ -1,3 +1,8 @@
+<%@ page
+	import="com.liferay.portlet.assetpublisher.util.AssetPublisherSubscriptionUtil" %>
+
+<%@ page
+	import="com.liferay.portlet.assetpublisher.service.permission.AssetPublisherPermission" %>
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -96,6 +101,46 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	%>
 
 </c:if>
+
+<div class="subscribe-action">
+
+	<c:if test="<%= AssetPublisherPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) %>">
+
+		<%
+		boolean subscribed = false;
+
+		subscribed = AssetPublisherSubscriptionUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), themeDisplay.getPortletDisplay().getInstanceId());
+		%>
+
+		<c:choose>
+			<c:when test="<%= subscribed %>">
+				<portlet:actionURL var="unsubscribeURL">
+					<portlet:param name="struts_action" value='<%= "/asset_publisher/edit_subscription" %>' />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+				<liferay-ui:icon
+					image="unsubscribe"
+					label="<%= true %>"
+					url="<%= unsubscribeURL %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL var="subscribeURL">
+					<portlet:param name="struts_action" value='<%= "/asset_publisher/edit_subscription" %>' />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="subscribe"
+					label="<%= true %>"
+					url="<%= subscribeURL %>"
+					/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</div>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
