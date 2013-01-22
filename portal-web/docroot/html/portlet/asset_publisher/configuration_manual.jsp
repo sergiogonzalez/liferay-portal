@@ -24,8 +24,13 @@ String rootPortletId = (String)request.getAttribute("configuration.jsp-rootPortl
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 %>
 
-<liferay-ui:panel-container extended="<%= true %>" id="assetPublisherSelectionStylePanelContainer" persistState="<%= true %>">
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSelectionStylePanel" persistState="<%= true %>" title="selection">
+<liferay-ui:tabs
+	names="asset-selection,display-settings,subscriptions"
+	refresh="<%= false %>"
+>
+	<liferay-ui:section>
+		<liferay-util:include page="/html/portlet/asset_publisher/asset_selection_type.jsp" />
+
 		<aui:fieldset label="scope">
 			<%= selectScope %>
 		</aui:fieldset>
@@ -194,11 +199,14 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 			%>
 
 		</aui:fieldset>
-	</liferay-ui:panel>
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSelectionDisplaySettingsPanel" persistState="<%= true %>" title="display-settings">
+	</liferay-ui:section>
+	<liferay-ui:section>
 		<%@ include file="/html/portlet/asset_publisher/display_settings.jspf" %>
-	</liferay-ui:panel>
-</liferay-ui:panel-container>
+	</liferay-ui:section>
+	<liferay-ui:section>
+		<liferay-util:include page="/html/portlet/asset_publisher/email_subscription_settings.jsp" />
+	</liferay-ui:section>
+</liferay-ui:tabs>
 
 <aui:button-row>
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
