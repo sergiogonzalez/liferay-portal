@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,12 +26,12 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -49,10 +50,10 @@ public class EditSubscriptionAction extends PortletAction {
 
 		try {
 			if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribe(actionRequest);
+				subscribe((LiferayPortletConfig)portletConfig, actionRequest);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribe(actionRequest);
+				unsubscribe((LiferayPortletConfig)portletConfig, actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -69,19 +70,21 @@ public class EditSubscriptionAction extends PortletAction {
 		}
 	}
 
-	private void subscribe(ActionRequest actionRequest)
+	private void subscribe(
+			LiferayPortletConfig liferayPortletConfig,
+			ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		String portletId = liferayPortletConfig.getPortletId();
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-				portletDisplay.getId());
+				portletId);
 
 		AssetPublisherUtil.subscribe(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
@@ -89,19 +92,21 @@ public class EditSubscriptionAction extends PortletAction {
 			themeDisplay.getPermissionChecker());
 	}
 
-	private void unsubscribe(ActionRequest actionRequest)
+	private void unsubscribe(
+			LiferayPortletConfig liferayPortletConfig,
+			ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		String portletId = liferayPortletConfig.getPortletId();
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-				portletDisplay.getId());
+				portletId);
 
 		AssetPublisherUtil.unsubscribe(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
