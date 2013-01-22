@@ -22,8 +22,10 @@ import java.lang.reflect.Array;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -1113,11 +1115,146 @@ public class ArrayUtil {
 		return newArray;
 	}
 
+	public static double[] toDoubleArray(Collection<Double> collection) {
+		double[] newArray = new double[collection.size()];
+
+		if (collection instanceof List) {
+			List<Double> list = (List<Double>)collection;
+
+			for (int i = 0; i < list.size(); i++) {
+				Double value = list.get(i);
+
+				newArray[i++] = value.doubleValue();
+			}
+		}
+		else {
+			int i = 0;
+
+			Iterator<Double> iterator = collection.iterator();
+
+			while (iterator.hasNext()) {
+				Double value = iterator.next();
+
+				newArray[i++] = value.doubleValue();
+			}
+		}
+
+		return newArray;
+	}
+
+	public static float[] toFloatArray(Collection<Float> collection) {
+		float[] newArray = new float[collection.size()];
+
+		if (collection instanceof List) {
+			List<Float> list = (List<Float>)collection;
+
+			for (int i = 0; i < list.size(); i++) {
+				Float value = list.get(i);
+
+				newArray[i++] = value.floatValue();
+			}
+		}
+		else {
+			int i = 0;
+
+			Iterator<Float> iterator = collection.iterator();
+
+			while (iterator.hasNext()) {
+				Float value = iterator.next();
+
+				newArray[i++] = value.floatValue();
+			}
+		}
+
+		return newArray;
+	}
+
+	public static int[] toIntArray(Collection<Integer> collection) {
+		int[] newArray = new int[collection.size()];
+
+		if (collection instanceof List) {
+			List<Integer> list = (List<Integer>)collection;
+
+			for (int i = 0; i < list.size(); i++) {
+				Integer value = list.get(i);
+
+				newArray[i++] = value.intValue();
+			}
+		}
+		else {
+			int i = 0;
+
+			Iterator<Integer> iterator = collection.iterator();
+
+			while (iterator.hasNext()) {
+				Integer value = iterator.next();
+
+				newArray[i++] = value.intValue();
+			}
+		}
+
+		return newArray;
+	}
+
+	public static long[] toLongArray(Collection<Long> collection) {
+		long[] newArray = new long[collection.size()];
+
+		if (collection instanceof List) {
+			List<Long> list = (List<Long>)collection;
+
+			for (int i = 0; i < list.size(); i++) {
+				Long value = list.get(i);
+
+				newArray[i++] = value.longValue();
+			}
+		}
+		else {
+			int i = 0;
+
+			Iterator<Long> iterator = collection.iterator();
+
+			while (iterator.hasNext()) {
+				Long value = iterator.next();
+
+				newArray[i++] = value.longValue();
+			}
+		}
+
+		return newArray;
+	}
+
 	public static Long[] toLongArray(Object[] array) {
 		Long[] newArray = new Long[array.length];
 
 		for (int i = 0; i < array.length; i++) {
 			newArray[i] = (Long)array[i];
+		}
+
+		return newArray;
+	}
+
+	public static short[] toShortArray(Collection<Short> collection) {
+		short[] newArray = new short[collection.size()];
+
+		if (collection instanceof List) {
+			List<Short> list = (List<Short>)collection;
+
+			for (int i = 0; i < list.size(); i++) {
+				Short value = list.get(i);
+
+				newArray[i++] = value.shortValue();
+			}
+		}
+		else {
+			int i = 0;
+
+			Iterator<Short> iterator = collection.iterator();
+
+			while (iterator.hasNext()) {
+				Short value = iterator.next();
+
+				newArray[i++] = value.shortValue();
+			}
 		}
 
 		return newArray;

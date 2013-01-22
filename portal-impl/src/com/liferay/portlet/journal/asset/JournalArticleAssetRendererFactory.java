@@ -50,8 +50,6 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Julio Camarero
  * @author Juan Fernández
@@ -158,11 +156,9 @@ public class JournalArticleAssetRendererFactory
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException, SystemException {
 
-		HttpServletRequest request =
-			liferayPortletRequest.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!JournalPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -184,8 +180,8 @@ public class JournalArticleAssetRendererFactory
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.JOURNAL, getControlPanelPlid(themeDisplay),
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, PortletKeys.JOURNAL,
+			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/journal/edit_article");
 

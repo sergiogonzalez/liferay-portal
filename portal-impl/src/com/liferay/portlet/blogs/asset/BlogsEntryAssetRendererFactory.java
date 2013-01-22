@@ -35,8 +35,6 @@ import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Jorge Ferrer
  * @author Juan Fernández
@@ -80,11 +78,9 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException, SystemException {
 
-		HttpServletRequest request =
-			liferayPortletRequest.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!BlogsPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -94,8 +90,8 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.BLOGS, getControlPanelPlid(themeDisplay),
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, PortletKeys.BLOGS,
+			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/blogs/edit_entry");
 

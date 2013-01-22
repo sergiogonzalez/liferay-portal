@@ -34,8 +34,6 @@ import com.liferay.portlet.calendar.service.permission.CalendarPermission;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Juan Fernández
  * @author Raymond Augé
@@ -69,11 +67,9 @@ public class CalEventAssetRendererFactory extends BaseAssetRendererFactory {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException, SystemException {
 
-		HttpServletRequest request =
-			liferayPortletRequest.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!CalendarPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -83,8 +79,8 @@ public class CalEventAssetRendererFactory extends BaseAssetRendererFactory {
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.CALENDAR, getControlPanelPlid(themeDisplay),
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, PortletKeys.CALENDAR,
+			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/calendar/edit_event");
 

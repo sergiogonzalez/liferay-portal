@@ -188,11 +188,15 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>SUBSCRIBE</action-key>
 			</supports>
-			<site-member-defaults />
+			<site-member-defaults>
+				<action-key>SUBSCRIBE</action-key>
+			</site-member-defaults>
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>SUBSCRIBE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

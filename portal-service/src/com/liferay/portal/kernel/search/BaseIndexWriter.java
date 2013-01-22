@@ -20,7 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 /**
  * @author Michael C. Han
  */
-public class DelegatingSpellCheckIndexWriter implements SpellCheckIndexWriter {
+public abstract class BaseIndexWriter
+	implements IndexWriter, SpellCheckIndexWriter {
 
 	public void indexDictionaries(SearchContext searchContext)
 		throws SearchException {
@@ -52,8 +53,7 @@ public class DelegatingSpellCheckIndexWriter implements SpellCheckIndexWriter {
 		_spellCheckIndexWriter = spellCheckIndexWriter;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		DelegatingQuerySuggester.class);
+	private static Log _log = LogFactoryUtil.getLog(BaseIndexSearcher.class);
 
 	private SpellCheckIndexWriter _spellCheckIndexWriter;
 

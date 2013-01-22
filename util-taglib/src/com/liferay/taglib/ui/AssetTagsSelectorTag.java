@@ -14,8 +14,11 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -47,6 +50,10 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_focus = focus;
 	}
 
+	public void setGroupIds(long[] groupIds) {
+		_groupIds = groupIds;
+	}
+
 	public void setHiddenInput(String hiddenInput) {
 		_hiddenInput = hiddenInput;
 	}
@@ -62,6 +69,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_contentCallback = null;
 		_curTags = null;
 		_focus = false;
+		_groupIds = null;
 		_hiddenInput = "assetTagNames";
 		_id = null;
 	}
@@ -92,6 +100,33 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			"liferay-ui:asset-tags-selector:curTags", _curTags);
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:focus", String.valueOf(_focus));
+
+		if (_groupIds == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay) pageContext.getAttribute(
+				"themeDisplay");
+
+			long[] groupIds = null;
+
+			Group group = themeDisplay.getScopeGroup();
+
+			if (group.isLayout()) {
+				groupIds = new long[] {group.getParentGroupId()};
+			}
+			else {
+				groupIds = new long[] {group.getGroupId()};
+			}
+
+			if (group.getParentGroupId() != themeDisplay.getCompanyGroupId()) {
+				groupIds = ArrayUtil.append(
+					groupIds, themeDisplay.getCompanyGroupId());
+			}
+
+			_groupIds = groupIds;
+		}
+
+		request.setAttribute(
+			"liferay-ui:asset-tags-selector:groupIds", _groupIds);
+
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:hiddenInput", _hiddenInput);
 		request.setAttribute("liferay-ui:asset-tags-selector:id", id);
@@ -105,6 +140,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private String _contentCallback;
 	private String _curTags;
 	private boolean _focus;
+	private long[] _groupIds;
 	private String _hiddenInput = "assetTagNames";
 	private String _id;
 

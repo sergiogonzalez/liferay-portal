@@ -25,7 +25,8 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
-public class DelegatingQuerySuggester implements QuerySuggester {
+public abstract class BaseIndexSearcher
+	implements IndexSearcher, QuerySuggester {
 
 	public void setQuerySuggester(QuerySuggester querySuggester) {
 		_querySuggester = querySuggester;
@@ -74,8 +75,7 @@ public class DelegatingQuerySuggester implements QuerySuggester {
 		return _querySuggester.suggestKeywordQueries(searchContext, max);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		DelegatingQuerySuggester.class);
+	private static Log _log = LogFactoryUtil.getLog(BaseIndexSearcher.class);
 
 	private QuerySuggester _querySuggester;
 

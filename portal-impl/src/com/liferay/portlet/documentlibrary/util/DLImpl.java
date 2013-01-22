@@ -1084,8 +1084,7 @@ public class DLImpl implements DL {
 			ancestorFolderIds.add(groupId);
 		}
 
-		long[] folderIdsArray = ArrayUtil.toArray(
-			ArrayUtil.toLongArray(ancestorFolderIds.toArray()));
+		long[] folderIdsArray = ArrayUtil.toLongArray(ancestorFolderIds);
 
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId, Folder.class.getName(), folderIdsArray);

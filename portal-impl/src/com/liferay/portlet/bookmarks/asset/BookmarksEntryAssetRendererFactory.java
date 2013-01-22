@@ -35,8 +35,6 @@ import com.liferay.portlet.bookmarks.service.permission.BookmarksPermission;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Julio Camarero
  * @author Juan Fernández
@@ -72,11 +70,9 @@ public class BookmarksEntryAssetRendererFactory
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException, SystemException {
 
-		HttpServletRequest request =
-			liferayPortletRequest.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!BookmarksPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -86,8 +82,8 @@ public class BookmarksEntryAssetRendererFactory
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.BOOKMARKS, getControlPanelPlid(themeDisplay),
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, PortletKeys.BOOKMARKS,
+			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/bookmarks/edit_entry");
 		portletURL.setParameter(

@@ -96,8 +96,8 @@
 
 	<!-- Lucene search engine -->
 
-	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" class="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
-	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" class="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
+	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcher" class="com.liferay.portal.search.lucene.LuceneIndexSearcher" />
+	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriter" class="com.liferay.portal.search.lucene.LuceneIndexWriter" />
 	<bean id="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
 		<property name="booleanClauseFactory" >
 			<bean class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
@@ -111,8 +111,8 @@
 		<property name="clusteredWritePriority">
 			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
 		</property>
-		<property name="indexSearcher" ref="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
-		<property name="indexWriter" ref="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
+		<property name="indexSearcher" ref="com.liferay.portal.search.lucene.LuceneIndexSearcher" />
+		<property name="indexWriter" ref="com.liferay.portal.search.lucene.LuceneIndexWriter" />
 		<property name="luceneBased" value="true" />
 		<property name="termQueryFactory">
 			<bean class="com.liferay.portal.search.lucene.TermQueryFactoryImpl" />

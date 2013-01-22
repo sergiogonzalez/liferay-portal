@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
@@ -11,30 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.module.framework;
+<%@ include file="/html/portlet/document_library/init.jsp" %>
 
-import com.liferay.portal.kernel.exception.PortalException;
+<%
+int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
 
-/**
- * @author Brian Wing Shun Chan
- */
-public class ModuleFrameworkException extends PortalException {
+Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+%>
 
-	public ModuleFrameworkException() {
-		super();
-	}
-
-	public ModuleFrameworkException(String msg) {
-		super(msg);
-	}
-
-	public ModuleFrameworkException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public ModuleFrameworkException(Throwable cause) {
-		super(cause);
-	}
-
-}
+<p class="asset-description">
+	<%= HtmlUtil.escape(StringUtil.shorten(folder.getDescription(), abstractLength)) %>
+</p>
