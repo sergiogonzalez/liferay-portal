@@ -38,7 +38,8 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -60,8 +61,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Alexander Chow
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Before
@@ -336,8 +342,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 
-		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
-
 		_fileEntry = fileEntry;
 
 		search(_fileEntry, false, "hello", true);
@@ -356,8 +360,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
-
-		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		_fileEntry = fileEntry;
 
@@ -471,8 +473,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	protected void searchFile(boolean rootFolder) throws Exception {
 		FileEntry fileEntry = addFileEntry(rootFolder);
-
-		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		search(fileEntry, rootFolder, "title", true);
 		search(fileEntry, rootFolder, "content", true);

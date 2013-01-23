@@ -422,7 +422,9 @@ public abstract class BaseTrashHandlerTestCase {
 						getSearchKeywords(), serviceContext));
 			}
 
-			Assert.assertNull(fetchAssetEntry(baseModel));
+			if (isAssetableModel()) {
+				Assert.assertNull(fetchAssetEntry(baseModel));
+			}
 		}
 		else {
 			trashHandler.restoreTrashEntry(getTrashEntryClassPK(baseModel));
@@ -691,7 +693,9 @@ public abstract class BaseTrashHandlerTestCase {
 						getSearchKeywords(), serviceContext));
 			}
 
-			Assert.assertNull(fetchAssetEntry(baseModel));
+			if (isAssetableModel()) {
+				Assert.assertNull(fetchAssetEntry(baseModel));
+			}
 		}
 		else {
 			trashHandler.restoreTrashEntry(getTrashEntryClassPK(baseModel));
