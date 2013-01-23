@@ -238,6 +238,31 @@ public class AssetPublisherUtil {
 		assetEntryQuery.setAllCategoryIds(allCategoryIdsList.getArray());
 	}
 
+	public static void populateAssetEntryQuery(
+			AssetEntryQuery assetEntryQuery, long[] groupIds,
+			long assetCategoryId, String assetTagName,
+			boolean showOnlyLayoutAssets, Layout layout,
+			boolean enablePermissions)
+		throws PortalException, SystemException {
+
+		if (assetCategoryId > 0) {
+			assetEntryQuery.setAllCategoryIds(new long[] {assetCategoryId});
+		}
+
+		if (Validator.isNotNull(assetTagName)) {
+			long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+				groupIds, new String[] {assetTagName});
+
+			assetEntryQuery.setAnyTagIds(assetTagIds);
+		}
+
+		if (showOnlyLayoutAssets) {
+			assetEntryQuery.setLayout(layout);
+		}
+
+		assetEntryQuery.setEnablePermissions(enablePermissions);
+	}
+
 	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
 		throws Exception {
