@@ -22,7 +22,6 @@ import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
