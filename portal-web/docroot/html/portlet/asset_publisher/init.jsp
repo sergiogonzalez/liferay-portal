@@ -105,8 +105,6 @@ if (selectionStyle.equals("dynamic")) {
 
 	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(preferences, scopeGroupId);
 
-	assetEntryQuery.setClassTypeIds(classTypeIds);
-
 	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
 }
 

@@ -238,31 +238,6 @@ public class AssetPublisherUtil {
 		assetEntryQuery.setAllCategoryIds(allCategoryIdsList.getArray());
 	}
 
-	public static void populateAssetEntryQuery(
-			AssetEntryQuery assetEntryQuery, long[] groupIds,
-			long assetCategoryId, String assetTagName,
-			boolean showOnlyLayoutAssets, Layout layout,
-			boolean enablePermissions)
-		throws PortalException, SystemException {
-
-		if (assetCategoryId > 0) {
-			assetEntryQuery.setAllCategoryIds(new long[] {assetCategoryId});
-		}
-
-		if (Validator.isNotNull(assetTagName)) {
-			long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
-				groupIds, new String[] {assetTagName});
-
-			assetEntryQuery.setAnyTagIds(assetTagIds);
-		}
-
-		if (showOnlyLayoutAssets) {
-			assetEntryQuery.setLayout(layout);
-		}
-
-		assetEntryQuery.setEnablePermissions(enablePermissions);
-	}
-
 	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
 		throws Exception {
@@ -361,6 +336,11 @@ public class AssetPublisherUtil {
 			scopeGroupIds, notAnyAssetTagNames);
 
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
+
+		long[] classTypeIds = GetterUtil.getLongValues(
+			portletPreferences.getValues("classTypeIds", null));
+
+		assetEntryQuery.setClassTypeIds(classTypeIds);
 
 		return assetEntryQuery;
 	}
@@ -721,6 +701,46 @@ public class AssetPublisherUtil {
 			_getPortletPreferencesId(plid, portletId));
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	public static void populateAssetEntryQuery(
+			AssetEntryQuery assetEntryQuery, String portletName,
+			long[] groupIds, long assetCategoryId, String assetTagName,
+			boolean showOnlyLayoutAssets, Layout layout,
+			boolean enablePermissions, boolean excludeZeroViewCount,
+			long assetVocabularyId, long[] classNameIds)
+		throws PortalException, SystemException {
+
+		if (assetCategoryId > 0) {
+			assetEntryQuery.setAllCategoryIds(new long[] {assetCategoryId});
+		}
+
+		if (Validator.isNotNull(assetTagName)) {
+			long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+				groupIds, new String[] {assetTagName});
+
+			assetEntryQuery.setAnyTagIds(assetTagIds);
+		}
+
+		if (showOnlyLayoutAssets) {
+			assetEntryQuery.setLayout(layout);
+		}
+
+		assetEntryQuery.setEnablePermissions(enablePermissions);
+		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
+
+		if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
+			assetEntryQuery.setGroupIds(groupIds);
+		}
+
+		if (!portletName.equals(PortletKeys.RELATED_ASSETS) ||
+			(assetEntryQuery.getLinkedAssetEntryId() > 0)) {
+			assetEntryQuery.setClassNameIds(classNameIds);
+
+			if (assetVocabularyId > 0) {
+				assetEntryQuery.setClassNameIds(classNameIds);
+			}
+		}
 	}
 
 	public static void removeAndStoreSelection(
