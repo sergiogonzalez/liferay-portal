@@ -105,8 +105,6 @@ if (selectionStyle.equals("dynamic")) {
 
 	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(preferences, scopeGroupId);
 
-	assetEntryQuery.setClassTypeIds(classTypeIds);
-
 	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
 }
 
@@ -115,8 +113,6 @@ long assetVocabularyId = GetterUtil.getLong(preferences.getValue("assetVocabular
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 
 if (assetCategoryId > 0) {
-	assetEntryQuery.setAllCategoryIds(new long[] {assetCategoryId});
-
 	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
 
 	assetCategory = assetCategory.toEscapedModel();
@@ -131,19 +127,11 @@ String assetTagName = ParamUtil.getString(request, "tag");
 if (Validator.isNotNull(assetTagName)) {
 	allAssetTagNames = new String[] {assetTagName};
 
-	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, allAssetTagNames);
-
-	assetEntryQuery.setAnyTagIds(assetTagIds);
-
 	PortalUtil.setPageKeywords(assetTagName, request);
 }
 
 boolean showLinkedAssets = GetterUtil.getBoolean(preferences.getValue("showLinkedAssets", null), false);
 boolean showOnlyLayoutAssets = GetterUtil.getBoolean(preferences.getValue("showOnlyLayoutAssets", null));
-
-if (showOnlyLayoutAssets) {
-	assetEntryQuery.setLayout(layout);
-}
 
 if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
 	AssetEntry layoutAssetEntry = (AssetEntry)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
@@ -183,8 +171,6 @@ if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || (Validator.
 }
 
 boolean enablePermissions = GetterUtil.getBoolean(preferences.getValue("enablePermissions", null));
-
-assetEntryQuery.setEnablePermissions(enablePermissions);
 
 boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null));
