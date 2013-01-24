@@ -96,16 +96,7 @@ AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 String[] allAssetTagNames = new String[0];
 
 if (selectionStyle.equals("dynamic")) {
-	if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
-		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(preferences, ArrayUtil.append(groupIds, scopeGroupId));
-	}
-	else {
-		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(preferences, groupIds);
-	}
-
-	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(preferences, scopeGroupId);
-
-	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
+	assetEntryQuery = AssetPublisherUtil.initAssetEntryQuery(portletName, preferences, layout, themeDisplay);
 }
 
 long assetVocabularyId = GetterUtil.getLong(preferences.getValue("assetVocabularyId", StringPool.BLANK));
