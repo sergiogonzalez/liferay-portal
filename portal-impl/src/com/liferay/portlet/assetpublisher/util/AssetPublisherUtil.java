@@ -123,8 +123,8 @@ public class AssetPublisherUtil {
 			className, classPK);
 
 		addSelection(
-			className, assetEntry.getEntryId(), assetEntryOrder,
-			portletRequest, portletPreferences, referringPortletResource);
+			className, assetEntry.getEntryId(), assetEntryOrder, portletRequest,
+			portletPreferences, referringPortletResource);
 
 		portletPreferences.store();
 	}
@@ -756,12 +756,12 @@ public class AssetPublisherUtil {
 	}
 
 	public static void subscribe(
-			long userId, long groupId, long portletPreferencesId,
+			long userId, long groupId, long portletPreferencesId, long plid,
 			String portletId, PermissionChecker permissionChecker)
 		throws PortalException, SystemException {
 
 		PortletPermissionUtil.check(
-			permissionChecker, portletId, ActionKeys.SUBSCRIBE);
+			permissionChecker, plid, portletId, ActionKeys.SUBSCRIBE);
 
 		SubscriptionLocalServiceUtil.addSubscription(
 			userId, groupId,
@@ -770,12 +770,12 @@ public class AssetPublisherUtil {
 	}
 
 	public static void unsubscribe(
-			long userId, long portletPreferencesId, String portletId,
+			long userId, long portletPreferencesId, long plid, String portletId,
 			PermissionChecker permissionChecker)
 		throws PortalException, SystemException {
 
 		PortletPermissionUtil.check(
-			permissionChecker, portletId, ActionKeys.SUBSCRIBE);
+			permissionChecker, plid, portletId, ActionKeys.SUBSCRIBE);
 
 		SubscriptionLocalServiceUtil.deleteSubscription(
 			userId, com.liferay.portal.model.PortletPreferences.class.getName(),
