@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.search;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -53,7 +54,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	protected void addAttachment(ClassedModel classedModel) throws Exception {
 		WikiPage page = (WikiPage)classedModel;
 
-		String fileName = ServiceTestUtil.randomString() + ".txt";
+		String fileName = ServiceTestUtil.randomString() + ".docx";
 
 		Class<?> clazz = getClass();
 
@@ -66,9 +67,11 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 			file = FileUtil.createTempFile(bytes);
 		}
 
+		String mimeType = MimeTypesUtil.getContentTypeFromExtension("docx");
+
 		WikiPageLocalServiceUtil.addPageAttachment(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
-			fileName, file);
+			fileName, file, mimeType);
 	}
 
 	@Override
