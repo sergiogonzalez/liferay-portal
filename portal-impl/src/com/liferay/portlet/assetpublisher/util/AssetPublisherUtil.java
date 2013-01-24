@@ -186,18 +186,11 @@ public class AssetPublisherUtil {
 			plid = themeDisplay.getPlid();
 		}
 
-		boolean suscribed = isSubscribed(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(), plid,
-			portletId);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			AssetEntry.class.getName(), portletRequest);
 
-		if (suscribed) {
-			ServiceContext serviceContext =
-				ServiceContextFactory.getInstance(
-					AssetEntry.class.getName(), portletRequest);
-
-			AssetPublisherUtil.notifySubscribers(
-				plid, portletId, assetEntry, serviceContext);
-		}
+		AssetPublisherUtil.notifySubscribers(
+			plid, portletId, assetEntry, serviceContext);
 	}
 
 	public static void addUserAttributes(
