@@ -34,8 +34,6 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		assetEntryQuery.setClassNameIds(classNameIds);
-
 		for (AssetCategory assetCategory : assetCategories) {
 			assetCategory = assetCategory.toEscapedModel();
 
@@ -88,9 +86,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				}
 			}
 
-			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-			assetEntryQuery.setStart(QueryUtil.ALL_POS);
+			AssetPublisherUtil.resetAssetEntryQuery(assetEntryQuery, oldAllCategoryIds);
 		}
 
 		searchContainer.setTotal(total);
@@ -181,9 +177,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				}
 			}
 
-			assetEntryQuery.setClassNameIds(oldGroupClassNameIds);
-			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-			assetEntryQuery.setStart(QueryUtil.ALL_POS);
+			AssetPublisherUtil.resetAssetEntryQuery(assetEntryQuery, oldGroupClassNameIds);
 		}
 
 		searchContainer.setTotal(total);

@@ -55,6 +55,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -197,7 +198,7 @@ public class AssetPublisherUtil {
 	public static void addUserAttributes(
 			User user, String[] customUserAttributeNames,
 			AssetEntryQuery assetEntryQuery)
-		throws Exception {
+		throws SystemException, PortalException {
 
 		if ((user == null) || (customUserAttributeNames.length == 0)) {
 			return;
@@ -240,7 +241,7 @@ public class AssetPublisherUtil {
 
 	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -647,6 +648,69 @@ public class AssetPublisherUtil {
 		return key;
 	}
 
+	public static AssetEntryQuery initAssetEntryQuery(
+			String portletName, PortletPreferences preferences,
+			Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		long layoutGroupId = layout.getGroupId();
+
+		long[] groupIds = AssetPublisherUtil.getGroupIds(
+			preferences, layoutGroupId, layout);
+
+		if (Validator.isNotNull(themeDisplay)) {
+			long scopeGroupId = themeDisplay.getScopeGroupId();
+
+			if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
+				groupIds =  ArrayUtil.append(groupIds, scopeGroupId);
+			}
+		}
+
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+			preferences, groupIds);
+
+		if (Validator.isNotNull(themeDisplay)) {
+			String customUserAttributes = GetterUtil.getString(
+				preferences.getValue("customUserAttributes", StringPool.BLANK));
+			User user = themeDisplay.getUser();
+
+			AssetPublisherUtil.addUserAttributes(
+				user, StringUtil.split(customUserAttributes), assetEntryQuery);
+		}
+
+		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
+			preferences.getValue("showOnlyLayoutAssets", null));
+		boolean enablePermissions = GetterUtil.getBoolean(
+			preferences.getValue("enablePermissions", null));
+		boolean excludeZeroViewCount = GetterUtil.getBoolean(
+			preferences.getValue("excludeZeroViewCount", null));
+		long assetVocabularyId = GetterUtil.getLong(
+			preferences.getValue("assetVocabularyId", StringPool.BLANK));
+		long[] availableClassNameIds =
+			AssetRendererFactoryRegistryUtil.getClassNameIds();
+		for (long classNameId : availableClassNameIds) {
+			AssetRendererFactory assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						PortalUtil.getClassName(classNameId));
+
+			if (!assetRendererFactory.isSelectable()) {
+				availableClassNameIds = ArrayUtil.remove(
+					availableClassNameIds, classNameId);
+			}
+		}
+
+		long[] classNameIds = AssetPublisherUtil.getClassNameIds(
+			preferences, availableClassNameIds);
+
+		populateAssetEntryQuery(
+			assetEntryQuery, portletName, groupIds, 0, StringPool.BLANK,
+			showOnlyLayoutAssets, layout, enablePermissions,
+			excludeZeroViewCount, assetVocabularyId, classNameIds);
+
+		return assetEntryQuery;
+	}
+
 	public static boolean isSubscribed(
 			long companyId, long userId, long plid, String portletId)
 		throws PortalException, SystemException {
@@ -785,6 +849,15 @@ public class AssetPublisherUtil {
 		if (getRecentFolderId(portletRequest, className) == classPK) {
 			_getRecentFolderIds(portletRequest).remove(className);
 		}
+	}
+
+	public static void resetAssetEntryQuery(
+			AssetEntryQuery assetEntryQuery, long[]oldGroupClassNameIds)
+		throws PortalException, SystemException {
+
+		assetEntryQuery.setClassNameIds(oldGroupClassNameIds);
+		assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+		assetEntryQuery.setStart(QueryUtil.ALL_POS);
 	}
 
 	public static void subscribe(
