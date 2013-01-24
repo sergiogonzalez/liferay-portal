@@ -672,12 +672,14 @@ public class AssetPublisherUtil {
 			PortletPreferencesFactoryUtil.fromDefaultXML(
 				portletPreferences.getPreferences());
 
+		if (!getEmailAssetEntryAddedEnabled(preferences)) {
+			return;
+		}
+
 		String fromName = getEmailFromName(
 			preferences, assetEntry.getCompanyId());
 		String fromAddress = getEmailFromAddress(
 			preferences, assetEntry.getCompanyId());
-
-		getEmailAssetEntryAddedEnabled(preferences);
 
 		Map<Locale, String> localizedSubjectMap =
 			getEmailAssetEntryAddedSubjectMap(preferences);
