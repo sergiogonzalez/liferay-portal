@@ -45,6 +45,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -123,7 +124,7 @@ public class AssetPublisherUtil {
 
 		addSelection(
 			className, assetEntry.getEntryId(), assetEntryOrder,
-			portletPreferences, portletRequest, referringPortletResource);
+			portletRequest, portletPreferences, referringPortletResource);
 
 		portletPreferences.store();
 	}
@@ -146,14 +147,14 @@ public class AssetPublisherUtil {
 			portletRequest, "assetEntryOrder");
 
 		addSelection(
-			assetEntryType, assetEntryId, assetEntryOrder, portletPreferences,
-			portletRequest, portletId);
+			assetEntryType, assetEntryId, assetEntryOrder, portletRequest,
+			portletPreferences, portletId);
 	}
 
 	public static void addSelection(
 			String assetEntryType, long assetEntryId, int assetEntryOrder,
-			PortletPreferences portletPreferences,
-			PortletRequest portletRequest, String portletId)
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences, String portletId)
 		throws Exception {
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
@@ -663,14 +664,8 @@ public class AssetPublisherUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		com.liferay.portal.model.PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
-
 		PortletPreferences preferences =
-			PortletPreferencesFactoryUtil.fromDefaultXML(
-				portletPreferences.getPreferences());
+			ServiceContextUtil.getPortletPreferences(serviceContext);
 
 		if (!getEmailAssetEntryAddedEnabled(preferences)) {
 			return;
@@ -703,6 +698,11 @@ public class AssetPublisherUtil {
 		subscriptionSender.setScopeGroupId(assetEntry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUserId(assetEntry.getUserId());
+
+		com.liferay.portal.model.PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
 
 		subscriptionSender.addPersistedSubscribers(
 			com.liferay.portal.model.PortletPreferences.class.getName(),
