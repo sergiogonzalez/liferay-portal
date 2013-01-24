@@ -686,19 +686,12 @@ public class AssetPublisherUtil {
 		Map<Locale, String> localizedBodyMap = getEmailAssetEntryAddedBodyMap(
 			preferences);
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getDefault());
-
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setCompanyId(assetEntry.getCompanyId());
 
-		String portletSetupTitle = preferences.getValue(
-			"portletSetupTitle_" + defaultLanguageId, StringPool.BLANK);
-
 		subscriptionSender.setContextAttributes(
-			"[$PORTLET_TITLE$]", portletSetupTitle, "[$ASSET_ENTRIES$]",
-			assetEntry.getTitle(Locale.getDefault()));
+			"[$ASSET_ENTRIES$]", assetEntry.getTitle(Locale.getDefault()));
 		subscriptionSender.setContextUserPrefix("ASSET_PUBLISHER");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
