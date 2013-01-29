@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.MembershipException;
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
 import com.liferay.portal.UserEmailAddressException;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Address;
@@ -40,6 +42,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -58,6 +62,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -119,6 +124,28 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			if (!hasPermission) {
 				throw new PrincipalException();
 			}
+		}
+
+		// Membership policy
+
+		List<User> errorUsers = new ArrayList<User>();
+
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		for (long userId : userIds) {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			if (!membershipPolicy.isMembershipAllowed(group, user)) {
+				errorUsers.add(user);
+			}
+		}
+
+		if (!errorUsers.isEmpty()) {
+			throw new MembershipException(
+				MembershipException.MEMBERSHIP_NOT_ALLOWED, group, errorUsers);
 		}
 
 		userLocalService.addGroupUsers(groupId, userIds);
@@ -1051,6 +1078,33 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			if (!hasPermission) {
 				throw new PrincipalException();
 			}
+		}
+
+		// Membership policy
+
+		List<User> errorUsers = new ArrayList<User>();
+
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		for (long userId : userIds) {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			List<Group> mandatorySites = membershipPolicy.getMandatorySites(
+				user);
+
+			if (Validator.isNotNull(mandatorySites) &&
+				mandatorySites.contains(group)) {
+
+				errorUsers.add(user);
+			}
+		}
+
+		if (!errorUsers.isEmpty()) {
+			throw new MembershipException(
+				MembershipException.MEMBERSHIP_MANDATORY, group, errorUsers);
 		}
 
 		userLocalService.unsetGroupUsers(groupId, userIds, serviceContext);
