@@ -254,8 +254,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), inputStream, fileName,
-			mimeType);
+			page.getAttachmentsFolderId(), inputStream, fileName, mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -344,13 +343,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			groupPermissions, guestPermissions);
 	}
 
-	public String addTempPageAttachment(
-			long userId, String fileName, String tempFolderName,
-			InputStream inputStream)
+	public void addTempPageAttachment(
+			long groupId, long userId, String fileName, String tempFolderName,
+			InputStream inputStream, String mimeType)
 		throws PortalException, SystemException {
 
-		return TempFileUtil.addTempFile(
-			userId, fileName, tempFolderName, inputStream);
+		TempFileUtil.addTempFile(
+			groupId, userId, fileName, tempFolderName, inputStream, mimeType);
 	}
 
 	public void changeParent(
@@ -561,10 +560,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	public void deleteTempPageAttachment(
-			long userId, String fileName, String tempFolderName)
+			long groupId, long userId, String fileName, String tempFolderName)
 		throws PortalException, SystemException {
 
-		TempFileUtil.deleteTempFile(userId, fileName, tempFolderName);
+		TempFileUtil.deleteTempFile(groupId, userId, fileName, tempFolderName);
 	}
 
 	public void deleteTrashPageAttachments(long nodeId, String title)
@@ -976,9 +975,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	public String[] getTempPageAttachmentNames(
-		long userId, String tempFolderName) {
+			long groupId, long userId, String tempFolderName)
+		throws PortalException, SystemException {
 
-		return TempFileUtil.getTempFileEntryNames(userId, tempFolderName);
+		return TempFileUtil.getTempFileEntryNames(
+			groupId, userId, tempFolderName);
 	}
 
 	public boolean hasDraftPage(long nodeId, String title)
