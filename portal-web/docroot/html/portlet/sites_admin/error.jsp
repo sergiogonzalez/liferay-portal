@@ -25,3 +25,46 @@
 <liferay-ui:error exception="<%= NoSuchLayoutException.class %>" message="the-page-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchRoleException.class %>" message="the-role-could-not-be-found" />
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
+<%
+PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+%>
+
+<c:if test="<%= SessionErrors.contains(portletRequest, MembershipException.class.getName()) %>">
+
+	<%
+	MembershipException me = (MembershipException)SessionErrors.get(portletRequest, MembershipException.class.getName());
+
+	Group group = me.getGroup();
+
+	List<User> errorUsers = me.getErrorUsers();
+	%>
+
+	<div class="portlet-msg-error">
+		<c:choose>
+			<c:when test="<%= errorUsers.size() == 1 %>">
+
+				<%
+				User errorUser = errorUsers.get(0);
+				%>
+
+				<c:if test="<%= me.getType() == MembershipException.MEMBERSHIP_MANDATORY %>">
+					<liferay-ui:message arguments="<%= new Object[] {errorUser.getFullName(), group.getDescriptiveName(locale)} %>" key="user-x-is-not-allowed-to-leave-site-x" />
+				</c:if>
+
+				<c:if test="<%= me.getType() == MembershipException.MEMBERSHIP_NOT_ALLOWED %>">
+					<liferay-ui:message arguments="<%= new Object[] {errorUser.getFullName(), group.getDescriptiveName(locale)} %>" key="user-x-is-not-allowed-to-join-site-x" />
+				</c:if>
+			</c:when>
+			<c:otherwise>
+				<c:if test="<%= me.getType() == MembershipException.MEMBERSHIP_MANDATORY %>">
+					<liferay-ui:message arguments='<%= new Object[] {group.getDescriptiveName(locale), ListUtil.toString(errorUsers, "fullName", StringPool.COMMA_AND_SPACE)} %>' key="the-following-users-are-not-allowed-to-leave-site-x-x" />
+				</c:if>
+
+				<c:if test="<%= me.getType() == MembershipException.MEMBERSHIP_NOT_ALLOWED %>">
+					<liferay-ui:message arguments='<%= new Object[] {group.getDescriptiveName(locale), ListUtil.toString(errorUsers, "fullName", StringPool.COMMA_AND_SPACE)} %>' key="the-following-users-are-not-allowed-to-join-site-x-x" />
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</c:if>

@@ -22,6 +22,7 @@ page import="com.liferay.portal.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.GroupNameException" %><%@
 page import="com.liferay.portal.LayoutSetVirtualHostException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
+page import="com.liferay.portal.MembershipException" %><%@
 page import="com.liferay.portal.MembershipRequestCommentsException" %><%@
 page import="com.liferay.portal.NoSuchGroupException" %><%@
 page import="com.liferay.portal.NoSuchLayoutException" %><%@
