@@ -248,7 +248,7 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 
 					WikiPageLocalServiceUtil.addPageAttachment(
 						userId, importedPage.getNodeId(),
-						importedPage.getTitle(), name, inputStream);
+						importedPage.getTitle(), name, inputStream, null);
 				}
 				finally {
 					StreamUtil.cleanUp(inputStream);

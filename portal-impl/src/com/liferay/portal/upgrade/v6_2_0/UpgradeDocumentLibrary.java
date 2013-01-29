@@ -12,31 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.upgrade.v6_2_0;
 
-import java.io.File;
-import java.io.InputStream;
-
-import java.util.Set;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 /**
- * @author Jorge Ferrer
- * @author Brian Wing Shun Chan
+ * @author Alexander Chow
  */
-public interface MimeTypes {
+public class UpgradeDocumentLibrary extends UpgradeProcess {
 
-	public String getContentType(File file);
+	@Override
+	protected void doUpgrade() throws Exception {
+		updateTempFiles();
+	}
 
-	public String getContentType(File file, String fileName);
-
-	public String getContentType(InputStream inputStream, String fileName);
-
-	public String getContentType(String fileName);
-
-	public String getContentTypeFromExtension(String extension);
-
-	public Set<String> getExtensions(String contentType);
-
-	public boolean isWebImage(String mimeType);
+	protected void updateTempFiles() {
+		try {
+			DLStoreUtil.deleteDirectory(0, 0, "liferay_temp/");
+		}
+		catch (Exception e) {
+		}
+	}
 
 }
