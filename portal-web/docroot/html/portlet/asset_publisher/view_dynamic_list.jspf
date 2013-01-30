@@ -18,11 +18,6 @@
 int end = searchContainer.getEnd();
 int start = searchContainer.getStart();
 
-if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
-	assetEntryQuery.setGroupIds(groupIds);
-}
-
-assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
 assetEntryQuery.setOrderByCol1(orderByColumn1);
 assetEntryQuery.setOrderByCol2(orderByColumn2);
 assetEntryQuery.setOrderByType1(orderByType1);
@@ -37,16 +32,12 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		assetEntryQuery.setClassNameIds(classNameIds);
-
 		for (AssetCategory assetCategory : assetCategories) {
 			assetCategory = assetCategory.toEscapedModel();
 
 			long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
 
 			long[] newAllAssetCategoryIds = ArrayUtil.append(oldAllCategoryIds, assetCategory.getCategoryId());
-
-			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
 
 			int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
@@ -93,9 +84,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				}
 			}
 
-			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-			assetEntryQuery.setStart(QueryUtil.ALL_POS);
+			AssetPublisherUtil.resetAssetEntryQuery(assetEntryQuery, oldAllCategoryIds);
 		}
 
 		searchContainer.setTotal(total);
@@ -186,9 +175,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				}
 			}
 
-			assetEntryQuery.setClassNameIds(oldGroupClassNameIds);
-			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-			assetEntryQuery.setStart(QueryUtil.ALL_POS);
+			AssetPublisherUtil.resetAssetEntryQuery(assetEntryQuery, oldGroupClassNameIds);
 		}
 
 		searchContainer.setTotal(total);
