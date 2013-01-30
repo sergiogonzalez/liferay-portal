@@ -21,10 +21,10 @@ import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 /**
  * @author Roberto Díaz
  */
-public class AssetPublisherNotificationListener	extends BaseMessageListener {
+public class AssetPublisherNotificationListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		//TODO: create cron logic
+		AssetPublisherUtil.assetPublisherNotifier();
 	}
 }
