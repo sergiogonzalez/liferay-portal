@@ -648,19 +648,19 @@ public class AssetPublisherUtil {
 		return key;
 	}
 
-	public static AssetEntryQuery initAssetEntryQuery(
-			String portletName, PortletPreferences preferences, Layout layout,
-			ThemeDisplay themeDisplay)
+
+
+	public static AssetEntryQuery initDynamicAssetEntryQuery(
+			PortletPreferences preferences, Layout layout,
+			ThemeDisplay themeDisplay, String portletName)
 		throws PortalException, SystemException {
 
-		long layoutGroupId = layout.getGroupId();
+		long scopeGroupId = themeDisplay.getScopeGroupId();
 
 		long[] groupIds = AssetPublisherUtil.getGroupIds(
-			preferences, layoutGroupId, layout);
+			preferences, scopeGroupId, layout);
 
 		if (Validator.isNotNull(themeDisplay)) {
-			long scopeGroupId = themeDisplay.getScopeGroupId();
-
 			if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
 				groupIds = ArrayUtil.append(groupIds, scopeGroupId);
 			}
@@ -672,41 +672,20 @@ public class AssetPublisherUtil {
 		if (Validator.isNotNull(themeDisplay)) {
 			String customUserAttributes = GetterUtil.getString(
 				preferences.getValue("customUserAttributes", StringPool.BLANK));
-			User user = themeDisplay.getUser();
 
 			AssetPublisherUtil.addUserAttributes(
-				user, StringUtil.split(customUserAttributes), assetEntryQuery);
+				themeDisplay.getUser(), StringUtil.split(customUserAttributes),
+				assetEntryQuery);
 		}
 
-		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
-			preferences.getValue("showOnlyLayoutAssets", null));
-		boolean enablePermissions = GetterUtil.getBoolean(
-			preferences.getValue("enablePermissions", null));
 		boolean excludeZeroViewCount = GetterUtil.getBoolean(
 			preferences.getValue("excludeZeroViewCount", null));
-		long assetVocabularyId = GetterUtil.getLong(
-			preferences.getValue("assetVocabularyId", StringPool.BLANK));
-		long[] availableClassNameIds =
-			AssetRendererFactoryRegistryUtil.getClassNameIds();
-		for (long classNameId : availableClassNameIds) {
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						PortalUtil.getClassName(classNameId));
 
-			if (!assetRendererFactory.isSelectable()) {
-				availableClassNameIds = ArrayUtil.remove(
-					availableClassNameIds, classNameId);
-			}
+		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
+
+		if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
+			assetEntryQuery.setGroupIds(groupIds);
 		}
-
-		long[] classNameIds = AssetPublisherUtil.getClassNameIds(
-			preferences, availableClassNameIds);
-
-		populateAssetEntryQuery(
-			assetEntryQuery, portletName, groupIds, 0, StringPool.BLANK,
-			showOnlyLayoutAssets, layout, enablePermissions,
-			excludeZeroViewCount, assetVocabularyId, classNameIds);
 
 		return assetEntryQuery;
 	}
@@ -768,11 +747,11 @@ public class AssetPublisherUtil {
 	}
 
 	public static void populateAssetEntryQuery(
-			AssetEntryQuery assetEntryQuery, String portletName,
-			long[] groupIds, long assetCategoryId, String assetTagName,
+			AssetEntryQuery assetEntryQuery, long[] groupIds,
+			long assetCategoryId, String assetTagName,
 			boolean showOnlyLayoutAssets, Layout layout,
-			boolean enablePermissions, boolean excludeZeroViewCount,
-			long assetVocabularyId, long[] classNameIds)
+			boolean enablePermissions, AssetEntry layoutAssetEntry,
+			String portletName)
 		throws PortalException, SystemException {
 
 		if (assetCategoryId > 0) {
@@ -791,18 +770,11 @@ public class AssetPublisherUtil {
 		}
 
 		assetEntryQuery.setEnablePermissions(enablePermissions);
-		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
 
-		if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
-			assetEntryQuery.setGroupIds(groupIds);
-		}
-
-		if (!portletName.equals(PortletKeys.RELATED_ASSETS) ||
-			(assetEntryQuery.getLinkedAssetEntryId() > 0)) {
-			assetEntryQuery.setClassNameIds(classNameIds);
-
-			if (assetVocabularyId > 0) {
-				assetEntryQuery.setClassNameIds(classNameIds);
+		if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
+			if (layoutAssetEntry != null) {
+				assetEntryQuery.setLinkedAssetEntryId(
+					layoutAssetEntry.getEntryId());
 			}
 		}
 	}
@@ -852,7 +824,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static void resetAssetEntryQuery(
-			AssetEntryQuery assetEntryQuery, long[]oldGroupClassNameIds)
+			AssetEntryQuery assetEntryQuery, long[] oldGroupClassNameIds)
 		throws PortalException, SystemException {
 
 		assetEntryQuery.setClassNameIds(oldGroupClassNameIds);

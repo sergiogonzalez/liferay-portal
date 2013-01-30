@@ -32,12 +32,16 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
+		assetEntryQuery.setClassNameIds(classNameIds);
+
 		for (AssetCategory assetCategory : assetCategories) {
 			assetCategory = assetCategory.toEscapedModel();
 
 			long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
 
 			long[] newAllAssetCategoryIds = ArrayUtil.append(oldAllCategoryIds, assetCategory.getCategoryId());
+
+			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
 
 			int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
