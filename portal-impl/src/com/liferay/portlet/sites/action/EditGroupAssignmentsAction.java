@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.sites.action;
 
+import com.liferay.portal.MembershipException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -92,10 +93,11 @@ public class EditGroupAssignmentsAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
+			if (e instanceof MembershipException ||
+				e instanceof NoSuchGroupException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				setForward(actionRequest, "portlet.sites_admin.error");
 			}

@@ -160,6 +160,18 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 %>
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
+<liferay-ui:error exception="<%= MembershipException.class %>">
+
+	<%
+	MembershipException me = (MembershipException)errorException;
+
+	Group group = me.getGroup();
+
+	List<User> errorUsers = me.getErrorUsers();
+	%>
+
+	<liferay-ui:message arguments="<%= new Object[] {errorUsers.get(0).getFullName(), group.getDescriptiveName(locale)} %>" key="x-is-not-allowed-to-join-x" />
+</liferay-ui:error>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 	<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">
