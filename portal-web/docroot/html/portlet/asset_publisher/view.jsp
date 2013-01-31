@@ -96,39 +96,40 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	%>
 
 </c:if>
+<c:if test="<%= AssetPublisherUtil.getEmailAssetEntryAddedEnabled(portletPreferences) %>" >
+	<div class="subscribe-action">
+		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), ActionKeys.SUBSCRIBE) %>">
+			<c:choose>
+				<c:when test="<%= AssetPublisherUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
+					<portlet:actionURL var="unsubscribeURL">
+						<portlet:param name="struts_action" value="/asset_publisher/edit_subscription" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
 
-<div class="subscribe-action">
-	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), ActionKeys.SUBSCRIBE) %>">
-		<c:choose>
-			<c:when test="<%= AssetPublisherUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
-				<portlet:actionURL var="unsubscribeURL">
-					<portlet:param name="struts_action" value="/asset_publisher/edit_subscription" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
+					<liferay-ui:icon
+						image="unsubscribe"
+						label="<%= true %>"
+						url="<%= unsubscribeURL %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<portlet:actionURL var="subscribeURL">
+						<portlet:param name="struts_action" value="/asset_publisher/edit_subscription" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
 
-				<liferay-ui:icon
-					image="unsubscribe"
-					label="<%= true %>"
-					url="<%= unsubscribeURL %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="/asset_publisher/edit_subscription" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					image="subscribe"
-					label="<%= true %>"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-</div>
+					<liferay-ui:icon
+						image="subscribe"
+						label="<%= true %>"
+						url="<%= subscribeURL %>"
+					/>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
+	</div>
+</c:if>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();

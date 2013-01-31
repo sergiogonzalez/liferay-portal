@@ -24,9 +24,18 @@ import com.liferay.portal.model.StagedModel;
 public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	implements StagedModelDataHandler<T> {
 
-	public void exportModelData(
-			T stagedModel, PortletDataContext portletDataContext,
-			Element... elements)
+	public void exportStagedModel(
+			PortletDataContext portletDataContext, Element element,
+			T stagedModel)
+		throws PortletDataException {
+
+		exportStagedModel(
+			portletDataContext, new Element[] {element}, stagedModel);
+	}
+
+	public void exportStagedModel(
+			PortletDataContext portletDataContext, Element[] elements,
+			T stagedModel)
 		throws PortletDataException {
 
 		String path = StagedModelPathUtil.getPath(stagedModel);
@@ -36,7 +45,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 
 		try {
-			doExportModelData(stagedModel, portletDataContext, elements);
+			doExportStagedModel(portletDataContext, elements, stagedModel);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -45,20 +54,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	public abstract String getClassName();
 
-	public void importModelData(
-			Element stagedModelElement, PortletDataContext portletDataContext)
-		throws PortletDataException {
-
-		String path = stagedModelElement.attributeValue("path");
-
-		T stagedModel = (T)portletDataContext.getZipEntryAsObject(
-			stagedModelElement, path);
-
-		importModelData(stagedModel, path, portletDataContext);
-	}
-
-	public void importModelData(
-			T stagedModel, String path, PortletDataContext portletDataContext)
+	public void importStagedModel(
+			PortletDataContext portletDataContext, String path, T stagedModel)
 		throws PortletDataException {
 
 		if (portletDataContext.isPathProcessed(path)) {
@@ -66,20 +63,20 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 
 		try {
-			doImportModelData(stagedModel, path, portletDataContext);
+			doImportStagedModel(portletDataContext, path, stagedModel);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
 	}
 
-	protected abstract void doExportModelData(
-			T stagedModel, PortletDataContext portletDataContext,
-			Element... elements)
+	protected abstract void doExportStagedModel(
+			PortletDataContext portletDataContext, Element[] elements,
+			T stagedModel)
 		throws Exception;
 
-	protected abstract void doImportModelData(
-			T stagedModel, String path, PortletDataContext portletDataContext)
+	protected abstract void doImportStagedModel(
+			PortletDataContext portletDataContext, String path, T stagedModel)
 		throws Exception;
 
 }
