@@ -55,7 +55,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -648,8 +647,6 @@ public class AssetPublisherUtil {
 		return key;
 	}
 
-
-
 	public static AssetEntryQuery initDynamicAssetEntryQuery(
 			PortletPreferences preferences, Layout layout,
 			ThemeDisplay themeDisplay, String portletName)
@@ -660,7 +657,7 @@ public class AssetPublisherUtil {
 		long[] groupIds = AssetPublisherUtil.getGroupIds(
 			preferences, scopeGroupId, layout);
 
-		if (Validator.isNotNull(themeDisplay)) {
+		if (themeDisplay != null) {
 			if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
 				groupIds = ArrayUtil.append(groupIds, scopeGroupId);
 			}
@@ -669,7 +666,7 @@ public class AssetPublisherUtil {
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			preferences, groupIds);
 
-		if (Validator.isNotNull(themeDisplay)) {
+		if (themeDisplay != null) {
 			String customUserAttributes = GetterUtil.getString(
 				preferences.getValue("customUserAttributes", StringPool.BLANK));
 
