@@ -197,7 +197,7 @@ public class AssetPublisherUtil {
 	public static void addUserAttributes(
 			User user, String[] customUserAttributeNames,
 			AssetEntryQuery assetEntryQuery)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		if ((user == null) || (customUserAttributeNames.length == 0)) {
 			return;
@@ -240,7 +240,7 @@ public class AssetPublisherUtil {
 
 	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -336,6 +336,11 @@ public class AssetPublisherUtil {
 			scopeGroupIds, notAnyAssetTagNames);
 
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
+
+		long[] classTypeIds = GetterUtil.getLongValues(
+			portletPreferences.getValues("classTypeIds", null));
+
+		assetEntryQuery.setClassTypeIds(classTypeIds);
 
 		return assetEntryQuery;
 	}
@@ -642,6 +647,46 @@ public class AssetPublisherUtil {
 		return key;
 	}
 
+	public static AssetEntryQuery initDynamicAssetEntryQuery(
+			PortletPreferences preferences, Layout layout,
+			ThemeDisplay themeDisplay, String portletName)
+		throws PortalException, SystemException {
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		long[] groupIds = AssetPublisherUtil.getGroupIds(
+			preferences, scopeGroupId, layout);
+
+		if (themeDisplay != null) {
+			if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
+				groupIds = ArrayUtil.append(groupIds, scopeGroupId);
+			}
+		}
+
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+			preferences, groupIds);
+
+		if (themeDisplay != null) {
+			String customUserAttributes = GetterUtil.getString(
+				preferences.getValue("customUserAttributes", StringPool.BLANK));
+
+			AssetPublisherUtil.addUserAttributes(
+				themeDisplay.getUser(), StringUtil.split(customUserAttributes),
+				assetEntryQuery);
+		}
+
+		boolean excludeZeroViewCount = GetterUtil.getBoolean(
+			preferences.getValue("excludeZeroViewCount", null));
+
+		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
+
+		if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
+			assetEntryQuery.setGroupIds(groupIds);
+		}
+
+		return assetEntryQuery;
+	}
+
 	public static boolean isSubscribed(
 			long companyId, long userId, long plid, String portletId)
 		throws PortalException, SystemException {
@@ -698,6 +743,39 @@ public class AssetPublisherUtil {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
+	public static void populateAssetEntryQuery(
+			AssetEntryQuery assetEntryQuery, long[] groupIds,
+			long assetCategoryId, String assetTagName,
+			boolean showOnlyLayoutAssets, Layout layout,
+			boolean enablePermissions, AssetEntry layoutAssetEntry,
+			String portletName)
+		throws PortalException, SystemException {
+
+		if (assetCategoryId > 0) {
+			assetEntryQuery.setAllCategoryIds(new long[] {assetCategoryId});
+		}
+
+		if (Validator.isNotNull(assetTagName)) {
+			long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+				groupIds, new String[] {assetTagName});
+
+			assetEntryQuery.setAnyTagIds(assetTagIds);
+		}
+
+		if (showOnlyLayoutAssets) {
+			assetEntryQuery.setLayout(layout);
+		}
+
+		assetEntryQuery.setEnablePermissions(enablePermissions);
+
+		if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
+			if (layoutAssetEntry != null) {
+				assetEntryQuery.setLinkedAssetEntryId(
+					layoutAssetEntry.getEntryId());
+			}
+		}
+	}
+
 	public static void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
@@ -740,6 +818,15 @@ public class AssetPublisherUtil {
 		if (getRecentFolderId(portletRequest, className) == classPK) {
 			_getRecentFolderIds(portletRequest).remove(className);
 		}
+	}
+
+	public static void resetAssetEntryQuery(
+			AssetEntryQuery assetEntryQuery, long[] oldGroupClassNameIds)
+		throws PortalException, SystemException {
+
+		assetEntryQuery.setClassNameIds(oldGroupClassNameIds);
+		assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+		assetEntryQuery.setStart(QueryUtil.ALL_POS);
 	}
 
 	public static void subscribe(
