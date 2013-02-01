@@ -12,29 +12,40 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal;
 
-import com.liferay.portal.model.Group;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 
 import java.util.List;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public interface MembershipPolicy {
+public class RoleMembershipException extends PortalException {
 
-	public static final int ROLE_FORBIDDEN = 2;
+	public RoleMembershipException(
+		int type, List<Role> errorRoles, List<User> errorUsers) {
+		_errorUsers = errorUsers;
+		_errorRoles = errorRoles;
+		_type = type;
+	}
 
-	public static final int ROLE_MANDATORY = 1;
+	public List<Role> getErrorRoles() {
+		return _errorRoles;
+	}
 
-	public List<Role> getForbiddenRoles(Group group, User user);
+	public List<User> getErrorUsers() {
+		return _errorUsers;
+	}
 
-	public List<Group> getMandatoryGroups(User user);
+	public int getType() {
+		return _type;
+	}
 
-	public List<Role> getMandatoryRoles(Group group, User user);
-
-	public boolean isMembershipAllowed(Group group, User user);
+	private List<Role> _errorRoles;
+	private List<User> _errorUsers;
+	private int _type;
 
 }
