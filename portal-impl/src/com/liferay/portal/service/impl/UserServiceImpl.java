@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
+import com.liferay.portal.RoleMembershipException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -40,6 +42,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -58,6 +62,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -1928,25 +1933,41 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any user group roles that the administrator does not
 			// have the rights to remove and check that he has the permission to
 			// add a new user group role
 
+			List<Role> mandatoryRoles =
+				membershipPolicy.getMandatoryRoles(user.getGroup(), user);
+
 			oldUserGroupRoles = userGroupRoleLocalService.getUserGroupRoles(
 				userId);
 
 			for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
+				Role role = oldUserGroupRole.getRole();
+
 				if (!userGroupRoles.contains(oldUserGroupRole) &&
 					!UserGroupRolePermissionUtil.contains(
 						permissionChecker, oldUserGroupRole.getGroupId(),
-						oldUserGroupRole.getRoleId())) {
+						oldUserGroupRole.getRoleId()) ||
+					mandatoryRoles.contains(role)) {
 
 					userGroupRoles.add(oldUserGroupRole);
 				}
 			}
 		}
+
+		List<Role>forbiddenRoles =
+			membershipPolicy.getForbiddenRoles(user.getGroup(), user);
+
+		List<Role> errorRoles = new ArrayList<Role>();
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
 			if ((oldUserGroupRoles == null) ||
@@ -1955,7 +1976,19 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				UserGroupRolePermissionUtil.check(
 					permissionChecker, userGroupRole.getGroupId(),
 					userGroupRole.getRoleId());
+
+				Role role = userGroupRole.getRole();
+
+				if (forbiddenRoles.contains(role)) {
+					errorRoles.add(role);
+				}
 			}
+		}
+
+		if (!errorRoles.isEmpty()) {
+			throw new RoleMembershipException(
+				MembershipPolicy.ROLE_FORBIDDEN, errorRoles,
+				ListUtil.toList(new User[]{user}));
 		}
 
 		return userGroupRoles;

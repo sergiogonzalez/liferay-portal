@@ -14,10 +14,18 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.RoleMembershipException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.service.base.UserGroupRoleServiceBaseImpl;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -32,6 +40,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				getPermissionChecker(), groupId, roleId);
 		}
 
+		// Membership policy
+
+		_inspectMembershipPolicy(
+			new long[] {userId}, roleIds, MembershipPolicy.ROLE_FORBIDDEN );
+
 		userGroupRoleLocalService.addUserGroupRoles(userId, groupId, roleIds);
 	}
 
@@ -40,6 +53,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
+
+		// Membership policy
+
+		_inspectMembershipPolicy(
+			userIds, new long[] {roleId}, MembershipPolicy.ROLE_FORBIDDEN );
 
 		userGroupRoleLocalService.addUserGroupRoles(userIds, groupId, roleId);
 	}
@@ -52,6 +70,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				getPermissionChecker(), groupId, roleId);
 		}
 
+		// Membership policy
+
+		_inspectMembershipPolicy(
+			new long[] {userId}, roleIds, MembershipPolicy.ROLE_MANDATORY );
+
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userId, groupId, roleIds);
 	}
@@ -62,8 +85,52 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
+		// Membership policy
+
+		_inspectMembershipPolicy(
+			userIds, new long[] {roleId}, MembershipPolicy.ROLE_MANDATORY );
+
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, roleId);
+	}
+
+	private void _inspectMembershipPolicy(
+			long[]userIds, long[] roleIds, int rolePolicyType)
+		throws PortalException, SystemException {
+		List<User> errorUsers = new ArrayList<User>();
+		List<Role> errorRoles = new ArrayList<Role>();
+
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		for (long roleId : roleIds) {
+			Role role = rolePersistence.findByPrimaryKey(roleId);
+
+			for (long userId : userIds) {
+				User user = userPersistence.findByPrimaryKey(userId);
+
+				List<Role>policyRoles = null;
+
+				if (rolePolicyType == MembershipPolicy.ROLE_MANDATORY) {
+					policyRoles = membershipPolicy.getMandatoryRoles(
+						user.getGroup(), user);
+				}
+				else if (rolePolicyType == MembershipPolicy.ROLE_FORBIDDEN) {
+					policyRoles = membershipPolicy.getForbiddenRoles(
+						user.getGroup(), user);
+				}
+
+				if (policyRoles.contains(role)) {
+					errorUsers.add(user);
+					errorRoles.add(role);
+				}
+			}
+		}
+
+		if (!errorUsers.isEmpty()) {
+			throw new RoleMembershipException(
+				rolePolicyType, errorRoles, errorUsers);
+		}
 	}
 
 }

@@ -30,6 +30,52 @@ Organization organization = (Organization)request.getAttribute("edit_user_roles.
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-portletURL");
 %>
 
+<liferay-ui:error exception="<%= RoleMembershipException.class %>">
+
+	<%
+		RoleMembershipException rme = (RoleMembershipException)errorException;
+
+		List<Role> errorRoles = rme.getErrorRoles();
+		List<User> errorUsers = rme.getErrorUsers();
+	%>
+
+	<c:choose>
+		<c:when test="<%= errorUsers.size() > 1 %>">
+
+			<%
+				StringBuilder sb = new StringBuilder(errorRoles.size()*2);
+
+				for (int i = 0; i < errorUsers.size(); i++) {
+					sb.append(errorUsers.get(i).getFullName());
+
+					if (i != sb.length()-1) {
+						sb.append(", ");
+					}
+				}
+			%>
+
+			<c:choose>
+				<c:when test="<%= rme.getType() == MembershipPolicy.ROLE_FORBIDDEN %>">
+					<liferay-ui:message arguments="<%= new Object[] {errorRoles.get(0).getTitle(themeDisplay.getLanguageId()), sb.toString()} %>" key="the-following-users-are-not-allowed-to-have-role-x-x" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message arguments="<%= new Object[] {errorRoles.get(0).getTitle(themeDisplay.getLanguageId()), sb.toString()} %>" key="the-following-users-are-not-allowed-to-abandon-role-x-x" />
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+		<c:otherwise>
+			<c:choose>
+				<c:when test="<%= rme.getType() == MembershipPolicy.ROLE_FORBIDDEN %>">
+					<liferay-ui:message arguments="<%= new Object[] {errorUsers.get(0).getFullName(), errorRoles.get(0).getTitle(themeDisplay.getLanguageId())} %>" key="x-is-not-allowed-to-have-role-x" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message arguments="<%= new Object[] {errorUsers.get(0).getFullName(), errorRoles.get(0).getTitle(themeDisplay.getLanguageId())} %>" key="x-is-not-allowed-to-abandon-role-x" />
+				</c:otherwise>
+			</c:choose>
+		</c:otherwise>
+	</c:choose>
+</liferay-ui:error>
+
 <aui:input name="addUserIds" type="hidden" />
 <aui:input name="removeUserIds" type="hidden" />
 

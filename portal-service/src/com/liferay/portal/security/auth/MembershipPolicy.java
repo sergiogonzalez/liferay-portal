@@ -25,6 +25,10 @@ import java.util.List;
  */
 public interface MembershipPolicy {
 
+	public static final int ROLE_FORBIDDEN = 2;
+
+	public static final int ROLE_MANDATORY = 1;
+
 	public List<Role> getForbiddenRoles(Group group, User user);
 
 	public List<Group> getMandatoryGroups(User user);
