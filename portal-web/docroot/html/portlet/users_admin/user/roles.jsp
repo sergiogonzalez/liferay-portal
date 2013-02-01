@@ -29,6 +29,20 @@ List<Group> allGroups = (List<Group>)request.getAttribute("user.allGroups");
 List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
 userGroupRoles.addAll(organizationRoles);
+
+MembershipPolicy membershipPolicy = MembershipPolicyFactory.getInstance();
+List<Role> forbiddenRoles = membershipPolicy.getForbiddenRoles(user.getGroup(), user);
+
+List<UserGroupRole> forbiddenSiteRoles = new ArrayList<UserGroupRole>();
+
+for (UserGroupRole siteRole:siteRoles){
+	if (forbiddenRoles.contains(siteRole.getRole())) {
+		forbiddenSiteRoles.add(siteRole);
+	}
+}
+
+siteRoles.removeAll(forbiddenSiteRoles);
+
 userGroupRoles.addAll(siteRoles);
 %>
 
