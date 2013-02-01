@@ -16,6 +16,7 @@ package com.liferay.portlet.sites.action;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.RoleMembershipException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -62,6 +63,9 @@ public class EditUserRolesAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.sites_admin.error");
+			}
+			else if (e instanceof RoleMembershipException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
 				throw e;
