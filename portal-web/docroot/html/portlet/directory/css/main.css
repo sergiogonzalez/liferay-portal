@@ -1,4 +1,4 @@
-.portlet-directory {
+.portlet-directory, .portlet-friends-directory {
 	.details {
 		overflow: hidden;
 
@@ -168,7 +168,7 @@
 }
 
 .ie6 {
-	.portlet-directory {
+	.portlet-directory, .portlet-friends-directory {
 		height: 1%;
 
 		dl.property-list {

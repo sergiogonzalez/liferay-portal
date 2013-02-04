@@ -2368,6 +2368,42 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			params, start, end, obc);
 	}
 
+	public List<User> getSocialUsers(
+			long userId, int type, String keywords, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("socialRelationType", new Long[] {userId, new Long(type)});
+
+		return search(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, obc);
+	}
+
+	public List<User> getSocialUsers(
+			long userId, int type, String firstName, String middleName,
+			String lastName, String screenName, String emailAddress,
+			boolean andSearch, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("socialRelationType", new Long[] {userId, new Long(type)});
+
+		return search(
+			user.getCompanyId(), firstName, middleName, lastName, screenName,
+			emailAddress, WorkflowConstants.STATUS_APPROVED, params, andSearch,
+			start, end, obc);
+	}
+
 	/**
 	 * Returns an ordered range of all the users with a mutual social relation
 	 * of the type with both of the given users.
@@ -2506,6 +2542,39 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return searchCount(
 			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
 			params);
+	}
+
+	public int getSocialUsersCount(long userId, int type, String keywords)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("socialRelationType", new Long[] {userId, new Long(type)});
+
+		return searchCount(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params);
+	}
+
+	public int getSocialUsersCount(
+			long userId, int type, String firstName, String middleName,
+			String lastName, String screenName, String emailAddress,
+			boolean andSearch)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("socialRelationType", new Long[] {userId, new Long(type)});
+
+		return searchCount(
+			user.getCompanyId(), firstName, middleName, lastName, screenName,
+			emailAddress, WorkflowConstants.STATUS_APPROVED, params, andSearch);
 	}
 
 	/**
