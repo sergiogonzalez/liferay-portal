@@ -1,4 +1,3 @@
-<%@ page import="com.liferay.portal.security.auth.MembershipPolicyException" %>
 
 <%--
 /**
@@ -162,37 +161,6 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 %>
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
-<liferay-ui:error exception="<%= MembershipPolicyException.class %>">
-
-	<%
-	MembershipPolicyException mpe = (MembershipPolicyException)errorException;
-
-	List<Role> errorRoles = mpe.getRoles();
-	List<User> errorUsers = mpe.getUsers();
-	%>
-
-	<c:choose>
-		<c:when test="<%= errorRoles.size() > 1 %>">
-
-			<%
-			StringBuilder sb = new StringBuilder(errorRoles.size()*2);
-
-			for (int i = 0; i < errorRoles.size(); i++) {
-				sb.append(errorRoles.get(i).getTitle(themeDisplay.getLanguageId()));
-
-				if (i != sb.length()-1) {
-					sb.append(", ");
-				}
-			}
-			%>
-
-			<liferay-ui:message arguments="<%= new Object[] {sb.toString(), errorUsers.get(0).getFullName()} %>" key="assing-the-following-roles-x-to-x-is-not-allowed" />
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:message arguments="<%= new Object[] {errorRoles.get(0).getTitle(themeDisplay.getLanguageId()), errorUsers.get(0).getFullName()} %>" key="assing-role-x-to-x-is-not-allowed" />
-		</c:otherwise>
-	</c:choose>
-</liferay-ui:error>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 	<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">

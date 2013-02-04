@@ -46,6 +46,10 @@ siteRoles.removeAll(forbiddenSiteRoles);
 userGroupRoles.addAll(siteRoles);
 %>
 
+<liferay-ui:error-marker key="errorSection" value="roles" />
+
+<liferay-ui:membership-policy-error />
+
 <liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
 		image="unlink"

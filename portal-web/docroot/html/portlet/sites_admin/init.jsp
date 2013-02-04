@@ -36,7 +36,6 @@ page import="com.liferay.portal.kernel.staging.StagingConstants" %><%@
 page import="com.liferay.portal.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
 page import="com.liferay.portal.security.auth.MembershipPolicy" %><%@
-page import="com.liferay.portal.security.auth.MembershipPolicyException" %><%@
 page import="com.liferay.portal.security.auth.MembershipPolicyFactory" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.TeamPermissionUtil" %><%@
