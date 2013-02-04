@@ -40,6 +40,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyException;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -60,6 +63,7 @@ import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * The implementation of the user remote service.
@@ -1928,34 +1932,66 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any user group roles that the administrator does not
 			// have the rights to remove and check that he has the permission to
 			// add a new user group role
 
+			Set<Role> mandatoryRoles = membershipPolicy.getMandatoryRoles(
+				user.getGroup(), user);
+
 			oldUserGroupRoles = userGroupRoleLocalService.getUserGroupRoles(
 				userId);
 
 			for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
+				Role role = oldUserGroupRole.getRole();
+
 				if (!userGroupRoles.contains(oldUserGroupRole) &&
 					!UserGroupRolePermissionUtil.contains(
 						permissionChecker, oldUserGroupRole.getGroupId(),
-						oldUserGroupRole.getRoleId())) {
+						oldUserGroupRole.getRoleId()) ||
+					mandatoryRoles.contains(role)) {
 
 					userGroupRoles.add(oldUserGroupRole);
 				}
 			}
 		}
 
+		MembershipPolicyException membershipPolicyException = null;
+
 		for (UserGroupRole userGroupRole : userGroupRoles) {
+			Role role = userGroupRole.getRole();
+
 			if ((oldUserGroupRoles == null) ||
 				!oldUserGroupRoles.contains(userGroupRole)) {
 
 				UserGroupRolePermissionUtil.check(
 					permissionChecker, userGroupRole.getGroupId(),
 					userGroupRole.getRoleId());
+
+				if (!membershipPolicy.isMembershipAllowed(role, user)) {
+
+					if (membershipPolicyException == null) {
+
+					membershipPolicyException =new MembershipPolicyException(
+						MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED);
+
+						membershipPolicyException.addUser(user);
+					}
+
+					membershipPolicyException.addRole(role);
+				}
 			}
+		}
+
+		if (membershipPolicyException != null) {
+			throw membershipPolicyException;
 		}
 
 		return userGroupRoles;
