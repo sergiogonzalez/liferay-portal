@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.Address;
@@ -49,6 +50,13 @@ import javax.servlet.http.HttpServletRequest;
 public class UsersAdminUtil {
 
 	public static final String CUSTOM_QUESTION = "write-my-own-question";
+
+	public static final Accessor<User, String> USER_FULLNAME_ACCESSOR =
+		new Accessor<User, String>() {
+			public String get(User user) {
+				return user.getFullName();
+			}
+		};
 
 	public static void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest request,
