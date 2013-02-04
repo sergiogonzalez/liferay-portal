@@ -30,29 +30,7 @@ Organization organization = (Organization)request.getAttribute("edit_user_roles.
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-portletURL");
 %>
 
-<liferay-ui:error exception="<%= MembershipPolicyException.class %>">
-
-	<%
-		MembershipPolicyException mpe = (MembershipPolicyException)errorException;
-
-		List<Role> errorRoles = mpe.getRoles();
-		List<User> errorUsers = mpe.getUsers();
-	%>
-
-	<c:choose>
-		<c:when test="<%= errorUsers.size() > 1 %>">
-
-			<%
-				String errorUsersFullname = ListUtil.toString(errorUsers, UsersAdminUtil.USER_FULLNAME_ACCESSOR, StringPool.COMMA_AND_SPACE);
-			%>
-
-			<liferay-ui:message arguments="<%= new Object[] {errorRoles.get(0).getTitle(themeDisplay.getLanguageId()), errorUsersFullname} %>" key='<%= mpe.getType() == MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED?"assing-role-x-to-the-following-users-x-is-not-allowed":"unassing-role-x-to-the-following-users-x-is-not-allowed" %>' />
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:message arguments="<%= new Object[] {errorRoles.get(0).getTitle(themeDisplay.getLanguageId()), errorUsers.get(0).getFullName()} %>" key='<%= mpe.getType() == MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED?"assing-role-x-to-x-is-not-allowed":"unassing-role-x-to-x-is-not-allowed" %>' />
-		</c:otherwise>
-	</c:choose>
-</liferay-ui:error>
+<liferay-ui:membership-policy-error />
 
 <aui:input name="addUserIds" type="hidden" />
 <aui:input name="removeUserIds" type="hidden" />

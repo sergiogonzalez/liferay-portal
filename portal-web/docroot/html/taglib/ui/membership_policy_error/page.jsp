@@ -24,6 +24,7 @@
 	MembershipPolicyException mpe = (MembershipPolicyException)errorException;
 
 	List<Group> groups = mpe.getGroups();
+	List<Role> roles = mpe.getRoles();
 	List<User> users = mpe.getUsers();
 
 	User user2 = null;
@@ -53,6 +54,12 @@
 					<liferay-ui:message arguments='<%= new Object[] {ListUtil.toString(users, "fullName", StringPool.COMMA_AND_SPACE), ListUtil.toString(groups,"descriptiveName", StringPool.COMMA_AND_SPACE)} %>' key='<%= user2 != null ? "x-is-not-allowed-to-leave-x" : "the-following-users-are-not-allowed-to-leave-x-x" %>' />
 				</c:otherwise>
 			</c:choose>
+		</c:when>
+		<c:when test="<%= mpe.getType() == MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED %>">
+			<liferay-ui:message arguments='<%= new Object[] {ListUtil.toString(users, "fullName", StringPool.COMMA_AND_SPACE), ListUtil.toString(roles, "title", StringPool.COMMA_AND_SPACE)} %>' key='<%= user2 != null ? "x-cannot-be-assigned-to-x" : "the-following-users-cannot-be-assigned-to-x-x" %>' />
+		</c:when>
+		<c:when test="<%= mpe.getType() == MembershipPolicyException.ROLE_MEMBERSHIP_REQUIRED %>">
+			<liferay-ui:message arguments='<%= new Object[] {ListUtil.toString(users, "fullName", StringPool.COMMA_AND_SPACE), ListUtil.toString(roles, "title", StringPool.COMMA_AND_SPACE)} %>' key='<%= user2 != null ? "x-cannot-be-unassigned-from-x" : "the-following-users-cannot-be-unassigned-from-x-x" %>' />
 		</c:when>
 	</c:choose>
 </liferay-ui:error>
