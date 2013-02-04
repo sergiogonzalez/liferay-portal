@@ -249,6 +249,7 @@ public class EditUserAction extends PortletAction {
 					 e instanceof DuplicateUserScreenNameException ||
 					 e instanceof EmailAddressException ||
 					 e instanceof GroupFriendlyURLException ||
+					 e instanceof MembershipPolicyException ||
 					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
 					 e instanceof NoSuchRegionException ||
