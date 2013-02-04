@@ -32,6 +32,38 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.
 portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 %>
 
+<liferay-ui:error exception="<%= MembershipPolicyException.class %>">
+
+	<%
+		MembershipPolicyException rme = (MembershipPolicyException)errorException;
+
+		List<Role> errorRoles = rme.getRoles();
+		List<User> errorUsers = rme.getUsers();
+	%>
+
+	<c:choose>
+		<c:when test="<%= errorRoles.size() > 1 %>">
+
+			<%
+				StringBuilder sb = new StringBuilder(errorRoles.size()*2);
+
+				for (int i = 0; i < errorRoles.size(); i++) {
+					sb.append(errorRoles.get(i).getTitle(themeDisplay.getLanguageId()));
+
+					if (i != sb.length()-1) {
+						sb.append(", ");
+					}
+				}
+			%>
+
+			<liferay-ui:message arguments="<%= new Object[] {sb.toString(), errorUsers.get(0).getFullName()} %>" key='<%= rme.getType() == MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED? "assing-the-following-roles-x-to-x-is-not-allowed":"unassing-the-following-roles-x-to-x-is-not-allowed" %>' />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message arguments="<%= new Object[] {errorRoles.get(0).getTitle(themeDisplay.getLanguageId()), errorUsers.get(0).getFullName()} %>" key='<%= rme.getType() == MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED?"assing-role-x-to-x-is-not-allowed":"unassing-role-x-to-x-is-not-allowed" %>' />
+		</c:otherwise>
+	</c:choose>
+</liferay-ui:error>
+
 <aui:input name="p_u_i_d" type="hidden" value="<%= selUser.getUserId() %>" />
 <aui:input name="addRoleIds" type="hidden" />
 <aui:input name="removeRoleIds" type="hidden" />
