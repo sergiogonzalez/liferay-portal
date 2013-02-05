@@ -16,8 +16,15 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyException;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.service.base.UserGroupRoleServiceBaseImpl;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
+
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -32,6 +39,12 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				getPermissionChecker(), groupId, roleId);
 		}
 
+		// Membership policy
+
+		_inspectMembershipPolicy(
+			new long[] {userId}, roleIds,
+				MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED);
+
 		userGroupRoleLocalService.addUserGroupRoles(userId, groupId, roleIds);
 	}
 
@@ -40,6 +53,12 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
+
+		// Membership policy
+
+		_inspectMembershipPolicy(
+			userIds, new long[] {roleId},
+				MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED);
 
 		userGroupRoleLocalService.addUserGroupRoles(userIds, groupId, roleId);
 	}
@@ -52,6 +71,12 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				getPermissionChecker(), groupId, roleId);
 		}
 
+		// Membership policy
+
+		_inspectMembershipPolicy(
+			new long[] {userId}, roleIds,
+				MembershipPolicyException.ROLE_MEMBERSHIP_REQUIRED);
+
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userId, groupId, roleIds);
 	}
@@ -62,8 +87,69 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
+		// Membership policy
+
+		_inspectMembershipPolicy(
+			userIds, new long[] {roleId},
+				MembershipPolicyException.ROLE_MEMBERSHIP_REQUIRED );
+
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, roleId);
+	}
+
+	private void _inspectMembershipPolicy(
+			long[]userIds, long[] roleIds, int rolePolicyType)
+		throws PortalException, SystemException {
+
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		MembershipPolicyException membershipPolicyException =null;
+
+		for (long roleId : roleIds) {
+			Role role = rolePersistence.findByPrimaryKey(roleId);
+
+			for (long userId : userIds) {
+				User user = userPersistence.findByPrimaryKey(userId);
+
+				Set<Role> policyRoles = null;
+
+				if (rolePolicyType ==
+					MembershipPolicyException.ROLE_MEMBERSHIP_REQUIRED) {
+					policyRoles = membershipPolicy.getMandatoryRoles(
+						user.getGroup(), user);
+
+					if (policyRoles.contains(role)) {
+
+						if (membershipPolicyException == null) {
+							membershipPolicyException =
+								new MembershipPolicyException(rolePolicyType);
+						}
+
+						membershipPolicyException.addUser(user);
+						membershipPolicyException.addRole(role);
+					}
+				}
+				else if (rolePolicyType ==
+					MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED) {
+
+				if (!membershipPolicy.isMembershipAllowed(role, user)) {
+
+					if (membershipPolicyException == null) {
+						membershipPolicyException =
+							new MembershipPolicyException(rolePolicyType);
+					}
+
+					membershipPolicyException.addUser(user);
+					membershipPolicyException.addRole(role);
+					}
+				}
+			}
+		}
+
+		if (membershipPolicyException!= null) {
+			throw membershipPolicyException;
+		}
 	}
 
 }
