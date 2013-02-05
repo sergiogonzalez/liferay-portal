@@ -20,6 +20,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.BaseSearchTestCase;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -78,7 +79,8 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return BookmarksTestUtil.addFolder(group.getGroupId());
+		return BookmarksTestUtil.addFolder(
+			group.getGroupId(), ServiceTestUtil.randomString());
 	}
 
 	@Override
