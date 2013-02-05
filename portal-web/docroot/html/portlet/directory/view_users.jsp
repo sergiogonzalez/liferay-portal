@@ -88,11 +88,16 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	if (userGroupId > 0) {
 		userParams.put("usersUserGroups", new Long(userGroupId));
 	}
+
+	if (Validator.equals(themeDisplay.getPortletDisplay().getId(), PortletKeys.SITE_MEMBERS_DIRECTORY) && organizationId == 0 && userGroupId == 0) {
+		userParams.put("inherit", true);
+		userParams.put("usersGroups", new Long(themeDisplay.getScopeGroupId()));
+	}
 	%>
 
 	<liferay-ui:search-container-results>
 		<c:choose>
-			<c:when test="<%= PropsValues.USERS_INDEXER_ENABLED && PropsValues.USERS_SEARCH_WITH_INDEX %>">
+			<c:when test="<%= Validator.equals(themeDisplay.getPortletDisplay().getId(), PortletKeys.DIRECTORY) && PropsValues.USERS_INDEXER_ENABLED && PropsValues.USERS_SEARCH_WITH_INDEX %>">
 				<%@ include file="/html/portlet/users_admin/user_search_results_index.jspf" %>
 			</c:when>
 			<c:otherwise>
