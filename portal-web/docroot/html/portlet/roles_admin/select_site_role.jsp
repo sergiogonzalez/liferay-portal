@@ -18,11 +18,13 @@
 
 <%
 int step = ParamUtil.getInteger(request, "step");
+String target = ParamUtil.getString(request, "target", "selectRole");
 long userId = ParamUtil.getLong(request, "userId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/select_site_role");
+portletURL.setParameter("target", target);
 portletURL.setParameter("userId", String.valueOf(userId));
 
 User selUser = null;
@@ -208,7 +210,7 @@ if (step == 1) {
 
 					sb.append("javascript:opener.");
 					sb.append(renderResponse.getNamespace());
-					sb.append("selectRole('");
+					sb.append(target + "('");
 					sb.append(role.getRoleId());
 					sb.append("', '");
 					sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
