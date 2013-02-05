@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.service.search;
+package com.liferay.portlet.bookmarks.search;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
