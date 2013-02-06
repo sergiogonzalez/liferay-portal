@@ -238,6 +238,31 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
+		// Membership policy
+
+		MembershipPolicyException membershipPolicyException = null;
+
+		Role role = rolePersistence.findByPrimaryKey(roleId);
+
+		for (long userId : userIds) {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			if (!MembershipPolicyUtil.isMembershipAllowed(role, user)) {
+				if (membershipPolicyException == null) {
+					membershipPolicyException = new MembershipPolicyException(
+						MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED);
+
+					membershipPolicyException.addRole(role);
+				}
+
+				membershipPolicyException.addUser(user);
+			}
+		}
+
+		if (membershipPolicyException != null) {
+			throw membershipPolicyException;
+		}
+
 		userLocalService.addRoleUsers(roleId, userIds);
 	}
 
@@ -1247,6 +1272,34 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
+		// Membership policy
+
+		MembershipPolicyException membershipPolicyException = null;
+
+		Role role = rolePersistence.findByPrimaryKey(roleId);
+
+		for (long userId : userIds) {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
+				user);
+
+			if (mandatoryRoles.contains(role)) {
+				if (membershipPolicyException == null) {
+					membershipPolicyException = new MembershipPolicyException(
+						MembershipPolicyException.ROLE_MEMBERSHIP_REQUIRED);
+
+					membershipPolicyException.addRole(role);
+				}
+
+				membershipPolicyException.addUser(user);
+			}
+		}
+
+		if (membershipPolicyException != null) {
+			throw membershipPolicyException;
+		}
+
 		userLocalService.unsetRoleUsers(roleId, userIds);
 	}
 
@@ -2054,17 +2107,21 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	protected long[] checkRoles(long userId, long[] roleIds)
-		throws PrincipalException, SystemException {
+		throws PortalException, SystemException {
 
 		long[] oldRoleIds = null;
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any roles that the administrator does not have the
-			// rights to remove and check that he has the permission to add a
-			// new role
+			// rights to remove or that have a mandatory membership
+
+			Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
+				user);
 
 			List<Role> oldRoles = roleLocalService.getUserRoles(userId);
 
@@ -2074,9 +2131,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				Role role = oldRoles.get(i);
 
 				if (!ArrayUtil.contains(roleIds, role.getRoleId()) &&
-					!RolePermissionUtil.contains(
+					(!RolePermissionUtil.contains(
 						permissionChecker, role.getRoleId(),
-						ActionKeys.ASSIGN_MEMBERS)) {
+						ActionKeys.ASSIGN_MEMBERS) ||
+					mandatoryRoles.contains(role))) {
 
 					roleIds = ArrayUtil.append(roleIds, role.getRoleId());
 				}
@@ -2085,13 +2143,37 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
+		MembershipPolicyException membershipPolicyException = null;
+
+		// Check that the administrator has the permission to add a new role
+		// and that the role membership is allowed
+
 		for (long roleId : roleIds) {
 			if ((oldRoleIds == null) ||
 				!ArrayUtil.contains(oldRoleIds, roleId)) {
 
 				RolePermissionUtil.check(
 					permissionChecker, roleId, ActionKeys.ASSIGN_MEMBERS);
+
+				Role role = rolePersistence.findByPrimaryKey(roleId);
+
+				if (!MembershipPolicyUtil.isMembershipAllowed(role, user)) {
+					if (membershipPolicyException == null) {
+						membershipPolicyException =
+							new MembershipPolicyException(
+								MembershipPolicyException.
+									ROLE_MEMBERSHIP_NOT_ALLOWED);
+
+						membershipPolicyException.addUser(user);
+					}
+
+					membershipPolicyException.addRole(role);
+				}
 			}
+		}
+
+		if (membershipPolicyException != null) {
+			throw membershipPolicyException;
 		}
 
 		return roleIds;
