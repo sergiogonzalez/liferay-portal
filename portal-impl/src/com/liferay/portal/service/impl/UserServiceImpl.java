@@ -36,13 +36,13 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
-import com.liferay.portal.security.auth.MembershipPolicy;
 import com.liferay.portal.security.auth.MembershipPolicyException;
-import com.liferay.portal.security.auth.MembershipPolicyFactory;
+import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -1932,9 +1932,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactory.getInstance();
-
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		if (userId != CompanyConstants.SYSTEM) {
@@ -1943,8 +1940,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			// have the rights to remove and check that he has the permission to
 			// add a new user group role
 
-			Set<Role> mandatoryRoles = membershipPolicy.getMandatoryRoles(
+			Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
 				user.getGroup(), user);
+
+			List<Organization> organizations =
+				organizationLocalService.getUserOrganizations(userId);
 
 			oldUserGroupRoles = userGroupRoleLocalService.getUserGroupRoles(
 				userId);
@@ -1952,46 +1952,95 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
 				Role role = oldUserGroupRole.getRole();
 
-				if (!userGroupRoles.contains(oldUserGroupRole) &&
-					!UserGroupRolePermissionUtil.contains(
-						permissionChecker, oldUserGroupRole.getGroupId(),
-						oldUserGroupRole.getRoleId()) ||
-					mandatoryRoles.contains(role)) {
+				if (role.getType() == RoleConstants.TYPE_SITE) {
+					if (!userGroupRoles.contains(oldUserGroupRole) &&
+						!UserGroupRolePermissionUtil.contains(
+							permissionChecker, oldUserGroupRole.getGroupId(),
+							oldUserGroupRole.getRoleId()) ||
+						mandatoryRoles.contains(role)) {
 
-					userGroupRoles.add(oldUserGroupRole);
-				}
-			}
-		}
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		for (UserGroupRole userGroupRole : userGroupRoles) {
-			Role role = userGroupRole.getRole();
-
-			if ((oldUserGroupRoles == null) ||
-				!oldUserGroupRoles.contains(userGroupRole)) {
-
-				UserGroupRolePermissionUtil.check(
-					permissionChecker, userGroupRole.getGroupId(),
-					userGroupRole.getRoleId());
-
-				if (!membershipPolicy.isMembershipAllowed(role, user)) {
-
-					if (membershipPolicyException == null) {
-
-					membershipPolicyException =new MembershipPolicyException(
-						MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED);
-
-						membershipPolicyException.addUser(user);
+						userGroupRoles.add(oldUserGroupRole);
 					}
+				}
+				else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+					for (Organization organization : organizations) {
 
-					membershipPolicyException.addRole(role);
+						Set<Role> mandatoryOrganizationRoles =
+							MembershipPolicyUtil.getMandatoryRoles(
+								organization, user);
+
+						if (!userGroupRoles.contains(oldUserGroupRole) &&
+							!UserGroupRolePermissionUtil.contains(
+								permissionChecker,
+								oldUserGroupRole.getGroupId(),
+								oldUserGroupRole.getRoleId()) ||
+							mandatoryOrganizationRoles.contains(role)) {
+
+							userGroupRoles.add(oldUserGroupRole);
+						}
+					}
 				}
 			}
-		}
 
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
+			MembershipPolicyException membershipPolicyException = null;
+
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				Role role = userGroupRole.getRole();
+
+				if ((oldUserGroupRoles == null) ||
+					!oldUserGroupRoles.contains(userGroupRole)) {
+
+					UserGroupRolePermissionUtil.check(
+						permissionChecker, userGroupRole.getGroupId(),
+						userGroupRole.getRoleId());
+
+					if (role.getType() == RoleConstants.TYPE_SITE) {
+
+						if (!MembershipPolicyUtil.isMembershipAllowed(
+								role, user, userGroupRole.getGroup())) {
+
+							if (membershipPolicyException == null) {
+
+								membershipPolicyException =
+									new MembershipPolicyException(
+										MembershipPolicyException.
+											ROLE_MEMBERSHIP_NOT_ALLOWED);
+
+								membershipPolicyException.addUser(user);
+							}
+
+							membershipPolicyException.addRole(role);
+						}
+					}
+					else if (role.getType() ==
+							RoleConstants.TYPE_ORGANIZATION) {
+
+						for (Organization organization : organizations) {
+
+							if (!MembershipPolicyUtil.isMembershipAllowed(
+									role, user, organization)) {
+
+								if (membershipPolicyException == null) {
+
+									membershipPolicyException =
+										new MembershipPolicyException(
+											MembershipPolicyException.
+												ROLE_MEMBERSHIP_NOT_ALLOWED);
+
+									membershipPolicyException.addUser(user);
+								}
+
+								membershipPolicyException.addRole(role);
+							}
+						}
+					}
+				}
+			}
+
+			if (membershipPolicyException != null) {
+				throw membershipPolicyException;
+			}
+
 		}
 
 		return userGroupRoles;

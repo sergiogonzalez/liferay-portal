@@ -16,11 +16,11 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.MembershipPolicy;
 import com.liferay.portal.security.auth.MembershipPolicyException;
-import com.liferay.portal.security.auth.MembershipPolicyFactory;
+import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.service.base.UserGroupRoleServiceBaseImpl;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
 
@@ -41,7 +41,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 		// Membership policy
 
-		checkAddGroupRoles(new long[]{userId}, roleIds);
+		checkAddGroupRoles(new long[]{userId}, groupId, roleIds);
 
 		userGroupRoleLocalService.addUserGroupRoles(userId, groupId, roleIds);
 	}
@@ -54,7 +54,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 		// Membership policy
 
-		checkAddGroupRoles(userIds, new long[]{roleId});
+		checkAddGroupRoles(userIds, groupId, new long[]{roleId});
 
 		userGroupRoleLocalService.addUserGroupRoles(userIds, groupId, roleId);
 	}
@@ -69,7 +69,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 		// Membership policy
 
-		checkDeleteGroupRoles(new long[]{userId}, roleIds);
+		checkDeleteGroupRoles(new long[]{userId}, groupId, roleIds);
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userId, groupId, roleIds);
@@ -83,19 +83,19 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 		// Membership policy
 
-		checkDeleteGroupRoles(userIds, new long[]{roleId});
+		checkDeleteGroupRoles(userIds, groupId, new long[]{roleId});
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, roleId);
 	}
 
-	protected void checkAddGroupRoles(long[] userIds, long[] roleIds)
+	protected void checkAddGroupRoles(
+			long[] userIds, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactory.getInstance();
-
 		MembershipPolicyException membershipPolicyException = null;
+
+		Group group = groupLocalService.getGroup(groupId);
 
 		for (long roleId : roleIds) {
 			Role role = rolePersistence.findByPrimaryKey(roleId);
@@ -103,7 +103,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			for (long userId : userIds) {
 				User user = userPersistence.findByPrimaryKey(userId);
 
-				if (!membershipPolicy.isMembershipAllowed(role, user)) {
+				if (!MembershipPolicyUtil.isMembershipAllowed(
+						role, user, group)) {
 					if (membershipPolicyException == null) {
 						membershipPolicyException =
 							new MembershipPolicyException(
@@ -127,13 +128,13 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		}
 	}
 
-	protected void checkDeleteGroupRoles(long[] userIds, long[] roleIds)
+	protected void checkDeleteGroupRoles(
+			long[] userIds, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactory.getInstance();
-
 		MembershipPolicyException membershipPolicyException = null;
+
+		Group group = groupLocalService.getGroup(groupId);
 
 		for (long roleId : roleIds) {
 			Role role = rolePersistence.findByPrimaryKey(roleId);
@@ -141,8 +142,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			for (long userId : userIds) {
 				User user = userPersistence.findByPrimaryKey(userId);
 
-				Set<Role> mandatoryRoles = membershipPolicy.getMandatoryRoles(
-					user.getGroup(), user);
+				Set<Role> mandatoryRoles =
+					MembershipPolicyUtil.getMandatoryRoles(group, user);
 
 				if (mandatoryRoles.contains(role)) {
 					if (membershipPolicyException == null) {
