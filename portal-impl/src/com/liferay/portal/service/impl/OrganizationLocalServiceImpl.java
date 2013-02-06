@@ -51,6 +51,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.OrganizationImpl;
+import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
@@ -256,6 +257,46 @@ public class OrganizationLocalServiceImpl
 
 		passwordPolicyRelLocalService.addPasswordPolicyRels(
 			passwordPolicyId, Organization.class.getName(), organizationIds);
+	}
+
+	/**
+	 * Removes the user from any forbidden organizations and adds the user to all
+	 * mandatory organizations, if the user does not belong to them.
+	 *
+	 * @param  user the user
+	 * @throws PortalException if the user cannot be added or removed from any
+	 *  	   organizations.
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.events.MembershipPolicyAction
+	 */
+	public void checkMembershipPolicy(User user)
+		throws PortalException, SystemException {
+
+		List<Organization> organizations =
+			organizationLocalService.getUserOrganizations(user.getUserId());
+
+		for (Organization organization : organizations) {
+			long organizationId = organization.getOrganizationId();
+			long userId = user.getUserId();
+
+			if (!MembershipPolicyUtil.isMembershipAllowed(organization, user)) {
+				userLocalService.unsetOrganizationUsers(
+					organizationId, new long[] {userId});
+			}
+		}
+
+		Set<Organization> mandatoryOrganizations =
+			MembershipPolicyUtil.getMandatoryOrganizations(user);
+
+		for (Organization organization : mandatoryOrganizations) {
+			long organizationId = organization.getOrganizationId();
+			long userId = user.getUserId();
+
+			if (!hasUserOrganization(userId, organizationId)) {
+				userLocalService.addOrganizationUsers(
+					organizationId, new long[]{userId} );
+			}
+		}
 	}
 
 	/**
