@@ -51,8 +51,12 @@ public class MembershipPolicyAction extends Action {
 		throws PortalException, SystemException {
 		if (MembershipPolicyUtil.isApplicableUser(user)) {
 			GroupLocalServiceUtil.checkMembershipPolicy(user);
+
 			OrganizationLocalServiceUtil.checkMembershipPolicy(user);
+
 			UserGroupRoleLocalServiceUtil.checkMembershipPolicy(user);
+
+			UserGroupLocalServiceUtil.checkMembershipPolicy(user);
 		}
 	}
 
