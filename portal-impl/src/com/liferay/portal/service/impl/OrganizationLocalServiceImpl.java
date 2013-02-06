@@ -51,6 +51,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.OrganizationImpl;
+import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
@@ -256,6 +257,36 @@ public class OrganizationLocalServiceImpl
 
 		passwordPolicyRelLocalService.addPasswordPolicyRels(
 			passwordPolicyId, Organization.class.getName(), organizationIds);
+	}
+
+	public void checkMembershipPolicy(User user)
+		throws PortalException, SystemException {
+
+		List<Organization> organizations =
+			organizationLocalService.getUserOrganizations(user.getUserId());
+
+		for (Organization organization : organizations) {
+			long organizationId = organization.getOrganizationId();
+			long userId = user.getUserId();
+
+			if (!MembershipPolicyUtil.isMembershipAllowed(organization, user)) {
+				userLocalService.unsetOrganizationUsers(
+					organizationId, new long[] {userId});
+			}
+		}
+
+		Set<Organization> mandatoryOrganizations =
+			MembershipPolicyUtil.getMandatoryOrganizations(user);
+
+		for (Organization organization : mandatoryOrganizations) {
+			long organizationId = organization.getOrganizationId();
+			long userId = user.getUserId();
+
+			if (!hasUserOrganization(userId, organizationId)) {
+				userLocalService.addOrganizationUsers(
+					organizationId, new long[]{userId} );
+			}
+		}
 	}
 
 	/**
