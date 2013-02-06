@@ -22,6 +22,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -47,12 +49,15 @@ public class MembershipPolicyAction extends Action {
 		}
 	}
 
-	protected void checkMembershipPolicy(User user)
+	protected void checkMembershipPolicy(User user) 
 		throws PortalException, SystemException {
+
 		if (MembershipPolicyUtil.isApplicableUser(user)) {
 			GroupLocalServiceUtil.checkMembershipPolicy(user);
 
 			OrganizationLocalServiceUtil.checkMembershipPolicy(user);
+
+			RoleLocalServiceUtil.checkMembershipPolicy(user);
 
 			UserGroupRoleLocalServiceUtil.checkMembershipPolicy(user);
 
