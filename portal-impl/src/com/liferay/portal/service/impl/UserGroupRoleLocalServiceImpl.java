@@ -82,6 +82,7 @@ public class UserGroupRoleLocalServiceImpl
 
 	public void checkMembershipPolicy(User user)
 		throws PortalException, SystemException {
+
 		LinkedHashMap<String, Object> groupParams =
 			new LinkedHashMap<String, Object>();
 
