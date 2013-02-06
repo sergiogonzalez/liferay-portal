@@ -83,8 +83,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  userIds the primary keys of the users
 	 * @param  serviceContext the service context (optionally <code>null</code>)
 	 * @throws PortalException if a group or user with the primary key could not
-	 *         be found, or if the user did not have permission to assign group
-	 *         members
+	 *         be found, if the user did not have permission to assign group
+	 *         members, or if the assignment is not allowed by the membership
+	 *         policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void addGroupUsers(
@@ -160,8 +161,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  userIds the primary keys of the users
 	 * @throws PortalException if an organization or user with the primary key
 	 *         could not be found, if the user did not have permission to assign
-	 *         organization members, or if current user did not have an
-	 *         organization in common with a given user
+	 *         organization members, if current user did not have an
+	 *         organization in common with a given user, or if the assignment
+	 *         is not allowed by the membership policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void addOrganizationUsers(long organizationId, long[] userIds)
@@ -228,8 +230,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  roleId the primary key of the role
 	 * @param  userIds the primary keys of the users
 	 * @throws PortalException if a role or user with the primary key could not
-	 *         be found or if the user did not have permission to assign role
-	 *         members
+	 *         be found, if the user did not have permission to assign role
+	 *         members, or if the assignment is not allowed by the membership
+	 *         policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void addRoleUsers(long roleId, long[] userIds)
@@ -454,8 +457,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  userGroupId the primary key of the user group
 	 * @param  userIds the primary keys of the users
 	 * @throws PortalException if a user group or user with the primary could
-	 *         could not be found, or if the current user did not have
-	 *         permission to assign group members
+	 *         could not be found, if the current user did not have
+	 *         permission to assign group members, or if the assignment is not
+	 *         allowed by the membership policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void addUserGroupUsers(long userGroupId, long[] userIds)
@@ -463,6 +467,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
+
+		// Membership policy
 
 		MembershipPolicyException membershipPolicyException = null;
 
@@ -1116,7 +1122,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  userIds the primary keys of the users
 	 * @param  serviceContext the service context (optionally <code>null</code>)
 	 * @throws PortalException if the current user did not have permission to
-	 *         modify group assignments
+	 *         modify group assignments, or if the change is not allowed by
+	 *         the membership policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsetGroupUsers(
@@ -1196,7 +1203,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  organizationId the primary key of the organization
 	 * @param  userIds the primary keys of the users
 	 * @throws PortalException if the current user did not have permission to
-	 *         modify organization assignments
+	 *         modify organization assignments, or if the change is not allowed
+	 *         by the membership policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
@@ -1263,7 +1271,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  roleId the primary key of the role
 	 * @param  userIds the primary keys of the users
 	 * @throws PortalException if the current user did not have permission to
-	 *         modify role assignments
+	 *         modify role assignments, or if the change is not allowed by
+	 *         the membership policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsetRoleUsers(long roleId, long[] userIds)
@@ -1327,7 +1336,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  userGroupId the primary key of the user group
 	 * @param  userIds the primary keys of the users
 	 * @throws PortalException if the current user did not have permission to
-	 *         modify user group assignments
+	 *         modify user group assignments, or if the change is not allowed by
+	 *         the membership policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsetUserGroupUsers(long userGroupId, long[] userIds)
@@ -1720,8 +1730,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         bridge attributes for the user.
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be
-	 *         found, if the new information was invalid, or if the current user
-	 *         did not have permission to update the user
+	 *         found, if the new information was invalid, if the current user
+	 *         did not have permission to update the user, or if the
+	 *         change is not allowed by the membership policy.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public User updateUser(

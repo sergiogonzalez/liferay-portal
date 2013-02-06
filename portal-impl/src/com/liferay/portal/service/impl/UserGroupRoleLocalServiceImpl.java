@@ -80,6 +80,17 @@ public class UserGroupRoleLocalServiceImpl
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Removes any forbidden user group roles from the user and adds all
+	 * mandatory user group roles to the user, if the user does not have the
+	 * user group role.
+	 *
+	 * @param  user the user
+	 * @throws PortalException if the any user group roles cannot be added or
+	 *         removed from the user.
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.events.MembershipPolicyAction
+	 */
 	public void checkMembershipPolicy(User user)
 		throws PortalException, SystemException {
 

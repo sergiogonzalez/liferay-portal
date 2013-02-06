@@ -469,6 +469,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Removes the user from any forbidden groups and adds the user to all
+	 * mandatory groups, if the user does not belong to them.
+	 *
+	 * @param  user the user
+	 * @throws PortalException if the user cannot be added or removed from any
+	 *  	   groups.
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.events.MembershipPolicyAction
+	 */
 	public void checkMembershipPolicy(User user) throws SystemException {
 		LinkedHashMap<String, Object> groupParams =
 			new LinkedHashMap<String, Object>();

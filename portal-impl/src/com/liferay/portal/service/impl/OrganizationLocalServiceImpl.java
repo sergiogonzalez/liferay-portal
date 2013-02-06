@@ -259,6 +259,16 @@ public class OrganizationLocalServiceImpl
 			passwordPolicyId, Organization.class.getName(), organizationIds);
 	}
 
+	/**
+	 * Removes the user from any forbidden organizations and adds the user to all
+	 * mandatory organizations, if the user does not belong to them.
+	 *
+	 * @param  user the user
+	 * @throws PortalException if the user cannot be added or removed from any
+	 *  	   organizations.
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.events.MembershipPolicyAction
+	 */
 	public void checkMembershipPolicy(User user)
 		throws PortalException, SystemException {
 

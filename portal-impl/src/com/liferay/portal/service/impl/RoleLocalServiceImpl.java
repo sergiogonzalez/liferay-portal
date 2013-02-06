@@ -238,6 +238,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Removes any forbidden roles from the user and adds all mandatory roles to
+	 * the user, if the user does not have the role.
+	 *
+	 * @param  user the user
+	 * @throws PortalException if the any roles cannot be added or removed from
+	 * 	       the user.
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.events.MembershipPolicyAction
+	 */
 	public void checkMembershipPolicy(User user)
 		throws PortalException, SystemException {
 
@@ -245,8 +255,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		for (Role role : roles) {
 			if (!MembershipPolicyUtil.isMembershipAllowed(role, user)) {
-				unsetUserRoles(
-					user.getUserId(), new long[] {role.getRoleId()});
+				unsetUserRoles(user.getUserId(), new long[] {role.getRoleId()});
 			}
 		}
 
