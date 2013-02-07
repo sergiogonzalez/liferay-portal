@@ -110,7 +110,7 @@ public class LuceneFields {
 		else if (numericType.equals(Float.class)) {
 			numericField.setFloatValue(GetterUtil.getFloat(number));
 		}
-		else if (numericType.equals(Integer.class)){
+		else if (numericType.equals(Integer.class)) {
 			numericField.setIntValue(GetterUtil.getInteger(number));
 		}
 		else {

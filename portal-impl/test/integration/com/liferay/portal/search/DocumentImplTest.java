@@ -12,7 +12,7 @@
  * details.
  */
 
-package integration.com.liferay.portal.search;
+package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
@@ -34,15 +34,10 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.usersadmin.util.UserIndexer;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +45,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * <a href="DocumentImplTest.java.html"><b><i>View Source</i></b></a>
@@ -65,6 +65,23 @@ import java.util.Map;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class DocumentImplTest {
+
+	public static final String MULTI_DOUBLE = "md";
+
+	public static final String MULTI_FLOAT = "mf";
+
+	public static final String MULTI_INT = "mi";
+
+	public static final String MULTI_LONG = "ml";
+
+	public static final String SINGLE_DOUBLE = "sd";
+
+	public static final String SINGLE_FLOAT = "sf";
+
+	public static final String SINGLE_INT = "si";
+
+	public static final String SINGLE_LONG = "sl";
+
 	@Before
 	public void setUp() throws Exception {
 		_group = ServiceTestUtil.addGroup("testSearch");
@@ -86,7 +103,7 @@ public class DocumentImplTest {
 		_users.put("fourthuser",new NumbersHolder(
 			0.0000040000004, Integer.MIN_VALUE + 7));
 
-		_users.put("fifthuser",	new NumbersHolder(
+		_users.put("fifthuser", new NumbersHolder(
 			0.0000000000005, Integer.MIN_VALUE + 8));
 
 		_users.put("sixthuser", new NumbersHolder(
@@ -181,25 +198,18 @@ public class DocumentImplTest {
 			"third sixth second first fourth fifth", expected1);
 	}
 
-	private SearchContext buildSearchContext(String keywords)
+	protected SearchContext buildSearchContext(String keywords)
 		throws Exception {
 		SearchContext searchContext = ServiceTestUtil.getSearchContext();
 
-		searchContext.setGroupIds(new long[]{});
+		searchContext.setGroupIds(new long[] {});
 		searchContext.setKeywords(keywords);
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
 
 		return searchContext;
 	}
 
-	private void checkNumberOfSearchResults(
-		SearchContext searchContext, long expectedHits)
-		throws Exception {
-
-		checkNumberOfSearchResults(_indexer.search(searchContext), expectedHits);
-	}
-
-	private void checkNumberOfSearchResults(Hits results, long expectedHits)
+	protected void checkNumberOfSearchResults(Hits results, long expectedHits)
 		throws Exception {
 
 		if (expectedHits >= 0) {
@@ -207,8 +217,128 @@ public class DocumentImplTest {
 		}
 	}
 
-	private void checkSearchResultsData(Hits results) {
-		for (Document doc: results.getDocs()) {
+	protected void checkNumberOfSearchResults(
+			SearchContext searchContext, long expectedHits)
+		throws Exception {
+
+		checkNumberOfSearchResults(
+			_indexer.search(searchContext), expectedHits);
+	}
+
+	protected void checkSearchesSortedByDouble(
+		String keywords, String[] expectedAsc) throws Exception {
+
+		String[] expectedDsc = reverse(expectedAsc);
+
+		SearchContext searchContext = buildSearchContext(keywords);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(SINGLE_DOUBLE, Sort.DOUBLE_TYPE, false),
+			expectedAsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(SINGLE_DOUBLE, Sort.DOUBLE_TYPE, true),
+			expectedDsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(MULTI_DOUBLE, Sort.DOUBLE_TYPE, false),
+			expectedAsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(MULTI_DOUBLE, Sort.DOUBLE_TYPE, true),
+			expectedDsc);
+	}
+
+	protected void checkSearchesSortedByFloat(
+		String keywords, String[] expectedAsc) throws Exception {
+
+		String[] expectedDsc = reverse(expectedAsc);
+
+		SearchContext searchContext = buildSearchContext(keywords);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(SINGLE_FLOAT, Sort.FLOAT_TYPE, false),
+			expectedAsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(SINGLE_FLOAT, Sort.FLOAT_TYPE, true),
+			expectedDsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(MULTI_FLOAT, Sort.FLOAT_TYPE, false),
+			expectedAsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(MULTI_FLOAT, Sort.FLOAT_TYPE, true),
+			expectedDsc);
+	}
+
+	protected void checkSearchesSortedByInteger(
+		String keywords, String[] expectedAsc) throws Exception {
+
+		String[] expectedDsc = reverse(expectedAsc);
+
+		SearchContext searchContext = buildSearchContext(keywords);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(SINGLE_INT, Sort.INT_TYPE, false),
+			expectedAsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(SINGLE_INT, Sort.INT_TYPE, true),
+			expectedDsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(MULTI_INT, Sort.INT_TYPE, false),
+			expectedAsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(MULTI_INT, Sort.INT_TYPE, true),
+			expectedDsc);
+	}
+
+	protected void checkSearchesSortedByLong(
+		String keywords, String[] expectedAsc) throws Exception {
+
+		String[] expectedDsc = reverse(expectedAsc);
+
+		SearchContext searchContext = buildSearchContext(keywords);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(SINGLE_LONG, Sort.LONG_TYPE, false),
+			expectedAsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(SINGLE_LONG, Sort.LONG_TYPE, true),
+			expectedDsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(MULTI_LONG, Sort.LONG_TYPE, false),
+			expectedAsc);
+
+		checkSortedSearchResultsOrder(
+			searchContext,
+			SortFactoryUtil.create(MULTI_LONG, Sort.LONG_TYPE, true),
+			expectedDsc);
+	}
+
+	protected void checkSearchResultsData(Hits results) {
+		for (Document doc : results.getDocs()) {
 			NumbersHolder orig = _users.get(doc.get("screenName"));
 			NumbersHolder indexed = new NumbersHolder(doc);
 
@@ -231,97 +361,9 @@ public class DocumentImplTest {
 		}
 	}
 
-	private void checkSearchesSortedByDouble(
-		String keywords, String[] expectedAsc)
-			throws Exception {
-
-		String[] expectedDsc = reverse(expectedAsc);
-
-		SearchContext searchContext = buildSearchContext(keywords);
-
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			SINGLE_DOUBLE, Sort.DOUBLE_TYPE, false), expectedAsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			SINGLE_DOUBLE, Sort.DOUBLE_TYPE, true), expectedDsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			MULTI_DOUBLE, Sort.DOUBLE_TYPE, false), expectedAsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			MULTI_DOUBLE, Sort.DOUBLE_TYPE, true), expectedDsc);
-	}
-
-	private void checkSearchesSortedByFloat(
-		String keywords, String[] expectedAsc)
-		throws Exception {
-
-		String[] expectedDsc = reverse(expectedAsc);
-
-		SearchContext searchContext = buildSearchContext(keywords);
-
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			SINGLE_FLOAT, Sort.FLOAT_TYPE, false), expectedAsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			SINGLE_FLOAT, Sort.FLOAT_TYPE, true), expectedDsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			MULTI_FLOAT, Sort.FLOAT_TYPE, false), expectedAsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			MULTI_FLOAT, Sort.FLOAT_TYPE, true), expectedDsc);
-	}
-
-	private void checkSearchesSortedByLong(
-		String keywords, String[] expectedAsc)
-		throws Exception {
-
-		String[] expectedDsc = reverse(expectedAsc);
-
-		SearchContext searchContext = buildSearchContext(keywords);
-
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			SINGLE_LONG, Sort.LONG_TYPE, false), expectedAsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			SINGLE_LONG, Sort.LONG_TYPE, true), expectedDsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			MULTI_LONG, Sort.LONG_TYPE, false), expectedAsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			MULTI_LONG, Sort.LONG_TYPE, true), expectedDsc);
-	}
-
-	private void checkSearchesSortedByInteger(
-		String keywords, String[] expectedAsc)
-		throws Exception {
-
-		String[] expectedDsc = reverse(expectedAsc);
-
-		SearchContext searchContext = buildSearchContext(keywords);
-
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			SINGLE_INT, Sort.INT_TYPE, false), expectedAsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			SINGLE_INT, Sort.INT_TYPE, true), expectedDsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			MULTI_INT, Sort.INT_TYPE, false), expectedAsc);
-		checkSortedSearchResultsOrder(
-			searchContext, SortFactoryUtil.create(
-			MULTI_INT, Sort.INT_TYPE, true), expectedDsc);
-	}
-
-	private void checkSortedSearchResultsOrder(
+	protected void checkSortedSearchResultsOrder(
 			SearchContext searchContext, Sort sort, String[] expected)
-		throws Exception{
+		throws Exception {
 
 		Query query = _indexer.getFullQuery(searchContext);
 
@@ -338,14 +380,23 @@ public class DocumentImplTest {
 		checkSearchResultsData(results);
 	}
 
-	private String[] reverse(String[] array) {
+	protected String[] reverse(String[] array) {
 		String[] reversed = Arrays.copyOf(array, array.length);
+
 		Collections.reverse(Arrays.asList(reversed));
+
 		return reversed;
 	}
 
-	private class ExtendedUserIndexerPostProcessor extends
-		BaseIndexerPostProcessor {
+	private Group _group;
+
+	private Indexer _indexer;
+
+	private Map<String, NumbersHolder> _users =
+		new HashMap<String, NumbersHolder>();
+
+	private class ExtendedUserIndexerPostProcessor
+		extends BaseIndexerPostProcessor {
 
 		@Override
 		public void postProcessDocument(Document document, Object obj)
@@ -353,6 +404,7 @@ public class DocumentImplTest {
 
 			NumbersHolder numbersHolder = _users.get(
 				document.get("screenName"));
+
 			document.addNumber(SINGLE_DOUBLE, numbersHolder.getSingleDouble());
 			document.addNumber(SINGLE_FLOAT, numbersHolder.getSingleFloat());
 			document.addNumber(SINGLE_INT, numbersHolder.getSingleInteger());
@@ -365,6 +417,7 @@ public class DocumentImplTest {
 	}
 
 	private class NumbersHolder {
+
 		private double _singleDouble;
 		private float _singleFloat;
 		private int _singleInt;
@@ -376,24 +429,26 @@ public class DocumentImplTest {
 
 		public NumbersHolder(double number1, long number2) {
 			_singleDouble = number1;
-			_singleFloat = convertFloat(_singleDouble);
+			_singleFloat = _convertFloat(_singleDouble);
 			_singleLong = number2;
-			_singleInt = convertInteger(_singleLong);
+			_singleInt = _convertInteger(_singleLong);
 
 			_multiDouble = new ArrayList<Double>();
 			_multiLong = new ArrayList<Long>();
 			_multiFloat = new ArrayList<Float>();
 			_multiInt = new ArrayList<Integer>();
 
-			long longSum;
+			long longSum = 0L;
+
 			double doublePow = _singleDouble;
+
 			for (int i=1; i<5; i++) {
 				doublePow *= _singleDouble;
 				_multiDouble.add(doublePow);
-				_multiFloat.add(convertFloat(doublePow));
+				_multiFloat.add(_convertFloat(doublePow));
 				longSum = _singleLong + i;
 				_multiLong.add(longSum);
-				_multiInt.add(convertInteger(longSum));
+				_multiInt.add(_convertInteger(longSum));
 			}
 		}
 
@@ -404,26 +459,26 @@ public class DocumentImplTest {
 			_singleFloat = Float.valueOf(doc.get(SINGLE_FLOAT)).floatValue();
 			_singleInt = Integer.valueOf(doc.get(SINGLE_INT)).intValue();
 
-			_multiDouble = parseMultiDouble(doc.getValues(MULTI_DOUBLE));
-			_multiLong = parseMultiLong(doc.getValues(MULTI_LONG));
-			_multiFloat = parseMultiFloat(doc.getValues(MULTI_FLOAT));
-			_multiInt = parseMultiInteger(doc.getValues(MULTI_INT));
+			_multiDouble = _parseMultiDouble(doc.getValues(MULTI_DOUBLE));
+			_multiLong = _parseMultiLong(doc.getValues(MULTI_LONG));
+			_multiFloat = _parseMultiFloat(doc.getValues(MULTI_FLOAT));
+			_multiInt = _parseMultiInteger(doc.getValues(MULTI_INT));
 		}
 
 		public Double[] getMultiDouble() {
-			return _multiDouble.toArray(new Double[]{});
+			return _multiDouble.toArray(new Double[] {});
 		}
 
 		public Float[] getMultiFloat() {
-			return _multiFloat.toArray(new Float[]{});
+			return _multiFloat.toArray(new Float[] {});
 		}
 
 		public Integer[] getMultiInteger() {
-			return _multiInt.toArray(new Integer[]{});
+			return _multiInt.toArray(new Integer[] {});
 		}
 
 		public Long[] getMultiLong() {
-			return _multiLong.toArray(new Long[]{});
+			return _multiLong.toArray(new Long[] {});
 		}
 
 		public double getSingleDouble() {
@@ -442,57 +497,53 @@ public class DocumentImplTest {
 			return _singleLong;
 		}
 
-		private Float convertFloat(double data) {
+		private Float _convertFloat(double data) {
 			return new Float((float)data);
 		}
 
-		private Integer convertInteger(long data) {
+		private Integer _convertInteger(long data) {
 			return Long.valueOf(data).intValue();
 		}
 
-		private List<Double> parseMultiDouble(String[] data) {
+		private List<Double> _parseMultiDouble(String[] data) {
 			List<Double> multiDouble = new ArrayList<Double>();
+
 			for (String item : data) {
 				multiDouble.add(Double.valueOf(item));
 			}
+
 			return multiDouble;
 		}
 
-		private List<Float> parseMultiFloat(String[] data) {
+		private List<Float> _parseMultiFloat(String[] data) {
 			List<Float> multiFloat = new ArrayList<Float>();
+
 			for (String item : data) {
 				multiFloat.add(Float.valueOf(item));
 			}
+
 			return multiFloat;
 		}
 
-		private List<Integer> parseMultiInteger(String[] data) {
+		private List<Integer> _parseMultiInteger(String[] data) {
 			List<Integer> multiInt = new ArrayList<Integer>();
+
 			for (String item : data) {
 				multiInt.add(Integer.valueOf(item));
 			}
+
 			return multiInt;
 		}
 
-		private List<Long> parseMultiLong(String[] data) {
+		private List<Long> _parseMultiLong(String[] data) {
 			List<Long> multiLong = new ArrayList<Long>();
+
 			for (String item : data) {
 				multiLong.add(Long.valueOf(item));
 			}
+
 			return multiLong;
 		}
 	}
 
-	public static String MULTI_DOUBLE="md";
-	public static String MULTI_FLOAT="mf";
-	public static String MULTI_INT="mi";
-	public static String MULTI_LONG="ml";
-	public static String SINGLE_DOUBLE="sd";
-	public static String SINGLE_FLOAT="sf";
-	public static String SINGLE_INT="si";
-	public static String SINGLE_LONG="sl";
-	private Map<String, NumbersHolder> _users =
-		new HashMap<String, NumbersHolder>();
-	private Group _group;
-	private Indexer _indexer;
 }

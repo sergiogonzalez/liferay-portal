@@ -376,6 +376,10 @@ public class DocumentImpl implements Document {
 		addNumber(name, ArrayUtil.toStringArray(values), Long.class);
 	}
 
+	public void addNumber(String name, String value) {
+		addNumber(name, value, Long.class);
+	}
+
 	public void addNumber(
 			String name, String value, Class<? extends Number> type) {
 
@@ -387,6 +391,10 @@ public class DocumentImpl implements Document {
 
 			_fields.put(name, field);
 		}
+	}
+
+	public void addNumber(String name, String[] values) {
+		addNumber(name, values, Long.class);
 	}
 
 	public void addNumber(
@@ -402,14 +410,6 @@ public class DocumentImpl implements Document {
 		field.setNumericType(type);
 
 		_fields.put(name, field);
-	}
-
-	public void addNumber(String name, String value) {
-		addNumber(name, value, Long.class);
-	}
-
-	public void addNumber(String name, String[] values) {
-		addNumber(name, values, Long.class);
 	}
 
 	public void addText(String name, String value) {
