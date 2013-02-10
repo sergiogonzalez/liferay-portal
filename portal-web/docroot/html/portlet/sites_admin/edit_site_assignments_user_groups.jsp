@@ -53,6 +53,8 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGro
 userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
+<liferay-ui:membership-policy-error />
+
 <aui:input name="tabs1" type="hidden" value="user-groups" />
 <aui:input name="addUserGroupIds" type="hidden" />
 <aui:input name="removeUserGroupIds" type="hidden" />

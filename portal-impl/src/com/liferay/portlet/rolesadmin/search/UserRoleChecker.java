@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -45,6 +48,23 @@ public class UserRoleChecker extends RowChecker {
 		catch (Exception e) {
 			_log.error(e, e);
 
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		User user = (User)obj;
+
+		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(user);
+
+		if ((isChecked(user) && mandatoryRoles.contains(_role)) ||
+			(!isChecked(user) &&
+				!MembershipPolicyUtil.isMembershipAllowed(_role, user))) {
+
+			return true;
+		}
+		else {
 			return false;
 		}
 	}

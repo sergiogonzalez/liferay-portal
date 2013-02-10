@@ -21,20 +21,20 @@ int step = ParamUtil.getInteger(request, "step");
 long userId = ParamUtil.getLong(request, "userId");
 String callback = ParamUtil.getString(request, "callback", "selectRole");
 
+User selUser = PortalUtil.getSelectedUser(request);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/select_site_role");
 portletURL.setParameter("userId", String.valueOf(userId));
 portletURL.setParameter("callback", callback);
+portletURL.setParameter("p_u_i_d", selUser == null ? "0" : String.valueOf(selUser.getUserId()));
 
-User selUser = null;
 long uniqueGroupId = 0;
 
 List<Group> groups = null;
 
 if (step == 1) {
-	selUser = UserServiceUtil.getUserById(userId);
-
 	groups = selUser.getGroups();
 
 	if (filterManageableGroups) {
@@ -206,24 +206,28 @@ if (step == 1) {
 					<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
 
 					<%
-					StringBundler sb = new StringBundler(14);
+					String rowHREF = null;
 
-					sb.append("javascript:opener.");
-					sb.append(renderResponse.getNamespace());
-					sb.append(callback);
-					sb.append("('");
-					sb.append(role.getRoleId());
-					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
-					sb.append("', '");
-					sb.append("siteRoles");
-					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
-					sb.append("', '");
-					sb.append(group.getGroupId());
-					sb.append("'); window.close();");
+					if (MembershipPolicyUtil.isMembershipAllowed(group, role, selUser)) {
+						StringBundler sb = new StringBundler(14);
 
-					String rowHREF = sb.toString();
+						sb.append("javascript:opener.");
+						sb.append(renderResponse.getNamespace());
+						sb.append(callback);
+						sb.append("('");
+						sb.append(role.getRoleId());
+						sb.append("', '");
+						sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
+						sb.append("', '");
+						sb.append("siteRoles");
+						sb.append("', '");
+						sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
+						sb.append("', '");
+						sb.append(group.getGroupId());
+						sb.append("'); window.close();");
+
+						rowHREF = sb.toString();
+					}
 					%>
 
 					<liferay-ui:search-container-column-text
