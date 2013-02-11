@@ -1951,6 +1951,8 @@ public class HookHotDeployListener
 				membershipPolicyClassName);
 
 			membershipPolicyFactoryImpl.setMembershipPolicy(membershipPolicy);
+
+			membershipPolicy.membershipPolicyVerifier();
 		}
 
 		if (portalProperties.containsKey(
