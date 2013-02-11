@@ -1845,7 +1845,7 @@ public class PortletImporter {
 
 	protected void updateAssetPublisherScopeIds(
 			javax.portlet.PortletPreferences jxPreferences, String key,
-			long groupId, long plid)
+			long companyGroupId, long plid)
 		throws Exception {
 
 		String[] oldValues = jxPreferences.getValues(key, null);
@@ -1854,19 +1854,32 @@ public class PortletImporter {
 			return;
 		}
 
-		String groupScopeId =
-			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + groupId;
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		String[] newValues = new String[oldValues.length];
+		String companyGroupScopeId =
+			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + companyGroupId;
+
+		List<String> newValues = new ArrayList<String>(oldValues.length);
 
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
 
-			newValues[i] = StringUtil.replace(
-				oldValue, "[$GROUP_SCOPE_ID$]", groupScopeId);
+			String newValue = StringUtil.replace(
+				oldValue, "[$COMPANY_GROUP_SCOPE_ID$]", companyGroupScopeId);
+
+			if (!oldValue.equals("false") && !oldValue.equals("true") &&
+				!AssetPublisherUtil.isScopeIdSelectable(
+					PermissionThreadLocal.getPermissionChecker(), newValue,
+					companyGroupId, layout)) {
+
+				continue;
+			}
+
+			newValues.add(newValue);
 		}
 
-		jxPreferences.setValues(key, newValues);
+		jxPreferences.setValues(
+			key, newValues.toArray(new String[newValues.size()]));
 	}
 
 	protected void updatePortletPreferences(
