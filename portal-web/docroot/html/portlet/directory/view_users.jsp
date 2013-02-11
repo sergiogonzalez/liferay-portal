@@ -109,9 +109,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 
 		long[] groupIds = StringUtil.split(ListUtil.toString(groups, "groupId"), 0L);
 
-		String[] excludedSiteNames = PropsValues.MY_SITES_DIRECTORY_LIST_SITE_EXCLUDES;
-
-		for (String excludedSiteName : excludedSiteNames) {
+		for (String excludedSiteName : PropsValues.MY_SITES_DIRECTORY_LIST_SITE_EXCLUDES) {
 			Group excludedSite = GroupLocalServiceUtil.fetchGroup(themeDisplay.getCompanyId(), excludedSiteName);
 
 			if (excludedSite != null) {
