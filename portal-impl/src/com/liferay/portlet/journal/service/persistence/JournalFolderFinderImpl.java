@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalFolderImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -88,7 +89,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("JournalFolder", JournalFolderImpl.class);
+			q.addEntity(JournalFolderImpl.TABLE_NAME, JournalFolderImpl.class);
 
 			return q.list(true);
 		}
@@ -259,7 +260,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		long groupId, String id, QueryDefinition queryDefinition,
 		boolean inlineSQLHelper) {
 
-		String sql = CustomSQLUtil.get(id, queryDefinition, "JournalArticle");
+		String sql = CustomSQLUtil.get(
+			id, queryDefinition, JournalArticleImpl.TABLE_NAME);
 
 		if (inlineSQLHelper) {
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -270,7 +272,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		return sql;
 	}
 
-	protected String getFolderId(String table, long folderId) {
+	protected String getFolderId(String tableName, long folderId) {
 		if (folderId < 0) {
 			return StringPool.BLANK;
 		}
@@ -278,10 +280,10 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(" AND ");
-		sb.append(table);
+		sb.append(tableName);
 		sb.append(".");
 
-		if (table.equals("JournalFolder")) {
+		if (tableName.equals(JournalFolderImpl.TABLE_NAME)) {
 			sb.append("parentFolderId");
 		}
 		else {
@@ -314,8 +316,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 				"[$ARTICLE_FOLDER_ID$]", "[$FOLDER_PARENT_FOLDER_ID$]"
 			},
 			new String[] {
-				getFolderId("JournalArticle", folderId),
-				getFolderId("JournalFolder", folderId)
+				getFolderId(JournalArticleImpl.TABLE_NAME, folderId),
+				getFolderId(JournalFolderImpl.TABLE_NAME, folderId)
 			});
 
 		return sql;

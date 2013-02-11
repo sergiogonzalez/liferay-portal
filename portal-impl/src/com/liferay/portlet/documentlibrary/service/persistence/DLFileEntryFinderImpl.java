@@ -465,7 +465,7 @@ public class DLFileEntryFinderImpl
 		return StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
 	}
 
-	protected String getFolderIds(List<Long> folderIds, String table) {
+	protected String getFolderIds(List<Long> folderIds, String tableName) {
 		if (folderIds.isEmpty()) {
 			return StringPool.BLANK;
 		}
@@ -473,7 +473,7 @@ public class DLFileEntryFinderImpl
 		StringBundler sb = new StringBundler(folderIds.size() * 2 - 1);
 
 		for (int i = 0; i < folderIds.size(); i++) {
-			sb.append(table);
+			sb.append(tableName);
 			sb.append(".folderId = ? ");
 
 			if ((i + 1) != folderIds.size()) {
@@ -484,7 +484,7 @@ public class DLFileEntryFinderImpl
 		return sb.toString();
 	}
 
-	protected String getMimeTypes(String[] mimeTypes, String table) {
+	protected String getMimeTypes(String[] mimeTypes, String tableName) {
 		if (mimeTypes.length == 0) {
 			return StringPool.BLANK;
 		}
@@ -492,7 +492,7 @@ public class DLFileEntryFinderImpl
 		StringBundler sb = new StringBundler(mimeTypes.length * 2 - 1);
 
 		for (int i = 0; i < mimeTypes.length; i++) {
-			sb.append(table);
+			sb.append(tableName);
 			sb.append(".mimeType = ?");
 
 			if ((i + 1) != mimeTypes.length) {
