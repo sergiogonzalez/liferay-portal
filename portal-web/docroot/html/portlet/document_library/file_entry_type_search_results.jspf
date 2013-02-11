@@ -19,8 +19,10 @@ StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSear
 
 boolean includeBasicFileEntryType = ParamUtil.getBoolean(renderRequest, "includeBasicFileEntryType");
 
-results = DLFileEntryTypeServiceUtil.search(company.getCompanyId(), PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), searchTerms.getKeywords(), includeBasicFileEntryType, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-total = DLFileEntryTypeServiceUtil.searchCount(company.getCompanyId(), PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), searchTerms.getKeywords(), includeBasicFileEntryType);
+long[] groupIds = new long[] {themeDisplay.getScopeGroupId()};
+
+results = DLFileEntryTypeServiceUtil.search(company.getCompanyId(), groupIds, searchTerms.getKeywords(), includeBasicFileEntryType, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+total = DLFileEntryTypeServiceUtil.searchCount(company.getCompanyId(), groupIds, searchTerms.getKeywords(), includeBasicFileEntryType);
 
 pageContext.setAttribute("results", results);
 pageContext.setAttribute("total", total);
