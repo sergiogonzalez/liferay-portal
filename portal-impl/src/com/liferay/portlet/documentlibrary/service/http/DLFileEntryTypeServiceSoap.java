@@ -139,6 +139,23 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] getFolderFileEntryTypes(
+		long[] groupIds, long folderId, boolean inherited)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> returnValue =
+				DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(groupIds,
+					folderId, inherited);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
