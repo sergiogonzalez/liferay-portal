@@ -364,7 +364,7 @@ public class UserGroupFinderImpl
 			if (value instanceof Long) {
 				join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
 			}
-			else {
+			else if (value instanceof Long[]) {
 				Long[] userGroupIds = (Long[])value;
 
 				if (userGroupIds.length == 0) {

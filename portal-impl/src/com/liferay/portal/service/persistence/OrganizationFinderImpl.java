@@ -680,7 +680,7 @@ public class OrganizationFinderImpl
 			if (value instanceof Long) {
 				join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_GROUPS);
 			}
-			else {
+			else if (value instanceof Long[]) {
 				Long[] organizationGroupIds = (Long[])value;
 
 				if (organizationGroupIds.length == 0) {

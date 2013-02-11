@@ -224,7 +224,11 @@ public class UserFinderImpl
 		Long[] groupIds = null;
 
 		if (params.get("usersGroups") instanceof Long) {
-			groupIds = new Long[] {(Long)params.get("usersGroups")};
+			Long groupId = (Long)params.get("usersGroups");
+
+			if (groupId > 0) {
+				groupIds = new Long[] {groupId};
+			}
 		}
 		else {
 			groupIds = (Long[])params.get("usersGroups");
@@ -277,7 +281,9 @@ public class UserFinderImpl
 				"usersOrgs",
 				organizationIds.toArray(new Long[organizationIds.size()]));
 
-			params3.put("usersUserGroups", userGroupIds);
+			params3.put(
+				"usersUserGroups",
+				userGroupIds.toArray(new Long[userGroupIds.size()]));
 		}
 
 		Session session = null;
@@ -455,7 +461,11 @@ public class UserFinderImpl
 		Long[] groupIds = null;
 
 		if (params.get("usersGroups") instanceof Long) {
-			groupIds = new Long[] {(Long)params.get("usersGroups")};
+			Long groupId = (Long)params.get("usersGroups");
+
+			if (groupId > 0) {
+				groupIds = new Long[] {groupId};
+			}
 		}
 		else {
 			groupIds = (Long[])params.get("usersGroups");
@@ -816,7 +826,7 @@ public class UserFinderImpl
 			if (value instanceof Long) {
 				join = CustomSQLUtil.get(JOIN_BY_USERS_GROUPS);
 			}
-			else {
+			else if (value instanceof Long[]) {
 				Long[] groupIds = (Long[])value;
 
 				if (groupIds.length == 0) {
