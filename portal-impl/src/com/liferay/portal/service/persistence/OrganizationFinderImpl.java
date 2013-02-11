@@ -310,7 +310,7 @@ public class OrganizationFinderImpl
 		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 
 		sb.append(sql);
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		sql = sb.toString();
 
@@ -671,7 +671,7 @@ public class OrganizationFinderImpl
 					}
 				}
 
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				join = sb.toString();
 			}
@@ -730,7 +730,7 @@ public class OrganizationFinderImpl
 					}
 				}
 
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				join = sb.toString();
 			}
