@@ -90,6 +90,14 @@ public class DLFileEntryTypeServiceUtil {
 		return getService().getFileEntryTypesCount(groupIds);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFolderFileEntryTypes(
+		long[] groupIds, long folderId, boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFolderFileEntryTypes(groupIds, folderId, inherited);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
