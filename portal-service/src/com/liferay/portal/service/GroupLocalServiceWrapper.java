@@ -360,21 +360,6 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
-	* Removes the user from any forbidden groups and adds the user to all
-	* mandatory groups, if the user does not belong to them.
-	*
-	* @param user the user
-	* @throws PortalException if the user cannot be added or removed from any
-	groups.
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portal.events.MembershipPolicyAction
-	*/
-	public void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_groupLocalService.checkMembershipPolicy(user);
-	}
-
-	/**
 	* Creates systems groups and other related data needed by the system on the
 	* very first startup. Also takes care of creating the Control Panel groups
 	* and layouts.
@@ -520,7 +505,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
-	* Returns all the sites that are children of the parent group.
+	* Returns all the groups that are direct children of the parent group.
 	*
 	* @param companyId the primary key of the company
 	* @param parentGroupId the primary key of the parent group
@@ -550,6 +535,16 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getGroups(groupIds);
 	}
 
+	/**
+	* Returns the number of groups that are direct children of the parent
+	* group.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @return the number of matching groups
+	* @throws SystemException if a system exception occurred
+	*/
 	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _groupLocalService.getGroupsCount(companyId, parentGroupId, site);

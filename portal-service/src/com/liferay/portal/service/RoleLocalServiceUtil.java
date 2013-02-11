@@ -368,16 +368,6 @@ public class RoleLocalServiceUtil {
 		getService().addUserRoles(userId, roleIds);
 	}
 
-	/**
-	* Removes any forbidden roles from the user and adds all mandatory roles to
-	* the user, if the user does not have the role.
-	*
-	* @param user the user
-	* @throws PortalException if the any roles cannot be added or removed from
-	the user.
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portal.events.MembershipPolicyAction
-	*/
 	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
