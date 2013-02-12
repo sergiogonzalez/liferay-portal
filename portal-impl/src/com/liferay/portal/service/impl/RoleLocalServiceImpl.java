@@ -49,7 +49,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.RoleLocalServiceBaseImpl;
@@ -67,7 +66,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The implementation of the role local service.
@@ -240,22 +238,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	public void checkMembershipPolicy(User user)
 		throws PortalException, SystemException {
-
-		List<Role> roles = getUserRoles(user.getUserId());
-
-		for (Role role : roles) {
-			if (!MembershipPolicyUtil.isMembershipAllowed(role, user)) {
-				unsetUserRoles(user.getUserId(), new long[] {role.getRoleId()});
-			}
-		}
-
-		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(user);
-
-		for (Role role : mandatoryRoles) {
-			if (!hasUserRole(user.getUserId(), role.getRoleId())) {
-				addUserRoles(user.getUserId(), new long[] {role.getRoleId()});
-			}
-		}
+		//TODO
 	}
 
 	/**

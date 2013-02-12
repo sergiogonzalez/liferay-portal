@@ -16,15 +16,9 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.MembershipPolicyException;
 import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.service.base.UserGroupRoleServiceBaseImpl;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
-
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,8 +33,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				getPermissionChecker(), groupId, roleId);
 		}
 
-		checkAddUserGroupRolesMembershipPolicy(
-			new long[] {userId}, groupId, roleIds);
+		MembershipPolicyUtil.checkSetUserGroupRoleToUser(
+			new long[]{userId}, new long[]{groupId}, roleIds);
 
 		userGroupRoleLocalService.addUserGroupRoles(userId, groupId, roleIds);
 	}
@@ -51,8 +45,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
-		checkAddUserGroupRolesMembershipPolicy(
-			userIds, groupId, new long[] {roleId});
+		MembershipPolicyUtil.checkSetUserGroupRoleToUser(
+			userIds, new long[]{groupId}, new long[]{roleId});
 
 		userGroupRoleLocalService.addUserGroupRoles(userIds, groupId, roleId);
 	}
@@ -65,8 +59,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				getPermissionChecker(), groupId, roleId);
 		}
 
-		checkDeleteUserGroupRolesMembershipPolicy(
-			new long[] {userId}, groupId, roleIds);
+		MembershipPolicyUtil.checkUnsetUserGroupRoleToUser(
+			new long[]{userId}, new long[]{groupId}, roleIds);
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userId, groupId, roleIds);
@@ -78,96 +72,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
-		checkDeleteUserGroupRolesMembershipPolicy(
-			userIds, groupId, new long[] {roleId});
+		MembershipPolicyUtil.checkUnsetUserGroupRoleToUser(
+			userIds, new long[]{groupId}, new long[]{roleId});
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, roleId);
-	}
-
-	protected void checkAddUserGroupRolesMembershipPolicy(
-			long[] userIds, long groupId, long[] roleIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		Group group = groupLocalService.getGroup(groupId);
-
-		for (long roleId : roleIds) {
-			Role role = rolePersistence.findByPrimaryKey(roleId);
-
-			for (long userId : userIds) {
-				User user = userPersistence.findByPrimaryKey(userId);
-
-				if (MembershipPolicyUtil.isMembershipAllowed(
-						group, role, user)) {
-
-					continue;
-				}
-
-				if (membershipPolicyException == null) {
-					membershipPolicyException = new MembershipPolicyException(
-						MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED);
-
-					membershipPolicyException.addGroup(group);
-				}
-
-				if (!membershipPolicyException.getUsers().contains(user)) {
-					membershipPolicyException.addUser(user);
-				}
-
-				if (!membershipPolicyException.getRoles().contains(role)) {
-					membershipPolicyException.addRole(role);
-				}
-			}
-		}
-
-		if (membershipPolicyException!= null) {
-			throw membershipPolicyException;
-		}
-	}
-
-	protected void checkDeleteUserGroupRolesMembershipPolicy(
-			long[] userIds, long groupId, long[] roleIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		Group group = groupLocalService.getGroup(groupId);
-
-		for (long roleId : roleIds) {
-			Role role = rolePersistence.findByPrimaryKey(roleId);
-
-			for (long userId : userIds) {
-				User user = userPersistence.findByPrimaryKey(userId);
-
-				Set<Role> mandatoryRoles =
-					MembershipPolicyUtil.getMandatoryRoles(group, user);
-
-				if (!mandatoryRoles.contains(role)) {
-					continue;
-				}
-
-				if (membershipPolicyException == null) {
-					membershipPolicyException = new MembershipPolicyException(
-						MembershipPolicyException.ROLE_MEMBERSHIP_REQUIRED);
-
-					membershipPolicyException.addGroup(group);
-				}
-
-				if (!membershipPolicyException.getUsers().contains(user)) {
-					membershipPolicyException.addUser(user);
-				}
-
-				if (!membershipPolicyException.getRoles().contains(role)) {
-					membershipPolicyException.addRole(role);
-				}
-			}
-		}
-
-		if (membershipPolicyException!= null) {
-			throw membershipPolicyException;
-		}
 	}
 
 }

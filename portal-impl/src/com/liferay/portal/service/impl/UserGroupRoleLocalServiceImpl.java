@@ -15,23 +15,17 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.NoSuchUserGroupRoleException;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.UserGroupRoleLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Jorge Ferrer
@@ -79,82 +73,6 @@ public class UserGroupRoleLocalServiceImpl
 		}
 
 		PermissionCacheUtil.clearCache();
-	}
-
-	public void checkMembershipPolicy(User user)
-		throws PortalException, SystemException {
-
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("inheritance", Boolean.FALSE);
-		groupParams.put("site", Boolean.TRUE);
-		groupParams.put("usersGroups", user.getUserId());
-
-		List<Group> groups = groupLocalService.search(
-			user.getCompanyId(), groupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		for (Group group : groups) {
-			Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
-				group, user);
-
-			for (Role role : mandatoryRoles) {
-				if (!hasUserGroupRole(
-						user.getUserId(), group.getGroupId(), role.getRoleId(),
-						false)) {
-
-					addUserGroupRoles(
-						user.getUserId(), group.getGroupId(),
-						new long[] {role.getRoleId()});
-				}
-			}
-
-			List<Role> roles = roleLocalService.getUserGroupRoles(
-				user.getUserId(), group.getGroupId());
-
-			for (Role role : roles) {
-				if (!MembershipPolicyUtil.isMembershipAllowed(
-						group, role, user)) {
-
-					deleteUserGroupRoles(
-						user.getUserId(), group.getGroupId(),
-						new long[] {role.getRoleId()});
-				}
-			}
-		}
-
-		List<Organization> organizations =
-			organizationLocalService.getUserOrganizations(user.getUserId());
-
-		for (Organization organization : organizations) {
-			Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
-				organization, user);
-
-			for (Role role : mandatoryRoles) {
-				if (!hasUserGroupRole(
-						user.getUserId(), organization.getGroupId(),
-						role.getRoleId(), false)) {
-
-					addUserGroupRoles(
-						user.getUserId(), organization.getGroupId(),
-						new long[] {role.getRoleId()});
-				}
-			}
-
-			List<Role> roles = roleLocalService.getUserGroupRoles(
-				user.getUserId(), organization.getGroupId());
-
-			for (Role role : roles) {
-				if (!MembershipPolicyUtil.isMembershipAllowed(
-						organization, role, user)) {
-
-					deleteUserGroupRoles(
-						user.getUserId(), organization.getGroupId(),
-						new long[] {role.getRoleId()});
-				}
-			}
-		}
 	}
 
 	@Override

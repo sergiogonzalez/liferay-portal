@@ -71,9 +71,8 @@ public class UserServiceSoap {
 	* @param userIds the primary keys of the users
 	* @param serviceContext the service context (optionally <code>null</code>)
 	* @throws PortalException if a group or user with the primary key could not
-	be found, if the user did not have permission to assign group
-	members, or if the assignment is not allowed by the membership
-	policy.
+	be found, or if the user did not have permission to assign group
+	members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addGroupUsers(long groupId, long[] userIds,
@@ -96,9 +95,8 @@ public class UserServiceSoap {
 	* @param userIds the primary keys of the users
 	* @throws PortalException if an organization or user with the primary key
 	could not be found, if the user did not have permission to assign
-	organization members, if current user did not have an
-	organization in common with a given user, or if the assignment
-	is not allowed by the membership policy.
+	organization members, or if current user did not have an
+	organization in common with a given user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addOrganizationUsers(long organizationId, long[] userIds)
@@ -141,9 +139,8 @@ public class UserServiceSoap {
 	* @param roleId the primary key of the role
 	* @param userIds the primary keys of the users
 	* @throws PortalException if a role or user with the primary key could not
-	be found, if the user did not have permission to assign role
-	members, or if the assignment is not allowed by the membership
-	policy.
+	be found or if the user did not have permission to assign role
+	members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addRoleUsers(long roleId, long[] userIds)
@@ -366,9 +363,8 @@ public class UserServiceSoap {
 	* @param userGroupId the primary key of the user group
 	* @param userIds the primary keys of the users
 	* @throws PortalException if a user group or user with the primary could
-	could not be found, if the current user did not have
-	permission to assign group members, or if the assignment is not
-	allowed by the membership policy.
+	could not be found, or if the current user did not have
+	permission to assign group members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addUserGroupUsers(long userGroupId, long[] userIds)
@@ -1057,8 +1053,7 @@ public class UserServiceSoap {
 	* @param userIds the primary keys of the users
 	* @param serviceContext the service context (optionally <code>null</code>)
 	* @throws PortalException if the current user did not have permission to
-	modify group assignments, or if the change is not allowed by
-	the membership policy.
+	modify group assignments
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetGroupUsers(long groupId, long[] userIds,
@@ -1080,8 +1075,7 @@ public class UserServiceSoap {
 	* @param organizationId the primary key of the organization
 	* @param userIds the primary keys of the users
 	* @throws PortalException if the current user did not have permission to
-	modify organization assignments, or if the change is not allowed
-	by the membership policy.
+	modify organization assignments
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetOrganizationUsers(long organizationId,
@@ -1123,8 +1117,7 @@ public class UserServiceSoap {
 	* @param roleId the primary key of the role
 	* @param userIds the primary keys of the users
 	* @throws PortalException if the current user did not have permission to
-	modify role assignments, or if the change is not allowed by
-	the membership policy.
+	modify role assignments
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetRoleUsers(long roleId, long[] userIds)
@@ -1166,8 +1159,7 @@ public class UserServiceSoap {
 	* @param userGroupId the primary key of the user group
 	* @param userIds the primary keys of the users
 	* @throws PortalException if the current user did not have permission to
-	modify user group assignments, or if the change is not allowed by
-	the membership policy.
+	modify user group assignments
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetUserGroupUsers(long userGroupId, long[] userIds)
@@ -1581,9 +1573,8 @@ public class UserServiceSoap {
 	bridge attributes for the user.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
-	found, if the new information was invalid, if the current user
-	did not have permission to update the user, or if the
-	change is not allowed by the membership policy.
+	found, if the new information was invalid, or if the current user
+	did not have permission to update the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap updateUser(long userId,

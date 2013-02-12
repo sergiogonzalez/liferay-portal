@@ -14,159 +14,92 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroup;
-
-import java.util.Set;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class MembershipPolicyUtil {
 
-	public static Set<Group> getForbiddenGroups(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getForbiddenGroups(user);
+	public static void checkAddUserToOrganization(
+			long[] user, long[] organizationIds)
+		throws PortalException, SystemException {
+		getInstance().checkAddUserToOrganization(user, organizationIds);
 	}
 
-	public static Set<Organization> getForbiddenOrganizations(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getForbiddenOrganizations(user);
+	public static void checkAddUserToSites(long[] userIds, long[] groupIds)
+		throws PortalException, SystemException {
+		getInstance().checkAddUserToSites(userIds, groupIds);
 	}
 
-	public static Set<Role> getForbiddenRoles(Group group, User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getForbiddenRoles(group, user);
+	public static void checkAddUserToUserGroup(
+			long[] userIds, long[] userGroupIds)
+		throws PortalException, SystemException {
+		getInstance().checkAddUserToUserGroup(userIds, userGroupIds);
 	}
 
-	public static Set<Role> getForbiddenRoles(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getForbiddenRoles(user);
+	public static void checkRemoveUserFromOrganization(
+			long[] userIds, long[] organizationIds)
+		throws PortalException, SystemException {
+		getInstance().checkRemoveUserFromOrganization(userIds, organizationIds);
 	}
 
-	public static Set<Role> getForbiddenRoles(
-		User user, Organization organization) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getForbiddenRoles(organization, user);
+	public static void checkRemoveUserFromSite(long[] userIds, long[] groupIds)
+		throws PortalException, SystemException {
+		getInstance().checkRemoveUserFromSite(userIds, groupIds);
 	}
 
-	public static Set<UserGroup> getForbiddenUserGroups(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getForbiddenUserGroups(user);
+	public static void checkRemoveUserFromUserGroup(
+			long[] userIds, long[] userGroupIds)
+		throws PortalException, SystemException {
+		getInstance().checkRemoveUserFromUserGroup(userIds, userGroupIds);
 	}
 
-	public static Set<Group> getMandatoryGroups(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getMandatoryGroups(user);
+	public static void checkSetOrganizationRoleToUser(
+			long[] userIds, long[] organizationIds, long[] roleIds)
+		throws PortalException, SystemException {
+		getInstance().checkSetOrganizationRoleToUser(
+			userIds, organizationIds, roleIds);
 	}
 
-	public static Set<Organization> getMandatoryOrganizations(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getMandatoryOrganizations(user);
+	public static void checkSetRoleToUser(long[] userIds, long[] roleIds)
+		throws PortalException, SystemException {
+		getInstance().checkSetRoleToUser(userIds, roleIds);
 	}
 
-	public static Set<Role> getMandatoryRoles(Group group, User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getMandatoryRoles(group, user);
+	public static void checkSetUserGroupRoleToUser(
+			long[] userIds, long[] groupIds, long[] roleIds)
+		throws PortalException, SystemException {
+		getInstance().checkSetUserGroupRoleToUser(userIds, groupIds, roleIds);
 	}
 
-	public static Set<Role> getMandatoryRoles(
-		Organization organization, User user) {
-
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getMandatoryRoles(organization, user);
+	public static void checkUnsetOrganizationRoleToUser(
+			long[] userIds, long[] organizationIds, long[] roleIds)
+		throws PortalException, SystemException {
+		getInstance().checkUnsetOrganizationRoleToUser(
+			userIds, organizationIds, roleIds);
 	}
 
-	public static Set<Role> getMandatoryRoles(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getMandatoryRoles(user);
+	public static void checkUnsetRoleToUser(long[] userIds, long[] roleIds)
+		throws PortalException, SystemException {
+		getInstance().checkUnsetRoleToUser(userIds, roleIds);
 	}
 
-	public static Set<UserGroup> getMandatoryUserGroups(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getMandatoryUserGroups(user);
+	public static void checkUnsetUserGroupRoleToUser(
+			long[] userIds, long[] groupIds, long[] roleIds)
+		throws PortalException, SystemException {
+		getInstance().checkUnsetUserGroupRoleToUser(userIds, groupIds, roleIds);
 	}
 
-	public static boolean isApplicableUser(User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.isApplicableUser(user);
+	public static void membershipPolicyVerfier()
+		throws PortalException, SystemException {
+		getInstance().membershipPolicyVerifier();
 	}
 
-	public static boolean isMembershipAllowed(
-		Group group, Role role, User user) {
-
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.isMembershipAllowed(group, role, user);
-	}
-
-	public static boolean isMembershipAllowed(Group group, User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.isMembershipAllowed(group, user);
-	}
-
-	public static boolean isMembershipAllowed(
-		Organization organization, Role role, User user) {
-
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.isMembershipAllowed(organization, role, user);
-	}
-
-	public static boolean isMembershipAllowed(
-		Organization organization, User user) {
-
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.isMembershipAllowed(organization, user);
-	}
-
-	public static boolean isMembershipAllowed(Role role, User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.isMembershipAllowed(role, user);
-	}
-
-	public static boolean isMembershipAllowed(UserGroup userGroup, User user) {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.isMembershipAllowed(userGroup, user);
+	private static MembershipPolicy getInstance() {
+		return MembershipPolicyFactoryUtil.getMembershipPolicy();
 	}
 
 }

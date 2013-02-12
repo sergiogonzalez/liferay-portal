@@ -14,96 +14,250 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
-import java.util.Collections;
-import java.util.Set;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class DefaultMembershipPolicy implements MembershipPolicy {
 
-	public Set<Group> getForbiddenGroups(User user) {
-		return Collections.emptySet();
+	public void checkAddUserToOrganization(
+			long[] userIds, long[] organizationIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<Organization> getForbiddenOrganizations(User user) {
-		return Collections.emptySet();
+	public void checkAddUserToSites(long[] userIds, long[] groupIds)
+		throws PortalException, SystemException {
+
+		MembershipPolicyException membershipPolicyException = null;
+
+		for (long userId : userIds) {
+			User user = UserLocalServiceUtil.getUser(userId);
+
+			for (long groupId : groupIds) {
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				if (group.getParentGroupId() == 0) {
+					continue;
+				}
+
+		// Allow membership only to parent members
+
+				Group parentGroup = group.getParentGroup();
+
+				List<Group> userSites = getUserSites(user.getCompanyId(), user);
+
+				if (userSites.contains(parentGroup)) {
+					continue;
+				}
+
+				if (membershipPolicyException == null) {
+					membershipPolicyException = new MembershipPolicyException(
+						MembershipPolicyException.GROUP_MEMBERSHIP_NOT_ALLOWED);
+				}
+
+				if (!membershipPolicyException.getUsers().contains(user)) {
+					membershipPolicyException.addUser(user);
+				}
+
+				if (!membershipPolicyException.getGroups().contains(group)) {
+					membershipPolicyException.addGroup(group);
+				}
+			}
+		}
+
+		if (membershipPolicyException != null) {
+			throw membershipPolicyException;
+		}
 	}
 
-	public Set<Role> getForbiddenRoles(Group group, User user) {
-		return Collections.emptySet();
+	public void checkAddUserToUserGroup(long[] userIds, long[] userGroupIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<Role> getForbiddenRoles(Organization organization, User user) {
-		return Collections.emptySet();
+	public void checkRemoveUserFromOrganization(
+			long[] user, long[] organizationIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<Role> getForbiddenRoles(User user) {
-		return Collections.emptySet();
+	public void checkRemoveUserFromSite(long[] userIds, long[] groupIds)
+		throws PortalException, SystemException {
+
+		MembershipPolicyException membershipPolicyException = null;
+
+		//Inherit memberships from parent
+
+		for (long userId : userIds) {
+			User user = UserLocalServiceUtil.getUser(userId);
+
+			for (long groupId : groupIds) {
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				if (group.getParentGroupId() == 0) {
+					continue;
+				}
+
+				Group parentGroup = group.getParentGroup();
+
+				List<Group> userSites = getUserSites(user.getCompanyId(), user);
+
+				if (!userSites.contains(parentGroup)) {
+					continue;
+				}
+
+				if (membershipPolicyException == null) {
+					membershipPolicyException = new MembershipPolicyException(
+						MembershipPolicyException.GROUP_MEMBERSHIP_NOT_ALLOWED);
+				}
+
+				if (!membershipPolicyException.getUsers().contains(user)) {
+					membershipPolicyException.addUser(user);
+				}
+
+				if (!membershipPolicyException.getGroups().contains(group)) {
+					membershipPolicyException.addGroup(group);
+				}
+			}
+		}
+
+		if (membershipPolicyException != null) {
+			throw membershipPolicyException;
+		}
 	}
 
-	public Set<UserGroup> getForbiddenUserGroups(User user) {
-		return Collections.emptySet();
+	public void checkRemoveUserFromUserGroup(
+			long[] userIds, long[] userGroupIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<Group> getMandatoryGroups(User user) {
-		return Collections.emptySet();
+	public void checkSetOrganizationRoleToUser(
+			long[] userIds, long[] organizations, long[] roleIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<Organization> getMandatoryOrganizations(User user) {
-		return Collections.emptySet();
+	public void checkSetRoleToUser(long[] userIds, long[] roleIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<Role> getMandatoryRoles(Group group, User user) {
-		return Collections.emptySet();
+	public void checkSetUserGroupRoleToUser(
+			long[] userIds, long[] groupIds, long[] roleIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<Role> getMandatoryRoles(Organization organization, User user) {
-		return Collections.emptySet();
+	public void checkUnsetOrganizationRoleToUser(
+			long[] userIds, long[] organizationIds, long[] roleIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<Role> getMandatoryRoles(User user) {
-		return Collections.emptySet();
+	public void checkUnsetRoleToUser(long[] userIds, long[] roleIds)
+		throws PortalException, SystemException {
 	}
 
-	public Set<UserGroup> getMandatoryUserGroups(User user) {
-		return Collections.emptySet();
+	public void checkUnsetUserGroupRoleToUser(
+			long[] userIds, long[] groupIds, long[] roleIds)
+		throws PortalException, SystemException {
 	}
 
-	public boolean isApplicableUser(User user) {
-		return false;
+	public void membershipPolicyVerifier()
+		throws PortalException, SystemException {
+		long[] companyIds = PortalUtil.getCompanyIds();
+
+		for (long companyId : companyIds) {
+			siteMembershipVerifier(companyId);
+		}
 	}
 
-	public boolean isMembershipAllowed(Group group, Role role, User user) {
-		return true;
+	private List<Group> getUserSites(long companyId, User user)
+		throws PortalException, SystemException {
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		if (user != null) {
+			groupParams.put("inherit", Boolean.FALSE);
+			groupParams.put("usersGroups", user.getUserId());
+		}
+
+		groupParams.put("site", Boolean.TRUE);
+
+		return GroupLocalServiceUtil.search(
+			companyId, groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	public boolean isMembershipAllowed(Group group, User user) {
-		return true;
-	}
+	private void siteMembershipVerifier(long companyId)
+		throws PortalException, SystemException {
+		List<Group> userSites = getUserSites(companyId, null);
 
-	public boolean isMembershipAllowed(
-		Organization organization, Role role, User user) {
+		for (Group group : userSites) {
 
-		return true;
-	}
+			if (group.getParentGroupId() == 0) {
+				continue;
+			}
 
-	public boolean isMembershipAllowed(Organization organization, User user) {
-		return true;
-	}
+			List<User> parentGroupUsers = UserLocalServiceUtil.getGroupUsers(
+				group.getParentGroupId());
 
-	public boolean isMembershipAllowed(Role role, User user) {
-		return true;
-	}
+			List<User> currentGroupUsers = UserLocalServiceUtil.getGroupUsers(
+				group.getGroupId());
 
-	public boolean isMembershipAllowed(UserGroup userGroup, User user) {
-		return true;
+			//Inherit membership from parent
+
+			long[] inheritUserIds = null;
+
+			for (User user : parentGroupUsers) {
+				if (currentGroupUsers.contains(user)) {
+					continue;
+				}
+
+				if (inheritUserIds == null) {
+					inheritUserIds = new long[]{user.getUserId()};
+				}
+				else {
+					inheritUserIds = ArrayUtil.append(
+						inheritUserIds, user.getUserId());
+				}
+			}
+
+			if ((inheritUserIds != null) && (inheritUserIds.length > 0)) {
+				UserLocalServiceUtil.addGroupUsers(
+					group.getGroupId(), inheritUserIds);
+			}
+
+			// Allow membership only to parent members
+
+			long[] notAllowedtUserIds = null;
+
+			for (User user : currentGroupUsers) {
+				if (parentGroupUsers.contains(user)) {
+					continue;
+				}
+
+				if (notAllowedtUserIds == null) {
+					notAllowedtUserIds = new long[]{user.getUserId()};
+				}
+				else {
+					notAllowedtUserIds = ArrayUtil.append(
+						notAllowedtUserIds, user.getUserId());
+				}
+			}
+
+			if ((notAllowedtUserIds != null) &&
+				(notAllowedtUserIds.length > 0)) {
+				UserLocalServiceUtil.unsetGroupUsers(
+					group.getGroupId(), notAllowedtUserIds, null);
+			}
+		}
 	}
 
 }
