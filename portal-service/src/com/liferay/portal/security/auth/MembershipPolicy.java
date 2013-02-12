@@ -14,56 +14,59 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroup;
-
-import java.util.Set;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public interface MembershipPolicy {
 
-	public Set<Group> getForbiddenGroups(User user);
+	public void checkAddUserToOrganization(
+			long[] userIds, long[] organizationIds)
+		throws PortalException, SystemException;
 
-	public Set<Organization> getForbiddenOrganizations(User user);
+	public void checkAddUserToSites(long[] userIds, long[] groupIds)
+		throws PortalException, SystemException;
 
-	public Set<Role> getForbiddenRoles(Group group, User user);
+	public void checkAddUserToUserGroup(long[] userIds, long[] userGroupIds)
+		throws PortalException, SystemException;
 
-	public Set<Role> getForbiddenRoles(Organization organization, User user);
+	public void checkRemoveUserFromOrganization(
+			long[] userIds, long[] organizationIds)
+		throws PortalException, SystemException;
 
-	public Set<Role> getForbiddenRoles(User user);
+	public void checkRemoveUserFromSite(long[] userIds, long[] groupIds)
+		throws PortalException, SystemException;
 
-	public Set<UserGroup> getForbiddenUserGroups(User user);
+	public void checkRemoveUserFromUserGroup(
+			long[] userIds, long[] userGroupIds)
+		throws PortalException, SystemException;
 
-	public Set<Group> getMandatoryGroups(User user);
+	public void checkSetOrganizationRoleToUser(
+			long[] userIds, long[] organizationIds, long[] roleIds)
+		throws PortalException, SystemException;
 
-	public Set<Organization> getMandatoryOrganizations(User user);
+	public void checkSetRoleToUser(long[] userIds, long[] roleIds)
+		throws PortalException, SystemException;
 
-	public Set<Role> getMandatoryRoles(Group group, User user);
+	public void checkSetUserGroupRoleToUser(
+			long[] userIds, long[] groupIds, long[] roleIds)
+		throws PortalException, SystemException;
 
-	public Set<Role> getMandatoryRoles(Organization organization, User user);
+	public void checkUnsetOrganizationRoleToUser(
+			long[] userIds, long[] organizationIds, long[] roleIds)
+		throws PortalException, SystemException;
 
-	public Set<Role> getMandatoryRoles(User user);
+	public void checkUnsetRoleToUser(long[] userIds, long[] roleIds)
+		throws PortalException, SystemException;
 
-	public Set<UserGroup> getMandatoryUserGroups(User user);
+	public void checkUnsetUserGroupRoleToUser(
+			long[] userIds, long[] groupIds, long[] roleIds)
+		throws PortalException, SystemException;
 
-	public boolean isApplicableUser(User user);
-
-	public boolean isMembershipAllowed(Group group, Role role, User user);
-
-	public boolean isMembershipAllowed(Group group, User user);
-
-	public boolean isMembershipAllowed(
-		Organization organization, Role role, User user);
-
-	public boolean isMembershipAllowed(Organization organization, User user);
-
-	public boolean isMembershipAllowed(Role role, User user);
-
-	public boolean isMembershipAllowed(UserGroup userGroup, User user);
+	public void membershipPolicyVerifier()
+		throws PortalException, SystemException;
 
 }

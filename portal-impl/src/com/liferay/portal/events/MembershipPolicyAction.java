@@ -15,17 +15,7 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.Action;
-import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.MembershipPolicyUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,32 +26,12 @@ import javax.servlet.http.HttpServletResponse;
 public class MembershipPolicyAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
-		throws ActionException {
-
+	public void run(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			User user = PortalUtil.getUser(request);
-
-			checkMembershipPolicy(user);
+			MembershipPolicyUtil.membershipPolicyVerfier();
 		}
 		catch (Exception e) {
-			throw new ActionException();
-		}
-	}
-
-	protected void checkMembershipPolicy(User user)
-		throws PortalException, SystemException {
-
-		if (MembershipPolicyUtil.isApplicableUser(user)) {
-			GroupLocalServiceUtil.checkMembershipPolicy(user);
-
-			OrganizationLocalServiceUtil.checkMembershipPolicy(user);
-
-			UserGroupLocalServiceUtil.checkMembershipPolicy(user);
-
-			RoleLocalServiceUtil.checkMembershipPolicy(user);
-
-			UserGroupRoleLocalServiceUtil.checkMembershipPolicy(user);
+			e.printStackTrace();
 		}
 	}
 
