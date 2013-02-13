@@ -12,7 +12,7 @@
  * details.
  */
 
-package integration.com.liferay.portal.search;
+package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
@@ -64,21 +64,21 @@ import org.junit.runner.RunWith;
 @Sync
 public class DocumentImplTest {
 
-	public static final String MULTI_DOUBLE="md";
+	public static final String MULTI_DOUBLE = "md";
 
-	public static final String MULTI_FLOAT="mf";
+	public static final String MULTI_FLOAT = "mf";
 
-	public static final String MULTI_INT="mi";
+	public static final String MULTI_INT = "mi";
 
-	public static final String MULTI_LONG="ml";
+	public static final String MULTI_LONG = "ml";
 
-	public static final String SINGLE_DOUBLE="sd";
+	public static final String SINGLE_DOUBLE = "sd";
 
-	public static final String SINGLE_FLOAT="sf";
+	public static final String SINGLE_FLOAT = "sf";
 
-	public static final String SINGLE_INT="si";
+	public static final String SINGLE_INT = "si";
 
-	public static final String SINGLE_LONG="sl";
+	public static final String SINGLE_LONG = "sl";
 
 	@Before
 	public void setUp() throws Exception {
