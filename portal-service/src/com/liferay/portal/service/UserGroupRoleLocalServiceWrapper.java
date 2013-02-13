@@ -246,31 +246,25 @@ public class UserGroupRoleLocalServiceWrapper
 		_userGroupRoleLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public void addUserGroupRoles(long userId, long groupId, long[] roleIds)
+	public com.liferay.portal.model.UserGroupRole addUserGroupRole(
+		long userId, long groupId, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_userGroupRoleLocalService.addUserGroupRoles(userId, groupId, roleIds);
+		return _userGroupRoleLocalService.addUserGroupRole(userId, groupId,
+			roleId);
 	}
 
-	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
+	public java.util.List<com.liferay.portal.model.UserGroupRole> addUserGroupRoles(
+		long userId, long groupId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_userGroupRoleLocalService.addUserGroupRoles(userIds, groupId, roleId);
+		return _userGroupRoleLocalService.addUserGroupRoles(userId, groupId,
+			roleIds);
 	}
 
-	/**
-	* Removes any forbidden user group roles from the user and adds all
-	* mandatory user group roles to the user, if the user does not have the
-	* user group role.
-	*
-	* @param user the user
-	* @throws PortalException if the any user group roles cannot be added or
-	removed from the user.
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portal.events.MembershipPolicyAction
-	*/
-	public void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_userGroupRoleLocalService.checkMembershipPolicy(user);
+	public java.util.List<com.liferay.portal.model.UserGroupRole> addUserGroupRoles(
+		long[] userIds, long groupId, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupRoleLocalService.addUserGroupRoles(userIds, groupId,
+			roleId);
 	}
 
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
@@ -323,6 +317,12 @@ public class UserGroupRoleLocalServiceWrapper
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _userGroupRoleLocalService.getUserGroupRoles(userId, groupId);
+	}
+
+	public java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRolesByGroup(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupRoleLocalService.getUserGroupRolesByGroup(groupId);
 	}
 
 	public java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRolesByGroupAndRole(
