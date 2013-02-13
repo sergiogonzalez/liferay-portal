@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.auth.MembershipPolicyException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -68,9 +69,12 @@ public class EditRoleAssignmentsAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchRoleException ||
-				e instanceof PrincipalException ||
-				e instanceof RoleAssignmentException) {
+			if (e instanceof MembershipPolicyException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof NoSuchRoleException ||
+					 e instanceof PrincipalException ||
+					 e instanceof RoleAssignmentException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 

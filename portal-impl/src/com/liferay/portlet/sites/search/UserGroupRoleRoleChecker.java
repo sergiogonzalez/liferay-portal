@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -51,6 +54,24 @@ public class UserGroupRoleRoleChecker extends RowChecker {
 
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		Role role = (Role)obj;
+
+		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
+			_group, _user);
+
+		if ((isChecked(role) && mandatoryRoles.contains(role)) ||
+			(!isChecked(role) &&
+			 !MembershipPolicyUtil.isMembershipAllowed(
+				_group, role, _user))) {
+
+			return true;
+		}
+
+		return super.isDisabled(obj);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

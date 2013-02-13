@@ -36,7 +36,7 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{activityId=");
 		sb.append(activityId);
@@ -48,6 +48,8 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", activitySetId=");
+		sb.append(activitySetId);
 		sb.append(", mirrorActivityId=");
 		sb.append(mirrorActivityId);
 		sb.append(", classNameId=");
@@ -73,6 +75,7 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		socialActivityImpl.setCompanyId(companyId);
 		socialActivityImpl.setUserId(userId);
 		socialActivityImpl.setCreateDate(createDate);
+		socialActivityImpl.setActivitySetId(activitySetId);
 		socialActivityImpl.setMirrorActivityId(mirrorActivityId);
 		socialActivityImpl.setClassNameId(classNameId);
 		socialActivityImpl.setClassPK(classPK);
@@ -98,6 +101,7 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
+		activitySetId = objectInput.readLong();
 		mirrorActivityId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
@@ -113,6 +117,7 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(activitySetId);
 		objectOutput.writeLong(mirrorActivityId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
@@ -133,6 +138,7 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 	public long companyId;
 	public long userId;
 	public long createDate;
+	public long activitySetId;
 	public long mirrorActivityId;
 	public long classNameId;
 	public long classPK;

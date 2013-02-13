@@ -117,7 +117,11 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= (!(organizationUser || userGroupUser) && ((group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) && GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId())) %>">
+	<%
+	Set<Group> mandatoryGroups = MembershipPolicyUtil.getMandatoryGroups(user);
+	%>
+
+	<c:if test="<%= (!(organizationUser || userGroupUser) && ((group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) && GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId())) && !mandatoryGroups.contains(group) %>">
 		<portlet:actionURL var="leaveURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
 			<portlet:param name="<%= Constants.CMD %>" value="group_users" />

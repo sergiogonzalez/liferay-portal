@@ -35,6 +35,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	url="<%= portletURL.toString() %>"
 />
 
+<liferay-ui:membership-policy-error />
+
 <liferay-ui:search-container
 	rowChecker="<%= new UserRoleChecker(renderResponse, role) %>"
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"

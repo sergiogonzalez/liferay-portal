@@ -40,6 +40,8 @@ portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 
 <br /><br />
 
+<liferay-ui:membership-policy-error />
+
 <%
 RoleSearch searchContainer = new RoleSearch(renderRequest, portletURL);
 

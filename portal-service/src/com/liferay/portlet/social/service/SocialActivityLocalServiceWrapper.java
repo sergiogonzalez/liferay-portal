@@ -455,6 +455,13 @@ public class SocialActivityLocalServiceWrapper
 		_socialActivityLocalService.deleteUserActivities(userId);
 	}
 
+	public com.liferay.portlet.social.model.SocialActivity fetchFirstActivity(
+		java.lang.String className, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityLocalService.fetchFirstActivity(className,
+			classPK, type);
+	}
+
 	/**
 	* Returns a range of all the activities done on assets identified by the
 	* class name ID.

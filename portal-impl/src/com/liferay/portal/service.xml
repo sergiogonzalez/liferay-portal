@@ -395,6 +395,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="C_C_P" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="parentGroupId" />
+		</finder>
 		<finder name="C_P_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />
@@ -1771,6 +1776,10 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="ServiceComponent" local-service="true" remote-service="false">
 

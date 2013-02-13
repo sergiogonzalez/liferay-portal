@@ -463,6 +463,12 @@ public class SocialActivityLocalServiceUtil {
 		getService().deleteUserActivities(userId);
 	}
 
+	public static com.liferay.portlet.social.model.SocialActivity fetchFirstActivity(
+		java.lang.String className, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchFirstActivity(className, classPK, type);
+	}
+
 	/**
 	* Returns a range of all the activities done on assets identified by the
 	* class name ID.
