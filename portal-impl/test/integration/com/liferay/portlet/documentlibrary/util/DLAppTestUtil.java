@@ -32,6 +32,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -322,6 +323,7 @@ public abstract class DLAppTestUtil {
 			"Verify title", sourceFileEntry.getTitle(),
 			targetFileEntry.getTitle());
 
+		
 		Assert.assertEquals(
 			"Verify description", sourceFileEntry.getDescription(),
 			targetFileEntry.getDescription());
@@ -329,17 +331,19 @@ public abstract class DLAppTestUtil {
 		Assert.assertEquals(
 			"Verify extension", sourceFileEntry.getExtension(),
 			targetFileEntry.getExtension());
-
-		assertInputStreams(
-			String.format("Verifying that FileEntry %s content is equal",
-			sourceFileEntry.getUuid()), sourceFileEntry.getContentStream(),
-			targetFileEntry.getContentStream());
+		
+		Assert.assertEquals(
+				"Verify version", sourceFileEntry.getVersion(),
+				targetFileEntry.getVersion());		
 
 		DLFileEntryType dlFileEntryType = null;
 
 		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
 			targetFileEntry.getFileEntryTypeId());
 
+		assertDlFileVersion(sourceFileEntry.getFileVersion(),
+			targetFileEntry.getFileVersion());
+		
 		// With -1 you can disable this check
 
 		if (expectedFileEntryTypeGroupId!=-1) {
@@ -383,6 +387,24 @@ public abstract class DLAppTestUtil {
 			}
 		}
 	}
+
+	public static void assertDlFileVersion(
+			DLFileVersion sourceFileVersion, DLFileVersion targetFileVersion) 
+		throws Exception {
+		
+		Assert.assertEquals(sourceFileVersion.getUuid(), 
+			targetFileVersion.getUuid());
+
+		Assert.assertEquals(sourceFileVersion.getSize(), 
+				targetFileVersion.getSize());
+
+		assertInputStreams(
+			String.format("Verifying that DLFileVersion %s content is equal",
+			sourceFileVersion.getUuid()), 
+			sourceFileVersion.getContentStream(false),
+			targetFileVersion.getContentStream(false));
+	}
+
 
 	/**
 	 * Compare DL folder and files recursively
@@ -430,6 +452,7 @@ public abstract class DLAppTestUtil {
 				targetFolder.getFolderId(), expectedFileEntryTypeGroupId);
 		}
 	}
+	
 
 	/**
 	 * Compare site's DL folder structure
