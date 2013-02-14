@@ -40,7 +40,28 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 	}
 
-	if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY)) {
+	if (portletName.equals(PortletKeys.MY_SITES_DIRECTORY)) {
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
+
+		groupParams.put("inherit", Boolean.FALSE);
+		groupParams.put("site", Boolean.TRUE);
+		groupParams.put("usersGroups", user.getUserId());
+
+		List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+
+		long[] groupIds = StringUtil.split(ListUtil.toString(groups, "groupId"), 0L);
+
+		for (String name : PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES) {
+			Group group = GroupLocalServiceUtil.fetchGroup(themeDisplay.getCompanyId(), name);
+
+			if (group != null) {
+				groupIds = ArrayUtil.remove(groupIds, group.getGroupId());
+			}
+		}
+
+		organizationParams.put("organizationsGroups", ArrayUtil.toArray(groupIds));
+	}
+	else if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY)) {
 		organizationParams.put("organizationsGroups", new Long(themeDisplay.getScopeGroupId()));
 	}
 	%>

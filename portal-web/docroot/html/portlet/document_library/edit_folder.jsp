@@ -130,7 +130,7 @@ if (workflowEnabled) {
 				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
 			}
 
-			List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, false);
+			List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, false);
 
 			String headerNames = null;
 

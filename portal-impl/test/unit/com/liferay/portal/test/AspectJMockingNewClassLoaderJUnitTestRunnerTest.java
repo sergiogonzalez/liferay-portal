@@ -72,7 +72,6 @@ public class AspectJMockingNewClassLoaderJUnitTestRunnerTest {
 	private static class AdviceClass1 {
 
 		@Around("execution(* *.getValue1())")
-		@SuppressWarnings("unused")
 		public Object mockGetValue() {
 			return 3;
 		}
@@ -83,7 +82,6 @@ public class AspectJMockingNewClassLoaderJUnitTestRunnerTest {
 	private static class AdviceClass2 {
 
 		@Around("execution(* *.getValue2())")
-		@SuppressWarnings("unused")
 		public Object mockGetValue() {
 			return 4;
 		}
@@ -94,13 +92,11 @@ public class AspectJMockingNewClassLoaderJUnitTestRunnerTest {
 	private static class AdviceClass3 {
 
 		@Around("execution(* *.getValue1())")
-		@SuppressWarnings("unused")
 		public Object mockGetValue1() {
 			return 5;
 		}
 
 		@Around("execution(* *.getValue2())")
-		@SuppressWarnings("unused")
 		public Object mockGetValue2() {
 			throw new IllegalStateException();
 		}

@@ -306,7 +306,7 @@ else if (dlFileEntryType != null) {
 						inherited = !dlFolder.isOverrideFileEntryTypes();
 					}
 
-					List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, inherited);
+					List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, inherited);
 				%>
 
 				<c:choose>

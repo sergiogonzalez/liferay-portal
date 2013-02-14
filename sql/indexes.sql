@@ -313,6 +313,7 @@ create index IX_B71E92D5 on ExpandoValue (tableId, rowId_);
 create index IX_ABA5CEC2 on Group_ (companyId);
 create unique index IX_D0D5E397 on Group_ (companyId, classNameId, classPK);
 create unique index IX_5DE0BE11 on Group_ (companyId, classNameId, liveGroupId, name);
+create index IX_ABE2D54 on Group_ (companyId, classNameId, parentGroupId);
 create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL);
 create unique index IX_BBCA55B on Group_ (companyId, liveGroupId, name);
 create unique index IX_5AA68501 on Group_ (companyId, name);
@@ -742,6 +743,7 @@ create index IX_F474FD89 on ShoppingOrder (ppTxnId);
 
 create index IX_B5F82C7A on ShoppingOrderItem (orderId);
 
+create index IX_F542E9BC on SocialActivity (activitySetId);
 create index IX_82E39A0C on SocialActivity (classNameId);
 create index IX_A853C757 on SocialActivity (classNameId, classPK);
 create index IX_64B1BC66 on SocialActivity (companyId);

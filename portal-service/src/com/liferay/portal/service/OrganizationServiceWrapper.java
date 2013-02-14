@@ -76,7 +76,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	* @param name the organization's name
 	* @param type the organization's type
 	* @param recursable whether the permissions of the organization are to be
-	inherited by its sub-organizations
+	inherited by its suborganizations
 	* @param regionId the primary key of the organization's region
 	* @param countryId the primary key of the organization's country
 	* @param statusId the organization's workflow status
@@ -129,7 +129,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	* @param name the organization's name
 	* @param type the organization's type
 	* @param recursable whether the permissions of the organization are to be
-	inherited by its sub-organizations
+	inherited by its suborganizations
 	* @param regionId the primary key of the organization's region
 	* @param countryId the primary key of the organization's country
 	* @param statusId the organization's workflow status
@@ -394,7 +394,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	* @param name the organization's name
 	* @param type the organization's type
 	* @param recursable whether the permissions of the organization are to be
-	inherited by its sub-organizations
+	inherited by its suborganizations
 	* @param regionId the primary key of the organization's region
 	* @param countryId the primary key of the organization's country
 	* @param statusId the organization's workflow status
@@ -444,7 +444,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	* @param name the organization's name
 	* @param type the organization's type
 	* @param recursable whether permissions of the organization are to be
-	inherited by its sub-organizations
+	inherited by its suborganizations
 	* @param regionId the primary key of the organization's region
 	* @param countryId the primary key of the organization's country
 	* @param statusId the organization's workflow status
