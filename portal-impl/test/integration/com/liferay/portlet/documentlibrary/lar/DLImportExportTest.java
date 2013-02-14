@@ -75,6 +75,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -148,6 +149,57 @@ public class DLImportExportTest {
 	@Test
 	public void testFileEntriTypesAtLocalSameCompany() throws Exception {
 		testImportExport(false, false);
+	}
+
+	@Test
+	public void testLPS32967() throws Exception {
+
+		// Prepare From Site
+
+		User userFrom = getFirstAdministatorUserForCompany(
+			_companyFrom.getCompanyId());
+
+		Layout layoutFrom =
+			createTestLayoutWithSite(
+				_companyFrom.getCompanyId(), userFrom,
+				ServiceTestUtil.randomString());
+
+		addFilesWithFileTypesToSite(layoutFrom, true, userFrom);
+
+		// Export
+
+		Date startDate = null;
+		Date endDate = null;
+
+		_larFile =
+			LayoutLocalServiceUtil.exportPortletInfoAsFile(
+				layoutFrom.getPlid(), layoutFrom.getGroupId(),
+				PortletKeys.DOCUMENT_LIBRARY, getExportParameterMap(),
+				startDate, endDate);
+
+		Layout layoutTo =
+						createTestLayoutWithSite(
+							_companyFrom.getCompanyId(), userFrom,
+							ServiceTestUtil.randomString());
+
+		// Delete orignal group
+
+		GroupLocalServiceUtil.deleteGroup(layoutFrom.getGroup());
+
+		User userTo = userFrom;
+		Company companyTo = _companyFrom;
+
+		Group compareGroup = layoutTo.getGroup();
+
+		// Verify
+
+		LayoutLocalServiceUtil.importPortletInfo(
+			userTo.getUserId(), layoutTo.getPlid(), layoutTo.getGroupId(),
+			PortletKeys.DOCUMENT_LIBRARY,
+			getImportParameterMap(layoutTo.getPlid(), layoutTo.getGroupId()),
+			_larFile);
+
+		Assert.assertTrue("LPS-import was success",true);
 	}
 
 	protected DDMStructure addDDMStructure(
