@@ -54,7 +54,6 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
@@ -291,15 +290,6 @@ public class DLImportExportTest {
 
 	protected Group addGroup(long parentGroupId, User user, String name)
 		throws Exception {
-
-		Group group =
-			GroupLocalServiceUtil.fetchGroup(
-				TestPropsValues.getCompanyId(), name);
-
-		if (group != null) {
-			return group;
-		}
-
 		String description = "This is a test group.";
 		int type = GroupConstants.TYPE_SITE_OPEN;
 		String friendlyURL =
@@ -312,7 +302,7 @@ public class DLImportExportTest {
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+		serviceContext.setCompanyId(parentGroup.getCompanyId());
 		serviceContext.setUserId(user.getUserId());
 
 		return GroupLocalServiceUtil.addGroup(
@@ -671,7 +661,6 @@ public class DLImportExportTest {
 
 	private Company _companyFrom;
 	private Company _companyTo;
-	private int _counter = 0;
 	private File _larFile;
 
 }
