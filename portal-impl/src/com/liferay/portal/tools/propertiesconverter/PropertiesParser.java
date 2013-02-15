@@ -51,9 +51,21 @@ public class PropertiesParser {
 		}
 		root.put("toc", toc);
 		
+		String propertiesFileName = "portal.properties";
+		if (!args[2].isEmpty()) {
+			int ndx = args[2].lastIndexOf("/");
+			if (ndx != -1) {
+				propertiesFileName = args[2].substring(ndx + 1);
+			}
+		}
+		root.put("propertiesFileName", propertiesFileName);
+		
 		// Parse properties file and create sections for the data model
 		
-		File propertiesFile = new File(System.getProperty("user.dir") + "/" + args[2]);
+		System.out.println("Converting " + System.getProperty("user.dir") +
+			"/" + args[2] + " to HTML");
+		File propertiesFile =
+			new File(System.getProperty("user.dir") + "/" + args[2]);
 		String propertiesString = read(propertiesFile);
 		String[] paragraphs = propertiesString.split("\n\n");
 		ArrayList<Section> sections = new ArrayList<Section>();
@@ -148,10 +160,13 @@ public class PropertiesParser {
 
 		// Get the Freemarker template and merge it with the data model
 		
+		System.out.println("Writing " + System.getProperty("user.dir") + "/" +
+			args[2] + ".html");
 		try {
 			Template temp = cfg.getTemplate("properties.ftl");
 			File propertiesHtml =
-				new File(System.getProperty("user.dir") + "/properties.html");
+				new File(System.getProperty("user.dir") + "/" + args[2] +
+					".html");
 			Writer out = new FileWriter(propertiesHtml);
 			try {
 				temp.process(root, out);
