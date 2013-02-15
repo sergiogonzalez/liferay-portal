@@ -10,6 +10,11 @@
 	<property name="manifest.bundle.name" value="Liferay Portal Impl" />
 	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
+	
+	<!-- For properties to HTML converter -->
+	<property name="page.title" value="Portal Properties" />
+	<property name="toc" value="true" />
+	<property name="properties.file" value="src/portal.properties" />
 
 	<target name="build-alloy-taglib">
 		<if>
