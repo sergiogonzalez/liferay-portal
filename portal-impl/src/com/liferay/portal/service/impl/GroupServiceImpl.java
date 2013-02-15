@@ -28,6 +28,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -39,6 +40,12 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,6 +53,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The group remote service is responsible for accessing, creating, modifying
@@ -97,9 +105,15 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 					"a site with parent " + parentGroupId);
 		}
 
-		return groupLocalService.addGroup(
+		Group group = groupLocalService.addGroup(
 			getUserId(), parentGroupId, null, 0, liveGroupId, name, description,
 			type, friendlyURL, site, active, serviceContext);
+
+		if (site) {
+			SiteMembershipPolicyUtil.verifyPolicy(group);
+		}
+
+		return group;
 	}
 
 	/**
@@ -133,9 +147,15 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return addGroup(
+		Group group = addGroup(
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
 			description, type, friendlyURL, site, active, serviceContext);
+
+		if (site) {
+			SiteMembershipPolicyUtil.verifyPolicy(group);
+		}
+
+		return group;
 	}
 
 	/**
@@ -807,12 +827,40 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		return groupLocalService.updateGroup(
-			groupId, parentGroupId, name, description, type, friendlyURL,
-			active, serviceContext);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.UPDATE);
+
+		if (group.getSite()) {
+			Group oldGroup = group;
+
+			List<AssetCategory> oldAssetCategories =
+				AssetCategoryLocalServiceUtil.getCategories(
+					Group.class.getName(), groupId);
+
+			List<AssetTag> oldAssetTags =
+				AssetTagLocalServiceUtil.getTags(
+					Group.class.getName(), groupId);
+
+			Map<String, Serializable> oldExpandoAttributes =
+				group.getExpandoBridge().getAttributes();
+
+			group = groupLocalService.updateGroup(
+				groupId, parentGroupId, name, description, type, friendlyURL,
+				active, serviceContext);
+
+			SiteMembershipPolicyUtil.verifyUpdatePolicy(
+				group, oldGroup, oldAssetCategories, oldAssetTags,
+				oldExpandoAttributes);
+
+			return group;
+		}
+		else {
+			return groupLocalService.updateGroup(
+				groupId, parentGroupId, name, description, type, friendlyURL,
+				active, serviceContext);
+		}
 	}
 
 	/**
@@ -832,7 +880,24 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
-		return groupLocalService.updateGroup(groupId, typeSettings);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		if (group.getSite()) {
+
+			Group oldGroup = group;
+
+			String oldTypeSettings = oldGroup.getTypeSettings();
+
+			group = groupLocalService.updateGroup(groupId, typeSettings);
+
+			SiteMembershipPolicyUtil.verifyUpdatePolicy(
+				group, oldGroup, oldTypeSettings);
+
+			return group;
+		}
+		else {
+			return groupLocalService.updateGroup(groupId, typeSettings);
+		}
 	}
 
 	protected List<Group> filterGroups(List<Group> groups)
