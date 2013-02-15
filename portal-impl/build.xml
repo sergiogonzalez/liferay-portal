@@ -1326,6 +1326,19 @@ public class Creole10Parser]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="properties-to-html">
+		<java 
+			classname="com.liferay.portal.tools.propertiesconverter.PropertiesParser"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg value="Portal Properties"/>
+			<arg value="true"/>
+			<arg value="src/portal.properties"/>
+		</java>
+	</target>
+
 	<target name="rebuild-hypersonic">
 		<ant dir="../sql" target="rebuild-hypersonic" />
 	</target>
