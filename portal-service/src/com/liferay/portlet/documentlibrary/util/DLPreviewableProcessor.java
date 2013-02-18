@@ -966,13 +966,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			InputStream is = null;
 
 			try {
-				if (fileIndex < 0) {
-					is = doGetPreviewAsStream(fileVersion, previewType);
-				}
-				else {
-					is = doGetPreviewAsStream(
-						fileVersion, fileIndex, previewType);
-				}
+				is = doGetPreviewAsStream(fileVersion, previewType);
 
 				addFileToStore(
 					portletDataContext.getCompanyId(), PREVIEW_PATH,
