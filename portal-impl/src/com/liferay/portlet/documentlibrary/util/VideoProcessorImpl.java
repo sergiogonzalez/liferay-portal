@@ -286,11 +286,12 @@ public class VideoProcessorImpl
 			return;
 		}
 
-		for (String previewType : _PREVIEW_TYPES) {
+		for (int i=0; i<_PREVIEW_TYPES.length; i++) {
+			String previewType = _PREVIEW_TYPES[i];
 			if (previewType.equals("mp4") || previewType.equals("ogv")) {
 				importPreview(
 					portletDataContext, fileEntry, importedFileEntry,
-					fileEntryElement, "video", previewType);
+					fileEntryElement, "video", previewType, i);
 			}
 		}
 	}
