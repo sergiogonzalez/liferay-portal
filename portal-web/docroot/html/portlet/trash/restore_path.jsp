@@ -34,7 +34,7 @@
 
 				for (int i = 0; i < restoreLinks.size(); i++) {
 					sb.append("<a href=\"");
-					sb.append(restoreLinks.get(i));
+					sb.append(HttpUtil.removeParameter(restoreLinks.get(i),"controlPanelCategory"));
 					sb.append("\">");
 					sb.append(restoreMessages.get(i));
 					sb.append("</a> ");
