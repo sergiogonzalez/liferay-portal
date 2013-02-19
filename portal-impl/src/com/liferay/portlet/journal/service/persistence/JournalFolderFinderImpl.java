@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalFolderImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -37,6 +38,7 @@ import java.util.List;
 
 /**
  * @author Juan Fernández
+ * @author Zsolt Berentey
  */
 public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	implements JournalFolderFinder {
@@ -87,7 +89,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("JournalFolder", JournalFolderImpl.class);
+			q.addEntity(JournalFolderImpl.TABLE_NAME, JournalFolderImpl.class);
 
 			return q.list(true);
 		}
@@ -119,24 +121,14 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
-
-			String sql = CustomSQLUtil.get(COUNT_F_BY_G_F);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, JournalFolder.class.getName(),
-					"JournalFolder.folderId", groupId);
-			}
-
-			sb.append(sql);
+			sb.append(getFoldersSQL(groupId, COUNT_F_BY_G_F, inlineSQLHelper));
 			sb.append(") UNION ALL (");
 			sb.append(
-				getCountArticlesSQL(groupId, queryDefinition, inlineSQLHelper));
+				getArticlesSQL(
+					groupId, COUNT_A_BY_G_F, queryDefinition, inlineSQLHelper));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			sql = sb.toString();
-
-			sql = updateSQL(sql, folderId);
+			String sql = updateSQL(sb.toString(), folderId);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -192,22 +184,14 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
-
-			String sql = CustomSQLUtil.get(FIND_F_BY_G_F);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, JournalFolder.class.getName(),
-					"JournalFolder.folderId", groupId);
-			}
-
-			sb.append(sql);
+			sb.append(getFoldersSQL(groupId, FIND_F_BY_G_F, inlineSQLHelper));
 			sb.append(") UNION ALL (");
 			sb.append(
-				getArticlesSQL(groupId, queryDefinition, inlineSQLHelper));
+				getArticlesSQL(
+					groupId, FIND_A_BY_G_F, queryDefinition, inlineSQLHelper));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			sql = updateSQL(sb.toString(), folderId);
+			String sql = updateSQL(sb.toString(), folderId);
 
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
@@ -273,11 +257,11 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	}
 
 	protected String getArticlesSQL(
-		long groupId, QueryDefinition queryDefinition,
+		long groupId, String id, QueryDefinition queryDefinition,
 		boolean inlineSQLHelper) {
 
 		String sql = CustomSQLUtil.get(
-			FIND_A_BY_G_F, queryDefinition, "JournalArticle");
+			id, queryDefinition, JournalArticleImpl.TABLE_NAME);
 
 		if (inlineSQLHelper) {
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -288,23 +272,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		return sql;
 	}
 
-	protected String getCountArticlesSQL(
-		long groupId, QueryDefinition queryDefinition,
-		boolean inlineSQLHelper) {
-
-		String sql = CustomSQLUtil.get(
-			COUNT_A_BY_G_F, queryDefinition, "JournalArticle");
-
-		if (inlineSQLHelper) {
-			sql = InlineSQLHelperUtil.replacePermissionCheck(
-				sql, JournalArticle.class.getName(),
-				"JournalArticle.resourcePrimKey", groupId);
-		}
-
-		return sql;
-	}
-
-	protected String getFolderId(String table, long folderId) {
+	protected String getFolderId(String tableName, long folderId) {
 		if (folderId < 0) {
 			return StringPool.BLANK;
 		}
@@ -312,10 +280,10 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(" AND ");
-		sb.append(table);
+		sb.append(tableName);
 		sb.append(".");
 
-		if (table.equals("JournalFolder")) {
+		if (tableName.equals(JournalFolderImpl.TABLE_NAME)) {
 			sb.append("parentFolderId");
 		}
 		else {
@@ -327,6 +295,20 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		return sb.toString();
 	}
 
+	protected String getFoldersSQL(
+		long groupId, String id, boolean inlineSQLHelper) {
+
+		String sql = CustomSQLUtil.get(id);
+
+		if (inlineSQLHelper) {
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, JournalFolder.class.getName(), "JournalFolder.folderId",
+				groupId);
+		}
+
+		return sql;
+	}
+
 	protected String updateSQL(String sql, long folderId) {
 		sql = StringUtil.replace(
 			sql,
@@ -334,8 +316,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 				"[$ARTICLE_FOLDER_ID$]", "[$FOLDER_PARENT_FOLDER_ID$]"
 			},
 			new String[] {
-				getFolderId("JournalArticle", folderId),
-				getFolderId("JournalFolder", folderId)
+				getFolderId(JournalArticleImpl.TABLE_NAME, folderId),
+				getFolderId(JournalFolderImpl.TABLE_NAME, folderId)
 			});
 
 		return sql;

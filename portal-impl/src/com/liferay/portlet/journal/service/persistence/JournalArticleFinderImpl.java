@@ -424,7 +424,8 @@ public class JournalArticleFinderImpl
 	}
 
 	public List<JournalArticle> findByExpirationDate(
-			long classNameId, int status, Date expirationDateLT)
+			long classNameId, Date expirationDateLT,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
 		Timestamp expirationDateLT_TS = CalendarUtil.getTimestamp(
@@ -435,25 +436,18 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_EXPIRATION_DATE);
-
-			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(
-					sql, "(status = ?) AND", StringPool.BLANK);
-			}
+			String sql = CustomSQLUtil.get(
+				FIND_BY_EXPIRATION_DATE, queryDefinition);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("JournalArticle", JournalArticleImpl.class);
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(classNameId);
-
-			if (status != WorkflowConstants.STATUS_ANY) {
-				qPos.add(status);
-			}
-
+			qPos.add(queryDefinition.getStatus());
 			qPos.add(expirationDateLT_TS);
 
 			return q.list(true);
@@ -517,7 +511,8 @@ public class JournalArticleFinderImpl
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("JournalArticle", JournalArticleImpl.class);
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -549,7 +544,8 @@ public class JournalArticleFinderImpl
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("JournalArticle", JournalArticleImpl.class);
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -669,8 +665,6 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String table = "JournalArticle";
-
 			String sql = CustomSQLUtil.get(COUNT_BY_G_F, queryDefinition);
 
 			if (inlineSQLHelper) {
@@ -680,7 +674,8 @@ public class JournalArticleFinderImpl
 			}
 
 			sql = StringUtil.replace(
-				sql, "[$FOLDER_ID$]", getFolderIds(folderIds, table));
+				sql, "[$FOLDER_ID$]",
+				getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME, true));
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -696,6 +691,65 @@ public class JournalArticleFinderImpl
 
 				qPos.add(folderId);
 			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByG_C_S(
+			long groupId, long classNameId, String structureId,
+			QueryDefinition queryDefinition, boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_G_C_S, queryDefinition);
+
+			if (structureId.equals(
+					String.valueOf(
+						JournalArticleConstants.CLASSNAME_ID_DEFAULT))) {
+
+				sql = StringUtil.replace(
+					sql, "(structureId = ?)",
+					"((structureId = ?) OR (structureId = '') OR " +
+						"(structureId = null))");
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(classNameId);
+			qPos.add(structureId);
+			qPos.add(queryDefinition.getStatus());
 
 			Iterator<Long> itr = q.iterate();
 
@@ -742,67 +796,8 @@ public class JournalArticleFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(classNameId);
 			qPos.add(userId);
-			qPos.add(queryDefinition.getStatus());
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected int doCountByG_C_S(
-			long groupId, long classNameId, String structureId,
-			QueryDefinition queryDefinition, boolean inlineSQLHelper)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(COUNT_BY_G_C_S, queryDefinition);
-
-			if (structureId.equals(
-					String.valueOf(
-						JournalArticleConstants.CLASSNAME_ID_DEFAULT))) {
-
-				sql = StringUtil.replace(
-					sql, "(structureId = ?)",
-					"((structureId = ?) OR (structureId = '') OR" +
-						"(structureId = null))");
-			}
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, JournalArticle.class.getName(),
-					"JournalArticle.resourcePrimKey", groupId);
-			}
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
 			qPos.add(classNameId);
-			qPos.add(structureId);
 			qPos.add(queryDefinition.getStatus());
 
 			Iterator<Long> itr = q.iterate();
@@ -865,7 +860,8 @@ public class JournalArticleFinderImpl
 			else {
 				sql = StringUtil.replace(
 					sql, "[$FOLDER_ID$]",
-					getFolderIds(folderIds, "JournalArticle"));
+					getFolderIds(
+						folderIds, JournalArticleImpl.TABLE_NAME, false));
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -1019,7 +1015,8 @@ public class JournalArticleFinderImpl
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("JournalArticle", JournalArticleImpl.class);
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -1063,7 +1060,8 @@ public class JournalArticleFinderImpl
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("JournalArticle", JournalArticleImpl.class);
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -1124,7 +1122,8 @@ public class JournalArticleFinderImpl
 			else {
 				sql = StringUtil.replace(
 					sql, "[$FOLDER_ID$]",
-					getFolderIds(folderIds, "JournalArticle"));
+					getFolderIds(
+						folderIds, JournalArticleImpl.TABLE_NAME, false));
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -1180,7 +1179,8 @@ public class JournalArticleFinderImpl
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("JournalArticle", JournalArticleImpl.class);
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -1239,21 +1239,31 @@ public class JournalArticleFinderImpl
 		}
 	}
 
-	protected String getFolderIds(List<Long> folderIds, String table) {
+	protected String getFolderIds(
+		List<Long> folderIds, String tableName, boolean prependAnd) {
+
 		if (folderIds.isEmpty()) {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(folderIds.size() * 2 - 1);
+		StringBundler sb = new StringBundler(folderIds.size() * 2 + 2);
+
+		if (prependAnd) {
+			sb.append(WHERE_AND);
+		}
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < folderIds.size(); i++) {
-			sb.append(table);
+			sb.append(tableName);
 			sb.append(".folderId = ? ");
 
 			if ((i + 1) != folderIds.size()) {
 				sb.append(WHERE_OR);
 			}
 		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}

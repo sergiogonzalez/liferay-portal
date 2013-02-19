@@ -358,7 +358,7 @@ public class JournalArticleLocalServiceImpl
 				new HashMap<String, Serializable>(), serviceContext);
 		}
 
-		return article;
+		return getArticle(article.getPrimaryKey());
 	}
 
 	public JournalArticle addArticle(
@@ -455,8 +455,8 @@ public class JournalArticleLocalServiceImpl
 		List<JournalArticle> articles =
 			journalArticleFinder.findByExpirationDate(
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				WorkflowConstants.STATUS_APPROVED,
-				new Date(now.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL));
+				new Date(now.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL),
+				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Expiring " + articles.size() + " articles");
