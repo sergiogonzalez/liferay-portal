@@ -34,12 +34,17 @@ int suffixId = ParamUtil.getInteger(request, "suffixId");
 %>
 
 <div class="anonymous-account">
+	<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="struts_action" value="/login/login_redirect" />
+	</portlet:renderURL>
+
 	<portlet:actionURL var="createAccountURL">
 		<portlet:param name="struts_action" value="/login/create_account" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= createAccountURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
 		<aui:input name="birthdayDay" type="hidden" value="<%= String.valueOf(birthdayDay) %>" />
 		<aui:input name="birthdayMonth" type="hidden" value="<%= String.valueOf(birthdayMonth) %>" />
 		<aui:input name="birthdayYear" type="hidden" value="<%= String.valueOf(birthdayYear) %>" />
