@@ -45,6 +45,8 @@ public class FieldConstants {
 
 	public static final String HTML = "html";
 
+	public static final String IMAGE = "image";
+
 	public static final String INTEGER = "integer";
 
 	public static final String LABEL = "label";
@@ -55,7 +57,7 @@ public class FieldConstants {
 
 	public static final String NUMBER = "number";
 
-	public static final String PREDIFINED_VALUE = "predefinedValue";
+	public static final String PREDEFINED_VALUE = "predefinedValue";
 
 	public static final String REQUIRED = "required";
 

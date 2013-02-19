@@ -594,6 +594,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		long importedRepositoryId = 0;
 
 		try {
+			boolean hidden = GetterUtil.getBoolean(
+				repositoryElement.attributeValue("hidden"));
+
 			if (portletDataContext.isDataStrategyMirror()) {
 				Repository existingRepository = RepositoryUtil.fetchByUUID_G(
 					repository.getUuid(), portletDataContext.getScopeGroupId());
@@ -624,7 +627,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 							repository.getName(), repository.getDescription(),
 							repository.getPortletId(),
-							repository.getTypeSettingsProperties(), false,
+							repository.getTypeSettingsProperties(), hidden,
 							serviceContext);
 				}
 				else {
@@ -642,7 +645,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					repository.getName(), repository.getDescription(),
 					repository.getPortletId(),
-					repository.getTypeSettingsProperties(), false,
+					repository.getTypeSettingsProperties(), hidden,
 					serviceContext);
 			}
 		}
@@ -1109,6 +1112,16 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		Element repositoryElement = repositoriesElement.addElement(
 			"repository");
 
+		Folder folder = DLAppLocalServiceUtil.getFolder(
+			repository.getDlFolderId());
+
+		if (folder.getModel() instanceof DLFolder) {
+			DLFolder dlFolder = (DLFolder)folder.getModel();
+
+			repositoryElement.addAttribute(
+				"hidden", String.valueOf(dlFolder.isHidden()));
+		}
+
 		portletDataContext.addClassedModel(
 			repositoryElement, path, repository, NAMESPACE);
 
@@ -1441,6 +1454,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				if (ddmStructureKey.equals(
 						importedDLFileEntryDDMStructureKey)) {
+
 					continue;
 				}
 

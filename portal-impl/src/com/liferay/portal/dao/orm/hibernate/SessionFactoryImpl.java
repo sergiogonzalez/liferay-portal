@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -102,8 +102,7 @@ public class SessionFactoryImpl implements SessionFactory {
 	public void setSessionFactoryClassLoader(
 		ClassLoader sessionFactoryClassLoader) {
 
-		ClassLoader portalClassLoader =
-			PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		if (sessionFactoryClassLoader == portalClassLoader) {
 			_sessionFactoryClassLoader = sessionFactoryClassLoader;
@@ -126,7 +125,7 @@ public class SessionFactoryImpl implements SessionFactory {
 
 			for (String className : _PRELOAD_CLASS_NAMES) {
 				ClassLoader portalClassLoader =
-					PACLClassLoaderUtil.getPortalClassLoader();
+					ClassLoaderUtil.getPortalClassLoader();
 
 				Class<?> clazz = portalClassLoader.loadClass(className);
 

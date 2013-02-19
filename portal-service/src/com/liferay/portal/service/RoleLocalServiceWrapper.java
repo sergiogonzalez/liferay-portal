@@ -258,7 +258,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	primary key could not be found
 	* @throws SystemException if a system exception occurred
 	* @deprecated {@link #addRole(long, String, long, String, Map, Map, int,
-	String)}
+	String, ServiceContext)}
 	*/
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
@@ -293,7 +293,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	primary key could not be found
 	* @throws SystemException if a system exception occurred
 	* @deprecated {@link #addRole(long, String, long, String, Map, Map, int,
-	String)}
+	String, ServiceContext)}
 	*/
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
@@ -322,6 +322,9 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	<code>null</code>)
 	* @param type the role's type (optionally <code>0</code>)
 	* @param subType the role's subtype (optionally <code>null</code>)
+	* @param serviceContext the roles's service context (optionally
+	<code>null</code>). Can set expando bridge attributes for the
+	role.
 	* @return the role
 	* @throws PortalException if the class name or the role name were invalid,
 	if the role is a duplicate, or if a user with the primary key
@@ -332,11 +335,12 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		java.lang.String className, long classPK, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, java.lang.String subType)
+		int type, java.lang.String subType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _roleLocalService.addRole(userId, className, classPK, name,
-			titleMap, descriptionMap, type, subType);
+			titleMap, descriptionMap, type, subType, serviceContext);
 	}
 
 	/**
@@ -356,16 +360,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		_roleLocalService.addUserRoles(userId, roleIds);
 	}
 
-	/**
-	* Removes any forbidden roles from the user and adds all mandatory roles to
-	* the user, if the user does not have the role.
-	*
-	* @param user the user
-	* @throws PortalException if the any roles cannot be added or removed from
-	the user.
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portal.events.MembershipPolicyAction
-	*/
 	public void checkMembershipPolicy(com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1070,6 +1064,9 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param descriptionMap the new localized descriptions (optionally
 	<code>null</code>) to replace those existing for the role
 	* @param subtype the role's new subtype (optionally <code>null</code>)
+	* @param serviceContext the roles's service context (optionally
+	<code>null</code>). Can set expando bridge attributes for the
+	role.
 	* @return the role with the primary key
 	* @throws PortalException if a role with the primary could not be found or
 	if the role's name was invalid
@@ -1079,11 +1076,12 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String subtype)
+		java.lang.String subtype,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _roleLocalService.updateRole(roleId, name, titleMap,
-			descriptionMap, subtype);
+			descriptionMap, subtype, serviceContext);
 	}
 
 	/**

@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -65,9 +68,27 @@ public class UserOrganizationChecker extends RowChecker {
 
 		User user = (User)obj;
 
+		if (isChecked(user)) {
+			Set<Organization> mandatoryOrganizations =
+				MembershipPolicyUtil.getMandatoryOrganizations(user);
+
+			if (mandatoryOrganizations.contains(_organization) ||
+				!MembershipPolicyUtil.isMembershipAllowed(
+					_organization, user)) {
+
+				return true;
+			}
+		}
+
 		try {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
+
+			if (MembershipPolicyUtil.isMembershipProtected(
+					permissionChecker, _organization, user)) {
+
+				return true;
+			}
 
 			return !UserPermissionUtil.contains(
 				permissionChecker, user.getUserId(), ActionKeys.UPDATE);

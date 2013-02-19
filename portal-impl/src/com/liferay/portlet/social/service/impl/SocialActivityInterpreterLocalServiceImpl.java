@@ -17,15 +17,15 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.portlet.social.model.SocialActivitySet;
 import com.liferay.portlet.social.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.portlet.social.service.base.SocialActivityInterpreterLocalServiceBaseImpl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The social activity interpreter local service. Activity interpreters are
@@ -55,7 +55,11 @@ public class SocialActivityInterpreterLocalServiceImpl
 	public void addActivityInterpreter(
 		SocialActivityInterpreter activityInterpreter) {
 
-		_activityInterpreters.add(activityInterpreter);
+		String[] classNames = activityInterpreter.getClassNames();
+
+		for (String className : classNames) {
+			_activityInterpreters.put(className, activityInterpreter);
+		}
 	}
 
 	/**
@@ -67,7 +71,11 @@ public class SocialActivityInterpreterLocalServiceImpl
 		SocialActivityInterpreter activityInterpreter) {
 
 		if (activityInterpreter != null) {
-			_activityInterpreters.remove(activityInterpreter);
+			String[] classNames = activityInterpreter.getClassNames();
+
+			for (String className : classNames) {
+				_activityInterpreters.remove(className);
+			}
 		}
 	}
 
@@ -115,32 +123,62 @@ public class SocialActivityInterpreterLocalServiceImpl
 			}
 		}
 
-		String className = PortalUtil.getClassName(activity.getClassNameId());
+		SocialActivityInterpreterImpl activityInterpreter =
+			(SocialActivityInterpreterImpl)_activityInterpreters.get(
+				activity.getClassName());
 
-		for (int i = 0; i < _activityInterpreters.size(); i++) {
-			SocialActivityInterpreterImpl activityInterpreter =
-				(SocialActivityInterpreterImpl)_activityInterpreters.get(i);
-
-			if (activityInterpreter.hasClassName(className)) {
-				SocialActivityFeedEntry activityFeedEntry =
-					activityInterpreter.interpret(activity, themeDisplay);
-
-				if (activityFeedEntry != null) {
-					activityFeedEntry.setPortletId(
-						activityInterpreter.getPortletId());
-
-					return activityFeedEntry;
-				}
-			}
+		if (activityInterpreter == null) {
+			return null;
 		}
 
-		return null;
+		SocialActivityFeedEntry activityFeedEntry =
+			activityInterpreter.interpret(activity, themeDisplay);
+
+		if (activityFeedEntry == null) {
+			return null;
+		}
+
+		activityFeedEntry.setPortletId(activityInterpreter.getPortletId());
+
+		return activityFeedEntry;
+	}
+
+	public SocialActivityFeedEntry interpret(
+		SocialActivitySet activitySet, ThemeDisplay themeDisplay) {
+
+		try {
+			if (activitySet.getUserId() == themeDisplay.getDefaultUserId()) {
+				return null;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		SocialActivityInterpreterImpl activityInterpreter =
+			(SocialActivityInterpreterImpl)_activityInterpreters.get(
+				activitySet.getClassName());
+
+		if (activityInterpreter == null) {
+			return null;
+		}
+
+		SocialActivityFeedEntry activityFeedEntry =
+			activityInterpreter.interpret(activitySet, themeDisplay);
+
+		if (activityFeedEntry == null) {
+			return null;
+		}
+
+		activityFeedEntry.setPortletId(activityInterpreter.getPortletId());
+
+		return activityFeedEntry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		SocialActivityInterpreterLocalServiceImpl.class);
 
-	private List<SocialActivityInterpreter> _activityInterpreters =
-		new ArrayList<SocialActivityInterpreter>();
+	private Map<String, SocialActivityInterpreter> _activityInterpreters =
+		new HashMap<String, SocialActivityInterpreter>();
 
 }

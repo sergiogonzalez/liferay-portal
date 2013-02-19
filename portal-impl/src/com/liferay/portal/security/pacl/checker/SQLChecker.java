@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.StringReader;
 
@@ -44,6 +45,7 @@ import net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class SQLChecker extends BaseChecker {
 
@@ -53,6 +55,117 @@ public class SQLChecker extends BaseChecker {
 
 	public void checkPermission(Permission permission) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public AuthorizationProperty generateAuthorizationProperty(
+		Object... arguments) {
+
+		if ((arguments == null) || (arguments.length != 1) ||
+			!(arguments[0] instanceof String)) {
+
+			return null;
+		}
+
+		String sql = (String)arguments[0];
+
+		Statement statement = null;
+
+		try {
+			statement = _jSqlParser.parse(new StringReader(sql));
+		}
+		catch (Exception e) {
+			_log.error("Unable to parse SQL " + sql);
+
+			return null;
+		}
+
+		String key = null;
+		String value = null;
+
+		if (statement instanceof CreateTable) {
+			key = "security-manager-sql-tables-create";
+
+			CreateTable createTable = (CreateTable)statement;
+
+			Table table = createTable.getTable();
+
+			value = table.getName();
+		}
+		else if (statement instanceof Delete) {
+			key = "security-manager-sql-tables-delete";
+
+			Delete delete = (Delete)statement;
+
+			Table table = delete.getTable();
+
+			value = table.getName();
+		}
+		else if (statement instanceof Drop) {
+			key = "security-manager-sql-tables-drop";
+
+			Drop drop = (Drop)statement;
+
+			value = drop.getName();
+		}
+		else if (statement instanceof Insert) {
+			key = "security-manager-sql-tables-insert";
+
+			Insert insert = (Insert)statement;
+
+			Table table = insert.getTable();
+
+			value = table.getName();
+		}
+		else if (statement instanceof Replace) {
+			key = "security-manager-sql-tables-replace";
+
+			Replace replace = (Replace)statement;
+
+			Table table = replace.getTable();
+
+			value = table.getName();
+		}
+		else if (statement instanceof Select) {
+			key = "security-manager-sql-tables-select";
+
+			TableNamesFinder tableNamesFinder = new TableNamesFinder();
+
+			Select select = (Select)statement;
+
+			List<String> tableNames = tableNamesFinder.getTableNames(select);
+
+			value = StringUtil.merge(tableNames);
+		}
+		else if (statement instanceof Truncate) {
+			key = "security-manager-sql-tables-truncate";
+
+			Truncate truncate = (Truncate)statement;
+
+			Table table = truncate.getTable();
+
+			value = table.getName();
+		}
+		else if (statement instanceof Update) {
+			key = "security-manager-sql-tables-update";
+
+			Update update = (Update)statement;
+
+			Table table = update.getTable();
+
+			value = table.getName();
+		}
+		else {
+			return null;
+		}
+
+		AuthorizationProperty authorizationProperty =
+			new AuthorizationProperty();
+
+		authorizationProperty.setKey(key);
+		authorizationProperty.setValue(value);
+
+		return authorizationProperty;
 	}
 
 	public boolean hasSQL(String sql) {

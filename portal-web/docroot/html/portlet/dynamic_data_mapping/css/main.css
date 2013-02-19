@@ -72,6 +72,10 @@
 		}
 	}
 
+	.lfr-ddm-small-image-content img {
+		margin-right: 1em;
+	}
+
 	.lfr-ddm-text-html, .lfr-ddm-text-html-icon {
 		background-image: url(@theme_image_path@/aui/textarea.png);
 	}
@@ -103,6 +107,16 @@
 		}
 	}
 
+	.lfr-wcm-image {
+		background: url(@theme_image_path@/aui/image.png) no-repeat 0 20px;
+		padding-top: 35px;
+	}
+
+	.lfr-wcm-image-icon {
+		background-position: 50%;
+		padding: 0;
+	}
+
 	.editor-toolbar {
 		background-color: #DDD;
 		border: 1px solid #CCC;
@@ -124,7 +138,7 @@
 	.aui-form-builder-source-wrapper {
 		height: 600px;
 		position: relative;
-		
+
 		.aui-form-builder-source {
 			position: relative;
 		}

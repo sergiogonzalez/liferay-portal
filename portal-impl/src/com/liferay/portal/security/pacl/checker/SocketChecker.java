@@ -16,6 +16,8 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.net.SocketPermission;
 
@@ -42,6 +44,62 @@ public class SocketChecker extends BaseChecker {
 			throwSecurityException(
 				_log, "Attempted " + actions + " for address " + name);
 		}
+	}
+
+	@Override
+	public AuthorizationProperty generateAuthorizationProperty(
+		Object... arguments) {
+
+		if ((arguments == null) || (arguments.length != 1) ||
+			!(arguments[0] instanceof Permission)) {
+
+			return null;
+		}
+
+		Permission permission = (Permission)arguments[0];
+
+		String actions = permission.getActions();
+
+		if (actions.equals(SOCKET_PERMISSION_RESOLVE)) {
+
+			// There is no need for an authorization property because this
+			// action is always allowed
+
+			return null;
+		}
+
+		String name = permission.getName();
+
+		int index = name.indexOf(StringPool.COLON);
+
+		int port = GetterUtil.getInteger(name.substring(index + 1));
+
+		String key = null;
+		String value = null;
+
+		if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
+			key = "security-manager-sockets-accept";
+			value = name;
+		}
+		else if (actions.contains(SOCKET_PERMISSION_CONNECT)) {
+			key = "security-manager-sockets-connect";
+			value = name;
+		}
+		else if (actions.contains(SOCKET_PERMISSION_LISTEN)) {
+			key = "security-manager-sockets-listen";
+			value = String.valueOf(port);
+		}
+		else {
+			return null;
+		}
+
+		AuthorizationProperty authorizationProperty =
+			new AuthorizationProperty();
+
+		authorizationProperty.setKey(key);
+		authorizationProperty.setValue(value);
+
+		return authorizationProperty;
 	}
 
 	protected void initAcceptHostsAndPorts() {

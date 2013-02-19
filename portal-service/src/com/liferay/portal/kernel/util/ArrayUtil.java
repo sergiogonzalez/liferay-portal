@@ -1124,7 +1124,7 @@ public class ArrayUtil {
 			for (int i = 0; i < list.size(); i++) {
 				Double value = list.get(i);
 
-				newArray[i++] = value.doubleValue();
+				newArray[i] = value.doubleValue();
 			}
 		}
 		else {
@@ -1151,7 +1151,7 @@ public class ArrayUtil {
 			for (int i = 0; i < list.size(); i++) {
 				Float value = list.get(i);
 
-				newArray[i++] = value.floatValue();
+				newArray[i] = value.floatValue();
 			}
 		}
 		else {
@@ -1178,7 +1178,7 @@ public class ArrayUtil {
 			for (int i = 0; i < list.size(); i++) {
 				Integer value = list.get(i);
 
-				newArray[i++] = value.intValue();
+				newArray[i] = value.intValue();
 			}
 		}
 		else {
@@ -1205,7 +1205,7 @@ public class ArrayUtil {
 			for (int i = 0; i < list.size(); i++) {
 				Long value = list.get(i);
 
-				newArray[i++] = value.longValue();
+				newArray[i] = value.longValue();
 			}
 		}
 		else {
@@ -1242,7 +1242,7 @@ public class ArrayUtil {
 			for (int i = 0; i < list.size(); i++) {
 				Short value = list.get(i);
 
-				newArray[i++] = value.shortValue();
+				newArray[i] = value.shortValue();
 			}
 		}
 		else {

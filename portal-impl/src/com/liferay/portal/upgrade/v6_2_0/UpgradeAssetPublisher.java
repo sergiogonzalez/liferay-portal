@@ -17,13 +17,16 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.util.RSSUtil;
 
 import javax.portlet.PortletPreferences;
 
 /**
  * @author Eduardo Garcia
+ * @author Jorge Ferrer
  */
 public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 
@@ -42,20 +45,53 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
+		upgradeRss(portletPreferences);
+		upgradeScopeIds(portletPreferences);
+
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	protected void upgradeRss(PortletPreferences portletPreferences)
+		throws Exception {
+
 		String rssFormat = GetterUtil.getString(
 			portletPreferences.getValue("rssFormat", null));
 
 		if (Validator.isNotNull(rssFormat)) {
-			String rssFeedType = RSSUtil.getFeedType(
-				RSSUtil.getFormatType(rssFormat),
-				RSSUtil.getFormatVersion(rssFormat));
-
-			portletPreferences.setValue("rssFeedType", rssFeedType);
+			portletPreferences.setValue(
+				"rssFeedType",
+				RSSUtil.getFeedType(
+					RSSUtil.getFormatType(rssFormat),
+					RSSUtil.getFormatVersion(rssFormat)));
 		}
 
 		portletPreferences.reset("rssFormat");
+	}
 
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	protected void upgradeScopeIds(PortletPreferences portletPreferences)
+		throws Exception {
+
+		String defaultScope = GetterUtil.getString(
+			portletPreferences.getValue("defaultScope", null));
+
+		if (Validator.isNull(defaultScope)) {
+			return;
+		}
+
+		if (defaultScope.equals("true")) {
+			portletPreferences.setValues(
+				"scopeIds",
+				new String[] {
+					AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+						GroupConstants.DEFAULT
+				});
+		}
+		else if (!defaultScope.equals("false")) {
+			portletPreferences.setValues(
+				"scopeIds", new String[] {defaultScope});
+		}
+
+		portletPreferences.reset("defaultScope");
 	}
 
 }

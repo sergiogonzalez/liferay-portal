@@ -303,6 +303,8 @@ public interface PropsKeys {
 
 	public static final String BROWSER_CACHE_SIGNED_IN_DISABLED = "browser.cache.signed.in.disabled";
 
+	public static final String BROWSER_COMPATIBILITY_IE_VERSIONS = "browser.compatibility.ie.versions";
+
 	public static final String BROWSER_LAUNCHER_URL = "browser.launcher.url";
 
 	public static final String BUFFERED_INCREMENT_ENABLED = "buffered.increment.enabled";
@@ -1620,6 +1622,8 @@ public interface PropsKeys {
 	public static final String MSN_PASSWORD = "msn.password";
 
 	public static final String MULTI_VALUE_MAP = "multi.value.map.";
+
+	public static final String MY_SITES_DIRECTORY_SITE_EXCLUDES = "my.sites.directory.site.excludes";
 
 	public static final String MY_SITES_DISPLAY_STYLE = "my.sites.display.style";
 

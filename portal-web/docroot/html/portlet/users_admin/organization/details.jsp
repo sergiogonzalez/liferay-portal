@@ -44,6 +44,8 @@ if (organization != null) {
 
 	groupId = group.getGroupId();
 }
+
+User selUser = (User)request.getAttribute("user.selUser");
 %>
 
 <liferay-util:buffer var="removeOrganizationIcon">
@@ -262,7 +264,7 @@ if (parentOrganization != null) {
 				},
 				id: '<portlet:namespace />selectOrganizationDialog',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "select").concat(" ").concat(UnicodeLanguageUtil.get(pageContext, "parent-organization")) %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /></portlet:renderURL>'
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 			}
 		);
 	}

@@ -126,30 +126,44 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT {DLFileEntry.*}
+				{DLFileEntry.*}
 			FROM
-				DLFileEntry
-			[$JOIN$]
-			WHERE
-				(DLFileEntry.groupId = ?) AND
-				([$STATUS$]) AND
-				[$FOLDER_ID$]
+				(
+					SELECT
+						DISTINCT DLFileEntry.fileEntryId
+					FROM
+						DLFileEntry
+					[$JOIN$]
+					WHERE
+						(DLFileEntry.groupId = ?) AND
+						([$STATUS$]) AND
+						[$FOLDER_ID$]
+				) TEMP_TABLE
+				INNER JOIN
+					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_U_F">
 		<![CDATA[
 			SELECT
-				DISTINCT {DLFileEntry.*}
+				{DLFileEntry.*}
 			FROM
-				DLFileEntry
-			INNER JOIN
-				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
-			WHERE
-				(DLFileVersion.groupId = ?) AND
-				(DLFileVersion.userId = ?) AND
-				([$STATUS$]) AND
-				[$FOLDER_ID$]
+				(
+					SELECT
+						DISTINCT DLFileEntry.fileEntryId
+					FROM
+						DLFileEntry
+					INNER JOIN
+						DLFileVersion ON
+							(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
+					WHERE
+						(DLFileVersion.groupId = ?) AND
+						(DLFileVersion.userId = ?) AND
+						([$STATUS$]) AND
+						[$FOLDER_ID$]
+				) TEMP_TABLE
+				INNER JOIN
+					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.countByC_G_N_D_S">
@@ -231,14 +245,13 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
 			FROM
-				DLFileEntry
-			[$JOIN$]
+				DLFileVersion
 			WHERE
-				(DLFileEntry.groupId = ?) AND
+				(DLFileVersion.groupId = ?) AND
 				([$STATUS$]) AND
-				[$FILE_ENTRY_FOLDER_ID$]
+				[$FILE_VERSION_FOLDER_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFS_ByG_F_A">

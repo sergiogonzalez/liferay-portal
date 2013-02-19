@@ -325,10 +325,10 @@ public interface TrashHandler {
 	public String getRootContainerModelName();
 
 	/**
-	 * Returns the name of the sub-container model (e.g. for a folder the
-	 * sub-container model name may be "subfolder").
+	 * Returns the name of the subcontainer model (e.g. for a folder the
+	 * subcontainer model name may be "subfolder").
 	 *
-	 * @return the name of the sub-container model
+	 * @return the name of the subcontainer model
 	 */
 	public String getSubcontainerModelName();
 

@@ -30,6 +30,7 @@ import java.util.Properties;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PACLPolicyManager {
 
@@ -37,21 +38,22 @@ public class PACLPolicyManager {
 		String servletContextName, ClassLoader classLoader,
 		Properties properties) {
 
-		boolean active = GetterUtil.getBoolean(
-			properties.get("security-manager-enabled"));
+		String value = properties.getProperty(
+			"security-manager-enabled", "false");
 
-		PACLPolicy paclPolicy = null;
+		if (value.equals("generate")) {
+			return new GeneratingPACLPolicy(
+				servletContextName, classLoader, properties);
+		}
 
-		if (active) {
-			paclPolicy = new ActivePACLPolicy(
+		if (GetterUtil.getBoolean(value)) {
+			return new ActivePACLPolicy(
 				servletContextName, classLoader, properties);
 		}
 		else {
-			paclPolicy = new InactivePACLPolicy(
+			return new InactivePACLPolicy(
 				servletContextName, classLoader, properties);
 		}
-
-		return paclPolicy;
 	}
 
 	public static int getActiveCount() {

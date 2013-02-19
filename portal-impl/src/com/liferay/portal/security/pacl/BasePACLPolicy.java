@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -73,7 +74,7 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 	}
 
 	public Set<String> getPropertySet(String key) {
-		return SetUtil.fromArray(getPropertyArray(key));
+		return new TreeSet<String>(SetUtil.fromArray(getPropertyArray(key)));
 	}
 
 	public String getServletContextName() {

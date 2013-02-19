@@ -43,7 +43,11 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 			url="<%= assignURL %>"
 		/>
 
-		<c:if test="<%= !(organizationUser || userGroupUser) %>">
+		<%
+		Set<Group> mandatoryGroups = MembershipPolicyUtil.getMandatoryGroups(user2);
+		%>
+
+		<c:if test="<%= !(organizationUser || userGroupUser) && !mandatoryGroups.contains(group) %>">
 			<portlet:actionURL var="removeURL">
 				<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
 				<portlet:param name="<%= Constants.CMD %>" value="group_users" />

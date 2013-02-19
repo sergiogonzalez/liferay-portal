@@ -16,13 +16,16 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.MembershipPolicyException;
 import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.service.base.UserGroupRoleServiceBaseImpl;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.Set;
 
@@ -60,16 +63,37 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
+		long[] filteredRoleIds = roleIds;
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		for (long roleId : roleIds) {
 			UserGroupRolePermissionUtil.check(
 				getPermissionChecker(), groupId, roleId);
+
+			Role role = roleLocalService.getRole(roleId);
+
+			if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
+				(role.getType() == RoleConstants.TYPE_SITE)) {
+
+				if (MembershipPolicyUtil.isMembershipProtected(
+						getPermissionChecker(), group, role, user)) {
+
+					filteredRoleIds = ArrayUtil.remove(filteredRoleIds, roleId);
+				}
+			}
+		}
+
+		if (filteredRoleIds.length == 0) {
+			return;
 		}
 
 		checkDeleteUserGroupRolesMembershipPolicy(
-			new long[] {userId}, groupId, roleIds);
+			new long[] {userId}, groupId, filteredRoleIds);
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
-			userId, groupId, roleIds);
+			userId, groupId, filteredRoleIds);
 	}
 
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId)
@@ -77,6 +101,19 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
+
+		Role role = roleLocalService.getRole(roleId);
+
+		if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
+			(role.getType() == RoleConstants.TYPE_SITE)) {
+
+			userIds = UsersAdminUtil.filterDeleteGroupRoleUserIds(
+				getPermissionChecker(), groupId, role.getRoleId(), userIds);
+		}
+
+		if (userIds.length == 0) {
+			return;
+		}
 
 		checkDeleteUserGroupRolesMembershipPolicy(
 			userIds, groupId, new long[] {roleId});

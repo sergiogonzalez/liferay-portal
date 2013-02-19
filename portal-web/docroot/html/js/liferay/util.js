@@ -1103,6 +1103,36 @@
 
 	Liferay.provide(
 		Util,
+		'disableSelectBoxes',
+		function(toggleBoxId, value, selectBoxId) {
+			var selectBox = A.one('#' + selectBoxId);
+			var toggleBox = A.one('#' + toggleBoxId);
+
+			if (selectBox && toggleBox) {
+				var dynamicValue = Lang.isFunction(value);
+
+				var disabled = function() {
+					var currentValue = selectBox.val();
+
+					var visible = (value == currentValue);
+
+					if (dynamicValue) {
+						visible = value(currentValue, value);
+					}
+
+					toggleBox.set('disabled', !visible);
+				};
+
+				disabled();
+
+				selectBox.on('change', disabled);
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
 		'disableTextareaTabs',
 		function(textarea) {
 			textarea = A.one(textarea);
@@ -1267,6 +1297,11 @@
 			ddmURL.setParameter('ddmResource', config.ddmResource);
 			ddmURL.setParameter('ddmResourceActionId', config.ddmResourceActionId);
 			ddmURL.setParameter('groupId', config.groupId);
+
+			if ('refererPortletName' in config) {
+				ddmURL.setParameter('refererPortletName', config.refererPortletName);
+			}
+
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStorageType', config.storageType);

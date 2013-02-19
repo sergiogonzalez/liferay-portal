@@ -29,8 +29,8 @@
 					classPK: <%= classPK %>,
 					container: '#<%= randomNamespace %>',
 					fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputName %>',
-					portletNamespace: '<portlet:namespace />',
-					repeatable: '<%= repeatable %>'
+					namespace: '<portlet:namespace />',
+					repeatable: <%= repeatable %>
 				}
 			);
 		</aui:script>

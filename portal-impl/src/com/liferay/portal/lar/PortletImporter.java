@@ -18,6 +18,7 @@ import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1824,11 +1825,6 @@ public class PortletImporter {
 
 				updateAssetPublisherClassNameIds(jxPreferences, name);
 			}
-			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
-				updateAssetPublisherScopeIds(
-					jxPreferences, name, companyGroup.getGroupId(),
-					layout.getPlid());
-			}
 			else if (name.startsWith("queryName") &&
 					 value.equalsIgnoreCase("assetCategories")) {
 
@@ -1838,6 +1834,11 @@ public class PortletImporter {
 					portletDataContext, jxPreferences, "queryValues" + index,
 					AssetCategory.class, companyGroup.getGroupId());
 			}
+			else if (name.equals("scopeIds")) {
+				updateAssetPublisherScopeIds(
+					jxPreferences, name, companyGroup.getGroupId(),
+					layout.getPlid());
+			}
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
@@ -1845,7 +1846,7 @@ public class PortletImporter {
 
 	protected void updateAssetPublisherScopeIds(
 			javax.portlet.PortletPreferences jxPreferences, String key,
-			long groupId, long plid)
+			long companyGroupId, long plid)
 		throws Exception {
 
 		String[] oldValues = jxPreferences.getValues(key, null);
@@ -1854,19 +1855,40 @@ public class PortletImporter {
 			return;
 		}
 
-		String groupScopeId =
-			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + groupId;
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		String[] newValues = new String[oldValues.length];
+		String companyGroupScopeId =
+			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + companyGroupId;
+
+		List<String> newValues = new ArrayList<String>(oldValues.length);
 
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
 
-			newValues[i] = StringUtil.replace(
-				oldValue, "[$GROUP_SCOPE_ID$]", groupScopeId);
+			String newValue = StringUtil.replace(
+				oldValue, "[$COMPANY_GROUP_SCOPE_ID$]", companyGroupScopeId);
+
+			try {
+				if (!AssetPublisherUtil.isScopeIdSelectable(
+						PermissionThreadLocal.getPermissionChecker(), newValue,
+						companyGroupId, layout)) {
+
+					continue;
+				}
+
+				newValues.add(newValue);
+			}
+			catch (NoSuchGroupException nsge) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Ignoring scope " + newValue + "because the " +
+							"referenced group was not found");
+				}
+			}
 		}
 
-		jxPreferences.setValues(key, newValues);
+		jxPreferences.setValues(
+			key, newValues.toArray(new String[newValues.size()]));
 	}
 
 	protected void updatePortletPreferences(

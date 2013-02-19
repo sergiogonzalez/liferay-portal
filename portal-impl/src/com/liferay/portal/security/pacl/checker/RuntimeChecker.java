@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.security.AccessController;
 import java.security.Permission;
@@ -151,6 +151,59 @@ public class RuntimeChecker extends BaseReflectChecker {
 				"Attempted to " + permission.getName() + " on " +
 					permission.getActions());
 		}
+	}
+
+	@Override
+	public AuthorizationProperty generateAuthorizationProperty(
+		Object... arguments) {
+
+		if ((arguments == null) || (arguments.length != 1) ||
+			!(arguments[0] instanceof Permission)) {
+
+			return null;
+		}
+
+		Permission permission = (Permission)arguments[0];
+
+		String name = permission.getName();
+
+		String key = null;
+		String value = null;
+
+		if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+			key = "security-manager-class-loader-reference-ids";
+
+			if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+				value = "portal";
+			}
+			else {
+				value = name.substring(
+					RUNTIME_PERMISSION_GET_CLASSLOADER.length() + 1);
+			}
+		}
+		else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
+			key = "security-manager-environment-variables";
+
+			value = name.substring(RUNTIME_PERMISSION_GET_ENV.length() + 1);
+
+			// Since we are using a regular expression, we cannot allow a lone *
+			// as the rule
+
+			if (value.equals(StringPool.STAR)) {
+				value = StringPool.DOUBLE_BACK_SLASH + value;
+			}
+		}
+		else {
+			return null;
+		}
+
+		AuthorizationProperty authorizationProperty =
+			new AuthorizationProperty();
+
+		authorizationProperty.setKey(key);
+		authorizationProperty.setValue(value);
+
+		return authorizationProperty;
 	}
 
 	protected boolean hasAccessClassInPackage(String pkg) {
@@ -361,11 +414,11 @@ public class RuntimeChecker extends BaseReflectChecker {
 			boolean allow = false;
 
 			ClassLoader contextClassLoader =
-				PACLClassLoaderUtil.getContextClassLoader();
+				ClassLoaderUtil.getContextClassLoader();
 			ClassLoader portalClassLoader = getPortalClassLoader();
 
 			if (contextClassLoader == portalClassLoader) {
-				if (PACLClassLoaderUtil.getClassLoader(callerClass7) !=
+				if (ClassLoaderUtil.getClassLoader(callerClass7) !=
 						getClassLoader()) {
 
 					allow = true;

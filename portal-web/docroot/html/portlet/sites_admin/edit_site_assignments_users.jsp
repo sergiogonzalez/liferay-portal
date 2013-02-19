@@ -57,6 +57,8 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 <aui:input name="addUserIds" type="hidden" />
 <aui:input name="removeUserIds" type="hidden" />
 
+<liferay-ui:membership-policy-error />
+
 <liferay-ui:search-container
 	rowChecker="<%= userGroupChecker %>"
 	searchContainer="<%= userSearch %>"

@@ -202,10 +202,10 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 
 				PortletURL hitURL = liferayPortletResponse.createRenderURL();
 
-				List<SearchResult> searchResults = SearchResultUtil.getSearchResults(hits, locale, hitURL);
+				List<SearchResult> searchResultsList = SearchResultUtil.getSearchResults(hits, locale, hitURL);
 
-				for (int i = 0; i < searchResults.size(); i++) {
-					SearchResult searchResult = searchResults.get(i);
+				for (int i = 0; i < searchResultsList.size(); i++) {
+					SearchResult searchResult = searchResultsList.get(i);
 
 					Summary summary = searchResult.getSummary();
 
@@ -311,7 +311,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 				}
 				%>
 
-				<c:if test="<%= searchResults.isEmpty() %>">
+				<c:if test="<%= searchResultsList.isEmpty() %>">
 					<div class="portlet-msg-info">
 						<%= LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>
 					</div>

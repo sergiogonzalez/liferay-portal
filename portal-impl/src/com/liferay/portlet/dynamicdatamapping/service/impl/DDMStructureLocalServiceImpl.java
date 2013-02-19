@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -86,6 +87,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
  * @author Marcellus Tavares
+ * @author Juan Fernández
  */
 public class DDMStructureLocalServiceImpl
 	extends DDMStructureLocalServiceBaseImpl {
@@ -433,6 +435,8 @@ public class DDMStructureLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -488,9 +492,12 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure matching the structure key and group.
+	 * Returns the structure matching the class name ID, structure key, and
+	 * group.
 	 *
 	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @return the matching structure, or <code>null</code> if a matching
 	 *         structure could not be found
@@ -507,8 +514,8 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure matching the structure key and group, optionally in
-	 * the global scope.
+	 * Returns the structure matching the class name ID, structure key, and
+	 * group, optionally in the global scope.
 	 *
 	 * <p>
 	 * This method first searches in the group. If the structure is still not
@@ -517,6 +524,8 @@ public class DDMStructureLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @param  includeGlobalStructures whether to include the global scope in
 	 *         the search
@@ -693,9 +702,12 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure matching the structure key and group.
+	 * Returns the structure matching the class name ID, structure key, and
+	 * group.
 	 *
 	 * @param  groupId the primary key of the structure's group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @return the matching structure
 	 * @throws PortalException if a matching structure could not be found
@@ -712,8 +724,8 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure matching the structure key and group, optionally in
-	 * the global scope.
+	 * Returns the structure matching the class name ID, structure key, and
+	 * group, optionally in the global scope.
 	 *
 	 * <p>
 	 * This method first searches in the group. If the structure is still not
@@ -722,6 +734,8 @@ public class DDMStructureLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the structure's group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @param  includeGlobalStructures whether to include the global scope in
 	 *         the search
@@ -1118,19 +1132,24 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Updates the structure replacing its old parent structure, name map,
-	 * description map, and XSD with new ones.
+	 * Updates the structure matching the class name ID, structure key, and
+	 * group, replacing its old parent structure, name map, description map, and
+	 * XSD with new ones.
 	 *
-	 * @param  structureId the primary key of the structure
+	 * @param  groupId the primary key of the group
 	 * @param  parentStructureId the primary key of the new parent structure
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  structureKey the unique string identifying the structure
 	 * @param  nameMap the structure's new locales and localized names
 	 * @param  descriptionMap the structure's new locales and localized
 	 *         description
 	 * @param  xsd the structure's new XML schema definition
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date.
+	 *         structure's modification date.
 	 * @return the updated structure
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMStructure updateStructure(
@@ -1151,20 +1170,20 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Updates the structure matching the structure key and group, replacing its
-	 * old parent structure, name map, description map, and XSD with new ones.
+	 * Updates the structure matching the structure ID, replacing its old parent
+	 * structure, name map, description map, and XSD with new ones.
 	 *
-	 * @param  groupId the primary key of the group
+	 * @param  structureId the primary key of the structure
 	 * @param  parentStructureId the primary key of the new parent structure
-	 * @param  structureKey unique string identifying the structure
 	 * @param  nameMap the structure's new locales and localized names
 	 * @param  descriptionMap the structure's new locales and localized
 	 *         descriptions
 	 * @param  xsd the structure's new XML schema definition
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date
+	 *         structure's modification date.
 	 * @return the updated structure
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMStructure updateStructure(
@@ -1179,6 +1198,101 @@ public class DDMStructureLocalServiceImpl
 		return doUpdateStructure(
 			parentStructureId, nameMap, descriptionMap, xsd, serviceContext,
 			structure);
+	}
+
+	/**
+	 * Updates the structure matching the structure ID, replacing its XSD with a
+	 * new one.
+	 *
+	 * @param  structureId the primary key of the structure
+	 * @param  xsd the structure's new XML schema definition
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         structure's modification date.
+	 * @return the updated structure
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMStructure updateXSD(
+			long structureId, String xsd, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		return doUpdateStructure(
+			structure.getParentStructureId(), structure.getNameMap(),
+			structure.getDescriptionMap(), xsd, serviceContext, structure);
+	}
+
+	/**
+	 * Updates the structure matching the structure ID, replacing the metadata
+	 * entry of the named field.
+	 *
+	 * @param  structureId the primary key of the structure
+	 * @param  fieldName the name of the field whose metadata to update
+	 * @param  metadataEntryName the metadata entry's name
+	 * @param  metadataEntryValue the metadata entry's value
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         structure's modification date.
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void updateXSDFieldMetadata(
+			long structureId, String fieldName, String metadataEntryName,
+			String metadataEntryValue, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = fetchDDMStructure(structureId);
+
+		if (ddmStructure == null) {
+			return;
+		}
+
+		String xsd = ddmStructure.getXsd();
+
+		try {
+			Document document = SAXReaderUtil.read(xsd);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> dynamicElementElements = rootElement.elements(
+				"dynamic-element");
+
+			for (Element dynamicElementElement : dynamicElementElements) {
+				String dynamicElementElementFieldName = GetterUtil.getString(
+					dynamicElementElement.attributeValue("name"));
+
+				if (!dynamicElementElementFieldName.equals(fieldName)) {
+					continue;
+				}
+
+				List<Element> metadataElements = dynamicElementElement.elements(
+					"meta-data");
+
+				for (Element metadataElement : metadataElements) {
+					List<Element> metadataEntryElements =
+						metadataElement.elements();
+
+					for (Element metadataEntryElement : metadataEntryElements) {
+						String metadataEntryElementName = GetterUtil.getString(
+							metadataEntryElement.attributeValue("name"));
+
+						if (metadataEntryElementName.equals(
+								metadataEntryName)) {
+
+							metadataEntryElement.setText(metadataEntryValue);
+						}
+					}
+				}
+			}
+
+			updateXSD(structureId, document.asXML(), serviceContext);
+		}
+		catch (DocumentException de) {
+			throw new SystemException(de);
+		}
 	}
 
 	protected void appendNewStructureRequiredFields(

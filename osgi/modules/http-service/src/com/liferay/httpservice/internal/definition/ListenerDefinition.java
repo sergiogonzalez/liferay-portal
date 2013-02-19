@@ -14,40 +14,19 @@
 
 package com.liferay.httpservice.internal.definition;
 
-import java.util.Dictionary;
-
 /**
  * @author Raymond Augé
  */
 public class ListenerDefinition {
 
-	public ListenerDefinition() {
-	}
-
-	public ListenerDefinition(
-		Dictionary<String, String> contextParams, Object listener) {
-
-		_contextParams = contextParams;
-		_listener = listener;
-	}
-
-	public Dictionary<String, String> getContextParams() {
-		return _contextParams;
-	}
-
 	public Object getListener() {
 		return _listener;
-	}
-
-	public void setContextParams(Dictionary<String, String> contextParams) {
-		_contextParams = contextParams;
 	}
 
 	public void setListener(Object listener) {
 		_listener = listener;
 	}
 
-	private Dictionary<String, String> _contextParams;
 	private Object _listener;
 
 }

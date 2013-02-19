@@ -87,6 +87,7 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.journal.ArticleContentException;
@@ -139,7 +140,7 @@ import javax.portlet.PortletPreferences;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Bruno Farache
- * @author Juan FernÃ¡ndez
+ * @author Juan Fernández
  * @author Sergio González
  */
 public class JournalArticleLocalServiceImpl
@@ -311,6 +312,12 @@ public class JournalArticleLocalServiceImpl
 			userId, article, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
+
+		// Dynamic data mapping
+
+		if (PortalUtil.getClassNameId(DDMStructure.class) == classNameId) {
+			updateDDMStructureXSD(classPK, content, serviceContext);
+		}
 
 		// Message boards
 
@@ -2399,6 +2406,15 @@ public class JournalArticleLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
+		// Dynamic data mapping
+
+		if (PortalUtil.getClassNameId(DDMStructure.class) ==
+				article.getClassNameId()) {
+
+			updateDDMStructureXSD(
+				article.getClassPK(), content, serviceContext);
+		}
+
 		// Expando
 
 		ExpandoBridge expandoBridge = article.getExpandoBridge();
@@ -3788,6 +3804,38 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected void updateDDMStructureXSD(
+			long ddmStructureId, String content, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		try {
+			Document document = SAXReaderUtil.read(content);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> elements = rootElement.elements();
+
+			for (Element element : elements) {
+				String fieldName = element.attributeValue(
+					"name", StringPool.BLANK);
+
+				List<Element> dynamicContentElements = element.elements(
+					"dynamic-content");
+
+				for (Element dynamicContentElement : dynamicContentElements) {
+					String value = dynamicContentElement.getText();
+
+					ddmStructureLocalService.updateXSDFieldMetadata(
+						ddmStructureId, fieldName,
+						FieldConstants.PREDEFINED_VALUE, value, serviceContext);
+				}
+			}
+		}
+		catch (DocumentException de) {
+			throw new SystemException(de);
+		}
 	}
 
 	protected void updatePreviousApprovedArticle(JournalArticle article)

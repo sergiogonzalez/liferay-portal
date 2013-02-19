@@ -1883,34 +1883,50 @@ public class SourceFormatter {
 						_sourceFormatterHelper.printError(
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
-					else {
-						int lineTabCount = StringUtil.count(
-							line, StringPool.TAB);
-						int previousLineTabCount = StringUtil.count(
-							previousLine, StringPool.TAB);
+					else if (!trimmedLine.startsWith("//")) {
+						int lineLeadingTabCount = _getLeadingTabCount(line);
+						int previousLineLeadingTabCount = _getLeadingTabCount(
+							previousLine);
 
 						if (previousLine.endsWith(StringPool.COMMA) &&
 							previousLine.contains(
 								StringPool.OPEN_PARENTHESIS) &&
 							!previousLine.contains("for (") &&
-							(lineTabCount > previousLineTabCount)) {
+							(lineLeadingTabCount >
+								previousLineLeadingTabCount)) {
 
 							_sourceFormatterHelper.printError(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
 						}
 
-						if (Validator.isNotNull(trimmedLine) &&
-							((previousLine.endsWith(StringPool.COLON) &&
-							  previousLine.contains(StringPool.TAB + "for ")) ||
-							 (previousLine.endsWith(
-								 StringPool.OPEN_PARENTHESIS) &&
-							  previousLine.contains(StringPool.TAB + "if "))) &&
-							((previousLineTabCount + 2) != lineTabCount)) {
+						if (Validator.isNotNull(trimmedLine)) {
+							if (((previousLine.endsWith(StringPool.COLON) &&
+								  previousLine.contains(
+									  StringPool.TAB + "for ")) ||
+								 (previousLine.endsWith(
+									 StringPool.OPEN_PARENTHESIS) &&
+								  previousLine.contains(
+									  StringPool.TAB + "if "))) &&
+								((previousLineLeadingTabCount + 2) !=
+									lineLeadingTabCount)) {
 
 							_sourceFormatterHelper.printError(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
+							}
+
+							if (previousLine.endsWith(
+									StringPool.OPEN_CURLY_BRACE) &&
+								!trimmedLine.startsWith(
+									StringPool.CLOSE_CURLY_BRACE) &&
+								((previousLineLeadingTabCount + 1) !=
+									lineLeadingTabCount)) {
+
+								_sourceFormatterHelper.printError(
+									fileName,
+									"tab: " + fileName + " " + lineCount);
+							}
 						}
 
 						if (previousLine.endsWith(StringPool.PERIOD)) {
@@ -1932,15 +1948,29 @@ public class SourceFormatter {
 						}
 
 						if (trimmedLine.startsWith("throws ") &&
-							(lineTabCount == previousLineTabCount)) {
+							(lineLeadingTabCount ==
+								previousLineLeadingTabCount)) {
 
 							_sourceFormatterHelper.printError(
 								fileName, "tab: " + fileName + " " + lineCount);
 						}
 
+						if ((previousLine.contains(" class " ) ||
+							 previousLine.contains(" enum ")) &&
+							previousLine.endsWith(
+								StringPool.OPEN_CURLY_BRACE) &&
+							Validator.isNotNull(line) &&
+							!trimmedLine.startsWith(
+								StringPool.CLOSE_CURLY_BRACE)) {
+
+							_sourceFormatterHelper.printError(
+								fileName,
+								"new line: " + fileName + " " + lineCount);
+						}
+
 						combinedLines = _getCombinedLines(
-							trimmedLine, previousLine, lineTabCount,
-							previousLineTabCount);
+							trimmedLine, previousLine, lineLeadingTabCount,
+							previousLineLeadingTabCount);
 					}
 				}
 			}
@@ -3601,7 +3631,9 @@ public class SourceFormatter {
 					_TYPE_METHOD_PUBLIC_STATIC);
 			}
 
-			if (line.startsWith(StringPool.TAB + "public static class ")) {
+			if (line.startsWith(StringPool.TAB + "public static class ") ||
+				line.startsWith(StringPool.TAB + "public static enum")) {
+
 				return new Tuple(
 					_getClassName(line), _TYPE_CLASS_PUBLIC_STATIC);
 			}
@@ -3629,7 +3661,9 @@ public class SourceFormatter {
 						_TYPE_METHOD_PUBLIC);
 				}
 			}
-			else if (line.startsWith(StringPool.TAB + "public class ")) {
+			else if (line.startsWith(StringPool.TAB + "public class ") ||
+					 line.startsWith(StringPool.TAB + "public enum")) {
+
 				return new Tuple(_getClassName(line), _TYPE_CLASS_PUBLIC);
 			}
 		}
@@ -3656,7 +3690,9 @@ public class SourceFormatter {
 					_TYPE_METHOD_PROTECTED_STATIC);
 			}
 
-			if (line.startsWith(StringPool.TAB + "protected static class ")) {
+			if (line.startsWith(StringPool.TAB + "protected static class ") ||
+				line.startsWith(StringPool.TAB + "protected static enum ")) {
+
 				return new Tuple(
 					_getClassName(line), _TYPE_CLASS_PROTECTED_STATIC);
 			}
@@ -3680,7 +3716,9 @@ public class SourceFormatter {
 					}
 				}
 			}
-			else if (line.startsWith(StringPool.TAB + "protected class ")) {
+			else if (line.startsWith(StringPool.TAB + "protected class ") ||
+					 line.startsWith(StringPool.TAB + "protected enum ")) {
+
 				return new Tuple(_getClassName(line), _TYPE_CLASS_PROTECTED);
 			}
 
@@ -3709,7 +3747,9 @@ public class SourceFormatter {
 					_TYPE_METHOD_PRIVATE_STATIC);
 			}
 
-			if (line.startsWith(StringPool.TAB + "private static class ")) {
+			if (line.startsWith(StringPool.TAB + "private static class ") ||
+				line.startsWith(StringPool.TAB + "private static enum ")) {
+
 				return new Tuple(
 					_getClassName(line), _TYPE_CLASS_PRIVATE_STATIC);
 			}
@@ -3738,7 +3778,9 @@ public class SourceFormatter {
 						_TYPE_METHOD_PRIVATE);
 				}
 			}
-			else if (line.startsWith(StringPool.TAB + "private class ")) {
+			else if (line.startsWith(StringPool.TAB + "private class ") ||
+					 line.startsWith(StringPool.TAB + "private enum ")) {
+
 				return new Tuple(_getClassName(line), _TYPE_CLASS_PRIVATE);
 			}
 		}
@@ -3831,6 +3873,18 @@ public class SourceFormatter {
 		}
 
 		return new String[0];
+	}
+
+	private static int _getLeadingTabCount(String line) {
+		int leadingTabCount = 0;
+
+		while (line.startsWith(StringPool.TAB)) {
+			line = line.substring(1);
+
+			leadingTabCount++;
+		}
+
+		return leadingTabCount;
 	}
 
 	private static int _getLineLength(String line) {

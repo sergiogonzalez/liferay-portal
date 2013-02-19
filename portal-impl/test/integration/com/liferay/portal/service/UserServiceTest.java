@@ -14,19 +14,29 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.util.UserTestUtil;
 
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,6 +51,11 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
 public class UserServiceTest {
+
+	@Before
+	public void setUp() {
+		FinderCacheUtil.clearCache();
+	}
 
 	@Test
 	public void testAddUser() throws Exception {
@@ -60,6 +75,122 @@ public class UserServiceTest {
 
 		UserServiceUtil.getUserByEmailAddress(
 			TestPropsValues.getCompanyId(), user.getEmailAddress());
+	}
+
+	@Test
+	public void testGroupAdminUnsetGroupAdmin() throws Exception {
+		Group group = ServiceTestUtil.addGroup();
+
+		User subjectUser = UserTestUtil.addGroupAdminUser(group);
+		User objectUser = UserTestUtil.addGroupAdminUser(group);
+
+		unsetGroupUsers(group.getGroupId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasGroupUser(
+				group.getGroupId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testGroupAdminUnsetGroupOwner() throws Exception {
+		Group group = ServiceTestUtil.addGroup();
+
+		User subjectUser = UserTestUtil.addGroupAdminUser(group);
+		User objectUser = UserTestUtil.addGroupOwnerUser(group);
+
+		unsetGroupUsers(group.getGroupId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasGroupUser(
+				group.getGroupId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testGroupOwnerUnsetGroupAdmin() throws Exception {
+		Group group = ServiceTestUtil.addGroup();
+
+		User subjectUser = UserTestUtil.addGroupOwnerUser(group);
+		User objectUser = UserTestUtil.addGroupAdminUser(group);
+
+		unsetGroupUsers(group.getGroupId(), subjectUser, objectUser);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasGroupUser(
+				group.getGroupId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testGroupOwnerUnsetGroupOwner() throws Exception {
+		Group group = ServiceTestUtil.addGroup();
+
+		User subjectUser = UserTestUtil.addGroupOwnerUser(group);
+		User objectUser = UserTestUtil.addGroupOwnerUser(group);
+
+		unsetGroupUsers(group.getGroupId(), subjectUser, objectUser);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasGroupUser(
+				group.getGroupId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testOrganizationAdminUnsetOrganizationAdmin() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User subjectUser = UserTestUtil.addOrganizationAdminUser(organization);
+		User objectUser = UserTestUtil.addOrganizationAdminUser(organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasOrganizationUser(
+				organization.getOrganizationId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testOrganizationAdminUnsetOrganizationOwner() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User subjectUser = UserTestUtil.addOrganizationAdminUser(organization);
+		User objectUser = UserTestUtil.addOrganizationOwnerUser(organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasOrganizationUser(
+				organization.getOrganizationId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testOrganizationOwnerUnsetOrganizationAdmin() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User subjectUser = UserTestUtil.addOrganizationOwnerUser(organization);
+		User objectUser = UserTestUtil.addOrganizationAdminUser(organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), subjectUser, objectUser);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasOrganizationUser(
+				organization.getOrganizationId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testOrganizationOwnerUnsetOrganizationOwner() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User subjectUser = UserTestUtil.addOrganizationOwnerUser(organization);
+		User objectUser = UserTestUtil.addOrganizationOwnerUser(organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), subjectUser, objectUser);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasOrganizationUser(
+				organization.getOrganizationId(), objectUser.getUserId()));
 	}
 
 	protected User addUser() throws Exception {
@@ -97,6 +228,34 @@ public class UserServiceTest {
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
+	}
+
+	protected void unsetGroupUsers(
+				long groupId, User subjectUser, User objectUser)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(subjectUser);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		UserServiceUtil.unsetGroupUsers(
+			groupId, new long[] {objectUser.getUserId()}, serviceContext);
+	}
+
+	protected void unsetOrganizationUsers(
+			long organizationId, User subjectUser, User objectUser)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(subjectUser);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		UserServiceUtil.unsetOrganizationUsers(
+			organizationId, new long[] {objectUser.getUserId()});
 	}
 
 }

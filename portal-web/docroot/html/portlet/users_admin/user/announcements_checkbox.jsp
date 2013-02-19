@@ -22,25 +22,36 @@ SearchEntry entry = (SearchEntry)request.getAttribute(WebKeys.SEARCH_CONTAINER_R
 
 AnnouncementsDelivery delivery = (AnnouncementsDelivery)row.getObject();
 
-int index = entry.getIndex();
-
-String param = "announcementsType" + delivery.getType();
 boolean defaultValue = false;
 boolean disabled = false;
+String param = "announcementsType" + delivery.getType();
+String messageKey = StringPool.BLANK;
+
+int index = entry.getIndex();
 
 if (index == 1) {
-	param += "Email";
 	defaultValue = delivery.isEmail();
+	param += "Email";
+	messageKey = "receive-x-announcements-via-email";
 }
 else if (index == 2) {
-	param += "Sms";
 	defaultValue = delivery.isSms();
+	messageKey = "receive-x-announcements-via-sms";
+	param += "Sms";
 }
 else if (index == 3) {
-	param += "Website";
 	defaultValue = delivery.isWebsite();
 	disabled = true;
+	messageKey = "receive-x-announcements-via-website";
+	param += "Website";
 }
 %>
 
-<aui:input disabled="<%= disabled %>" label="" name="<%= param %>" type="checkbox" value="<%= defaultValue %>" />
+<aui:input
+	disabled="<%= disabled %>"
+	label=""
+	name="<%= param %>"
+	title='<%= LanguageUtil.format(pageContext, messageKey, delivery.getType(), true) %>'
+	type="checkbox"
+	value="<%= defaultValue %>"
+/>

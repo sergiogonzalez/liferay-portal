@@ -179,6 +179,47 @@ public class FileChecker extends BaseChecker {
 		}
 	}
 
+	@Override
+	public AuthorizationProperty generateAuthorizationProperty(
+		Object... arguments) {
+
+		if ((arguments == null) || (arguments.length != 1) ||
+			!(arguments[0] instanceof Permission)) {
+
+			return null;
+		}
+
+		Permission permission = (Permission)arguments[0];
+
+		String actions = permission.getActions();
+
+		String key = null;
+
+		if (actions.equals(FILE_PERMISSION_ACTION_DELETE)) {
+			key = "security-manager-files-delete";
+		}
+		else if (actions.equals(FILE_PERMISSION_ACTION_EXECUTE)) {
+			key = "security-manager-files-execute";
+		}
+		else if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
+			key = "security-manager-files-read";
+		}
+		else if (actions.equals(FILE_PERMISSION_ACTION_WRITE)) {
+			key = "security-manager-files-write";
+		}
+		else {
+			return null;
+		}
+
+		AuthorizationProperty authorizationProperty =
+			new AuthorizationProperty();
+
+		authorizationProperty.setKey(key);
+		authorizationProperty.setValue(permission.getName());
+
+		return authorizationProperty;
+	}
+
 	protected void addCanonicalPath(List<String> paths, String path) {
 		Iterator<String> itr = paths.iterator();
 

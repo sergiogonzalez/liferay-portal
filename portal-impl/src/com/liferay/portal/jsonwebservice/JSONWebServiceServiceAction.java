@@ -15,6 +15,7 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.action.JSONServiceAction;
+import com.liferay.portal.jsonwebservice.action.JSONWebServiceDiscoverAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
@@ -26,7 +27,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServiceLoader;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -56,7 +57,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 		if ((classLoader == null) &&
 			contextPath.equals(PortalUtil.getPathContext())) {
 
-			classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+			classLoader = ClassLoaderUtil.getPortalClassLoader();
 		}
 
 		_jsonWebServiceConfigurator = getJSONWebServiceConfigurator(
@@ -100,17 +101,8 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 		JSONWebServiceAction jsonWebServiceAction = null;
 
-		String path = GetterUtil.getString(request.getPathInfo());
-
 		try {
-			if (path.equals("/invoke")) {
-				jsonWebServiceAction = new JSONWebServiceInvokerAction(request);
-			}
-			else {
-				jsonWebServiceAction =
-					JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
-						request);
-			}
+			jsonWebServiceAction = getJSONWebServiceAction(request);
 
 			Object returnObj = jsonWebServiceAction.invoke();
 
@@ -137,6 +129,23 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 			return JSONFactoryUtil.serializeException(e);
 		}
+	}
+
+	protected JSONWebServiceAction getJSONWebServiceAction(
+		HttpServletRequest request) {
+
+		String path = GetterUtil.getString(request.getPathInfo());
+
+		if (path.equals("/invoke")) {
+			return new JSONWebServiceInvokerAction(request);
+		}
+
+		if (request.getParameter("discover") != null) {
+			return new JSONWebServiceDiscoverAction(request);
+		}
+
+		return JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
+			request);
 	}
 
 	protected JSONWebServiceConfigurator getJSONWebServiceConfigurator(

@@ -68,7 +68,9 @@ public class AtomEntryContent {
 	}
 
 	public enum Type {
+
 		HTML, MEDIA, TEXT, XHTML, XML
+
 	}
 
 	private String _mimeType;

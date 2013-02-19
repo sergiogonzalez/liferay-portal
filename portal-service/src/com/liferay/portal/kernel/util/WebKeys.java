@@ -73,6 +73,8 @@ public interface WebKeys {
 	 */
 	public static final String LIFERAY_SHARED_VISITED_GROUP_ID_RECENT = "LIFERAY_SHARED_VISITED_GROUP_ID_RECENT";
 
+	public static final String OSGI_BUNDLE = "OSGI_BUNDLE";
+
 	public static final String OUTPUT_DATA = "LIFERAY_SHARED_OUTPUT_DATA";
 
 	public static final String PAGE_BODY_BOTTOM = "PAGE_BODY_BOTTOM";

@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.reflect.Method;
 
@@ -38,6 +38,7 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalServiceChecker extends BaseChecker {
 
@@ -63,22 +64,75 @@ public class PortalServiceChecker extends BaseChecker {
 		}
 	}
 
+	@Override
+	public AuthorizationProperty generateAuthorizationProperty(
+		Object... arguments) {
+
+		if ((arguments == null) || (arguments.length == 0)) {
+			return null;
+		}
+
+		Object object = null;
+		Method method = null;
+
+		if (arguments[0] instanceof Permission) {
+			PortalServicePermission portalServicePermission =
+				(PortalServicePermission)arguments[0];
+
+			object = portalServicePermission.getObject();
+			method = portalServicePermission.getMethod();
+		}
+		else {
+			object = arguments[0];
+			method = (Method)arguments[1];
+		}
+
+		Class<?> clazz = getClass(object);
+
+		if (clazz == null) {
+			return null;
+		}
+
+		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
+
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
+
+		String filter = "[portal]";
+
+		if (paclPolicy != null) {
+			filter =
+				StringPool.OPEN_BRACKET + paclPolicy.getServletContextName() +
+					StringPool.CLOSE_BRACKET;
+		}
+
+		String className = getInterfaceName(clazz.getName());
+
+		String methodName = method.getName();
+
+		if (methodName.equals("invokeMethod")) {
+			methodName = (String)arguments[0];
+		}
+
+		AuthorizationProperty authorizationProperty =
+			new AuthorizationProperty();
+
+		authorizationProperty.setKey("security-manager-services" + filter);
+		authorizationProperty.setValue(
+			className + StringPool.POUND + methodName);
+
+		return authorizationProperty;
+	}
+
 	public boolean hasService(
 		Object object, Method method, Object[] arguments) {
 
-		Class<?> clazz = object.getClass();
+		Class<?> clazz = getClass(object);
 
-		if (ProxyUtil.isProxyClass(clazz)) {
-			Class<?>[] interfaces = clazz.getInterfaces();
-
-			if (interfaces.length == 0) {
-				return false;
-			}
-
-			clazz = interfaces[0];
+		if (clazz == null) {
+			return false;
 		}
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
 
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
 
@@ -107,6 +161,22 @@ public class PortalServiceChecker extends BaseChecker {
 		}
 
 		return false;
+	}
+
+	protected Class<?> getClass(Object object) {
+		Class<?> clazz = object.getClass();
+
+		if (ProxyUtil.isProxyClass(clazz)) {
+			Class<?>[] interfaces = clazz.getInterfaces();
+
+			if (interfaces.length == 0) {
+				return null;
+			}
+
+			clazz = interfaces[0];
+		}
+
+		return clazz;
 	}
 
 	protected String getInterfaceName(String className) {
@@ -138,7 +208,7 @@ public class PortalServiceChecker extends BaseChecker {
 	}
 
 	protected boolean hasDynamicQuery(Class<?> clazz) {
-		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
 
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
 

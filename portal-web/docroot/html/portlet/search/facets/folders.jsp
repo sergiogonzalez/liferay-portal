@@ -51,6 +51,7 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 			}
 
 			searchContext.setFolderIds(new long[] {curFolderId});
+			searchContext.setKeywords(StringPool.BLANK);
 
 			Hits results = indexer.search(searchContext);
 
@@ -67,9 +68,9 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
+							clearFields: '<%= renderResponse.getNamespace() + facet.getFieldName() %>',
 							fieldValues: '<%= curFolderId %>',
-							text: '<%= UnicodeFormatter.toString(title.getValue()) %>'
+							text: '<%= HtmlUtil.escapeJS(title.getValue()) %>'
 						}
 					);
 				</aui:script>

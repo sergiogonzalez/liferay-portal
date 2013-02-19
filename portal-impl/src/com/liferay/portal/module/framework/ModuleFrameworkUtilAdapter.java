@@ -14,7 +14,7 @@
 
 package com.liferay.portal.module.framework;
 
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.InputStream;
 
@@ -24,8 +24,7 @@ import java.io.InputStream;
  *
  * @author Miguel Pastor
  * @author Raymond Augé
- *
- * @see {@link ModuleFrameworkClassloader}
+ * @see    {@link ModuleFrameworkClassloader}
  */
 public class ModuleFrameworkUtilAdapter {
 
@@ -66,16 +65,16 @@ public class ModuleFrameworkUtilAdapter {
 	}
 
 	public static void startFramework() throws Exception {
-		ClassLoader current = PACLClassLoaderUtil.getContextClassLoader();
+		ClassLoader current = ClassLoaderUtil.getContextClassLoader();
 
-		PACLClassLoaderUtil.setContextClassLoader(
+		ClassLoaderUtil.setContextClassLoader(
 			ModuleFrameworkAdapterHelper.getClassLoader());
 
 		try {
 			_moduleFrameworkAdapterHelper.execute("startFramework");
 		}
 		finally {
-			PACLClassLoaderUtil.setContextClassLoader(current);
+			ClassLoaderUtil.setContextClassLoader(current);
 		}
 	}
 

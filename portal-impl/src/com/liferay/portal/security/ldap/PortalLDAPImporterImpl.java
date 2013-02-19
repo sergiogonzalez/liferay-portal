@@ -457,7 +457,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 			role = RoleLocalServiceUtil.addRole(
 				defaultUser.getUserId(), null, 0, ldapGroup.getGroupName(),
-				null, descriptionMap, RoleConstants.TYPE_REGULAR, null);
+				null, descriptionMap, RoleConstants.TYPE_REGULAR, null, null);
 		}
 
 		Group group = userGroup.getGroup();
@@ -599,7 +599,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			PrefsPropsUtil.getString(
 				companyId,
 				PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix));
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(groupMappings.getProperty("groupName"));
 		sb.append("=");
 		sb.append(escapeValue(userGroup.getName()));

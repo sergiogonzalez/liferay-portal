@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -201,8 +201,7 @@ public class HotDeployImpl implements HotDeploy {
 			ClassLoader contextClassLoader = getContextClassLoader();
 
 			try {
-				setContextClassLoader(
-					PACLClassLoaderUtil.getPortalClassLoader());
+				setContextClassLoader(ClassLoaderUtil.getPortalClassLoader());
 
 				List<HotDeployEvent> dependentEvents =
 					new ArrayList<HotDeployEvent>(_dependentHotDeployEvents);
@@ -254,7 +253,7 @@ public class HotDeployImpl implements HotDeploy {
 	}
 
 	protected ClassLoader getContextClassLoader() {
-		return PACLClassLoaderUtil.getContextClassLoader();
+		return ClassLoaderUtil.getContextClassLoader();
 	}
 
 	protected String getRequiredServletContextNames(
@@ -278,7 +277,7 @@ public class HotDeployImpl implements HotDeploy {
 	}
 
 	protected void setContextClassLoader(ClassLoader contextClassLoader) {
-		PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(HotDeployImpl.class);

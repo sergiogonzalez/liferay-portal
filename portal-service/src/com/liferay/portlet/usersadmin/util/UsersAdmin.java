@@ -60,6 +60,11 @@ public interface UsersAdmin {
 	public long[] addRequiredRoles(User user, long[] roleIds)
 		throws PortalException, SystemException;
 
+	public long[] filterDeleteGroupRoleUserIds(
+			PermissionChecker permissionChecker, long groupId, long roleId,
+			long[] userIds)
+		throws PortalException, SystemException;
+
 	public List<Role> filterGroupRoles(
 			PermissionChecker permissionChecker, long groupId, List<Role> roles)
 		throws PortalException, SystemException;
@@ -75,6 +80,10 @@ public interface UsersAdmin {
 
 	public List<Role> filterRoles(
 		PermissionChecker permissionChecker, List<Role> roles);
+
+	public long[] filterUnsetGroupUserIds(
+			PermissionChecker permissionChecker, long groupId, long[] userIds)
+		throws PortalException, SystemException;
 
 	public List<UserGroupRole> filterUserGroupRoles(
 			PermissionChecker permissionChecker,
