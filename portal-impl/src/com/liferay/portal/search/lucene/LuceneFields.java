@@ -98,11 +98,24 @@ public class LuceneFields {
 		return fieldObj;
 	}
 
-	public static NumericField getNumber(String field, String number) {
+	public static NumericField getNumber(
+		String field, String number, Class<? extends Number> numericType) {
+
 		NumericField numericField = new NumericField(
 			field, Field.Store.YES, true);
 
-		numericField.setLongValue(GetterUtil.getLong(number));
+		if (numericType.equals(Double.class)) {
+			numericField.setDoubleValue(GetterUtil.getDouble(number));
+		}
+		else if (numericType.equals(Float.class)) {
+			numericField.setFloatValue(GetterUtil.getFloat(number));
+		}
+		else if (numericType.equals(Integer.class)) {
+			numericField.setIntValue(GetterUtil.getInteger(number));
+		}
+		else {
+			numericField.setLongValue(GetterUtil.getLong(number));
+		}
 
 		return numericField;
 	}
