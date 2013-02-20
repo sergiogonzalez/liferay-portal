@@ -99,6 +99,15 @@ public class AssetTagServiceUtil {
 		return getService().getGroupTagsCount(groupId);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetTagDisplay getGroupTagsDisplay(
+		long groupId, java.lang.String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupTagsDisplay(groupId, name, start, end);
+	}
+
+	/**
+	* @deprecated {@link #getGroupTagsDisplay(long, String, int, int)}
+	*/
 	public static com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
 		long groupId, java.lang.String name, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,

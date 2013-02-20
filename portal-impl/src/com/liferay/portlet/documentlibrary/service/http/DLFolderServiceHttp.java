@@ -372,8 +372,8 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static long[] getFolderIds(HttpPrincipal httpPrincipal,
-		long groupId, long folderId)
+	public static java.util.List<java.lang.Long> getFolderIds(
+		HttpPrincipal httpPrincipal, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -400,7 +400,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (long[])returnObj;
+			return (java.util.List<java.lang.Long>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

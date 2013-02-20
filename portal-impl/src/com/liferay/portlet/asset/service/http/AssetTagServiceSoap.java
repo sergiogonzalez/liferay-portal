@@ -163,6 +163,25 @@ public class AssetTagServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.asset.model.AssetTagDisplay getGroupTagsDisplay(
+		long groupId, java.lang.String name, int start, int end)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetTagDisplay returnValue = AssetTagServiceUtil.getGroupTagsDisplay(groupId,
+					name, start, end);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated {@link #getGroupTagsDisplay(long, String, int, int)}
+	*/
 	public static java.lang.String getJSONGroupTags(long groupId,
 		java.lang.String name, int start, int end) throws RemoteException {
 		try {

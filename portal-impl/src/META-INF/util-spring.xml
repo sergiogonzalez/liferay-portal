@@ -877,6 +877,10 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.journal.util.JournalConverter" class="com.liferay.portlet.journal.util.JournalConverterImpl" />
+	<bean id="com.liferay.portlet.journal.util.JournalConverterUtil" class="com.liferay.portlet.journal.util.JournalConverterUtil">
+		<property name="journalConverter" ref="com.liferay.portlet.journal.util.JournalConverter" />
+	</bean>
 	<bean id="com.liferay.portlet.journalcontent.util.JournalContent" class="com.liferay.portlet.journalcontent.util.JournalContentImpl" />
 	<bean id="com.liferay.portlet.journalcontent.util.JournalContentUtil" class="com.liferay.portlet.journalcontent.util.JournalContentUtil">
 		<property name="journalContent" ref="com.liferay.portlet.journalcontent.util.JournalContent" />
@@ -923,6 +927,10 @@
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />
+	</bean>
+	<bean id="com.liferay.portlet.sites.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
+	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
+		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
 	</bean>
 	<bean id="com.liferay.portlet.trash.util.Trash" class="com.liferay.portlet.trash.util.TrashImpl" />
 	<bean id="com.liferay.portlet.trash.util.TrashUtil" class="com.liferay.portlet.trash.util.TrashUtil">

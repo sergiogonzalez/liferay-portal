@@ -129,6 +129,9 @@ public class AssetCategoryServiceUtil {
 				   .getJSONSearch(groupId, name, vocabularyIds, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getVocabularyCategoriesDisplay(long, int, int, OrderByComparator)}
+	*/
 	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -138,6 +141,9 @@ public class AssetCategoryServiceUtil {
 				   .getJSONVocabularyCategories(vocabularyId, start, end, obc);
 	}
 
+	/**
+	* @deprecated {@link #getVocabularyCategoriesDisplay(long, String, long, int, int, OrderByComparator)}
+	*/
 	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
 		long groupId, java.lang.String name, long vocabularyId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -187,6 +193,25 @@ public class AssetCategoryServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getVocabularyCategoriesCount(groupId, name, vocabularyId);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetCategoryDisplay getVocabularyCategoriesDisplay(
+		long vocabularyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategoriesDisplay(vocabularyId, start, end, obc);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetCategoryDisplay getVocabularyCategoriesDisplay(
+		long groupId, java.lang.String name, long vocabularyId, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategoriesDisplay(groupId, name, vocabularyId,
+			start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyRootCategories(

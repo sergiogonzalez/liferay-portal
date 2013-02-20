@@ -94,6 +94,8 @@ public class PropsValues {
 
 	public static final String ASSET_PUBLISHER_DISPLAY_TEMPLATES_CONFIG = PropsUtil.get(PropsKeys.ASSET_PUBLISHER_DISPLAY_TEMPLATES_CONFIG);
 
+	public static final int ASSET_PUBLISHER_DYNAMIC_SUBSCRIPTION_LIMIT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_DYNAMIC_SUBSCRIPTION_LIMIT));
+
 	public static final String ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY = PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY);
 
 	public static final boolean ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_ENABLED));

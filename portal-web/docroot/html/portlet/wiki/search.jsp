@@ -130,7 +130,7 @@ portletURL.setParameter("keywords", keywords);
 				containerType='<%= LanguageUtil.get(locale, "wiki-node") %>'
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : wikiPage.getSummary() %>"
-				fileEntries="<%= searchResult.getFileEntries() %>"
+				fileEntryTuples="<%= searchResult.getFileEntryTuples() %>"
 				mbMessages="<%= searchResult.getMBMessages() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : wikiPage.getTitle() %>"

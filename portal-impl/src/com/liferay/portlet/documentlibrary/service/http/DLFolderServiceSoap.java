@@ -181,13 +181,13 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static long[] getFolderIds(long groupId, long folderId)
+	public static java.lang.Long[] getFolderIds(long groupId, long folderId)
 		throws RemoteException {
 		try {
-			long[] returnValue = DLFolderServiceUtil.getFolderIds(groupId,
+			java.util.List<java.lang.Long> returnValue = DLFolderServiceUtil.getFolderIds(groupId,
 					folderId);
 
-			return returnValue;
+			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
