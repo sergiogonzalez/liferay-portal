@@ -239,7 +239,7 @@ public class DLFileEntryTypeLocalServiceImpl
 				folderId);
 		}
 
-		if ((dlFileEntryTypes == null) || dlFileEntryTypes.isEmpty()) {
+		if (dlFileEntryTypes == null) {
 			dlFileEntryTypes = new ArrayList<DLFileEntryType>(
 				getFileEntryTypes(groupIds));
 
