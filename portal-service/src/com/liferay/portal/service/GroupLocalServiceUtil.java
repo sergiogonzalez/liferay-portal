@@ -369,11 +369,6 @@ public class GroupLocalServiceUtil {
 		getService().checkCompanyGroup(companyId);
 	}
 
-	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().checkMembershipPolicy(user);
-	}
-
 	/**
 	* Creates systems groups and other related data needed by the system on the
 	* very first startup. Also takes care of creating the Control Panel groups
@@ -535,12 +530,35 @@ public class GroupLocalServiceUtil {
 		return getService().getGroups(companyId, parentGroupId, site);
 	}
 
+	/**
+	* Returns all the groups that are direct children of the parent group with
+	* the matching className.
+	*
+	* @param companyId the primary key of the company
+	* @param className the class name of the group
+	* @param parentGroupId the primary key of the parent group
+	* @return the matching groups, or <code>null</code> if no matches were
+	found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portal.model.Group> getGroups(
 		long companyId, java.lang.String className, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroups(companyId, className, parentGroupId);
 	}
 
+	/**
+	* Returns a range of all the groups that are direct children of the parent
+	* group with the matching className.
+	*
+	* @param companyId the primary key of the company
+	* @param className the class name of the group
+	* @param parentGroupId the primary key of the parent group
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching groups
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portal.model.Group> getGroups(
 		long companyId, java.lang.String className, long parentGroupId,
 		int start, int end)
@@ -580,6 +598,16 @@ public class GroupLocalServiceUtil {
 		return getService().getGroupsCount(companyId, parentGroupId, site);
 	}
 
+	/**
+	* Returns the number of groups that are direct children of the parent group
+	* with the matching className.
+	*
+	* @param companyId the primary key of the company
+	* @param className the class name of the group
+	* @param parentGroupId the primary key of the parent group
+	* @return the number of matching groups
+	* @throws SystemException if a system exception occurred
+	*/
 	public static int getGroupsCount(long companyId,
 		java.lang.String className, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {

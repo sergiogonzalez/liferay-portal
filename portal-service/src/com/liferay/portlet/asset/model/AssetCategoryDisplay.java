@@ -12,27 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portlet.asset.model;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Igor Spasic
  */
-public class MembershipPolicyFactoryUtil {
+public interface AssetCategoryDisplay extends Serializable {
 
-	public static MembershipPolicy getMembershipPolicy() {
-		return getMembershipPolicyFactory().getMembershipPolicy();
-	}
+	public List<AssetCategory> getCategories();
 
-	public static MembershipPolicyFactory getMembershipPolicyFactory() {
-		return _membershipPolicyFactory;
-	}
+	public int getEnd();
 
-	public void setMembershipPolicyFactory(
-		MembershipPolicyFactory membershipPolicyFactory) {
+	public int getPage();
 
-		_membershipPolicyFactory = membershipPolicyFactory;
-	}
+	public int getStart();
 
-	private static MembershipPolicyFactory _membershipPolicyFactory;
+	public int getTotal();
 
 }

@@ -1088,10 +1088,13 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	protected Portal portal;
+
 	@BeanReference(type = PortletLocalService.class)
 	protected PortletLocalService portletLocalService;
+
 	@BeanReference(type = ResourceActionLocalService.class)
 	protected ResourceActionLocalService resourceActionLocalService;
+
 	@BeanReference(type = RoleLocalService.class)
 	protected RoleLocalService roleLocalService;
 

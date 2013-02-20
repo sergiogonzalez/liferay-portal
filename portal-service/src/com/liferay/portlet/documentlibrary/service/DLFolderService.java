@@ -110,7 +110,8 @@ public interface DLFolderService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getFolderIds(long groupId, long folderId)
+	public java.util.List<java.lang.Long> getFolderIds(long groupId,
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -12,13 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portlet.asset.model;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Igor Spasic
  */
-public interface MembershipPolicyFactory {
+public interface AssetVocabularyDisplay extends Serializable {
 
-	public MembershipPolicy getMembershipPolicy();
+	public int getEnd();
+
+	public int getPage();
+
+	public int getStart();
+
+	public int getTotal();
+
+	public List<AssetVocabulary> getVocabularies();
 
 }

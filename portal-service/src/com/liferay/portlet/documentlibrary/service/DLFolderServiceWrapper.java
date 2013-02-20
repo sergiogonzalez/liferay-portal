@@ -114,7 +114,8 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		return _dlFolderService.getFolder(groupId, parentFolderId, name);
 	}
 
-	public long[] getFolderIds(long groupId, long folderId)
+	public java.util.List<java.lang.Long> getFolderIds(long groupId,
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderService.getFolderIds(groupId, folderId);

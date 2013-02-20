@@ -115,6 +115,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_DISPLAY_TEMPLATES_HELP = "asset.publisher.display.templates.help";
 
+	public static final String ASSET_PUBLISHER_DYNAMIC_SUBSCRIPTION_LIMIT = "asset.publisher.dynamic.subscription.limit";
+
 	public static final String ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY = "asset.publisher.email.asset.entry.added.body";
 
 	public static final String ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_ENABLED = "asset.publisher.email.asset.entry.added.enabled";
@@ -1493,6 +1495,14 @@ public interface PropsKeys {
 
 	public static final String MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL = "mail.session.mail.transport.protocol";
 
+	public static final String MEMBERSHIP_POLICY_ORGANIZATIONS = "membership.policy.organizations";
+
+	public static final String MEMBERSHIP_POLICY_ROLES = "membership.policy.roles";
+
+	public static final String MEMBERSHIP_POLICY_SITES = "membership.policy.sites";
+
+	public static final String MEMBERSHIP_POLICY_USER_GROUPS = "membership.policy.user.groups";
+
 	public static final String MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED = "memory.cluster.scheduler.lock.cache.enabled";
 
 	public static final String MESSAGE_BOARDS_ALLOW_ANONYMOUS_POSTING = "message.boards.anonymous.posting.enabled";
@@ -2382,8 +2392,6 @@ public interface PropsKeys {
 	public static final String USERS_LAST_NAME_REQUIRED = "users.last.name.required";
 
 	public static final String USERS_LIST_VIEWS = "users.list.views";
-
-	public static final String USERS_MEMBERSHIP_POLICY = "users.membership.policy";
 
 	public static final String USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED = "users.reminder.queries.custom.question.enabled";
 

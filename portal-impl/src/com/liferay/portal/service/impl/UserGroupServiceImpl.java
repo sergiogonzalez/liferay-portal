@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserGroupServiceBaseImpl;
@@ -27,8 +28,11 @@ import com.liferay.portal.service.permission.TeamPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The implementation of the user group remote service.
@@ -124,9 +128,13 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 
 		User user = getUser();
 
-		return userGroupLocalService.addUserGroup(
+		UserGroup userGroup = userGroupLocalService.addUserGroup(
 			user.getUserId(), user.getCompanyId(), name, description,
 			serviceContext);
+
+		UserGroupMembershipPolicyUtil.verifyPolicy(userGroup);
+
+		return userGroup;
 	}
 
 	/**
@@ -266,7 +274,19 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 			long userGroupId, String name, String description)
 		throws PortalException, SystemException {
 
-		return updateUserGroup(userGroupId, name, description, null);
+		UserGroup oldUserGroup = userGroupPersistence.findByPrimaryKey(
+			userGroupId);
+
+		Map<String, Serializable> oldExpandoAttributes =
+			oldUserGroup.getExpandoBridge().getAttributes();
+
+		UserGroup userGroup = updateUserGroup(
+			userGroupId, name, description, null);
+
+		UserGroupMembershipPolicyUtil.verifyUpdatePolicy(
+			userGroup, oldUserGroup, oldExpandoAttributes);
+
+		return userGroup;
 	}
 
 	/**
