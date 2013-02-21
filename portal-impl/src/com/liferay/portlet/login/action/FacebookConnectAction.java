@@ -207,6 +207,7 @@ public class FacebookConnectAction extends PortletAction {
 		portletURL.setPortletMode(PortletMode.VIEW);
 
 		portletURL.setParameter("struts_action", "/login/update_account");
+		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter("birthdayDay", String.valueOf(birthdayDay));
 		portletURL.setParameter(
 			"birthdayMonth", String.valueOf(birthdayMonth));

@@ -44,7 +44,9 @@ int suffixId = ParamUtil.getInteger(request, "suffixId");
 
 	<aui:form action="<%= createAccountURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
+		<c:if test="<%= facebookId > 0 %>">
+			<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
+		</c:if>
 		<aui:input name="birthdayDay" type="hidden" value="<%= String.valueOf(birthdayDay) %>" />
 		<aui:input name="birthdayMonth" type="hidden" value="<%= String.valueOf(birthdayMonth) %>" />
 		<aui:input name="birthdayYear" type="hidden" value="<%= String.valueOf(birthdayYear) %>" />

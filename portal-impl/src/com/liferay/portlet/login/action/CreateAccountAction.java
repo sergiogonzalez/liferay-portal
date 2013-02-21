@@ -435,6 +435,8 @@ public class CreateAccountAction extends PortletAction {
 		if (facebookId > 0) {
 			password1 = PwdGenerator.getPassword();
 			password2 = password1;
+
+			sendEmail = false;
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -452,7 +454,7 @@ public class CreateAccountAction extends PortletAction {
 		long facebookIncompleteUserId = GetterUtil.getLong(
 			session.getAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID));
 
-		if (facebookIncompleteUserId != 0) {
+		if (facebookIncompleteUserId > 0) {
 			UserLocalServiceUtil.updateLastLogin(
 				user.getUserId(), user.getLoginIP());
 
@@ -472,7 +474,9 @@ public class CreateAccountAction extends PortletAction {
 			if (company.getAuthType().equals(CompanyConstants.AUTH_TYPE_ID)) {
 				login = String.valueOf(user.getUserId());
 			}
-			else if (company.getAuthType().equals(CompanyConstants.AUTH_TYPE_SN)) {
+			else if (company.getAuthType().equals(
+						CompanyConstants.AUTH_TYPE_SN)) {
+
 				login = user.getScreenName();
 			}
 			else {
@@ -480,8 +484,7 @@ public class CreateAccountAction extends PortletAction {
 			}
 
 			sendRedirect(
-				actionRequest, actionResponse, themeDisplay, login,
-				password1);
+				actionRequest, actionResponse, themeDisplay, login, password1);
 
 			return;
 		}
