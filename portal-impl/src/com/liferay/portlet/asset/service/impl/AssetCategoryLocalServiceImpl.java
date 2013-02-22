@@ -302,6 +302,12 @@ public class AssetCategoryLocalServiceImpl
 		return assetCategoryFinder.findByEntryId(entryId);
 	}
 
+	public List<Long> getSubcategoryIds(long parentCategoryId)
+		throws SystemException {
+
+		return assetCategoryFinder.findByG_L(parentCategoryId);
+	}
+
 	public List<AssetCategory> getVocabularyCategories(
 			long vocabularyId, int start, int end, OrderByComparator obc)
 		throws SystemException {

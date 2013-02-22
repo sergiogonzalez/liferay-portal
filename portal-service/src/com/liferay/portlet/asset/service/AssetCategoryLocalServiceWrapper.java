@@ -407,6 +407,12 @@ public class AssetCategoryLocalServiceWrapper
 		return _assetCategoryLocalService.getEntryCategories(entryId);
 	}
 
+	public java.util.List<java.lang.Long> getSubcategoryIds(
+		long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryLocalService.getSubcategoryIds(parentCategoryId);
+	}
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

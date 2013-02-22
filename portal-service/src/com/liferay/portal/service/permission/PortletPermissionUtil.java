@@ -185,7 +185,6 @@ public class PortletPermissionUtil {
 			permissionChecker, groupId, layout, portletId, actionId, strict);
 	}
 
-
 	/**
 	 * @deprecated As of 6.2, replaced by {@link
 	 *             #hasControlPanelAccessPermission(PermissionChecker, long,

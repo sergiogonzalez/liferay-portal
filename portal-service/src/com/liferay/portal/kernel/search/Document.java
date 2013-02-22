@@ -29,7 +29,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  */
-public interface Document extends Serializable {
+public interface Document extends Cloneable, Serializable {
 
 	public void add(Field field);
 
@@ -171,6 +171,8 @@ public interface Document extends Serializable {
 		String portletId, String field1, String field2, String field3,
 		String field4);
 
+	public Object clone();
+
 	public String get(Locale locale, String name);
 
 	public String get(Locale locale, String name, String defaultName);
@@ -191,6 +193,10 @@ public interface Document extends Serializable {
 
 	public String[] getValues(String name);
 
+	public boolean isSortableTextField(String name);
+
 	public void remove(String name);
+
+	public void setSortableTextFields(String[] sortableTextFields);
 
 }

@@ -127,6 +127,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_EMAIL_FROM_NAME = "asset.publisher.email.from.name";
 
+	public static final String ASSET_PUBLISHER_SEARCH_WITH_INDEX = "asset.publisher.search.with.index";
+
 	public static final String ASSET_RENDERER_ENABLED = "asset.renderer.enabled.";
 
 	public static final String ASSET_TAG_PROPERTIES_DEFAULT = "asset.tag.properties.default";
@@ -759,17 +761,11 @@ public interface PropsKeys {
 
 	public static final String DOCKBAR_SHOW_SITE_CONTENT_ICON = "dockbar.show.site.content.icon";
 
-	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER = "dynamic.data.lists.error.template.freemarker";
-
-	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY = "dynamic.data.lists.error.template.velocity";
-
-	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL = "dynamic.data.lists.error.template.xsl";
+	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE = "dynamic.data.lists.error.template";
 
 	public static final String DYNAMIC_DATA_LISTS_RECORD_SET_FORCE_AUTOGENERATE_KEY = "dynamic.data.lists.record.set.force.autogenerate.key";
 
 	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE = "dynamic.data.lists.storage.type";
-
-	public static final String DYNAMIC_DATA_LISTS_TEMPLATE_LANGUAGE_PARSER = "dynamic.data.lists.template.language.parser";
 
 	public static final String DYNAMIC_DATA_LISTS_TRANSFORMER_LISTENER = "dynamic.data.lists.transformer.listener";
 
@@ -1101,11 +1097,7 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_EMAIL_FROM_NAME = "journal.email.from.name";
 
-	public static final String JOURNAL_ERROR_TEMPLATE_FREEMARKER = "journal.error.template.freemarker";
-
-	public static final String JOURNAL_ERROR_TEMPLATE_VELOCITY = "journal.error.template.velocity";
-
-	public static final String JOURNAL_ERROR_TEMPLATE_XSL = "journal.error.template.xsl";
+	public static final String JOURNAL_ERROR_TEMPLATE = "journal.error.template";
 
 	public static final String JOURNAL_FEED_FORCE_AUTOGENERATE_ID = "journal.feed.force.autogenerate.id";
 
@@ -1124,8 +1116,6 @@ public interface PropsKeys {
 	public static final String JOURNAL_TEMPLATE_FREEMARKER_RESTRICTED_VARIABLES = "journal.template.freemarker.restricted.variables";
 
 	public static final String JOURNAL_TEMPLATE_LANGUAGE_CONTENT = "journal.template.language.content";
-
-	public static final String JOURNAL_TEMPLATE_LANGUAGE_PARSER = "journal.template.language.parser";
 
 	public static final String JOURNAL_TEMPLATE_VELOCITY_RESTRICTED_VARIABLES = "journal.template.velocity.restricted.variables";
 

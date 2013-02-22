@@ -1194,6 +1194,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage movePageToTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
 
+		// Page
+
+		int oldStatus = page.getStatus();
+
 		page = updateStatus(
 			userId, page, WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
@@ -1222,7 +1226,27 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		page.setTitle(trashTitle);
 
-		return wikiPagePersistence.update(page);
+		wikiPagePersistence.update(page);
+
+		// Social
+
+		socialActivityCounterLocalService.disableActivityCounters(
+			WikiPage.class.getName(), page.getPageId());
+
+		socialActivityLocalService.addActivity(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_MOVE_TO_TRASH, StringPool.BLANK, 0);
+
+		// Workflow
+
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+				page.getCompanyId(), page.getGroupId(),
+				WikiPage.class.getName(), page.getPageId());
+		}
+
+		return page;
 	}
 
 	public void restorePageAttachmentFromTrash(
@@ -1281,6 +1305,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		updateStatus(
 			userId, page, trashEntry.getStatus(), new ServiceContext());
+
+		// Social
+
+		socialActivityCounterLocalService.enableActivityCounters(
+			WikiPage.class.getName(), page.getPageId());
+
+		socialActivityLocalService.addActivity(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
+			0);
 	}
 
 	public WikiPage revertPage(
@@ -1630,7 +1665,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Social
 
-			if ((page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
+			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
+				(page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
 				(!page.isMinorEdit() ||
 					PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY)) {
 

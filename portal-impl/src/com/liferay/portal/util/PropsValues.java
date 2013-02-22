@@ -106,6 +106,8 @@ public class PropsValues {
 
 	public static final String ASSET_PUBLISHER_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_FROM_NAME);
 
+	public static final boolean ASSET_PUBLISHER_SEARCH_WITH_INDEX = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_SEARCH_WITH_INDEX));
+
 	public static final String[] ASSET_TAG_PROPERTIES_DEFAULT = PropsUtil.getArray(PropsKeys.ASSET_TAG_PROPERTIES_DEFAULT);
 
 	public static final boolean ASSET_TAG_SUGGESTIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_TAG_SUGGESTIONS_ENABLED));
@@ -622,12 +624,6 @@ public class PropsValues {
 
 	public static final boolean DOCKBAR_SHOW_SITE_CONTENT_ICON = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DOCKBAR_SHOW_SITE_CONTENT_ICON));
 
-	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER);
-
-	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY);
-
-	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL);
-
 	public static final boolean DYNAMIC_DATA_LISTS_RECORD_SET_FORCE_AUTOGENERATE_KEY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_RECORD_SET_FORCE_AUTOGENERATE_KEY));
 
 	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_STORAGE_TYPE);
@@ -809,12 +805,6 @@ public class PropsValues {
 	public static final String JOURNAL_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_FROM_ADDRESS);
 
 	public static final String JOURNAL_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_FROM_NAME);
-
-	public static final String JOURNAL_ERROR_TEMPLATE_FREEMARKER = PropsUtil.get(PropsKeys.JOURNAL_ERROR_TEMPLATE_FREEMARKER);
-
-	public static final String JOURNAL_ERROR_TEMPLATE_VELOCITY = PropsUtil.get(PropsKeys.JOURNAL_ERROR_TEMPLATE_VELOCITY);
-
-	public static final String JOURNAL_ERROR_TEMPLATE_XSL = PropsUtil.get(PropsKeys.JOURNAL_ERROR_TEMPLATE_XSL);
 
 	public static final boolean JOURNAL_FEED_FORCE_AUTOGENERATE_ID = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_FEED_FORCE_AUTOGENERATE_ID));
 
