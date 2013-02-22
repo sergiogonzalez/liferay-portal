@@ -198,7 +198,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 					List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay));
 					%>
 
-					<c:if test="<%= !fileEntryTypes.isEmpty() %>">
+					<c:if test="<%= themeDisplay.isSignedIn() %>">
 						<liferay-portlet:renderURL varImpl="viewBasicFileEntryTypeURL">
 							<portlet:param name="struts_action" value="/document_library/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
