@@ -99,18 +99,18 @@ public class LuceneFields {
 	}
 
 	public static NumericField getNumber(
-		String field, String number, Class<? extends Number> numericType) {
+		String field, String number, Class<? extends Number> type) {
 
 		NumericField numericField = new NumericField(
 			field, Field.Store.YES, true);
 
-		if (numericType.equals(Double.class)) {
+		if (type.equals(Double.class)) {
 			numericField.setDoubleValue(GetterUtil.getDouble(number));
 		}
-		else if (numericType.equals(Float.class)) {
+		else if (type.equals(Float.class)) {
 			numericField.setFloatValue(GetterUtil.getFloat(number));
 		}
-		else if (numericType.equals(Integer.class)) {
+		else if (type.equals(Integer.class)) {
 			numericField.setIntValue(GetterUtil.getInteger(number));
 		}
 		else {
