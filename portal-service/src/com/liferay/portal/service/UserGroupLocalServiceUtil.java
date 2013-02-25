@@ -359,6 +359,22 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
+	* Copies the user group's layout to the user.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param userId the primary key of the user
+	* @throws PortalException if a user with the primary key could not be
+	found or if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	* @deprecated
+	*/
+	public static void copyUserGroupLayouts(long userGroupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().copyUserGroupLayouts(userGroupId, userId);
+	}
+
+	/**
 	* Copies the user group's layouts to the users who are not already members
 	* of the user group.
 	*
@@ -389,22 +405,6 @@ public class UserGroupLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().copyUserGroupLayouts(userGroupIds, userId);
-	}
-
-	/**
-	* Copies the user group's layout to the user.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if a portal exception occurred
-	* @throws SystemException if a system exception occurred
-	* @deprecated
-	*/
-	public static void copyUserGroupLayouts(long userGroupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().copyUserGroupLayouts(userGroupId, userId);
 	}
 
 	/**

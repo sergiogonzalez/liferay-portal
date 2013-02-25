@@ -33,14 +33,17 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.impl.PortletFilterImpl;
 import com.liferay.portal.tools.deploy.PortletDeployer;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -495,6 +498,37 @@ public class InvokerPortletImpl implements InvokerPortlet {
 				_resourceFilters.add((ResourceFilter)portletFilter);
 			}
 		}
+
+		for (String portletFilterClassName :
+				PropsValues.PORTLET_FILTERS_SYSTEM) {
+
+			com.liferay.portal.model.PortletFilter portletFilterModel =
+				new PortletFilterImpl(
+					portletFilterClassName, portletFilterClassName,
+					Collections.<String>emptySet(),
+					Collections.<String, String>emptyMap(), portletApp);
+
+			PortletFilter portletFilter = PortletFilterFactory.create(
+				portletFilterModel, _portletContextImpl);
+
+			_systemPortletFilters.add(portletFilter);
+
+			if (portletFilter instanceof ActionFilter) {
+				_actionFilters.add((ActionFilter)portletFilter);
+			}
+
+			if (portletFilter instanceof EventFilter) {
+				_eventFilters.add((EventFilter)portletFilter);
+			}
+
+			if (portletFilter instanceof RenderFilter) {
+				_renderFilters.add((RenderFilter)portletFilter);
+			}
+
+			if (portletFilter instanceof ResourceFilter) {
+				_resourceFilters.add((ResourceFilter)portletFilter);
+			}
+		}
 	}
 
 	protected void invoke(
@@ -639,6 +673,12 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		_eventFilters.clear();
 		_renderFilters.clear();
 		_resourceFilters.clear();
+
+		for (PortletFilter portletFilter : _systemPortletFilters) {
+			portletFilter.destroy();
+		}
+
+		_systemPortletFilters.clear();
 	}
 
 	private void _initialize(
@@ -684,5 +724,7 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		new ArrayList<ResourceFilter>();
 	private boolean _strutsBridgePortlet;
 	private boolean _strutsPortlet;
+	private List<PortletFilter> _systemPortletFilters =
+		new ArrayList<PortletFilter>();
 
 }

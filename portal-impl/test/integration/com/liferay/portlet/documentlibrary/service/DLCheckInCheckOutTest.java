@@ -337,14 +337,14 @@ public class DLCheckInCheckOutTest {
 	protected FileEntry updateFileEntry(long fileEntryId, String fileName)
 		throws Exception {
 
-		String newContent = _TEST_CONTENT + "\n" + System.currentTimeMillis();
+		String content = _TEST_CONTENT + "\n" + System.currentTimeMillis();
 
 		InputStream inputStream = new UnsyncByteArrayInputStream(
-			newContent.getBytes());
+			content.getBytes());
 
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName, null,
-			null, false, inputStream, newContent.length(), _serviceContext);
+			null, false, inputStream, content.length(), _serviceContext);
 	}
 
 	private static final String _FILE_NAME = "test1.txt";

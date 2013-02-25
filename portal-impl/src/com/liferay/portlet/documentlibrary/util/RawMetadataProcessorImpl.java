@@ -132,6 +132,16 @@ public class RawMetadataProcessorImpl
 			try {
 				inputStream = fileVersion.getContentStream(false);
 
+				if (inputStream == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No metadata is available for file version " +
+								fileVersion.getFileVersionId());
+					}
+
+					return;
+				}
+
 				rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
 					fileVersion.getExtension(), fileVersion.getMimeType(),
 					inputStream);

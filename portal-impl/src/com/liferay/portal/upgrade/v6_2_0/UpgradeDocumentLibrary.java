@@ -40,6 +40,34 @@ import java.sql.Timestamp;
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
+	protected void deleteChecksumDirectory() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select distinct companyId from DLFileEntry");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+
+				try {
+					DLStoreUtil.deleteDirectory(companyId, 0, "checksum");
+				}
+				catch (Exception e) {
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void deleteTempDirectory() {
 		try {
 			DLStoreUtil.deleteDirectory(0, 0, "liferay_temp/");
@@ -82,6 +110,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		upgradeTable.setIndexesSQL(DLSyncTable.TABLE_SQL_ADD_INDEXES);
 
 		upgradeTable.updateTable();
+
+		// Checksum directory
+
+		deleteChecksumDirectory();
 
 		// Temp directory
 

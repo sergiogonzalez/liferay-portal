@@ -135,7 +135,6 @@ public class SampleSQLBuilder {
 
 		_dataFactory = new DataFactory(
 			baseDir, _maxGroupCount, _maxJournalArticleSize,
-			_maxMBCategoryCount, _maxMBThreadCount, _maxMBMessageCount,
 			_maxUserToGroupCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
@@ -262,15 +261,12 @@ public class SampleSQLBuilder {
 		processTemplate(_tplDLFolders, context);
 	}
 
-	public void insertGroup(
-			Group group, List<Layout> privateLayouts,
-			List<Layout> publicLayouts)
+	public void insertGroup(Group group, List<Layout> publicLayouts)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "group", group);
-		put(context, "privateLayouts", privateLayouts);
 		put(context, "publicLayouts", publicLayouts);
 
 		processTemplate(_tplGroup, context);
@@ -322,15 +318,13 @@ public class SampleSQLBuilder {
 	}
 
 	public void insertUser(
-			Contact contact, List<Long> groupIds, List<Long> organizationIds,
-			List<Role> roleIds, User user)
+			Contact contact, List<Long> groupIds, List<Role> roleIds, User user)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "contact", contact);
 		put(context, "groupIds", groupIds);
-		put(context, "organizationIds", organizationIds);
 		put(context, "roleIds", roleIds);
 		put(context, "user", user);
 

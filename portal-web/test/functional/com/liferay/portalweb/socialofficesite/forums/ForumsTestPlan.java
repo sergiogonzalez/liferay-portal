@@ -15,7 +15,8 @@
 package com.liferay.portalweb.socialofficesite.forums;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficesite.forums.thread.ThreadTestPlan;
+import com.liferay.portalweb.socialofficesite.forums.mblar.MBLARTestPlan;
+import com.liferay.portalweb.socialofficesite.forums.mbthread.MBThreadTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +29,8 @@ public class ForumsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ThreadTestPlan.suite());
+		testSuite.addTest(MBLARTestPlan.suite());
+		testSuite.addTest(MBThreadTestPlan.suite());
 
 		return testSuite;
 	}
