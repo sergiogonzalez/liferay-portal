@@ -75,7 +75,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 	</c:if>
 
 	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
-		<c:if test="<%= !fileEntryTypes.isEmpty() && ((folder == null) || folder.isSupportsMetadata()) %>">
+		<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 
 			<%
 			for (DLFileEntryType fileEntryType : fileEntryTypes) {
