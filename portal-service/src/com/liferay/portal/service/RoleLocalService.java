@@ -333,10 +333,6 @@ public interface RoleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Checks to ensure that the system roles map has appropriate default roles
 	* in each company.
@@ -523,6 +519,42 @@ public interface RoleLocalService extends BaseLocalService,
 		long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the roles of the type.
+	*
+	* @param type
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getRolesByType(
+		int type) throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the roles of the type.
+	*
+	* @param type
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getRolesByType(
+		int type, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of roles of the type.
+	*
+	* @param type
+	* @return
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRolesByTypeCount(int type)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns all the roles of the subtype.

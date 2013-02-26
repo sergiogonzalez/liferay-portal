@@ -372,12 +372,6 @@ public class RoleLocalServiceUtil {
 		getService().addUserRoles(userId, roleIds);
 	}
 
-	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().checkMembershipPolicy(user);
-	}
-
 	/**
 	* Checks to ensure that the system roles map has appropriate default roles
 	* in each company.
@@ -580,6 +574,45 @@ public class RoleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRoles(roleIds);
+	}
+
+	/**
+	* Returns all the roles of the type.
+	*
+	* @param type
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	public static java.util.List<com.liferay.portal.model.Role> getRolesByType(
+		int type) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRolesByType(type);
+	}
+
+	/**
+	* Returns all the roles of the type.
+	*
+	* @param type
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	public static java.util.List<com.liferay.portal.model.Role> getRolesByType(
+		int type, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRolesByType(type, start, end);
+	}
+
+	/**
+	* Returns the number of roles of the type.
+	*
+	* @param type
+	* @return
+	* @throws SystemException
+	*/
+	public static int getRolesByTypeCount(int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRolesByTypeCount(type);
 	}
 
 	/**
