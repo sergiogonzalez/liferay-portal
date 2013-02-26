@@ -1,14 +1,17 @@
 
 package com.liferay.portal.tools.propertiesconverter;
 
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.FileImpl;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -19,189 +22,186 @@ import java.util.Map;
 
 public class PropertiesParser {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 
-		Configuration cfg = new Configuration();
-		try {
-			cfg.setDirectoryForTemplateLoading(new File(
-				System.getProperty("user.dir") +
-					"/src/com/liferay/portal/tools/propertiesconverter/dependencies"));
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		cfg.setObjectWrapper(new DefaultObjectWrapper());
-		
-		// Create a data model for Freemarker
-		
+		// Create a Data Model for Freemarker
+
 		Map root = new HashMap();
-		
+
 		String pageTitle = "Portal Properties";
+
 		if (!args[0].isEmpty()) {
 			pageTitle = args[0];
 		}
+
 		root.put("pageTitle", pageTitle);
-		
+
 		boolean toc = true;
+
 		if (!args[1].isEmpty()) {
 			toc = Boolean.parseBoolean(args[1]);
 		}
+
 		root.put("toc", toc);
-		
+
 		String propertiesFileName = "portal.properties";
+
 		if (!args[2].isEmpty()) {
-			int ndx = args[2].lastIndexOf("/");
-			if (ndx != -1) {
-				propertiesFileName = args[2].substring(ndx + 1);
+			int pos = args[2].lastIndexOf(StringPool.FORWARD_SLASH);
+
+			if (pos != -1) {
+				propertiesFileName = args[2].substring(pos + 1);
 			}
 		}
+
 		root.put("propertiesFileName", propertiesFileName);
-		
-		// Parse properties file and create sections for the data model
-		
-		System.out.println("Converting " + System.getProperty("user.dir") +
-			"/" + args[2] + " to HTML");
-		File propertiesFile =
-			new File(System.getProperty("user.dir") + "/" + args[2]);
-		String propertiesString = read(propertiesFile);
+
+		// Parse properties file and create sections and properties for the data
+		// model
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(System.getProperty("user.dir"));
+		sb.append(StringPool.SLASH);
+		sb.append(args[2]);
+
+		System.out.println("Converting " + sb.toString() + " to HTML");
+
+		File propertiesFile = new File(sb.toString());
+
+		String propertiesString = StringPool.BLANK;
+
+		try {
+			FileUtil fileUtil = new FileUtil();
+
+			fileUtil.setFile(new FileImpl());
+
+			propertiesString = FileUtil.read(propertiesFile);
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
 		String[] paragraphs = propertiesString.split("\n\n");
-		ArrayList<Section> sections = new ArrayList<Section>();
-		
+
+		List<Section> sections = new ArrayList<Section>();
+
+		Section section = null;
+
 		for (int i = 0; i < paragraphs.length; i++) {
 			if (paragraphs[i].startsWith("##")) {
-				Section section =
-					new Section(
-						new ArrayList<String>(), true, paragraphs[i].replace(
-							"#", "").trim(), paragraphs[i],
-						new ArrayList<String>(), "", new ArrayList<String>());
+				String title = paragraphs[i].replace(
+					StringPool.POUND, StringPool.BLANK);
+
+				section = new Section(title.trim());
+
 				sections.add(section);
 			}
 			else {
-				ArrayList<String> properties = new ArrayList<String>();
-				String[] lines = paragraphs[i].split("\n");
-				for (int j = 0; j < lines.length; j++) {
-					if (lines[j].trim().contains("=") &&
-						!lines[j].trim().startsWith("# ")) {
-						int equalsNdx = lines[j].indexOf("=");
-						String property = lines[j].substring(0, equalsNdx);
-						if (!properties.contains(property)) {
-							properties.add(property);
+				String[] lines = paragraphs[i].split(StringPool.NEW_LINE);
+
+				Map<String, String> properties = new HashMap<String, String>();
+
+				for (String line : lines) {
+					if (line.trim().contains(StringPool.EQUAL) &&
+						!line.trim().startsWith("# ")) {
+
+						int pos = line.indexOf(StringPool.EQUAL);
+
+						String propertyKey = line.substring(0, pos);
+						String propertyValue = line.substring(pos);
+
+						if (!properties.containsKey(propertyKey)) {
+							properties.put(propertyKey, propertyValue);
 						}
 					}
 				}
-				Section section =
-					new Section(
-						new ArrayList<String>(), false, "", paragraphs[i],
-						properties, "", new ArrayList<String>());
-				sections.add(section);
+
+				Property property = new Property(properties, paragraphs[i]);
+
+				section.addProperty(property);
 			}
 		}
-		
-		// Populate sectionProperties
-		
-		for (int i = 0; i < sections.size(); i++) {
-			if (sections.get(i).getIsSectionTitle()) {
-				for (int j = i + 1; j < sections.size(); j++) {
-					if (!sections.get(j).getProperties().isEmpty()) {
-						for (int k = 0; k < sections.get(j).getProperties().size(); k++) {
-							sections.get(i).getSectionProperties().add(
-								sections.get(j).getProperties().get(k));
-						}
+
+		// Populate the properties of every section
+
+		for (Section curSection : sections) {
+			for (Property property : curSection.getProperties()) {
+				List<String> description = new ArrayList<String>();
+
+				String descriptionLine = StringPool.BLANK;
+
+				String content = property.getContent();
+
+				String[] lines = content.trim().split(StringPool.NEW_LINE, 0);
+
+				for (String line : lines) {
+					line = line.trim();
+
+					if (line.matches("#[\\s]+[^\\s].*")) {
+						descriptionLine += line.substring(1);
 					}
 					else {
-						break;
-					}
-				}
-			}
-		}
-		
-		// Populate descriptionParagraphs
-		
-		for (int i = 0; i < sections.size(); i++) {
-			String paragraph = "";
-			List<String> descriptionParagraphs = new ArrayList<String>();
-			if (sections.get(i).getParagraph().trim().startsWith("#\n")) {
-				String[] lines =
-					sections.get(i).getParagraph().trim().split("\n", 0);
-				for (int j = 0; j < lines.length; j++) {
-					lines[j] = lines[j].trim();
-				}
-				for (int j = 0; j < lines.length; j++) {
-					if (lines[j].matches("#[\\s]+[^\\s].*")) {
-						paragraph += lines[j].substring(1);
-					}
-					else {
-						if (!paragraph.isEmpty()) {
-							descriptionParagraphs.add(paragraph.trim());
-							paragraph = "";
+						if (Validator.isNotNull(descriptionLine)) {
+							description.add(descriptionLine);
+
+							descriptionLine = StringPool.BLANK;
 						}
 					}
 				}
+
+				property.setDescription(description);
+
+				if (property.getProperties().isEmpty()) {
+					continue;
+				}
+
+				String propertiesParagraph = content.substring(
+					content.lastIndexOf("#\n") + 1);
+
+				property.setPropertiesParagraph(propertiesParagraph);
 			}
-			sections.get(i).setDescriptionParagraphs(descriptionParagraphs);
 		}
-		
-		// Populate propertiesParagraph
-		
-		for (int i = 0; i < sections.size(); i++) {
-			if (sections.get(i).getProperties().isEmpty()) {
-				continue;
-			}
-			String propertiesParagraph =
-				sections.get(i).getParagraph().substring(
-					sections.get(i).getParagraph().lastIndexOf("#\n") + 1);
-			sections.get(i).setPropertiesParagraph(propertiesParagraph);
-		}
-		
+
 		root.put("sections", sections);
 
-		// Get the Freemarker template and merge it with the data model
-		
-		System.out.println("Writing " + System.getProperty("user.dir") + "/" +
-			args[2] + ".html");
+		System.out.println("Writing " + sb.toString() + ".html");
+
 		try {
-			Template temp = cfg.getTemplate("properties.ftl");
-			File propertiesHtml =
-				new File(System.getProperty("user.dir") + "/" + args[2] +
-					".html");
-			Writer out = new FileWriter(propertiesHtml);
+			Configuration configuration = new Configuration();
+
+			File file = new File(
+				System.getProperty("user.dir") +
+					"/src/com/liferay/portal/tools/propertiesconverter/" +
+						"dependencies");
+
 			try {
-				temp.process(root, out);
+				configuration.setDirectoryForTemplateLoading(file);
 			}
-			catch (TemplateException e) {
-				e.printStackTrace();
+			catch (IOException ioe) {
+				ioe.printStackTrace();
 			}
-			out.flush();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
 
-	}
+			configuration.setObjectWrapper(new DefaultObjectWrapper());
 
-	private static String read(File file) {
+			Template template = configuration.getTemplate("properties.ftl");
 
-		StringBuilder contents = new StringBuilder();
-		try {
-			BufferedReader input = new BufferedReader(new FileReader(file));
+			File propertiesHTMLFile = new File(sb.toString() + ".html");
+
+			Writer writer = new FileWriter(propertiesHTMLFile);
+
 			try {
-				String line = null;
-				while ((line = input.readLine()) != null) {
-					contents.append(line);
-					contents.append("\n");
-				}
+				template.process(root, writer);
 			}
-			finally {
-				input.close();
+			catch (TemplateException te) {
+				te.printStackTrace();
 			}
+
+			writer.flush();
 		}
-		catch (IOException ex) {
-			ex.printStackTrace();
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
-		return contents.toString();
 	}
 
 }
