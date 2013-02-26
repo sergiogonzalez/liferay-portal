@@ -18,13 +18,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RoleServiceBaseImpl;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +77,21 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 		User user = getUser();
 
-		return roleLocalService.addRole(
+		Role role = roleLocalService.addRole(
 			user.getUserId(), className, classPK, name, titleMap,
 			descriptionMap, type, subType, serviceContext);
+
+		if (type == RoleConstants.TYPE_ORGANIZATION) {
+			OrganizationMembershipPolicyUtil.verifyPolicy(role);
+		}
+		else if (type == RoleConstants.TYPE_SITE) {
+			SiteMembershipPolicyUtil.verifyPolicy(role);
+		}
+		else {
+			RoleMembershipPolicyUtil.verifyPolicy(role);
+		}
+
+		return role;
 	}
 
 	/**
@@ -119,7 +137,11 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 		checkUserRolesPermission(userId, roleIds);
 
+		RoleMembershipPolicyUtil.checkAddRoles(new long[]{userId}, roleIds);
+
 		roleLocalService.addUserRoles(userId, roleIds);
+
+		RoleMembershipPolicyUtil.propagateAddRoles(new long[]{userId}, roleIds);
 	}
 
 	/**
@@ -348,7 +370,12 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 		checkUserRolesPermission(userId, roleIds);
 
+		RoleMembershipPolicyUtil.checkRemoveRoles(new long[]{userId}, roleIds);
+
 		roleLocalService.unsetUserRoles(userId, roleIds);
+
+		RoleMembershipPolicyUtil.propagateRemoveRoles(
+			new long[]{userId}, roleIds);
 	}
 
 	/**
@@ -379,8 +406,18 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.UPDATE);
 
-		return roleLocalService.updateRole(
+		Role oldRole = rolePersistence.findByPrimaryKey(roleId);
+
+		Map<String, Serializable> oldExpandoAttributes =
+			oldRole.getExpandoBridge().getAttributes();
+
+		Role role = roleLocalService.updateRole(
 			roleId, name, titleMap, descriptionMap, subtype, serviceContext);
+
+		RoleMembershipPolicyUtil.verifyUpdatePolicy(
+			role, oldRole, oldExpandoAttributes);
+
+		return role;
 	}
 
 	protected void checkUserRolesPermission(long userId, long[] roleIds)

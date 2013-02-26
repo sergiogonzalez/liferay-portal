@@ -46,7 +46,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
-import com.liferay.portal.security.auth.MembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.AddressLocalServiceUtil;
@@ -187,14 +188,9 @@ public class UsersAdminImpl implements UsersAdmin {
 
 		long[] filteredUserIds = userIds;
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-		Role role = RoleLocalServiceUtil.getRole(roleId);
-
 		for (long userId : userIds) {
-			User user = UserLocalServiceUtil.getUser(userId);
-
-			if (MembershipPolicyUtil.isMembershipProtected(
-					permissionChecker, group, role, user)) {
+			if (SiteMembershipPolicyUtil.isRoleProtected(
+					permissionChecker, userId, groupId, roleId)) {
 
 				filteredUserIds = ArrayUtil.remove(filteredUserIds, userId);
 			}
@@ -375,11 +371,26 @@ public class UsersAdminImpl implements UsersAdmin {
 		long[] filteredUserIds = userIds;
 
 		for (long userId : userIds) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-			User user = UserLocalServiceUtil.getUser(userId);
+			if (SiteMembershipPolicyUtil.isMembershipProtected(
+					permissionChecker, userId, groupId)) {
 
-			if (MembershipPolicyUtil.isMembershipProtected(
-					permissionChecker, group, user)) {
+				filteredUserIds = ArrayUtil.remove(filteredUserIds, userId);
+			}
+		}
+
+		return filteredUserIds;
+	}
+
+	public long[] filterUnsetOrganizationUserIds(
+			PermissionChecker permissionChecker, long organizationId,
+			long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] filteredUserIds = userIds;
+
+		for (long userId : userIds) {
+			if (OrganizationMembershipPolicyUtil.isMembershipProtected(
+					permissionChecker, userId, organizationId)) {
 
 				filteredUserIds = ArrayUtil.remove(filteredUserIds, userId);
 			}
