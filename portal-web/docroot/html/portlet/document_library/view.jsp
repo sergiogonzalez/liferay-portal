@@ -181,13 +181,40 @@ if (folder != null) {
 		'<portlet:namespace />toggleActionsButton',
 		function() {
 			var A = AUI();
+			var nameSpace = '<portlet:namespace />';
+			var nameSpaceId = '#' + nameSpace;
 
-			var actionsButton = A.one('#<portlet:namespace />actionsButtonContainer');
+			var actionsButton = A.one(nameSpaceId + 'actionsButtonContainer');
+			var isTrashInput = A.one(nameSpaceId + 'isTrashEnabled');
+			var isTrashEnabled = isTrashInput.val()==='true';
+
+			if(A.one(nameSpaceId + 'moveToTrashSelected')) {
+				var moveToTrashSelected = A.one(nameSpaceId + 'moveToTrashSelected').get('parentNode');
+			}
+			if(A.one(nameSpaceId + 'deleteSelected')) {
+				var deleteSelected = A.one(nameSpaceId + 'deleteSelected').get('parentNode');
+			}
 
 			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
 
 			if (actionsButton) {
 				actionsButton.toggle(!hide);
+				if(moveToTrashSelected && deleteSelected) {
+					if(!hide) {
+						if(isTrashEnabled) {
+							moveToTrashSelected.show();
+							deleteSelected.hide();
+						}
+						else {
+							moveToTrashSelected.hide();
+							deleteSelected.show();
+						}
+					}
+					else {
+						moveToTrashSelected.hide();
+						deleteSelected.hide();
+					}
+				}
 			}
 		},
 		['liferay-util-list-fields']

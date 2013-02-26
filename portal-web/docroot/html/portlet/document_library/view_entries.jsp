@@ -569,7 +569,7 @@ for (int i = 0; i < results.size(); i++) {
 <c:if test='<%= displayStyle.equals("list") %>'>
 	<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 </c:if>
-
+<input id="<portlet:namespace />isTrashEnabled" type="hidden" value="<%= ((repositoryId==scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) %>" />
 <aui:script>
 	Liferay.fire(
 		'<portlet:namespace />pageLoaded',
