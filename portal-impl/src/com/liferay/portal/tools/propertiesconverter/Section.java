@@ -13,21 +13,21 @@ public class Section {
 	public void addProperty(Property property) {
 		_properties.add(property);
 	}
-
-	public String getTitle() {
-		return _title;
-	}
 	
 	public List<Property> getProperties() {
 		return _properties;
+	}
+
+	public String getTitle() {
+		return _title;
 	}
 
 	public void setTitle(String title) {
 		_title = title;
 	}
 	
-	private String _title;
-
 	private List<Property> _properties = new ArrayList<Property>();
+	
+	private String _title;
 
 }

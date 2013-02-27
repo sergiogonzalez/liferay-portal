@@ -5,7 +5,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.FileImpl;
+
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -24,34 +26,31 @@ public class PropertiesParser {
 
 	public static void main(String[] args) {
 
-		// Create a Data Model for Freemarker
+		// Create a data model for Freemarker
 
 		Map root = new HashMap();
-
-		String pageTitle = "Portal Properties";
-
-		if (!args[0].isEmpty()) {
-			pageTitle = args[0];
-		}
+		
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+		
+		String pageTitle = arguments.get("properties.title");
 
 		root.put("pageTitle", pageTitle);
 
-		boolean toc = true;
-
-		if (!args[1].isEmpty()) {
-			toc = Boolean.parseBoolean(args[1]);
-		}
+		boolean toc = Boolean.parseBoolean(arguments.get("properties.toc"));
 
 		root.put("toc", toc);
 
-		String propertiesFileName = "portal.properties";
+		String propertiesFilePath = arguments.get("properties.file.path");
 
-		if (!args[2].isEmpty()) {
-			int pos = args[2].lastIndexOf(StringPool.FORWARD_SLASH);
+		int pos = propertiesFilePath.lastIndexOf(StringPool.SLASH);
+		
+		String propertiesFileName = StringPool.BLANK;
 
-			if (pos != -1) {
-				propertiesFileName = args[2].substring(pos + 1);
-			}
+		if (pos != -1) {
+			propertiesFileName = propertiesFilePath.substring(pos + 1);
+		}
+		else {
+			propertiesFileName = propertiesFilePath;
 		}
 
 		root.put("propertiesFileName", propertiesFileName);
@@ -63,7 +62,7 @@ public class PropertiesParser {
 
 		sb.append(System.getProperty("user.dir"));
 		sb.append(StringPool.SLASH);
-		sb.append(args[2]);
+		sb.append(propertiesFilePath);
 
 		System.out.println("Converting " + sb.toString() + " to HTML");
 
@@ -106,10 +105,10 @@ public class PropertiesParser {
 					if (line.trim().contains(StringPool.EQUAL) &&
 						!line.trim().startsWith("# ")) {
 
-						int pos = line.indexOf(StringPool.EQUAL);
+						int eqlPos = line.indexOf(StringPool.EQUAL);
 
-						String propertyKey = line.substring(0, pos);
-						String propertyValue = line.substring(pos);
+						String propertyKey = line.substring(0, eqlPos);
+						String propertyValue = line.substring(eqlPos);
 
 						if (!properties.containsKey(propertyKey)) {
 							properties.put(propertyKey, propertyValue);
@@ -123,7 +122,7 @@ public class PropertiesParser {
 			}
 		}
 
-		// Populate the properties of every section
+		// Populate the properties of each section
 
 		for (Section curSection : sections) {
 			for (Property property : curSection.getProperties()) {
@@ -164,6 +163,8 @@ public class PropertiesParser {
 		}
 
 		root.put("sections", sections);
+		
+		// Get the Freemarker template and merge it with the data model
 
 		System.out.println("Writing " + sb.toString() + ".html");
 

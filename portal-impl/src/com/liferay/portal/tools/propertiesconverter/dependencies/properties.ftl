@@ -17,27 +17,22 @@
 			<h2>Table of Contents</h2>
 			<ul id="toc">
 				<#list sections as section>
-			 		<#if section.title?has_content>
-			 			<li>
-			 				<a href="${propertiesFileName}.html#${section.title}">${section.title}</a>
-			 			</li>
-			 		</#if>
+			 		<li>
+			 			<a href="${propertiesFileName}.html#${section.title}">${section.title}</a>
+			 		</li>
 				</#list>
 			</ul>
 		</#if>
 		<h2>Properties</h2>
 		<#list sections as section>
 			<a name="${section.title}"></a><a href="${propertiesFileName}.html">Top of Page</a>
-
 			<h3>${section.title}</h3>
-
 			<#list section.properties as property>
 				<#if property.description?has_content>
 					<#list property.description as description>
 						<p>${description}</p>
 					</#list>
 				</#if>
-
 				<#if property.propertiesParagraph?has_content>
 					<p><pre>${property.propertiesParagraph}</pre></p>
 				</#if>

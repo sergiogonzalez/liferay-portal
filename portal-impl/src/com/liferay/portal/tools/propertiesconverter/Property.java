@@ -11,12 +11,12 @@ public class Property {
 		_content = content;
 	}
 
-	public List<String> getDescription() {
-		return _description;
-	}
-
 	public String getContent() {
 		return _content;
+	}
+
+	public List<String> getDescription() {
+		return _description;
 	}
 
 	public Map<String, String> getProperties() {
@@ -27,25 +27,25 @@ public class Property {
 		return _propertiesParagraph;
 	}
 
-	public void setDescription(List<String> description) {
-		_description = description;
-	}
-
 	public void setContent(String content) {
 		_content = content;
 	}
 
-	public void setPropertiesParagraph(String propertiesParagraph) {
-		_propertiesParagraph = propertiesParagraph;
+	public void setDescription(List<String> description) {
+		_description = description;
 	}
 
 	public void setProperties(Map<String, String> properties) {
 		_properties = properties;
 	}
 
+	public void setPropertiesParagraph(String propertiesParagraph) {
+		_propertiesParagraph = propertiesParagraph;
+	}
+
+	private String _content;
 	private List<String> _description;
 	private Map<String, String> _properties;
-	private String _content;
 	private String _propertiesParagraph;
 
 }
