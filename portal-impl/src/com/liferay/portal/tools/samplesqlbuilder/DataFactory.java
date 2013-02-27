@@ -15,18 +15,21 @@
 package com.liferay.portal.tools.samplesqlbuilder;
 
 import com.liferay.counter.model.Counter;
-import com.liferay.counter.model.impl.CounterModelImpl;
+import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Account;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -38,6 +41,8 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.VirtualHost;
+import com.liferay.portal.model.impl.AccountImpl;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.model.impl.ContactImpl;
@@ -47,6 +52,7 @@ import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.model.impl.UserImpl;
+import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
@@ -131,549 +137,21 @@ public class DataFactory {
 
 			initClassNames();
 			initCompany();
-			initDefaultUser();
 			initDLFileEntryType();
 			initGuestGroup();
 			initJournalArticle(maxJournalArticleSize);
 			initRoles();
 			initUserNames();
+			initUsers();
+			initVirtualHost();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public AssetEntry addAssetEntry(
-		long groupId, long userId, long classNameId, long classPK,
-		boolean visible, String mimeType, String title) {
-
-		AssetEntry assetEntry = new AssetEntryImpl();
-
-		assetEntry.setGroupId(groupId);
-		assetEntry.setUserId(userId);
-		assetEntry.setClassNameId(classNameId);
-		assetEntry.setClassPK(classPK);
-		assetEntry.setVisible(visible);
-		assetEntry.setMimeType(mimeType);
-		assetEntry.setTitle(title);
-
-		return assetEntry;
-	}
-
-	public BlogsEntry addBlogsEntry(
-		long groupId, long userId, String title, String urlTitle,
-		String content) {
-
-		BlogsEntry blogsEntry = new BlogsEntryImpl();
-
-		blogsEntry.setEntryId(_counter.get());
-		blogsEntry.setGroupId(groupId);
-		blogsEntry.setUserId(userId);
-		blogsEntry.setTitle(title);
-		blogsEntry.setUrlTitle(urlTitle);
-		blogsEntry.setContent(content);
-
-		return blogsEntry;
-	}
-
-	public BlogsStatsUser addBlogsStatsUser(long groupId, long userId) {
-		BlogsStatsUser blogsStatsUser = new BlogsStatsUserImpl();
-
-		blogsStatsUser.setGroupId(groupId);
-		blogsStatsUser.setUserId(userId);
-
-		return blogsStatsUser;
-	}
-
-	public Contact addContact(String firstName, String lastName) {
-		Contact contact = new ContactImpl();
-
-		contact.setContactId(_counter.get());
-		contact.setAccountId(_company.getAccountId());
-		contact.setFirstName(firstName);
-		contact.setLastName(lastName);
-
-		return contact;
-	}
-
-	public DDLRecord addDDLRecord(
-		long groupId, long companyId, long userId, long ddlRecordSetId) {
-
-		DDLRecord ddlRecord = new DDLRecordImpl();
-
-		ddlRecord.setRecordId(_counter.get());
-		ddlRecord.setGroupId(groupId);
-		ddlRecord.setCompanyId(companyId);
-		ddlRecord.setUserId(userId);
-		ddlRecord.setCreateDate(newCreateDate());
-		ddlRecord.setRecordSetId(ddlRecordSetId);
-
-		return ddlRecord;
-	}
-
-	public DDLRecordSet addDDLRecordSet(
-		long groupId, long companyId, long userId, long ddmStructureId) {
-
-		DDLRecordSet ddlRecordSet = new DDLRecordSetImpl();
-
-		ddlRecordSet.setRecordSetId(_counter.get());
-		ddlRecordSet.setGroupId(groupId);
-		ddlRecordSet.setCompanyId(companyId);
-		ddlRecordSet.setUserId(userId);
-		ddlRecordSet.setDDMStructureId(ddmStructureId);
-
-		return ddlRecordSet;
-	}
-
-	public DDLRecordVersion addDDLRecordVersion(DDLRecord ddlRecord) {
-		DDLRecordVersion ddlRecordVersion = new DDLRecordVersionImpl();
-
-		ddlRecordVersion.setRecordVersionId(_counter.get());
-		ddlRecordVersion.setGroupId(ddlRecord.getGroupId());
-		ddlRecordVersion.setCompanyId(ddlRecord.getCompanyId());
-		ddlRecordVersion.setUserId(ddlRecord.getUserId());
-		ddlRecordVersion.setRecordSetId(ddlRecord.getRecordSetId());
-		ddlRecordVersion.setRecordId(ddlRecord.getRecordId());
-
-		return ddlRecordVersion;
-	}
-
-	public DDMContent addDDMContent(long groupId, long companyId, long userId) {
-		DDMContent ddmContent = new DDMContentImpl();
-
-		ddmContent.setContentId(_counter.get());
-		ddmContent.setGroupId(groupId);
-		ddmContent.setCompanyId(companyId);
-		ddmContent.setUserId(userId);
-
-		return ddmContent;
-	}
-
-	public DDMStorageLink addDDMStorageLink(
-		long classNameId, long classPK, long structureId) {
-
-		DDMStorageLink ddmStorageLink = new DDMStorageLinkImpl();
-
-		ddmStorageLink.setStorageLinkId(_counter.get());
-		ddmStorageLink.setClassNameId(classNameId);
-		ddmStorageLink.setClassPK(classPK);
-		ddmStorageLink.setStructureId(structureId);
-
-		return ddmStorageLink;
-	}
-
-	public DDMStructure addDDMStructure(
-		long groupId, long companyId, long userId, long classNameId) {
-
-		DDMStructure ddmStructure = new DDMStructureImpl();
-
-		ddmStructure.setStructureId(_counter.get());
-		ddmStructure.setGroupId(groupId);
-		ddmStructure.setCompanyId(companyId);
-		ddmStructure.setUserId(userId);
-		ddmStructure.setCreateDate(newCreateDate());
-		ddmStructure.setClassNameId(classNameId);
-
-		return ddmStructure;
-	}
-
-	public DDMStructureLink addDDMStructureLink(
-		long classPK, long structureId) {
-
-		DDMStructureLink ddmStructureLink = new DDMStructureLinkImpl();
-
-		ddmStructureLink.setStructureLinkId(_counter.get());
-		ddmStructureLink.setClassNameId(_dlFileEntryClassNameId);
-		ddmStructureLink.setClassPK(classPK);
-		ddmStructureLink.setStructureId(structureId);
-
-		return ddmStructureLink;
-	}
-
-	public DLFileEntry addDlFileEntry(
-		long groupId, long companyId, long userId, long folderId,
-		String extension, String mimeType, String name, String title,
-		String description) {
-
-		DLFileEntry dlFileEntry = new DLFileEntryImpl();
-
-		dlFileEntry.setFileEntryId(_counter.get());
-		dlFileEntry.setGroupId(groupId);
-		dlFileEntry.setCompanyId(companyId);
-		dlFileEntry.setUserId(userId);
-		dlFileEntry.setCreateDate(newCreateDate());
-		dlFileEntry.setRepositoryId(groupId);
-		dlFileEntry.setFolderId(folderId);
-		dlFileEntry.setName(name);
-		dlFileEntry.setExtension(extension);
-		dlFileEntry.setMimeType(mimeType);
-		dlFileEntry.setTitle(title);
-		dlFileEntry.setDescription(description);
-		dlFileEntry.setSmallImageId(_counter.get());
-		dlFileEntry.setLargeImageId(_counter.get());
-
-		return dlFileEntry;
-	}
-
-	public DLFileEntryMetadata addDLFileEntryMetadata(
-		long ddmStorageId, long ddmStructureId, long fileEntryId,
-		long fileVersionId) {
-
-		DLFileEntryMetadata dlFileEntryMetadata = new DLFileEntryMetadataImpl();
-
-		dlFileEntryMetadata.setFileEntryMetadataId(_counter.get());
-		dlFileEntryMetadata.setDDMStorageId(ddmStorageId);
-		dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
-		dlFileEntryMetadata.setFileEntryId(fileEntryId);
-		dlFileEntryMetadata.setFileVersionId(fileVersionId);
-
-		return dlFileEntryMetadata;
-	}
-
-	public DLFileVersion addDLFileVersion(DLFileEntry dlFileEntry) {
-		DLFileVersion dlFileVersion = new DLFileVersionImpl();
-
-		dlFileVersion.setFileVersionId(_counter.get());
-		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
-		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
-		dlFileVersion.setUserId(dlFileEntry.getUserId());
-		dlFileVersion.setRepositoryId(dlFileEntry.getRepositoryId());
-		dlFileVersion.setFileEntryId(dlFileEntry.getFileEntryId());
-		dlFileVersion.setExtension(dlFileEntry.getExtension());
-		dlFileVersion.setMimeType(dlFileEntry.getMimeType());
-		dlFileVersion.setTitle(dlFileEntry.getTitle());
-		dlFileVersion.setDescription(dlFileEntry.getDescription());
-		dlFileVersion.setSize(dlFileEntry.getSize());
-
-		return dlFileVersion;
-	}
-
-	public DLFolder addDLFolder(
-		long groupId, long companyId, long userId, long parentFolderId,
-		String name, String description) {
-
-		DLFolder dlFolder = new DLFolderImpl();
-
-		dlFolder.setFolderId(_counter.get());
-		dlFolder.setGroupId(groupId);
-		dlFolder.setCompanyId(companyId);
-		dlFolder.setUserId(userId);
-		dlFolder.setCreateDate(newCreateDate());
-		dlFolder.setRepositoryId(groupId);
-		dlFolder.setParentFolderId(parentFolderId);
-		dlFolder.setName(name);
-		dlFolder.setDescription(description);
-
-		return dlFolder;
-	}
-
-	public DLSync addDLSync(
-		long companyId, long fileId, long repositoryId, long parentFolderId,
-		boolean typeFolder) {
-
-		DLSync dlSync = new DLSyncImpl();
-
-		dlSync.setSyncId(_counter.get());
-		dlSync.setCompanyId(companyId);
-		dlSync.setFileId(fileId);
-		dlSync.setRepositoryId(repositoryId);
-		dlSync.setParentFolderId(parentFolderId);
-		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
-
-		if (typeFolder) {
-			dlSync.setType(DLSyncConstants.TYPE_FOLDER);
-		}
-		else {
-			dlSync.setType(DLSyncConstants.TYPE_FILE);
-		}
-
-		return dlSync;
-	}
-
-	public Group addGroup(
-		long groupId, long classNameId, long classPK, String name,
-		String friendlyURL, boolean site) {
-
-		Group group = new GroupImpl();
-
-		group.setGroupId(groupId);
-		group.setClassNameId(classNameId);
-		group.setClassPK(classPK);
-		group.setName(name);
-		group.setFriendlyURL(friendlyURL);
-		group.setSite(site);
-
-		return group;
-	}
-
-	public JournalArticle addJournalArticle(
-		long resourcePrimKey, long groupId, long companyId, String articleId) {
-
-		JournalArticle journalArticle = new JournalArticleImpl();
-
-		journalArticle.setId(_counter.get());
-		journalArticle.setResourcePrimKey(resourcePrimKey);
-		journalArticle.setGroupId(groupId);
-		journalArticle.setCompanyId(companyId);
-		journalArticle.setArticleId(articleId);
-		journalArticle.setContent(_journalArticleContent);
-
-		return journalArticle;
-	}
-
-	public JournalArticleResource addJournalArticleResource(long groupId) {
-		JournalArticleResource journalArticleResource =
-			new JournalArticleResourceImpl();
-
-		journalArticleResource.setResourcePrimKey(_counter.get());
-		journalArticleResource.setGroupId(groupId);
-		journalArticleResource.setArticleId(String.valueOf(_counter.get()));
-
-		return journalArticleResource;
-	}
-
-	public Layout addLayout(
-		int layoutId, String name, String friendlyURL, String column1,
-		String column2) {
-
-		Layout layout = new LayoutImpl();
-
-		layout.setPlid(_counter.get());
-		layout.setPrivateLayout(false);
-		layout.setLayoutId(layoutId);
-		layout.setName(name);
-		layout.setFriendlyURL(friendlyURL);
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		typeSettingsProperties.setProperty(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "2_columns_ii");
-		typeSettingsProperties.setProperty("column-1", column1);
-		typeSettingsProperties.setProperty("column-2", column2);
-
-		String typeSettings = StringUtil.replace(
-			typeSettingsProperties.toString(), "\n", "\\n");
-
-		layout.setTypeSettings(typeSettings);
-
-		return layout;
-	}
-
-	public MBCategory addMBCategory(
-		long categoryId, long groupId, long companyId, long userId, String name,
-		String description, int threadCount, int messageCount) {
-
-		MBCategory mbCategory = new MBCategoryImpl();
-
-		mbCategory.setCategoryId(categoryId);
-		mbCategory.setGroupId(groupId);
-		mbCategory.setCompanyId(companyId);
-		mbCategory.setUserId(userId);
-		mbCategory.setName(name);
-		mbCategory.setDescription(description);
-		mbCategory.setDisplayStyle(MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
-		mbCategory.setThreadCount(threadCount);
-		mbCategory.setMessageCount(messageCount);
-
-		return mbCategory;
-	}
-
-	public MBDiscussion addMBDiscussion(
-		long classNameId, long classPK, long threadId) {
-
-		MBDiscussion mbDiscussion = new MBDiscussionImpl();
-
-		mbDiscussion.setDiscussionId(_counter.get());
-		mbDiscussion.setClassNameId(classNameId);
-		mbDiscussion.setClassPK(classPK);
-		mbDiscussion.setThreadId(threadId);
-
-		return mbDiscussion;
-	}
-
-	public MBMessage addMBMessage(
-		long messageId, long groupId, long userId, long classNameId,
-		long classPK, long categoryId, long threadId, long rootMessageId,
-		long parentMessageId, String subject, String body) {
-
-		MBMessage mbMessage = new MBMessageImpl();
-
-		mbMessage.setMessageId(messageId);
-		mbMessage.setGroupId(groupId);
-		mbMessage.setUserId(userId);
-		mbMessage.setClassNameId(classNameId);
-		mbMessage.setClassPK(classPK);
-		mbMessage.setCategoryId(categoryId);
-		mbMessage.setThreadId(threadId);
-		mbMessage.setRootMessageId(rootMessageId);
-		mbMessage.setParentMessageId(parentMessageId);
-		mbMessage.setSubject(subject);
-		mbMessage.setBody(body);
-
-		return mbMessage;
-	}
-
-	public MBStatsUser addMBStatsUser(long groupId, long userId) {
-		MBStatsUser mbStatsUser = new MBStatsUserImpl();
-
-		mbStatsUser.setGroupId(groupId);
-		mbStatsUser.setUserId(userId);
-
-		return mbStatsUser;
-	}
-
-	public MBThread addMBThread(
-		long threadId, long groupId, long companyId, long categoryId,
-		long rootMessageId, int messageCount, long lastPostByUserId) {
-
-		MBThread mbThread = new MBThreadImpl();
-
-		mbThread.setThreadId(threadId);
-		mbThread.setGroupId(groupId);
-		mbThread.setCompanyId(companyId);
-		mbThread.setCategoryId(categoryId);
-		mbThread.setRootMessageId(rootMessageId);
-		mbThread.setRootMessageUserId(lastPostByUserId);
-		mbThread.setMessageCount(messageCount);
-		mbThread.setLastPostByUserId(lastPostByUserId);
-
-		return mbThread;
-	}
-
-	public PortletPreferences addPortletPreferences(
-		long ownerId, long plid, String portletId, String preferences) {
-
-		PortletPreferences portletPreferences = new PortletPreferencesImpl();
-
-		portletPreferences.setPortletPreferencesId(_counter.get());
-		portletPreferences.setOwnerId(ownerId);
-		portletPreferences.setOwnerType(PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-		portletPreferences.setPlid(plid);
-		portletPreferences.setPortletId(portletId);
-		portletPreferences.setPreferences(preferences);
-
-		return portletPreferences;
-	}
-
-	public List<ResourcePermission> addResourcePermission(
-		long companyId, String name, String primKey) {
-
-		List<ResourcePermission> resourcePermissions =
-			new ArrayList<ResourcePermission>(2);
-
-		ResourcePermission resourcePermission = new ResourcePermissionImpl();
-
-		resourcePermission.setResourcePermissionId(
-			_resourcePermissionCounter.get());
-		resourcePermission.setCompanyId(companyId);
-		resourcePermission.setName(name);
-		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-		resourcePermission.setPrimKey(primKey);
-		resourcePermission.setRoleId(_ownerRole.getRoleId());
-		resourcePermission.setOwnerId(_defaultUser.getUserId());
-		resourcePermission.setActionIds(1);
-
-		resourcePermissions.add(resourcePermission);
-
-		resourcePermission = new ResourcePermissionImpl();
-
-		resourcePermission.setResourcePermissionId(
-			_resourcePermissionCounter.get());
-		resourcePermission.setCompanyId(companyId);
-		resourcePermission.setName(name);
-		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-		resourcePermission.setPrimKey(primKey);
-		resourcePermission.setRoleId(_guestRole.getRoleId());
-		resourcePermission.setOwnerId(0);
-		resourcePermission.setActionIds(1);
-
-		resourcePermissions.add(resourcePermission);
-
-		return resourcePermissions;
-	}
-
-	public SocialActivity addSocialActivity(
-		long groupId, long companyId, long userId, long classNameId,
-		long classPK) {
-
-		SocialActivity socialActivity = new SocialActivityImpl();
-
-		socialActivity.setActivityId(_socialActivityCounter.get());
-		socialActivity.setGroupId(groupId);
-		socialActivity.setCompanyId(companyId);
-		socialActivity.setUserId(userId);
-		socialActivity.setClassNameId(classNameId);
-		socialActivity.setClassPK(classPK);
-
-		return socialActivity;
-	}
-
-	public User addUser(boolean defaultUser, String screenName) {
-		User user = new UserImpl();
-
-		user.setUserId(_counter.get());
-		user.setDefaultUser(defaultUser);
-
-		if (Validator.isNull(screenName)) {
-			screenName = String.valueOf(user.getUserId());
-		}
-
-		user.setScreenName(screenName);
-
-		String emailAddress = screenName + "@liferay.com";
-
-		user.setEmailAddress(emailAddress);
-
-		return user;
-	}
-
-	public List<Long> addUserToGroupIds(long groupId) {
-		List<Long> groupIds = new ArrayList<Long>(_maxUserToGroupCount + 1);
-
-		groupIds.add(_guestGroup.getGroupId());
-
-		if ((groupId + _maxUserToGroupCount) > _maxGroupsCount) {
-			groupId = groupId - _maxUserToGroupCount + 1;
-		}
-
-		for (int i = 0; i < _maxUserToGroupCount; i++) {
-			groupIds.add(groupId + i);
-		}
-
-		return groupIds;
-	}
-
-	public WikiNode addWikiNode(
-		long groupId, long userId, String name, String description) {
-
-		WikiNode wikiNode = new WikiNodeImpl();
-
-		wikiNode.setNodeId(_counter.get());
-		wikiNode.setGroupId(groupId);
-		wikiNode.setUserId(userId);
-		wikiNode.setName(name);
-		wikiNode.setDescription(description);
-
-		return wikiNode;
-	}
-
-	public WikiPage addWikiPage(
-		long groupId, long userId, long nodeId, String title, double version,
-		String content, boolean head) {
-
-		WikiPage wikiPage = new WikiPageImpl();
-
-		wikiPage.setPageId(_counter.get());
-		wikiPage.setResourcePrimKey(_counter.get());
-		wikiPage.setGroupId(groupId);
-		wikiPage.setUserId(userId);
-		wikiPage.setNodeId(nodeId);
-		wikiPage.setTitle(title);
-		wikiPage.setVersion(version);
-		wikiPage.setContent(content);
-		wikiPage.setHead(head);
-
-		return wikiPage;
+	public Account getAccount() {
+		return _account;
 	}
 
 	public Role getAdministratorRole() {
@@ -698,10 +176,6 @@ public class DataFactory {
 
 	public SimpleCounter getCounter() {
 		return _counter;
-	}
-
-	public List<CounterModelImpl> getCounters() {
-		return _counters;
 	}
 
 	public String getDateLong(Date date) {
@@ -752,12 +226,32 @@ public class DataFactory {
 		return _guestRole;
 	}
 
+	public User getGuestUser() {
+		return _guestUser;
+	}
+
 	public long getJournalArticleClassNameId() {
 		return _journalArticleClassNameId;
 	}
 
 	public long getMBMessageClassNameId() {
 		return _mbMessageClassNameId;
+	}
+
+	public List<Long> getNewUserGroupIds(long groupId) {
+		List<Long> groupIds = new ArrayList<Long>(_maxUserToGroupCount + 1);
+
+		groupIds.add(_guestGroup.getGroupId());
+
+		if ((groupId + _maxUserToGroupCount) > _maxGroupsCount) {
+			groupId = groupId - _maxUserToGroupCount + 1;
+		}
+
+		for (int i = 0; i < _maxUserToGroupCount; i++) {
+			groupIds.add(groupId + i);
+		}
+
+		return groupIds;
 	}
 
 	public Role getOrganizationAdministratorRole() {
@@ -784,6 +278,10 @@ public class DataFactory {
 		return _roles;
 	}
 
+	public User getSampleUser() {
+		return _sampleUser;
+	}
+
 	public Role getSiteAdministratorRole() {
 		return _siteAdministratorRole;
 	}
@@ -804,8 +302,8 @@ public class DataFactory {
 		return _userRole;
 	}
 
-	public SimpleCounter getUserScreenNameCounter() {
-		return _userScreenNameCounter;
+	public VirtualHost getVirtualHost() {
+		return _virtualHost;
 	}
 
 	public long getWikiPageClassNameId() {
@@ -866,47 +364,18 @@ public class DataFactory {
 
 		_company.setCompanyId(_counter.get());
 		_company.setAccountId(_counter.get());
-	}
+		_company.setWebId("liferay.com");
+		_company.setMx("liferay.com");
+		_company.setActive(true);
 
-	public void initCounters() {
-		if (_counters != null) {
-			return;
-		}
+		_account = new AccountImpl();
 
-		_counters = new ArrayList<CounterModelImpl>();
-
-		// Counter
-
-		CounterModelImpl counter = new CounterModelImpl();
-
-		counter.setName(Counter.class.getName());
-		counter.setCurrentId(_counter.get());
-
-		_counters.add(counter);
-
-		// ResourcePermission
-
-		counter = new CounterModelImpl();
-
-		counter.setName(ResourcePermission.class.getName());
-		counter.setCurrentId(_resourcePermissionCounter.get());
-
-		_counters.add(counter);
-
-		// SocialActivity
-
-		counter = new CounterModelImpl();
-
-		counter.setName(SocialActivity.class.getName());
-		counter.setCurrentId(_socialActivityCounter.get());
-
-		_counters.add(counter);
-	}
-
-	public void initDefaultUser() {
-		_defaultUser = new UserImpl();
-
-		_defaultUser.setUserId(_counter.get());
+		_account.setAccountId(_company.getAccountId());
+		_account.setCompanyId(_company.getCompanyId());
+		_account.setCreateDate(new Date());
+		_account.setModifiedDate(new Date());
+		_account.setName("Liferay");
+		_account.setLegalName("Liferay, Inc.");
 	}
 
 	public void initDLFileEntryType() {
@@ -915,8 +384,8 @@ public class DataFactory {
 		_defaultDLFileEntryType.setUuid(SequentialUUID.generate());
 		_defaultDLFileEntryType.setFileEntryTypeId(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		_defaultDLFileEntryType.setCreateDate(newCreateDate());
-		_defaultDLFileEntryType.setModifiedDate(newCreateDate());
+		_defaultDLFileEntryType.setCreateDate(nextFutureDate());
+		_defaultDLFileEntryType.setModifiedDate(nextFutureDate());
 		_defaultDLFileEntryType.setName(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 	}
@@ -947,137 +416,87 @@ public class DataFactory {
 	}
 
 	public void initRoles() {
-		if (_roles != null) {
-			return;
-		}
-
 		_roles = new ArrayList<Role>();
 
 		// Administrator
 
-		Role role = newRole();
+		_administratorRole = newRole(
+			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.ADMINISTRATOR);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_administratorRole = role;
+		_roles.add(_administratorRole);
 
 		// Guest
 
-		role = newRole();
+		_guestRole = newRole(RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.GUEST);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_guestRole = role;
+		_roles.add(_guestRole);
 
 		// Organization Administrator
 
-		role = newRole();
+		_organizationAdministratorRole = newRole(
+			RoleConstants.ORGANIZATION_ADMINISTRATOR,
+			RoleConstants.TYPE_ORGANIZATION);
 
-		role.setName(RoleConstants.ORGANIZATION_ADMINISTRATOR);
-		role.setType(RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(role);
-
-		_organizationAdministratorRole = role;
+		_roles.add(_organizationAdministratorRole);
 
 		// Organization Owner
 
-		role = newRole();
+		_organizationOwnerRole = newRole(
+			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
 
-		role.setName(RoleConstants.ORGANIZATION_OWNER);
-		role.setType(RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(role);
-
-		_organizationOwnerRole = role;
+		_roles.add(_organizationOwnerRole);
 
 		// Organization User
 
-		role = newRole();
+		_organizationUserRole = newRole(
+			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
 
-		role.setName(RoleConstants.ORGANIZATION_USER);
-		role.setType(RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(role);
-
-		_organizationUserRole = role;
+		_roles.add(_organizationUserRole);
 
 		// Owner
 
-		role = newRole();
+		_ownerRole = newRole(RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.OWNER);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_ownerRole = role;
+		_roles.add(_ownerRole);
 
 		// Power User
 
-		role = newRole();
+		_powerUserRole = newRole(
+			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.POWER_USER);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_powerUserRole = role;
+		_roles.add(_powerUserRole);
 
 		// Site Administrator
 
-		role = newRole();
+		_siteAdministratorRole = newRole(
+			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
 
-		role.setName(RoleConstants.SITE_ADMINISTRATOR);
-		role.setType(RoleConstants.TYPE_SITE);
-
-		_roles.add(role);
-
-		_siteAdministratorRole = role;
+		_roles.add(_siteAdministratorRole);
 
 		// Site Member
 
-		role = newRole();
+		_siteMemberRole = newRole(
+			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
 
-		role.setName(RoleConstants.SITE_MEMBER);
-		role.setType(RoleConstants.TYPE_SITE);
-
-		_roles.add(role);
-
-		_siteMemberRole = role;
+		_roles.add(_siteMemberRole);
 
 		// Site Owner
 
-		role = newRole();
+		_siteOwnerRole = newRole(
+			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
 
-		role.setName(RoleConstants.SITE_OWNER);
-		role.setType(RoleConstants.TYPE_SITE);
-
-		_roles.add(role);
-
-		_siteOwnerRole = role;
+		_roles.add(_siteOwnerRole);
 
 		// User
 
-		role = newRole();
+		_userRole = newRole(RoleConstants.USER, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.USER);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_userRole = role;
+		_roles.add(_userRole);
 	}
 
 	public void initSimpleCounters() {
 		_counter = new SimpleCounter(_maxGroupsCount + 1);
-		_dlDateCounter = new SimpleCounter();
+		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
@@ -1094,8 +513,573 @@ public class DataFactory {
 			new File(_baseDir, dependenciesDir + "last_names.txt"));
 	}
 
+	public void initUsers() {
+		_defaultUser = newUser(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, true);
+		_guestUser = newUser("Test", "Test", "Test", false);
+		_sampleUser = newUser("Sample", "Sample", "Sample", false);
+	}
+
+	public void initVirtualHost() throws Exception {
+		_virtualHost = new VirtualHostImpl();
+
+		_virtualHost.setVirtualHostId(_counter.get());
+		_virtualHost.setCompanyId(_company.getCompanyId());
+		_virtualHost.setHostname("localhost");
+	}
+
+	public AssetEntry newAssetEntry(
+		long groupId, long userId, long classNameId, long classPK,
+		boolean visible, String mimeType, String title) {
+
+		AssetEntry assetEntry = new AssetEntryImpl();
+
+		assetEntry.setGroupId(groupId);
+		assetEntry.setUserId(userId);
+		assetEntry.setClassNameId(classNameId);
+		assetEntry.setClassPK(classPK);
+		assetEntry.setVisible(visible);
+		assetEntry.setMimeType(mimeType);
+		assetEntry.setTitle(title);
+
+		return assetEntry;
+	}
+
+	public BlogsEntry newBlogsEntry(
+		long groupId, long userId, String title, String urlTitle,
+		String content) {
+
+		BlogsEntry blogsEntry = new BlogsEntryImpl();
+
+		blogsEntry.setEntryId(_counter.get());
+		blogsEntry.setGroupId(groupId);
+		blogsEntry.setUserId(userId);
+		blogsEntry.setTitle(title);
+		blogsEntry.setUrlTitle(urlTitle);
+		blogsEntry.setContent(content);
+
+		return blogsEntry;
+	}
+
+	public BlogsStatsUser newBlogsStatsUser(long groupId, long userId) {
+		BlogsStatsUser blogsStatsUser = new BlogsStatsUserImpl();
+
+		blogsStatsUser.setGroupId(groupId);
+		blogsStatsUser.setUserId(userId);
+
+		return blogsStatsUser;
+	}
+
+	public Contact newContact(User user) {
+		Contact contact = new ContactImpl();
+
+		contact.setContactId(user.getContactId());
+		contact.setCompanyId(user.getCompanyId());
+		contact.setUserId(user.getUserId());
+		contact.setUserName(user.getFullName());
+		contact.setCreateDate(new Date());
+		contact.setModifiedDate(new Date());
+		contact.setClassNameId(_userClassNameId);
+		contact.setClassPK(user.getUserId());
+		contact.setAccountId(_company.getAccountId());
+		contact.setParentContactId(ContactConstants.DEFAULT_PARENT_CONTACT_ID);
+		contact.setEmailAddress(user.getEmailAddress());
+		contact.setFirstName(user.getFirstName());
+		contact.setLastName(user.getLastName());
+		contact.setMale(true);
+		contact.setBirthday(new Date());
+
+		return contact;
+	}
+
+	public List<Counter> newCounters() {
+		List<Counter> counters = new ArrayList<Counter>();
+
+		// Counter
+
+		Counter counter = new CounterImpl();
+
+		counter.setName(Counter.class.getName());
+		counter.setCurrentId(_counter.get());
+
+		counters.add(counter);
+
+		// ResourcePermission
+
+		counter = new CounterImpl();
+
+		counter.setName(ResourcePermission.class.getName());
+		counter.setCurrentId(_resourcePermissionCounter.get());
+
+		counters.add(counter);
+
+		// SocialActivity
+
+		counter = new CounterImpl();
+
+		counter.setName(SocialActivity.class.getName());
+		counter.setCurrentId(_socialActivityCounter.get());
+
+		counters.add(counter);
+
+		return counters;
+	}
+
+	public DDLRecord newDDLRecord(
+		long groupId, long companyId, long userId, long ddlRecordSetId) {
+
+		DDLRecord ddlRecord = new DDLRecordImpl();
+
+		ddlRecord.setRecordId(_counter.get());
+		ddlRecord.setGroupId(groupId);
+		ddlRecord.setCompanyId(companyId);
+		ddlRecord.setUserId(userId);
+		ddlRecord.setCreateDate(nextFutureDate());
+		ddlRecord.setRecordSetId(ddlRecordSetId);
+
+		return ddlRecord;
+	}
+
+	public DDLRecordSet newDDLRecordSet(
+		long groupId, long companyId, long userId, long ddmStructureId) {
+
+		DDLRecordSet ddlRecordSet = new DDLRecordSetImpl();
+
+		ddlRecordSet.setRecordSetId(_counter.get());
+		ddlRecordSet.setGroupId(groupId);
+		ddlRecordSet.setCompanyId(companyId);
+		ddlRecordSet.setUserId(userId);
+		ddlRecordSet.setDDMStructureId(ddmStructureId);
+
+		return ddlRecordSet;
+	}
+
+	public DDLRecordVersion newDDLRecordVersion(DDLRecord ddlRecord) {
+		DDLRecordVersion ddlRecordVersion = new DDLRecordVersionImpl();
+
+		ddlRecordVersion.setRecordVersionId(_counter.get());
+		ddlRecordVersion.setGroupId(ddlRecord.getGroupId());
+		ddlRecordVersion.setCompanyId(ddlRecord.getCompanyId());
+		ddlRecordVersion.setUserId(ddlRecord.getUserId());
+		ddlRecordVersion.setRecordSetId(ddlRecord.getRecordSetId());
+		ddlRecordVersion.setRecordId(ddlRecord.getRecordId());
+
+		return ddlRecordVersion;
+	}
+
+	public DDMContent newDDMContent(long groupId, long companyId, long userId) {
+		DDMContent ddmContent = new DDMContentImpl();
+
+		ddmContent.setContentId(_counter.get());
+		ddmContent.setGroupId(groupId);
+		ddmContent.setCompanyId(companyId);
+		ddmContent.setUserId(userId);
+
+		return ddmContent;
+	}
+
+	public DDMStorageLink newDDMStorageLink(
+		long classNameId, long classPK, long structureId) {
+
+		DDMStorageLink ddmStorageLink = new DDMStorageLinkImpl();
+
+		ddmStorageLink.setStorageLinkId(_counter.get());
+		ddmStorageLink.setClassNameId(classNameId);
+		ddmStorageLink.setClassPK(classPK);
+		ddmStorageLink.setStructureId(structureId);
+
+		return ddmStorageLink;
+	}
+
+	public DDMStructure newDDMStructure(
+		long groupId, long companyId, long userId, long classNameId) {
+
+		DDMStructure ddmStructure = new DDMStructureImpl();
+
+		ddmStructure.setStructureId(_counter.get());
+		ddmStructure.setGroupId(groupId);
+		ddmStructure.setCompanyId(companyId);
+		ddmStructure.setUserId(userId);
+		ddmStructure.setCreateDate(nextFutureDate());
+		ddmStructure.setClassNameId(classNameId);
+
+		return ddmStructure;
+	}
+
+	public DDMStructureLink newDDMStructureLink(
+		long classPK, long structureId) {
+
+		DDMStructureLink ddmStructureLink = new DDMStructureLinkImpl();
+
+		ddmStructureLink.setStructureLinkId(_counter.get());
+		ddmStructureLink.setClassNameId(_dlFileEntryClassNameId);
+		ddmStructureLink.setClassPK(classPK);
+		ddmStructureLink.setStructureId(structureId);
+
+		return ddmStructureLink;
+	}
+
+	public DLFileEntry newDlFileEntry(
+		long groupId, long companyId, long userId, long folderId,
+		String extension, String mimeType, String name, String title,
+		String description) {
+
+		DLFileEntry dlFileEntry = new DLFileEntryImpl();
+
+		dlFileEntry.setFileEntryId(_counter.get());
+		dlFileEntry.setGroupId(groupId);
+		dlFileEntry.setCompanyId(companyId);
+		dlFileEntry.setUserId(userId);
+		dlFileEntry.setCreateDate(nextFutureDate());
+		dlFileEntry.setRepositoryId(groupId);
+		dlFileEntry.setFolderId(folderId);
+		dlFileEntry.setName(name);
+		dlFileEntry.setExtension(extension);
+		dlFileEntry.setMimeType(mimeType);
+		dlFileEntry.setTitle(title);
+		dlFileEntry.setDescription(description);
+		dlFileEntry.setSmallImageId(_counter.get());
+		dlFileEntry.setLargeImageId(_counter.get());
+
+		return dlFileEntry;
+	}
+
+	public DLFileEntryMetadata newDLFileEntryMetadata(
+		long ddmStorageId, long ddmStructureId, long fileEntryId,
+		long fileVersionId) {
+
+		DLFileEntryMetadata dlFileEntryMetadata = new DLFileEntryMetadataImpl();
+
+		dlFileEntryMetadata.setFileEntryMetadataId(_counter.get());
+		dlFileEntryMetadata.setDDMStorageId(ddmStorageId);
+		dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
+		dlFileEntryMetadata.setFileEntryId(fileEntryId);
+		dlFileEntryMetadata.setFileVersionId(fileVersionId);
+
+		return dlFileEntryMetadata;
+	}
+
+	public DLFileVersion newDLFileVersion(DLFileEntry dlFileEntry) {
+		DLFileVersion dlFileVersion = new DLFileVersionImpl();
+
+		dlFileVersion.setFileVersionId(_counter.get());
+		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
+		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
+		dlFileVersion.setUserId(dlFileEntry.getUserId());
+		dlFileVersion.setRepositoryId(dlFileEntry.getRepositoryId());
+		dlFileVersion.setFileEntryId(dlFileEntry.getFileEntryId());
+		dlFileVersion.setExtension(dlFileEntry.getExtension());
+		dlFileVersion.setMimeType(dlFileEntry.getMimeType());
+		dlFileVersion.setTitle(dlFileEntry.getTitle());
+		dlFileVersion.setDescription(dlFileEntry.getDescription());
+		dlFileVersion.setSize(dlFileEntry.getSize());
+
+		return dlFileVersion;
+	}
+
+	public DLFolder newDLFolder(
+		long groupId, long companyId, long userId, long parentFolderId,
+		String name, String description) {
+
+		DLFolder dlFolder = new DLFolderImpl();
+
+		dlFolder.setFolderId(_counter.get());
+		dlFolder.setGroupId(groupId);
+		dlFolder.setCompanyId(companyId);
+		dlFolder.setUserId(userId);
+		dlFolder.setCreateDate(nextFutureDate());
+		dlFolder.setRepositoryId(groupId);
+		dlFolder.setParentFolderId(parentFolderId);
+		dlFolder.setName(name);
+		dlFolder.setDescription(description);
+
+		return dlFolder;
+	}
+
+	public DLSync newDLSync(
+		long companyId, long fileId, long repositoryId, long parentFolderId,
+		boolean typeFolder) {
+
+		DLSync dlSync = new DLSyncImpl();
+
+		dlSync.setSyncId(_counter.get());
+		dlSync.setCompanyId(companyId);
+		dlSync.setFileId(fileId);
+		dlSync.setRepositoryId(repositoryId);
+		dlSync.setParentFolderId(parentFolderId);
+		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
+
+		if (typeFolder) {
+			dlSync.setType(DLSyncConstants.TYPE_FOLDER);
+		}
+		else {
+			dlSync.setType(DLSyncConstants.TYPE_FILE);
+		}
+
+		return dlSync;
+	}
+
+	public Group newGroup(
+		long groupId, long classNameId, long classPK, String name,
+		String friendlyURL, boolean site) {
+
+		Group group = new GroupImpl();
+
+		group.setGroupId(groupId);
+		group.setClassNameId(classNameId);
+		group.setClassPK(classPK);
+		group.setName(name);
+		group.setFriendlyURL(friendlyURL);
+		group.setSite(site);
+
+		return group;
+	}
+
 	public IntegerWrapper newInteger() {
 		return new IntegerWrapper();
+	}
+
+	public JournalArticle newJournalArticle(
+		long resourcePrimKey, long groupId, long companyId, String articleId) {
+
+		JournalArticle journalArticle = new JournalArticleImpl();
+
+		journalArticle.setId(_counter.get());
+		journalArticle.setResourcePrimKey(resourcePrimKey);
+		journalArticle.setGroupId(groupId);
+		journalArticle.setCompanyId(companyId);
+		journalArticle.setArticleId(articleId);
+		journalArticle.setContent(_journalArticleContent);
+
+		return journalArticle;
+	}
+
+	public JournalArticleResource newJournalArticleResource(long groupId) {
+		JournalArticleResource journalArticleResource =
+			new JournalArticleResourceImpl();
+
+		journalArticleResource.setResourcePrimKey(_counter.get());
+		journalArticleResource.setGroupId(groupId);
+		journalArticleResource.setArticleId(String.valueOf(_counter.get()));
+
+		return journalArticleResource;
+	}
+
+	public Layout newLayout(
+		int layoutId, String name, String friendlyURL, String column1,
+		String column2) {
+
+		Layout layout = new LayoutImpl();
+
+		layout.setPlid(_counter.get());
+		layout.setPrivateLayout(false);
+		layout.setLayoutId(layoutId);
+		layout.setName(name);
+		layout.setFriendlyURL(friendlyURL);
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.setProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "2_columns_ii");
+		typeSettingsProperties.setProperty("column-1", column1);
+		typeSettingsProperties.setProperty("column-2", column2);
+
+		String typeSettings = StringUtil.replace(
+			typeSettingsProperties.toString(), "\n", "\\n");
+
+		layout.setTypeSettings(typeSettings);
+
+		return layout;
+	}
+
+	public MBCategory newMBCategory(
+		long categoryId, long groupId, long companyId, long userId, String name,
+		String description, int threadCount, int messageCount) {
+
+		MBCategory mbCategory = new MBCategoryImpl();
+
+		mbCategory.setCategoryId(categoryId);
+		mbCategory.setGroupId(groupId);
+		mbCategory.setCompanyId(companyId);
+		mbCategory.setUserId(userId);
+		mbCategory.setName(name);
+		mbCategory.setDescription(description);
+		mbCategory.setDisplayStyle(MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
+		mbCategory.setThreadCount(threadCount);
+		mbCategory.setMessageCount(messageCount);
+
+		return mbCategory;
+	}
+
+	public MBDiscussion newMBDiscussion(
+		long classNameId, long classPK, long threadId) {
+
+		MBDiscussion mbDiscussion = new MBDiscussionImpl();
+
+		mbDiscussion.setDiscussionId(_counter.get());
+		mbDiscussion.setClassNameId(classNameId);
+		mbDiscussion.setClassPK(classPK);
+		mbDiscussion.setThreadId(threadId);
+
+		return mbDiscussion;
+	}
+
+	public MBMessage newMBMessage(
+		long messageId, long groupId, long userId, long classNameId,
+		long classPK, long categoryId, long threadId, long rootMessageId,
+		long parentMessageId, String subject, String body) {
+
+		MBMessage mbMessage = new MBMessageImpl();
+
+		mbMessage.setMessageId(messageId);
+		mbMessage.setGroupId(groupId);
+		mbMessage.setUserId(userId);
+		mbMessage.setClassNameId(classNameId);
+		mbMessage.setClassPK(classPK);
+		mbMessage.setCategoryId(categoryId);
+		mbMessage.setThreadId(threadId);
+		mbMessage.setRootMessageId(rootMessageId);
+		mbMessage.setParentMessageId(parentMessageId);
+		mbMessage.setSubject(subject);
+		mbMessage.setBody(body);
+
+		return mbMessage;
+	}
+
+	public MBStatsUser newMBStatsUser(long groupId, long userId) {
+		MBStatsUser mbStatsUser = new MBStatsUserImpl();
+
+		mbStatsUser.setGroupId(groupId);
+		mbStatsUser.setUserId(userId);
+
+		return mbStatsUser;
+	}
+
+	public MBThread newMBThread(
+		long threadId, long groupId, long companyId, long categoryId,
+		long rootMessageId, int messageCount, long lastPostByUserId) {
+
+		MBThread mbThread = new MBThreadImpl();
+
+		mbThread.setThreadId(threadId);
+		mbThread.setGroupId(groupId);
+		mbThread.setCompanyId(companyId);
+		mbThread.setCategoryId(categoryId);
+		mbThread.setRootMessageId(rootMessageId);
+		mbThread.setRootMessageUserId(lastPostByUserId);
+		mbThread.setMessageCount(messageCount);
+		mbThread.setLastPostByUserId(lastPostByUserId);
+
+		return mbThread;
+	}
+
+	public PortletPreferences newPortletPreferences(
+		long ownerId, long plid, String portletId, String preferences) {
+
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setPortletPreferencesId(_counter.get());
+		portletPreferences.setOwnerId(ownerId);
+		portletPreferences.setOwnerType(PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		portletPreferences.setPlid(plid);
+		portletPreferences.setPortletId(portletId);
+		portletPreferences.setPreferences(preferences);
+
+		return portletPreferences;
+	}
+
+	public List<ResourcePermission> newResourcePermission(
+		long companyId, String name, String primKey) {
+
+		List<ResourcePermission> resourcePermissions =
+			new ArrayList<ResourcePermission>(2);
+
+		ResourcePermission resourcePermission = new ResourcePermissionImpl();
+
+		resourcePermission.setResourcePermissionId(
+			_resourcePermissionCounter.get());
+		resourcePermission.setCompanyId(companyId);
+		resourcePermission.setName(name);
+		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermission.setPrimKey(primKey);
+		resourcePermission.setRoleId(_ownerRole.getRoleId());
+		resourcePermission.setOwnerId(_defaultUser.getUserId());
+		resourcePermission.setActionIds(1);
+
+		resourcePermissions.add(resourcePermission);
+
+		resourcePermission = new ResourcePermissionImpl();
+
+		resourcePermission.setResourcePermissionId(
+			_resourcePermissionCounter.get());
+		resourcePermission.setCompanyId(companyId);
+		resourcePermission.setName(name);
+		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermission.setPrimKey(primKey);
+		resourcePermission.setRoleId(_guestRole.getRoleId());
+		resourcePermission.setOwnerId(0);
+		resourcePermission.setActionIds(1);
+
+		resourcePermissions.add(resourcePermission);
+
+		return resourcePermissions;
+	}
+
+	public SocialActivity newSocialActivity(
+		long groupId, long companyId, long userId, long classNameId,
+		long classPK) {
+
+		SocialActivity socialActivity = new SocialActivityImpl();
+
+		socialActivity.setActivityId(_socialActivityCounter.get());
+		socialActivity.setGroupId(groupId);
+		socialActivity.setCompanyId(companyId);
+		socialActivity.setUserId(userId);
+		socialActivity.setClassNameId(classNameId);
+		socialActivity.setClassPK(classPK);
+
+		return socialActivity;
+	}
+
+	public User newUser(int currentIndex) {
+		String[] userName = nextUserName(currentIndex - 1);
+
+		return newUser(
+			userName[0], userName[1], "test" + _userScreenNameCounter.get(),
+			false);
+	}
+
+	public WikiNode newWikiNode(
+		long groupId, long userId, String name, String description) {
+
+		WikiNode wikiNode = new WikiNodeImpl();
+
+		wikiNode.setNodeId(_counter.get());
+		wikiNode.setGroupId(groupId);
+		wikiNode.setUserId(userId);
+		wikiNode.setName(name);
+		wikiNode.setDescription(description);
+
+		return wikiNode;
+	}
+
+	public WikiPage newWikiPage(
+		long groupId, long userId, long nodeId, String title, double version,
+		String content, boolean head) {
+
+		WikiPage wikiPage = new WikiPageImpl();
+
+		wikiPage.setPageId(_counter.get());
+		wikiPage.setResourcePrimKey(_counter.get());
+		wikiPage.setGroupId(groupId);
+		wikiPage.setUserId(userId);
+		wikiPage.setNodeId(nodeId);
+		wikiPage.setTitle(title);
+		wikiPage.setVersion(version);
+		wikiPage.setContent(content);
+		wikiPage.setHead(head);
+
+		return wikiPage;
 	}
 
 	public String[] nextUserName(long index) {
@@ -1108,38 +1092,84 @@ public class DataFactory {
 		return userName;
 	}
 
-	protected Date newCreateDate() {
-		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
-	}
-
-	protected Role newRole() {
+	protected Role newRole(String name, int type) {
 		Role role = new RoleImpl();
 
 		role.setRoleId(_counter.get());
+		role.setCompanyId(_company.getCompanyId());
 		role.setClassNameId(_roleClassNameId);
 		role.setClassPK(role.getRoleId());
+		role.setName(name);
+		role.setType(type);
 
 		return role;
 	}
 
+	protected User newUser(
+		String firstName, String lastName, String screenName,
+		boolean defaultUser) {
+
+		long userId = _counter.get();
+
+		if (Validator.isNull(screenName)) {
+			screenName = String.valueOf(userId);
+		}
+
+		User user = new UserImpl();
+
+		user.setUuid(SequentialUUID.generate());
+		user.setUserId(userId);
+		user.setCompanyId(_company.getCompanyId());
+		user.setCreateDate(new Date());
+		user.setModifiedDate(new Date());
+		user.setDefaultUser(defaultUser);
+		user.setContactId(_counter.get());
+		user.setPassword("test");
+		user.setPasswordModifiedDate(new Date());
+		user.setReminderQueryQuestion("What is your screen name?");
+		user.setReminderQueryAnswer(screenName);
+		user.setEmailAddress(screenName + "@liferay.com");
+		user.setScreenName(screenName);
+		user.setLanguageId("en_US");
+		user.setGreeting("Welcome " + screenName + StringPool.EXCLAMATION);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setLoginDate(new Date());
+		user.setLastLoginDate(new Date());
+		user.setLastFailedLoginDate(new Date());
+		user.setLockoutDate(new Date());
+		user.setAgreedToTermsOfUse(true);
+		user.setEmailAddressVerified(true);
+
+		return user;
+	}
+
+	protected Date nextFutureDate() {
+		return new Date(
+			_FUTURE_TIME + (_futureDateCounter.get() * Time.SECOND));
+	}
+
+	private static final long _FUTURE_TIME =
+		System.currentTimeMillis() + Time.YEAR;
+
+	private Account _account;
 	private Role _administratorRole;
-	private long _baseCreateTime = System.currentTimeMillis() + Time.YEAR;
 	private String _baseDir;
 	private long _blogsEntryClassNameId;
 	private List<ClassName> _classNames;
 	private Company _company;
 	private SimpleCounter _counter;
-	private List<CounterModelImpl> _counters;
 	private long _ddlRecordSetClassNameId;
 	private long _ddmContentClassNameId;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
-	private SimpleCounter _dlDateCounter;
 	private long _dlFileEntryClassNameId;
 	private List<String> _firstNames;
+	private SimpleCounter _futureDateCounter;
 	private long _groupClassNameId;
 	private Group _guestGroup;
 	private Role _guestRole;
+	private User _guestUser;
 	private long _journalArticleClassNameId;
 	private String _journalArticleContent;
 	private List<String> _lastNames;
@@ -1154,6 +1184,7 @@ public class DataFactory {
 	private SimpleCounter _resourcePermissionCounter;
 	private long _roleClassNameId;
 	private List<Role> _roles;
+	private User _sampleUser;
 	private Format _simpleDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Role _siteAdministratorRole;
@@ -1163,6 +1194,7 @@ public class DataFactory {
 	private long _userClassNameId;
 	private Role _userRole;
 	private SimpleCounter _userScreenNameCounter;
+	private VirtualHost _virtualHost;
 	private long _wikiPageClassNameId;
 
 }

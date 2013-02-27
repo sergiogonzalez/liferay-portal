@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.InvocationTargetException;
@@ -40,6 +41,7 @@ import org.json.JSONML;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class JSONFactoryImpl implements JSONFactory {
 
 	public JSONFactoryImpl() {

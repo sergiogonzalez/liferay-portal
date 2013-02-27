@@ -86,22 +86,22 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	* </p>
 	*
 	* @param activity the activity to be translated to human readable form
-	* @param themeDisplay the theme display needed by interpreters to create
-	links and get localized text fragments
 	* @return the activity feed that is a human readable form of the activity
 	record or <code>null</code> if a compatible interpreter is not
 	found
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		java.lang.String selector,
 		com.liferay.portlet.social.model.SocialActivity activity,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
-		return getService().interpret(activity, themeDisplay);
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().interpret(selector, activity, serviceContext);
 	}
 
 	public static com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		java.lang.String selector,
 		com.liferay.portlet.social.model.SocialActivitySet activitySet,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
-		return getService().interpret(activitySet, themeDisplay);
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().interpret(selector, activitySet, serviceContext);
 	}
 
 	public static SocialActivityInterpreterLocalService getService() {

@@ -292,10 +292,12 @@ public class JournalArticleFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByExpirationDate(
-		long classNameId, int status, java.util.Date expirationDateLT)
+		long classNameId, java.util.Date expirationDateLT,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByExpirationDate(classNameId, status, expirationDateLT);
+				   .findByExpirationDate(classNameId, expirationDateLT,
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByKeywords(

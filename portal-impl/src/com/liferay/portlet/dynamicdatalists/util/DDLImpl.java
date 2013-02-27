@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.templateparser.Transformer;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,6 +41,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -80,6 +83,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Marcelllus Tavares
  * @author Eduardo Lundgren
  */
+@DoPrivileged
 public class DDLImpl implements DDL {
 
 	public void addAllReservedEls(
@@ -526,6 +530,9 @@ public class DDLImpl implements DDL {
 
 	private static Log _log = LogFactoryUtil.getLog(DDLImpl.class);
 
-	private Transformer _transformer = new DDLTransformer();
+	private Transformer _transformer = new Transformer(
+		PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE,
+		PropsKeys.DYNAMIC_DATA_LISTS_TRANSFORMER_LISTENER,
+		TemplateContextType.STANDARD);
 
 }

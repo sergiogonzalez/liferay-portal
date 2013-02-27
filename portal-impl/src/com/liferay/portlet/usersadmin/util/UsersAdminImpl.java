@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -106,6 +107,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jorge Ferrer
  * @author Julio Camarero
  */
+@DoPrivileged
 public class UsersAdminImpl implements UsersAdmin {
 
 	public void addPortletBreadcrumbEntries(
@@ -378,6 +380,29 @@ public class UsersAdminImpl implements UsersAdmin {
 
 			if (MembershipPolicyUtil.isMembershipProtected(
 					permissionChecker, group, user)) {
+
+				filteredUserIds = ArrayUtil.remove(filteredUserIds, userId);
+			}
+		}
+
+		return filteredUserIds;
+	}
+
+	public long[] filterUnsetOrganizationUserIds(
+			PermissionChecker permissionChecker, long organizationId,
+			long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] filteredUserIds = userIds;
+
+		for (long userId : userIds) {
+			Organization organization =
+				OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+			User user = UserLocalServiceUtil.getUser(userId);
+
+			if (MembershipPolicyUtil.isMembershipProtected(
+					permissionChecker, organization, user)) {
 
 				filteredUserIds = ArrayUtil.remove(filteredUserIds, userId);
 			}

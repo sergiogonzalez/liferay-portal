@@ -107,12 +107,12 @@ public class WikiUtil {
 		String targetContent = StringPool.BLANK;
 
 		if (sourcePage != null) {
-			sourceContent = WikiUtil.convert(
+			sourceContent = convert(
 				sourcePage, viewPageURL, editPageURL, attachmentURLPrefix);
 		}
 
 		if (targetPage != null) {
-			targetContent = WikiUtil.convert(
+			targetContent = convert(
 				targetPage, viewPageURL, editPageURL, attachmentURLPrefix);
 		}
 
@@ -156,6 +156,23 @@ public class WikiUtil {
 		orphans = ListUtil.sort(orphans);
 
 		return orphans;
+	}
+
+	public static String getAttachmentURLPrefix(
+		String mainPath, long plid, long nodeId, String title) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(mainPath);
+		sb.append("/wiki/get_page_attachment?p_l_id=");
+		sb.append(plid);
+		sb.append("&nodeId=");
+		sb.append(nodeId);
+		sb.append("&title=");
+		sb.append(HttpUtil.encodeURL(title));
+		sb.append("&fileName=");
+
+		return sb.toString();
 	}
 
 	public static String getEditPage(String format) {
@@ -416,7 +433,7 @@ public class WikiUtil {
 			}
 		}
 
-		return WikiUtil.convert(
+		return convert(
 			wikiPage, curViewPageURL, curEditPageURL, attachmentURLPrefix);
 	}
 

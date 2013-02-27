@@ -3,7 +3,7 @@
 
 <#if entries?has_content>
 	<style>
-		.aui-carousel-item {
+		#<@liferay_portlet.namespace />carousel .aui-carousel-item {
 			height: 250px;
 			width: 700px;
 		}

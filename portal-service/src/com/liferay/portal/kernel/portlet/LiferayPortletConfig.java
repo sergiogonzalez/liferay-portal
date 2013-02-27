@@ -36,4 +36,8 @@ public interface LiferayPortletConfig extends PortletConfig {
 
 	public String getPortletId();
 
+	public boolean isCopyRequestParameters();
+
+	public boolean isWARFile();
+
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.xsl;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -28,6 +29,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,6 +72,12 @@ public class XSLTemplate implements Template {
 
 	public Object get(String key) {
 		return _context.get(key);
+	}
+
+	public String[] getKeys() {
+		Set<String> keys = _context.keySet();
+
+		return keys.toArray(new String[keys.size()]);
 	}
 
 	public void prepare(HttpServletRequest request) {
@@ -120,7 +128,8 @@ public class XSLTemplate implements Template {
 		try {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			transformer.setParameter(WRITER, unsyncStringWriter);
+			transformer.setParameter(
+				TemplateConstants.WRITER, unsyncStringWriter);
 
 			transformer.transform(
 				xmlSource, new StreamResult(unsyncStringWriter));
@@ -135,7 +144,7 @@ public class XSLTemplate implements Template {
 			Transformer errorTransformer = _getTransformer(
 				transformerFactory, _errorTemplateResource);
 
-			errorTransformer.setParameter(WRITER, writer);
+			errorTransformer.setParameter(TemplateConstants.WRITER, writer);
 			errorTransformer.setParameter(
 				"exception", xslErrorListener.getMessageAndLocation());
 

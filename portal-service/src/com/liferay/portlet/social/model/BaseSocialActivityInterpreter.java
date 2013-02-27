@@ -24,14 +24,18 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -40,11 +44,15 @@ import java.util.List;
 public abstract class BaseSocialActivityInterpreter
 	implements SocialActivityInterpreter {
 
+	public String getSelector() {
+		return StringPool.BLANK;
+	}
+
 	public SocialActivityFeedEntry interpret(
-		SocialActivity activity, ThemeDisplay themeDisplay) {
+		SocialActivity activity, ServiceContext serviceContext) {
 
 		try {
-			return doInterpret(activity, themeDisplay);
+			return doInterpret(activity, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error("Unable to interpret activity", e);
@@ -54,7 +62,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	public SocialActivityFeedEntry interpret(
-		SocialActivitySet activitySet, ThemeDisplay themeDisplay) {
+		SocialActivitySet activitySet, ServiceContext serviceContext) {
 
 		try {
 			List<SocialActivity> activities =
@@ -64,7 +72,7 @@ public abstract class BaseSocialActivityInterpreter
 			if (!activities.isEmpty()) {
 				SocialActivity activity = activities.get(0);
 
-				return doInterpret(activity, themeDisplay);
+				return doInterpret(activity, serviceContext);
 			}
 		}
 		catch (Exception e) {
@@ -81,9 +89,25 @@ public abstract class BaseSocialActivityInterpreter
 		return StringUtil.shorten(HtmlUtil.extractText(content), 200);
 	}
 
-	protected abstract SocialActivityFeedEntry doInterpret(
+	protected SocialActivityFeedEntry doInterpret(
+			SocialActivity activity, ServiceContext serviceContext)
+		throws Exception {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return doInterpret(activity, themeDisplay);
+	}
+
+	protected SocialActivityFeedEntry doInterpret(
 			SocialActivity activity, ThemeDisplay themeDisplay)
-		throws Exception;
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"Please override #doInterpret(SocialActivity, ServiceContext)");
+	}
 
 	protected String getGroupName(long groupId, ThemeDisplay themeDisplay) {
 		try {

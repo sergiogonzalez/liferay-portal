@@ -2,7 +2,7 @@
 
 ${writerRepositoryCSV.write(group.groupId + ", " + group.name + "\n")}
 
-<#assign ddmStructure = dataFactory.addDDMStructure(groupId, companyId, sampleUserId, dataFactory.DLFileEntryClassNameId)>
+<#assign ddmStructure = dataFactory.newDDMStructure(groupId, companyId, sampleUserId, dataFactory.DLFileEntryClassNameId)>
 
 <#assign createDate = dataFactory.getDateString(ddmStructure.createDate)>
 

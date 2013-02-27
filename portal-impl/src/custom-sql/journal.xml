@@ -9,7 +9,7 @@
 				JournalArticle
 			WHERE
 				(groupId = ?) AND
-				([$STATUS$])
+				([$STATUS$]) AND
 				[$FOLDER_ID$]
 		]]>
 	</sql>
@@ -88,7 +88,7 @@
 				JournalArticle
 			WHERE
 				(classNameId = ?) AND
-				(status = ?) AND
+				([$STATUS$]) AND
 				(expirationDate <= ?)
 		]]>
 	</sql>
@@ -272,7 +272,8 @@
 			FROM
 				JournalFolder
 			WHERE
-				(JournalFolder.groupId = ?)
+				(JournalFolder.groupId = ?) AND
+				([$STATUS$])
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
@@ -315,7 +316,8 @@
 			FROM
 				JournalFolder
 			WHERE
-				(JournalFolder.groupId = ?)
+				(JournalFolder.groupId = ?) AND
+				([$STATUS$])
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>

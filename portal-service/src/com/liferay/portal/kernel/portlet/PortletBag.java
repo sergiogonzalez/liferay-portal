@@ -92,7 +92,8 @@ public interface PortletBag extends Cloneable {
 
 	public ServletContext getServletContext();
 
-	public SocialActivityInterpreter getSocialActivityInterpreterInstance();
+	public List<SocialActivityInterpreter>
+		getSocialActivityInterpreterInstances();
 
 	public SocialRequestInterpreter getSocialRequestInterpreterInstance();
 

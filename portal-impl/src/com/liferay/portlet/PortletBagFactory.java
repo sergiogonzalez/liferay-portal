@@ -170,8 +170,8 @@ public class PortletBagFactory {
 		MessageListener popMessageListenerInstance = newPOPMessageListener(
 			portlet);
 
-		SocialActivityInterpreter socialActivityInterpreterInstance =
-			initSocialActivityInterpreterInstance(portlet);
+		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
+			newSocialActivityInterpreterInstances(portlet);
 
 		SocialRequestInterpreter socialRequestInterpreterInstance = null;
 
@@ -325,7 +325,7 @@ public class PortletBagFactory {
 			portletDataHandlerInstance, stagedModelDataHandlerInstances,
 			portletDisplayTemplateHandlerInstance,
 			portletLayoutListenerInstance, pollerProcessorInstance,
-			popMessageListenerInstance, socialActivityInterpreterInstance,
+			popMessageListenerInstance, socialActivityInterpreterInstances,
 			socialRequestInterpreterInstance, webDAVStorageInstance,
 			xmlRpcMethodInstance, controlPanelEntryInstance,
 			assetRendererFactoryInstances, atomCollectionAdapterInstances,
@@ -544,28 +544,6 @@ public class PortletBagFactory {
 		for (SchedulerEntry schedulerEntry : schedulerEntries) {
 			initScheduler(schedulerEntry, portlet.getPortletId());
 		}
-	}
-
-	protected SocialActivityInterpreter initSocialActivityInterpreterInstance(
-			Portlet portlet)
-		throws Exception {
-
-		if (Validator.isNull(portlet.getSocialActivityInterpreterClass())) {
-			return null;
-		}
-
-		SocialActivityInterpreter socialActivityInterpreterInstance =
-			(SocialActivityInterpreter)newInstance(
-				SocialActivityInterpreter.class,
-				portlet.getSocialActivityInterpreterClass());
-
-		socialActivityInterpreterInstance = new SocialActivityInterpreterImpl(
-			portlet.getPortletId(), socialActivityInterpreterInstance);
-
-		SocialActivityInterpreterLocalServiceUtil.addActivityInterpreter(
-			socialActivityInterpreterInstance);
-
-		return socialActivityInterpreterInstance;
 	}
 
 	protected AssetRendererFactory newAssetRendererFactoryInstance(
@@ -861,6 +839,45 @@ public class PortletBagFactory {
 		return (PortletLayoutListener)newInstance(
 			PortletLayoutListener.class,
 			portlet.getPortletLayoutListenerClass());
+	}
+
+	protected SocialActivityInterpreter newSocialActivityInterpreterInstance(
+			Portlet portlet, String socialActivityInterpreterClass)
+		throws Exception {
+
+		SocialActivityInterpreter socialActivityInterpreterInstance =
+			(SocialActivityInterpreter)newInstance(
+				SocialActivityInterpreter.class,
+				socialActivityInterpreterClass);
+
+		socialActivityInterpreterInstance = new SocialActivityInterpreterImpl(
+			portlet.getPortletId(), socialActivityInterpreterInstance);
+
+		SocialActivityInterpreterLocalServiceUtil.addActivityInterpreter(
+			socialActivityInterpreterInstance);
+
+		return socialActivityInterpreterInstance;
+	}
+
+	protected List<SocialActivityInterpreter>
+			newSocialActivityInterpreterInstances(Portlet portlet)
+		throws Exception {
+
+		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
+			new ArrayList<SocialActivityInterpreter>();
+
+		for (String socialActivityInterpreterClass :
+				portlet.getSocialActivityInterpreterClasses()) {
+
+			SocialActivityInterpreter socialActivityInterpreterInstance =
+				newSocialActivityInterpreterInstance(
+					portlet, socialActivityInterpreterClass);
+
+			socialActivityInterpreterInstances.add(
+				socialActivityInterpreterInstance);
+		}
+
+		return socialActivityInterpreterInstances;
 	}
 
 	protected List<StagedModelDataHandler<?>> newStagedModelDataHandler(

@@ -93,8 +93,9 @@ public class JSONWebServiceConfiguratorImpl extends ClassFinder
 		_baseJSONWebServiceConfigurator.init(servletContext, classLoader);
 
 		setIncludedJars(
-			"*_wl_cls_gen.jar", "*-hook-service*.jar", "*-portlet-service*.jar",
-			"*-web-service*.jar", "*portal-impl.jar", "*portal-service.jar");
+			"**/_wl_cls_gen.jar", "**/*-hook-service*.jar",
+			"**/*-portlet-service*.jar", "**/*-web-service*.jar",
+			"**/portal-impl.jar", "**/portal-service.jar");
 	}
 
 	public void registerClass(String className, InputStream inputStream)
@@ -146,7 +147,7 @@ public class JSONWebServiceConfiguratorImpl extends ClassFinder
 
 		classPaths.add(classPathFile);
 
-		FindFile findFile = new RegExpFindFile(
+		FindFile<?> findFile = new RegExpFindFile(
 			".*-(hook|portlet|web)-service.*\\.jar");
 
 		findFile.searchPath(libDir);

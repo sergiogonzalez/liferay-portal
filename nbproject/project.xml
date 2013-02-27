@@ -440,7 +440,6 @@
                 <classpath mode="compile">lib/portal/jgroups.jar</classpath>
                 <classpath mode="compile">lib/portal/jhlabs-filters.jar</classpath>
                 <classpath mode="compile">lib/portal/jodconverter.jar</classpath>
-                <classpath mode="compile">lib/portal/jodd-wot.jar</classpath>
                 <classpath mode="compile">lib/portal/jodd.jar</classpath>
                 <classpath mode="compile">lib/portal/jrcs-diff.jar</classpath>
                 <classpath mode="compile">lib/portal/jruby.jar</classpath>

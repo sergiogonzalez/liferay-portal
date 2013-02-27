@@ -188,7 +188,8 @@ public interface JournalArticleFinder {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByExpirationDate(
-		long classNameId, int status, java.util.Date expirationDateLT)
+		long classNameId, java.util.Date expirationDateLT,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByKeywords(

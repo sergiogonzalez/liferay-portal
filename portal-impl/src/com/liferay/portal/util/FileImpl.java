@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileComparator;
@@ -71,6 +72,7 @@ import org.mozilla.intl.chardet.nsPSMDetector;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
+@DoPrivileged
 public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	public static FileImpl getInstance() {
@@ -372,6 +374,14 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			if (directory.charAt(directory.length() - 1) == CharPool.SLASH) {
 				directory = directory.substring(0, directory.length() - 1);
 			}
+		}
+
+		if (!exists(directory)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Directory " + directory + " does not exist");
+			}
+
+			return new String[0];
 		}
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();

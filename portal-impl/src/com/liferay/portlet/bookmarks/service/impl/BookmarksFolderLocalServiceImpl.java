@@ -343,6 +343,9 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Social
 
+		socialActivityCounterLocalService.enableActivityCounters(
+			BookmarksFolder.class.getName(), folder.getFolderId());
+
 		socialActivityLocalService.addActivity(
 			userId, folder.getGroupId(), BookmarksFolder.class.getName(),
 			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
@@ -364,6 +367,9 @@ public class BookmarksFolderLocalServiceImpl
 		updateStatus(userId, folder, trashEntry.getStatus());
 
 		// Social
+
+		socialActivityCounterLocalService.enableActivityCounters(
+			BookmarksFolder.class.getName(), folder.getFolderId());
 
 		socialActivityLocalService.addActivity(
 			userId, folder.getGroupId(), BookmarksFolder.class.getName(),
@@ -479,15 +485,29 @@ public class BookmarksFolderLocalServiceImpl
 
 		updateDependentStatus(foldersAndEntries, status);
 
-		// Asset
-
 		if (status == WorkflowConstants.STATUS_APPROVED) {
+
+			// Asset
+
 			assetEntryLocalService.updateVisible(
 				BookmarksFolder.class.getName(), folder.getFolderId(), true);
+
+			// Social
+
+			socialActivityCounterLocalService.enableActivityCounters(
+				BookmarksFolder.class.getName(), folder.getFolderId());
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
+
+			// Asset
+
 			assetEntryLocalService.updateVisible(
 				BookmarksFolder.class.getName(), folder.getFolderId(), false);
+
+			// Social
+
+			socialActivityCounterLocalService.disableActivityCounters(
+				BookmarksFolder.class.getName(), folder.getFolderId());
 		}
 
 		// Trash
@@ -658,11 +678,46 @@ public class BookmarksFolderLocalServiceImpl
 					continue;
 				}
 
-				List<Object> curFoldersAndEntries =
-					bookmarksFolderLocalService.getFoldersAndEntries(
-						folder.getGroupId(), folder.getFolderId());
+				// Folders and entries
+
+				List<Object> curFoldersAndEntries = getFoldersAndEntries(
+					folder.getGroupId(), folder.getFolderId());
 
 				updateDependentStatus(curFoldersAndEntries, status);
+
+				if (status == WorkflowConstants.STATUS_IN_TRASH) {
+
+					// Asset
+
+					assetEntryLocalService.updateVisible(
+						BookmarksFolder.class.getName(), folder.getFolderId(),
+						false);
+
+					// Social
+
+					socialActivityCounterLocalService.disableActivityCounters(
+						BookmarksFolder.class.getName(), folder.getFolderId());
+				}
+				else {
+
+					// Asset
+
+					assetEntryLocalService.updateVisible(
+						BookmarksFolder.class.getName(), folder.getFolderId(),
+						true);
+
+					// Social
+
+					socialActivityCounterLocalService.enableActivityCounters(
+						BookmarksFolder.class.getName(), folder.getFolderId());
+				}
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					BookmarksFolder.class);
+
+				indexer.reindex(folder);
 			}
 		}
 	}

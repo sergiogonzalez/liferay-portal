@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -50,6 +50,10 @@ public class SocialActivityInterpreterImpl
 		return _portletId;
 	}
 
+	public String getSelector() {
+		return _activityInterpreter.getSelector();
+	}
+
 	public boolean hasClassName(String className) {
 		if (_classNames.contains(className)) {
 			return true;
@@ -60,15 +64,15 @@ public class SocialActivityInterpreterImpl
 	}
 
 	public SocialActivityFeedEntry interpret(
-		SocialActivity activity, ThemeDisplay themeDisplay) {
+		SocialActivity activity, ServiceContext serviceContext) {
 
-		return _activityInterpreter.interpret(activity, themeDisplay);
+		return _activityInterpreter.interpret(activity, serviceContext);
 	}
 
 	public SocialActivityFeedEntry interpret(
-		SocialActivitySet activitySet, ThemeDisplay themeDisplay) {
+		SocialActivitySet activitySet, ServiceContext serviceContext) {
 
-		return _activityInterpreter.interpret(activitySet, themeDisplay);
+		return _activityInterpreter.interpret(activitySet, serviceContext);
 	}
 
 	private SocialActivityInterpreter _activityInterpreter;

@@ -1,7 +1,7 @@
 <#setting number_format = "0">
 
 <#if (maxDDLRecordSetCount > 0)>
-	<#assign ddmStructure = dataFactory.addDDMStructure(groupId, companyId, sampleUserId, dataFactory.DDLRecordSetClassNameId)>
+	<#assign ddmStructure = dataFactory.newDDMStructure(groupId, companyId, sampleUserId, dataFactory.DDLRecordSetClassNameId)>
 
 	<#assign createDate = dataFactory.getDateString(ddmStructure.createDate)>
 
@@ -11,17 +11,17 @@
 		<#assign ddlFriendlyURL = "dynamic_data_list_display_" + ddlRecordSetCount>
 		<#assign ddlPortletId = "169_INSTANCE_TEST" + ddlRecordSetCount>
 
-		<#assign ddlDisplayLayout = dataFactory.addLayout(publicLayouts?size + ddlRecordSetCount, "Dynamic Data List Display " + ddlRecordSetCount, "/" + ddlFriendlyURL, "", ddlPortletId)>
+		<#assign ddlDisplayLayout = dataFactory.newLayout(publicLayouts?size + ddlRecordSetCount, "Dynamic Data List Display " + ddlRecordSetCount, "/" + ddlFriendlyURL, "", ddlPortletId)>
 
 		<#assign publicLayouts = publicLayouts + [ddlDisplayLayout]>
 
-		<#assign ddlRecordSet = dataFactory.addDDLRecordSet(ddmStructure.groupId, ddmStructure.companyId, ddmStructure.userId, ddmStructure.structureId)>
+		<#assign ddlRecordSet = dataFactory.newDDLRecordSet(ddmStructure.groupId, ddmStructure.companyId, ddmStructure.userId, ddmStructure.structureId)>
 
 		insert into DDLRecordSet values ('${portalUUIDUtil.generate()}', ${ddlRecordSet.recordSetId}, ${ddlRecordSet.groupId}, ${ddlRecordSet.companyId}, ${ddlRecordSet.userId}, '', '${createDate}', '${createDate}', ${ddlRecordSet.DDMStructureId}, 'Test DDL Record Set ${ddlRecordSetCount}', '<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales="en_US" default-locale="en_US"><Name language-id="en_US">Test DDL Record Set  ${ddlRecordSetCount}</Name></root>', '', 20, 0);
 
 		<#if (maxDDLRecordCount > 0)>
 			<#list 1..maxDDLRecordCount as ddlRecordCount>
-				<#assign ddlRecord = dataFactory.addDDLRecord(ddlRecordSet.groupId, ddlRecordSet.companyId, ddlRecordSet.userId, ddlRecordSet.recordSetId)>
+				<#assign ddlRecord = dataFactory.newDDLRecord(ddlRecordSet.groupId, ddlRecordSet.companyId, ddlRecordSet.userId, ddlRecordSet.recordSetId)>
 
 				${sampleSQLBuilder.insertDDLRecord(ddlRecord, ddlRecordSet, ddlRecordCount)}
 
@@ -31,7 +31,7 @@
 
 		<#assign preferences = "<portlet-preferences><preference><name>recordSetId</name><value>" + ddlRecordSet.recordSetId +"</value></preference><preference><name>displayDDMTemplateId</name><value></value></preference><preference><name>editable</name><value>true</value></preference></portlet-preferences>">
 
-		<#assign portletPreferences = dataFactory.addPortletPreferences(0, ddlDisplayLayout.plid, ddlPortletId, preferences)>
+		<#assign portletPreferences = dataFactory.newPortletPreferences(0, ddlDisplayLayout.plid, ddlPortletId, preferences)>
 
 		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
 

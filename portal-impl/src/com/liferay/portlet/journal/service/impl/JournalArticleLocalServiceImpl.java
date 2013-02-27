@@ -353,7 +353,7 @@ public class JournalArticleLocalServiceImpl
 				new HashMap<String, Serializable>(), serviceContext);
 		}
 
-		return article;
+		return getArticle(article.getPrimaryKey());
 	}
 
 	public JournalArticle addArticle(
@@ -451,8 +451,8 @@ public class JournalArticleLocalServiceImpl
 		List<JournalArticle> articles =
 			journalArticleFinder.findByExpirationDate(
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				WorkflowConstants.STATUS_APPROVED,
-				new Date(now.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL));
+				new Date(now.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL),
+				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Expiring " + articles.size() + " articles");
@@ -820,10 +820,19 @@ public class JournalArticleLocalServiceImpl
 	public void deleteArticles(long groupId, long folderId)
 		throws PortalException, SystemException {
 
+		deleteArticles(groupId, folderId, true);
+	}
+
+	public void deleteArticles(
+			long groupId, long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
 		for (JournalArticle article :
 				journalArticlePersistence.findByG_F(groupId, folderId)) {
 
-			deleteArticle(article, null, null);
+			if (includeTrashedEntries || !article.isInTrash()) {
+				deleteArticle(article, null, null);
+			}
 		}
 	}
 
@@ -1723,6 +1732,17 @@ public class JournalArticleLocalServiceImpl
 
 			journalArticlePersistence.update(article);
 		}
+	}
+
+	public JournalArticle moveArticleFromTrash(
+			long userId, long groupId, JournalArticle article, long newFolderId)
+		throws PortalException, SystemException {
+
+		restoreArticleFromTrash(userId, article);
+
+		moveArticle(groupId, article.getArticleId(), newFolderId);
+
+		return article;
 	}
 
 	public JournalArticle moveArticleToTrash(

@@ -192,7 +192,9 @@ public abstract class BaseSandboxHandler implements SandboxHandler {
 		String[] fileNames = FileUtil.find(dirName, "**/ROOT.xml", null);
 
 		if (fileNames.length == 0) {
-			_log.error("Unable to locate ROOT.xml under CATALINA_BASE/conf");
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to locate ROOT.xml under CATALINA_BASE/conf");
+			}
 
 			return null;
 		}

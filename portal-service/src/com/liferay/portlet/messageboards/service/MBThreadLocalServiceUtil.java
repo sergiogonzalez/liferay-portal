@@ -325,7 +325,7 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	boolean, boolean, QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
@@ -338,7 +338,7 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	boolean, QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
@@ -350,7 +350,7 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
@@ -374,7 +374,7 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, int status)
@@ -401,7 +401,7 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	long, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId, int status)
@@ -410,7 +410,7 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	long, boolean, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId,
@@ -421,7 +421,7 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	long, boolean, boolean, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId,

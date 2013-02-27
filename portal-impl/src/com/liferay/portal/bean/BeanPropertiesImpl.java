@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.User;
@@ -31,7 +32,7 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jodd.bean.BeanTool;
+import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import jodd.typeconverter.Convert;
@@ -39,11 +40,14 @@ import jodd.typeconverter.Convert;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class BeanPropertiesImpl implements BeanProperties {
 
 	public void copyProperties(Object source, Object target) {
 		try {
-			BeanTool.copyProperties(source, target);
+			BeanCopy beanCopy = BeanCopy.beans(source, target);
+
+			beanCopy.copy();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -54,7 +58,11 @@ public class BeanPropertiesImpl implements BeanProperties {
 		Object source, Object target, Class<?> editable) {
 
 		try {
-			BeanTool.copyProperties(source, target, editable);
+			BeanCopy beanCopy = BeanCopy.beans(source, target);
+
+			beanCopy.includeAs(editable);
+
+			beanCopy.copy();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -65,7 +73,11 @@ public class BeanPropertiesImpl implements BeanProperties {
 		Object source, Object target, String[] ignoreProperties) {
 
 		try {
-			BeanTool.copyProperties(source, target, ignoreProperties, false);
+			BeanCopy beanCopy = BeanCopy.beans(source, target);
+
+			beanCopy.exclude(ignoreProperties);
+
+			beanCopy.copy();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

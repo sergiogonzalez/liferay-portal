@@ -17,6 +17,8 @@ package com.liferay.portlet;
 import com.liferay.portal.ccpp.PortalProfileFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -80,6 +82,7 @@ import javax.servlet.http.HttpSession;
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
  * @author Sergey Ponomarev
+ * @author Raymond Augé
  */
 public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
@@ -115,9 +118,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	public void defineObjects(
 		PortletConfig portletConfig, PortletResponse portletResponse) {
 
-		PortletConfigImpl portletConfigImpl = (PortletConfigImpl)portletConfig;
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)portletConfig;
 
-		setAttribute(WebKeys.PORTLET_ID, portletConfigImpl.getPortletId());
+		setAttribute(WebKeys.PORTLET_ID, liferayPortletConfig.getPortletId());
 		setAttribute(JavaConstants.JAVAX_PORTLET_CONFIG, portletConfig);
 		setAttribute(JavaConstants.JAVAX_PORTLET_REQUEST, this);
 		setAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE, portletResponse);
@@ -172,10 +176,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	public String getContextPath() {
-		PortletContextImpl portletContextImpl =
-			(PortletContextImpl)_portletContext;
+		LiferayPortletContext liferayPortletContext =
+			(LiferayPortletContext)_portletContext;
 
-		ServletContext servletContext = portletContextImpl.getServletContext();
+		ServletContext servletContext =
+			liferayPortletContext.getServletContext();
 
 		String servletContextName = servletContext.getServletContextName();
 

@@ -256,8 +256,8 @@ public class JavadocFormatter {
 		boolean publicAccess) {
 
 		List<String> allTagNames = new ArrayList<String>();
-		List<String> commonTagNamesWithComments = new ArrayList<String>();
 		List<String> customTagNames = new ArrayList<String>();
+		List<String> requiredTagNames = new ArrayList<String>();
 
 		for (String tagName : tagNames) {
 			List<Element> elements = parentElement.elements(tagName);
@@ -280,7 +280,21 @@ public class JavadocFormatter {
 					tagName.equals("throws")) {
 
 					if (Validator.isNotNull(comment)) {
-						commonTagNamesWithComments.add(tagName);
+						requiredTagNames.add(tagName);
+					}
+					else if (tagName.equals("param")) {
+						if (GetterUtil.getBoolean(
+								element.elementText("required"))) {
+
+							requiredTagNames.add(tagName);
+						}
+					}
+					else if (tagName.equals("throws")) {
+						if (GetterUtil.getBoolean(
+								element.elementText("required"))) {
+
+							requiredTagNames.add(tagName);
+						}
 					}
 				}
 				else {
@@ -299,17 +313,17 @@ public class JavadocFormatter {
 			maxTagNameLengthTags.addAll(allTagNames);
 		}
 		else if (_updateJavadocs) {
-			if (!commonTagNamesWithComments.isEmpty()) {
+			if (!requiredTagNames.isEmpty()) {
 				maxTagNameLengthTags.addAll(allTagNames);
 			}
 			else {
-				maxTagNameLengthTags.addAll(commonTagNamesWithComments);
 				maxTagNameLengthTags.addAll(customTagNames);
+				maxTagNameLengthTags.addAll(requiredTagNames);
 			}
 		}
 		else {
-			maxTagNameLengthTags.addAll(commonTagNamesWithComments);
 			maxTagNameLengthTags.addAll(customTagNames);
+			maxTagNameLengthTags.addAll(requiredTagNames);
 		}
 
 		for (String name : maxTagNameLengthTags) {
@@ -318,7 +332,7 @@ public class JavadocFormatter {
 			}
 		}
 
-		// There should be an @ sign before the tag name and a space after it
+		// There should be an @ sign before the tag and a space after it
 
 		maxTagNameLength += 2;
 
@@ -369,7 +383,7 @@ public class JavadocFormatter {
 							!tagName.equals("return") &&
 							!tagName.equals("throws")) {
 
-							// Write out custom tag name
+							// Write out custom tag
 
 							comment = _assembleTagComment(
 								tagName, elementName, comment, indent,
@@ -377,7 +391,7 @@ public class JavadocFormatter {
 
 							sb.append(comment);
 						}
-						else if (!commonTagNamesWithComments.isEmpty()) {
+						else if (!requiredTagNames.isEmpty()) {
 
 							// Write out all tags
 
@@ -389,7 +403,7 @@ public class JavadocFormatter {
 						}
 						else {
 
-							// Skip empty common tag name
+							// Skip empty common tag
 
 						}
 					}
@@ -398,7 +412,7 @@ public class JavadocFormatter {
 							!tagName.equals("return") &&
 							!tagName.equals("throws")) {
 
-							// Write out custom tag name
+							// Write out custom tag
 
 							comment = _assembleTagComment(
 								tagName, elementName, comment, indent,
@@ -406,9 +420,25 @@ public class JavadocFormatter {
 
 							sb.append(comment);
 						}
+						else if (tagName.equals("param") ||
+								 tagName.equals("return") ||
+								 tagName.equals("throws")) {
+
+							if (GetterUtil.getBoolean(
+									element.elementText("required"))) {
+
+								elementName = element.elementText("name");
+
+								comment = _assembleTagComment(
+									tagName, elementName, comment, indent,
+									tagNameIndent);
+
+								sb.append(comment);
+							}
+						}
 						else {
 
-							// Skip empty common tag name
+							// Skip empty common tag
 
 						}
 					}
@@ -492,6 +522,8 @@ public class JavadocFormatter {
 
 		if (value != null) {
 			value = value.substring(name.length());
+
+			DocUtil.add(paramElement, "required", true);
 		}
 
 		value = _trimMultilineText(value);
@@ -541,6 +573,8 @@ public class JavadocFormatter {
 			DocletTag returnDocletTag = returnDocletTags[0];
 
 			comment = GetterUtil.getString(returnDocletTag.getValue());
+
+			DocUtil.add(returnElement, "required", true);
 		}
 
 		comment = _trimMultilineText(comment);
@@ -582,6 +616,8 @@ public class JavadocFormatter {
 
 		if (value != null) {
 			value = value.substring(name.length());
+
+			DocUtil.add(throwsElement, "required", true);
 		}
 
 		value = _trimMultilineText(value);

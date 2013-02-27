@@ -1,44 +1,41 @@
 <#-- Default user -->
 
-<#assign contact = dataFactory.addContact("", "")>
-<#assign user = dataFactory.addUser(true, "")>
+${sampleSQLBuilder.insertUser(null, null, dataFactory.defaultUser)}
 
-${sampleSQLBuilder.insertUser(contact, null, null, user)}
+<#-- Guest user -->
 
-<#assign contact = dataFactory.addContact("Test", "Test")>
-<#assign user = dataFactory.addUser(false, "test")>
+<#assign user = dataFactory.guestUser>
 
-<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
+<#assign userGroup = dataFactory.newGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
 
 ${sampleSQLBuilder.insertGroup(userGroup, [])}
 
 <#assign groupIds = [dataFactory.guestGroup.groupId]>
 <#assign roleIds = [dataFactory.administratorRole.roleId]>
 
-${sampleSQLBuilder.insertUser(contact, groupIds, roleIds, user)}
+${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#-- Sample user -->
 
-<#assign contact = dataFactory.addContact("Sample", "Sample")>
-<#assign user = dataFactory.addUser(false, "Sample")>
+<#assign user = dataFactory.sampleUser>
 
 <#assign sampleUserId = user.userId>
 
-<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
+<#assign userGroup = dataFactory.newGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
 
-${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.addLayout(1, "Home", "/home", "", "33,")])}
+${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.newLayout(1, "Home", "/home", "", "33,")])}
 
 <#assign groupIds = 1..maxGroupCount>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
 
-${sampleSQLBuilder.insertUser(contact, groupIds, roleIds, user)}
+${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#list groupIds as groupId>
-	<#assign blogsStatsUser = dataFactory.addBlogsStatsUser(groupId, user.userId)>
+	<#assign blogsStatsUser = dataFactory.newBlogsStatsUser(groupId, user.userId)>
 
 	insert into BlogsStatsUser (statsUserId, groupId, companyId, userId) values (${counter.get()}, ${blogsStatsUser.groupId}, ${companyId}, ${blogsStatsUser.userId});
 
-	<#assign mbStatsUser = dataFactory.addMBStatsUser(groupId, user.userId)>
+	<#assign mbStatsUser = dataFactory.newMBStatsUser(groupId, user.userId)>
 
 	insert into MBStatsUser (statsUserId, groupId, userId) values (${counter.get()}, ${mbStatsUser.groupId}, ${mbStatsUser.userId});
 </#list>

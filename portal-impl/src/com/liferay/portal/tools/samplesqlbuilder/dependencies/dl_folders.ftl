@@ -2,7 +2,7 @@
 
 <#if (dlFolderDepth <= maxDLFolderDepth)>
 	<#list 1..maxDLFolderCount as dlFolderCount>
-		<#assign dlFolder = dataFactory.addDLFolder(ddmStructure.groupId, companyId, ddmStructure.userId, parentDLFolderId, "Test Folder " + dlFolderCount, "This is a test dl folder " + dlFolderCount + ".")>
+		<#assign dlFolder = dataFactory.newDLFolder(ddmStructure.groupId, companyId, ddmStructure.userId, parentDLFolderId, "Test Folder " + dlFolderCount, "This is a test dl folder " + dlFolderCount + ".")>
 
 		${sampleSQLBuilder.insertDLFolder(dlFolder, ddmStructure)}
 

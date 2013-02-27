@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -68,6 +70,7 @@ import org.geotools.image.ImageWorker;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class SpriteProcessorImpl implements SpriteProcessor {
 
 	public Properties generate(
@@ -175,7 +178,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 					renderedImages.add(renderedImage);
 
-					String key = imageURL.getPath();
+					String key = ServletContextUtil.getResourcePath(imageURL);
 
 					int pos = key.indexOf(rootPath);
 

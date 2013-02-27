@@ -17,9 +17,12 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -42,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Contains context information about a given API call.
@@ -445,6 +449,30 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _layoutURL;
 	}
 
+	public LiferayPortletRequest getLiferayPortletRequest() {
+		if (_request == null) {
+			return null;
+		}
+
+		LiferayPortletRequest liferayPortletRequest =
+			(LiferayPortletRequest)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		return liferayPortletRequest;
+	}
+
+	public LiferayPortletResponse getLiferayPortletResponse() {
+		if (_request == null) {
+			return null;
+		}
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return liferayPortletResponse;
+	}
+
 	public Locale getLocale() {
 		return LocaleUtil.fromLanguageId(_languageId);
 	}
@@ -569,6 +597,17 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	public HttpServletRequest getRequest() {
 		return _request;
+	}
+
+	public HttpServletResponse getResponse() {
+		LiferayPortletResponse liferayPortletResponse =
+			getLiferayPortletResponse();
+
+		if (liferayPortletResponse == null) {
+			return null;
+		}
+
+		return PortalUtil.getHttpServletResponse(liferayPortletResponse);
 	}
 
 	public String getRootPortletId() {

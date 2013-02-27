@@ -32,6 +32,7 @@ import javax.portlet.PortletRequest;
  * Represents the trash handler for bookmarks entries entity.
  *
  * @author Levente Hudák
+ * @author Zsolt Berentey
  */
 public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
@@ -106,6 +107,15 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
 		return entry.isInTrash();
+	}
+
+	@Override
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
+
+		return entry.isInTrashContainer();
 	}
 
 	@Override

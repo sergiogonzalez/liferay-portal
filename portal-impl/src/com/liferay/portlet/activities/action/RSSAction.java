@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -60,7 +62,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 	protected String exportToRSS(
 			PortletRequest portletRequest, String title, String description,
 			String format, double version, String displayStyle,
-			List<SocialActivity> activities)
+			List<SocialActivity> activities, ServiceContext serviceContext)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -77,7 +79,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		for (SocialActivity activity : activities) {
 			SocialActivityFeedEntry activityFeedEntry =
 				SocialActivityInterpreterLocalServiceUtil.interpret(
-					activity, themeDisplay);
+					StringPool.BLANK, activity, serviceContext);
 
 			if (activityFeedEntry == null) {
 				continue;
@@ -179,11 +181,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		int max = ParamUtil.getInteger(
-			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
-
-		List<SocialActivity> activities = getActivities(resourceRequest, max);
-
 		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
 		String format = ParamUtil.getString(
 			resourceRequest, "type", RSSUtil.FORMAT_DEFAULT);
@@ -192,9 +189,17 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		String displayStyle = ParamUtil.getString(
 			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
+		int max = ParamUtil.getInteger(
+			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
+
+		List<SocialActivity> activities = getActivities(resourceRequest, max);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			resourceRequest);
+
 		String rss = exportToRSS(
 			resourceRequest, feedTitle, null, format, version, displayStyle,
-			activities);
+			activities, serviceContext);
 
 		return rss.getBytes(StringPool.UTF8);
 	}

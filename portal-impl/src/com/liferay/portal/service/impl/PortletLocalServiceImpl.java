@@ -1350,10 +1350,19 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("pop-message-listener-class"),
 				portletModel.getPopMessageListenerClass()));
-		portletModel.setSocialActivityInterpreterClass(
-			GetterUtil.getString(
-				portletElement.elementText("social-activity-interpreter-class"),
-				portletModel.getSocialActivityInterpreterClass()));
+
+		List<String> socialActivityInterpreterClasses = new ArrayList<String>();
+
+		for (Element socialActivityInterpreterClassElement :
+				portletElement.elements("social-activity-interpreter-class")) {
+
+			socialActivityInterpreterClasses.add(
+				socialActivityInterpreterClassElement.getText());
+		}
+
+		portletModel.setSocialActivityInterpreterClasses(
+			socialActivityInterpreterClasses);
+
 		portletModel.setSocialRequestInterpreterClass(
 			GetterUtil.getString(
 				portletElement.elementText("social-request-interpreter-class"),
