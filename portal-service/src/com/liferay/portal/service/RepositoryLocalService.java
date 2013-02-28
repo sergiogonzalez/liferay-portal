@@ -242,9 +242,10 @@ public interface RepositoryLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public long addRepository(long userId, long groupId, long classNameId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, java.lang.String portletId,
+	public com.liferay.portal.model.Repository addRepository(long userId,
+		long groupId, long classNameId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		boolean hidden, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -255,9 +256,10 @@ public interface RepositoryLocalService extends BaseLocalService,
 	long, long, String, String, String, UnicodeProperties,
 	boolean, ServiceContext)}
 	*/
-	public long addRepository(long userId, long groupId, long classNameId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, java.lang.String portletId,
+	public com.liferay.portal.model.Repository addRepository(long userId,
+		long groupId, long classNameId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
