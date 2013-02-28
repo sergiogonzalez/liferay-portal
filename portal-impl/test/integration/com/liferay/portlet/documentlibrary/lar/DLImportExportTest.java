@@ -289,7 +289,8 @@ public class DLImportExportTest {
 	}
 
 	protected Group addGroup(long parentGroupId, User user, String name)
-		throws Exception {
+			throws Exception {
+
 		String description = "This is a test group.";
 		int type = GroupConstants.TYPE_SITE_OPEN;
 		String friendlyURL =
@@ -340,8 +341,8 @@ public class DLImportExportTest {
 
 		Group parentGroup = GroupLocalServiceUtil.getCompanyGroup(companyId);
 		Group group = addGroup(parentGroup.getGroupId(), user, siteName);
-		return addLayout(group, "Home", false, "/home", "2_columns_ii");
 
+		return addLayout(group, "Home", false, "/home", "2_columns_ii");
 	}
 
 	protected Map<Locale, String> getDefaultLocaleMap(String defaultValue) {
@@ -550,8 +551,8 @@ public class DLImportExportTest {
 		throws IOException {
 
 		byte[] fileBytes =
-			FileUtil.getBytes(getClass().getResourceAsStream(
-				structureFileWithClasspath));
+			FileUtil.getBytes(
+				getClass().getResourceAsStream(structureFileWithClasspath));
 
 		return new String(fileBytes, "UTF-8");
 	}

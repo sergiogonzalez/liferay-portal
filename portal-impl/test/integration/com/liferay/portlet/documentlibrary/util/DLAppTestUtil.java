@@ -323,7 +323,6 @@ public abstract class DLAppTestUtil {
 			"Verify title", sourceFileEntry.getTitle(),
 			targetFileEntry.getTitle());
 
-		
 		Assert.assertEquals(
 			"Verify description", sourceFileEntry.getDescription(),
 			targetFileEntry.getDescription());
@@ -331,19 +330,19 @@ public abstract class DLAppTestUtil {
 		Assert.assertEquals(
 			"Verify extension", sourceFileEntry.getExtension(),
 			targetFileEntry.getExtension());
-		
+
 		Assert.assertEquals(
 				"Verify version", sourceFileEntry.getVersion(),
-				targetFileEntry.getVersion());		
+				targetFileEntry.getVersion());
 
 		DLFileEntryType dlFileEntryType = null;
 
 		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
 			targetFileEntry.getFileEntryTypeId());
 
-		assertDlFileVersion(sourceFileEntry.getFileVersion(),
-			targetFileEntry.getFileVersion());
-		
+		assertDlFileVersion(
+			sourceFileEntry.getFileVersion(), targetFileEntry.getFileVersion());
+
 		// With -1 you can disable this check
 
 		if (expectedFileEntryTypeGroupId!=-1) {
@@ -389,22 +388,21 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static void assertDlFileVersion(
-			DLFileVersion sourceFileVersion, DLFileVersion targetFileVersion) 
+			DLFileVersion sourceFileVersion, DLFileVersion targetFileVersion)
 		throws Exception {
-		
-		Assert.assertEquals(sourceFileVersion.getUuid(), 
-			targetFileVersion.getUuid());
 
-		Assert.assertEquals(sourceFileVersion.getSize(), 
-				targetFileVersion.getSize());
+		Assert.assertEquals(
+			sourceFileVersion.getUuid(), targetFileVersion.getUuid());
+
+		Assert.assertEquals(
+				sourceFileVersion.getSize(), targetFileVersion.getSize());
 
 		assertInputStreams(
 			String.format("Verifying that DLFileVersion %s content is equal",
-			sourceFileVersion.getUuid()), 
+			sourceFileVersion.getUuid()),
 			sourceFileVersion.getContentStream(false),
 			targetFileVersion.getContentStream(false));
 	}
-
 
 	/**
 	 * Compare DL folder and files recursively
@@ -452,7 +450,6 @@ public abstract class DLAppTestUtil {
 				targetFolder.getFolderId(), expectedFileEntryTypeGroupId);
 		}
 	}
-	
 
 	/**
 	 * Compare site's DL folder structure
@@ -553,8 +550,7 @@ public abstract class DLAppTestUtil {
 		int sourceResult = sourceStream.read(source);
 		int targetResult = targetStream.read(target);
 
-		while (sourceResult!=-1 ||
-			 targetResult!=-1) {
+		while (sourceResult!=-1 || targetResult!=-1) {
 			Assert.assertArrayEquals(message, source, target);
 			sourceResult = sourceStream.read(source);
 			targetResult = targetStream.read(target);
