@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -97,11 +99,16 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 				portletDataContext.getScopeGroupId());
 
 			for (Folder folder : folders) {
-				DLPortletDataHandler.exportFolder(
-					portletDataContext, fileEntryTypesElement, foldersElement,
-					fileEntriesElement, fileShortcutsElement, fileRanksElement,
-					repositoriesElement, repositoryEntriesElement, folder,
-					false);
+				if (!TrashUtil.isInTrash(
+						DLFolder.class.getName(), folder.getPrimaryKey())) {
+
+					DLPortletDataHandler.exportFolder(
+						portletDataContext, fileEntryTypesElement,
+						foldersElement, fileEntriesElement,
+						fileShortcutsElement, fileRanksElement,
+						repositoriesElement, repositoryEntriesElement, folder,
+						false);
+				}
 			}
 
 			List<FileEntry> fileEntries = FileEntryUtil.findByR_F(
@@ -109,10 +116,16 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 			for (FileEntry fileEntry : fileEntries) {
-				DLPortletDataHandler.exportFileEntry(
-					portletDataContext, fileEntryTypesElement, foldersElement,
-					fileEntriesElement, fileRanksElement, repositoriesElement,
-					repositoryEntriesElement, fileEntry, true);
+				if (!TrashUtil.isInTrash(
+						DLFileEntry.class.getName(),
+						fileEntry.getPrimaryKey())) {
+
+					DLPortletDataHandler.exportFileEntry(
+						portletDataContext, fileEntryTypesElement,
+						foldersElement, fileEntriesElement, fileRanksElement,
+						repositoriesElement, repositoryEntriesElement,
+						fileEntry, true);
+				}
 			}
 		}
 		else {
