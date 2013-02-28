@@ -136,7 +136,7 @@
 		</liferay-ui:search-container-row>
 
 		<c:if test="<%= (total > 0) && showActions && showDeleteButton %>">
-			<aui:button id='<%= renderResponse.getNamespace() + "deleteSelectedButton" %>' cssClass='aui-helper-hidden' onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value='<%= ((repositoryId==scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) ? "move-to-the-recycle-bin" : "delete" %>' />
+			<aui:button cssClass="aui-helper-hidden" id='<%= renderResponse.getNamespace() + "deleteSelectedButton" %>' onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value='<%= ((repositoryId==scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) ? "move-to-the-recycle-bin" : "delete" %>' />
 
 			<div class="separator"><!-- --></div>
 		</c:if>
