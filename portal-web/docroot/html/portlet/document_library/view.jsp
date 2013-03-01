@@ -181,13 +181,46 @@ if (folder != null) {
 		'<portlet:namespace />toggleActionsButton',
 		function() {
 			var A = AUI();
+			var nameSpace = '<portlet:namespace />';
+			var nameSpaceId = '#' + nameSpace;
+			var moveToTrashMenu = nameSpace + 'moveToTrashMenu';
+			var deleteMenu = nameSpace + 'deleteMenu';
 
-			var actionsButton = A.one('#<portlet:namespace />actionsButtonContainer');
+			var actionsButton = A.one(nameSpaceId + 'actionsButtonContainer');
+			var isTrashInput = A.one(nameSpaceId + 'isTrashEnabled');
+			var isTrashEnabled = isTrashInput.val()==='true';
+
+			// Cache reference to Window scope since Delete / Move to the Recycle bin button is not
+			// always findable through DOM search
+
+			if((!Window[moveToTrashMenu]) && A.one(nameSpaceId + 'moveToTrashSelected')) {
+				Window[moveToTrashMenu] = A.one(nameSpaceId + 'moveToTrashSelected').get('parentNode');
+			}
+
+			if((!Window[deleteMenu]) && A.one(nameSpaceId + 'deleteSelected')) {
+				Window[deleteMenu] = A.one(nameSpaceId + 'deleteSelected').get('parentNode');
+			}
 
 			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
 
 			if (actionsButton) {
 				actionsButton.toggle(!hide);
+				if(Window[moveToTrashMenu] && Window[deleteMenu]) {
+					if(!hide) {
+						if(isTrashEnabled) {
+							Window[moveToTrashMenu].show();
+							deleteSelected.hide();
+						}
+						else {
+							Window[moveToTrashMenu].hide();
+							Window[deleteMenu].show();
+						}
+					}
+					else {
+						Window[moveToTrashMenu].hide();
+						Window[deleteMenu].hide();
+					}
+				}
 			}
 		},
 		['liferay-util-list-fields']
