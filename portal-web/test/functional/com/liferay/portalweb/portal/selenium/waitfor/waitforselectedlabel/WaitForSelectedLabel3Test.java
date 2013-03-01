@@ -12,35 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portalweb.portal.selenium.waitfor.waitforselectedlabel;
 
-import net.sf.ehcache.Ehcache;
+import com.liferay.portalweb.portal.BaseTestCase;
 
 /**
- * <p>
- * See http://issues.liferay.com/browse/LPS-11061.
- * </p>
- *
- * @author Shuyang Zhou
+ * @author Brian Wing Shun Chan
  */
-public class JGroupsBootstrapCacheLoader
-	extends net.sf.ehcache.distribution.jgroups.JGroupsBootstrapCacheLoader {
-
-	public JGroupsBootstrapCacheLoader(
-		boolean asynchronous, int maximumChunkSize) {
-
-		super(asynchronous, maximumChunkSize);
+public class WaitForSelectedLabel3Test extends BaseTestCase {
+	public void testWaitForSelectedLabel3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		selenium.waitForSelectedLabel("//select[@id='_130_languageId']",
+			"English (United States)");
 	}
-
-	@Override
-	public Object clone() {
-		return new JGroupsBootstrapCacheLoader(
-			asynchronous, maximumChunkSizeBytes);
-	}
-
-	@Override
-	public void load(Ehcache cache) {
-		return;
-	}
-
 }

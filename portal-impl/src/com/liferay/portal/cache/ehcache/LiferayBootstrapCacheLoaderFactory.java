@@ -28,7 +28,7 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
  * @author Brian Wing Shun Chan
  */
 public class LiferayBootstrapCacheLoaderFactory
-	extends BootstrapCacheLoaderFactory {
+	extends BootstrapCacheLoaderFactory<BootstrapCacheLoader> {
 
 	public LiferayBootstrapCacheLoaderFactory() {
 		String className = PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_FACTORY;
@@ -39,8 +39,8 @@ public class LiferayBootstrapCacheLoaderFactory
 
 		try {
 			_bootstrapCacheLoaderFactory =
-				(BootstrapCacheLoaderFactory)InstanceFactory.newInstance(
-					className);
+				(BootstrapCacheLoaderFactory<BootstrapCacheLoader>)
+					InstanceFactory.newInstance(className);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -58,6 +58,7 @@ public class LiferayBootstrapCacheLoaderFactory
 	private static Log _log = LogFactoryUtil.getLog(
 		LiferayBootstrapCacheLoaderFactory.class);
 
-	private BootstrapCacheLoaderFactory _bootstrapCacheLoaderFactory;
+	private BootstrapCacheLoaderFactory<BootstrapCacheLoader>
+		_bootstrapCacheLoaderFactory;
 
 }

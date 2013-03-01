@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
 import com.liferay.portalweb.portal.selenium.clicking.ClickingTestPlan;
 import com.liferay.portalweb.portal.selenium.typing.TypingTestPlan;
+import com.liferay.portalweb.portal.selenium.waitfor.WaitForTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,6 +34,7 @@ public class SeleniumTestPlan extends BaseTestSuite {
 		testSuite.addTest(AssertionsTestPlan.suite());
 		testSuite.addTest(ClickingTestPlan.suite());
 		testSuite.addTest(TypingTestPlan.suite());
+		testSuite.addTest(WaitForTestPlan.suite());
 
 		return testSuite;
 	}

@@ -159,6 +159,10 @@ public class JSONObjectImpl implements JSONObject {
 		return new JSONArrayImpl(_jsonObject.names());
 	}
 
+	public JSONObject put(String key) {
+		return put(key, StringPool.BLANK);
+	}
+
 	public JSONObject put(String key, boolean value) {
 		try {
 			_jsonObject.put(key, value);

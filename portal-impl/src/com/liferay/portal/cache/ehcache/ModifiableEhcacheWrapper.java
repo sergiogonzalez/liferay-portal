@@ -37,6 +37,7 @@ import net.sf.ehcache.extension.CacheExtension;
 import net.sf.ehcache.loader.CacheLoader;
 import net.sf.ehcache.search.Attribute;
 import net.sf.ehcache.search.Query;
+import net.sf.ehcache.search.attribute.DynamicAttributesExtractor;
 import net.sf.ehcache.statistics.CacheUsageListener;
 import net.sf.ehcache.statistics.LiveCacheStatistics;
 import net.sf.ehcache.statistics.sampled.SampledCacheStatistics;
@@ -88,6 +89,12 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		return _ehcache.calculateOffHeapSize();
 	}
 
+	public long calculateOnDiskSize()
+		throws CacheException, IllegalStateException {
+
+		return _ehcache.calculateOnDiskSize();
+	}
+
 	public void clearStatistics() {
 		_ehcache.clearStatistics();
 	}
@@ -136,6 +143,12 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public int getActiveReferenceCount() {
 		return _referenceCounter.get();
+	}
+
+	public Map<Object, Element> getAll(Collection<?> keys)
+		throws CacheException, IllegalStateException, NullPointerException {
+
+		return _ehcache.getAll(keys);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -190,6 +203,9 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		return _ehcache.getKeys();
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@SuppressWarnings("rawtypes")
 	public List getKeysNoDuplicateCheck() throws IllegalStateException {
 		return _ehcache.getKeysNoDuplicateCheck();
@@ -295,6 +311,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		return _ehcache.getWriterManager();
 	}
 
+	public boolean hasAbortedSizeOf() {
+		return _ehcache.hasAbortedSizeOf();
+	}
+
 	@Override
 	public int hashCode() {
 		return _ehcache.hashCode();
@@ -360,6 +380,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		return _ehcache.isNodeCoherent();
 	}
 
+	public boolean isPinned(Object key) {
+		return _ehcache.isPinned(key);
+	}
+
 	public boolean isReadLockedByCurrentThread(Object key) {
 		return _ehcache.isReadLockedByCurrentThread(key);
 	}
@@ -407,8 +431,21 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		_ehcache.put(element, doNotNotifyCacheReplicators);
 	}
 
+	public void putAll(Collection<Element> elements)
+		throws CacheException, IllegalArgumentException, IllegalStateException {
+
+		_ehcache.putAll(elements);
+	}
+
 	public Element putIfAbsent(Element element) throws NullPointerException {
 		return _ehcache.putIfAbsent(element);
+	}
+
+	public Element putIfAbsent(
+			Element element, boolean doNotNotifyCacheReplicators)
+		throws NullPointerException {
+
+		return _ehcache.putIfAbsent(element, doNotNotifyCacheReplicators);
 	}
 
 	public void putQuiet(Element element)
@@ -440,6 +477,12 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public void registerCacheWriter(CacheWriter cacheWriter) {
 		_ehcache.registerCacheWriter(cacheWriter);
+	}
+
+	public void registerDynamicAttributesExtractor(
+		DynamicAttributesExtractor dynamicAttributesExtractor) {
+
+		_ehcache.registerDynamicAttributesExtractor(dynamicAttributesExtractor);
 	}
 
 	public void releaseReadLockOnKey(Object key) {
@@ -486,6 +529,19 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		}
 
 		_ehcache.removeAll(doNotNotifyCacheReplicators);
+	}
+
+	public void removeAll(Collection<?> keys)
+		throws IllegalStateException, NullPointerException {
+
+		_ehcache.removeAll(keys);
+	}
+
+	public void removeAll(
+			Collection<?> keys, boolean doNotNotifyCacheReplicators)
+		throws IllegalStateException, NullPointerException {
+
+		_ehcache.removeAll(keys, doNotNotifyCacheReplicators);
 	}
 
 	public void removeCacheUsageListener(CacheUsageListener cacheUsageListener)
@@ -569,10 +625,6 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		_ehcache.setDisabled(disabled);
 	}
 
-	public void setDiskStorePath(String diskStorePath) throws CacheException {
-		_ehcache.setDiskStorePath(diskStorePath);
-	}
-
 	public void setName(String name) {
 		_ehcache.setName(name);
 	}
@@ -590,6 +642,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		throws UnsupportedOperationException {
 
 		_ehcache.setNodeCoherent(nodeCoherent);
+	}
+
+	public void setPinned(Object key, boolean pinned) {
+		_ehcache.setPinned(key, pinned);
 	}
 
 	public void setSampledStatisticsEnabled(boolean sampleStatisticsEnabled) {
@@ -624,6 +680,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 		throws InterruptedException {
 
 		return _ehcache.tryWriteLockOnKey(key, timeout);
+	}
+
+	public void unpinAll() {
+		_ehcache.unpinAll();
 	}
 
 	public void unregisterCacheExtension(CacheExtension cacheExtension) {

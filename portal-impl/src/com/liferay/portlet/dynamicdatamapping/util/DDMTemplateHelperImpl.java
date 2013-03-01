@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -70,18 +69,18 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		template.prepare(request);
 
 		for (String key : template.getKeys()) {
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+			JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject();
 
-			Object object = template.get(key);
+			Object value = template.get(key);
 
-			if (object == null) {
+			if (value == null) {
 				continue;
 			}
 
-			Class<?> clazz = object.getClass();
+			Class<?> clazz = value.getClass();
 
 			for (Field field : clazz.getFields()) {
-				jsonArray.put(field.getName());
+				valueJSONObject.put(field.getName());
 			}
 
 			for (Method method : clazz.getMethods()) {
@@ -104,10 +103,10 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
-				jsonArray.put(sb.toString());
+				valueJSONObject.put(sb.toString());
 			}
 
-			jsonObject.put(key, jsonArray);
+			jsonObject.put(key, valueJSONObject);
 		}
 
 		return jsonObject.toString();
