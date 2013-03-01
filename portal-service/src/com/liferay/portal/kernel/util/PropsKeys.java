@@ -1924,6 +1924,8 @@ public interface PropsKeys {
 	public static final String RATINGS_MAX_SCORE = "ratings.max.score";
 
 	public static final String RATINGS_MIN_SCORE = "ratings.min.score";
+	
+	public static final String RECENT_CONTENT_MAX_ITEMS_TO_DISPLAY = "recent.content.max.items.to.display";
 
 	public static final String REDIRECT_URL_DOMAINS_ALLOWED = "redirect.url.domains.allowed";
 

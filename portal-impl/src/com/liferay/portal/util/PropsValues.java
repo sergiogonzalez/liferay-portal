@@ -1433,6 +1433,8 @@ public class PropsValues {
 	public static final int RATINGS_MAX_SCORE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RATINGS_MAX_SCORE));
 
 	public static final int RATINGS_MIN_SCORE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RATINGS_MIN_SCORE));
+	
+	public static final int RECENT_CONTENT_MAX_ITEMS_TO_DISPLAY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RECENT_CONTENT_MAX_ITEMS_TO_DISPLAY));
 
 	public static final String[] REDIRECT_URL_DOMAINS_ALLOWED = PropsUtil.getArray(PropsKeys.REDIRECT_URL_DOMAINS_ALLOWED);
 
