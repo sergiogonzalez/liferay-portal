@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -49,11 +47,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
@@ -68,7 +62,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -76,19 +69,11 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Sampsa Sohlman
  */
-@ExecutionTestListeners(listeners = {
-	MainServletExecutionTestListener.class,
-	TransactionalExecutionTestListener.class
-})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
-public class DLImportExportTest {
+public class DLBaseExportImportTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -128,26 +113,6 @@ public class DLImportExportTest {
 
 		_companyFrom = null;
 		_companyTo = null;
-	}
-
-	@Test
-	public void testFileEntriTypesAtGlobalDifferentCompany() throws Exception {
-		testImportExport(true, true);
-	}
-
-	@Test
-	public void testFileEntriTypesAtGlobalSameCompany() throws Exception {
-		testImportExport(true, false);
-	}
-
-	@Test
-	public void testFileEntriTypesAtLocalDifferentCompany() throws Exception {
-		testImportExport(false, true);
-	}
-
-	@Test
-	public void testFileEntriTypesAtLocalSameCompany() throws Exception {
-		testImportExport(false, false);
 	}
 
 	protected DDMStructure addDDMStructure(
@@ -589,79 +554,11 @@ public class DLImportExportTest {
 			value);
 	}
 
-	protected void testImportExport(
-			boolean isGlobal, boolean isTargetDifferentCompany)
-		throws Exception {
+	protected Company _companyFrom;
+	protected Company _companyTo;
+	protected File _larFile;
 
-		// Prepare From Site
-
-		User userFrom = getFirstAdministatorUserForCompany(
-			_companyFrom.getCompanyId());
-
-		Layout layoutFrom =
-			createTestLayoutWithSite(
-				_companyFrom.getCompanyId(), userFrom,
-				ServiceTestUtil.randomString());
-
-		addFilesWithFileTypesToSite(layoutFrom, isGlobal, userFrom);
-
-		// Export
-
-		Date startDate = null;
-		Date endDate = null;
-
-		_larFile =
-			LayoutLocalServiceUtil.exportPortletInfoAsFile(
-				layoutFrom.getPlid(), layoutFrom.getGroupId(),
-				PortletKeys.DOCUMENT_LIBRARY, getExportParameterMap(),
-				startDate, endDate);
-
-		User userTo;
-		Company companyTo;
-		Group compareGroup = layoutFrom.getGroup();
-
-		if (isTargetDifferentCompany) {
-			companyTo = _companyTo;
-			userTo = getFirstAdministatorUserForCompany(
-				_companyTo.getCompanyId());
-		}
-		else {
-			companyTo = _companyFrom;
-			userTo = userFrom;
-		}
-
-		// Prepare to Site
-
-		Layout layoutTo = createTestLayoutWithSite(
-			companyTo.getCompanyId(), userTo, ServiceTestUtil.randomString());
-
-		if (isGlobal && !isTargetDifferentCompany) {
-			compareGroup = GroupLocalServiceUtil.getCompanyGroup(
-				_companyFrom.getCompanyId());
-		}
-		else {
-			compareGroup = layoutTo.getGroup();
-		}
-
-		// Import
-
-		LayoutLocalServiceUtil.importPortletInfo(
-			userTo.getUserId(), layoutTo.getPlid(), layoutTo.getGroupId(),
-			PortletKeys.DOCUMENT_LIBRARY,
-			getImportParameterMap(layoutTo.getPlid(), layoutTo.getGroupId()),
-			_larFile);
-
-		// Verify
-
-		DLAppTestUtil.assertDlFoldersOfSites(
-			layoutFrom.getGroupId(), layoutTo.getGroupId(),
-			compareGroup.getGroupId());
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(DLImportExportTest.class);
-
-	private Company _companyFrom;
-	private Company _companyTo;
-	private File _larFile;
+	private static Log _log = LogFactoryUtil.getLog(
+		DLBaseExportImportTest.class);
 
 }
