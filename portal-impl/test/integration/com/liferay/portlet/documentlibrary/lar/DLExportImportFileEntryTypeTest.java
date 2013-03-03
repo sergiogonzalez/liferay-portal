@@ -28,7 +28,9 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.util.Date;
@@ -73,11 +75,11 @@ public class DLExportImportFileEntryTypeTest extends DLBaseExportImportTest {
 
 		// Prepare From Site
 
-		User userFrom = getFirstAdministatorUserForCompany(
+		User userFrom = UserTestUtil.getFirstAdministatorUserForCompany(
 			_companyFrom.getCompanyId());
 
 		Layout layoutFrom =
-			createTestLayoutWithSite(
+			LayoutTestUtil.createTestLayoutWithSite(
 				_companyFrom.getCompanyId(), userFrom,
 				ServiceTestUtil.randomString());
 
@@ -100,7 +102,7 @@ public class DLExportImportFileEntryTypeTest extends DLBaseExportImportTest {
 
 		if (isTargetDifferentCompany) {
 			companyTo = _companyTo;
-			userTo = getFirstAdministatorUserForCompany(
+			userTo = UserTestUtil.getFirstAdministatorUserForCompany(
 				_companyTo.getCompanyId());
 		}
 		else {
@@ -110,7 +112,7 @@ public class DLExportImportFileEntryTypeTest extends DLBaseExportImportTest {
 
 		// Prepare to Site
 
-		Layout layoutTo = createTestLayoutWithSite(
+		Layout layoutTo = LayoutTestUtil.createTestLayoutWithSite(
 			companyTo.getCompanyId(), userTo, ServiceTestUtil.randomString());
 
 		if (isGlobal && !isTargetDifferentCompany) {

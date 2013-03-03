@@ -14,18 +14,24 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -40,11 +46,17 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -60,6 +72,19 @@ import org.junit.Assert;
  * @author Sampsa Sohlman
  */
 public abstract class DLAppTestUtil {
+
+	public static DLFileEntryType addDLFileEntryType(
+			long groupId, String fileEnryTypeName, User user,
+			ServiceContext serviceContext, long... ddmStructureIds)
+		throws Exception {
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				user.getUserId(), groupId, fileEnryTypeName, StringPool.BLANK,
+				ddmStructureIds, serviceContext);
+
+		return dlFileEntryType;
+	}
 
 	public static DLFileRank addDLFileRank(long groupId, long fileEntryId)
 		throws Exception {
@@ -237,6 +262,69 @@ public abstract class DLAppTestUtil {
 			ContentTypes.TEXT_PLAIN, title, description, changeLog, bytes,
 			serviceContext);
 
+	}
+
+	public static FileEntry addFileEntryToFolder(
+			long parentFolderId, long fileEntryTypeId, long groupId,
+			long userId, String name, byte[] bytes,
+			ObjectValuePair<String, String>... values)
+		throws Exception {
+
+		String title = name.concat(" ").concat("title");
+		String description = name.concat(" ").concat("description");
+
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+				fileEntryTypeId);
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		if (!ddmStructures.isEmpty()) {
+
+			// For start this supports only 1 strucutre per file type
+
+			DDMStructure ddmStructure = ddmStructures.get(0);
+			for (ObjectValuePair<String, String> value : values) {
+				setDDMFieldValueToServiceToContext(
+					serviceContext, ddmStructure, value.getKey(),
+					value.getValue());
+			}
+		}
+
+		return DLAppTestUtil.addFileEntry(
+			groupId, parentFolderId, name, title, description, bytes,
+			serviceContext);
+	}
+
+	public static DLFileEntryType addFileEntryType(
+			long fileTypeGroupId, User user, String structureKey, String xsd)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setScopeGroupId(fileTypeGroupId);
+		serviceContext.setUserId(user.getUserId());
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.addStructure(
+			user.getUserId(), fileTypeGroupId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			PortalUtil.getClassNameId(DDLRecord.class), structureKey,
+			getDefaultLocaleMap("en_US"), null, xsd, StorageType.XML.getValue(),
+			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+
+		return addDLFileEntryType(
+			fileTypeGroupId, "MyFileTypeEntry", user, serviceContext,
+			ddmStructure.getStructureId());
 	}
 
 	public static Folder addFolder(
@@ -592,6 +680,14 @@ public abstract class DLAppTestUtil {
 		}
 	}
 
+	protected static Map<Locale, String> getDefaultLocaleMap(
+		String defaultValue) {
+
+		Map<Locale, String> map = new HashMap<Locale, String>();
+		map.put(LocaleUtil.getDefault(), defaultValue);
+		return map;
+	}
+
 	protected static String intent(int amount) {
 		if (amount==0) {
 			return "";
@@ -604,6 +700,22 @@ public abstract class DLAppTestUtil {
 		}
 
 		return sb.toString();
+	}
+
+	protected static void setDDMFieldValueToServiceToContext(
+			ServiceContext sc, DDMStructure ddmStructure, String fieldName,
+			String value)
+		throws PortalException, SystemException {
+
+		if (!ddmStructure.getFieldNames().contains(fieldName)) {
+			throw new IllegalArgumentException(
+				String.format("Structure id:%d does not contain fieldName %s",
+				ddmStructure.getStructureId(), fieldName));
+		}
+
+		sc.setAttribute(
+			String.format("%d%s", ddmStructure.getStructureId(), fieldName),
+			value);
 	}
 
 	private static final String _CONTENT =

@@ -18,10 +18,14 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
@@ -35,6 +39,29 @@ import java.util.Locale;
  * @author Manuel de la Peña
  */
 public class LayoutTestUtil {
+
+	public static Layout addLayout(
+			Group group, String name, boolean privateLayout, String friendlyURL,
+			String layouteTemplateId)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		Layout layout =
+			LayoutLocalServiceUtil.addLayout(
+				group.getCreatorUserId(), group.getGroupId(), privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
+				StringPool.BLANK, StringPool.BLANK,
+				LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+				serviceContext);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
+
+		return layout;
+	}
 
 	public static Layout addLayout(long groupId, String name) throws Exception {
 		return addLayout(groupId, name, false);
@@ -105,6 +132,17 @@ public class LayoutTestUtil {
 		return LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			nameMap, null, true, true, ServiceTestUtil.getServiceContext());
+	}
+
+	public static Layout createTestLayoutWithSite(
+			long companyId, User user, String siteName)
+		throws Exception {
+
+		Group parentGroup = GroupLocalServiceUtil.getCompanyGroup(companyId);
+		Group group = GroupTestUtil.addGroup(
+			siteName, parentGroup.getGroupId(), user);
+
+		return addLayout(group, "Home", false, "/home", "2_columns_ii");
 	}
 
 }
