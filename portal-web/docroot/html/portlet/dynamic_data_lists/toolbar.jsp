@@ -55,6 +55,13 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 						dialog: {
 							width: 820
 						},
+
+						<%
+						Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+						%>
+
+						refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
+
 						storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
 						structureName: 'data-definition',
 						structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',

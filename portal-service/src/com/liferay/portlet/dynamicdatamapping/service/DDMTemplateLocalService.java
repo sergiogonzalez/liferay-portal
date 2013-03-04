@@ -263,9 +263,9 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	* @param script the template's script
-	* @param serviceContext the template's service context. Can set the UUID,
-	creation date, modification date, guest permissions, and group
-	permissions for the template.
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the template.
 	* @return the template
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
@@ -306,9 +306,9 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @param smallImageFile the template's small image file (optionally
 	<code>null</code>)
-	* @param serviceContext the template's service context. Can set the UUID,
-	creation date, modification date, guest permissions, and group
-	permissions for the template.
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the template.
 	* @return the template
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
@@ -642,6 +642,17 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByClassPK(
+		long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
+		long groupId, long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

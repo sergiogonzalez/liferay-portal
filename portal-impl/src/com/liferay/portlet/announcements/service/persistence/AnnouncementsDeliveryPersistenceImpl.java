@@ -1437,7 +1437,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<AnnouncementsDelivery>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

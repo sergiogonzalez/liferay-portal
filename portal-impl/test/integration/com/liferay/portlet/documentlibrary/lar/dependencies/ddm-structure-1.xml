@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="string" name="superHero" type="select">
+		<dynamic-element name="spiderman" type="option" value="spider">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Spiderman]]></entry>
+				<entry name="multiple"><![CDATA[false]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="superman" type="option" value="super">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Superman]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="batman" type="option" value="bat">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Batman]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<meta-data locale="en_US">
+			<entry name="displayChildLabelAsValue"><![CDATA[true]]></entry>
+			<entry name="label"><![CDATA[Product]]></entry>
+			<entry name="multiple"><![CDATA[true]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="readOnly"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="showLabel"><![CDATA[true]]></entry>
+			<entry name="tip"><![CDATA[]]>Who are you?</entry>
+		</meta-data>
+	</dynamic-element>
+
+</root>

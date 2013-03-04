@@ -14,109 +14,136 @@
 
 package com.liferay.portlet.journal.webdav;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.webdav.BaseResourceImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.webdav.DDMWebDavUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Juan Fernández
  */
 public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Override
-	public int deleteResource(WebDAVRequest webDavRequest)
+	public int deleteResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		try {
-			Resource resource = getResource(webDavRequest);
-
-			if (resource == null) {
-				return HttpServletResponse.SC_NOT_FOUND;
-			}
-
-			return HttpServletResponse.SC_FORBIDDEN;
-		}
-		catch (PortalException pe) {
-			return HttpServletResponse.SC_FORBIDDEN;
-		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
-		}
+		return DDMWebDavUtil.deleteResource(
+			webDAVRequest, getRootPath(), getToken(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 	}
 
-	public Resource getResource(WebDAVRequest webDavRequest)
+	public Resource getResource(WebDAVRequest webDAVRequest)
+		throws WebDAVException {
+
+		return DDMWebDavUtil.getResource(
+			webDAVRequest, getRootPath(), getToken(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+	}
+
+	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
 		try {
-			String[] pathArray = webDavRequest.getPathArray();
+			String[] pathArray = webDAVRequest.getPathArray();
 
 			if (pathArray.length == 2) {
-				String path = getRootPath() + webDavRequest.getPath();
-
-				return new BaseResourceImpl(path, StringPool.BLANK, getToken());
+				return getFolders(webDAVRequest);
 			}
 			else if (pathArray.length == 3) {
 				String type = pathArray[2];
 
-				return toResource(webDavRequest, type, false);
+				if (type.equals(DDMWebDavUtil.TYPE_STRUCTURES)) {
+					return getStructures(webDAVRequest);
+				}
+				else if (type.equals(DDMWebDavUtil.TYPE_TEMPLATES)) {
+					return getTemplates(webDAVRequest);
+				}
 			}
 
-			return null;
+			return new ArrayList<Resource>();
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);
 		}
-	}
-
-	public List<Resource> getResources(WebDAVRequest webDavRequest) {
-		return Collections.emptyList();
 	}
 
 	@Override
-	public int putResource(WebDAVRequest webDavRequest) throws WebDAVException {
-		try {
-			Resource resource = getResource(webDavRequest);
-
-			if (resource == null) {
-				return HttpServletResponse.SC_NOT_FOUND;
-			}
-
-			return HttpServletResponse.SC_FORBIDDEN;
-		}
-		catch (PortalException pe) {
-			return HttpServletResponse.SC_FORBIDDEN;
-		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
-		}
+	public int putResource(WebDAVRequest webDAVRequest) throws WebDAVException {
+		return DDMWebDavUtil.putResource(
+			webDAVRequest, getRootPath(), getToken(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 	}
 
-	protected Resource toResource(
-		WebDAVRequest webDavRequest, String type, boolean appendPath) {
+	protected List<Resource> getFolders(WebDAVRequest webDAVRequest)
+		throws Exception {
 
-		String parentPath = getRootPath() + webDavRequest.getPath();
+		List<Resource> resources = new ArrayList<Resource>();
 
-		String name = StringPool.BLANK;
+		resources.add(
+			DDMWebDavUtil.toResource(
+				webDAVRequest, DDMWebDavUtil.TYPE_STRUCTURES, getRootPath(),
+				true));
+		resources.add(
+			DDMWebDavUtil.toResource(
+				webDAVRequest, DDMWebDavUtil.TYPE_TEMPLATES, getRootPath(),
+				true));
 
-		if (appendPath) {
-			name = type;
+		return resources;
+	}
+
+	protected List<Resource> getStructures(WebDAVRequest webDAVRequest)
+		throws Exception {
+
+		List<Resource> resources = new ArrayList<Resource>();
+
+		List<DDMStructure> ddmStructures =
+			DDMStructureLocalServiceUtil.getStructures(
+				webDAVRequest.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class));
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			Resource resource = DDMWebDavUtil.toResource(
+				webDAVRequest, ddmStructure, getRootPath(), true);
+
+			resources.add(resource);
 		}
 
-		Resource resource = new BaseResourceImpl(parentPath, name, type);
+		return resources;
+	}
 
-		resource.setModel(type);
+	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest)
+		throws Exception {
 
-		return resource;
+		List<Resource> resources = new ArrayList<Resource>();
+
+		List<DDMTemplate> ddmTemplates =
+			DDMTemplateLocalServiceUtil.getTemplatesByStructureClassNameId(
+				webDAVRequest.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			Resource resource = DDMWebDavUtil.toResource(
+				webDAVRequest, ddmTemplate, getRootPath(), true);
+
+			resources.add(resource);
+		}
+
+		return resources;
 	}
 
 }

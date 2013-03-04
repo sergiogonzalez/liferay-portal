@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class LayoutParentLayoutIdException extends PortalException {
 
+	/**
+	 * @deprecated
+	 */
 	public static final int FIRST_LAYOUT_HIDDEN = 4;
 
 	public static final int FIRST_LAYOUT_TYPE = 3;

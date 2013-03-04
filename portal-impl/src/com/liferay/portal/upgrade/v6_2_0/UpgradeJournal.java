@@ -183,6 +183,8 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		super.doUpgrade();
+
 		try {
 			runSQL(
 				"alter_column_name JournalFeed feedType feedFormat " +
@@ -197,8 +199,6 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 		updateStructures();
 		updateTemplates();
-
-		updatePortletPreferences();
 	}
 
 	@Override

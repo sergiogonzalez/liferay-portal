@@ -2560,7 +2560,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<MDRAction>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

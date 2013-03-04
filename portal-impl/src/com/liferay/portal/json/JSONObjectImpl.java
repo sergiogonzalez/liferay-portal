@@ -62,8 +62,8 @@ public class JSONObjectImpl implements JSONObject {
 		_jsonObject = new org.json.JSONObject(obj, names);
 	}
 
-	public JSONObjectImpl(org.json.JSONObject jsonObj) {
-		_jsonObject = jsonObj;
+	public JSONObjectImpl(org.json.JSONObject jsonObject) {
+		_jsonObject = jsonObject;
 	}
 
 	public JSONObjectImpl(String json) throws JSONException {
@@ -114,13 +114,13 @@ public class JSONObjectImpl implements JSONObject {
 	}
 
 	public JSONObject getJSONObject(String key) {
-		org.json.JSONObject jsonObj = _jsonObject.optJSONObject(key);
+		org.json.JSONObject jsonObject = _jsonObject.optJSONObject(key);
 
-		if (jsonObj == null) {
+		if (jsonObject == null) {
 			return null;
 		}
 
-		return new JSONObjectImpl(jsonObj);
+		return new JSONObjectImpl(jsonObject);
 	}
 
 	public long getLong(String key) {

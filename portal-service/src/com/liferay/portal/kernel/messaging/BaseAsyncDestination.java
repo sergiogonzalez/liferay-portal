@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
+import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
@@ -46,14 +46,14 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public BaseAsyncDestination(String name) {
 		this(name, _WORKERS_CORE_SIZE, _WORKERS_MAX_SIZE);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public BaseAsyncDestination(
 		String name, int workersCoreSize, int workersMaxSize) {
@@ -268,11 +268,11 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		}
 
 		Boolean clusterForwardMessage = (Boolean)message.get(
-			ClusterLinkUtil.CLUSTER_FORWARD_MESSAGE);
+			ClusterLink.CLUSTER_FORWARD_MESSAGE);
 
 		if (clusterForwardMessage != null) {
 			MessageValuesThreadLocal.setValue(
-				ClusterLinkUtil.CLUSTER_FORWARD_MESSAGE, clusterForwardMessage);
+				ClusterLink.CLUSTER_FORWARD_MESSAGE, clusterForwardMessage);
 		}
 	}
 

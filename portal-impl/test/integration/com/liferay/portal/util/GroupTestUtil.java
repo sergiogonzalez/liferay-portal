@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -104,6 +105,30 @@ public class GroupTestUtil {
 		return GroupServiceUtil.addGroup(
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
 			description, type, friendlyURL, site, active, serviceContext);
+	}
+
+	public static Group addGroup(String name, long parentGroupId, User user)
+			throws Exception {
+
+		String description = "This is a test group.";
+		int type = GroupConstants.TYPE_SITE_OPEN;
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
+		boolean site = true;
+		boolean active = true;
+
+		Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(parentGroup.getCompanyId());
+		serviceContext.setUserId(user.getUserId());
+
+		return GroupLocalServiceUtil.addGroup(
+			user.getUserId(), parentGroupId, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
+			friendlyURL, site, active, serviceContext);
 	}
 
 }

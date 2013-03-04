@@ -32,20 +32,20 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class MkcolMethodImpl implements Method {
 
-	public int process(WebDAVRequest webDavRequest) throws WebDAVException {
-		WebDAVStorage storage = webDavRequest.getWebDAVStorage();
-		HttpServletRequest request = webDavRequest.getHttpServletRequest();
-		HttpServletResponse response = webDavRequest.getHttpServletResponse();
-		long groupId = webDavRequest.getGroupId();
+	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
+		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
+		HttpServletRequest request = webDAVRequest.getHttpServletRequest();
+		HttpServletResponse response = webDAVRequest.getHttpServletResponse();
+		long groupId = webDAVRequest.getGroupId();
 
 		if (groupId != 0) {
-			Status status = storage.makeCollection(webDavRequest);
+			Status status = storage.makeCollection(webDAVRequest);
 
 			if (Validator.isNotNull(status.getObject())) {
 				response.setHeader(
 					HttpHeaders.LOCATION,
 					PortalUtil.getPortalURL(request) +
-						webDavRequest.getRootPath() + StringPool.SLASH +
+						webDAVRequest.getRootPath() + StringPool.SLASH +
 							status.getObject());
 			}
 

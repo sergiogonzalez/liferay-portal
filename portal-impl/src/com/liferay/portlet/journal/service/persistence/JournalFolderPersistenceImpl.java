@@ -5961,7 +5961,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<JournalFolder>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -2534,7 +2534,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<MDRRule>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

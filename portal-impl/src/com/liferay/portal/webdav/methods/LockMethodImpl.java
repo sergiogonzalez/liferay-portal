@@ -45,29 +45,29 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LockMethodImpl implements Method {
 
-	public int process(WebDAVRequest webDavRequest) throws WebDAVException {
+	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
 		try {
-			return doProcess(webDavRequest);
+			return doProcess(webDAVRequest);
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);
 		}
 	}
 
-	protected int doProcess(WebDAVRequest webDavRequest) throws Exception {
-		WebDAVStorage storage = webDavRequest.getWebDAVStorage();
+	protected int doProcess(WebDAVRequest webDAVRequest) throws Exception {
+		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
 
 		if (!storage.isSupportsClassTwo()) {
 			return HttpServletResponse.SC_METHOD_NOT_ALLOWED;
 		}
 
-		HttpServletRequest request = webDavRequest.getHttpServletRequest();
-		HttpServletResponse response = webDavRequest.getHttpServletResponse();
+		HttpServletRequest request = webDAVRequest.getHttpServletRequest();
+		HttpServletResponse response = webDAVRequest.getHttpServletResponse();
 
 		Lock lock = null;
 		Status status = null;
 
-		String lockUuid = webDavRequest.getLockUuid();
+		String lockUuid = webDAVRequest.getLockUuid();
 		long timeout = WebDAVUtil.getTimeout(request);
 
 		if (Validator.isNull(lockUuid)) {
@@ -123,7 +123,7 @@ public class LockMethodImpl implements Method {
 				return HttpServletResponse.SC_PRECONDITION_FAILED;
 			}
 
-			status = storage.lockResource(webDavRequest, owner, timeout);
+			status = storage.lockResource(webDAVRequest, owner, timeout);
 
 			lock = (Lock)status.getObject();
 		}
@@ -133,7 +133,7 @@ public class LockMethodImpl implements Method {
 				// Refresh existing lock
 
 				lock = storage.refreshResourceLock(
-					webDavRequest, lockUuid, timeout);
+					webDAVRequest, lockUuid, timeout);
 
 				status = new Status(HttpServletResponse.SC_OK);
 			}

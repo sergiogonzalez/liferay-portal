@@ -86,7 +86,7 @@ public abstract class BasePropMethodImpl implements Method {
 	}
 
 	protected void addResponse(
-			WebDAVRequest webDavRequest, Resource resource, Set<QName> props,
+			WebDAVRequest webDAVRequest, Resource resource, Set<QName> props,
 			Element multistatus)
 		throws Exception {
 
@@ -253,7 +253,7 @@ public abstract class BasePropMethodImpl implements Method {
 						activeLockElement, createQName("timeout"), "Infinite");
 				}
 
-				if (webDavRequest.getUserId() == lock.getUserId()) {
+				if (webDAVRequest.getUserId() == lock.getUserId()) {
 					Element lockTokenElement = DocUtil.add(
 						activeLockElement, createQName("locktoken"));
 
@@ -287,7 +287,7 @@ public abstract class BasePropMethodImpl implements Method {
 		// Check remaining properties against custom properties
 
 		WebDAVProps webDavProps = WebDAVPropsLocalServiceUtil.getWebDAVProps(
-			webDavRequest.getCompanyId(), resource.getClassName(),
+			webDAVRequest.getCompanyId(), resource.getClassName(),
 			resource.getPrimaryKey());
 
 		Set<QName> customProps = webDavProps.getPropsSet();
@@ -334,31 +334,31 @@ public abstract class BasePropMethodImpl implements Method {
 	}
 
 	protected void addResponse(
-			WebDAVStorage storage, WebDAVRequest webDavRequest,
+			WebDAVStorage storage, WebDAVRequest webDAVRequest,
 			Resource resource, Set<QName> props, Element multistatusElement,
 			long depth)
 		throws Exception {
 
-		addResponse(webDavRequest, resource, props, multistatusElement);
+		addResponse(webDAVRequest, resource, props, multistatusElement);
 
 		if (resource.isCollection() && (depth != 0)) {
 			List<Resource> storageResources = storage.getResources(
-				webDavRequest);
+				webDAVRequest);
 
 			for (Resource storageResource : storageResources) {
 				addResponse(
-					webDavRequest, storageResource, props, multistatusElement);
+					webDAVRequest, storageResource, props, multistatusElement);
 			}
 		}
 	}
 
 	protected int writeResponseXML(
-			WebDAVRequest webDavRequest, Set<QName> props)
+			WebDAVRequest webDAVRequest, Set<QName> props)
 		throws Exception {
 
-		WebDAVStorage storage = webDavRequest.getWebDAVStorage();
+		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
 
-		long depth = WebDAVUtil.getDepth(webDavRequest.getHttpServletRequest());
+		long depth = WebDAVUtil.getDepth(webDAVRequest.getHttpServletRequest());
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -367,11 +367,11 @@ public abstract class BasePropMethodImpl implements Method {
 
 		document.setRootElement(multistatusElement);
 
-		Resource resource = storage.getResource(webDavRequest);
+		Resource resource = storage.getResource(webDAVRequest);
 
 		if (resource != null) {
 			addResponse(
-				storage, webDavRequest, resource, props, multistatusElement,
+				storage, webDAVRequest, resource, props, multistatusElement,
 				depth);
 
 			String xml = document.formattedString(StringPool.FOUR_SPACES);
@@ -385,7 +385,7 @@ public abstract class BasePropMethodImpl implements Method {
 			int status = WebDAVUtil.SC_MULTI_STATUS;
 
 			HttpServletResponse response =
-				webDavRequest.getHttpServletResponse();
+				webDAVRequest.getHttpServletResponse();
 
 			response.setContentType(ContentTypes.TEXT_XML_UTF8);
 			response.setStatus(status);
@@ -407,7 +407,7 @@ public abstract class BasePropMethodImpl implements Method {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No resource found for " + storage.getRootPath() +
-						webDavRequest.getPath());
+						webDAVRequest.getPath());
 			}
 
 			return HttpServletResponse.SC_NOT_FOUND;

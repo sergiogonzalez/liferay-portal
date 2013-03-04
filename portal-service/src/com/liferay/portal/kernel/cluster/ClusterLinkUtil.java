@@ -28,8 +28,11 @@ import java.util.List;
  */
 public class ClusterLinkUtil {
 
+	/**
+	 * @deprecated {@link ClusterLink#CLUSTER_FORWARD_MESSAGE}
+	 */
 	public static final String CLUSTER_FORWARD_MESSAGE =
-		"CLUSTER_FORWARD_MESSAGE";
+		ClusterLink.CLUSTER_FORWARD_MESSAGE;
 
 	public static Address getAddress(Message message) {
 		return (Address)message.get(_ADDRESS);
@@ -70,7 +73,7 @@ public class ClusterLinkUtil {
 	}
 
 	public static boolean isForwardMessage(Message message) {
-		return message.getBoolean(CLUSTER_FORWARD_MESSAGE);
+		return message.getBoolean(ClusterLink.CLUSTER_FORWARD_MESSAGE);
 	}
 
 	public static void sendMulticastMessage(
@@ -112,7 +115,7 @@ public class ClusterLinkUtil {
 	}
 
 	public static void setForwardMessage(Message message) {
-		message.put(CLUSTER_FORWARD_MESSAGE, true);
+		message.put(ClusterLink.CLUSTER_FORWARD_MESSAGE, true);
 	}
 
 	public void setClusterLink(ClusterLink clusterLink) {

@@ -31,24 +31,24 @@ import java.util.List;
  */
 public class GroupWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
-	public Resource getResource(WebDAVRequest webDavRequest)
+	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		verifyGroup(webDavRequest);
+		verifyGroup(webDAVRequest);
 
-		String path = getRootPath() + webDavRequest.getPath();
+		String path = getRootPath() + webDAVRequest.getPath();
 
 		return new BaseResourceImpl(path, StringPool.BLANK, StringPool.BLANK);
 	}
 
-	public List<Resource> getResources(WebDAVRequest webDavRequest)
+	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		verifyGroup(webDavRequest);
+		verifyGroup(webDAVRequest);
 
 		List<Resource> resources = new ArrayList<Resource>();
 
-		String path = getRootPath() + webDavRequest.getPath();
+		String path = getRootPath() + webDAVRequest.getPath();
 
 		for (String token : WebDAVUtil.getStorageTokens()) {
 			resources.add(new BaseResourceImpl(path, token, token));
@@ -57,13 +57,13 @@ public class GroupWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return resources;
 	}
 
-	protected void verifyGroup(WebDAVRequest webDavRequest)
+	protected void verifyGroup(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		String path = webDavRequest.getPath();
+		String path = webDAVRequest.getPath();
 
 		try {
-			long userId = webDavRequest.getUserId();
+			long userId = webDAVRequest.getUserId();
 
 			List<Group> groups = WebDAVUtil.getGroups(userId);
 
@@ -78,7 +78,7 @@ public class GroupWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		throw new WebDAVException(
 			"Invalid group for given credentials " +
-				webDavRequest.getRootPath() + path);
+				webDAVRequest.getRootPath() + path);
 	}
 
 }
