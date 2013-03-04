@@ -155,7 +155,11 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public DLFileVersion getFileVersion()
 		throws PortalException, SystemException {
 
-		return getFileVersion(getVersion());
+		if (_dlFileVersion == null) {
+			_dlFileVersion = getFileVersion(getVersion());
+		}
+
+		return _dlFileVersion;
 	}
 
 	public DLFileVersion getFileVersion(String version)
@@ -328,6 +332,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryImpl.class);
 
+	private DLFileVersion _dlFileVersion;
 	private UnicodeProperties _extraSettingsProperties;
 
 }
