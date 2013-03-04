@@ -57,7 +57,11 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(getThreadId()), serviceContext);
 
-		return folder.getFolderId();
+		if (folder != null) {
+			_attachmentsFolderId = folder.getFolderId();
+		}
+
+		return _attachmentsFolderId;
 	}
 
 	public Lock getLock() {
@@ -121,5 +125,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 
 		return false;
 	}
+
+	private long _attachmentsFolderId;
 
 }
