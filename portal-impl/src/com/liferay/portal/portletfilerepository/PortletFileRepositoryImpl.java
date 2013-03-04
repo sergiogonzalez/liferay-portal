@@ -172,6 +172,26 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 	}
 
+	public Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Folder folder = null;
+
+		try {
+			folder = DLAppLocalServiceUtil.getFolder(
+				repositoryId, parentFolderId, folderName);
+		}
+		catch (NoSuchFolderException nsfe) {
+			folder = DLAppLocalServiceUtil.addFolder(
+				userId, repositoryId, parentFolderId, folderName,
+				StringPool.BLANK, serviceContext);
+		}
+
+		return folder;
+	}
+
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -180,7 +200,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
 
-			DLAppLocalServiceUtil.deleteFolder(folderId);
+			if (folderId != DLFolderConstants.DEFAULT_FOLDER_ID) {
+				DLAppLocalServiceUtil.deleteFolder(folderId);
+			}
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
@@ -320,13 +342,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			folder = DLAppLocalServiceUtil.getFolder(
 				repositoryId, parentFolderId, folderName);
 		}
-		catch (NoSuchFolderException nsfe) {
-			folder = DLAppLocalServiceUtil.addFolder(
-				userId, repositoryId, parentFolderId, folderName,
-				StringPool.BLANK, serviceContext);
+		finally {
+			return folder;
 		}
-
-		return folder;
 	}
 
 	public long getPortletRepositoryId(

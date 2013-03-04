@@ -40,7 +40,7 @@ public class TempFileUtil {
 			File file, String mimeType)
 		throws PortalException, SystemException {
 
-		long folderId = getTempFolderId(groupId, userId, tempFolderName);
+		long folderId = addTempFolderId(groupId, userId, tempFolderName);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, StringPool.BLANK, 0, PortletKeys.DOCUMENT_LIBRARY,
@@ -52,7 +52,7 @@ public class TempFileUtil {
 			InputStream inputStream, String mimeType)
 		throws PortalException, SystemException {
 
-		long folderId = getTempFolderId(groupId, userId, tempFolderName);
+		long folderId = addTempFolderId(groupId, userId, tempFolderName);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, StringPool.BLANK, 0, PortletKeys.DOCUMENT_LIBRARY,
@@ -91,6 +91,10 @@ public class TempFileUtil {
 
 		long folderId = getTempFolderId(groupId, userId, tempFolderName);
 
+		if (folderId == DLFolderConstants.DEFAULT_FOLDER_ID) {
+			return new String[]{};
+		}
+
 		List<FileEntry> fileEntries =
 			PortletFileRepositoryUtil.getPortletFileEntries(groupId, folderId);
 
@@ -103,6 +107,29 @@ public class TempFileUtil {
 		}
 
 		return fileEntryNames;
+	}
+
+	protected static long addTempFolderId(
+			long groupId, long userId, String tempFolderName)
+		throws PortalException, SystemException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
+			groupId, PortletKeys.DOCUMENT_LIBRARY, serviceContext);
+
+		Folder userFolder = PortletFileRepositoryUtil.addPortletFolder(
+			userId, repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(userId), serviceContext);
+
+		Folder tempFolder = PortletFileRepositoryUtil.addPortletFolder(
+			userId, repositoryId, userFolder.getFolderId(), tempFolderName,
+			serviceContext);
+
+		return tempFolder.getFolderId();
 	}
 
 	protected static long getTempFolderId(
@@ -121,9 +148,17 @@ public class TempFileUtil {
 			userId, repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(userId), serviceContext);
 
+		if (userFolder == null) {
+			return DLFolderConstants.DEFAULT_FOLDER_ID;
+		}
+
 		Folder tempFolder = PortletFileRepositoryUtil.getPortletFolder(
 			userId, repositoryId, userFolder.getFolderId(), tempFolderName,
 			serviceContext);
+
+		if (tempFolder == null) {
+			return DLFolderConstants.DEFAULT_FOLDER_ID;
+		}
 
 		return tempFolder.getFolderId();
 	}
