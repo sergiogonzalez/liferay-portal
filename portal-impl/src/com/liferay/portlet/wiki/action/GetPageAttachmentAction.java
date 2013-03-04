@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -115,8 +116,14 @@ public class GetPageAttachmentAction extends PortletAction {
 
 		WikiPage wikiPage = WikiPageServiceUtil.getPage(nodeId, title);
 
+		Folder folder = wikiPage.getAttachmentsFolder();
+
+		if (folder == null) {
+			return;
+		}
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
+			wikiPage.getGroupId(), folder.getFolderId(), fileName);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

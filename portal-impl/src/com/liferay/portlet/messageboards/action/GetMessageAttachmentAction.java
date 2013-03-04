@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -100,8 +101,10 @@ public class GetMessageAttachmentAction extends PortletAction {
 
 		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
 
+		Folder folder = message.getAttachmentsFolder();
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			message.getGroupId(), message.getAttachmentsFolderId(), fileName);
+			message.getGroupId(), folder.getFolderId(), fileName);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
