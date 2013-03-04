@@ -72,7 +72,7 @@ public class DDMTemplateServiceUtil {
 	see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	* @param script the template's script
-	* @param serviceContext the template's service context. Must have the
+	* @param serviceContext the service context to be applied. Must have the
 	<code>ddmResource</code> attribute to check permissions. Can set
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
@@ -120,7 +120,7 @@ public class DDMTemplateServiceUtil {
 	<code>null</code>)
 	* @param smallImageFile the template's small image file (optionally
 	<code>null</code>)
-	* @param serviceContext the template's service context. Must have the
+	* @param serviceContext the service context to be applied. Must have the
 	<code>ddmResource</code> attribute to check permissions. Can set
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
@@ -370,6 +370,21 @@ public class DDMTemplateServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getTemplates(groupId, classNameId, classPK, type, mode);
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByClassPK(
+		long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTemplatesByClassPK(groupId, classPK);
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
+		long groupId, long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getTemplatesByStructureClassNameId(groupId,
+			structureClassNameId, start, end, orderByComparator);
 	}
 
 	/**

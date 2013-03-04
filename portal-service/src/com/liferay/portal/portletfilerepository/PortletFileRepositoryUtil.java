@@ -67,6 +67,15 @@ public class PortletFileRepositoryUtil {
 			inputStream, fileName, mimeType);
 	}
 
+	public static Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletFolder(
+			userId, repositoryId, parentFolderId, folderName, serviceContext);
+	}
+
 	public static void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 

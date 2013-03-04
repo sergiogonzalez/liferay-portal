@@ -17,7 +17,8 @@ package com.liferay.portal;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
+ * @deprecated
  */
 public class LayoutHiddenException extends PortalException {
 

@@ -26,7 +26,8 @@ public class UpgradePortletPreferences
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updatePortletPreferences();
+		super.doUpgrade();
+
 		upgrade(UpgradeCommunityProperties.class);
 	}
 

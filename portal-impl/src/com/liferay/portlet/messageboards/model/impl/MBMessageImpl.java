@@ -44,6 +44,30 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public MBMessageImpl() {
 	}
 
+	public long addAttachmentsFolderId()
+		throws PortalException, SystemException {
+
+		if (_attachmentsFolderId > 0) {
+			return _attachmentsFolderId;
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
+			getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			getUserId(), repositoryId, getThreadAttachmentsFolderId(),
+			String.valueOf(getMessageId()), serviceContext);
+
+		_attachmentsFolderId = folder.getFolderId();
+
+		return _attachmentsFolderId;
+	}
+
 	public String[] getAssetTagNames() throws SystemException {
 		return AssetTagLocalServiceUtil.getTagNames(
 			MBMessage.class.getName(), getMessageId());
@@ -90,7 +114,9 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 			getUserId(), repositoryId, getThreadAttachmentsFolderId(),
 			String.valueOf(getMessageId()), serviceContext);
 
-		_attachmentsFolderId = folder.getFolderId();
+		if (folder != null) {
+			_attachmentsFolderId = folder.getFolderId();
+		}
 
 		return _attachmentsFolderId;
 	}

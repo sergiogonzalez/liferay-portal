@@ -18,13 +18,8 @@ import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portlet.expando.model.ExpandoColumn;
 
 import java.io.InputStream;
 
@@ -40,31 +35,29 @@ import javax.servlet.jsp.PageContext;
 public class ResourceActionsUtil {
 
 	/**
-	 * @deprecated {@link #getActionNamePrefix}
+	 * @deprecated As of 6.1.0, replaced by {@link #getActionNamePrefix}
 	 */
-	public static final String ACTION_NAME_PREFIX = "action.";
+	public static final String ACTION_NAME_PREFIX =
+		ResourceActions.ACTION_NAME_PREFIX;
 
 	/**
-	 * @deprecated {@link #getModelResourceNamePrefix}
+	 * @deprecated As of 6.1.0, replaced by {@link #getModelResourceNamePrefix}
 	 */
-	public static final String MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
+	public static final String MODEL_RESOURCE_NAME_PREFIX =
+		ResourceActions.MODEL_RESOURCE_NAME_PREFIX;
 
 	/**
-	 * @deprecated {@link #getOrganizationModelResources}
+	 * @deprecated As of 6.1.0, replaced by {@link
+	 *             #getOrganizationModelResources}
 	 */
-	public static final String[] ORGANIZATION_MODEL_RESOURCES = {
-		Organization.class.getName(), PasswordPolicy.class.getName(),
-		User.class.getName()
-	};
+	public static final String[] ORGANIZATION_MODEL_RESOURCES =
+		ResourceActions.ORGANIZATION_MODEL_RESOURCES;
 
 	/**
-	 * @deprecated {@link #getPortalModelResources}
+	 * @deprecated As of 6.1.0, replaced by {@link #getPortalModelResources}
 	 */
-	public static final String[] PORTAL_MODEL_RESOURCES = {
-		ExpandoColumn.class.getName(), Organization.class.getName(),
-		PasswordPolicy.class.getName(), Role.class.getName(),
-		User.class.getName(), UserGroup.class.getName()
-	};
+	public static final String[] PORTAL_MODEL_RESOURCES =
+		ResourceActions.PORTAL_MODEL_RESOURCES;
 
 	public static void checkAction(String name, String actionId)
 		throws NoSuchResourceActionException {
@@ -231,7 +224,8 @@ public class ResourceActionsUtil {
 	}
 
 	/**
-	 * @deprecated {@link #getRoles(long, Group, String, int[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getRoles(long, Group,
+	 *             String, int[])}
 	 */
 	public static List<Role> getRoles(
 			long companyId, Group group, String modelResource)
@@ -253,7 +247,7 @@ public class ResourceActionsUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void init() {
 	}

@@ -33,8 +33,9 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		super.doUpgrade();
+
 		updateEntries();
-		updatePortletPreferences();
 	}
 
 	@Override

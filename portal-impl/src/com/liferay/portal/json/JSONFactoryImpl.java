@@ -175,6 +175,10 @@ public class JSONFactoryImpl implements JSONFactory {
 		return _NULL_JSON;
 	}
 
+	public JSONObject getUnmodifiableJSONObject() {
+		return _unmodifiableJSONObject;
+	}
+
 	public Object looseDeserialize(String json) {
 		try {
 			JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
@@ -324,5 +328,7 @@ public class JSONFactoryImpl implements JSONFactory {
 	private static Log _log = LogFactoryUtil.getLog(JSONFactoryImpl.class);
 
 	private org.jabsorb.JSONSerializer _jsonSerializer;
+	private JSONObject _unmodifiableJSONObject =
+		new UnmodifiableJSONObjectImpl();
 
 }

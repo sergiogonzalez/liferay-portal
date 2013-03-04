@@ -95,9 +95,9 @@ public class DDMTemplateLocalServiceImpl
 	 *         see {@link
 	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  script the template's script
-	 * @param  serviceContext the template's service context. Can set the UUID,
-	 *         creation date, modification date, guest permissions, and group
-	 *         permissions for the template.
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, guest permissions, and
+	 *         group permissions for the template.
 	 * @return the template
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -141,9 +141,9 @@ public class DDMTemplateLocalServiceImpl
 	 *         <code>null</code>)
 	 * @param  smallImageFile the template's small image file (optionally
 	 *         <code>null</code>)
-	 * @param  serviceContext the template's service context. Can set the UUID,
-	 *         creation date, modification date, guest permissions, and group
-	 *         permissions for the template.
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, guest permissions, and
+	 *         group permissions for the template.
 	 * @return the template
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -678,6 +678,21 @@ public class DDMTemplateLocalServiceImpl
 
 		return ddmTemplatePersistence.findByG_C_C_T_M(
 			groupId, classNameId, classPK, type, mode);
+	}
+
+	public List<DDMTemplate> getTemplatesByClassPK(long groupId, long classPK)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByG_CPK(groupId, classPK);
+	}
+
+	public List<DDMTemplate> getTemplatesByStructureClassNameId(
+			long groupId, long structureClassNameId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmTemplateFinder.findByG_SC(
+			groupId, structureClassNameId, start, end, orderByComparator);
 	}
 
 	/**

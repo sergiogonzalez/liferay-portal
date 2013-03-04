@@ -54,6 +54,7 @@ import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -235,7 +236,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), file, fileName, mimeType);
+			page.addAttachmentsFolderId(), file, fileName, mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -263,7 +264,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), inputStream, fileName, mimeType);
+			page.addAttachmentsFolderId(), inputStream, fileName, mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -470,7 +471,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(page.getAttachmentsFolderId());
+		long attachmentsFolderId = page.getAttachmentsFolderId();
+
+		if (attachmentsFolderId != DLFolderConstants.DEFAULT_FOLDER_ID) {
+			PortletFileRepositoryUtil.deleteFolder(
+				page.getAttachmentsFolderId());
+		}
 
 		// Subscriptions
 
@@ -1207,6 +1213,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
+			page.getNodeId(), page.getTitle());
+
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(trashTitle);
+
+			wikiPagePersistence.update(redirectPage);
+		}
+
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N_H(
 			page.getResourcePrimKey(), page.getNodeId(), false);
 
@@ -1279,9 +1294,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String title = TrashUtil.getOriginalTitle(page.getTitle());
 
-		page.setTitle(title);
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
+			page.getNodeId(), page.getTitle());
 
-		wikiPagePersistence.update(page);
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(title);
+
+			wikiPagePersistence.update(redirectPage);
+		}
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N_H(
 			page.getResourcePrimKey(), page.getNodeId(), false);
@@ -1299,6 +1319,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		pageResource.setTitle(title);
 
 		wikiPageResourcePersistence.update(pageResource);
+
+		page.setTitle(title);
+
+		wikiPagePersistence.update(page);
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			WikiPage.class.getName(), page.getResourcePrimKey());

@@ -167,14 +167,9 @@ if (Validator.isNotNull(structureAvailableFields)) {
 						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_template?templateId=" + templateId %>' />
 					</aui:field-wrapper>
 
-					<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
+					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
 						<aui:field-wrapper label="webdav-url">
-
-							<%
-							Group group = GroupLocalServiceUtil.getGroup(groupId);
-							%>
-
-							<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/webdav" + group.getFriendlyURL() + "/dynamic_data_mapping/ddmTemplates/" + templateId %>' />
+							<liferay-ui:input-resource url="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
 						</aui:field-wrapper>
 					</c:if>
 				</c:if>

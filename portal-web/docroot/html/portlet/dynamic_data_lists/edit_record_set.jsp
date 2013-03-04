@@ -160,6 +160,13 @@ if (ddmStructureId > 0) {
 					width: 820
 				},
 				groupId: <%= groupId %>,
+
+				<%
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+				%>
+
+				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
+
 				saveCallback: '<portlet:namespace />selectDDMStructure',
 				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
 				structureName: 'data-definition',

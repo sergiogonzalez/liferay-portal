@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %>
+
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -42,7 +44,7 @@ List childPages = wikiPage.getViewableChildPages();
 
 int attachmentsFileEntriesCount = 0;
 
-if (wikiPage != null) {
+if ((wikiPage != null) && (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_FOLDER_ID)) {
 	attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
 }
 

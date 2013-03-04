@@ -51,6 +51,11 @@ public interface PortletFileRepository {
 			String fileName, String mimeType)
 		throws PortalException, SystemException;
 
+	public Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException;
 

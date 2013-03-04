@@ -28,6 +28,8 @@ package com.liferay.portlet.documentlibrary.model;
  */
 public class DLFolderConstants {
 
+	public static final long DEFAULT_FOLDER_ID = 0;
+
 	public static final long DEFAULT_PARENT_FOLDER_ID = 0;
 
 	public static String getClassName() {

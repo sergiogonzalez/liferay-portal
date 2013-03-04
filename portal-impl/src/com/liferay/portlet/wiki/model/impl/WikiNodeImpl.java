@@ -57,7 +57,9 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(getNodeId()), serviceContext);
 
-		_attachmentsFolderId = folder.getFolderId();
+		if (folder != null) {
+			_attachmentsFolderId = folder.getFolderId();
+		}
 
 		return _attachmentsFolderId;
 	}

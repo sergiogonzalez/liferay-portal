@@ -398,6 +398,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 	}
 
+	protected ClassLoader getClassLoader() {
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
+	}
+
 	/**
 	 * Removes the model instance from the database. {@link #update(BaseModel,
 	 * boolean)} depends on this method to implement the remove operation; it

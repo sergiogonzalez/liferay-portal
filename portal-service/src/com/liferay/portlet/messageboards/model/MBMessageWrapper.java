@@ -950,6 +950,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		_mbMessage.persist();
 	}
 
+	public long addAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessage.addAttachmentsFolderId();
+	}
+
 	public java.lang.String[] getAssetTagNames()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessage.getAssetTagNames();

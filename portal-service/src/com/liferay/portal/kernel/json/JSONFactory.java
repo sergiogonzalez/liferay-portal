@@ -50,6 +50,8 @@ public interface JSONFactory {
 
 	public String getNullJSON();
 
+	public JSONObject getUnmodifiableJSONObject();
+
 	public Object looseDeserialize(String json);
 
 	public <T> T looseDeserialize(String json, Class<T> clazz);

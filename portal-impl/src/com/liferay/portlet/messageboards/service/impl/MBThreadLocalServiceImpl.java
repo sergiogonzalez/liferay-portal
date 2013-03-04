@@ -30,6 +30,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -131,7 +132,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(thread.getAttachmentsFolderId());
+		long attachmentsFolderId = thread.getAttachmentsFolderId();
+
+		if (attachmentsFolderId != DLFolderConstants.DEFAULT_FOLDER_ID) {
+			PortletFileRepositoryUtil.deleteFolder(
+				thread.getAttachmentsFolderId());
+		}
 
 		// Subscriptions
 

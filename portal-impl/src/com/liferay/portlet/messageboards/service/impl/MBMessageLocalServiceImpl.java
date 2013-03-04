@@ -62,6 +62,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
@@ -326,7 +327,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
 				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-				message.getAttachmentsFolderId(), inputStreamOVPs);
+				message.addAttachmentsFolderId(), inputStreamOVPs);
 		}
 
 		// Resources
@@ -512,8 +513,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(
-			message.getAttachmentsFolderId());
+		long attachmentsFolderId = message.getAttachmentsFolderId();
+
+		if (attachmentsFolderId != DLFolderConstants.DEFAULT_FOLDER_ID) {
+			PortletFileRepositoryUtil.deleteFolder(
+				message.getAttachmentsFolderId());
+		}
 
 		// Thread
 
@@ -1258,7 +1263,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessage message = getMessage(messageId);
 
 		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
-			message.getGroupId(), userId, message.getAttachmentsFolderId(),
+			message.getGroupId(), userId, message.addAttachmentsFolderId(),
 			deletedFileName);
 	}
 
@@ -1440,7 +1445,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
 				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-				message.getAttachmentsFolderId(), inputStreamOVPs);
+				message.addAttachmentsFolderId(), inputStreamOVPs);
 		}
 		else {
 			if (TrashUtil.isTrashEnabled(message.getGroupId())) {

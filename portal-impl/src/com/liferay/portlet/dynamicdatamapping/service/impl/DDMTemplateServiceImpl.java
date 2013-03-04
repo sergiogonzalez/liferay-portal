@@ -60,7 +60,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         see {@link
 	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  script the template's script
-	 * @param  serviceContext the template's service context. Must have the
+	 * @param  serviceContext the service context to be applied. Must have the
 	 *         <code>ddmResource</code> attribute to check permissions. Can set
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
@@ -116,7 +116,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @param  smallImageFile the template's small image file (optionally
 	 *         <code>null</code>)
-	 * @param  serviceContext the template's service context. Must have the
+	 * @param  serviceContext the service context to be applied. Must have the
 	 *         <code>ddmResource</code> attribute to check permissions. Can set
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
@@ -423,6 +423,21 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplatePersistence.filterFindByG_C_C_T_M(
 			groupId, classNameId, classPK, type, mode);
+	}
+
+	public List<DDMTemplate> getTemplatesByClassPK(long groupId, long classPK)
+		throws SystemException {
+
+		return ddmTemplatePersistence.filterFindByG_CPK(groupId, classPK);
+	}
+
+	public List<DDMTemplate> getTemplatesByStructureClassNameId(
+			long groupId, long structureClassNameId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterFindByG_SC(
+			groupId, structureClassNameId, start, end, orderByComparator);
 	}
 
 	/**
