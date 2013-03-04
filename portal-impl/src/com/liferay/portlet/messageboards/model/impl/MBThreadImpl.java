@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -38,26 +39,59 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	public MBThreadImpl() {
 	}
 
-	public long getAttachmentsFolderId()
+	public Folder addAttachmentsFolder()
 		throws PortalException, SystemException {
+
+		if (_attachmentsFolderId > 0) {
+			return PortletFileRepositoryUtil.getPortletFolder(
+				_attachmentsFolderId);
+		}
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
-			getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+				getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(
 			getRootMessageId());
 
-		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-			message.getUserId(), repositoryId,
+		return PortletFileRepositoryUtil.addPortletFolder(
+			message.getUserId(), repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(getThreadId()), serviceContext);
+	}
 
-		return folder.getFolderId();
+	public Folder getAttachmentsFolder()
+		throws PortalException, SystemException {
+
+		if (_attachmentsFolderId > 0) {
+			return PortletFileRepositoryUtil.getPortletFolder(
+				_attachmentsFolderId);
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				getGroupId(), PortletKeys.MESSAGE_BOARDS);
+
+		if (repository == null) {
+			return null;
+		}
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+			getRootMessageId());
+
+		return PortletFileRepositoryUtil.getPortletFolder(
+			message.getUserId(), repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(getThreadId()), serviceContext);
 	}
 
 	public Lock getLock() {
@@ -121,5 +155,11 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 
 		return false;
 	}
+
+	public void setAttachmentsFolderId(long attachmentsFolderId) {
+		_attachmentsFolderId = attachmentsFolderId;
+	}
+
+	private long _attachmentsFolderId;
 
 }

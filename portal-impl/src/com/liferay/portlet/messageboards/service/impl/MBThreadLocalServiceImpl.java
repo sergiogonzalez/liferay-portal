@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -141,7 +142,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(thread.getAttachmentsFolderId());
+		Folder attachmentsFolder = thread.getAttachmentsFolder();
+
+		if (attachmentsFolder != null) {
+			PortletFileRepositoryUtil.deleteFolder(
+				attachmentsFolder.getFolderId());
+		}
 
 		// Subscriptions
 

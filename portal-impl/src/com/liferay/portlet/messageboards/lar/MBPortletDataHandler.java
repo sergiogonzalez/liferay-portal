@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -365,7 +366,11 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 					binPath, fileEntry.getContentStream());
 			}
 
-			message.setAttachmentsFolderId(message.getAttachmentsFolderId());
+			Folder folder = message.getAttachmentsFolder();
+
+			if (folder != null) {
+				message.setAttachmentsFolderId(folder.getFolderId());
+			}
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "thread-flags")) {
