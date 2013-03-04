@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -50,22 +49,22 @@ import org.junit.runner.RunWith;
 public class DLExportImportFileEntryTypeTest extends DLBaseExportImportTest {
 
 	@Test
-	public void testFileEntriTypesAtGlobalDifferentCompany() throws Exception {
+	public void testWithGlobalTypeAndDifferentCompany() throws Exception {
 		testImportExport(true, true);
 	}
 
 	@Test
-	public void testFileEntriTypesAtGlobalSameCompany() throws Exception {
+	public void testWithGlobalTypeAndSameCompany() throws Exception {
 		testImportExport(true, false);
 	}
 
 	@Test
-	public void testFileEntriTypesAtLocalDifferentCompany() throws Exception {
+	public void testWithLocalTypeAndDifferentCompany() throws Exception {
 		testImportExport(false, true);
 	}
 
 	@Test
-	public void testFileEntriTypesAtLocalSameCompany() throws Exception {
+	public void testWithLocalTypeAndSameCompany() throws Exception {
 		testImportExport(false, false);
 	}
 
@@ -73,7 +72,7 @@ public class DLExportImportFileEntryTypeTest extends DLBaseExportImportTest {
 			boolean isGlobal, boolean isTargetDifferentCompany)
 		throws Exception {
 
-		// Prepare From Site
+		// Prepare "From" Site
 
 		User userFrom = UserTestUtil.getFirstAdministatorUserForCompany(
 			_companyFrom.getCompanyId());
@@ -98,7 +97,6 @@ public class DLExportImportFileEntryTypeTest extends DLBaseExportImportTest {
 
 		User userTo;
 		Company companyTo;
-		Group compareGroup = layoutFrom.getGroup();
 
 		if (isTargetDifferentCompany) {
 			companyTo = _companyTo;
@@ -110,17 +108,17 @@ public class DLExportImportFileEntryTypeTest extends DLBaseExportImportTest {
 			userTo = userFrom;
 		}
 
-		// Prepare to Site
+		// Prepare "To" Site
 
 		Layout layoutTo = LayoutTestUtil.createTestLayoutWithSite(
 			companyTo.getCompanyId(), userTo, ServiceTestUtil.randomString());
 
+		long expectedFileEntryTypeGroupId = -1;
+
 		if (isGlobal && !isTargetDifferentCompany) {
-			compareGroup = GroupLocalServiceUtil.getCompanyGroup(
-				_companyFrom.getCompanyId());
-		}
-		else {
-			compareGroup = layoutTo.getGroup();
+			expectedFileEntryTypeGroupId =
+				GroupLocalServiceUtil.getCompanyGroup(
+					_companyFrom.getCompanyId()).getGroupId();
 		}
 
 		// Import
@@ -135,7 +133,7 @@ public class DLExportImportFileEntryTypeTest extends DLBaseExportImportTest {
 
 		DLAppTestUtil.assertDlFoldersOfSites(
 			layoutFrom.getGroupId(), layoutTo.getGroupId(),
-			compareGroup.getGroupId());
+			expectedFileEntryTypeGroupId);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
