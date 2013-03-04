@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -65,6 +66,23 @@ public class PortletFileRepositoryUtil {
 		return getPortletFileRepository().addPortletFileEntry(
 			groupId, userId, className, classPK, portletId, folderId,
 			inputStream, fileName, mimeType);
+	}
+
+	public static Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletFolder(
+			userId, repositoryId, parentFolderId, folderName, serviceContext);
+	}
+
+	public static long addPortletRepositoryId(
+			long groupId, String portletId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletRepositoryId(
+			groupId, portletId, serviceContext);
 	}
 
 	public static void deleteFolder(long folderId)
@@ -183,12 +201,12 @@ public class PortletFileRepositoryUtil {
 			userId, repositoryId, parentFolderId, folderName, serviceContext);
 	}
 
-	public static long getPortletRepositoryId(
-			long groupId, String portletId, ServiceContext serviceContext)
+	public static Repository getPortletRepository(
+			long groupId, String portletId)
 		throws PortalException, SystemException {
 
-		return getPortletFileRepository().getPortletRepositoryId(
-			groupId, portletId, serviceContext);
+		return getPortletFileRepository().getPortletRepository(
+			groupId, portletId);
 	}
 
 	public static void movePortletFileEntryToTrash(
