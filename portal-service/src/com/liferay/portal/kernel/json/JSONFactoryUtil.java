@@ -90,6 +90,10 @@ public class JSONFactoryUtil {
 		return getJSONFactory().getNullJSON();
 	}
 
+	public static JSONObject getUnmodifiableJSONObject() {
+		return getJSONFactory().getUnmodifiableJSONObject();
+	}
+
 	public static Object looseDeserialize(String json) {
 		return getJSONFactory().looseDeserialize(json);
 	}

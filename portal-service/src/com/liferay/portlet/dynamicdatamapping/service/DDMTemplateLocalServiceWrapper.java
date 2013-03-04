@@ -282,9 +282,9 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	* @param script the template's script
-	* @param serviceContext the template's service context. Can set the UUID,
-	creation date, modification date, guest permissions, and group
-	permissions for the template.
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the template.
 	* @return the template
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
@@ -329,9 +329,9 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	<code>null</code>)
 	* @param smallImageFile the template's small image file (optionally
 	<code>null</code>)
-	* @param serviceContext the template's service context. Can set the UUID,
-	creation date, modification date, guest permissions, and group
-	permissions for the template.
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the template.
 	* @return the template
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
@@ -709,6 +709,20 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.getTemplates(groupId, classNameId,
 			classPK, type, mode);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByClassPK(
+		long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateLocalService.getTemplatesByClassPK(groupId, classPK);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
+		long groupId, long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateLocalService.getTemplatesByStructureClassNameId(groupId,
+			structureClassNameId, start, end, orderByComparator);
 	}
 
 	/**

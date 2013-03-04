@@ -25,61 +25,61 @@ import java.util.List;
 public interface WebDAVStorage {
 
 	public int copyCollectionResource(
-			WebDAVRequest webDavRequest, Resource resource, String destination,
+			WebDAVRequest webDAVRequest, Resource resource, String destination,
 			boolean overwrite, long depth)
 		throws WebDAVException;
 
 	public int copySimpleResource(
-			WebDAVRequest webDavRequest, Resource resource, String destination,
+			WebDAVRequest webDAVRequest, Resource resource, String destination,
 			boolean overwrite)
 		throws WebDAVException;
 
-	public int deleteResource(WebDAVRequest webDavRequest)
+	public int deleteResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException;
 
-	public Resource getResource(WebDAVRequest webDavRequest)
+	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException;
 
-	public List<Resource> getResources(WebDAVRequest webDavRequest)
+	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException;
 
 	public String getRootPath();
 
 	public String getToken();
 
-	public boolean isAvailable(WebDAVRequest webDavRequest)
+	public boolean isAvailable(WebDAVRequest webDAVRequest)
 		throws WebDAVException;
 
 	public boolean isSupportsClassTwo();
 
 	public Status lockResource(
-			WebDAVRequest webDavRequest, String owner, long timeout)
+			WebDAVRequest webDAVRequest, String owner, long timeout)
 		throws WebDAVException;
 
-	public Status makeCollection(WebDAVRequest webDavRequest)
+	public Status makeCollection(WebDAVRequest webDAVRequest)
 		throws WebDAVException;
 
 	public int moveCollectionResource(
-			WebDAVRequest webDavRequest, Resource resource, String destination,
+			WebDAVRequest webDAVRequest, Resource resource, String destination,
 			boolean overwrite)
 		throws WebDAVException;
 
 	public int moveSimpleResource(
-			WebDAVRequest webDavRequest, Resource resource, String destination,
+			WebDAVRequest webDAVRequest, Resource resource, String destination,
 			boolean overwrite)
 		throws WebDAVException;
 
-	public int putResource(WebDAVRequest webDavRequest) throws WebDAVException;
+	public int putResource(WebDAVRequest webDAVRequest) throws WebDAVException;
 
 	public Lock refreshResourceLock(
-			WebDAVRequest webDavRequest, String uuid, long timeout)
+			WebDAVRequest webDAVRequest, String uuid, long timeout)
 		throws WebDAVException;
 
 	public void setRootPath(String rootPath);
 
 	public void setToken(String token);
 
-	public boolean unlockResource(WebDAVRequest webDavRequest, String token)
+	public boolean unlockResource(WebDAVRequest webDAVRequest, String token)
 		throws WebDAVException;
 
 }

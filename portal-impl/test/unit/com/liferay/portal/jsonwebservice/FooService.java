@@ -65,6 +65,17 @@ public class FooService {
 		return fooData;
 	}
 
+	public static FooDataPage getFooDataPage() {
+		FooDataAltImpl fooDataAltImpl = new FooDataAltImpl();
+
+		fooDataAltImpl.setArray(9, 5, 7);
+		fooDataAltImpl.setHeight(8);
+		fooDataAltImpl.setId(2);
+		fooDataAltImpl.setName("life");
+
+		return new FooDataPage(fooDataAltImpl, getFooDatas(), 3);
+	}
+
 	public static List<FooData> getFooDatas() {
 		List<FooData> fooDataList = new ArrayList<FooData>();
 

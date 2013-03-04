@@ -37,8 +37,9 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 
 		if (_initialValue instanceof Cloneable) {
 			try {
-				_cloneMethod = _initialValue.getClass().getMethod(
-					_METHOD_CLONE);
+				Class<?> clazz = _initialValue.getClass();
+
+				_cloneMethod = clazz.getMethod(_METHOD_CLONE);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

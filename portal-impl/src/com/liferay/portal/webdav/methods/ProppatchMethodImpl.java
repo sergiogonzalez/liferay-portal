@@ -50,11 +50,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ProppatchMethodImpl extends BasePropMethodImpl {
 
-	public int process(WebDAVRequest webDavRequest) throws WebDAVException {
+	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
 		try {
-			Set<QName> props = processInstructions(webDavRequest);
+			Set<QName> props = processInstructions(webDAVRequest);
 
-			return writeResponseXML(webDavRequest, props);
+			return writeResponseXML(webDAVRequest, props);
 		}
 		catch (InvalidRequestException ire) {
 			if (_log.isInfoEnabled()) {
@@ -71,12 +71,12 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 		}
 	}
 
-	protected WebDAVProps getStoredProperties(WebDAVRequest webDavRequest)
+	protected WebDAVProps getStoredProperties(WebDAVRequest webDAVRequest)
 		throws PortalException, SystemException {
 
-		WebDAVStorage storage = webDavRequest.getWebDAVStorage();
+		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
 
-		Resource resource = storage.getResource(webDavRequest);
+		Resource resource = storage.getResource(webDAVRequest);
 
 		WebDAVProps webDavProps = null;
 
@@ -91,28 +91,28 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 			Lock lock = resource.getLock();
 
 			if ((lock == null) ||
-				!lock.getUuid().equals(webDavRequest.getLockUuid())) {
+				!lock.getUuid().equals(webDAVRequest.getLockUuid())) {
 
 				throw new LockException();
 			}
 		}
 
 		webDavProps = WebDAVPropsLocalServiceUtil.getWebDAVProps(
-			webDavRequest.getCompanyId(), resource.getClassName(),
+			webDAVRequest.getCompanyId(), resource.getClassName(),
 			resource.getPrimaryKey());
 
 		return webDavProps;
 	}
 
-	protected Set<QName> processInstructions(WebDAVRequest webDavRequest)
+	protected Set<QName> processInstructions(WebDAVRequest webDAVRequest)
 		throws InvalidRequestException, LockException {
 
 		try {
 			Set<QName> newProps = new HashSet<QName>();
 
-			HttpServletRequest request = webDavRequest.getHttpServletRequest();
+			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
 
-			WebDAVProps webDavProps = getStoredProperties(webDavRequest);
+			WebDAVProps webDavProps = getStoredProperties(webDAVRequest);
 
 			String xml = new String(
 				FileUtil.getBytes(request.getInputStream()));

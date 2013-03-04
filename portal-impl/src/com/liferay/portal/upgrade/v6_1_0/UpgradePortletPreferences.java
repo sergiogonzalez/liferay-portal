@@ -88,9 +88,11 @@ public class UpgradePortletPreferences
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		super.doUpgrade();
+
 		updatePortalPreferences();
-		updatePortletPreferences();
 		updatePortletPreferencesOwner();
+
 		upgrade(UpgradeCommunityProperties.class);
 
 		runSQL(

@@ -144,15 +144,6 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isInTrashContainer(ClassedModel classedModel)
-		throws Exception {
-
-		JournalArticle article = (JournalArticle)classedModel;
-
-		return article.isInTrashContainer();
-	}
-
-	@Override
 	protected BaseModel<?> moveBaseModelFromTrash(
 			ClassedModel classedModel, Group group,
 			ServiceContext serviceContext)
@@ -182,6 +173,19 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+			primaryKey);
+
+		return JournalTestUtil.updateArticle(
+			article, "Content: Enterprise. Open Source. For Life.",
+			article.getContent());
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

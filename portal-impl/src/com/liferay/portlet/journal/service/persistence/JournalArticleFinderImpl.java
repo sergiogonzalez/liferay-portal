@@ -73,6 +73,9 @@ public class JournalArticleFinderImpl
 	public static final String FIND_BY_R_D =
 		JournalArticleFinder.class.getName() + ".findByR_D";
 
+	public static final String FIND_BY_G_F =
+		JournalArticleFinder.class.getName() + ".findByG_F";
+
 	public static final String FIND_BY_G_U_C =
 		JournalArticleFinder.class.getName() + ".findByG_U_C";
 
@@ -359,6 +362,13 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition, true);
 	}
 
+	public List<JournalArticle> filterFindByG_F(
+			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_F(groupId, folderIds, queryDefinition, true);
+	}
+
 	public List<JournalArticle> filterFindByG_U_C(
 			long groupId, long userId, long classNameId,
 			QueryDefinition queryDefinition)
@@ -589,6 +599,13 @@ public class JournalArticleFinderImpl
 		sb.append("}");
 
 		throw new NoSuchArticleException(sb.toString());
+	}
+
+	public List<JournalArticle> findByG_F(
+			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_F(groupId, folderIds, queryDefinition, false);
 	}
 
 	public List<JournalArticle> findByG_U_C(
@@ -989,6 +1006,59 @@ public class JournalArticleFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalArticle> doFindByG_F(
+			long groupId, List<Long> folderIds, QueryDefinition queryDefinition,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_F, queryDefinition);
+
+			sql = CustomSQLUtil.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			sql = StringUtil.replace(
+				sql, "[$FOLDER_ID$]",
+				getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(queryDefinition.getStatus());
+
+			for (int i = 0; i < folderIds.size(); i++) {
+				Long folderId = folderIds.get(i);
+
+				qPos.add(folderId);
+			}
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

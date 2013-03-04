@@ -49,28 +49,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SitesUtil {
 
-	public static final String ANALYTICS_PREFIX = "analytics_";
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE = -1;
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_DISABLED = 0;
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_DISABLED_BY_DEFAULT =
-		1;
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED = 3;
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT =
-		2;
-
-	public static final String LAST_MERGE_TIME = "last-merge-time";
-
-	public static final String LAST_RESET_TIME = "last-reset-time";
-
-	public static final String LAYOUT_UPDATEABLE = "layoutUpdateable";
-
-	public static final String MERGE_FAIL_COUNT = "merge-fail-count";
-
 	public static void addPortletBreadcrumbEntries(
 			Group group, HttpServletRequest request,
 			RenderResponse renderResponse)
@@ -174,6 +152,18 @@ public class SitesUtil {
 		ServiceContext serviceContext) {
 
 		return getSites().getLayoutSetPrototypeParameters(serviceContext);
+	}
+
+	public static int getMergeFailCount(LayoutPrototype layoutPrototype)
+		throws PortalException, SystemException {
+
+		return getSites().getMergeFailCount(layoutPrototype);
+	}
+
+	public static int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
+		throws PortalException, SystemException {
+
+		return getSites().getMergeFailCount(layoutSetPrototype);
 	}
 
 	public static Sites getSites() {
@@ -282,6 +272,26 @@ public class SitesUtil {
 		throws PortalException, SystemException {
 
 		getSites().resetPrototype(layout);
+	}
+
+	public static void resetPrototype(LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
+		getSites().resetPrototype(layoutSet);
+	}
+
+	public static void setMergeFailCount(
+			LayoutPrototype layoutPrototype, int newMergeFailCount)
+		throws PortalException, SystemException {
+
+		getSites().setMergeFailCount(layoutPrototype, newMergeFailCount);
+	}
+
+	public static void setMergeFailCount(
+			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
+		throws PortalException, SystemException {
+
+		getSites().setMergeFailCount(layoutSetPrototype, newMergeFailCount);
 	}
 
 	public static void updateLayoutScopes(

@@ -375,6 +375,13 @@ if (feed != null) {
 				width: 820
 			},
 			groupId: <%= groupId %>,
+
+			<%
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+			%>
+
+			refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
+
 			saveCallback: '<portlet:namespace />selectStructure',
 			storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 			structureName: 'structure',

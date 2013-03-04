@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.webdav.WebDAVStorage;
  */
 public class DeleteMethodImpl implements Method {
 
-	public int process(WebDAVRequest webDavRequest) throws WebDAVException {
-		WebDAVStorage storage = webDavRequest.getWebDAVStorage();
+	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
+		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
 
-		return storage.deleteResource(webDavRequest);
+		return storage.deleteResource(webDAVRequest);
 	}
 
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -27,16 +28,23 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ContactConstants;
+import com.liferay.portal.model.ListType;
+import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.service.ListTypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ContactUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 
+import java.text.ParseException;
+
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -138,14 +146,78 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		Contact contact = ContactUtil.create(0);
 
-		Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar(
-			1970, Calendar.JANUARY, 1);
+		int prefixId = getListTypeId(
+			attributes, contactMappings, ContactConverterKeys.PREFIX,
+			ListTypeConstants.CONTACT_PREFIX);
 
-		contact.setBirthday(birthdayCalendar.getTime());
+		contact.setPrefixId(prefixId);
 
-		contact.setMale(true);
-		contact.setPrefixId(0);
-		contact.setSuffixId(0);
+		int suffixId = getListTypeId(
+			attributes, contactMappings, ContactConverterKeys.SUFFIX,
+			ListTypeConstants.CONTACT_SUFFIX);
+
+		contact.setSuffixId(suffixId);
+
+		String gender = LDAPUtil.getAttributeString(
+			attributes, contactMappings, ContactConverterKeys.GENDER);
+
+		gender = gender.toLowerCase();
+
+		if (GetterUtil.getBoolean(gender) || gender.equals("female")) {
+			contact.setMale(false);
+		}
+		else {
+			contact.setMale(true);
+		}
+
+		try {
+			Date birthday = DateUtil.parseDate(
+				LDAPUtil.getAttributeString(
+					attributes, contactMappings, ContactConverterKeys.BIRTHDAY),
+				LocaleUtil.getDefault());
+
+			contact.setBirthday(birthday);
+		}
+		catch (ParseException pe) {
+			Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar(
+				1970, Calendar.JANUARY, 1);
+
+			contact.setBirthday(birthdayCalendar.getTime());
+		}
+
+		contact.setSmsSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.SMS_SN));
+		contact.setAimSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.AIM_SN));
+		contact.setFacebookSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.FACEBOOK_SN));
+		contact.setIcqSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.ICQ_SN));
+		contact.setJabberSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.JABBER_SN));
+		contact.setMsnSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.MSN_SN));
+		contact.setMySpaceSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.MYSPACE_SN));
+		contact.setSkypeSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.SKYPE_SN));
+		contact.setTwitterSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.TWITTER_SN));
+		contact.setYmSn(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.YM_SN));
+		contact.setJobTitle(
+			LDAPUtil.getAttributeString(
+				attributes, contactMappings, ContactConverterKeys.JOB_TITLE));
 
 		ldapUser.setContact(contact);
 
@@ -246,6 +318,26 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		}
 
 		return expandoAttributes;
+	}
+
+	protected int getListTypeId(
+			Attributes attributes, Properties contactMappings,
+			String contactMappingsKey, String listTypeType)
+		throws Exception {
+
+		List<ListType> contactPrefixListTypes =
+			ListTypeServiceUtil.getListTypes(listTypeType);
+
+		String name = LDAPUtil.getAttributeString(
+			attributes, contactMappings, contactMappingsKey);
+
+		for (ListType listType : contactPrefixListTypes) {
+			if (name.equals(listType.getName())) {
+				return listType.getListTypeId();
+			}
+		}
+
+		return 0;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

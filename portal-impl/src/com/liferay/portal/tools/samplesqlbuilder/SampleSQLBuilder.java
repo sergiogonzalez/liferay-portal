@@ -133,8 +133,9 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.output.merge"));
 
 		_dataFactory = new DataFactory(
-			baseDir, _maxGroupCount, _maxJournalArticleSize,
-			_maxUserToGroupCount);
+			baseDir, _maxBlogsEntryCount, _maxGroupCount,
+			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
+			_maxMBMessageCount, _maxUserToGroupCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 

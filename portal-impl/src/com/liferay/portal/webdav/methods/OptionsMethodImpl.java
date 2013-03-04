@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class OptionsMethodImpl implements Method {
 
-	public int process(WebDAVRequest webDavRequest) {
-		HttpServletResponse response = webDavRequest.getHttpServletResponse();
+	public int process(WebDAVRequest webDAVRequest) {
+		HttpServletResponse response = webDAVRequest.getHttpServletResponse();
 
-		if (webDavRequest.getWebDAVStorage().isSupportsClassTwo()) {
+		if (webDAVRequest.getWebDAVStorage().isSupportsClassTwo()) {
 			response.addHeader("DAV", "1,2");
 		}
 		else {

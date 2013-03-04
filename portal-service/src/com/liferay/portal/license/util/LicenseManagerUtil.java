@@ -27,17 +27,35 @@ import java.util.Set;
  */
 public class LicenseManagerUtil {
 
-	public static final int STATE_ABSENT = 1;
+	/**
+	 * @deprecated {@link LicenseManager#STATE_ABSENT}
+	 */
+	public static final int STATE_ABSENT = LicenseManager.STATE_ABSENT;
 
-	public static final int STATE_EXPIRED = 2;
+	/**
+	 * @deprecated {@link LicenseManager#STATE_EXPIRED}
+	 */
+	public static final int STATE_EXPIRED = LicenseManager.STATE_EXPIRED;
 
-	public static final int STATE_GOOD = 3;
+	/**
+	 * @deprecated {@link LicenseManager#STATE_GOOD}
+	 */
+	public static final int STATE_GOOD = LicenseManager.STATE_GOOD;
 
-	public static final int STATE_INACTIVE = 4;
+	/**
+	 * @deprecated {@link LicenseManager#STATE_INACTIVE}
+	 */
+	public static final int STATE_INACTIVE = LicenseManager.STATE_INACTIVE;
 
-	public static final int STATE_INVALID = 5;
+	/**
+	 * @deprecated {@link LicenseManager#STATE_INVALID}
+	 */
+	public static final int STATE_INVALID = LicenseManager.STATE_INVALID;
 
-	public static final int STATE_OVERLOAD = 6;
+	/**
+	 * @deprecated {@link LicenseManager#STATE_OVERLOAD}
+	 */
+	public static final int STATE_OVERLOAD = LicenseManager.STATE_OVERLOAD;
 
 	public static void checkLicense(String productId) {
 		getLicenseManager().checkLicense(productId);
