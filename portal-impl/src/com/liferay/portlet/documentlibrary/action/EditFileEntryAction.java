@@ -312,6 +312,10 @@ public class EditFileEntryAction extends PortletAction {
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				selectedFileName, _TEMP_FOLDER_NAME);
 
+			if (tempFileEntry == null) {
+				return;
+			}
+
 			String mimeType = tempFileEntry.getMimeType();
 			InputStream inputStream = tempFileEntry.getContentStream();
 			long size = tempFileEntry.getSize();

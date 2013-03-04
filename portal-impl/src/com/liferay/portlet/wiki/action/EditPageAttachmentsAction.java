@@ -279,6 +279,10 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				selectedFileName, _TEMP_FOLDER_NAME);
 
+			if (tempFileEntry == null) {
+				return;
+			}
+
 			InputStream inputStream = tempFileEntry.getContentStream();
 			String mimeType = tempFileEntry.getMimeType();
 
