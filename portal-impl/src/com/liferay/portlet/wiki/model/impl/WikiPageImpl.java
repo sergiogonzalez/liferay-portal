@@ -45,6 +45,30 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	public WikiPageImpl() {
 	}
 
+	public long addAttachmentsFolderId()
+		throws PortalException, SystemException {
+
+		if (_attachmentsFolderId > 0) {
+			return _attachmentsFolderId;
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
+			getGroupId(), PortletKeys.WIKI, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			getUserId(), repositoryId, getNodeAttachmentsFolderId(),
+			String.valueOf(getResourcePrimKey()), serviceContext);
+
+		_attachmentsFolderId = folder.getFolderId();
+
+		return _attachmentsFolderId;
+	}
+
 	public List<FileEntry> getAttachmentsFileEntries()
 		throws PortalException, SystemException {
 
@@ -86,7 +110,9 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			getUserId(), repositoryId, getNodeAttachmentsFolderId(),
 			String.valueOf(getResourcePrimKey()), serviceContext);
 
-		_attachmentsFolderId = folder.getFolderId();
+		if (folder != null) {
+			_attachmentsFolderId = folder.getFolderId();
+		}
 
 		return _attachmentsFolderId;
 	}

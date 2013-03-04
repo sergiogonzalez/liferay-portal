@@ -54,6 +54,7 @@ import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -235,7 +236,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), file, fileName, mimeType);
+			page.addAttachmentsFolderId(), file, fileName, mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -263,7 +264,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), inputStream, fileName, mimeType);
+			page.addAttachmentsFolderId(), inputStream, fileName, mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -470,7 +471,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(page.getAttachmentsFolderId());
+		long attachmentsFolderId = page.getAttachmentsFolderId();
+
+		if (attachmentsFolderId != DLFolderConstants.DEFAULT_FOLDER_ID) {
+			PortletFileRepositoryUtil.deleteFolder(
+				page.getAttachmentsFolderId());
+		}
 
 		// Subscriptions
 
