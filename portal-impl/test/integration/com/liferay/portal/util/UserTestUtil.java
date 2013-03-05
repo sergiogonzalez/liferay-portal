@@ -28,6 +28,7 @@ import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -157,6 +158,19 @@ public class UserTestUtil {
 		else {
 			return addUser(screenName, false, new long[] {groupId});
 		}
+	}
+
+	public static User getFirstAdministatorUserForCompany(long companyId)
+		throws Exception {
+
+		Role role =
+			RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.ADMINISTRATOR);
+
+		List<User> users = UserLocalServiceUtil.getRoleUsers(
+			role.getRoleId(), 0, 2);
+
+		return users.get(0);
 	}
 
 }
