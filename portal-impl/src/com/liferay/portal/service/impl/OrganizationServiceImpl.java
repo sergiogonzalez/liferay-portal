@@ -28,6 +28,7 @@ import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -37,11 +38,18 @@ import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+
+import java.io.Serializable;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The implementation of the organization remote service.
@@ -151,6 +159,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 				indexer.reindex(organization);
 			}
 
+			OrganizationMembershipPolicyUtil.verifyPolicy(organization);
+
 			return organization;
 		}
 		finally {
@@ -204,9 +214,13 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 					"an organization with parent " + parentOrganizationId);
 		}
 
-		return organizationLocalService.addOrganization(
+		Organization organization = organizationLocalService.addOrganization(
 			getUserId(), parentOrganizationId, name, type, recursable, regionId,
 			countryId, statusId, comments, site, serviceContext);
+
+		OrganizationMembershipPolicyUtil.verifyPolicy(organization);
+
+		return organization;
 	}
 
 	/**
@@ -579,10 +593,29 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		User user = getUser();
 
-		return organizationLocalService.updateOrganization(
+		Organization oldOrganization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
+		List<AssetCategory> oldAssetCategories =
+			AssetCategoryLocalServiceUtil.getCategories(
+				Organization.class.getName(), organizationId);
+
+		List<AssetTag> oldAssetTags = AssetTagLocalServiceUtil.getTags(
+			Organization.class.getName(), organizationId);
+
+		Map<String, Serializable> oldExpandoAttributes =
+			oldOrganization.getExpandoBridge().getAttributes();
+
+		Organization organization = organizationLocalService.updateOrganization(
 			user.getCompanyId(), organizationId, parentOrganizationId, name,
 			type, recursable, regionId, countryId, statusId, comments, site,
 			serviceContext);
+
+		OrganizationMembershipPolicyUtil.verifyUpdatePolicy(
+			organization, oldOrganization, oldAssetCategories, oldAssetTags,
+			oldExpandoAttributes);
+
+		return organization;
 	}
 
 	/**
@@ -623,6 +656,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			organizationId, parentOrganizationId, name, type, recursable,
 			regionId, countryId, statusId, comments, site, null, null, null,
 			null, null, serviceContext);
+
 	}
 
 }

@@ -71,11 +71,7 @@ userGroupRoles.addAll(siteRoles);
 			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 		/>
 
-		<%
-		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(selUser);
-		%>
-
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !mandatoryRoles.contains(role) %>">
+		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 			</liferay-ui:search-container-column-text>
