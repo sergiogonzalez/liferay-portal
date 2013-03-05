@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="string" name="cars" type="select">
+		<dynamic-element name="toyota" type="option" value="toyota">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Toyota]]></entry>
+				<entry name="multiple"><![CDATA[false]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="lada" type="option" value="lada">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Lada]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="karma" type="option" value="fiskerkarma">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[FiskerKarma]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<meta-data locale="en_US">
+			<entry name="displayChildLabelAsValue"><![CDATA[true]]></entry>
+			<entry name="label"><![CDATA[Product]]></entry>
+			<entry name="multiple"><![CDATA[true]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="readOnly"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="showLabel"><![CDATA[true]]></entry>
+			<entry name="tip"><![CDATA[]]>Who are you?</entry>
+		</meta-data>
+	</dynamic-element>
+
+</root>
