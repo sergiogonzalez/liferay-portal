@@ -14,25 +14,75 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+
+import java.io.InputStream;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map.Entry;
+import java.util.Map;
+
+import org.junit.Assert;
 
 /**
+ * This class contains helper methods to create integration tests for
+ * Document and media library
+ *
  * @author Alexander Chow
+ * @author Sampsa Sohlman
  */
 public abstract class DLAppTestUtil {
+
+	public static DLFileEntryType addDLFileEntryType(
+			long groupId, String fileEnryTypeName, User user,
+			ServiceContext serviceContext, long... ddmStructureIds)
+		throws Exception {
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				user.getUserId(), groupId, fileEnryTypeName, StringPool.BLANK,
+				ddmStructureIds, serviceContext);
+
+		return dlFileEntryType;
+	}
 
 	public static DLFileRank addDLFileRank(long groupId, long fileEntryId)
 		throws Exception {
@@ -194,6 +244,69 @@ public abstract class DLAppTestUtil {
 			mimeType, title, bytes, workflowAction);
 	}
 
+	public static DLFileEntryType addFileEntryType(
+			long fileTypeGroupId, User user, String structureKey, String xsd)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(fileTypeGroupId);
+		serviceContext.setUserId(user.getUserId());
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.addStructure(
+			user.getUserId(), fileTypeGroupId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			PortalUtil.getClassNameId(DDLRecord.class), structureKey,
+			getDefaultLocaleMap("en_US"), null, xsd, StorageType.XML.getValue(),
+			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+
+		return addDLFileEntryType(
+			fileTypeGroupId, "MyFileTypeEntry", user, serviceContext,
+			ddmStructure.getStructureId());
+	}
+
+	public static FileEntry addFileEntryWithDDMValues(
+			long parentFolderId, long fileEntryTypeId, long groupId,
+			long userId, String name, byte[] bytes,
+			ObjectValuePair<String, String>... values)
+		throws Exception {
+
+		String title = name.concat(" ").concat("title");
+		String description = name.concat(" ").concat("description");
+
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+				fileEntryTypeId);
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		if (!ddmStructures.isEmpty()) {
+
+			// For start this supports only 1 structure per file type
+
+			DDMStructure ddmStructure = ddmStructures.get(0);
+			for (ObjectValuePair<String, String> value : values) {
+				setDDMFieldValueToServiceToContext(
+					serviceContext, ddmStructure, value.getKey(),
+					value.getValue());
+			}
+		}
+
+		return addFileEntry(
+			userId, groupId, parentFolderId, name, title, description, bytes,
+			WorkflowConstants.ACTION_PUBLISH, serviceContext);
+	}
+
 	public static Folder addFolder(
 			long groupId, Folder parentFolder, boolean rootFolder, String name)
 		throws Exception {
@@ -237,6 +350,183 @@ public abstract class DLAppTestUtil {
 
 		return DLAppServiceUtil.addFolder(
 			groupId, parentFolderId, name, description, serviceContext);
+	}
+
+	/**
+	 * Compare two sourceFileEntries including DDM data
+	 *
+	 * @param sourceFileEntry
+	 * @param targetFileEntry
+	 * @param expectedFileEntryTypeGroupId expected FileEntryType groupId
+	 *  if -1 then Assert is not done
+	 * @throws Exception
+	 */
+	public static void assertDLFileEntries(
+			DLFileEntry sourceFileEntry, DLFileEntry targetFileEntry,
+			long expectedFileEntryTypeGroupId)
+		throws Exception {
+
+		Assert.assertNotNull(
+			String.format("Verifying that FileEntry %s is found",
+			sourceFileEntry.getUuid()), targetFileEntry);
+
+		Assert.assertEquals(
+			"Verify title", sourceFileEntry.getTitle(),
+			targetFileEntry.getTitle());
+
+		Assert.assertEquals(
+			"Verify description", sourceFileEntry.getDescription(),
+			targetFileEntry.getDescription());
+
+		Assert.assertEquals(
+			"Verify extension", sourceFileEntry.getExtension(),
+			targetFileEntry.getExtension());
+
+		Assert.assertEquals(
+				"Verify version", sourceFileEntry.getVersion(),
+				targetFileEntry.getVersion());
+
+		DLFileEntryType dlFileEntryType = null;
+
+		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
+			targetFileEntry.getFileEntryTypeId());
+
+		assertDlFileVersion(
+			sourceFileEntry.getFileVersion(), targetFileEntry.getFileVersion());
+
+		// With -1 you can disable this check
+
+		if (expectedFileEntryTypeGroupId!=-1) {
+			Assert.assertEquals(
+				"Verifying the DLFileEntryType groupId",
+				dlFileEntryType.getGroupId(), expectedFileEntryTypeGroupId);
+		}
+
+		Map<String, Fields> sourceFieldsMap = sourceFileEntry.getFieldsMap(
+			sourceFileEntry.getFileVersion().getFileVersionId());
+
+		Map<String, Fields> targetFieldsMap = targetFileEntry.getFieldsMap(
+			targetFileEntry.getFileVersion().getFileVersionId());
+
+		for (Entry<String, Fields> sourceEntry : sourceFieldsMap.entrySet()) {
+
+			Fields sourceFields = sourceEntry.getValue();
+			Fields targetFields = targetFieldsMap.get(sourceEntry.getKey());
+
+			for (String name : sourceFields.getNames()) {
+
+				for (Locale locale : sourceFields.getAvailableLocales()) {
+
+					Field sourceField = sourceFields.get(name);
+					Field targetField = targetFields.get(name);
+
+					Assert.assertNotNull(
+						String.format("Verifying that target field '%s' exists",
+						name), targetField);
+
+					if (targetField!=null) {
+
+						Assert.assertEquals(
+							String.format(
+							"Verifying field '%s' are same with locale %s",
+							name, locale.toString()),
+							sourceField.getValue(locale),
+							targetField.getValue(locale));
+					}
+				}
+			}
+		}
+	}
+
+	public static void assertDlFileVersion(
+			DLFileVersion sourceFileVersion, DLFileVersion targetFileVersion)
+		throws Exception {
+
+		Assert.assertEquals(
+			sourceFileVersion.getUuid(), targetFileVersion.getUuid());
+
+		Assert.assertEquals(
+				sourceFileVersion.getSize(), targetFileVersion.getSize());
+
+		assertInputStreams(
+			String.format("Verifying that DLFileVersion %s content is equal",
+			sourceFileVersion.getUuid()),
+			sourceFileVersion.getContentStream(false),
+			targetFileVersion.getContentStream(false));
+	}
+
+	/**
+	 * Compare DL folder and files recursively
+	 *
+	 * <i>Support is not complete yet.</i>
+	 *
+	 * @param sourceGroupId
+	 * @param targetGroupId
+	 * @param sourceParentFolderId
+	 * @param targetParentFolderId
+	 * @param fileEntryTypeGroupId FileEntryType has to be at this group
+	 * @throws Exception
+	 */
+	public static void assertDLFolders(
+			long sourceGroupId, long targetGroupId, long sourceParentFolderId,
+			long targetParentFolderId, long expectedFileEntryTypeGroupId)
+		throws Exception {
+
+		List<DLFileEntry> fileEntriesSource = DLFileEntryLocalServiceUtil.
+			getFileEntries(sourceGroupId, sourceParentFolderId);
+
+		for (DLFileEntry sourceFileEntry : fileEntriesSource) {
+
+			DLFileEntry targetFileEntry = DLFileEntryLocalServiceUtil.
+				getDLFileEntryByUuidAndGroupId(sourceFileEntry.getUuid(),
+				targetGroupId);
+
+			assertDLFileEntries(
+				sourceFileEntry, targetFileEntry, expectedFileEntryTypeGroupId);
+		}
+
+		List<DLFolder> foldersSource = DLFolderLocalServiceUtil.getFolders(
+			sourceGroupId, sourceParentFolderId);
+
+		for (DLFolder sourceFolder : foldersSource) {
+			DLFolder targetFolder = DLFolderLocalServiceUtil.
+				getDLFolderByUuidAndGroupId(sourceFolder.getUuid(),
+				targetGroupId);
+			Assert.assertNotNull(
+				String.format("Verifying that Folder %s is found",
+				sourceFolder.getUuid()), targetFolder);
+
+			assertDLFolders(
+				sourceGroupId, targetGroupId, sourceFolder.getFolderId(),
+				targetFolder.getFolderId(), expectedFileEntryTypeGroupId);
+		}
+	}
+
+	/**
+	 * Compare site's DL folder structure
+	 *
+	 * <i>Support is not complete yet.</i>
+	 *
+	 * @param sourceGroupId
+	 * @param targetGroupId
+	 * @param sourceParentFolderId
+	 * @param targetParentFolderId
+	 * @throws Exception
+	 */
+	public static void assertDlFoldersOfSites(
+			long sourceGroupId, long targetGroupId,
+			long expectedFileEntryTypeGroupId)
+		throws Exception {
+
+		_log.debug(
+			String.format("sourceGroupId=%d, targetGroupid, %d %d",
+			sourceGroupId, targetGroupId, expectedFileEntryTypeGroupId));
+
+		assertDLFolders(
+			sourceGroupId, targetGroupId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			expectedFileEntryTypeGroupId);
 	}
 
 	public static FileEntry updateFileEntry(
@@ -284,7 +574,113 @@ public abstract class DLAppTestUtil {
 			changeLog, majorVersion, bytes, serviceContext);
 	}
 
+	/**
+	 * Print site's DL folder structure to lot on debug level
+	 *
+	 * @param groupId Site's group id where folder should be printed out.
+	 * @throws Exception
+	 */
+	public void debugFolderStructure(long groupId) throws Exception {
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler();
+			debugFolderStructure(
+				sb, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, 0);
+		}
+	}
+
+	protected static void assertInputStreams(
+			String message, InputStream sourceStream, InputStream targetStream)
+		throws Exception {
+
+		byte[] source = new byte[1024];
+		byte[] target = new byte[1024];
+
+		int sourceResult = sourceStream.read(source);
+		int targetResult = targetStream.read(target);
+
+		while (sourceResult!=-1 || targetResult!=-1) {
+			Assert.assertArrayEquals(message, source, target);
+			sourceResult = sourceStream.read(source);
+			targetResult = targetStream.read(target);
+		}
+	}
+
+	protected static void debugFolderStructure(
+			StringBundler sb, long groupId, long parentFolderId, int depth)
+		throws Exception {
+
+		List<DLFileEntry> listTo = DLFileEntryLocalServiceUtil.getFileEntries(
+			groupId, parentFolderId);
+
+		if (!_log.isDebugEnabled()) {
+			return;
+		}
+
+		for (DLFileEntry dlFileEntry : listTo) {
+			sb.append(
+				String.format("[%s] %s.%s %s ( %s ) - File", intent(depth),
+				dlFileEntry.getName(), dlFileEntry.getTitle(),
+				dlFileEntry.getExtension(), dlFileEntry.getDescription()));
+
+			sb.append(StringPool.RETURN_NEW_LINE);
+		}
+
+		List<DLFolder> listFolderTo = DLFolderLocalServiceUtil.getFolders(
+			groupId, parentFolderId);
+
+		for (DLFolder dlFolder : listFolderTo) {
+			sb.append(
+				String.format("%s%s - Folder", intent(depth),
+				dlFolder.getName()));
+
+			sb.append(StringPool.RETURN_NEW_LINE);
+
+			debugFolderStructure(
+				sb, groupId, dlFolder.getFolderId(), depth + 2);
+		}
+	}
+
+	protected static Map<Locale, String> getDefaultLocaleMap(
+		String defaultValue) {
+
+		Map<Locale, String> map = new HashMap<Locale, String>();
+		map.put(LocaleUtil.getDefault(), defaultValue);
+		return map;
+	}
+
+	protected static String intent(int amount) {
+		if (amount==0) {
+			return "";
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (int i=0; i<=amount; i++) {
+			sb.append(' ');
+		}
+
+		return sb.toString();
+	}
+
+	protected static void setDDMFieldValueToServiceToContext(
+			ServiceContext sc, DDMStructure ddmStructure, String fieldName,
+			String value)
+		throws PortalException, SystemException {
+
+		if (!ddmStructure.getFieldNames().contains(fieldName)) {
+			throw new IllegalArgumentException(
+				String.format("Structure id:%d does not contain fieldName %s",
+				ddmStructure.getStructureId(), fieldName));
+		}
+
+		sc.setAttribute(
+			String.format("%d%s", ddmStructure.getStructureId(), fieldName),
+			value);
+	}
+
 	private static final String _CONTENT =
 		"Content: Enterprise. Open Source. For Life.";
+
+	private static Log _log = LogFactoryUtil.getLog(DLAppTestUtil.class);
 
 }
