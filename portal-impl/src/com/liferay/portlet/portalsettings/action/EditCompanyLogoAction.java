@@ -138,6 +138,10 @@ public class EditCompanyLogoAction extends PortletAction {
 				FileEntry tempFileEntry = getTempImageFileEntry(
 					resourceRequest);
 
+				if (tempFileEntry == null) {
+					return;
+				}
+
 				serveTempImageFile(
 					resourceResponse, tempFileEntry.getContentStream());
 			}
@@ -235,6 +239,10 @@ public class EditCompanyLogoAction extends PortletAction {
 
 		try {
 			tempFileEntry = getTempImageFileEntry(actionRequest);
+
+			if (tempFileEntry == null) {
+				return;
+			}
 
 			tempImageStream = tempFileEntry.getContentStream();
 

@@ -108,7 +108,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		long repositoryId = getPortletRepositoryId(
+		long repositoryId = addPortletRepositoryId(
 			groupId, portletId, serviceContext);
 
 		serviceContext.setAttribute("className", className);
@@ -152,8 +152,11 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		long repositoryId = getPortletRepositoryId(
-			groupId, portletId, serviceContext);
+		Repository repository = getPortletRepository(groupId, portletId);
+
+		if (repository == null) {
+			return null;
+		}
 
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
@@ -164,12 +167,59 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			DLAppHelperThreadLocal.setEnabled(false);
 
 			return DLAppLocalServiceUtil.addFileEntry(
-				userId, repositoryId, folderId, fileName, mimeType, fileName,
-				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
+				userId, repository.getRepositoryId(), folderId, fileName,
+				mimeType, fileName, StringPool.BLANK, StringPool.BLANK, bytes,
+				serviceContext);
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
 		}
+	}
+
+	public Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Folder folder = null;
+
+		try {
+			folder = DLAppLocalServiceUtil.getFolder(
+				repositoryId, parentFolderId, folderName);
+		}
+		catch (NoSuchFolderException nsfe) {
+			folder = DLAppLocalServiceUtil.addFolder(
+				userId, repositoryId, parentFolderId, folderName,
+				StringPool.BLANK, serviceContext);
+		}
+
+		return folder;
+	}
+
+	public long addPortletRepositoryId(
+			long groupId, String portletId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			groupId, portletId);
+
+		if (repository != null) {
+			return repository.getRepositoryId();
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		User user = UserLocalServiceUtil.getDefaultUser(group.getCompanyId());
+
+		long classNameId = PortalUtil.getClassNameId(
+			LiferayRepository.class.getName());
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		return RepositoryLocalServiceUtil.addRepository(
+			user.getUserId(), groupId, classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, portletId,
+			StringPool.BLANK, portletId, typeSettingsProperties, true,
+			serviceContext);
 	}
 
 	public void deleteFolder(long folderId)
@@ -320,39 +370,15 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			folder = DLAppLocalServiceUtil.getFolder(
 				repositoryId, parentFolderId, folderName);
 		}
-		catch (NoSuchFolderException nsfe) {
-			folder = DLAppLocalServiceUtil.addFolder(
-				userId, repositoryId, parentFolderId, folderName,
-				StringPool.BLANK, serviceContext);
+		finally {
+			return folder;
 		}
-
-		return folder;
 	}
 
-	public long getPortletRepositoryId(
-			long groupId, String portletId, ServiceContext serviceContext)
+	public Repository getPortletRepository(long groupId, String portletId)
 		throws PortalException, SystemException {
 
-		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
-			groupId, portletId);
-
-		if (repository != null) {
-			return repository.getRepositoryId();
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		User user = UserLocalServiceUtil.getDefaultUser(group.getCompanyId());
-
-		long classNameId = PortalUtil.getClassNameId(
-			LiferayRepository.class.getName());
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		return RepositoryLocalServiceUtil.addRepository(
-			user.getUserId(), groupId, classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, portletId,
-			StringPool.BLANK, portletId, typeSettingsProperties, true,
-			serviceContext);
+		return RepositoryLocalServiceUtil.fetchRepository(groupId, portletId);
 	}
 
 	public void movePortletFileEntryToTrash(long userId, long fileEntryId)

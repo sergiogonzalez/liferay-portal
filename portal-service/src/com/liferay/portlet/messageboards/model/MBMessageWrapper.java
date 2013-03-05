@@ -950,6 +950,18 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		_mbMessage.persist();
 	}
 
+	public long addAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessage.addAttachmentsFolderId();
+	}
+
+	public long addThreadAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessage.addThreadAttachmentsFolderId();
+	}
+
 	public java.lang.String[] getAssetTagNames()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessage.getAssetTagNames();
@@ -974,10 +986,10 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.getAttachmentsFileEntriesCount();
 	}
 
-	public long getAttachmentsFolderId()
+	public com.liferay.portal.kernel.repository.model.Folder getAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessage.getAttachmentsFolderId();
+		return _mbMessage.getAttachmentsFolder();
 	}
 
 	public java.lang.String getBody(boolean translate) {
@@ -1015,10 +1027,10 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.getThread();
 	}
 
-	public long getThreadAttachmentsFolderId()
+	public com.liferay.portal.kernel.repository.model.Folder getThreadAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessage.getThreadAttachmentsFolderId();
+		return _mbMessage.getThreadAttachmentsFolder();
 	}
 
 	public java.lang.String getWorkflowClassName() {
