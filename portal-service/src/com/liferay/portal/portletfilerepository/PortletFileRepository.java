@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -49,6 +50,15 @@ public interface PortletFileRepository {
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
 			String fileName, String mimeType)
+		throws PortalException, SystemException;
+
+	public Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public long addPortletRepositoryId(
+			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public void deleteFolder(long folderId)
@@ -105,8 +115,7 @@ public interface PortletFileRepository {
 			String folderName, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
-	public long getPortletRepositoryId(
-			long groupId, String portletId, ServiceContext serviceContext)
+	public Repository getPortletRepository(long groupId, String portletId)
 		throws PortalException, SystemException;
 
 	public void movePortletFileEntryToTrash(long userId, long fileEntryId)

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -326,7 +327,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
 				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-				message.getAttachmentsFolderId(), inputStreamOVPs);
+				message.addAttachmentsFolderId(), inputStreamOVPs);
 		}
 
 		// Resources
@@ -512,8 +513,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(
-			message.getAttachmentsFolderId());
+		Folder folder = message.getAttachmentsFolder();
+
+		if (folder != null) {
+			PortletFileRepositoryUtil.deleteFolder(folder.getFolderId());
+		}
 
 		// Thread
 
@@ -523,8 +527,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Attachments
 
-			PortletFileRepositoryUtil.deleteFolder(
-				message.getThreadAttachmentsFolderId());
+			Folder threadAttachmentsFolder =
+				message.getThreadAttachmentsFolder();
+
+			if (threadAttachmentsFolder != null) {
+				PortletFileRepositoryUtil.deleteFolder(
+					threadAttachmentsFolder.getFolderId());
+			}
 
 			// Subscriptions
 
@@ -703,8 +712,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
+		Folder folder = message.getAttachmentsFolder();
+
+		if (folder == null) {
+			return;
+		}
+
 		PortletFileRepositoryUtil.deletePortletFileEntry(
-			message.getGroupId(), message.getAttachmentsFolderId(), fileName);
+			message.getGroupId(), folder.getFolderId(), fileName);
 	}
 
 	public void deleteMessageAttachments(long messageId)
@@ -712,8 +727,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
+		Folder folder = message.getAttachmentsFolder();
+
+		if (folder == null) {
+			return;
+		}
+
 		PortletFileRepositoryUtil.deletePortletFileEntries(
-			message.getGroupId(), message.getAttachmentsFolderId());
+			message.getGroupId(), folder.getFolderId());
 	}
 
 	public List<MBMessage> getCategoryMessages(
@@ -1243,7 +1264,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessage message = getMessage(messageId);
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			message.getGroupId(), message.getAttachmentsFolderId(), fileName);
+			message.getGroupId(), message.addAttachmentsFolderId(), fileName);
 
 		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
 			userId, fileEntry.getFileEntryId());
@@ -1258,7 +1279,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessage message = getMessage(messageId);
 
 		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
-			message.getGroupId(), userId, message.getAttachmentsFolderId(),
+			message.getGroupId(), userId, message.addAttachmentsFolderId(),
 			deletedFileName);
 	}
 
@@ -1440,7 +1461,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
 				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-				message.getAttachmentsFolderId(), inputStreamOVPs);
+				message.addAttachmentsFolderId(), inputStreamOVPs);
 		}
 		else {
 			if (TrashUtil.isTrashEnabled(message.getGroupId())) {

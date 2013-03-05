@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
@@ -37,7 +38,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 	public WikiNodeImpl() {
 	}
 
-	public long getAttachmentsFolderId()
+	public long addAttachmentsFolderId()
 		throws PortalException, SystemException {
 
 		if (_attachmentsFolderId > 0) {
@@ -49,17 +50,38 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
-			getGroupId(), PortletKeys.WIKI, serviceContext);
+		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
+			getGroupId(), PortletKeys.WIKI);
 
-		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-			getUserId(), repositoryId,
+		_attachmentsFolder = PortletFileRepositoryUtil.addPortletFolder(
+			getUserId(), repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(getNodeId()), serviceContext);
 
-		_attachmentsFolderId = folder.getFolderId();
+		_attachmentsFolderId = _attachmentsFolder.getFolderId();
 
 		return _attachmentsFolderId;
+	}
+
+	public Folder getAttachmentsFolder()
+		throws PortalException, SystemException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
+			getGroupId(), PortletKeys.WIKI);
+
+		if (repository == null) {
+			return null;
+		}
+
+		return PortletFileRepositoryUtil.getPortletFolder(
+			getUserId(), repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(getNodeId()), serviceContext);
 	}
 
 	public List<FileEntry> getDeletedAttachmentsFiles()
@@ -77,6 +99,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		return fileEntries;
 	}
 
+	private Folder _attachmentsFolder;
 	private long _attachmentsFolderId;
 
 }
