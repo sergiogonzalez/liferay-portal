@@ -10,6 +10,10 @@
 	<property name="manifest.bundle.name" value="Liferay Portal Impl" />
 	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
+	
+	<property name="properties.title" value="Portal Properties" />
+	<property name="properties.toc" value="true" />
+	<property name="properties.file.path" value="src/portal.properties" />
 
 	<target name="build-alloy-taglib">
 		<if>
@@ -1354,6 +1358,19 @@ public class Creole10Parser]]></replacevalue>
 				/>
 			</then>
 		</if>
+	</target>
+
+	<target name="properties-to-html">
+		<java 
+			classname="com.liferay.portal.tools.propertiesconverter.PropertiesParser"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg value="properties.title=${properties.title}"/>
+			<arg value="properties.toc=${properties.toc}"/>
+			<arg value="properties.file.path=${properties.file.path}"/>
+		</java>
 	</target>
 
 	<target name="rebuild-hypersonic">
