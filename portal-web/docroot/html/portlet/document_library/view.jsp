@@ -181,8 +181,10 @@ if (folder != null) {
 		'<portlet:namespace />toggleActionsButton',
 		function() {
 			var A = AUI();
+			var nameSpace = '<portlet:namespace />';
+			var nameSpaceId = '#' + nameSpace;
 
-			var actionsButton = A.one('#<portlet:namespace />actionsButtonContainer');
+			var actionsButton = A.one(nameSpaceId + 'actionsButtonContainer');
 
 			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
 
@@ -194,6 +196,51 @@ if (folder != null) {
 	);
 
 	<portlet:namespace />toggleActionsButton();
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />toggleTrashAction',
+		function(isTrashEnabled) {
+			var A = AUI();
+			var nameSpace = '<portlet:namespace />';
+			var nameSpaceId = '#' + nameSpace;
+			var moveToTrashMenu = nameSpace + 'moveToTrashMenu';
+			var deleteMenu = nameSpace + 'deleteMenu';
+
+			// Cache reference to Window scope since Delete / Move to the Recycle bin button is not
+			// always findable through DOM search
+
+			if (!Window[moveToTrashMenu]) {
+				var moveToTrashIcon = A.one(nameSpaceId + 'moveToTrashAction');
+
+				if (moveToTrashIcon) {
+					Window[moveToTrashMenu] = moveToTrashIcon.get('parentNode');
+				}
+			}
+
+			if (!Window[deleteMenu]) {
+				var deleteMenuIcon = A.one(nameSpaceId + 'deleteAction');
+
+				if(deleteMenuIcon) {
+					Window[deleteMenu] = A.one(nameSpaceId + 'deleteAction').get('parentNode');
+				}
+			}
+
+			if (Window[moveToTrashMenu] && Window[deleteMenu]) {
+
+				if (isTrashEnabled) {
+					Window[moveToTrashMenu].show();
+					Window[deleteMenu].hide();
+				}
+				else {
+					Window[moveToTrashMenu].hide();
+					Window[deleteMenu].show();
+				}
+			}
+		},
+		['liferay-util-list-fields']
+	);
+	<portlet:namespace />toggleTrashAction(<%= ((repositoryId==scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) %>);
 </aui:script>
 
 <aui:script use="liferay-document-library">
