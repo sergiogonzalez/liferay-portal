@@ -1067,6 +1067,16 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	/**
+	* Returs the inherit users from a site
+	*/
+	public java.util.List<com.liferay.portal.model.User> getInheritGroupUsers(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getInheritGroupUsers(groupId);
+	}
+
+	/**
 	* Returns all the users belonging to the group.
 	*
 	* @param groupId the primary key of the group
