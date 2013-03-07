@@ -1087,6 +1087,16 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Returs the inherit users from a site
+	*/
+	public static java.util.List<com.liferay.portal.model.User> getInheritGroupUsers(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getInheritGroupUsers(groupId);
+	}
+
+	/**
 	* Returns all the users belonging to the group.
 	*
 	* @param groupId the primary key of the group

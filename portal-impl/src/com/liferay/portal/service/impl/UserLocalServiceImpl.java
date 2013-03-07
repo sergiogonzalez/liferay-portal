@@ -45,6 +45,7 @@ import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
 import com.liferay.portal.kernel.concurrent.PortalCallable;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -68,6 +69,7 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -76,6 +78,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -123,6 +126,7 @@ import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -143,6 +147,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -2061,6 +2066,61 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	public long[] getGroupUserIds(long groupId) throws SystemException {
 		return getUserIds(getGroupUsers(groupId));
+	}
+
+	/**
+	 * Returs the inherit users from a group
+	 *
+	 * @param groupId the primary key of the group
+	 * @return the inherit users from a gorup
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<User> getInheritGroupUsers(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		if (!group.isSite()) {
+			throw new SystemException();
+		}
+
+		List<Group> implicitMembershipGroups = new UniqueList<Group>();
+
+		Group currentGroup = group;
+
+		if (currentGroup.isImplicitMembership()) {
+			implicitMembershipGroups.add(currentGroup);
+		}
+
+		while (currentGroup.isImplicitMembership()) {
+			implicitMembershipGroups.add(currentGroup.getParentGroup());
+
+			currentGroup = groupPersistence.findByPrimaryKey(
+					currentGroup.getParentGroupId());
+		}
+
+		Long[] groupIds = new Long[implicitMembershipGroups.size()];
+
+		for (int i = 0 ; i < groupIds.length ; i++) {
+			groupIds[i] = implicitMembershipGroups.get(i).getGroupId();
+		}
+
+		if (groupIds.length == 0) {
+			return Collections.EMPTY_LIST;
+		}
+
+		LinkedHashMap<String, Object> userParams =
+			new LinkedHashMap<String, Object>();
+
+		userParams.put("inherit", Boolean.TRUE);
+		userParams.put("usersGroups", groupIds);
+
+		return search(
+			group.getCompanyId(), StringPool.BLANK, QueryUtil.ALL_POS,
+			userParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			(OrderByComparator) null);
 	}
 
 	/**
