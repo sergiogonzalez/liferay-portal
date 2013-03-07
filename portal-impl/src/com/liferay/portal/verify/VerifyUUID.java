@@ -101,7 +101,13 @@ public class VerifyUUID extends VerifyProcess {
 			"MBBan", "banId"
 		},
 		new String[] {
+			"MBThread", "threadId"
+		},
+		new String[] {
 			"MBThreadFlag", "threadFlagId"
+		},
+		new String[] {
+			"PollsVote", "voteId"
 		},
 		new String[] {
 			"WikiPageResource", "resourcePrimKey"

@@ -379,6 +379,12 @@ update MBMessage set status = 2 where status = 9;
 
 alter table MBMessage drop column attachments;
 
+alter table MBThread add uuid_ VARCHAR(75) null;
+alter table MBThread add userId LONG;
+alter table MBThread add userName VARCHAR(75) null;
+alter table MBThread add createDate DATE null;
+alter table MBThread add modifiedDate DATE null;
+
 alter table MBThreadFlag add uuid_ VARCHAR(75) null;
 alter table MBThreadFlag add groupId LONG;
 alter table MBThreadFlag add companyId LONG;
@@ -393,6 +399,9 @@ drop index IX_C3A17327 on PasswordPolicyRel;
 drop index IX_ED7CF243 on PasswordPolicyRel;
 
 drop table Permission_;
+
+alter table PollsVote add uuid_ VARCHAR(75) null;
+alter table PollsVote add groupId LONG;
 
 alter table RepositoryEntry add companyId LONG;
 alter table RepositoryEntry add userId LONG;

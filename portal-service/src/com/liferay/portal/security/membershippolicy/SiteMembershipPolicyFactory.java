@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.tools.seleniumbuilder;
+package com.liferay.portal.security.membershippolicy;
 
 /**
- * @author Michael Hashimoto
+ * @author Roberto Díaz
  */
-public class TestPlanConverter extends BaseConverter {
+public interface SiteMembershipPolicyFactory {
 
-	public TestPlanConverter(SeleniumBuilderContext seleniumBuilderContext) {
-		super(seleniumBuilderContext);
-	}
+	public SiteMembershipPolicy getSiteMembershipPolicy();
 
 }

@@ -346,12 +346,6 @@ public class OrganizationLocalServiceUtil {
 			.addPasswordPolicyOrganizations(passwordPolicyId, organizationIds);
 	}
 
-	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().checkMembershipPolicy(user);
-	}
-
 	/**
 	* Deletes the logo of the organization.
 	*
@@ -1314,7 +1308,7 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(OrganizationLocalService service) {
 	}

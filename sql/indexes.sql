@@ -547,6 +547,9 @@ create index IX_485F7E98 on MBThread (groupId, categoryId, status);
 create index IX_E1E7142B on MBThread (groupId, status);
 create index IX_AEDD9CB5 on MBThread (lastPostDate, priority);
 create index IX_CC993ECB on MBThread (rootMessageId);
+create index IX_7E264A0F on MBThread (uuid_);
+create index IX_F8CA2AB9 on MBThread (uuid_, companyId);
+create unique index IX_3A200B7B on MBThread (uuid_, groupId);
 
 create index IX_8CB0A24A on MBThreadFlag (threadId);
 create index IX_A28004B on MBThreadFlag (userId);
@@ -622,6 +625,9 @@ create unique index IX_F3C9F36 on PollsQuestion (uuid_, groupId);
 create index IX_D5DF7B54 on PollsVote (choiceId);
 create index IX_12112599 on PollsVote (questionId);
 create unique index IX_1BBFD4D3 on PollsVote (questionId, userId);
+create index IX_FD32EB70 on PollsVote (uuid_);
+create index IX_7D8E92B8 on PollsVote (uuid_, companyId);
+create unique index IX_A88C673A on PollsVote (uuid_, groupId);
 
 create index IX_D1F795F1 on PortalPreferences (ownerId, ownerType);
 
@@ -693,6 +699,7 @@ create unique index IX_A88E424E on Role_ (companyId, classNameId, classPK);
 create unique index IX_EBC931B8 on Role_ (companyId, name);
 create index IX_F436EC8E on Role_ (name);
 create index IX_5EB4E2FB on Role_ (subtype);
+create index IX_F92B66E6 on Role_ (type_);
 create index IX_CBE204 on Role_ (type_, subtype);
 
 create index IX_3BB93ECA on SCFrameworkVersi_SCProductVers (frameworkVersionId);

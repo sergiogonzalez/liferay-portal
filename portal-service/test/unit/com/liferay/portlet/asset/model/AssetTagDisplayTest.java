@@ -12,27 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portlet.asset.model;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Igor Spasic
  */
-public class MembershipPolicyFactoryUtil {
+public class AssetTagDisplayTest {
 
-	public static MembershipPolicy getMembershipPolicy() {
-		return getMembershipPolicyFactory().getMembershipPolicy();
+	@Test
+	public void testGetPage() {
+		AssetTagDisplay assetTagDisplay = new AssetTagDisplay();
+
+		assetTagDisplay.setStart(0);
+		assetTagDisplay.setEnd(20);
+
+		Assert.assertEquals(1, assetTagDisplay.getPage());
+
+		assetTagDisplay.setStart(20);
+		assetTagDisplay.setEnd(40);
+
+		Assert.assertEquals(2, assetTagDisplay.getPage());
+
+		assetTagDisplay.setEnd(0);
+
+		Assert.assertEquals(0, assetTagDisplay.getPage());
 	}
-
-	public static MembershipPolicyFactory getMembershipPolicyFactory() {
-		return _membershipPolicyFactory;
-	}
-
-	public void setMembershipPolicyFactory(
-		MembershipPolicyFactory membershipPolicyFactory) {
-
-		_membershipPolicyFactory = membershipPolicyFactory;
-	}
-
-	private static MembershipPolicyFactory _membershipPolicyFactory;
 
 }

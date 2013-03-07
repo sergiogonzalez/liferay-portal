@@ -360,11 +360,6 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		_groupLocalService.checkCompanyGroup(companyId);
 	}
 
-	public void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_groupLocalService.checkMembershipPolicy(user);
-	}
-
 	/**
 	* Creates systems groups and other related data needed by the system on the
 	* very first startup. Also takes care of creating the Control Panel groups
@@ -2264,14 +2259,14 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public GroupLocalService getWrappedGroupLocalService() {
 		return _groupLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;

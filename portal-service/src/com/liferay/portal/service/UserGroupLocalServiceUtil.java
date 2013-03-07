@@ -336,12 +336,6 @@ public class UserGroupLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().checkMembershipPolicy(user);
-	}
-
 	/**
 	* Clears all associations between the user and its user groups and clears
 	* the permissions cache.
@@ -729,7 +723,7 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(UserGroupLocalService service) {
 	}

@@ -186,6 +186,22 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	}
 
 	/**
+	* Returns the polls vote with the UUID in the group.
+	*
+	* @param uuid the UUID of polls vote
+	* @param groupId the group id of the polls vote
+	* @return the polls vote
+	* @throws PortalException if a polls vote with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.polls.model.PollsVote getPollsVoteByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _pollsVoteLocalService.getPollsVoteByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the polls votes.
 	*
 	* <p>
@@ -284,14 +300,14 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public PollsVoteLocalService getWrappedPollsVoteLocalService() {
 		return _pollsVoteLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedPollsVoteLocalService(
 		PollsVoteLocalService pollsVoteLocalService) {

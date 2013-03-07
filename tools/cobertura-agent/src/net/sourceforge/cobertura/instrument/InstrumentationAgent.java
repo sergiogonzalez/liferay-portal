@@ -192,7 +192,9 @@ public class InstrumentationAgent {
 
 			instrumentation.addTransformer(coberturaClassFileTransformer);
 		}
-		else if (instrumentation.isRetransformClassesSupported()) {
+		else if (instrumentation.isRedefineClassesSupported() &&
+				 instrumentation.isRetransformClassesSupported()) {
+
 			_instrumentation = instrumentation;
 			_includes = includes;
 			_excludes = excludes;
@@ -205,9 +207,31 @@ public class InstrumentationAgent {
 			dataFile.delete();
 		}
 		else {
-			System.out.println(
-				"Current JVM does not support class retransform. Dynamic s" +
-					"instrumententation is disabled.");
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Current JVM is not capable for dynamic ");
+			sb.append("instrumententation. Instrumentation ");
+
+			if (instrumentation.isRetransformClassesSupported()) {
+				sb.append("supports ");
+			}
+			else {
+				sb.append("does not support ");
+			}
+
+			sb.append("restranforming classes. Instrumentation ");
+
+			if (instrumentation.isRedefineClassesSupported()) {
+				sb.append("supports ");
+			}
+			else {
+				sb.append("does not support ");
+			}
+
+			sb.append("redefining classes. Dynamic instrumententation is ");
+			sb.append("disabled.");
+
+			System.out.println(sb.toString());
 		}
 	}
 

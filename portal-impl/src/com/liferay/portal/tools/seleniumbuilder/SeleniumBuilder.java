@@ -44,6 +44,17 @@ public class SeleniumBuilder {
 		Set<String> types = SetUtil.fromArray(
 			StringUtil.split(arguments.get("selenium.types")));
 
+		if (types.contains("action")) {
+			ActionConverter actionConverter = new ActionConverter(
+				seleniumBuilderContext);
+
+			Set<String> actionNames = seleniumBuilderContext.getActionNames();
+
+			for (String actionName : actionNames) {
+				actionConverter.convert(actionName);
+			}
+		}
+
 		if (types.contains("function")) {
 			FunctionConverter functionConverter = new FunctionConverter(
 				seleniumBuilderContext);
@@ -53,6 +64,17 @@ public class SeleniumBuilder {
 
 			for (String functionName : functionNames) {
 				functionConverter.convert(functionName);
+			}
+		}
+
+		if (types.contains("macro")) {
+			MacroConverter macroConverter = new MacroConverter(
+				seleniumBuilderContext);
+
+			Set<String> macroNames = seleniumBuilderContext.getMacroNames();
+
+			for (String macroName : macroNames) {
+				macroConverter.convert(macroName);
 			}
 		}
 	}

@@ -41,6 +41,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts.Globals;
 
 /**
  * @author Brian Wing Shun Chan
@@ -94,6 +97,14 @@ public class I18nServlet extends HttpServlet {
 
 				request.setAttribute(WebKeys.I18N_LANGUAGE_ID, i18nLanguageId);
 				request.setAttribute(WebKeys.I18N_PATH, i18nPath);
+
+				Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+
+				HttpSession session = request.getSession();
+
+				session.setAttribute(Globals.LOCALE_KEY, locale);
+
+				LanguageUtil.updateCookie(request, response, locale);
 
 				ServletContext servletContext = getServletContext();
 

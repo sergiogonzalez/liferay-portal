@@ -325,12 +325,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 			description, serviceContext);
 	}
 
-	public void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_userGroupLocalService.checkMembershipPolicy(user);
-	}
-
 	/**
 	* Clears all associations between the user and its user groups and clears
 	* the permissions cache.
@@ -705,14 +699,14 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public UserGroupLocalService getWrappedUserGroupLocalService() {
 		return _userGroupLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedUserGroupLocalService(
 		UserGroupLocalService userGroupLocalService) {
