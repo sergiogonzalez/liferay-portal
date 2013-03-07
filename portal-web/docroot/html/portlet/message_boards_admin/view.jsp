@@ -227,8 +227,8 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						rowChecker="<%= new RowChecker(renderResponse) %>"
 					>
 						<liferay-ui:search-container-results
-							results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-							total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
+							results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd()) %>"
+							total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_ANY) %>"
 						/>
 
 						<liferay-ui:search-container-row
