@@ -45,6 +45,10 @@ public class UserTestUtil {
 		return UserTestUtil.addGroupUser(group, RoleConstants.SITE_OWNER);
 	}
 
+	public static User addGroupMemberUser(Group group) throws Exception {
+		return UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
+	}
+
 	public static User addGroupUser(Group group, String roleName)
 		throws Exception {
 
