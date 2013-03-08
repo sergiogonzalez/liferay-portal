@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.UserGroupRole;
@@ -77,7 +78,7 @@ public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 		List<AssetTag> oldAssetTags,
 		Map<String, Serializable> oldExpandoAttributes,
-		String oldTypeSettings) {
+		UnicodeProperties oldTypeSettingsProperties) {
 	}
 
 	public void verifyPolicy(Role role) {
