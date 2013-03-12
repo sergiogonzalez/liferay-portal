@@ -226,6 +226,143 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addAssetEntryAssetTag(long entryId, long tagId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.addAssetEntryAssetTag(entryId, tagId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addAssetEntryAssetTag(long entryId,
+		com.liferay.portlet.asset.model.AssetTag assetTag)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.addAssetEntryAssetTag(entryId, assetTag);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addAssetEntryAssetTags(long entryId, long[] tagIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.addAssetEntryAssetTags(entryId, tagIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addAssetEntryAssetTags(long entryId,
+		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.addAssetEntryAssetTags(entryId, AssetTags);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void clearAssetEntryAssetTags(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.clearAssetEntryAssetTags(entryId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteAssetEntryAssetTag(long entryId, long tagId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.deleteAssetEntryAssetTag(entryId, tagId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteAssetEntryAssetTag(long entryId,
+		com.liferay.portlet.asset.model.AssetTag assetTag)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.deleteAssetEntryAssetTag(entryId, assetTag);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.deleteAssetEntryAssetTags(entryId, tagIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteAssetEntryAssetTags(long entryId,
+		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.deleteAssetEntryAssetTags(entryId, AssetTags);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getAssetEntryAssetTags(entryId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
+		long entryId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getAssetEntryAssetTags(entryId, start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
+		long entryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getAssetEntryAssetTags(entryId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getAssetEntryAssetTagsCount(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getAssetEntryAssetTagsCount(entryId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean hasAssetEntryAssetTag(long entryId, long tagId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.hasAssetEntryAssetTag(entryId, tagId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean hasAssetEntryAssetTags(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.hasAssetEntryAssetTags(entryId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setAssetEntryAssetTags(long entryId, long[] tagIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.setAssetEntryAssetTags(entryId, tagIds);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

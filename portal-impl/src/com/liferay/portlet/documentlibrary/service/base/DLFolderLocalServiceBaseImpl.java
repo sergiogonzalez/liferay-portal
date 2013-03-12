@@ -317,6 +317,138 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId, long folderId)
+		throws SystemException {
+		dlFileEntryTypePersistence.addDLFolder(fileEntryTypeId, folderId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		DLFolder dlFolder) throws SystemException {
+		dlFileEntryTypePersistence.addDLFolder(fileEntryTypeId, dlFolder);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds) throws SystemException {
+		dlFileEntryTypePersistence.addDLFolders(fileEntryTypeId, folderIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		List<DLFolder> DLFolders) throws SystemException {
+		dlFileEntryTypePersistence.addDLFolders(fileEntryTypeId, DLFolders);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId)
+		throws SystemException {
+		dlFileEntryTypePersistence.clearDLFolders(fileEntryTypeId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		long folderId) throws SystemException {
+		dlFileEntryTypePersistence.removeDLFolder(fileEntryTypeId, folderId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		DLFolder dlFolder) throws SystemException {
+		dlFileEntryTypePersistence.removeDLFolder(fileEntryTypeId, dlFolder);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds) throws SystemException {
+		dlFileEntryTypePersistence.removeDLFolders(fileEntryTypeId, folderIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		List<DLFolder> DLFolders) throws SystemException {
+		dlFileEntryTypePersistence.removeDLFolders(fileEntryTypeId, DLFolders);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId)
+		throws SystemException {
+		return dlFileEntryTypePersistence.getDLFolders(fileEntryTypeId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		int start, int end) throws SystemException {
+		return dlFileEntryTypePersistence.getDLFolders(fileEntryTypeId, start,
+			end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return dlFileEntryTypePersistence.getDLFolders(fileEntryTypeId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getDLFileEntryTypeDLFoldersCount(long fileEntryTypeId)
+		throws SystemException {
+		return dlFileEntryTypePersistence.getDLFoldersSize(fileEntryTypeId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		long folderId) throws SystemException {
+		return dlFileEntryTypePersistence.containsDLFolder(fileEntryTypeId,
+			folderId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasDLFileEntryTypeDLFolders(long fileEntryTypeId)
+		throws SystemException {
+		return dlFileEntryTypePersistence.containsDLFolders(fileEntryTypeId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds) throws SystemException {
+		dlFileEntryTypePersistence.setDLFolders(fileEntryTypeId, folderIds);
+	}
+
+	/**
 	 * Returns the d l app local service.
 	 *
 	 * @return the d l app local service

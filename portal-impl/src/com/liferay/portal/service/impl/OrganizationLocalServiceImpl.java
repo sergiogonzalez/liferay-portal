@@ -19,7 +19,6 @@ import com.liferay.portal.OrganizationNameException;
 import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.OrganizationTypeException;
 import com.liferay.portal.RequiredOrganizationException;
-import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -91,6 +90,7 @@ public class OrganizationLocalServiceImpl
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addGroupOrganizations(long groupId, long[] organizationIds)
 		throws PortalException, SystemException {
 
@@ -422,19 +422,6 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the organizations belonging to the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @return the organizations belonging to the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Organization> getGroupOrganizations(long groupId)
-		throws SystemException {
-
-		return groupPersistence.getOrganizations(groupId);
-	}
-
-	/**
 	 * Returns the organization with the name.
 	 *
 	 * @param  companyId the primary key of the organization's company
@@ -724,21 +711,6 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the organizations associated with the user.
-	 *
-	 * @param  userId the primary key of the user
-	 * @return the organizations associated with the user
-	 * @throws PortalException if a user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Organization> getUserOrganizations(long userId)
-		throws PortalException, SystemException {
-
-		return getUserOrganizations(
-			userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	/**
 	 * Returns all the organizations associated with the user. If
 	 * includeAdministrative is <code>true</code>, the result includes those
 	 * organizations that are not directly associated to the user but he is an
@@ -789,61 +761,6 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the organizations associated with the user.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  start the lower bound of the range of organizations to return
-	 * @param  end the upper bound of the range of organizations to return (not
-	 *         inclusive)
-	 * @return the range organizations associated with the user
-	 * @throws PortalException if a user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Organization> getUserOrganizations(
-			long userId, int start, int end)
-		throws PortalException, SystemException {
-
-		return userPersistence.getOrganizations(userId, start, end);
-	}
-
-	/**
-	 * Returns the number of organizations associated with the user.
-	 *
-	 * @param  userId the primary key of the user
-	 * @return the number of organizations associated with the user
-	 * @throws SystemException if a system exception occurred
-	 */
-	@ThreadLocalCachable
-	public int getUserOrganizationsCount(long userId) throws SystemException {
-		return userPersistence.getOrganizationsSize(userId);
-	}
-
-	/**
-	 * Returns <code>true</code> if the organization belongs to the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  organizationId the primary key of the organization
-	 * @return <code>true</code> if the organization belongs to the group;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasGroupOrganization(long groupId, long organizationId)
-		throws SystemException {
-
-		return groupPersistence.containsOrganization(groupId, organizationId);
-	}
-
-	/**
 	 * Returns <code>true</code> if the password policy has been assigned to the
 	 * organization.
 	 *
@@ -859,23 +776,6 @@ public class OrganizationLocalServiceImpl
 
 		return passwordPolicyRelLocalService.hasPasswordPolicyRel(
 			passwordPolicyId, Organization.class.getName(), organizationId);
-	}
-
-	/**
-	 * Returns <code>true</code> if the user is a member of the organization.
-	 * This method is usually called to determine if the user has view access to
-	 * a resource belonging to the organization.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  organizationId the primary key of the organization
-	 * @return <code>true</code> if the user has access to the organization;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasUserOrganization(long userId, long organizationId)
-		throws SystemException {
-
-		return userPersistence.containsOrganization(userId, organizationId);
 	}
 
 	/**
@@ -1535,6 +1435,7 @@ public class OrganizationLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void setGroupOrganizations(long groupId, long[] organizationIds)
 		throws PortalException, SystemException {
 

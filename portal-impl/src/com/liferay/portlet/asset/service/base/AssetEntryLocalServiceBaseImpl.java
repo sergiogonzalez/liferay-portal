@@ -330,6 +330,264 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetCategoryAssetEntry(long categoryId, long entryId)
+		throws SystemException {
+		assetCategoryPersistence.addAssetEntry(categoryId, entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetCategoryAssetEntry(long categoryId,
+		AssetEntry assetEntry) throws SystemException {
+		assetCategoryPersistence.addAssetEntry(categoryId, assetEntry);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetCategoryAssetEntries(long categoryId, long[] entryIds)
+		throws SystemException {
+		assetCategoryPersistence.addAssetEntries(categoryId, entryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetCategoryAssetEntries(long categoryId,
+		List<AssetEntry> AssetEntries) throws SystemException {
+		assetCategoryPersistence.addAssetEntries(categoryId, AssetEntries);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearAssetCategoryAssetEntries(long categoryId)
+		throws SystemException {
+		assetCategoryPersistence.clearAssetEntries(categoryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetCategoryAssetEntry(long categoryId, long entryId)
+		throws SystemException {
+		assetCategoryPersistence.removeAssetEntry(categoryId, entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetCategoryAssetEntry(long categoryId,
+		AssetEntry assetEntry) throws SystemException {
+		assetCategoryPersistence.removeAssetEntry(categoryId, assetEntry);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetCategoryAssetEntries(long categoryId, long[] entryIds)
+		throws SystemException {
+		assetCategoryPersistence.removeAssetEntries(categoryId, entryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetCategoryAssetEntries(long categoryId,
+		List<AssetEntry> AssetEntries) throws SystemException {
+		assetCategoryPersistence.removeAssetEntries(categoryId, AssetEntries);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetEntry> getAssetCategoryAssetEntries(long categoryId)
+		throws SystemException {
+		return assetCategoryPersistence.getAssetEntries(categoryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetEntry> getAssetCategoryAssetEntries(long categoryId,
+		int start, int end) throws SystemException {
+		return assetCategoryPersistence.getAssetEntries(categoryId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetEntry> getAssetCategoryAssetEntries(long categoryId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return assetCategoryPersistence.getAssetEntries(categoryId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getAssetCategoryAssetEntriesCount(long categoryId)
+		throws SystemException {
+		return assetCategoryPersistence.getAssetEntriesSize(categoryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasAssetCategoryAssetEntry(long categoryId, long entryId)
+		throws SystemException {
+		return assetCategoryPersistence.containsAssetEntry(categoryId, entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasAssetCategoryAssetEntries(long categoryId)
+		throws SystemException {
+		return assetCategoryPersistence.containsAssetEntries(categoryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds)
+		throws SystemException {
+		assetCategoryPersistence.setAssetEntries(categoryId, entryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetTagAssetEntry(long tagId, long entryId)
+		throws SystemException {
+		assetTagPersistence.addAssetEntry(tagId, entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetTagAssetEntry(long tagId, AssetEntry assetEntry)
+		throws SystemException {
+		assetTagPersistence.addAssetEntry(tagId, assetEntry);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetTagAssetEntries(long tagId, long[] entryIds)
+		throws SystemException {
+		assetTagPersistence.addAssetEntries(tagId, entryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetTagAssetEntries(long tagId,
+		List<AssetEntry> AssetEntries) throws SystemException {
+		assetTagPersistence.addAssetEntries(tagId, AssetEntries);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearAssetTagAssetEntries(long tagId) throws SystemException {
+		assetTagPersistence.clearAssetEntries(tagId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetTagAssetEntry(long tagId, long entryId)
+		throws SystemException {
+		assetTagPersistence.removeAssetEntry(tagId, entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetTagAssetEntry(long tagId, AssetEntry assetEntry)
+		throws SystemException {
+		assetTagPersistence.removeAssetEntry(tagId, assetEntry);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetTagAssetEntries(long tagId, long[] entryIds)
+		throws SystemException {
+		assetTagPersistence.removeAssetEntries(tagId, entryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetTagAssetEntries(long tagId,
+		List<AssetEntry> AssetEntries) throws SystemException {
+		assetTagPersistence.removeAssetEntries(tagId, AssetEntries);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetEntry> getAssetTagAssetEntries(long tagId)
+		throws SystemException {
+		return assetTagPersistence.getAssetEntries(tagId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetEntry> getAssetTagAssetEntries(long tagId, int start,
+		int end) throws SystemException {
+		return assetTagPersistence.getAssetEntries(tagId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetEntry> getAssetTagAssetEntries(long tagId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		return assetTagPersistence.getAssetEntries(tagId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getAssetTagAssetEntriesCount(long tagId)
+		throws SystemException {
+		return assetTagPersistence.getAssetEntriesSize(tagId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasAssetTagAssetEntry(long tagId, long entryId)
+		throws SystemException {
+		return assetTagPersistence.containsAssetEntry(tagId, entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasAssetTagAssetEntries(long tagId)
+		throws SystemException {
+		return assetTagPersistence.containsAssetEntries(tagId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setAssetTagAssetEntries(long tagId, long[] entryIds)
+		throws SystemException {
+		assetTagPersistence.setAssetEntries(tagId, entryIds);
+	}
+
+	/**
 	 * Returns the asset category local service.
 	 *
 	 * @return the asset category local service

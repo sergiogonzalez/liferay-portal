@@ -278,6 +278,135 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetEntryAssetTag(long entryId, long tagId)
+		throws SystemException {
+		assetEntryPersistence.addAssetTag(entryId, tagId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetEntryAssetTag(long entryId, AssetTag assetTag)
+		throws SystemException {
+		assetEntryPersistence.addAssetTag(entryId, assetTag);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetEntryAssetTags(long entryId, long[] tagIds)
+		throws SystemException {
+		assetEntryPersistence.addAssetTags(entryId, tagIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetEntryAssetTags(long entryId, List<AssetTag> AssetTags)
+		throws SystemException {
+		assetEntryPersistence.addAssetTags(entryId, AssetTags);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearAssetEntryAssetTags(long entryId)
+		throws SystemException {
+		assetEntryPersistence.clearAssetTags(entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetEntryAssetTag(long entryId, long tagId)
+		throws SystemException {
+		assetEntryPersistence.removeAssetTag(entryId, tagId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetEntryAssetTag(long entryId, AssetTag assetTag)
+		throws SystemException {
+		assetEntryPersistence.removeAssetTag(entryId, assetTag);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds)
+		throws SystemException {
+		assetEntryPersistence.removeAssetTags(entryId, tagIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetEntryAssetTags(long entryId, List<AssetTag> AssetTags)
+		throws SystemException {
+		assetEntryPersistence.removeAssetTags(entryId, AssetTags);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetTag> getAssetEntryAssetTags(long entryId)
+		throws SystemException {
+		return assetEntryPersistence.getAssetTags(entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetTag> getAssetEntryAssetTags(long entryId, int start,
+		int end) throws SystemException {
+		return assetEntryPersistence.getAssetTags(entryId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetTag> getAssetEntryAssetTags(long entryId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		return assetEntryPersistence.getAssetTags(entryId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getAssetEntryAssetTagsCount(long entryId)
+		throws SystemException {
+		return assetEntryPersistence.getAssetTagsSize(entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasAssetEntryAssetTag(long entryId, long tagId)
+		throws SystemException {
+		return assetEntryPersistence.containsAssetTag(entryId, tagId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasAssetEntryAssetTags(long entryId)
+		throws SystemException {
+		return assetEntryPersistence.containsAssetTags(entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setAssetEntryAssetTags(long entryId, long[] tagIds)
+		throws SystemException {
+		assetEntryPersistence.setAssetTags(entryId, tagIds);
+	}
+
+	/**
 	 * Returns the asset category local service.
 	 *
 	 * @return the asset category local service

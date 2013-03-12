@@ -246,6 +246,159 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.addDLFileEntryTypeDLFolder(fileEntryTypeId,
+			folderId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.addDLFileEntryTypeDLFolder(fileEntryTypeId,
+			dlFolder);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.addDLFileEntryTypeDLFolders(fileEntryTypeId,
+			folderIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> DLFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.addDLFileEntryTypeDLFolders(fileEntryTypeId,
+			DLFolders);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.clearDLFileEntryTypeDLFolders(fileEntryTypeId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.deleteDLFileEntryTypeDLFolder(fileEntryTypeId,
+			folderId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.deleteDLFileEntryTypeDLFolder(fileEntryTypeId,
+			dlFolder);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.deleteDLFileEntryTypeDLFolders(fileEntryTypeId,
+			folderIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> DLFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.deleteDLFileEntryTypeDLFolders(fileEntryTypeId,
+			DLFolders);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
+		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId,
+			start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getDLFileEntryTypeDLFoldersCount(long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getDLFileEntryTypeDLFoldersCount(fileEntryTypeId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.hasDLFileEntryTypeDLFolder(fileEntryTypeId,
+			folderId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean hasDLFileEntryTypeDLFolders(long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.hasDLFileEntryTypeDLFolders(fileEntryTypeId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.setDLFileEntryTypeDLFolders(fileEntryTypeId,
+			folderIds);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

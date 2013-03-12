@@ -224,6 +224,277 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserTeam(long userId, long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.addUserTeam(userId, teamId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserTeam(long userId, com.liferay.portal.model.Team team)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.addUserTeam(userId, team);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserTeams(long userId, long[] teamIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.addUserTeams(userId, teamIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserTeams(long userId,
+		java.util.List<com.liferay.portal.model.Team> Teams)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.addUserTeams(userId, Teams);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void clearUserTeams(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.clearUserTeams(userId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteUserTeam(long userId, long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.deleteUserTeam(userId, teamId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteUserTeam(long userId, com.liferay.portal.model.Team team)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.deleteUserTeam(userId, team);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteUserTeams(long userId, long[] teamIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.deleteUserTeams(userId, teamIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteUserTeams(long userId,
+		java.util.List<com.liferay.portal.model.Team> Teams)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.deleteUserTeams(userId, Teams);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserTeams(userId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserTeams(userId, start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserTeams(userId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getUserTeamsCount(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserTeamsCount(userId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean hasUserTeam(long userId, long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.hasUserTeam(userId, teamId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean hasUserTeams(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.hasUserTeams(userId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setUserTeams(long userId, long[] teamIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.setUserTeams(userId, teamIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserGroupTeam(long userGroupId, long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.addUserGroupTeam(userGroupId, teamId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserGroupTeam(long userGroupId,
+		com.liferay.portal.model.Team team)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.addUserGroupTeam(userGroupId, team);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserGroupTeams(long userGroupId, long[] teamIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.addUserGroupTeams(userGroupId, teamIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserGroupTeams(long userGroupId,
+		java.util.List<com.liferay.portal.model.Team> Teams)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.addUserGroupTeams(userGroupId, Teams);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void clearUserGroupTeams(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.clearUserGroupTeams(userGroupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteUserGroupTeam(long userGroupId, long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.deleteUserGroupTeam(userGroupId, teamId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteUserGroupTeam(long userGroupId,
+		com.liferay.portal.model.Team team)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.deleteUserGroupTeam(userGroupId, team);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteUserGroupTeams(long userGroupId, long[] teamIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.deleteUserGroupTeams(userGroupId, teamIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteUserGroupTeams(long userGroupId,
+		java.util.List<com.liferay.portal.model.Team> Teams)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.deleteUserGroupTeams(userGroupId, Teams);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Team> getUserGroupTeams(
+		long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserGroupTeams(userGroupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Team> getUserGroupTeams(
+		long userGroupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserGroupTeams(userGroupId, start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Team> getUserGroupTeams(
+		long userGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserGroupTeams(userGroupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getUserGroupTeamsCount(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserGroupTeamsCount(userGroupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean hasUserGroupTeam(long userGroupId, long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.hasUserGroupTeam(userGroupId, teamId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean hasUserGroupTeams(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.hasUserGroupTeams(userGroupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setUserGroupTeams(long userGroupId, long[] teamIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_teamLocalService.setUserGroupTeams(userGroupId, teamIds);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
@@ -268,19 +539,9 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return _teamLocalService.getUserTeams(userId);
-	}
-
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _teamLocalService.getUserTeams(userId, groupId);
-	}
-
-	public boolean hasUserTeam(long userId, long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _teamLocalService.hasUserTeam(userId, teamId);
 	}
 
 	public java.util.List<com.liferay.portal.model.Team> search(long groupId,

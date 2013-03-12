@@ -284,6 +284,137 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSCLicenseSCProductEntry(long licenseId, long productEntryId)
+		throws SystemException {
+		scLicensePersistence.addSCProductEntry(licenseId, productEntryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSCLicenseSCProductEntry(long licenseId,
+		SCProductEntry scProductEntry) throws SystemException {
+		scLicensePersistence.addSCProductEntry(licenseId, scProductEntry);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSCLicenseSCProductEntries(long licenseId,
+		long[] productEntryIds) throws SystemException {
+		scLicensePersistence.addSCProductEntries(licenseId, productEntryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSCLicenseSCProductEntries(long licenseId,
+		List<SCProductEntry> SCProductEntries) throws SystemException {
+		scLicensePersistence.addSCProductEntries(licenseId, SCProductEntries);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearSCLicenseSCProductEntries(long licenseId)
+		throws SystemException {
+		scLicensePersistence.clearSCProductEntries(licenseId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteSCLicenseSCProductEntry(long licenseId,
+		long productEntryId) throws SystemException {
+		scLicensePersistence.removeSCProductEntry(licenseId, productEntryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteSCLicenseSCProductEntry(long licenseId,
+		SCProductEntry scProductEntry) throws SystemException {
+		scLicensePersistence.removeSCProductEntry(licenseId, scProductEntry);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteSCLicenseSCProductEntries(long licenseId,
+		long[] productEntryIds) throws SystemException {
+		scLicensePersistence.removeSCProductEntries(licenseId, productEntryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteSCLicenseSCProductEntries(long licenseId,
+		List<SCProductEntry> SCProductEntries) throws SystemException {
+		scLicensePersistence.removeSCProductEntries(licenseId, SCProductEntries);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductEntry> getSCLicenseSCProductEntries(long licenseId)
+		throws SystemException {
+		return scLicensePersistence.getSCProductEntries(licenseId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductEntry> getSCLicenseSCProductEntries(long licenseId,
+		int start, int end) throws SystemException {
+		return scLicensePersistence.getSCProductEntries(licenseId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductEntry> getSCLicenseSCProductEntries(long licenseId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return scLicensePersistence.getSCProductEntries(licenseId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getSCLicenseSCProductEntriesCount(long licenseId)
+		throws SystemException {
+		return scLicensePersistence.getSCProductEntriesSize(licenseId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasSCLicenseSCProductEntry(long licenseId,
+		long productEntryId) throws SystemException {
+		return scLicensePersistence.containsSCProductEntry(licenseId,
+			productEntryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasSCLicenseSCProductEntries(long licenseId)
+		throws SystemException {
+		return scLicensePersistence.containsSCProductEntries(licenseId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setSCLicenseSCProductEntries(long licenseId,
+		long[] productEntryIds) throws SystemException {
+		scLicensePersistence.setSCProductEntries(licenseId, productEntryIds);
+	}
+
+	/**
 	 * Returns the s c framework version local service.
 	 *
 	 * @return the s c framework version local service

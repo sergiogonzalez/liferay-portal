@@ -233,6 +233,557 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addOrganizationGroup(long organizationId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addOrganizationGroup(organizationId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addOrganizationGroup(long organizationId,
+		com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addOrganizationGroup(organizationId, group);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addOrganizationGroups(long organizationId,
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addOrganizationGroups(organizationId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addOrganizationGroups(long organizationId,
+		java.util.List<com.liferay.portal.model.Group> Groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addOrganizationGroups(organizationId, Groups);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void clearOrganizationGroups(long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().clearOrganizationGroups(organizationId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteOrganizationGroup(long organizationId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteOrganizationGroup(organizationId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteOrganizationGroup(long organizationId,
+		com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteOrganizationGroup(organizationId, group);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteOrganizationGroups(long organizationId,
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteOrganizationGroups(organizationId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteOrganizationGroups(long organizationId,
+		java.util.List<com.liferay.portal.model.Group> Groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteOrganizationGroups(organizationId, Groups);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOrganizationGroups(organizationId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
+		long organizationId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOrganizationGroups(organizationId, start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
+		long organizationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getOrganizationGroups(organizationId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getOrganizationGroupsCount(long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOrganizationGroupsCount(organizationId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasOrganizationGroup(long organizationId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasOrganizationGroup(organizationId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasOrganizationGroups(long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasOrganizationGroups(organizationId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void setOrganizationGroups(long organizationId,
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setOrganizationGroups(organizationId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addRoleGroup(long roleId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addRoleGroup(roleId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addRoleGroup(long roleId,
+		com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addRoleGroup(roleId, group);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addRoleGroups(long roleId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addRoleGroups(roleId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addRoleGroups(long roleId,
+		java.util.List<com.liferay.portal.model.Group> Groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addRoleGroups(roleId, Groups);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void clearRoleGroups(long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().clearRoleGroups(roleId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteRoleGroup(long roleId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRoleGroup(roleId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteRoleGroup(long roleId,
+		com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRoleGroup(roleId, group);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteRoleGroups(long roleId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRoleGroups(roleId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteRoleGroups(long roleId,
+		java.util.List<com.liferay.portal.model.Group> Groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRoleGroups(roleId, Groups);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getRoleGroups(
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRoleGroups(roleId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getRoleGroups(
+		long roleId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRoleGroups(roleId, start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getRoleGroups(
+		long roleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRoleGroups(roleId, start, end, orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getRoleGroupsCount(long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRoleGroupsCount(roleId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasRoleGroup(long roleId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasRoleGroup(roleId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasRoleGroups(long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasRoleGroups(roleId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void setRoleGroups(long roleId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setRoleGroups(roleId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addUserGroupGroup(long userGroupId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserGroupGroup(userGroupId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addUserGroupGroup(long userGroupId,
+		com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserGroupGroup(userGroupId, group);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addUserGroupGroups(long userGroupId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserGroupGroups(userGroupId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addUserGroupGroups(long userGroupId,
+		java.util.List<com.liferay.portal.model.Group> Groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserGroupGroups(userGroupId, Groups);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void clearUserGroupGroups(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().clearUserGroupGroups(userGroupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteUserGroupGroup(long userGroupId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroupGroup(userGroupId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteUserGroupGroup(long userGroupId,
+		com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroupGroup(userGroupId, group);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteUserGroupGroups(long userGroupId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroupGroups(userGroupId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteUserGroupGroups(long userGroupId,
+		java.util.List<com.liferay.portal.model.Group> Groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroupGroups(userGroupId, Groups);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
+		long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroupGroups(userGroupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
+		long userGroupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroupGroups(userGroupId, start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
+		long userGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserGroupGroups(userGroupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getUserGroupGroupsCount(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroupGroupsCount(userGroupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasUserGroupGroup(long userGroupId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasUserGroupGroup(userGroupId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasUserGroupGroups(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasUserGroupGroups(userGroupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void setUserGroupGroups(long userGroupId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setUserGroupGroups(userGroupId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addUserGroup(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserGroup(userId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addUserGroup(long userId,
+		com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserGroup(userId, group);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addUserGroups(long userId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserGroups(userId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addUserGroups(long userId,
+		java.util.List<com.liferay.portal.model.Group> Groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserGroups(userId, Groups);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void clearUserGroups(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().clearUserGroups(userId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteUserGroup(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroup(userId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteUserGroup(long userId,
+		com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroup(userId, group);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteUserGroups(long userId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroups(userId, groupIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteUserGroups(long userId,
+		java.util.List<com.liferay.portal.model.Group> Groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroups(userId, Groups);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getUserGroups(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroups(userId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getUserGroups(
+		long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroups(userId, start, end);
+	}
+
+	/**
+	* @throws PortalException
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> getUserGroups(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroups(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getUserGroupsCount(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroupsCount(userId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasUserGroup(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasUserGroup(userId, groupId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasUserGroups(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasUserGroups(userId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void setUserGroups(long userId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setUserGroups(userId, groupIds);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
@@ -327,30 +878,6 @@ public class GroupLocalServiceUtil {
 		return getService()
 				   .addGroup(userId, parentGroupId, className, classPK, name,
 			description, type, friendlyURL, site, active, serviceContext);
-	}
-
-	/**
-	* Adds the groups to the role.
-	*
-	* @param roleId the primary key of the role
-	* @param groupIds the primary keys of the groups
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addRoleGroups(long roleId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().addRoleGroups(roleId, groupIds);
-	}
-
-	/**
-	* Adds the user to the groups.
-	*
-	* @param userId the primary key of the user
-	* @param groupIds the primary keys of the groups
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addUserGroups(long userId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().addUserGroups(userId, groupIds);
 	}
 
 	/**
@@ -805,18 +1332,6 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the groups associated with the role.
-	*
-	* @param roleId the primary key of the role
-	* @return the groups associated with the role
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getRoleGroups(roleId);
-	}
-
-	/**
 	* Returns the staging group.
 	*
 	* @param liveGroupId the primary key of the live group
@@ -862,22 +1377,6 @@ public class GroupLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserGroupGroup(companyId, userGroupId);
-	}
-
-	/**
-	* Returns all the user's site groups and immediate organization groups.
-	* System and staged groups are not included.
-	*
-	* @param userId the primary key of the user
-	* @return the user's groups and organization groups
-	* @throws PortalException if a user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserGroups(userId);
 	}
 
 	/**
@@ -931,36 +1430,6 @@ public class GroupLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserGroups(userId, inherit, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the user's site groups and immediate
-	* organization groups. System and staged groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @return the range of the user's groups and organization groups ordered by
-	name
-	* @throws PortalException if a user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserGroups(userId, start, end);
 	}
 
 	/**
@@ -1026,20 +1495,6 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns <code>true</code> if the group is associated with the role.
-	*
-	* @param roleId the primary key of the role
-	* @param groupId the primary key of the group
-	* @return <code>true</code> if the group is associated with the role;
-	<code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean hasRoleGroup(long roleId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().hasRoleGroup(roleId, groupId);
-	}
-
-	/**
 	* Returns <code>true</code> if the live group has a staging group.
 	*
 	* @param liveGroupId the primary key of the live group
@@ -1050,22 +1505,6 @@ public class GroupLocalServiceUtil {
 	public static boolean hasStagingGroup(long liveGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().hasStagingGroup(liveGroupId);
-	}
-
-	/**
-	* Returns <code>true</code> if the user is immediately associated with the
-	* group, or associated with the group via the user's organizations,
-	* inherited organizations, or user groups.
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the group
-	* @return <code>true</code> if the user is associated with the group;
-	<code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean hasUserGroup(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().hasUserGroup(userId, groupId);
 	}
 
 	/**
@@ -2141,19 +2580,6 @@ public class GroupLocalServiceUtil {
 		return getService()
 				   .searchCount(companyId, name, description, params,
 			andOperator);
-	}
-
-	/**
-	* Sets the groups associated with the role, removing and adding
-	* associations as necessary.
-	*
-	* @param roleId the primary key of the role
-	* @param groupIds the primary keys of the groups
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void setRoleGroups(long roleId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().setRoleGroups(roleId, groupIds);
 	}
 
 	/**

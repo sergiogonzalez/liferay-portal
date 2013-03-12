@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Collection;
@@ -209,6 +210,30 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 	public Criterion sizeNe(String propertyName, int size) {
 		return new CriterionImpl(
 			org.hibernate.criterion.Restrictions.sizeNe(propertyName, size));
+	}
+
+	public Criterion sqlRestriction(String sql) {
+		return new CriterionImpl(
+			org.hibernate.criterion.Restrictions.sqlRestriction(sql));
+	}
+
+	public Criterion sqlRestriction(String sql, Object value, Type type) {
+		return new CriterionImpl(
+			org.hibernate.criterion.Restrictions.sqlRestriction(
+				sql, value, TypeTranslator.translate(type)));
+	}
+
+	public Criterion sqlRestriction(String sql, Object[] values, Type[] types) {
+		org.hibernate.type.Type[] hibernateTypes =
+			new org.hibernate.type.Type[types.length];
+
+		for (int i = 0; i < types.length; i++) {
+			hibernateTypes[i] = TypeTranslator.translate(types[i]);
+		}
+
+		return new CriterionImpl(
+			org.hibernate.criterion.Restrictions.sqlRestriction(
+				sql, values, hibernateTypes));
 	}
 
 }

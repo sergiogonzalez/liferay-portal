@@ -825,6 +825,15 @@ public class UserFinderImpl
 		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
+
+			Long[] valueArray = (Long[])value;
+
+			Long groupId = valueArray[0];
+
+			if (Validator.isNull(groupId)) {
+				join = StringUtil.replace(
+					join, "(UserGroupRole.groupId = ?) AND", StringPool.BLANK);
+			}
 		}
 		else if (key.equals("usersGroups")) {
 			if (value instanceof Long) {

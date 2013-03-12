@@ -326,6 +326,17 @@ public class Entity {
 		}
 	}
 
+	public String getPKVarNames() {
+		if (hasCompoundPK()) {
+			return getVarName() + "PKs";
+		}
+		else {
+			EntityColumn col = _getPKColumn();
+
+			return col.getNames();
+		}
+	}
+
 	public String getPortletName() {
 		return _portletName;
 	}
@@ -397,6 +408,21 @@ public class Entity {
 
 	public String getVarNames() {
 		return TextFormatter.formatPlural(getVarName());
+	}
+
+	public boolean hasActionableDynamicQuery() {
+		if (hasColumns() && hasLocalService()) {
+			if (hasCompoundPK()) {
+				EntityColumn col = _pkList.get(0);
+
+				return col.isPrimitiveType();
+			}
+			else {
+				return hasPrimitivePK();
+			}
+		}
+
+		return false;
 	}
 
 	public boolean hasArrayableOperator() {

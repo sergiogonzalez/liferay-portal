@@ -88,4 +88,10 @@ public interface RestrictionsFactory {
 
 	public Criterion sizeNe(String propertyName, int size);
 
+	public Criterion sqlRestriction(String sql);
+
+	public Criterion sqlRestriction(String sql, Object value, Type type);
+
+	public Criterion sqlRestriction(String sql, Object[] values, Type[] types);
+
 }

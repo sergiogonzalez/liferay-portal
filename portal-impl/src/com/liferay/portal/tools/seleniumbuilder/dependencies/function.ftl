@@ -13,7 +13,22 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 	<#assign functionCommandElements = rootElement.elements("function-command")>
 
 	<#list functionCommandElements as functionCommandElement>
-		public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${functionCommandElement.attributeValue("name")}() {
+		public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${functionCommandElement.attributeValue("name")}(
+
+		<#list 1..seleniumBuilderContext.getFunctionTargetCount(functionName) as i>
+			String target${i}, String value${i}
+
+			<#if i_has_next>
+				,
+			</#if>
+		</#list>
+
+		) {
+			<#assign childElementNames = seleniumBuilderFileUtil.getChildElementNames(functionCommandElement)>
+
+			<#list childElementNames as childElementName>
+				${childElementName}Function ${seleniumBuilderFileUtil.getVariableName(childElementName)}Function = new ${childElementName}Function(liferaySelenium);
+			</#list>
 		}
 	</#list>
 

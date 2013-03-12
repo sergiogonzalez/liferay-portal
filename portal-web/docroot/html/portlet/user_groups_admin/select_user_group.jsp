@@ -25,11 +25,12 @@ User selUser = PortalUtil.getSelectedUser(request);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group");
-portletURL.setParameter("callback", callback);
 
 if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 }
+
+portletURL.setParameter("callback", callback);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -46,22 +47,19 @@ if (selUser != null) {
 
 		<%
 		UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
+
+		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 		%>
 
 		<liferay-ui:search-container-results>
+			<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_database.jspf" %>
 
 			<%
 			if (filterManageableUserGroups) {
-				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
+				results = UsersAdminUtil.filterUserGroups(permissionChecker, results);
 
-				userGroups = UsersAdminUtil.filterUserGroups(permissionChecker, userGroups);
-
-				total = userGroups.size();
-				results = ListUtil.subList(userGroups, searchContainer.getStart(), searchContainer.getEnd());
-			}
-			else {
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), null);
+				total = results.size();
+				results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
 			}
 
 			pageContext.setAttribute("results", results);
@@ -80,7 +78,7 @@ if (selUser != null) {
 			<%
 			String rowHREF = null;
 
-			if (UserGroupMembershipPolicyUtil.isMembershipAllowed(selUser.getUserId(), userGroup.getUserGroupId())) {
+			if (UserGroupMembershipPolicyUtil.isMembershipAllowed(selUser != null ? selUser.getUserId() : 0, userGroup.getUserGroupId())) {
 				StringBundler sb = new StringBundler(10);
 
 				sb.append("javascript:opener.");

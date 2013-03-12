@@ -602,7 +602,8 @@ public class LuceneHelperImplTest {
 			}
 
 			if (!_autoResponse) {
-				return new FutureClusterResponses(Collections.EMPTY_LIST);
+				return new FutureClusterResponses(
+					Collections.<Address>emptyList());
 			}
 
 			FutureClusterResponses futureClusterResponses =
@@ -691,7 +692,7 @@ public class LuceneHelperImplTest {
 		}
 
 		public List<ClusterNode> getClusterNodes() {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 
 		public ClusterNode getLocalClusterNode() {
@@ -857,8 +858,6 @@ public class LuceneHelperImplTest {
 
 				String request = reader.readLine();
 
-				socket.shutdownInput();
-
 				if (!request.contains("/lucene/dump")) {
 					return;
 				}
@@ -873,8 +872,6 @@ public class LuceneHelperImplTest {
 
 				outputStream.write(sb.toString().getBytes());
 				outputStream.write(_RESPONSE_MESSAGE);
-
-				socket.shutdownOutput();
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);

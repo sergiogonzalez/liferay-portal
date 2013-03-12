@@ -290,6 +290,145 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
+		long structureId) throws SystemException {
+		dlFileEntryTypePersistence.addDDMStructure(fileEntryTypeId, structureId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
+		DDMStructure ddmStructure) throws SystemException {
+		dlFileEntryTypePersistence.addDDMStructure(fileEntryTypeId, ddmStructure);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
+		long[] structureIds) throws SystemException {
+		dlFileEntryTypePersistence.addDDMStructures(fileEntryTypeId,
+			structureIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
+		List<DDMStructure> DDMStructures) throws SystemException {
+		dlFileEntryTypePersistence.addDDMStructures(fileEntryTypeId,
+			DDMStructures);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId)
+		throws SystemException {
+		dlFileEntryTypePersistence.clearDDMStructures(fileEntryTypeId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
+		long structureId) throws SystemException {
+		dlFileEntryTypePersistence.removeDDMStructure(fileEntryTypeId,
+			structureId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
+		DDMStructure ddmStructure) throws SystemException {
+		dlFileEntryTypePersistence.removeDDMStructure(fileEntryTypeId,
+			ddmStructure);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
+		long[] structureIds) throws SystemException {
+		dlFileEntryTypePersistence.removeDDMStructures(fileEntryTypeId,
+			structureIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
+		List<DDMStructure> DDMStructures) throws SystemException {
+		dlFileEntryTypePersistence.removeDDMStructures(fileEntryTypeId,
+			DDMStructures);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMStructure> getDLFileEntryTypeDDMStructures(
+		long fileEntryTypeId) throws SystemException {
+		return dlFileEntryTypePersistence.getDDMStructures(fileEntryTypeId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMStructure> getDLFileEntryTypeDDMStructures(
+		long fileEntryTypeId, int start, int end) throws SystemException {
+		return dlFileEntryTypePersistence.getDDMStructures(fileEntryTypeId,
+			start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMStructure> getDLFileEntryTypeDDMStructures(
+		long fileEntryTypeId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return dlFileEntryTypePersistence.getDDMStructures(fileEntryTypeId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getDLFileEntryTypeDDMStructuresCount(long fileEntryTypeId)
+		throws SystemException {
+		return dlFileEntryTypePersistence.getDDMStructuresSize(fileEntryTypeId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasDLFileEntryTypeDDMStructure(long fileEntryTypeId,
+		long structureId) throws SystemException {
+		return dlFileEntryTypePersistence.containsDDMStructure(fileEntryTypeId,
+			structureId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId)
+		throws SystemException {
+		return dlFileEntryTypePersistence.containsDDMStructures(fileEntryTypeId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setDLFileEntryTypeDDMStructures(long fileEntryTypeId,
+		long[] structureIds) throws SystemException {
+		dlFileEntryTypePersistence.setDDMStructures(fileEntryTypeId,
+			structureIds);
+	}
+
+	/**
 	 * Returns the d d m content local service.
 	 *
 	 * @return the d d m content local service

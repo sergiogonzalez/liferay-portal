@@ -26,8 +26,6 @@ import java.security.Permission;
 import java.util.Set;
 import java.util.TreeSet;
 
-import sun.reflect.Reflection;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -204,9 +202,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			}
 		}
 
-		Class<?> callerClass10 = Reflection.getCallerClass(10);
-
-		return isTrustedCallerClass(callerClass10);
+		return false;
 	}
 
 	protected boolean hasSetBeanProperty(Class<?> clazz, String property) {

@@ -70,6 +70,10 @@ public class PortalContextImpl implements PortalContext {
 	}
 
 	public String getProperty(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException();
+		}
+
 		return properties.getProperty(name);
 	}
 

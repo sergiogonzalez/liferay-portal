@@ -18,12 +18,17 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 
 import java.io.File;
+
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Michael Hashimoto
@@ -36,6 +41,32 @@ public class SeleniumBuilderFileUtil {
 
 	public String getBaseDir() {
 		return _baseDir;
+	}
+
+	public Set<String> getChildElementNames(Element element) {
+		Set<String> childElementNames = new TreeSet<String>();
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			return childElementNames;
+		}
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.attributeValue("name");
+
+			if (childElementName != null) {
+				int x = childElementName.lastIndexOf(StringPool.POUND);
+
+				if (x != -1) {
+					childElementNames.add(childElementName.substring(0, x));
+				}
+			}
+
+			childElementNames.addAll(getChildElementNames(childElement));
+		}
+
+		return childElementNames;
 	}
 
 	public String getClassName(String fileName) {
@@ -135,13 +166,19 @@ public class SeleniumBuilderFileUtil {
 	public int getTargetCount(Element rootElement) {
 		String xml = rootElement.asXML();
 
-		for (int i = 1;; i++) {
-			if (xml.contains("${target" + i +"}")) {
+		for (int i = 1;;) {
+			if (xml.contains("${target" + i + "}")) {
+				i++;
+
 				continue;
 			}
 
 			return i;
 		}
+	}
+
+	public String getVariableName(String name) {
+		return TextFormatter.format(name, TextFormatter.I);
 	}
 
 	public String normalizeFileName(String fileName) {

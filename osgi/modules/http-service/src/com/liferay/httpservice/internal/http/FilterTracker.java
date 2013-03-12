@@ -42,11 +42,13 @@ public class FilterTracker extends
 			Map<String, String> initParameters, HttpContext httpContext)
 		throws Exception {
 
-		String pattern = GetterUtil.getString(
-			serviceReference.getProperty("pattern"));
+		String filterName = GetterUtil.getString(
+			serviceReference.getProperty("filterName"));
+		String urlPattern = GetterUtil.getString(
+			serviceReference.getProperty("urlPattern"));
 
 		bundleServletContext.registerFilter(
-			pattern, filter, initParameters, httpContext);
+			filterName, urlPattern, filter, initParameters, httpContext);
 	}
 
 	@Override
@@ -54,10 +56,10 @@ public class FilterTracker extends
 		BundleServletContext bundleServletContext,
 		ServiceReference<Filter> serviceReference) {
 
-		String pattern = GetterUtil.getString(
-			serviceReference.getProperty("pattern"));
+		String filterName = GetterUtil.getString(
+			serviceReference.getProperty("filterName"));
 
-		bundleServletContext.unregisterFilter(pattern);
+		bundleServletContext.unregisterFilter(filterName);
 	}
 
 }

@@ -6,6 +6,7 @@
             <name>Liferay Portal</name>
         </general-data>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
             <name>Liferay Portal</name>
             <properties/>
             <folders>
@@ -24,6 +25,12 @@
                     <label>osgi\modules\http-service\src</label>
                     <type>java</type>
                     <location>osgi/modules/http-service/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>osgi\modules\http-service\test\unit</label>
+                    <type>java</type>
+                    <location>osgi/modules/http-service/test/unit</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -153,6 +160,10 @@
                     <source-folder style="packages">
                         <label>osgi\modules\http-service\src</label>
                         <location>osgi/modules/http-service/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>osgi\modules\http-service\test\unit</label>
+                        <location>osgi/modules/http-service/test/unit</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>osgi\modules\log-bridge\src</label>
@@ -389,6 +400,7 @@
                 <classpath mode="compile">lib/portal/eclipse-core-runtime.jar</classpath>
                 <classpath mode="compile">lib/portal/ecs.jar</classpath>
                 <classpath mode="compile">lib/portal/ehcache-core.jar</classpath>
+                <classpath mode="compile">lib/portal/ehcache-jgroupsreplication.jar</classpath>
                 <classpath mode="compile">lib/portal/fastutil.jar</classpath>
                 <classpath mode="compile">lib/portal/felix-fileinstall.jar</classpath>
                 <classpath mode="compile">lib/portal/flexjson.jar</classpath>

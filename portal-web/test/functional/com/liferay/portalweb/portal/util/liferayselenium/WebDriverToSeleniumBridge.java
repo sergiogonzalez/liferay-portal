@@ -366,9 +366,12 @@ public class WebDriverToSeleniumBridge
 
 		Alert alert = webDriverWait.until(ExpectedConditions.alertIsPresent());
 
-		acceptConfirmation();
-
-		return alert.getText();
+		try {
+			return alert.getText();
+		}
+		finally {
+			alert.accept();
+		}
 	}
 
 	public String getCookie() {
@@ -1045,20 +1048,17 @@ public class WebDriverToSeleniumBridge
 		Set<String> windowHandles = getWindowHandles();
 
 		if (windowID.equals("") || windowID.equals("null")) {
-			String currentWindowTitle = getTitle();
+			String title = getTitle();
 
 			for (String windowHandle : windowHandles) {
 				WebDriver.TargetLocator targetLocator = switchTo();
 
 				targetLocator.window(windowHandle);
 
-				if (!currentWindowTitle.equals(getTitle())) {
+				if (!title.equals(getTitle())) {
 					return;
 				}
 			}
-
-			BaseTestCase.fail(
-				"Unable to find the window ID \"" + windowID + "\"");
 		}
 		else {
 			selectWindow(windowID);
@@ -1068,7 +1068,23 @@ public class WebDriverToSeleniumBridge
 	public void selectWindow(String windowID) {
 		Set<String> windowHandles = getWindowHandles();
 
-		if (windowID.equals("null")) {
+		if (windowID.equals("name=undefined")) {
+			String title = getTitle();
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (!title.equals(getTitle())) {
+					return;
+				}
+			}
+
+			BaseTestCase.fail(
+				"Unable to find the window ID \"" + windowID + "\"");
+		}
+		else if (windowID.equals("null")) {
 			WebDriver.TargetLocator targetLocator = switchTo();
 
 			targetLocator.window(_defaultWindowHandle);

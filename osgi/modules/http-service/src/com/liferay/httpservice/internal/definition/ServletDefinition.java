@@ -14,9 +14,9 @@
 
 package com.liferay.httpservice.internal.definition;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 
@@ -29,7 +29,7 @@ public class ServletDefinition {
 		_urlPatterns.add(urlPattern);
 	}
 
-	public Dictionary<String, String> getInitParameters() {
+	public Map<String, String> getInitParameters() {
 		return _initParameters;
 	}
 
@@ -49,7 +49,7 @@ public class ServletDefinition {
 		_initParameters.put(name, value);
 	}
 
-	public void setInitParameters(Dictionary<String, String> initParameters) {
+	public void setInitParameters(Map<String, String> initParameters) {
 		_initParameters = initParameters;
 	}
 
@@ -65,8 +65,7 @@ public class ServletDefinition {
 		_urlPatterns = urlPatterns;
 	}
 
-	private Dictionary<String, String> _initParameters =
-		new Hashtable<String, String>();
+	private Map<String, String> _initParameters = new HashMap<String, String>();
 	private String _name;
 	private Servlet _servlet;
 	private List<String> _urlPatterns;

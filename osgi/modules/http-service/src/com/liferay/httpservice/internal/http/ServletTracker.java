@@ -42,11 +42,13 @@ public class ServletTracker
 			Map<String, String> initParameters, HttpContext httpContext)
 		throws Exception {
 
-		String alias = GetterUtil.getString(
-			serviceReference.getProperty("alias"));
+		String servletName = GetterUtil.getString(
+			serviceReference.getProperty("servletName"));
+		String urlPattern = GetterUtil.getString(
+			serviceReference.getProperty("urlPattern"));
 
 		bundleServletContext.registerServlet(
-			alias, servlet, initParameters, httpContext);
+			servletName, urlPattern, servlet, initParameters, httpContext);
 	}
 
 	@Override
@@ -54,10 +56,10 @@ public class ServletTracker
 		BundleServletContext bundleServletContext,
 		ServiceReference<Servlet> serviceReference) {
 
-		String alias = GetterUtil.getString(
-			serviceReference.getProperty("alias"));
+		String servletName = GetterUtil.getString(
+			serviceReference.getProperty("servletName"));
 
-		bundleServletContext.unregisterServlet(alias);
+		bundleServletContext.unregisterServlet(servletName);
 	}
 
 }

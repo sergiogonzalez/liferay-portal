@@ -428,6 +428,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addGroupUsers(long groupId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -451,6 +452,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -487,6 +489,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addRoleUsers(long roleId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -508,6 +511,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addTeamUsers(long teamId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -607,6 +611,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	@SuppressWarnings("deprecation")
 	public void addUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
@@ -1536,6 +1541,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  organizationId the primary key of the organization
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void clearOrganizationUsers(long organizationId)
 		throws SystemException {
 
@@ -1550,6 +1556,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  userGroupId the primary key of the user group
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void clearUserGroupUsers(long userGroupId) throws SystemException {
 		userGroupPersistence.clearUsers(userGroupId);
 
@@ -1724,6 +1731,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteRoleUser(long roleId, long userId)
 		throws PortalException, SystemException {
 
@@ -1890,6 +1898,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteUserGroupUser(long userGroupId, long userId)
 		throws PortalException, SystemException {
 
@@ -2064,28 +2073,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the users belonging to the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @return the users belonging to the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<User> getGroupUsers(long groupId) throws SystemException {
-		return groupPersistence.getUsers(groupId);
-	}
-
-	/**
-	 * Returns the number of users belonging to the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @return the number of users belonging to the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int getGroupUsersCount(long groupId) throws SystemException {
-		return groupPersistence.getUsersSize(groupId);
-	}
-
-	/**
 	 * Returns the number of users with the status belonging to the group.
 	 *
 	 * @param  groupId the primary key of the group
@@ -2157,32 +2144,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the users belonging to the organization.
-	 *
-	 * @param  organizationId the primary key of the organization
-	 * @return the users belonging to the organization
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<User> getOrganizationUsers(long organizationId)
-		throws SystemException {
-
-		return organizationPersistence.getUsers(organizationId);
-	}
-
-	/**
-	 * Returns the number of users belonging to the organization.
-	 *
-	 * @param  organizationId the primary key of the organization
-	 * @return the number of users belonging to the organization
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int getOrganizationUsersCount(long organizationId)
-		throws SystemException {
-
-		return organizationPersistence.getUsersSize(organizationId);
-	}
-
-	/**
 	 * Returns the number of users with the status belonging to the
 	 * organization.
 	 *
@@ -2216,53 +2177,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	public long[] getRoleUserIds(long roleId) throws SystemException {
 		return getUserIds(getRoleUsers(roleId));
-	}
-
-	/**
-	 * Returns all the users belonging to the role.
-	 *
-	 * @param  roleId the primary key of the role
-	 * @return the users belonging to the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<User> getRoleUsers(long roleId) throws SystemException {
-		return rolePersistence.getUsers(roleId);
-	}
-
-	/**
-	 * Returns a range of all the users belonging to the role.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  roleId the primary key of the role
-	 * @param  start the lower bound of the range of users
-	 * @param  end the upper bound of the range of users (not inclusive)
-	 * @return the range of users belonging to the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<User> getRoleUsers(long roleId, int start, int end)
-		throws SystemException {
-
-		return rolePersistence.getUsers(roleId, start, end);
-	}
-
-	/**
-	 * Returns the number of users belonging to the role.
-	 *
-	 * @param  roleId the primary key of the role
-	 * @return the number of users belonging to the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int getRoleUsersCount(long roleId) throws SystemException {
-		return rolePersistence.getUsersSize(roleId);
 	}
 
 	/**
@@ -2735,30 +2649,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the users belonging to the user group.
-	 *
-	 * @param  userGroupId the primary key of the user group
-	 * @return the users belonging to the user group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<User> getUserGroupUsers(long userGroupId)
-		throws SystemException {
-
-		return userGroupPersistence.getUsers(userGroupId);
-	}
-
-	/**
-	 * Returns the number of users belonging to the user group.
-	 *
-	 * @param  userGroupId the primary key of the user group
-	 * @return the number of users belonging to the user group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int getUserGroupUsersCount(long userGroupId) throws SystemException {
-		return userGroupPersistence.getUsersSize(userGroupId);
-	}
-
-	/**
 	 * Returns the number of users with the status belonging to the user group.
 	 *
 	 * @param  userGroupId the primary key of the user group
@@ -2822,36 +2712,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user is a member of the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  userId the primary key of the user
-	 * @return <code>true</code> if the user is a member of the group;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasGroupUser(long groupId, long userId)
-		throws SystemException {
-
-		return groupPersistence.containsUser(groupId, userId);
-	}
-
-	/**
-	 * Returns <code>true</code> if the user is a member of the organization.
-	 *
-	 * @param  organizationId the primary key of the organization
-	 * @param  userId the primary key of the user
-	 * @return <code>true</code> if the user is a member of the organization;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasOrganizationUser(long organizationId, long userId)
-		throws SystemException {
-
-		return organizationPersistence.containsUser(organizationId, userId);
-	}
-
-	/**
 	 * Returns <code>true</code> if the password policy has been assigned to the
 	 * user.
 	 *
@@ -2866,21 +2726,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		return passwordPolicyRelLocalService.hasPasswordPolicyRel(
 			passwordPolicyId, User.class.getName(), userId);
-	}
-
-	/**
-	 * Returns <code>true</code> if the user is a member of the role.
-	 *
-	 * @param  roleId the primary key of the role
-	 * @param  userId the primary key of the user
-	 * @return <code>true</code> if the user is a member of the role;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasRoleUser(long roleId, long userId)
-		throws SystemException {
-
-		return rolePersistence.containsUser(roleId, userId);
 	}
 
 	/**
@@ -2903,36 +2748,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return roleLocalService.hasUserRole(userId, companyId, name, inherited);
-	}
-
-	/**
-	 * Returns <code>true</code> if the user is a member of the team.
-	 *
-	 * @param  teamId the primary key of the team
-	 * @param  userId the primary key of the user
-	 * @return <code>true</code> if the user is a member of the team;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasTeamUser(long teamId, long userId)
-		throws SystemException {
-
-		return teamPersistence.containsUser(teamId, userId);
-	}
-
-	/**
-	 * Returns <code>true</code> if the user is a member of the user group.
-	 *
-	 * @param  userGroupId the primary key of the user group
-	 * @param  userId the primary key of the user
-	 * @return <code>true</code> if the user is a member of the user group;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasUserGroupUser(long userGroupId, long userId)
-		throws SystemException {
-
-		return userGroupPersistence.containsUser(userGroupId, userId);
 	}
 
 	/**
@@ -3567,6 +3382,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void setRoleUsers(long roleId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -3588,6 +3404,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	@SuppressWarnings("deprecation")
 	public void setUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {

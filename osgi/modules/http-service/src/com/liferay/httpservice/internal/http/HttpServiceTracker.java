@@ -67,11 +67,14 @@ public class HttpServiceTracker
 
 		readConfiguration(_bundle);
 
-		initListeners((ExtendedHttpService)httpService, httpContext);
+		ExtendedHttpService extendedHttpService =
+			(ExtendedHttpService)httpService;
 
-		initServlets(httpService, httpContext);
+		initListeners(extendedHttpService, httpContext);
 
-		initFilters((ExtendedHttpService)httpService, httpContext);
+		initServlets(extendedHttpService, httpContext);
+
+		initFilters(extendedHttpService, httpContext);
 
 		return httpService;
 	}
@@ -85,11 +88,14 @@ public class HttpServiceTracker
 			return;
 		}
 
-		destroyFilters((ExtendedHttpService)httpService);
+		ExtendedHttpService extendedHttpService =
+			(ExtendedHttpService)httpService;
 
-		destroyServlets(httpService);
+		destroyFilters(extendedHttpService);
 
-		destroyListeners((ExtendedHttpService)httpService);
+		destroyServlets(extendedHttpService);
+
+		destroyListeners(extendedHttpService);
 
 		_webXML = null;
 	}
@@ -98,9 +104,9 @@ public class HttpServiceTracker
 		Map<String, FilterDefinition> filterDefinitions =
 			_webXML.getFilterDefinitions();
 
-		for (String name : filterDefinitions.keySet()) {
+		for (String filterName : filterDefinitions.keySet()) {
 			try {
-				extendedHttpService.unregisterFilter(name);
+				extendedHttpService.unregisterFilter(filterName);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -123,12 +129,12 @@ public class HttpServiceTracker
 		}
 	}
 
-	protected void destroyServlets(HttpService httpService) {
+	protected void destroyServlets(ExtendedHttpService extendedHttpService) {
 		Map<String, ServletDefinition> servlets =
 			_webXML.getServletDefinitions();
 
-		for (String name : servlets.keySet()) {
-			httpService.unregister(name);
+		for (String servletName : servlets.keySet()) {
+			extendedHttpService.unregisterServlet(servletName);
 		}
 	}
 
@@ -143,17 +149,15 @@ public class HttpServiceTracker
 
 			FilterDefinition filterDefinition = entry.getValue();
 
-			List<String> urlPatterns = filterDefinition.getURLPatterns();
-
-			for (String urlPattern : urlPatterns) {
-				try {
-					extendedHttpService.registerFilter(
-						urlPattern, filterDefinition.getFilter(),
-						filterDefinition.getInitParameters(), httpContext);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
+			try {
+				extendedHttpService.registerFilter(
+					filterDefinition.getName(),
+					filterDefinition.getURLPatterns(),
+					filterDefinition.getFilter(),
+					filterDefinition.getInitParameters(), httpContext);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 			}
 		}
 	}
@@ -177,7 +181,7 @@ public class HttpServiceTracker
 	}
 
 	protected void initServlets(
-		HttpService httpService, HttpContext httpContext) {
+		ExtendedHttpService extendedHttpService, HttpContext httpContext) {
 
 		Map<String, ServletDefinition> servletDefinitions =
 			_webXML.getServletDefinitions();
@@ -187,17 +191,15 @@ public class HttpServiceTracker
 
 			ServletDefinition servletDefinition = entry.getValue();
 
-			List<String> urlPatterns = servletDefinition.getURLPatterns();
-
-			for (String urlPattern : urlPatterns) {
-				try {
-					httpService.registerServlet(
-						urlPattern, servletDefinition.getServlet(),
-						servletDefinition.getInitParameters(), httpContext);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
+			try {
+				extendedHttpService.registerServlet(
+					servletDefinition.getName(),
+					servletDefinition.getURLPatterns(),
+					servletDefinition.getServlet(),
+					servletDefinition.getInitParameters(), httpContext);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 			}
 		}
 	}

@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
@@ -146,8 +145,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		PortalSecurityManagerThreadLocal.setEnabled(false);
-
 		DBFactoryUtil.reset();
 		DeployManagerUtil.reset();
 		InstancePool.reset();
@@ -185,8 +182,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 		finally {
 			PortalContextLoaderLifecycleThreadLocal.setInitializing(false);
-
-			PortalSecurityManagerThreadLocal.setEnabled(true);
 		}
 
 		ApplicationContext applicationContext =
@@ -219,8 +214,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			portalClassLoader, applicationContext);
-
-		beanLocatorImpl.setPACLWrapPersistence(true);
 
 		PortalBeanLocatorUtil.setBeanLocator(beanLocatorImpl);
 

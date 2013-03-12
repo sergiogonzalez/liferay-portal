@@ -321,6 +321,12 @@
 			<finder-column name="classPK" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_U_C_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="categoryId" arrayable-operator="OR" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_C_T_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" />
@@ -409,7 +415,7 @@
 
 		<!-- PK fields -->
 
-		<column name="threadId" type="long" primary="true" />
+		<column name="threadId" type="long" primary="true" container-model="true" />
 
 		<!-- Group instance -->
 
@@ -425,7 +431,7 @@
 
 		<!-- Other fields -->
 
-		<column name="categoryId" type="long" />
+		<column name="categoryId" type="long" parent-container-model="true" />
 		<column name="rootMessageId" type="long" />
 		<column name="rootMessageUserId" type="long" />
 		<column name="messageCount" type="int" />

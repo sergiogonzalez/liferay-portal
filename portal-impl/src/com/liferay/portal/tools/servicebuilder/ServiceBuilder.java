@@ -721,11 +721,11 @@ public class ServiceBuilder {
 					if (_isTargetEntity(entity)) {
 						System.out.println("Building " + entity.getName());
 
-						if (entity.hasColumns()) {
-							if (entity.hasLocalService()) {
-								_createActionableDynamicQuery(entity);
-							}
+						if (entity.hasActionableDynamicQuery()) {
+							_createActionableDynamicQuery(entity);
+						}
 
+						if (entity.hasColumns()) {
 							_createHbm(entity);
 							_createHbmUtil(entity);
 

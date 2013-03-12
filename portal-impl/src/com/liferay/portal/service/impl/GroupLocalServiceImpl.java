@@ -414,6 +414,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  groupIds the primary keys of the groups
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addRoleGroups(long roleId, long[] groupIds)
 		throws SystemException {
 
@@ -429,6 +430,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  groupIds the primary keys of the groups
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addUserGroups(long userId, long[] groupIds)
 		throws SystemException {
 
@@ -1363,17 +1365,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the groups associated with the role.
-	 *
-	 * @param  roleId the primary key of the role
-	 * @return the groups associated with the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Group> getRoleGroups(long roleId) throws SystemException {
-		return rolePersistence.getGroups(roleId);
-	}
-
-	/**
 	 * Returns the staging group.
 	 *
 	 * @param  liveGroupId the primary key of the live group
@@ -1421,21 +1412,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		return groupPersistence.findByC_C_C(
 			companyId, classNameId, userGroupId);
-	}
-
-	/**
-	 * Returns all the user's site groups and immediate organization groups.
-	 * System and staged groups are not included.
-	 *
-	 * @param  userId the primary key of the user
-	 * @return the user's groups and organization groups
-	 * @throws PortalException if a user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Group> getUserGroups(long userId)
-		throws PortalException, SystemException {
-
-		return getUserGroups(userId, false);
 	}
 
 	/**
@@ -1502,35 +1478,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		else {
 			return userPersistence.getGroups(userId, start, end);
 		}
-	}
-
-	/**
-	 * Returns an ordered range of all the user's site groups and immediate
-	 * organization groups. System and staged groups are not included.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  start the lower bound of the range of groups to return
-	 * @param  end the upper bound of the range of groups to return (not
-	 *         inclusive)
-	 * @return the range of the user's groups and organization groups ordered by
-	 *         name
-	 * @throws PortalException if a user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Group> getUserGroups(long userId, int start, int end)
-		throws PortalException, SystemException {
-
-		return getUserGroups(userId, false, start, end);
 	}
 
 	/**
@@ -1633,21 +1580,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the group is associated with the role.
-	 *
-	 * @param  roleId the primary key of the role
-	 * @param  groupId the primary key of the group
-	 * @return <code>true</code> if the group is associated with the role;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasRoleGroup(long roleId, long groupId)
-		throws SystemException {
-
-		return rolePersistence.containsGroup(roleId, groupId);
-	}
-
-	/**
 	 * Returns <code>true</code> if the live group has a staging group.
 	 *
 	 * @param  liveGroupId the primary key of the live group
@@ -1675,6 +1607,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public boolean hasUserGroup(long userId, long groupId)
 		throws SystemException {
 
@@ -2889,6 +2822,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  groupIds the primary keys of the groups
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void setRoleGroups(long roleId, long[] groupIds)
 		throws SystemException {
 

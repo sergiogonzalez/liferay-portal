@@ -252,7 +252,7 @@ public class UserImpl extends UserBaseImpl {
 		return group.getGroupId();
 	}
 
-	public long[] getGroupIds() throws PortalException, SystemException {
+	public long[] getGroupIds() throws SystemException {
 		List<Group> groups = getGroups();
 
 		long[] groupIds = new long[groups.size()];
@@ -266,7 +266,7 @@ public class UserImpl extends UserBaseImpl {
 		return groupIds;
 	}
 
-	public List<Group> getGroups() throws PortalException, SystemException {
+	public List<Group> getGroups() throws SystemException {
 		return GroupLocalServiceUtil.getUserGroups(getUserId());
 	}
 

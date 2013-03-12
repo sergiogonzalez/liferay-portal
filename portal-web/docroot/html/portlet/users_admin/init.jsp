@@ -67,7 +67,6 @@ page import="com.liferay.portlet.rolesadmin.search.OrganizationRoleChecker" %><%
 page import="com.liferay.portlet.rolesadmin.search.UserGroupRoleChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.search.UserRoleChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %><%@
-page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %><%@

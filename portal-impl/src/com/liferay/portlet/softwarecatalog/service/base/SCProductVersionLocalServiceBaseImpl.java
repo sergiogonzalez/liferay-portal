@@ -268,6 +268,155 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSCFrameworkVersionSCProductVersion(long frameworkVersionId,
+		long productVersionId) throws SystemException {
+		scFrameworkVersionPersistence.addSCProductVersion(frameworkVersionId,
+			productVersionId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSCFrameworkVersionSCProductVersion(long frameworkVersionId,
+		SCProductVersion scProductVersion) throws SystemException {
+		scFrameworkVersionPersistence.addSCProductVersion(frameworkVersionId,
+			scProductVersion);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, long[] productVersionIds)
+		throws SystemException {
+		scFrameworkVersionPersistence.addSCProductVersions(frameworkVersionId,
+			productVersionIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, List<SCProductVersion> SCProductVersions)
+		throws SystemException {
+		scFrameworkVersionPersistence.addSCProductVersions(frameworkVersionId,
+			SCProductVersions);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId) throws SystemException {
+		scFrameworkVersionPersistence.clearSCProductVersions(frameworkVersionId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteSCFrameworkVersionSCProductVersion(
+		long frameworkVersionId, long productVersionId)
+		throws SystemException {
+		scFrameworkVersionPersistence.removeSCProductVersion(frameworkVersionId,
+			productVersionId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteSCFrameworkVersionSCProductVersion(
+		long frameworkVersionId, SCProductVersion scProductVersion)
+		throws SystemException {
+		scFrameworkVersionPersistence.removeSCProductVersion(frameworkVersionId,
+			scProductVersion);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, long[] productVersionIds)
+		throws SystemException {
+		scFrameworkVersionPersistence.removeSCProductVersions(frameworkVersionId,
+			productVersionIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, List<SCProductVersion> SCProductVersions)
+		throws SystemException {
+		scFrameworkVersionPersistence.removeSCProductVersions(frameworkVersionId,
+			SCProductVersions);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductVersion> getSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId) throws SystemException {
+		return scFrameworkVersionPersistence.getSCProductVersions(frameworkVersionId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductVersion> getSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, int start, int end) throws SystemException {
+		return scFrameworkVersionPersistence.getSCProductVersions(frameworkVersionId,
+			start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductVersion> getSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return scFrameworkVersionPersistence.getSCProductVersions(frameworkVersionId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getSCFrameworkVersionSCProductVersionsCount(
+		long frameworkVersionId) throws SystemException {
+		return scFrameworkVersionPersistence.getSCProductVersionsSize(frameworkVersionId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasSCFrameworkVersionSCProductVersion(
+		long frameworkVersionId, long productVersionId)
+		throws SystemException {
+		return scFrameworkVersionPersistence.containsSCProductVersion(frameworkVersionId,
+			productVersionId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId) throws SystemException {
+		return scFrameworkVersionPersistence.containsSCProductVersions(frameworkVersionId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, long[] productVersionIds)
+		throws SystemException {
+		scFrameworkVersionPersistence.setSCProductVersions(frameworkVersionId,
+			productVersionIds);
+	}
+
+	/**
 	 * Returns the s c framework version local service.
 	 *
 	 * @return the s c framework version local service

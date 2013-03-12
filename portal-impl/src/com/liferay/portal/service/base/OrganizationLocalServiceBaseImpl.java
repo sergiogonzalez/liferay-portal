@@ -443,6 +443,264 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addGroupOrganization(long groupId, long organizationId)
+		throws SystemException {
+		groupPersistence.addOrganization(groupId, organizationId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addGroupOrganization(long groupId, Organization organization)
+		throws SystemException {
+		groupPersistence.addOrganization(groupId, organization);
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addGroupOrganizations(long groupId, long[] organizationIds)
+		throws PortalException, SystemException {
+		groupPersistence.addOrganizations(groupId, organizationIds);
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addGroupOrganizations(long groupId,
+		List<Organization> Organizations)
+		throws PortalException, SystemException {
+		groupPersistence.addOrganizations(groupId, Organizations);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearGroupOrganizations(long groupId) throws SystemException {
+		groupPersistence.clearOrganizations(groupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteGroupOrganization(long groupId, long organizationId)
+		throws SystemException {
+		groupPersistence.removeOrganization(groupId, organizationId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteGroupOrganization(long groupId, Organization organization)
+		throws SystemException {
+		groupPersistence.removeOrganization(groupId, organization);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteGroupOrganizations(long groupId, long[] organizationIds)
+		throws SystemException {
+		groupPersistence.removeOrganizations(groupId, organizationIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteGroupOrganizations(long groupId,
+		List<Organization> Organizations) throws SystemException {
+		groupPersistence.removeOrganizations(groupId, Organizations);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Organization> getGroupOrganizations(long groupId)
+		throws SystemException {
+		return groupPersistence.getOrganizations(groupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Organization> getGroupOrganizations(long groupId, int start,
+		int end) throws SystemException {
+		return groupPersistence.getOrganizations(groupId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Organization> getGroupOrganizations(long groupId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		return groupPersistence.getOrganizations(groupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getGroupOrganizationsCount(long groupId)
+		throws SystemException {
+		return groupPersistence.getOrganizationsSize(groupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasGroupOrganization(long groupId, long organizationId)
+		throws SystemException {
+		return groupPersistence.containsOrganization(groupId, organizationId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasGroupOrganizations(long groupId)
+		throws SystemException {
+		return groupPersistence.containsOrganizations(groupId);
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setGroupOrganizations(long groupId, long[] organizationIds)
+		throws PortalException, SystemException {
+		groupPersistence.setOrganizations(groupId, organizationIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserOrganization(long userId, long organizationId)
+		throws SystemException {
+		userPersistence.addOrganization(userId, organizationId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserOrganization(long userId, Organization organization)
+		throws SystemException {
+		userPersistence.addOrganization(userId, organization);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserOrganizations(long userId, long[] organizationIds)
+		throws SystemException {
+		userPersistence.addOrganizations(userId, organizationIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserOrganizations(long userId,
+		List<Organization> Organizations) throws SystemException {
+		userPersistence.addOrganizations(userId, Organizations);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearUserOrganizations(long userId) throws SystemException {
+		userPersistence.clearOrganizations(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserOrganization(long userId, long organizationId)
+		throws SystemException {
+		userPersistence.removeOrganization(userId, organizationId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserOrganization(long userId, Organization organization)
+		throws SystemException {
+		userPersistence.removeOrganization(userId, organization);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserOrganizations(long userId, long[] organizationIds)
+		throws SystemException {
+		userPersistence.removeOrganizations(userId, organizationIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserOrganizations(long userId,
+		List<Organization> Organizations) throws SystemException {
+		userPersistence.removeOrganizations(userId, Organizations);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Organization> getUserOrganizations(long userId)
+		throws SystemException {
+		return userPersistence.getOrganizations(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Organization> getUserOrganizations(long userId, int start,
+		int end) throws SystemException {
+		return userPersistence.getOrganizations(userId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Organization> getUserOrganizations(long userId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		return userPersistence.getOrganizations(userId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getUserOrganizationsCount(long userId) throws SystemException {
+		return userPersistence.getOrganizationsSize(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasUserOrganization(long userId, long organizationId)
+		throws SystemException {
+		return userPersistence.containsOrganization(userId, organizationId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasUserOrganizations(long userId) throws SystemException {
+		return userPersistence.containsOrganizations(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setUserOrganizations(long userId, long[] organizationIds)
+		throws SystemException {
+		userPersistence.setOrganizations(userId, organizationIds);
+	}
+
+	/**
 	 * Returns the account local service.
 	 *
 	 * @return the account local service

@@ -418,6 +418,256 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserTeam(long userId, long teamId) throws SystemException {
+		userPersistence.addTeam(userId, teamId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserTeam(long userId, Team team) throws SystemException {
+		userPersistence.addTeam(userId, team);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserTeams(long userId, long[] teamIds)
+		throws SystemException {
+		userPersistence.addTeams(userId, teamIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserTeams(long userId, List<Team> Teams)
+		throws SystemException {
+		userPersistence.addTeams(userId, Teams);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearUserTeams(long userId) throws SystemException {
+		userPersistence.clearTeams(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserTeam(long userId, long teamId)
+		throws SystemException {
+		userPersistence.removeTeam(userId, teamId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserTeam(long userId, Team team)
+		throws SystemException {
+		userPersistence.removeTeam(userId, team);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserTeams(long userId, long[] teamIds)
+		throws SystemException {
+		userPersistence.removeTeams(userId, teamIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserTeams(long userId, List<Team> Teams)
+		throws SystemException {
+		userPersistence.removeTeams(userId, Teams);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Team> getUserTeams(long userId) throws SystemException {
+		return userPersistence.getTeams(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Team> getUserTeams(long userId, int start, int end)
+		throws SystemException {
+		return userPersistence.getTeams(userId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Team> getUserTeams(long userId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return userPersistence.getTeams(userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getUserTeamsCount(long userId) throws SystemException {
+		return userPersistence.getTeamsSize(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasUserTeam(long userId, long teamId)
+		throws SystemException {
+		return userPersistence.containsTeam(userId, teamId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasUserTeams(long userId) throws SystemException {
+		return userPersistence.containsTeams(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setUserTeams(long userId, long[] teamIds)
+		throws SystemException {
+		userPersistence.setTeams(userId, teamIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserGroupTeam(long userGroupId, long teamId)
+		throws SystemException {
+		userGroupPersistence.addTeam(userGroupId, teamId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserGroupTeam(long userGroupId, Team team)
+		throws SystemException {
+		userGroupPersistence.addTeam(userGroupId, team);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserGroupTeams(long userGroupId, long[] teamIds)
+		throws SystemException {
+		userGroupPersistence.addTeams(userGroupId, teamIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserGroupTeams(long userGroupId, List<Team> Teams)
+		throws SystemException {
+		userGroupPersistence.addTeams(userGroupId, Teams);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearUserGroupTeams(long userGroupId) throws SystemException {
+		userGroupPersistence.clearTeams(userGroupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserGroupTeam(long userGroupId, long teamId)
+		throws SystemException {
+		userGroupPersistence.removeTeam(userGroupId, teamId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserGroupTeam(long userGroupId, Team team)
+		throws SystemException {
+		userGroupPersistence.removeTeam(userGroupId, team);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserGroupTeams(long userGroupId, long[] teamIds)
+		throws SystemException {
+		userGroupPersistence.removeTeams(userGroupId, teamIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserGroupTeams(long userGroupId, List<Team> Teams)
+		throws SystemException {
+		userGroupPersistence.removeTeams(userGroupId, Teams);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Team> getUserGroupTeams(long userGroupId)
+		throws SystemException {
+		return userGroupPersistence.getTeams(userGroupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Team> getUserGroupTeams(long userGroupId, int start, int end)
+		throws SystemException {
+		return userGroupPersistence.getTeams(userGroupId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Team> getUserGroupTeams(long userGroupId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return userGroupPersistence.getTeams(userGroupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getUserGroupTeamsCount(long userGroupId)
+		throws SystemException {
+		return userGroupPersistence.getTeamsSize(userGroupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasUserGroupTeam(long userGroupId, long teamId)
+		throws SystemException {
+		return userGroupPersistence.containsTeam(userGroupId, teamId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasUserGroupTeams(long userGroupId)
+		throws SystemException {
+		return userGroupPersistence.containsTeams(userGroupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setUserGroupTeams(long userGroupId, long[] teamIds)
+		throws SystemException {
+		userGroupPersistence.setTeams(userGroupId, teamIds);
+	}
+
+	/**
 	 * Returns the account local service.
 	 *
 	 * @return the account local service

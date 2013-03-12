@@ -144,6 +144,10 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
+	double)}
+	*/
 	public static void deletePage(long nodeId, java.lang.String title,
 		double version) throws RemoteException {
 		try {
@@ -199,6 +203,18 @@ public class WikiPageServiceSoap {
 		java.lang.String title) throws RemoteException {
 		try {
 			WikiPageServiceUtil.deleteTrashPageAttachments(nodeId, title);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void discardDraft(long nodeId, java.lang.String title,
+		double version) throws RemoteException {
+		try {
+			WikiPageServiceUtil.discardDraft(nodeId, title, version);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -229,6 +229,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @see    com.liferay.portal.service.persistence.UserPersistence#addRoles(
 	 *         long, long[])
 	 */
+	@Override
 	public void addUserRoles(long userId, long[] roleIds)
 		throws PortalException, SystemException {
 
@@ -516,17 +517,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		}
 
 		return role;
-	}
-
-	/**
-	 * Returns all the roles associated with the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @return the roles associated with the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Role> getGroupRoles(long groupId) throws SystemException {
-		return groupPersistence.getRoles(groupId);
 	}
 
 	public List<Role> getResourceBlockRoles(
@@ -817,32 +807,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		throws SystemException {
 
 		return roleFinder.findByU_G(userId, groupIds);
-	}
-
-	/**
-	 * Returns all the roles associated with the user.
-	 *
-	 * @param  userId the primary key of the user
-	 * @return the roles associated with the user
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Role> getUserRoles(long userId) throws SystemException {
-		return userPersistence.getRoles(userId);
-	}
-
-	/**
-	 * Returns <code>true</code> if the user is associated with the role.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  roleId the primary key of the role
-	 * @return <code>true</code> if the user is associated with the role;
-	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasUserRole(long userId, long roleId)
-		throws SystemException {
-
-		return userPersistence.containsRole(userId, roleId);
 	}
 
 	/**
@@ -1221,6 +1185,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *         if any one of the roles with the primary keys could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void setUserRoles(long userId, long[] roleIds)
 		throws PortalException, SystemException {
 

@@ -37,6 +37,7 @@ import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.List;
 
@@ -313,6 +314,14 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			if (!PortalUtil.isLayoutParentable(parentLayout)) {
 				throw new LayoutParentLayoutIdException(
 					LayoutParentLayoutIdException.NOT_PARENTABLE);
+			}
+
+			// Layout cannot become a child of a layout that is not sortable
+			// because it is linked to a layout set prototype
+
+			if (!SitesUtil.isLayoutSortable(parentLayout)) {
+				throw new LayoutParentLayoutIdException(
+					LayoutParentLayoutIdException.NOT_SORTABLE);
 			}
 
 			// Layout cannot become descendant of itself

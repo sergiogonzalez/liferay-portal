@@ -1321,14 +1321,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	public long[] getGroupIds()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getGroupIds();
 	}
 
 	public java.util.List<com.liferay.portal.model.Group> getGroups()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getGroups();
 	}
 

@@ -86,6 +86,10 @@
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
 
+		<!-- Relationships -->
+
+		<column name="dlFileEntryTypes" type="Collection" entity="com.liferay.portlet.documentlibrary.DLFileEntryType" mapping-table="DLFileEntryTypes_DDMStructures" />
+
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">

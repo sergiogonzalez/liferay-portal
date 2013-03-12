@@ -30,7 +30,11 @@ public class FunctionConverter extends BaseConverter {
 
 		context.put("functionName", functionName);
 
-		processTemplate("function.ftl", context);
+		String content = processTemplate("function.ftl", context);
+
+		seleniumBuilderFileUtil.writeFile(
+			seleniumBuilderContext.getFunctionJavaFileName(functionName),
+			content, true);
 	}
 
 }

@@ -181,6 +181,22 @@ public class RestrictionsFactoryUtil {
 		return getRestrictionsFactory().sizeNe(propertyName, size);
 	}
 
+	public static Criterion sqlRestriction(String sql) {
+		return getRestrictionsFactory().sqlRestriction(sql);
+	}
+
+	public static Criterion sqlRestriction(
+		String sql, Object value, Type type) {
+
+		return getRestrictionsFactory().sqlRestriction(sql, value, type);
+	}
+
+	public static Criterion sqlRestriction(
+		String sql, Object[] values, Type[] types) {
+
+		return getRestrictionsFactory().sqlRestriction(sql, values, types);
+	}
+
 	public void setRestrictionsFactory(
 		RestrictionsFactory restrictionsFactory) {
 

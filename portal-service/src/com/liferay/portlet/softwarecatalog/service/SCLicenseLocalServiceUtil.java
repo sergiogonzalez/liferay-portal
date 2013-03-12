@@ -235,6 +235,151 @@ public class SCLicenseLocalServiceUtil {
 	}
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addSCProductEntrySCLicense(long productEntryId,
+		long licenseId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addSCProductEntrySCLicense(productEntryId, licenseId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addSCProductEntrySCLicense(long productEntryId,
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addSCProductEntrySCLicense(productEntryId, scLicense);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addSCProductEntrySCLicenses(productEntryId, licenseIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addSCProductEntrySCLicenses(long productEntryId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().addSCProductEntrySCLicenses(productEntryId, SCLicenses);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void clearSCProductEntrySCLicenses(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().clearSCProductEntrySCLicenses(productEntryId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteSCProductEntrySCLicense(long productEntryId,
+		long licenseId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteSCProductEntrySCLicense(productEntryId, licenseId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteSCProductEntrySCLicense(long productEntryId,
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteSCProductEntrySCLicense(productEntryId, scLicense);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteSCProductEntrySCLicenses(productEntryId, licenseIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteSCProductEntrySCLicenses(long productEntryId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteSCProductEntrySCLicenses(productEntryId, SCLicenses);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
+		long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSCProductEntrySCLicenses(productEntryId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
+		long productEntryId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getSCProductEntrySCLicenses(productEntryId, start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
+		long productEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getSCProductEntrySCLicenses(productEntryId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getSCProductEntrySCLicensesCount(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSCProductEntrySCLicensesCount(productEntryId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasSCProductEntrySCLicense(long productEntryId,
+		long licenseId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasSCProductEntrySCLicense(productEntryId, licenseId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasSCProductEntrySCLicenses(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasSCProductEntrySCLicenses(productEntryId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void setSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setSCProductEntrySCLicenses(productEntryId, licenseIds);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

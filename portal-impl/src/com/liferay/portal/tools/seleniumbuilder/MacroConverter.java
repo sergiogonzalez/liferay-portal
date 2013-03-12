@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import java.util.Map;
+
 /**
  * @author Michael Hashimoto
  */
@@ -21,6 +23,18 @@ public class MacroConverter extends BaseConverter {
 
 	public MacroConverter(SeleniumBuilderContext seleniumBuilderContext) {
 		super(seleniumBuilderContext);
+	}
+
+	public void convert(String macroName) throws Exception {
+		Map<String, Object> context = getContext();
+
+		context.put("macroName", macroName);
+
+		String content = processTemplate("macro.ftl", context);
+
+		seleniumBuilderFileUtil.writeFile(
+			seleniumBuilderContext.getMacroJavaFileName(macroName), content,
+			true);
 	}
 
 }

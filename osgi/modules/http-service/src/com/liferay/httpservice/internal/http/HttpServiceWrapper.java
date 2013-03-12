@@ -17,13 +17,16 @@ package com.liferay.httpservice.internal.http;
 import com.liferay.httpservice.internal.servlet.BundleServletContext;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
+import javax.servlet.ServletException;
 
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.HttpService;
+import org.osgi.service.http.NamespaceException;
 
 /**
  * @author Raymond Augé
@@ -32,15 +35,24 @@ import org.osgi.service.http.HttpService;
 public class HttpServiceWrapper implements ExtendedHttpService, HttpService {
 
 	public HttpServiceWrapper(BundleServletContext bundleServletContext) {
+		this.bundleServletContext = bundleServletContext;
 	}
 
 	public HttpContext createDefaultHttpContext() {
-		return null;
+		return bundleServletContext.getHttpContext();
 	}
 
 	public void registerFilter(
-		String urlPattern, Filter filter, Map<String, String> initParameters,
-		HttpContext httpContext) {
+			String filterName, List<String> urlPatterns, Filter filter,
+			Map<String, String> initParameters, HttpContext httpContext)
+		throws NamespaceException, ServletException {
+
+		if (httpContext == null) {
+			httpContext = createDefaultHttpContext();
+		}
+
+		bundleServletContext.registerFilter(
+			filterName, urlPatterns, filter, initParameters, httpContext);
 	}
 
 	public void registerListener(
@@ -53,18 +65,44 @@ public class HttpServiceWrapper implements ExtendedHttpService, HttpService {
 	}
 
 	public void registerServlet(
-		String alias, Servlet servlet,
+			String servletName, List<String> urlPatterns, Servlet servlet,
+			Map<String, String> initParameters, HttpContext httpContext)
+		throws NamespaceException, ServletException {
+
+		if (httpContext == null) {
+			httpContext = createDefaultHttpContext();
+		}
+
+		bundleServletContext.registerServlet(
+			servletName, urlPatterns, servlet, initParameters, httpContext);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0
+	 */
+	public void registerServlet(
+		String urlPattern, Servlet servlet,
 		@SuppressWarnings("rawtypes") Dictionary initParameters,
 		HttpContext httpContext) {
+
+		throw new UnsupportedOperationException();
 	}
 
-	public void unregister(String alias) {
+	public void unregister(String servletName) {
+		unregisterServlet(servletName);
 	}
 
-	public void unregisterFilter(String name) {
+	public void unregisterFilter(String filterName) {
+		bundleServletContext.unregisterFilter(filterName);
 	}
 
 	public void unregisterListener(Object listener) {
 	}
+
+	public void unregisterServlet(String servletName) {
+		bundleServletContext.unregisterServlet(servletName);
+	}
+
+	protected BundleServletContext bundleServletContext;
 
 }

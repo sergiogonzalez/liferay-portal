@@ -66,6 +66,52 @@ public class SeleniumBuilder {
 				functionConverter.convert(functionName);
 			}
 		}
+
+		if (types.contains("macro")) {
+			MacroConverter macroConverter = new MacroConverter(
+				seleniumBuilderContext);
+
+			Set<String> macroNames = seleniumBuilderContext.getMacroNames();
+
+			for (String macroName : macroNames) {
+				macroConverter.convert(macroName);
+			}
+		}
+
+		if (types.contains("path")) {
+			PathConverter pathConverter = new PathConverter(
+				seleniumBuilderContext);
+
+			Set<String> pathNames = seleniumBuilderContext.getPathNames();
+
+			for (String pathName : pathNames) {
+				pathConverter.convert(pathName);
+			}
+		}
+
+		if (types.contains("testcase")) {
+			TestCaseConverter testCaseConverter = new TestCaseConverter(
+				seleniumBuilderContext);
+
+			Set<String> testCaseNames =
+				seleniumBuilderContext.getTestCaseNames();
+
+			for (String testCaseName : testCaseNames) {
+				testCaseConverter.convert(testCaseName);
+			}
+		}
+
+		if (types.contains("testsuite")) {
+			TestSuiteConverter testSuiteConverter = new TestSuiteConverter(
+				seleniumBuilderContext);
+
+			Set<String> testSuiteNames =
+				seleniumBuilderContext.getTestSuiteNames();
+
+			for (String testSuiteName : testSuiteNames) {
+				testSuiteConverter.convert(testSuiteName);
+			}
+		}
 	}
 
 }

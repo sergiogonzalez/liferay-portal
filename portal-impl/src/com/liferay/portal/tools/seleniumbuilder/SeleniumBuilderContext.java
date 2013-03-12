@@ -14,12 +14,15 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -68,6 +71,9 @@ public class SeleniumBuilderContext {
 
 				_functionFileNames.put(functionName, fileName);
 
+				_functionJavaFileNames.put(
+					functionName, _getJavaFileName(fileName));
+
 				if (_functionNames.contains(functionName)) {
 					throw new Exception(
 						"Duplicate name " + functionName + " at " + fileName);
@@ -98,6 +104,8 @@ public class SeleniumBuilderContext {
 
 				_macroFileNames.put(macroName, fileName);
 
+				_macroJavaFileNames.put(macroName, _getJavaFileName(fileName));
+
 				if (_macroNames.contains(macroName)) {
 					throw new Exception(
 						"Duplicate name " + macroName + " at " + fileName);
@@ -118,6 +126,9 @@ public class SeleniumBuilderContext {
 				_actionClassNames.put(
 					pathName, _getClassName(fileName, "Action"));
 
+				_actionJavaFileNames.put(
+					pathName, _getJavaFileName(fileName, "Action"));
+
 				_actionNames.add(pathName);
 
 				_actionPackageNames.put(pathName, _getPackageName(fileName));
@@ -128,6 +139,8 @@ public class SeleniumBuilderContext {
 				_pathClassNames.put(pathName, _getClassName(fileName));
 
 				_pathFileNames.put(pathName, fileName);
+
+				_pathJavaFileNames.put(pathName, _getJavaFileName(fileName));
 
 				if (_pathNames.contains(pathName)) {
 					throw new Exception(
@@ -149,6 +162,9 @@ public class SeleniumBuilderContext {
 				_testCaseClassNames.put(testCaseName, _getClassName(fileName));
 
 				_testCaseFileNames.put(testCaseName, fileName);
+
+				_testCaseJavaFileNames.put(
+					testCaseName, _getJavaFileName(fileName));
 
 				if (_testCaseNames.contains(testCaseName)) {
 					throw new Exception(
@@ -174,6 +190,9 @@ public class SeleniumBuilderContext {
 
 				_testSuiteFileNames.put(testSuiteName, fileName);
 
+				_testSuiteJavaFileNames.put(
+					testSuiteName, _getJavaFileName(fileName));
+
 				if (_testSuiteNames.contains(testSuiteName)) {
 					throw new Exception(
 						"Duplicate name " + testSuiteName + " at " + fileName);
@@ -194,6 +213,46 @@ public class SeleniumBuilderContext {
 				throw new IllegalArgumentException("Invalid file " + fileName);
 			}
 		}
+
+		String[] seleniumFileNames = {
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"SeleniumWrapper.java",
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"LiferaySelenium.java"
+		};
+
+		for (String seleniumFileName : seleniumFileNames) {
+			String content = _seleniumBuilderFileUtil.getNormalizedContent(
+				seleniumFileName);
+
+			Pattern pattern = Pattern.compile(
+				"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
+
+			Matcher matcher = pattern.matcher(content);
+
+			while (matcher.find()) {
+				String methodSignature = matcher.group();
+
+				int x = methodSignature.indexOf(" ", 7);
+				int y = methodSignature.indexOf("(");
+
+				String seleniumCommandName = methodSignature.substring(x, y);
+
+				int count = 0;
+
+				int z = methodSignature.indexOf(")");
+
+				String parameters = methodSignature.substring(y + 1, z);
+
+				if (!parameters.equals("")) {
+					count = StringUtil.count(parameters, ",") + 1;
+				}
+
+				_seleniumParameterCounts.put(seleniumCommandName, count);
+			}
+		}
+
+		_seleniumParameterCounts.put("open", 1);
 	}
 
 	public String getActionClassName(String actionName) {
@@ -202,6 +261,10 @@ public class SeleniumBuilderContext {
 
 	public String getActionFileName(String actionName) {
 		return _actionFileNames.get(actionName);
+	}
+
+	public String getActionJavaFileName(String actionName) {
+		return _actionJavaFileNames.get(actionName);
 	}
 
 	public Set<String> getActionNames() {
@@ -232,6 +295,10 @@ public class SeleniumBuilderContext {
 		return _functionFileNames.get(functionName);
 	}
 
+	public String getFunctionJavaFileName(String functionName) {
+		return _functionJavaFileNames.get(functionName);
+	}
+
 	public Set<String> getFunctionNames() {
 		return _functionNames;
 	}
@@ -252,7 +319,7 @@ public class SeleniumBuilderContext {
 		return _functionSimpleClassNames.get(functionName);
 	}
 
-	public Integer getFunctionTargetCount(String functionName) {
+	public int getFunctionTargetCount(String functionName) {
 		return _functionTargetCounts.get(functionName);
 	}
 
@@ -262,6 +329,10 @@ public class SeleniumBuilderContext {
 
 	public String getMacroFileName(String macroName) {
 		return _macroFileNames.get(macroName);
+	}
+
+	public String getMacroJavaFileName(String macroName) {
+		return _macroJavaFileNames.get(macroName);
 	}
 
 	public Set<String> getMacroNames() {
@@ -288,6 +359,10 @@ public class SeleniumBuilderContext {
 		return _pathFileNames.get(pathName);
 	}
 
+	public String getPathJavaFileName(String pathName) {
+		return _pathJavaFileNames.get(pathName);
+	}
+
 	public Set<String> getPathNames() {
 		return _pathNames;
 	}
@@ -304,12 +379,20 @@ public class SeleniumBuilderContext {
 		return _pathSimpleClassNames.get(pathName);
 	}
 
+	public int getSeleniumParameterCount(String seleniumCommandName) {
+		return _seleniumParameterCounts.get(seleniumCommandName);
+	}
+
 	public String getTestCaseClassName(String testCaseName) {
 		return _testCaseClassNames.get(testCaseName);
 	}
 
 	public String getTestCaseFileName(String testCaseName) {
 		return _testCaseFileNames.get(testCaseName);
+	}
+
+	public String getTestCaseJavaFileName(String testCaseName) {
+		return _testCaseJavaFileNames.get(testCaseName);
 	}
 
 	public Set<String> getTestCaseNames() {
@@ -336,6 +419,10 @@ public class SeleniumBuilderContext {
 		return _testSuiteFileNames.get(testSuiteName);
 	}
 
+	public String getTestSuiteJavaFileName(String testSuiteName) {
+		return _testSuiteJavaFileNames.get(testSuiteName);
+	}
+
 	public Set<String> getTestSuiteNames() {
 		return _testSuiteNames;
 	}
@@ -358,6 +445,14 @@ public class SeleniumBuilderContext {
 
 	private String _getClassName(String fileName, String classSuffix) {
 		return _seleniumBuilderFileUtil.getClassName(fileName, classSuffix);
+	}
+
+	private String _getJavaFileName(String fileName) {
+		return _seleniumBuilderFileUtil.getJavaFileName(fileName);
+	}
+
+	private String _getJavaFileName(String fileName, String classSuffix) {
+		return _seleniumBuilderFileUtil.getJavaFileName(fileName, classSuffix);
 	}
 
 	private String _getName(String fileName) {
@@ -397,6 +492,8 @@ public class SeleniumBuilderContext {
 		new HashMap<String, String>();
 	private Map<String, String> _actionFileNames =
 		new HashMap<String, String>();
+	private Map<String, String> _actionJavaFileNames =
+		new HashMap<String, String>();
 	private Set<String> _actionNames = new HashSet<String>();
 	private Map<String, String> _actionPackageNames =
 		new HashMap<String, String>();
@@ -408,6 +505,8 @@ public class SeleniumBuilderContext {
 	private Map<String, String> _functionClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _functionFileNames =
+		new HashMap<String, String>();
+	private Map<String, String> _functionJavaFileNames =
 		new HashMap<String, String>();
 	private Set<String> _functionNames = new HashSet<String>();
 	private Map<String, String> _functionPackageNames =
@@ -423,6 +522,8 @@ public class SeleniumBuilderContext {
 	private Map<String, String> _macroClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _macroFileNames = new HashMap<String, String>();
+	private Map<String, String> _macroJavaFileNames =
+		new HashMap<String, String>();
 	private Set<String> _macroNames = new HashSet<String>();
 	private Map<String, String> _macroPackageNames =
 		new HashMap<String, String>();
@@ -432,6 +533,8 @@ public class SeleniumBuilderContext {
 		new HashMap<String, String>();
 	private Map<String, String> _pathClassNames = new HashMap<String, String>();
 	private Map<String, String> _pathFileNames = new HashMap<String, String>();
+	private Map<String, String> _pathJavaFileNames =
+		new HashMap<String, String>();
 	private Set<String> _pathNames = new HashSet<String>();
 	private Map<String, String> _pathPackageNames =
 		new HashMap<String, String>();
@@ -440,9 +543,13 @@ public class SeleniumBuilderContext {
 	private Map<String, String> _pathSimpleClassNames =
 		new HashMap<String, String>();
 	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
+	private Map<String, Integer> _seleniumParameterCounts =
+		new HashMap<String, Integer>();
 	private Map<String, String> _testCaseClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _testCaseFileNames =
+		new HashMap<String, String>();
+	private Map<String, String> _testCaseJavaFileNames =
 		new HashMap<String, String>();
 	private Set<String> _testCaseNames = new HashSet<String>();
 	private Map<String, String> _testCasePackageNames =
@@ -454,6 +561,8 @@ public class SeleniumBuilderContext {
 	private Map<String, String> _testSuiteClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _testSuiteFileNames =
+		new HashMap<String, String>();
+	private Map<String, String> _testSuiteJavaFileNames =
 		new HashMap<String, String>();
 	private Set<String> _testSuiteNames = new HashSet<String>();
 	private Map<String, String> _testSuitePackageNames =

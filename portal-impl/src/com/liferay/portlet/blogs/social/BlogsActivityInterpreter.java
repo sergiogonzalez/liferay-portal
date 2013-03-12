@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -27,7 +26,6 @@ import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 
 import java.text.Format;
 
@@ -43,113 +41,123 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected SocialActivityFeedEntry doInterpret(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getPath(SocialActivity activity) throws Exception {
+		return "/blogs/find_entry?entryId=";
+	}
+
+	@Override
+	protected Object[] getTitleArguments(
+			String groupName, SocialActivity activity, String link,
+			String title, ThemeDisplay themeDisplay)
 		throws Exception {
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!BlogsEntryPermission.contains(
-				permissionChecker, activity.getClassPK(), ActionKeys.VIEW)) {
-
-			return null;
-		}
-
-		String groupName = StringPool.BLANK;
-
-		if (activity.getGroupId() != themeDisplay.getScopeGroupId()) {
-			groupName = getGroupName(activity.getGroupId(), themeDisplay);
-		}
 
 		String creatorUserName = getUserName(
 			activity.getUserId(), themeDisplay);
 		String receiverUserName = getUserName(
 			activity.getReceiverUserId(), themeDisplay);
 
-		int activityType = activity.getType();
-
-		// Link
-
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
 			activity.getClassPK());
 
-		String link =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/blogs/find_entry?entryId=" + activity.getClassPK();
-
-		// Title
-
-		String entryTitle = getValue(
-			activity.getExtraData(), "title", entry.getTitle());
-
-		String displayTitle = wrapLink(link, entryTitle);
+		String displayTitle = wrapLink(link, entry.getTitle());
 		String displayDate = StringPool.BLANK;
 
-		String titlePattern = null;
+		if ((activity.getType() == BlogsActivityKeys.ADD_ENTRY) &&
+			(entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED)) {
+
+			displayTitle = entry.getTitle();
+
+			Format dateFormatDate =
+				FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"MMMM d", themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
+
+			displayDate = dateFormatDate.format(entry.getDisplayDate());
+		}
+
+		return new Object[] {
+			groupName, creatorUserName, receiverUserName, displayTitle,
+			displayDate
+		};
+	}
+
+	@Override
+	protected String getTitlePattern(String groupName, SocialActivity activity)
+		throws Exception {
+
+		int activityType = activity.getType();
 
 		if ((activityType == BlogsActivityKeys.ADD_COMMENT) ||
 			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
 
 			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-blogs-add-comment";
+				return "activity-blogs-add-comment";
 			}
 			else {
-				titlePattern = "activity-blogs-add-comment-in";
+				return "activity-blogs-add-comment-in";
 			}
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {
+			BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
+				activity.getClassPK());
+
 			if (entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
-				displayTitle = entryTitle;
-
-				Format dateFormatDate =
-					FastDateFormatFactoryUtil.getSimpleDateFormat(
-						"MMMM d", themeDisplay.getLocale(),
-						themeDisplay.getTimeZone());
-
-				displayDate = dateFormatDate.format(entry.getDisplayDate());
-
 				if (Validator.isNull(groupName)) {
-					titlePattern = "activity-blogs-scheduled-entry";
+					return "activity-blogs-scheduled-entry";
 				}
 				else {
-					titlePattern = "activity-blogs-scheduled-entry-in";
+					return "activity-blogs-scheduled-entry-in";
 				}
 			}
 			else {
 				if (Validator.isNull(groupName)) {
-					titlePattern = "activity-blogs-add-entry";
+					return "activity-blogs-add-entry";
 				}
 				else {
-					titlePattern = "activity-blogs-add-entry-in";
+					return "activity-blogs-add-entry-in";
 				}
+			}
+		}
+		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
+			if (Validator.isNull(groupName)) {
+				return "activity-blogs-move-to-trash";
+			}
+			else {
+				return "activity-blogs-move-to-trash-in";
+			}
+		}
+		else if (activityType ==
+					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+
+			if (Validator.isNull(groupName)) {
+				return "activity-blogs-restore-from-trash";
+			}
+			else {
+				return "activity-blogs-restore-from-trash-in";
 			}
 		}
 		else if (activityType == BlogsActivityKeys.UPDATE_ENTRY) {
 			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-blogs-update-entry";
+				return "activity-blogs-update-entry";
 			}
 			else {
-				titlePattern = "activity-blogs-update-entry-in";
+				return "activity-blogs-update-entry-in";
 			}
 		}
 
-		Object[] titleArguments = new Object[] {
-			groupName, creatorUserName, receiverUserName, displayTitle,
-			displayDate
-		};
-
-		String title = themeDisplay.translate(titlePattern, titleArguments);
-
-		// Body
-
-		String body = StringPool.BLANK;
-
-		return new SocialActivityFeedEntry(link, title, body);
+		return null;
 	}
 
-	private static final String[] _CLASS_NAMES = new String[] {
-		BlogsEntry.class.getName()
-	};
+	@Override
+	protected boolean hasPermissions(
+			PermissionChecker permissionChecker, SocialActivity activity,
+			String actionId, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return BlogsEntryPermission.contains(
+			permissionChecker, activity.getClassPK(), actionId);
+	}
+
+	private static final String[] _CLASS_NAMES = {BlogsEntry.class.getName()};
 
 }

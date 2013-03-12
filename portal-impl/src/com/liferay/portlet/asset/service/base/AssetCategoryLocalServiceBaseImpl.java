@@ -298,6 +298,136 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetEntryAssetCategory(long entryId, long categoryId)
+		throws SystemException {
+		assetEntryPersistence.addAssetCategory(entryId, categoryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetEntryAssetCategory(long entryId,
+		AssetCategory assetCategory) throws SystemException {
+		assetEntryPersistence.addAssetCategory(entryId, assetCategory);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetEntryAssetCategories(long entryId, long[] categoryIds)
+		throws SystemException {
+		assetEntryPersistence.addAssetCategories(entryId, categoryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addAssetEntryAssetCategories(long entryId,
+		List<AssetCategory> AssetCategories) throws SystemException {
+		assetEntryPersistence.addAssetCategories(entryId, AssetCategories);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearAssetEntryAssetCategories(long entryId)
+		throws SystemException {
+		assetEntryPersistence.clearAssetCategories(entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetEntryAssetCategory(long entryId, long categoryId)
+		throws SystemException {
+		assetEntryPersistence.removeAssetCategory(entryId, categoryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetEntryAssetCategory(long entryId,
+		AssetCategory assetCategory) throws SystemException {
+		assetEntryPersistence.removeAssetCategory(entryId, assetCategory);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetEntryAssetCategories(long entryId, long[] categoryIds)
+		throws SystemException {
+		assetEntryPersistence.removeAssetCategories(entryId, categoryIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteAssetEntryAssetCategories(long entryId,
+		List<AssetCategory> AssetCategories) throws SystemException {
+		assetEntryPersistence.removeAssetCategories(entryId, AssetCategories);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> getAssetEntryAssetCategories(long entryId)
+		throws SystemException {
+		return assetEntryPersistence.getAssetCategories(entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> getAssetEntryAssetCategories(long entryId,
+		int start, int end) throws SystemException {
+		return assetEntryPersistence.getAssetCategories(entryId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> getAssetEntryAssetCategories(long entryId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return assetEntryPersistence.getAssetCategories(entryId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getAssetEntryAssetCategoriesCount(long entryId)
+		throws SystemException {
+		return assetEntryPersistence.getAssetCategoriesSize(entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasAssetEntryAssetCategory(long entryId, long categoryId)
+		throws SystemException {
+		return assetEntryPersistence.containsAssetCategory(entryId, categoryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasAssetEntryAssetCategories(long entryId)
+		throws SystemException {
+		return assetEntryPersistence.containsAssetCategories(entryId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setAssetEntryAssetCategories(long entryId, long[] categoryIds)
+		throws SystemException {
+		assetEntryPersistence.setAssetCategories(entryId, categoryIds);
+	}
+
+	/**
 	 * Returns the asset category local service.
 	 *
 	 * @return the asset category local service

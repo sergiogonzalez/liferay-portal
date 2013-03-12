@@ -422,6 +422,254 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addGroupRole(long groupId, long roleId)
+		throws SystemException {
+		groupPersistence.addRole(groupId, roleId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addGroupRole(long groupId, Role role) throws SystemException {
+		groupPersistence.addRole(groupId, role);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addGroupRoles(long groupId, long[] roleIds)
+		throws SystemException {
+		groupPersistence.addRoles(groupId, roleIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addGroupRoles(long groupId, List<Role> Roles)
+		throws SystemException {
+		groupPersistence.addRoles(groupId, Roles);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearGroupRoles(long groupId) throws SystemException {
+		groupPersistence.clearRoles(groupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteGroupRole(long groupId, long roleId)
+		throws SystemException {
+		groupPersistence.removeRole(groupId, roleId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteGroupRole(long groupId, Role role)
+		throws SystemException {
+		groupPersistence.removeRole(groupId, role);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteGroupRoles(long groupId, long[] roleIds)
+		throws SystemException {
+		groupPersistence.removeRoles(groupId, roleIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteGroupRoles(long groupId, List<Role> Roles)
+		throws SystemException {
+		groupPersistence.removeRoles(groupId, Roles);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getGroupRoles(long groupId) throws SystemException {
+		return groupPersistence.getRoles(groupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getGroupRoles(long groupId, int start, int end)
+		throws SystemException {
+		return groupPersistence.getRoles(groupId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getGroupRoles(long groupId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return groupPersistence.getRoles(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getGroupRolesCount(long groupId) throws SystemException {
+		return groupPersistence.getRolesSize(groupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasGroupRole(long groupId, long roleId)
+		throws SystemException {
+		return groupPersistence.containsRole(groupId, roleId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasGroupRoles(long groupId) throws SystemException {
+		return groupPersistence.containsRoles(groupId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setGroupRoles(long groupId, long[] roleIds)
+		throws SystemException {
+		groupPersistence.setRoles(groupId, roleIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserRole(long userId, long roleId) throws SystemException {
+		userPersistence.addRole(userId, roleId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserRole(long userId, Role role) throws SystemException {
+		userPersistence.addRole(userId, role);
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserRoles(long userId, long[] roleIds)
+		throws PortalException, SystemException {
+		userPersistence.addRoles(userId, roleIds);
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserRoles(long userId, List<Role> Roles)
+		throws PortalException, SystemException {
+		userPersistence.addRoles(userId, Roles);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearUserRoles(long userId) throws SystemException {
+		userPersistence.clearRoles(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserRole(long userId, long roleId)
+		throws SystemException {
+		userPersistence.removeRole(userId, roleId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserRole(long userId, Role role)
+		throws SystemException {
+		userPersistence.removeRole(userId, role);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserRoles(long userId, long[] roleIds)
+		throws SystemException {
+		userPersistence.removeRoles(userId, roleIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteUserRoles(long userId, List<Role> Roles)
+		throws SystemException {
+		userPersistence.removeRoles(userId, Roles);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getUserRoles(long userId) throws SystemException {
+		return userPersistence.getRoles(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getUserRoles(long userId, int start, int end)
+		throws SystemException {
+		return userPersistence.getRoles(userId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getUserRoles(long userId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return userPersistence.getRoles(userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getUserRolesCount(long userId) throws SystemException {
+		return userPersistence.getRolesSize(userId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasUserRole(long userId, long roleId)
+		throws SystemException {
+		return userPersistence.containsRole(userId, roleId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean hasUserRoles(long userId) throws SystemException {
+		return userPersistence.containsRoles(userId);
+	}
+
+	/**
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setUserRoles(long userId, long[] roleIds)
+		throws PortalException, SystemException {
+		userPersistence.setRoles(userId, roleIds);
+	}
+
+	/**
 	 * Returns the account local service.
 	 *
 	 * @return the account local service

@@ -90,12 +90,10 @@ public interface User extends UserModel, PersistedModel {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public long[] getGroupIds()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.Group> getGroups()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.Locale getLocale();
 
