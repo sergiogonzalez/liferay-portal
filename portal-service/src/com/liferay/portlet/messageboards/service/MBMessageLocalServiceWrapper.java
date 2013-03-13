@@ -494,6 +494,9 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		_mbMessageLocalService.deleteMessageAttachments(messageId);
 	}
 
+	/**
+	* @deprecated {@link #getCategoryMessages(long, long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
@@ -502,6 +505,9 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getCategoryMessages(long, long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end,
@@ -512,12 +518,36 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getCategoryMessages(groupId, categoryId,
+			queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getCategoryMessagesCount(long, long,
+	QueryDefinition)}
+	*/
+	@Override
 	public int getCategoryMessagesCount(long groupId, long categoryId,
 		int status) throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessageLocalService.getCategoryMessagesCount(groupId,
 			categoryId, status);
 	}
 
+	@Override
+	public int getCategoryMessagesCount(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getCategoryMessagesCount(groupId,
+			categoryId, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getCompanyMessages(long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCompanyMessages(
 		long companyId, int status, int start, int end)
@@ -526,6 +556,9 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			start, end);
 	}
 
+	/**
+	* @deprecated {@link #getCompanyMessages(long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCompanyMessages(
 		long companyId, int status, int start, int end,
@@ -536,9 +569,29 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCompanyMessages(
+		long companyId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getCompanyMessages(companyId,
+			queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getCompanyMessagesCount(long, QueryDefinition)}
+	*/
+	@Override
 	public int getCompanyMessagesCount(long companyId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessageLocalService.getCompanyMessagesCount(companyId, status);
+	}
+
+	@Override
+	public int getCompanyMessagesCount(long companyId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getCompanyMessagesCount(companyId,
+			queryDefinition);
 	}
 
 	@Override
@@ -583,6 +636,9 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		return _mbMessageLocalService.getDiscussions(className);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessages(long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
 		long groupId, int status, int start, int end)
@@ -591,6 +647,9 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessages(long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
 		long groupId, int status, int start, int end,
@@ -600,6 +659,9 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			end, obc);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessages(long, long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
 		long groupId, long userId, int status, int start, int end)
@@ -608,6 +670,9 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			start, end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessages(long, long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
 		long groupId, long userId, int status, int start, int end,
@@ -618,16 +683,55 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
+		long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getGroupMessages(groupId, userId,
+			queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
+		long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getGroupMessages(groupId, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupMessagesCount(long, QueryDefinition)}
+	*/
+	@Override
 	public int getGroupMessagesCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessageLocalService.getGroupMessagesCount(groupId, status);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessagesCount(long, long, QueryDefinition)}
+	*/
 	@Override
 	public int getGroupMessagesCount(long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessageLocalService.getGroupMessagesCount(groupId, userId,
 			status);
+	}
+
+	@Override
+	public int getGroupMessagesCount(long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getGroupMessagesCount(groupId, userId,
+			queryDefinition);
+	}
+
+	@Override
+	public int getGroupMessagesCount(long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getGroupMessagesCount(groupId,
+			queryDefinition);
 	}
 
 	@Override
@@ -678,6 +782,10 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		return _mbMessageLocalService.getPositionInThread(messageId);
 	}
 
+	/**
+	* @deprecated {@link #getThreadMessages(long, QueryDefinition,
+	java.util.Comparator)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
 		long threadId, int status)
@@ -685,6 +793,10 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		return _mbMessageLocalService.getThreadMessages(threadId, status);
 	}
 
+	/**
+	* @deprecated {@link #getThreadMessages(long, QueryDefinition,
+	java.util.Comparator)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
 		long threadId, int status,
@@ -694,6 +806,9 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			comparator);
 	}
 
+	/**
+	* @deprecated {@link #getThreadMessages(long, QueryDefinition)}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
 		long threadId, int status, int start, int end)
@@ -703,17 +818,59 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
+		long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getThreadMessages(threadId,
+			queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
+		long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition,
+		java.util.Comparator<com.liferay.portlet.messageboards.model.MBMessage> comparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getThreadMessages(threadId,
+			queryDefinition, comparator);
+	}
+
+	/**
+	* @deprecated {@link #getThreadMessagesCount(long, QueryDefinition)}
+	*/
+	@Override
 	public int getThreadMessagesCount(long threadId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessageLocalService.getThreadMessagesCount(threadId, status);
 	}
 
 	@Override
+	public int getThreadMessagesCount(long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getThreadMessagesCount(threadId,
+			queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getThreadRepliesMessages(long, QueryDefinition)}
+	*/
+	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadRepliesMessages(
 		long threadId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessageLocalService.getThreadRepliesMessages(threadId,
 			status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadRepliesMessages(
+		long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getThreadRepliesMessages(threadId,
+			queryDefinition);
 	}
 
 	@Override
