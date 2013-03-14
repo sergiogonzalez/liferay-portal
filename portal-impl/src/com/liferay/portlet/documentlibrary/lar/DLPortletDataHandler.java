@@ -80,6 +80,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.PwdGenerator;
 
 import java.io.IOException;
@@ -907,11 +908,16 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				folder.getRepositoryId(), folder.getFolderId());
 
 			for (Folder curFolder : folders) {
-				exportFolder(
-					portletDataContext, fileEntryTypesElement, foldersElement,
-					fileEntriesElement, fileShortcutsElement, fileRanksElement,
-					repositoriesElement, repositoryEntriesElement, curFolder,
-					recurse);
+				if (!TrashUtil.isInTrash(
+						DLFolder.class.getName(), folder.getPrimaryKey())) {
+
+					exportFolder(
+						portletDataContext, fileEntryTypesElement,
+						foldersElement, fileEntriesElement,
+						fileShortcutsElement, fileRanksElement,
+						repositoriesElement, repositoryEntriesElement,
+						curFolder, recurse);
+				}
 			}
 		}
 
@@ -919,10 +925,15 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			folder.getRepositoryId(), folder.getFolderId());
 
 		for (FileEntry fileEntry : fileEntries) {
-			exportFileEntry(
-				portletDataContext, fileEntryTypesElement, foldersElement,
-				fileEntriesElement, fileRanksElement, repositoriesElement,
-				repositoryEntriesElement, fileEntry, true);
+
+			if (!TrashUtil.isInTrash(
+					DLFileEntry.class.getName(), fileEntry.getPrimaryKey())) {
+
+				exportFileEntry(
+					portletDataContext, fileEntryTypesElement, foldersElement,
+					fileEntriesElement, fileRanksElement, repositoriesElement,
+					repositoryEntriesElement, fileEntry, true);
+			}
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
@@ -930,10 +941,16 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				folder.getRepositoryId(), folder.getFolderId(), true);
 
 			for (DLFileShortcut fileShortcut : fileShortcuts) {
-				exportFileShortcut(
-					portletDataContext, fileEntryTypesElement, foldersElement,
-					fileShortcutsElement, repositoriesElement,
-					repositoryEntriesElement, fileShortcut);
+				if (!TrashUtil.isInTrash(
+						DLFileShortcut.class.getName(),
+						fileShortcut.getPrimaryKey())) {
+
+					exportFileShortcut(
+						portletDataContext, fileEntryTypesElement,
+						foldersElement, fileShortcutsElement,
+						repositoriesElement, repositoryEntriesElement,
+						fileShortcut);
+				}
 			}
 		}
 	}
@@ -1875,10 +1892,15 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId());
 
 		for (Folder folder : folders) {
-			exportFolder(
-				portletDataContext, fileEntryTypesElement, foldersElement,
-				fileEntriesElement, fileShortcutsElement, fileRanksElement,
-				repositoriesElement, repositoryEntriesElement, folder, false);
+			if (!TrashUtil.isInTrash(
+					DLFolder.class.getName(), folder.getPrimaryKey())) {
+
+				exportFolder(
+					portletDataContext, fileEntryTypesElement, foldersElement,
+					fileEntriesElement, fileShortcutsElement, fileRanksElement,
+					repositoriesElement, repositoryEntriesElement, folder,
+					false);
+			}
 		}
 
 		List<FileEntry> fileEntries = FileEntryUtil.findByR_F(
@@ -1886,10 +1908,14 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		for (FileEntry fileEntry : fileEntries) {
-			exportFileEntry(
-				portletDataContext, fileEntryTypesElement, foldersElement,
-				fileEntriesElement, fileRanksElement, repositoriesElement,
-				repositoryEntriesElement, fileEntry, true);
+			if (!TrashUtil.isInTrash(
+					DLFileEntry.class.getName(), fileEntry.getPrimaryKey())) {
+
+				exportFileEntry(
+					portletDataContext, fileEntryTypesElement, foldersElement,
+					fileEntriesElement, fileRanksElement, repositoriesElement,
+					repositoryEntriesElement, fileEntry, true);
+			}
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
@@ -1898,10 +1924,16 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true);
 
 			for (DLFileShortcut fileShortcut : fileShortcuts) {
-				exportFileShortcut(
-					portletDataContext, fileEntryTypesElement, foldersElement,
-					fileShortcutsElement, repositoriesElement,
-					repositoryEntriesElement, fileShortcut);
+				if (!TrashUtil.isInTrash(
+						DLFileShortcut.class.getName(),
+						fileShortcut.getPrimaryKey())) {
+
+					exportFileShortcut(
+						portletDataContext, fileEntryTypesElement,
+						foldersElement, fileShortcutsElement,
+						repositoriesElement, repositoryEntriesElement,
+						fileShortcut);
+				}
 			}
 		}
 
