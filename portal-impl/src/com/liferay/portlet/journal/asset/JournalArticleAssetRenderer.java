@@ -131,9 +131,21 @@ public class JournalArticleAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		if (themeDisplay.getScopeGroupId() == _article.getGroupId()) {
+			plid = themeDisplay.getPlid();
+		}
+		else {
+			plid = getControlPanelPlid(liferayPortletRequest);
+		}
+
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
+			plid, PortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/journal/edit_article");
 		portletURL.setParameter(

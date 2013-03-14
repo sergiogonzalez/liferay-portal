@@ -81,9 +81,21 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		if (themeDisplay.getScopeGroupId() == _event.getGroupId()) {
+			plid = themeDisplay.getPlid();
+		}
+		else {
+			plid = getControlPanelPlid(liferayPortletRequest);
+		}
+
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.CALENDAR,
-			PortletRequest.RENDER_PHASE);
+			plid, PortletKeys.CALENDAR, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/calendar/edit_event");
 		portletURL.setParameter("eventId", String.valueOf(_event.getEventId()));

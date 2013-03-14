@@ -143,9 +143,21 @@ public class DLFileEntryAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		if (themeDisplay.getScopeGroupId() == _fileEntry.getGroupId()) {
+			plid = themeDisplay.getPlid();
+		}
+		else {
+			plid = getControlPanelPlid(liferayPortletRequest);
+		}
+
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
+			plid, PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"struts_action", "/document_library/edit_file_entry");

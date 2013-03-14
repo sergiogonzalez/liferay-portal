@@ -95,9 +95,21 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		if (themeDisplay.getScopeGroupId() == _record.getGroupId()) {
+			plid = themeDisplay.getPlid();
+		}
+		else {
+			plid = getControlPanelPlid(liferayPortletRequest);
+		}
+
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
+			plid, PortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"struts_action", "/dynamic_data_lists/edit_record");

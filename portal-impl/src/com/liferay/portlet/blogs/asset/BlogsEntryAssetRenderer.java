@@ -105,9 +105,21 @@ public class BlogsEntryAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		if (themeDisplay.getScopeGroupId() == _entry.getGroupId()) {
+			plid = themeDisplay.getPlid();
+		}
+		else {
+			plid = getControlPanelPlid(liferayPortletRequest);
+		}
+
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.BLOGS,
-			PortletRequest.RENDER_PHASE);
+			plid, PortletKeys.BLOGS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/blogs/edit_entry");
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
