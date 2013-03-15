@@ -121,6 +121,8 @@ searchContainer.setOrderByType(orderByType);
 int entryStart = ParamUtil.getInteger(request, "entryStart", searchContainer.getStart());
 int entryEnd = ParamUtil.getInteger(request, "entryEnd", searchContainer.getEnd());
 
+searchContainer.setDelta(entryEnd - entryStart);
+
 List results = null;
 int total = 0;
 
@@ -141,7 +143,21 @@ if (fileEntryTypeId >= 0) {
 
 	Hits hits = indexer.search(searchContext);
 
-	results = new ArrayList();
+	total = hits.getLength();
+
+	searchContainer.setTotal(total);
+
+	if (total <= entryStart) {
+		entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
+		entryEnd = entryStart + searchContainer.getDelta();;
+
+        searchContext.setEnd(entryEnd);
+        searchContext.setStart(entryStart);
+
+        hits = indexer.search(searchContext);
+    }
+
+    results = new ArrayList();
 
 	for (int i = 0; i < hits.getDocs().length; i++) {
 		Document doc = hits.doc(i);
@@ -163,8 +179,6 @@ if (fileEntryTypeId >= 0) {
 
 		results.add(fileEntry);
 	}
-
-	total = hits.getLength();
 }
 else {
 	if (navigation.equals("home")) {
@@ -176,13 +190,32 @@ else {
 			assetEntryQuery.setEnd(entryEnd);
 			assetEntryQuery.setExcludeZeroViewCount(false);
 			assetEntryQuery.setStart(entryStart);
+			
+			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+			searchContainer.setTotal(total);
+
+			if (total <= entryStart) {
+				entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();;
+				entryEnd = entryStart + searchContainer.getDelta();;
+
+				assetEntryQuery.setEnd(entryEnd);
+				assetEntryQuery.setStart(entryStart);
+			}			
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 		}
 		else {
-			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
-			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+            total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+
+			searchContainer.setTotal(total);
+
+			if (total <= entryStart) {
+				entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();;
+				entryEnd = entryStart + searchContainer.getDelta();;
+			}
+
+            results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
 		}
 	}
 	else if (navigation.equals("mine") || navigation.equals("recent")) {
@@ -192,14 +225,24 @@ else {
 			groupFileEntriesUserId = user.getUserId();
 		}
 
-		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
-		total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+        total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+
+		searchContainer.setTotal(total);
+
+		if (total <= entryStart) {
+			entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();;
+			entryEnd = entryStart + searchContainer.getDelta();;
+		}
+
+        results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
 	}
 }
 
 searchContainer.setResults(results);
-searchContainer.setTotal(total);
 
+request.setAttribute("view_entries.jsp-entryStart", String.valueOf(entryStart));
+request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(entryEnd));
+request.setAttribute("view_entries.jsp-entryDelta", String.valueOf(searchContainer.getDelta()));
 request.setAttribute("view.jsp-total", String.valueOf(total));
 %>
 
@@ -577,8 +620,8 @@ for (int i = 0; i < results.size(); i++) {
 			paginator: {
 				name: 'entryPaginator',
 				state: {
-					page: <%= (total == 0) ? 0 : (entryEnd / (entryEnd - entryStart)) %>,
-					rowsPerPage: <%= (entryEnd - entryStart) %>,
+					page: <%= (total == 0) ? 0 : searchContainer.getCur() %>,
+					rowsPerPage: <%= searchContainer.getDelta() %>,
 					total: <%= total %>
 				}
 			}

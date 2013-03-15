@@ -231,11 +231,11 @@ if (folder != null) {
 				updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>
 			},
 			paginator: {
-				entriesTotal: <%= entriesTotal %>,
-				entryEnd: <%= entryEnd %>,
-				entryRowsPerPage: <%= entryRowsPerPage %>,
+				entriesTotal: <%= (request.getAttribute("view_entries.jsp-total") != null) ? request.getAttribute("view_entries.jsp-total") :entriesTotal %>,
+				entryEnd: <%= (request.getAttribute("view_entries.jsp-entryEnd") != null) ? request.getAttribute("view_entries.jsp-entryEnd") : entryEnd %>,
+				entryRowsPerPage: <%= (request.getAttribute("view_entries.jsp-entryDelta") != null) ? request.getAttribute("view_entries.jsp-entryDelta") : entryRowsPerPage %>,
 				entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-				entryStart: <%= entryStart %>,
+				entryStart: <%= (request.getAttribute("view_entries.jsp-entryStart") != null) ? request.getAttribute("view_entries.jsp-entryStart") : entryStart %>,
 				folderEnd: <%= folderEnd %>,
 				folderId: <%= folderId %>,
 				folderRowsPerPage: <%= folderRowsPerPage %>,
