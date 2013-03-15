@@ -335,6 +335,15 @@ public class SearchContainer<R> {
 		_className = className;
 	}
 
+	public void setCur( int cur) {
+		if (cur <=0) {
+			_cur = DEFAULT_CUR;
+		}
+		else {
+			_cur = cur;
+		}
+	}
+
 	public void setDelta(int delta) {
 		if (delta <= 0) {
 			_delta = DEFAULT_DELTA;
