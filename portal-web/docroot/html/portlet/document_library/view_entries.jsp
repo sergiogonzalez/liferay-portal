@@ -120,6 +120,7 @@ searchContainer.setOrderByType(orderByType);
 
 int entryStart = ParamUtil.getInteger(request, "entryStart", searchContainer.getStart());
 int entryEnd = ParamUtil.getInteger(request, "entryEnd", searchContainer.getEnd());
+int entryDelta = entryEnd - entryStart;
 
 List results = null;
 int total = 0;
@@ -141,7 +142,19 @@ if (fileEntryTypeId >= 0) {
 
 	Hits hits = indexer.search(searchContext);
 
-	results = new ArrayList();
+    total = hits.getLength();
+
+    if (total <= entryStart) {
+        entryStart -= entryDelta;
+        entryEnd -= entryDelta;
+
+        searchContext.setEnd(entryEnd);
+        searchContext.setStart(entryStart);
+
+        hits = indexer.search(searchContext);
+    }
+
+    results = new ArrayList();
 
 	for (int i = 0; i < hits.getDocs().length; i++) {
 		Document doc = hits.doc(i);
@@ -163,8 +176,6 @@ if (fileEntryTypeId >= 0) {
 
 		results.add(fileEntry);
 	}
-
-	total = hits.getLength();
 }
 else {
 	if (navigation.equals("home")) {
@@ -177,12 +188,28 @@ else {
 			assetEntryQuery.setExcludeZeroViewCount(false);
 			assetEntryQuery.setStart(entryStart);
 
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+            total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+            if (total <= entryStart) {
+                entryStart -= entryDelta;
+                entryEnd -= entryDelta;
+
+                assetEntryQuery.setEnd(entryEnd);
+                assetEntryQuery.setExcludeZeroViewCount(false);
+                assetEntryQuery.setStart(entryStart);
+            }
+
+            results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
 		else {
-			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
-			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+            total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+
+            if (total <= entryStart) {
+                entryStart -= entryDelta;
+                entryEnd -= entryDelta;
+            }
+
+            results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
 		}
 	}
 	else if (navigation.equals("mine") || navigation.equals("recent")) {
@@ -192,8 +219,14 @@ else {
 			groupFileEntriesUserId = user.getUserId();
 		}
 
-		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
-		total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+        total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+
+        if (total <= entryStart) {
+            entryStart -= entryDelta;
+            entryEnd -= entryDelta;
+        }
+
+        results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
 	}
 }
 
