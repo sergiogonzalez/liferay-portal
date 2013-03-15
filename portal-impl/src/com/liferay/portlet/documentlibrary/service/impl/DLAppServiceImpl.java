@@ -3055,10 +3055,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			StringPool.BLANK, latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
-		for (int i = fileVersions.size() - 2; i >= 0; i--) {
-			FileVersion fileVersion = fileVersions.get(i);
+		FileVersion previousFileVersion = latestFileVersion;
 
-			FileVersion previousFileVersion = fileVersions.get(i + 1);
+		int last = fileVersions.size() - 1;
+
+		for (int i = last; i >= 0; i--) {
+			FileVersion fileVersion = fileVersions.get(i);
 
 			try {
 				destinationFileEntry = toRepository.updateFileEntry(
@@ -3076,11 +3078,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 				throw pe;
 			}
-		}
 
-		dlAppHelperLocalService.addFileEntry(
-			getUserId(), destinationFileEntry,
-			destinationFileEntry.getFileVersion(), serviceContext);
+			previousFileVersion = fileVersion;
+		}
 
 		return destinationFileEntry;
 	}
