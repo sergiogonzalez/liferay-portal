@@ -1699,7 +1699,8 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if ((layout == null) || layout.isPrivateLayout()) {
+		if ((layout == null) || layout.isPrivateLayout() ||
+			 layout.getGroup().isStagingGroup()) {
 
 			// Check the Guest site
 
