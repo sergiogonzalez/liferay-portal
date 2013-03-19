@@ -344,6 +344,18 @@ public interface DLAppLocalService extends BaseLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the repository with the groupId and the portletId.
+	*
+	* @param groupId the primary key of the group
+	* @param portletId the primary key of the portlet
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Repository fetchRepository(long groupId,
+		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the file entry with the primary key.
 	*
 	* @param fileEntryId the primary key of the file entry

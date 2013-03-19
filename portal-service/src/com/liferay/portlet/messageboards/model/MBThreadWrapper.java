@@ -904,10 +904,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		_mbThread.persist();
 	}
 
-	public long getAttachmentsFolderId()
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbThread.getAttachmentsFolderId();
+		return _mbThread.addAttachmentsFolder();
+	}
+
+	public com.liferay.portal.kernel.repository.model.Folder getAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThread.getAttachmentsFolder();
 	}
 
 	public com.liferay.portal.model.Lock getLock() {
@@ -928,6 +934,10 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 
 	public boolean isLocked() {
 		return _mbThread.isLocked();
+	}
+
+	public void setAttachmentsFolderId(long attachmentsFolderId) {
+		_mbThread.setAttachmentsFolderId(attachmentsFolderId);
 	}
 
 	/**

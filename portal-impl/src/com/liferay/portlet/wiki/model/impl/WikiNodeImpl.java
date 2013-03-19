@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
@@ -37,11 +38,12 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 	public WikiNodeImpl() {
 	}
 
-	public long getAttachmentsFolderId()
+	public Folder addAttachmentsFolder()
 		throws PortalException, SystemException {
 
 		if (_attachmentsFolderId > 0) {
-			return _attachmentsFolderId;
+			return PortletFileRepositoryUtil.getPortletFolder(
+				_attachmentsFolderId);
 		}
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -49,17 +51,41 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
-			getGroupId(), PortletKeys.WIKI, serviceContext);
+		Repository repository =
+			PortletFileRepositoryUtil.addPortletRepository(
+				getGroupId(), PortletKeys.WIKI, serviceContext);
 
-		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-			getUserId(), repositoryId,
+		return PortletFileRepositoryUtil.addPortletFolder(
+			getUserId(), repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(getNodeId()), serviceContext);
+	}
 
-		_attachmentsFolderId = folder.getFolderId();
+	public Folder getAttachmentsFolder()
+		throws PortalException, SystemException {
 
-		return _attachmentsFolderId;
+		if (_attachmentsFolderId > 0) {
+			return PortletFileRepositoryUtil.getPortletFolder(
+				_attachmentsFolderId);
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				getGroupId(), PortletKeys.WIKI);
+
+		if (repository == null) {
+			return null;
+		}
+
+		return PortletFileRepositoryUtil.getPortletFolder(
+			getUserId(), repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(getNodeId()), serviceContext);
 	}
 
 	public List<FileEntry> getDeletedAttachmentsFiles()
@@ -75,6 +101,10 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		}
 
 		return fileEntries;
+	}
+
+	public void setAttachmentsFolderId(long attachmentsFolderId) {
+		_attachmentsFolderId = attachmentsFolderId;
 	}
 
 	private long _attachmentsFolderId;

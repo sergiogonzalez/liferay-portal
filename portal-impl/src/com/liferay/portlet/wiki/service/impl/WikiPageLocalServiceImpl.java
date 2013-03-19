@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -226,10 +227,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		Folder folder = page.addAttachmentsFolder();
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
-			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), file, fileName, mimeType);
+			page.getResourcePrimKey(), PortletKeys.WIKI, folder.getFolderId(),
+			file, fileName, mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -254,10 +257,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		Folder folder = page.addAttachmentsFolder();
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
-			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), inputStream, fileName, mimeType);
+			page.getResourcePrimKey(), PortletKeys.WIKI, folder.getFolderId(),
+			inputStream, fileName, mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -468,7 +473,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(page.getAttachmentsFolderId());
+		Folder folder = page.getAttachmentsFolder();
+
+		if (folder != null) {
+			PortletFileRepositoryUtil.deleteFolder(folder.getFolderId());
+		}
 
 		// Subscriptions
 
@@ -539,8 +548,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		Folder folder = page.getAttachmentsFolder();
+
+		if (folder == null) {
+			return;
+		}
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
+			page.getGroupId(), folder.getFolderId(), fileName);
 
 		deletePageAttachment(fileEntry.getFileEntryId());
 	}
@@ -550,8 +565,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		Folder folder = page.getAttachmentsFolder();
+
+		if (folder == null) {
+			return;
+		}
+
 		PortletFileRepositoryUtil.deletePortletFileEntries(
-			page.getGroupId(), page.getAttachmentsFolderId());
+			page.getGroupId(), folder.getFolderId());
 	}
 
 	public void deletePages(long nodeId)
@@ -584,8 +605,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		Folder folder = page.getAttachmentsFolder();
+
+		if (folder == null) {
+			return;
+		}
+
 		PortletFileRepositoryUtil.deletePortletFileEntries(
-			page.getGroupId(), page.getAttachmentsFolderId(),
+			page.getGroupId(), folder.getFolderId(),
 			WorkflowConstants.STATUS_IN_TRASH);
 	}
 
@@ -1148,8 +1175,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		Folder folder = page.getAttachmentsFolder();
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
+			page.getGroupId(), folder.getFolderId(), fileName);
 
 		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
 			userId, fileEntry.getFileEntryId());
@@ -1264,8 +1293,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		Folder folder = page.getAttachmentsFolder();
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
+			page.getGroupId(), folder.getFolderId(), fileName);
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 

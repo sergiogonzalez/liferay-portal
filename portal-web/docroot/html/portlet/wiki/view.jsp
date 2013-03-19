@@ -42,7 +42,7 @@ List childPages = wikiPage.getViewableChildPages();
 
 int attachmentsFileEntriesCount = 0;
 
-if (wikiPage != null) {
+if ((wikiPage != null) && (wikiPage.getAttachmentsFolder() != null)) {
 	attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
 }
 

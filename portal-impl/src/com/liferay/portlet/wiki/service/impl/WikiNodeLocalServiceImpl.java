@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -200,7 +201,11 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(node.getAttachmentsFolderId());
+		Folder folder = node.getAttachmentsFolder();
+
+		if (folder != null) {
+			PortletFileRepositoryUtil.deleteFolder(folder.getFolderId());
+		}
 
 		// Subscriptions
 

@@ -4415,9 +4415,7 @@
 	</entity>
 	<entity class="com.liferay.portlet.messageboards.model.impl.MBMessageImpl" name="MBMessage">
 		<table name="MBMessage" />
-		<attributes>
-			<transient name="attachmentsFolderId" />
-		</attributes>
+		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl" name="MBStatsUser">
 		<table name="MBStatsUser" />
@@ -4580,9 +4578,7 @@
 	</entity>
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiPageImpl" name="WikiPage">
 		<table name="WikiPage" />
-		<attributes>
-			<transient name="attachmentsFolderId" />
-		</attributes>
+		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl" name="WikiPageResource">
 		<table name="WikiPageResource" />
