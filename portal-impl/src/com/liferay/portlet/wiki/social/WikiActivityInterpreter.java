@@ -18,7 +18,6 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -94,10 +93,10 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				sb.append("&fileName=");
 				sb.append(fileEntryTitle);
 
-				return wrapLink(sb.toString(), HtmlUtil.escape(fileEntryTitle));
+				return wrapLink(sb.toString(), fileEntryTitle);
 			}
 			else {
-				return HtmlUtil.escape(fileEntryTitle);
+				return wrapLink(null, fileEntryTitle);
 			}
 		}
 
@@ -141,11 +140,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		String creatorUserName = getUserName(
 			activity.getUserId(), themeDisplay);
 
-		title = HtmlUtil.escape(title);
-
-		if (Validator.isNotNull(link)) {
-			title = wrapLink(link, title);
-		}
+		title = wrapLink(link, title);
 
 		return new Object[] {
 			groupName, creatorUserName, title,
