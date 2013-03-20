@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Jorge Ferrer
  */
@@ -24,7 +26,22 @@ public class TemplateVariableDefinition {
 
 		_label = label;
 		_clazz = clazz;
+		_dataType = StringPool.BLANK;
 		_name = variableName;
+		_help = label + "-help";
+		_repeatable = false;
+	}
+
+	public TemplateVariableDefinition(
+		String label, Class<?> clazz, String variableName, String help,
+		String dataType, boolean repeatable) {
+
+		_label = label;
+		_clazz = clazz;
+		_dataType = dataType;
+		_name = variableName;
+		_help = help;
+		_repeatable = repeatable;
 	}
 
 	public TemplateVariableDefinition(
@@ -38,6 +55,14 @@ public class TemplateVariableDefinition {
 
 	public Class<?> getClazz() {
 		return _clazz;
+	}
+
+	public String getDataType() {
+		return _dataType;
+	}
+
+	public String getHelp() {
+		return _help;
 	}
 
 	public TemplateVariableDefinition getItemTemplateVariableDefinition() {
@@ -60,9 +85,16 @@ public class TemplateVariableDefinition {
 		return false;
 	}
 
+	public boolean isRepeatable() {
+		return _repeatable;
+	}
+
 	private Class<?> _clazz;
+	private String _dataType;
+	private String _help;
 	private TemplateVariableDefinition _itemTemplateVariableDefinition;
 	private String _label;
 	private String _name;
+	private boolean _repeatable = false;
 
 }
