@@ -35,10 +35,6 @@ import java.util.Map;
 public abstract class BasePortletDisplayTemplateHandler
 	implements PortletDisplayTemplateHandler {
 
-	public long getClassPK() {
-		return 0;
-	}
-
 	public List<Element> getDefaultTemplateElements() throws Exception {
 		String templatesConfigPath = getTemplatesConfigPath();
 
