@@ -429,10 +429,7 @@ public class SearchContainer<R> {
 	public void setTotal(int total) {
 		_total = total;
 
-		if (((_cur - 1) * _delta) >= _total) {
-			_cur = DEFAULT_CUR;
-		}
-
+		_calculateCur();
 		_calculateStartAndEnd();
 	}
 
@@ -446,6 +443,12 @@ public class SearchContainer<R> {
 		for (String headerName : headerNames) {
 			_normalizedHeaderNames.add(
 				FriendlyURLNormalizerUtil.normalize(headerName));
+		}
+	}
+
+	private void _calculateCur() {
+		if (((_cur - 1) * _delta) >= _total) {
+			_cur = (_total /_delta) + 1;
 		}
 	}
 
