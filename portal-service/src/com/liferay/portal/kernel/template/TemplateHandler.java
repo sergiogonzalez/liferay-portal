@@ -26,9 +26,9 @@ import java.util.Map;
 public interface TemplateHandler {
 
 	/**
-	 * Returns the class name of the portlet display template.
+	 * Returns the class name of the template handler.
 	 *
-	 * @return the class name of the portlet display template
+	 * @return the class name of the template handler
 	 */
 	public String getClassName();
 
@@ -45,17 +45,16 @@ public interface TemplateHandler {
 	public List<Element> getDefaultTemplateElements() throws Exception;
 
 	/**
-	 * Returns the name of the portlet display template.
+	 * Returns the name of the template handler.
 	 *
-	 * @param  locale the locale of the portlet display template name to get
-	 * @return the name of the portlet display template
+	 * @param  locale the locale of the template handler name to get
+	 * @return the name of the template
 	 */
 	public String getName(Locale locale);
 
 	/**
-	 * Returns the name of the resource the portlet display template is
-	 * associated with. Permissions on the resource are checked when adding a
-	 * new portlet display template.
+	 * Returns the name of the resource the template is associated with.
+	 * Permissions on the resource are checked when adding a new template.
 	 *
 	 * @return the name of the resource
 	 */
@@ -67,7 +66,7 @@ public interface TemplateHandler {
 	 * @param  language the language of the template
 	 * @return the path to the help template of the portlet display. This
 	 *         template will be shown as a help message when the user creates a
-	 *         new portlet display template.
+	 *         new template.
 	 */
 	public String getTemplatesHelpPath(String language);
 
