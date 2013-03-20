@@ -144,6 +144,10 @@ public List<PortletDisplayTemplateHandler> getPortletDisplayTemplateHandlers(Per
 	List<PortletDisplayTemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<PortletDisplayTemplateHandler>();
 
 	for (PortletDisplayTemplateHandler portletDisplayTemplateHandler : portletDisplayTemplateHandlers) {
+		if (portletDisplayTemplateHandler instanceof JournalPortletDisplayTemplateHandler) {
+			continue;
+		}
+
 		if (DDMPermission.contains(permissionChecker, scopeGroupId, portletDisplayTemplateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 			allowedPortletDisplayTemplateHandlers.add(portletDisplayTemplateHandler);
 		}

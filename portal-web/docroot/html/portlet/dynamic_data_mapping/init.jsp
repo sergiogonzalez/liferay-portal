@@ -57,7 +57,8 @@ page import="com.liferay.portlet.dynamicdatamapping.storage.StorageType" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %><%@
-page import="com.liferay.portlet.journal.model.JournalArticle" %>
+page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
+page import="com.liferay.portlet.journal.template.JournalPortletDisplayTemplateHandler" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
