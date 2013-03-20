@@ -22,11 +22,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
@@ -34,7 +32,8 @@ import com.liferay.portlet.trash.util.TrashUtil;
  * @author Ryan Park
  * @author Zsolt Berentey
  */
-public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
+public class MBMessageActivityInterpreter
+	extends BaseSocialActivityInterpreter {
 
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
@@ -44,7 +43,8 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 	protected String getBody(SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		MBMessage message = getMessage(activity);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+			activity.getClassPK());
 
 		if (message.getCategoryId() <= 0) {
 			return StringPool.BLANK;
@@ -67,7 +67,8 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 			SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		MBMessage message = getMessage(activity);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+			activity.getClassPK());
 
 		return message.getSubject();
 	}
@@ -76,7 +77,8 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		MBMessage message = getMessage(activity);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+			activity.getClassPK());
 
 		MBThread thread = message.getThread();
 
@@ -93,18 +95,6 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 		sb.append(message.getMessageId());
 
 		return sb.toString();
-	}
-
-	protected MBMessage getMessage(SocialActivity activity) throws Exception {
-		if (activity.isClassName(MBThread.class.getName())) {
-			MBThread thread = MBThreadLocalServiceUtil.getThread(
-				activity.getClassPK());
-
-			return MBMessageLocalServiceUtil.getMessage(
-				thread.getRootMessageId());
-		}
-
-		return MBMessageLocalServiceUtil.getMessage(activity.getClassPK());
 	}
 
 	@Override
@@ -143,24 +133,6 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 				return "activity-message-boards-reply-message-in";
 			}
 		}
-		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
-			if (Validator.isNull(groupName)) {
-				return "activity-message-boards-move-to-trash";
-			}
-			else {
-				return "activity-message-boards-move-to-trash-in";
-			}
-		}
-		else if (activityType ==
-					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
-
-			if (Validator.isNull(groupName)) {
-				return "activity-message-boards-restore-from-trash";
-			}
-			else {
-				return "activity-message-boards-restore-from-trash-in";
-			}
-		}
 
 		return null;
 	}
@@ -171,13 +143,13 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 			String actionId, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		MBMessage message = getMessage(activity);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+			activity.getClassPK());
 
 		return MBMessagePermission.contains(
 			permissionChecker, message.getMessageId(), actionId);
 	}
 
-	private static final String[] _CLASS_NAMES =
-		{MBMessage.class.getName(), MBThread.class.getName()};
+	private static final String[] _CLASS_NAMES = {MBMessage.class.getName()};
 
 }

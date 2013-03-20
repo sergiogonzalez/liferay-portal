@@ -206,13 +206,17 @@ public class SiteMembershipPolicyMembershipsTest
 			user, null, null, userGroupIds, null,
 			Collections.<UserGroupRole>emptyList());
 
-		Assert.assertEquals(userGroupIds.length, user.getGroups().size());
+		groups = user.getGroups();
+
+		Assert.assertEquals(userGroupIds.length, groups.size());
 
 		MembershipPolicyTestUtil.updateUser(
 			user, null, null, requiredGroupIds, null,
 			Collections.<UserGroupRole>emptyList());
 
-		Assert.assertEquals(requiredGroupIds.length, user.getGroups().size());
+		groups = user.getGroups();
+
+		Assert.assertEquals(requiredGroupIds.length, groups.size());
 	}
 
 	@Test
