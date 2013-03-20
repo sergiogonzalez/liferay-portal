@@ -24,17 +24,14 @@ public class TemplateVariableDefinition {
 	public TemplateVariableDefinition(
 		String label, Class<?> clazz, String variableName) {
 
-		_label = label;
-		_clazz = clazz;
-		_dataType = StringPool.BLANK;
-		_name = variableName;
-		_help = label + "-help";
-		_repeatable = false;
+		this(
+			label, clazz, StringPool.BLANK, variableName, label.concat("-help"),
+			false);
 	}
 
 	public TemplateVariableDefinition(
-		String label, Class<?> clazz, String variableName, String help,
-		String dataType, boolean repeatable) {
+		String label, Class<?> clazz, String dataType, String variableName,
+		String help, boolean repeatable) {
 
 		_label = label;
 		_clazz = clazz;

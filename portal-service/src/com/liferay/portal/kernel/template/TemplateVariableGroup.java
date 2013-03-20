@@ -50,7 +50,7 @@ public class TemplateVariableGroup {
 
 		TemplateVariableDefinition templateVariableDefinition =
 			new TemplateVariableDefinition(
-				labelKey, clazz, variableName, help, dataType, repeatable);
+				labelKey, clazz, dataType, variableName, help, repeatable);
 
 		_templateVariableDefinitions.add(templateVariableDefinition);
 
