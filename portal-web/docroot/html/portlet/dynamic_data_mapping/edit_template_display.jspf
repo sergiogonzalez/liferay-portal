@@ -35,10 +35,10 @@ boolean useRichEditor = editorType.equals("rich");
 Map<String, TemplateVariableGroup> templateVariableGroups = Collections.emptyMap();
 
 if (template != null) {
-	templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(template.getClassNameId(), classPK);
+	templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(template.getClassNameId(), classPK, locale);
 }
 else if (classNameId > 0) {
-	templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNameId, classPK);
+	templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNameId, classPK, locale);
 }
 %>
 

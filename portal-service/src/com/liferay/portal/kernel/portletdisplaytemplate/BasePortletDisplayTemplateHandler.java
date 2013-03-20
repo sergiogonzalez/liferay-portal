@@ -27,6 +27,7 @@ import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUti
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -64,7 +65,8 @@ public abstract class BasePortletDisplayTemplateHandler
 	}
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		long classPK) {
+			long classPK, Locale locale)
+		throws Exception {
 
 		return PortletDisplayTemplateUtil.getTemplateVariableGroups();
 	}

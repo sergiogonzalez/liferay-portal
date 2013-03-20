@@ -82,6 +82,7 @@ public interface PortletDisplayTemplateHandler {
 	public String getTemplatesHelpPropertyKey();
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		long classPK);
+			long classPK, Locale locale)
+		throws Exception;
 
 }

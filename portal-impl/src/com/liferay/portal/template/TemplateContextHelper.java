@@ -90,6 +90,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -111,7 +112,8 @@ import org.apache.struts.tiles.ComponentContext;
 public class TemplateContextHelper {
 
 	public static Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		long classNameId, long classPK) {
+			long classNameId, long classPK, Locale locale)
+		throws Exception {
 
 		PortletDisplayTemplateHandler portletDisplayTemplateHandler =
 			PortletDisplayTemplateHandlerRegistryUtil.
@@ -122,7 +124,8 @@ public class TemplateContextHelper {
 		}
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			portletDisplayTemplateHandler.getTemplateVariableGroups(classPK);
+			portletDisplayTemplateHandler.getTemplateVariableGroups(
+				classPK, locale);
 
 		TemplateVariableGroup utilTemplateVariableGroup =
 			templateVariableGroups.get("util");
