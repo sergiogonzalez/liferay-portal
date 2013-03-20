@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -60,6 +62,10 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public boolean getFieldRepeatable(java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.Set<java.lang.String> getFieldNames()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -77,6 +83,14 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public boolean getFieldRequired(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public String getFieldTip(
+			java.lang.String fieldName, java.util.Locale locale)
+		throws PortalException, SystemException;
+
+	public String getFieldTip(
+			java.lang.String fieldName, java.lang.String locale)
+		throws PortalException, SystemException;
 
 	public java.util.Map<java.lang.String, java.lang.String> getFields(
 		java.lang.String fieldName, java.lang.String attributeName,

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -860,6 +862,11 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getFieldLabel(fieldName, locale);
 	}
 
+	public boolean getFieldRepeatable(String fieldName)
+		throws PortalException, SystemException {
+		return _ddmStructure.getFieldRepeatable(fieldName);
+	}
+
 	public java.util.Set<java.lang.String> getFieldNames()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -884,6 +891,18 @@ public class DDMStructureWrapper implements DDMStructure,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructure.getFieldRequired(fieldName);
+	}
+
+	public String getFieldTip(
+			java.lang.String fieldName, java.util.Locale locale)
+		throws PortalException, SystemException {
+		return _ddmStructure.getFieldTip(fieldName, locale);
+	}
+
+	public String getFieldTip(
+			java.lang.String fieldName, java.lang.String locale)
+		throws PortalException, SystemException {
+		return _ddmStructure.getFieldTip(fieldName, locale);
 	}
 
 	public java.util.Map<java.lang.String, java.lang.String> getFields(
