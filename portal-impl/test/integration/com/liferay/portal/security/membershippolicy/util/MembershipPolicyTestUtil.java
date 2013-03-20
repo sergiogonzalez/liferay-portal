@@ -21,11 +21,16 @@ import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.ListTypeConstants;
+import com.liferay.portal.model.OrgLabor;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserServiceUtil;
@@ -42,6 +47,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -66,6 +72,20 @@ public class MembershipPolicyTestUtil {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, "This is a test group",
 			GroupConstants.TYPE_SITE_OPEN, friendlyURL, true, true,
 			populateServiceContext());
+	}
+
+	public static Organization addOrganization() throws Exception {
+		long parentOrganizationId =
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+		String name = ServiceTestUtil.randomString();
+		String type = OrganizationConstants.TYPE_REGULAR_ORGANIZATION;
+		int statusId = ListTypeConstants.ORGANIZATION_STATUS_DEFAULT;
+		String comments = StringPool.BLANK;
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		return OrganizationServiceUtil.addOrganization(
+			parentOrganizationId, name, type, false, 0, 0, statusId, comments,
+			false, serviceContext);
 	}
 
 	public static User addUser(
@@ -103,6 +123,21 @@ public class MembershipPolicyTestUtil {
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, siteIds,
 			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
+	}
+
+	public static Organization updateOrganization(Organization organization)
+		throws Exception {
+
+		return OrganizationServiceUtil.updateOrganization(
+			organization.getOrganizationId(),
+			organization.getParentOrganizationId(), organization.getName(),
+			organization.getType(), false, 0, 0, organization.getStatusId(),
+			organization.getComments(), false, Collections.<Address>emptyList(),
+			Collections.<EmailAddress>emptyList(),
+			Collections.<OrgLabor>emptyList(), Collections.<Phone>emptyList(),
+			Collections.<Website>emptyList(),
+			ServiceTestUtil.getServiceContext());
+
 	}
 
 	public static void updateUser(
