@@ -108,6 +108,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 										for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
 											String dataContent1 = "${" + templateVariableDefinition.getName() + "}";
 											String dataContent2 = StringPool.BLANK;
+											String dataContent3 = StringPool.BLANK;
 
 											if (templateVariableDefinition.isCollection()) {
 												TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
@@ -115,13 +116,20 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 												dataContent1 = "<#list " + itemTemplateVariableDefinition.getName() + " as " + templateVariableDefinition.getName() + ">";
 												dataContent2 = "</#list>";
 											}
+											else if (templateVariableDefinition.isRepeatable()) {
+												String itemName = "cur_" + templateVariableDefinition.getName();
+
+												dataContent1 = "<#list " + templateVariableDefinition.getName() + ".getSiblings()" + " as " + itemName + ">";
+												dataContent2 = "${" + itemName + ".getData()}";
+												dataContent3 = "</#list>";
+											}
 											else if (Validator.isNotNull(templateVariableDefinition.getDataType())) {
 												dataContent1 = "${" + templateVariableDefinition.getName() + ".getData()}";
 											}
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= dataContent1 %>" <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content2="<%= dataContent2 %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content1="<%= dataContent1 %>" <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content2="<%= dataContent2 %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content3="<%= dataContent3 %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" />
 												</span>
 											</li>
