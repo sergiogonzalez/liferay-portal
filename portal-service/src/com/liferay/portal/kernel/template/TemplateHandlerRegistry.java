@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portletdisplaytemplate;
+package com.liferay.portal.kernel.template;
 
 import java.util.List;
 
 /**
  * @author Juan Fernández
  */
-public interface PortletDisplayTemplateHandlerRegistry {
+public interface TemplateHandlerRegistry {
 
 	public long[] getClassNameIds();
 
@@ -31,8 +31,7 @@ public interface PortletDisplayTemplateHandlerRegistry {
 	 * @return the portlet display template handler associated with the class
 	 *         name ID
 	 */
-	public PortletDisplayTemplateHandler getPortletDisplayTemplateHandler(
-		long classNameId);
+	public TemplateHandler getTemplateHandler(long classNameId);
 
 	/**
 	 * Returns the portlet display template handler associated with the class
@@ -42,33 +41,29 @@ public interface PortletDisplayTemplateHandlerRegistry {
 	 * @return the portlet display template handler associated with the class
 	 *         name
 	 */
-	public PortletDisplayTemplateHandler getPortletDisplayTemplateHandler(
-		String className);
+	public TemplateHandler getTemplateHandler(String className);
 
 	/**
 	 * Returns all the portlet display template handlers.
 	 *
 	 * @return the portlet display template handlers
 	 */
-	public List<PortletDisplayTemplateHandler>
-		getPortletDisplayTemplateHandlers();
+	public List<TemplateHandler> getTemplateHandlers();
 
 	/**
 	 * Registers the portlet display template handler.
 	 *
-	 * @param portletDisplayTemplateHandler the portlet display template handler
+	 * @param templateHandler the portlet display template handler
 	 *        to register
 	 */
-	public void register(
-		PortletDisplayTemplateHandler portletDisplayTemplateHandler);
+	public void register(TemplateHandler templateHandler);
 
 	/**
 	 * Unregisters the portlet display template handler.
 	 *
-	 * @param portletDisplayTemplateHandler the portlet display template handler
+	 * @param templateHandler the portlet display template handler
 	 *        to unregister
 	 */
-	public void unregister(
-		PortletDisplayTemplateHandler portletDisplayTemplateHandler);
+	public void unregister(TemplateHandler templateHandler);
 
 }

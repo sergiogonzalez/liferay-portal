@@ -985,8 +985,8 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*
 	* @return the name of the portlet display style class of the portlet
 	*/
-	public java.lang.String getPortletDisplayTemplateHandlerClass() {
-		return _portlet.getPortletDisplayTemplateHandlerClass();
+	public java.lang.String getTemplateHandlerClass() {
+		return _portlet.getTemplateHandlerClass();
 	}
 
 	/**
@@ -994,8 +994,8 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*
 	* @return the portlet display style instance of the portlet
 	*/
-	public com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler getPortletDisplayTemplateHandlerInstance() {
-		return _portlet.getPortletDisplayTemplateHandlerInstance();
+	public com.liferay.portal.kernel.template.TemplateHandler getTemplateHandlerInstance() {
+		return _portlet.getTemplateHandlerInstance();
 	}
 
 	/**
@@ -2485,12 +2485,11 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* Sets the name of the portlet display template handler class of the
 	* portlet.
 	*
-	* @param portletDisplayTemplateHandlerClass the name of display template
+	* @param templateHandlerClass the name of display template
 	handler class of the portlet
 	*/
-	public void setPortletDisplayTemplateHandlerClass(
-		java.lang.String portletDisplayTemplateHandlerClass) {
-		_portlet.setPortletDisplayTemplateHandlerClass(portletDisplayTemplateHandlerClass);
+	public void setTemplateHandlerClass(java.lang.String templateHandlerClass) {
+		_portlet.setTemplateHandlerClass(templateHandlerClass);
 	}
 
 	/**

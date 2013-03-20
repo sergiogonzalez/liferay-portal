@@ -1334,10 +1334,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletModel.setStagedModelDataHandlerClasses(
 			stagedModelDataHandlerClasses);
 
-		portletModel.setPortletDisplayTemplateHandlerClass(
+		portletModel.setTemplateHandlerClass(
 			GetterUtil.getString(
 				portletElement.elementText("portlet-display-template-handler"),
-				portletModel.getPortletDisplayTemplateHandlerClass()));
+				portletModel.getTemplateHandlerClass()));
 		portletModel.setPortletLayoutListenerClass(
 			GetterUtil.getString(
 				portletElement.elementText("portlet-layout-listener-class"),

@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portletdisplaytemplate;
+package com.liferay.portal.kernel.template;
 
-import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.Map;
 /**
  * @author Juan Fernández
  */
-public interface PortletDisplayTemplateHandler {
+public interface TemplateHandler {
 
 	/**
 	 * Returns the class name of the portlet display template.

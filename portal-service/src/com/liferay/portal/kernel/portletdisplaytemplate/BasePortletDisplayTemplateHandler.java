@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -34,7 +35,7 @@ import java.util.Map;
  * @author Eduardo Garcia
  */
 public abstract class BasePortletDisplayTemplateHandler
-	implements PortletDisplayTemplateHandler {
+	implements TemplateHandler {
 
 	public List<Element> getDefaultTemplateElements() throws Exception {
 		String templatesConfigPath = getTemplatesConfigPath();
