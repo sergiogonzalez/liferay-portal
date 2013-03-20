@@ -129,7 +129,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= dataContent1 %>" <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content2="<%= dataContent2 %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content3="<%= dataContent3 %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContent1) %>" <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContent2) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContent3) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContent3) %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" />
 												</span>
 											</li>
