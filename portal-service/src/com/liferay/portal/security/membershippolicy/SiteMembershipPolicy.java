@@ -85,6 +85,7 @@ public interface SiteMembershipPolicy {
 			Map<String, Serializable> oldExpandoAttributes,
 			UnicodeProperties oldTypeSettingsProperties)
 		throws PortalException, SystemException;
+
 	public void verifyPolicy(Role role) throws PortalException, SystemException;
 
 	public void verifyPolicy(
