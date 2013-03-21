@@ -178,7 +178,7 @@ public abstract class BaseSiteMembershipPolicyTestCase {
 		return _userIds;
 	}
 
-	protected static Group group;
+	protected Group group;
 
 	private static long[] _forbiddenGroupIds = new long[2];
 	private static long[] _forbiddenRoleIds = new long[2];

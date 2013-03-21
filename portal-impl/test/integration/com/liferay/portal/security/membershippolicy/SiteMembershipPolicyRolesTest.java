@@ -70,7 +70,6 @@ public class SiteMembershipPolicyRolesTest
 
 		UserGroupRoleServiceUtil.addUserGroupRoles(
 			userIds[0], group.getGroupId(), addForbiddenRoles());
-
 	}
 
 	@Test

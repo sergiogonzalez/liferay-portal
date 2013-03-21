@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 import com.liferay.portlet.calendar.service.permission.CalEventPermission;
@@ -38,7 +38,7 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
 	protected String getEntryTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
 		CalEvent event = CalEventLocalServiceUtil.getEvent(
@@ -48,15 +48,16 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getLink(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(themeDisplay.getPathMain());
+		sb.append(serviceContext.getPortalURL());
+		sb.append(serviceContext.getPathMain());
 		sb.append("/calendar/find_event?redirect=");
-		sb.append(HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
+		sb.append(HtmlUtil.escapeURL(serviceContext.getCurrentURL()));
 		sb.append("&eventId=");
 		sb.append(activity.getClassPK());
 
@@ -92,7 +93,7 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 	@Override
 	protected boolean hasPermissions(
 			PermissionChecker permissionChecker, SocialActivity activity,
-			String actionId, ThemeDisplay themeDisplay)
+			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
 		return CalEventPermission.contains(
