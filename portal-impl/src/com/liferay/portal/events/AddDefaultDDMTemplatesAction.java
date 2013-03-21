@@ -94,7 +94,6 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 			TemplateHandlerRegistryUtil.getTemplateHandlers();
 
 		for (TemplateHandler templateHandler : templateHandlers) {
-
 			long classNameId = PortalUtil.getClassNameId(
 				templateHandler.getClassName());
 

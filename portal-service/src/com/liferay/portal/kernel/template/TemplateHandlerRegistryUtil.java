@@ -32,7 +32,6 @@ public class TemplateHandlerRegistryUtil {
 	}
 
 	public static TemplateHandler getTemplateHandler(String className) {
-
 		return getTemplateRegistry().getTemplateHandler(className);
 	}
 
@@ -41,7 +40,6 @@ public class TemplateHandlerRegistryUtil {
 	}
 
 	public static TemplateHandlerRegistry getTemplateRegistry() {
-
 		PortalRuntimePermission.checkGetBeanProperty(
 			TemplateHandlerRegistryUtil.class);
 

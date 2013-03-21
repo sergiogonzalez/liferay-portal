@@ -58,7 +58,6 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 	}
 
 	public List<TemplateHandler> getTemplateHandlers() {
-
 		return ListUtil.fromMapValues(_templateHandlers);
 	}
 
