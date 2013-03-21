@@ -93,16 +93,13 @@ public class BookmarksTestUtil {
 			long groupId, long parentFolderId, String name)
 		throws Exception {
 
-		String description = "This is a test folder.";
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		return BookmarksFolderServiceUtil.addFolder(
-			parentFolderId, name, description, serviceContext);
+		return addFolder(parentFolderId, name, serviceContext);
 	}
 
 	public static BookmarksFolder addFolder(long groupId, String name)
@@ -110,6 +107,16 @@ public class BookmarksTestUtil {
 
 		return addFolder(
 			groupId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+	}
+
+	public static BookmarksFolder addFolder(
+			long parentFolderId, String name, ServiceContext serviceContext)
+		throws Exception {
+
+		String description = "This is a test folder.";
+
+		return BookmarksFolderServiceUtil.addFolder(
+			parentFolderId, name, description, serviceContext);
 	}
 
 	public static BookmarksFolder addFolder(String name) throws Exception {
