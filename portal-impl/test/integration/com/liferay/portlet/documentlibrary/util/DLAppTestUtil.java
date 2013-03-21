@@ -191,6 +191,23 @@ public abstract class DLAppTestUtil {
 			mimeType, title, bytes, workflowAction);
 	}
 
+	public static FileEntry addFileEntry(
+			long folderId, String sourceFileName, String title,
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		int workflowAction = WorkflowConstants.ACTION_SAVE_DRAFT;
+
+		if (approved) {
+			workflowAction = WorkflowConstants.ACTION_PUBLISH;
+		}
+
+		return addFileEntry(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			folderId, sourceFileName, ContentTypes.TEXT_PLAIN, title, null,
+			workflowAction, serviceContext);
+	}
+
 	public static Folder addFolder(
 			long groupId, Folder parentFolder, boolean rootFolder, String name)
 		throws Exception {
@@ -216,21 +233,38 @@ public abstract class DLAppTestUtil {
 			boolean deleteExisting)
 		throws Exception {
 
-		String description = StringPool.BLANK;
-
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
 
+		return addFolder(parentFolderId, name, deleteExisting, serviceContext);
+	}
+
+	public static Folder addFolder(
+			long parentFolderId, String name, boolean deleteExisting,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String description = StringPool.BLANK;
+
 		if (deleteExisting) {
 			try {
-				DLAppServiceUtil.deleteFolder(groupId, parentFolderId, name);
+				DLAppServiceUtil.deleteFolder(
+					serviceContext.getScopeGroupId(), parentFolderId, name);
 			}
 			catch (NoSuchFolderException nsfe) {
 			}
 		}
 
 		return DLAppServiceUtil.addFolder(
-			groupId, parentFolderId, name, description, serviceContext);
+			serviceContext.getScopeGroupId(), parentFolderId, name, description,
+			serviceContext);
+	}
+
+	public static Folder addFolder(
+			long parentFolderId, String name, ServiceContext serviceContext)
+		throws Exception {
+
+		return addFolder(parentFolderId, name, false, serviceContext);
 	}
 
 	public static FileEntry updateFileEntry(
