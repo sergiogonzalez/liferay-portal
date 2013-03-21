@@ -65,18 +65,18 @@ public class JournalPortletDisplayTemplateHandler
 			new LinkedHashMap<String, TemplateVariableGroup>();
 
 		templateVariableGroups.put(
-			"fields", getStructureFieldsVariableGroup(classPK, locale));
+			"fields", getStructureFieldsTemplateVariableGroup(classPK, locale));
 
 		templateVariableGroups.put(
-			"general-variables", getGeneralVariablesVariableGroup());
+			"general-variables", getGeneralVariablesTemplateVariableGroup());
 
-		templateVariableGroups.put("util", getUtilVariableGroup());
+		templateVariableGroups.put("util", getUtilTemplateVariableGroup());
 
 		return templateVariableGroups;
 
 	}
 
-	protected TemplateVariableGroup getGeneralVariablesVariableGroup() {
+	protected TemplateVariableGroup getGeneralVariablesTemplateVariableGroup() {
 		TemplateVariableGroup generalVariablesTemplateVariableGroup =
 			new TemplateVariableGroup("general-variables");
 
@@ -94,7 +94,7 @@ public class JournalPortletDisplayTemplateHandler
 		return generalVariablesTemplateVariableGroup;
 	}
 
-	protected TemplateVariableGroup getStructureFieldsVariableGroup(
+	protected TemplateVariableGroup getStructureFieldsTemplateVariableGroup(
 			long ddmStructureId, Locale locale)
 		throws PortalException, SystemException {
 
@@ -124,7 +124,7 @@ public class JournalPortletDisplayTemplateHandler
 		return fieldsTemplateVariableGroup;
 	}
 
-	protected TemplateVariableGroup getUtilVariableGroup() {
+	protected TemplateVariableGroup getUtilTemplateVariableGroup() {
 		TemplateVariableGroup utilTemplateVariableGroup =
 			new TemplateVariableGroup("util");
 
