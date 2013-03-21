@@ -45,6 +45,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -510,6 +511,18 @@ public class ServiceContext implements Cloneable, Serializable {
 		}
 	}
 
+	public String getPathFriendlyURLPrivateGroup() {
+		return _pathFriendlyURLPrivateGroup;
+	}
+
+	public String getPathFriendlyURLPrivateUser() {
+		return _pathFriendlyURLPrivateUser;
+	}
+
+	public String getPathFriendlyURLPublic() {
+		return _pathFriendlyURLPublic;
+	}
+
 	/**
 	 * Returns the main context path of the portal, concatenated with
 	 * <code>/c</code>.
@@ -622,6 +635,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		return PortletConstants.getRootPortletId(portletId);
 	}
 
+	public Group getScopeGroup() throws PortalException, SystemException {
+		return GroupLocalServiceUtil.getGroup(_scopeGroupId);
+	}
+
 	/**
 	 * Returns the ID of the group corresponding to the current data scope of
 	 * this service context.
@@ -639,6 +656,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		}
 
 		return (ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
+	}
+
+	public TimeZone getTimeZone() {
+		return _timeZone;
 	}
 
 	/**
@@ -1091,6 +1112,22 @@ public class ServiceContext implements Cloneable, Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public void setPathFriendlyURLPrivateGroup(
+		String pathFriendlyURLPrivateGroup) {
+
+		_pathFriendlyURLPrivateGroup = pathFriendlyURLPrivateGroup;
+	}
+
+	public void setPathFriendlyURLPrivateUser(
+		String pathFriendlyURLPrivateUser) {
+
+		_pathFriendlyURLPrivateUser = pathFriendlyURLPrivateUser;
+	}
+
+	public void setPathFriendlyURLPublic(String pathFriendlyURLPublic) {
+		_pathFriendlyURLPublic = pathFriendlyURLPublic;
+	}
+
 	/**
 	 * Sets the main context path of the portal, concatenated with
 	 * <code>/c</code>.
@@ -1197,6 +1234,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		_signedIn = signedIn;
 	}
 
+	public void setTimeZone(TimeZone timeZone) {
+		_timeZone = timeZone;
+	}
+
 	/**
 	 * Sets the complete URL of this service context's current user's profile
 	 * page.
@@ -1284,6 +1325,9 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _layoutFullURL;
 	private String _layoutURL;
 	private Date _modifiedDate;
+	private String _pathFriendlyURLPrivateGroup;
+	private String _pathFriendlyURLPrivateUser;
+	private String _pathFriendlyURLPublic;
 	private String _pathMain;
 	private long _plid;
 	private String _portalURL;
@@ -1293,6 +1337,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private transient HttpServletRequest _request;
 	private long _scopeGroupId;
 	private boolean _signedIn;
+	private TimeZone _timeZone;
 	private String _userDisplayURL;
 	private long _userId;
 	private String _uuid;

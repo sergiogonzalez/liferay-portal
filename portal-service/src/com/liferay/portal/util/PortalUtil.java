@@ -59,6 +59,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -377,6 +378,22 @@ public class PortalUtil {
 		throws SystemException {
 
 		return getPortal().getControlPanelPortlets(category, themeDisplay);
+	}
+
+	public static PortletURL getControlPanelPortletURL(
+		HttpServletRequest request, String portletId, long referrerPlid,
+		String lifecycle) {
+
+		return getPortal().getControlPanelPortletURL(
+			request, portletId, referrerPlid, lifecycle);
+	}
+
+	public static PortletURL getControlPanelPortletURL(
+		PortletRequest portletRequest, String portletId, long referrerPlid,
+		String lifecycle) {
+
+		return getPortal().getControlPanelPortletURL(
+			portletRequest, portletId, referrerPlid, lifecycle);
 	}
 
 	public static String getCreateAccountURL(

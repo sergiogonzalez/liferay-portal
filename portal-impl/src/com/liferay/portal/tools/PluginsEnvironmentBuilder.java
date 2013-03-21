@@ -579,7 +579,7 @@ public class PluginsEnvironmentBuilder {
 		_fileUtil.write(projectFile, sb.toString());
 	}
 
-	private static final String _BRANCH = "trunk";
+	private static final String _BRANCH = "master";
 
 	private static final String[] _SOURCE_DIR_NAMES = new String[] {
 		"docroot/WEB-INF/ext-impl/src", "docroot/WEB-INF/ext-service/src",

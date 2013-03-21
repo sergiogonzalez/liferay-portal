@@ -15,6 +15,7 @@
 package com.liferay.httpservice.internal.servlet;
 
 import com.liferay.httpservice.servlet.ResourceServlet;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 
 import java.text.SimpleDateFormat;
@@ -23,15 +24,22 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingListener;
@@ -55,6 +63,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletConfig;
 
 /**
@@ -93,6 +103,40 @@ public class BundleServletContextTest extends PowerMockito {
 
 		Assert.assertEquals(
 			classLoader, _bundleServletContext.getClassLoader());
+
+		verifyBundleWiring();
+	}
+
+	@Test
+	public void testGetFilterChain() throws Exception {
+		mockBundleWiring();
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			MockFilter.class.getName(), Level.INFO);
+
+		String cssFilterName = "CSS Filter";
+
+		registerFilter(
+			cssFilterName, new MockFilter(cssFilterName), null, "/css/*");
+
+		String jsFilterName = "JS Filter";
+
+		registerFilter(
+			jsFilterName, new MockFilter(jsFilterName), null, "/js/*");
+
+		FilterChain filterChain = _bundleServletContext.getFilterChain(
+			"/js/main.js");
+
+		Assert.assertNotNull(filterChain);
+
+		filterChain.doFilter(
+			new MockHttpServletRequest(), new MockHttpServletResponse());
+
+		Assert.assertEquals(1, logRecords.size());
+
+		LogRecord logRecord = logRecords.get(0);
+
+		Assert.assertEquals(jsFilterName, logRecord.getMessage());
 
 		verifyBundleWiring();
 	}
@@ -139,7 +183,7 @@ public class BundleServletContextTest extends PowerMockito {
 
 		initParameters.put("service.ranking", "1");
 
-		registerFilter("Security Filter", initParameters, "/a");
+		registerFilter("Security Filter", _filter, initParameters, "/a");
 	}
 
 	@Test
@@ -405,14 +449,14 @@ public class BundleServletContextTest extends PowerMockito {
 	}
 
 	protected void registerFilter(
-			String filterName, Map<String, String> initParameters,
-			String ... urlPatterns)
+			String filterName, Filter filter,
+			Map<String, String> initParameters, String ... urlPatterns)
 		throws NamespaceException, ServletException {
 
 		mockBundleWiring();
 
 		_bundleServletContext.registerFilter(
-			filterName, Arrays.asList(urlPatterns), _filter, initParameters,
+			filterName, Arrays.asList(urlPatterns), filter, initParameters,
 			_httpContext);
 
 		verifyBundleWiring();
@@ -421,7 +465,7 @@ public class BundleServletContextTest extends PowerMockito {
 	protected void registerFilter(String filterName, String ... urlPatterns)
 		throws NamespaceException, ServletException {
 
-		registerFilter(filterName, null, urlPatterns);
+		registerFilter(filterName, _filter, null, urlPatterns);
 	}
 
 	protected void registerListener(Object listener) {
@@ -537,5 +581,35 @@ public class BundleServletContextTest extends PowerMockito {
 
 	@Mock
 	private ServletRequestListener _servletRequestListener;
+
+	private class MockFilter implements Filter {
+
+		public MockFilter(String message) {
+			_message = message;
+
+			_logger.setLevel(Level.INFO);
+		}
+
+		@Override
+		public void destroy() {
+		}
+
+		@Override
+		public void doFilter(
+			ServletRequest servletRequest, ServletResponse servletResponse,
+			FilterChain filterChain) {
+
+			_logger.info(_message);
+		}
+
+		@Override
+		public void init(FilterConfig filterConfig) {
+		}
+
+		private Logger _logger = Logger.getLogger(MockFilter.class.getName());
+
+		private String _message;
+
+	}
 
 }

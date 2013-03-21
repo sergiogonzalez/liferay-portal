@@ -63,10 +63,6 @@ public class DLFileEntryAssetRenderer
 		_type = type;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return DLFileEntryAssetRendererFactory.CLASS_NAME;
-	}
-
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}
@@ -253,7 +249,7 @@ public class DLFileEntryAssetRenderer
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
 			}
 
-			return "/html/portlet/document_library/asset/file_entry" +
+			return "/html/portlet/document_library/asset/file_entry_" +
 				template + ".jsp";
 		}
 		else {

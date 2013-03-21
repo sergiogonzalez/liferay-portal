@@ -8,14 +8,10 @@
 			<#assign actionElement = element>
 
 			<#include "action_element.ftl">
-
-			;
 		<#elseif element.attributeValue("macro")??>
 			<#assign macroElement = element>
 
 			<#include "macro_element.ftl">
-
-			;
 		</#if>
 	<#elseif name == "if">
 		<#assign conditionElement = element.element("condition")>
@@ -41,5 +37,11 @@
 				<#include "macro_block_element.ftl">
 			}
 		</#if>
+	<#elseif name == "var">
+		<#assign varName = element.attributeValue("name")>
+
+		<#assign varValue = element.attributeValue("value")>
+
+		commandScopeVariables.put("${varName}", "${varValue}");
 	</#if>
 </#list>

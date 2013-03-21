@@ -73,10 +73,17 @@ public class ServiceContextFactory {
 					PortalUtil.getLayoutURL(themeDisplay), themeDisplay,
 					themeDisplay.getLayout(), true));
 			serviceContext.setPathMain(PortalUtil.getPathMain());
+			serviceContext.setPathFriendlyURLPrivateGroup(
+				PortalUtil.getPathFriendlyURLPrivateGroup());
+			serviceContext.setPathFriendlyURLPrivateUser(
+				PortalUtil.getPathFriendlyURLPrivateUser());
+			serviceContext.setPathFriendlyURLPublic(
+				PortalUtil.getPathFriendlyURLPublic());
 			serviceContext.setPlid(themeDisplay.getPlid());
 			serviceContext.setPortalURL(PortalUtil.getPortalURL(request));
 			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
 			serviceContext.setSignedIn(themeDisplay.isSignedIn());
+			serviceContext.setTimeZone(themeDisplay.getTimeZone());
 
 			User user = themeDisplay.getUser();
 
@@ -88,6 +95,12 @@ public class ServiceContextFactory {
 
 			serviceContext.setCompanyId(companyId);
 
+			serviceContext.setPathFriendlyURLPrivateGroup(
+				PortalUtil.getPathFriendlyURLPrivateGroup());
+			serviceContext.setPathFriendlyURLPrivateUser(
+				PortalUtil.getPathFriendlyURLPrivateUser());
+			serviceContext.setPathFriendlyURLPublic(
+				PortalUtil.getPathFriendlyURLPublic());
 			serviceContext.setPathMain(PortalUtil.getPathMain());
 
 			User user = null;
@@ -283,11 +296,18 @@ public class ServiceContextFactory {
 			serviceContext.setLayoutFullURL(
 				PortalUtil.getLayoutFullURL(themeDisplay));
 			serviceContext.setLayoutURL(PortalUtil.getLayoutURL(themeDisplay));
+			serviceContext.setPathFriendlyURLPrivateGroup(
+				PortalUtil.getPathFriendlyURLPrivateGroup());
+			serviceContext.setPathFriendlyURLPrivateUser(
+				PortalUtil.getPathFriendlyURLPrivateUser());
+			serviceContext.setPathFriendlyURLPublic(
+				PortalUtil.getPathFriendlyURLPublic());
 			serviceContext.setPathMain(PortalUtil.getPathMain());
 			serviceContext.setPlid(themeDisplay.getPlid());
 			serviceContext.setPortalURL(
 				PortalUtil.getPortalURL(portletRequest));
 			serviceContext.setSignedIn(themeDisplay.isSignedIn());
+			serviceContext.setTimeZone(themeDisplay.getTimeZone());
 
 			User user = themeDisplay.getUser();
 

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
@@ -118,6 +119,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -1446,6 +1448,56 @@ public class PortalImpl implements Portal {
 		return filterControlPanelPortlets(portlets, themeDisplay);
 	}
 
+	public PortletURL getControlPanelPortletURL(
+		HttpServletRequest request, String portletId, long referrerPlid,
+		String lifecycle) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		try {
+			plid = getControlPanelPlid(themeDisplay.getCompanyId());
+		}
+		catch (Exception e) {
+			_log.error("Unable to determine control panel layout id", e);
+		}
+
+		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+			request, portletId, plid, lifecycle);
+
+		liferayPortletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
+		liferayPortletURL.setRefererPlid(themeDisplay.getPlid());
+
+		return liferayPortletURL;
+	}
+
+	public PortletURL getControlPanelPortletURL(
+		PortletRequest portletRequest, String portletId, long referrerPlid,
+		String lifecycle) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		try {
+			plid = getControlPanelPlid(themeDisplay.getCompanyId());
+		}
+		catch (Exception e) {
+			_log.error("Unable to determine control panel layout id", e);
+		}
+
+		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+			portletRequest, portletId, plid, lifecycle);
+
+		liferayPortletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
+		liferayPortletURL.setRefererPlid(themeDisplay.getPlid());
+
+		return liferayPortletURL;
+	}
+
 	public String getCreateAccountURL(
 			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -2732,7 +2784,7 @@ public class PortalImpl implements Portal {
 		PortletRequestImpl portletRequestImpl =
 			PortletRequestImpl.getPortletRequestImpl(portletRequest);
 
-		return portletRequestImpl;
+		return DoPrivilegedUtil.wrap(portletRequestImpl, true);
 	}
 
 	public LiferayPortletResponse getLiferayPortletResponse(
@@ -2741,7 +2793,7 @@ public class PortalImpl implements Portal {
 		PortletResponseImpl portletResponseImpl =
 			PortletResponseImpl.getPortletResponseImpl(portletResponse);
 
-		return portletResponseImpl;
+		return DoPrivilegedUtil.wrap(portletResponseImpl, true);
 	}
 
 	public Locale getLocale(HttpServletRequest request) {
@@ -4303,9 +4355,9 @@ public class PortalImpl implements Portal {
 		if (userId <= 0) {
 
 			// Portlet WARs may have the correct remote user and not have the
-			// correct user id because the user id is saved in the session
-			// and may not be accessible by the portlet WAR's session. This
-			// behavior is inconsistent across different application servers.
+			// correct user id because the user id is saved in the session and
+			// may not be accessible by the portlet WAR's session. This behavior
+			// is inconsistent across different application servers.
 
 			String remoteUser = request.getRemoteUser();
 
