@@ -14,6 +14,9 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.bean.BeanLocatorImpl;
+import com.liferay.portal.bean.VelocityBeanHandler;
+import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
@@ -24,9 +27,11 @@ import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.PortalSecurityManager;
+import com.liferay.portal.security.pacl.dao.jdbc.PACLDataSource;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Member;
 import java.lang.reflect.ReflectPermission;
 
@@ -38,6 +43,8 @@ import java.security.PrivilegedExceptionAction;
 
 import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
+
+import javax.sql.DataSource;
 
 import sun.security.util.SecurityConstants;
 
@@ -138,8 +145,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		Class<?> stack[] = getClassContext();
 
 		// Stack depth of 4 should be the caller of one of the methods in
-		// java.lang.Class that invoked the checkMember access. The stack
-		// should look like:
+		// java.lang.Class that invoked the checkMember access. The stack should
+		// look like:
 
 		// [3] someCaller
 		// [2] java.lang.Class.someReflectionAPI
@@ -185,8 +192,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				// Call getDeclared* and immediately change the accessibility of
 				// it. The getDeclared* results in a call to
 				// SecurityManager#checkMemberAccess(Class, int). In the case
-				// where the target class and the caller class are from the
-				// same class loader, the checking is short circuited with a
+				// where the target class and the caller class are from the same
+				// class loader, the checking is short circuited with a
 				// successful result. If this short circuit happens in our
 				// implementation, we will store the class loader of the target
 				// class, and on the very next permission check, if the check is
@@ -298,9 +305,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		}
 	}
 
-	protected void initPACLImpl(Class<?> clazz, DoPrivilegedUtil.PACL pacl)
-		throws Exception {
-
+	protected void initPACLImpl(Class<?> clazz, Object pacl) throws Exception {
 		Field field = clazz.getDeclaredField("_pacl");
 
 		synchronized (field) {
@@ -311,6 +316,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	}
 
 	protected void initPACLImpls() throws Exception {
+		initPACLImpl(BeanLocatorImpl.class, new DoBeanLocatorImplPACL());
+		initPACLImpl(
+			DataSourceFactoryImpl.class, new DoDataSourceFactoryImplPACL());
 		initPACLImpl(DoPrivilegedUtil.class, new DoDoPrivilegedPACL());
 	}
 
@@ -323,6 +331,28 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				"._checkMembersAccessClassLoader");
 
 	private Policy _policy;
+
+	private static class DoBeanLocatorImplPACL implements BeanLocatorImpl.PACL {
+
+		public InvocationHandler getInvocationHandler(
+			Object bean, ClassLoader classLoader) {
+
+			InvocationHandler invocationHandler = new VelocityBeanHandler(
+				bean, classLoader);
+
+			return new PACLInvocationHandler(invocationHandler);
+		}
+
+	}
+
+	private static class DoDataSourceFactoryImplPACL
+		implements DataSourceFactoryImpl.PACL {
+
+		public DataSource getDataSource(DataSource dataSource) {
+			return new PACLDataSource(dataSource);
+		}
+
+	}
 
 	private static class DoDoPrivilegedPACL implements DoPrivilegedUtil.PACL {
 

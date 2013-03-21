@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -46,7 +46,8 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getBody(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getBody(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
 		if (!activity.isClassName(DLFileEntry.class.getName())) {
@@ -71,22 +72,23 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
 			fileEntry.getFileEntryId());
 
-		String fileEntryLink = assetRenderer.getURLDownload(themeDisplay);
+		String fileEntryLink = assetRenderer.getURLDownload(
+			serviceContext.getThemeDisplay());
 
-		sb.append(wrapLink(fileEntryLink, "download-file", themeDisplay));
+		sb.append(wrapLink(fileEntryLink, "download-file", serviceContext));
 
 		sb.append(StringPool.SPACE);
 
-		String folderLink = getFolderLink(fileEntry, themeDisplay);
+		String folderLink = getFolderLink(fileEntry, serviceContext);
 
-		sb.append(wrapLink(folderLink, "go-to-folder", themeDisplay));
+		sb.append(wrapLink(folderLink, "go-to-folder", serviceContext));
 
 		return sb.toString();
 	}
 
 	@Override
 	protected String getEntryTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
 		if (activity.isClassName(DLFileEntry.class.getName())) {
@@ -124,12 +126,12 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	protected String getFolderLink(
-		FileEntry fileEntry, ThemeDisplay themeDisplay) {
+		FileEntry fileEntry, ServiceContext serviceContext) {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(themeDisplay.getPathMain());
+		sb.append(serviceContext.getPortalURL());
+		sb.append(serviceContext.getPathMain());
 		sb.append("/document_library/find_folder?groupId=");
 		sb.append(fileEntry.getRepositoryId());
 		sb.append("&folderId=");
@@ -221,7 +223,7 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 	@Override
 	protected boolean hasPermissions(
 			PermissionChecker permissionChecker, SocialActivity activity,
-			String actionId, ThemeDisplay themeDisplay)
+			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
 		if (activity.isClassName(DLFileEntry.class.getName())) {
