@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -307,11 +308,11 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 					TrashPermissionException.RESTORE_RENAME);
 			}
 
+			trashHandler.checkDuplicateTrashEntry(
+				entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, name);
+
 			trashHandler.updateTitle(entry.getClassPK(), name);
 		}
-
-		trashHandler.checkDuplicateTrashEntry(
-			entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, null);
 
 		trashHandler.restoreTrashEntry(getUserId(), entry.getClassPK());
 
