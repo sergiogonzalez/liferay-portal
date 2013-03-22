@@ -42,6 +42,11 @@ import org.junit.runner.RunWith;
 public class BlogsEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
+	public void testParentBaseModelUserPermissions() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testSearchAttachments() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}

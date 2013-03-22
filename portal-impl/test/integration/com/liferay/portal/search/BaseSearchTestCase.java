@@ -64,6 +64,18 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
+	@Transactional
+	public void testBaseModelUserPermissions() throws Exception {
+		testUserPermissions(false, true);
+	}
+
+	@Test
+	@Transactional
+	public void testParentBaseModelUserPermissions() throws Exception {
+		testUserPermissions(true, false);
+	}
+
+	@Test
 	public void testSearchAttachments() throws Exception {
 		searchAttachments();
 	}
@@ -119,9 +131,11 @@ public abstract class BaseSearchTestCase {
 		searchWithinDDMStructure();
 	}
 
-	@Test
-	@Transactional
-	public void testUserPermissions() throws Exception {
+	public void testUserPermissions(
+			boolean addBaseModelPermission,
+			boolean addParentBaseModelPermission)
+		throws Exception {
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -133,11 +147,14 @@ public abstract class BaseSearchTestCase {
 		int initialBaseModelsSearchCount = searchBaseModelsCount(
 			getBaseModelClass(), group.getGroupId(), searchContext);
 
+		serviceContext.setAddGroupPermissions(addParentBaseModelPermission);
+		serviceContext.setAddGuestPermissions(addParentBaseModelPermission);
+
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		serviceContext.setAddGroupPermissions(false);
-		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(addBaseModelPermission);
+		serviceContext.setAddGuestPermissions(addBaseModelPermission);
 
 		baseModel = addBaseModel(
 			parentBaseModel, true, getSearchKeywords(), serviceContext);
