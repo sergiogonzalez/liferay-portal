@@ -144,17 +144,26 @@ public abstract class BaseSearchTestCase {
 
 		User user = UserTestUtil.addUser(null, 0);
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		try {
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
 
-		searchContext.setUserId(user.getUserId());
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-		Assert.assertEquals(
-			initialBaseModelsSearchCount,
-			searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId(), searchContext));
+			searchContext.setUserId(user.getUserId());
+
+			Assert.assertEquals(
+				initialBaseModelsSearchCount,
+				searchBaseModelsCount(
+					getBaseModelClass(), group.getGroupId(), searchContext));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	protected void addAttachment(ClassedModel classedModel) throws Exception {
