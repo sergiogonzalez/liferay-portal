@@ -29,11 +29,14 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import javax.portlet.PortletURL;
+
 /**
  * @author Roberto Diaz
  * @author Zsolt Berentey
  */
-public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
+public class JournalArticleActivityInterpreter
+	extends BaseSocialActivityInterpreter {
 
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
@@ -61,9 +64,11 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 		if (TrashUtil.isInTrash(
 				JournalArticle.class.getName(), article.getResourcePrimKey())) {
 
-			return TrashUtil.getViewContentURL(
+			PortletURL portletURL = TrashUtil.getViewContentURL(
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
-				serviceContext.getThemeDisplay());
+				serviceContext.getRequest());
+
+			return portletURL.toString();
 		}
 
 		JournalArticle lastestArticle =
