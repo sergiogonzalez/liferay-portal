@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.util;
 
 import com.liferay.portal.kernel.concurrent.PortalCallable;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -982,6 +983,17 @@ public class MBUtil {
 					MBMessageLocalServiceUtil.getCategoryMessagesCount(
 						category.getGroupId(), category.getCategoryId(),
 						WorkflowConstants.STATUS_APPROVED);
+
+				QueryDefinition queryDefinition = new QueryDefinition(
+					WorkflowConstants.STATUS_IN_TRASH);
+
+				List<MBThread> threads =
+					MBThreadLocalServiceUtil.getGroupThreads(
+						category.getGroupId(), queryDefinition);
+
+				for (MBThread thread : threads) {
+					messageCount = messageCount - thread.getMessageCount();
+				}
 
 				int threadCount =
 					MBThreadLocalServiceUtil.getCategoryThreadsCount(
