@@ -158,31 +158,12 @@ public class GroupServiceTest {
 
 	@Test
 	public void testGetParentSites() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		getParentSites(false);
+	}
 
-		Assert.assertTrue(group.isRoot());
-
-		String keywords = StringPool.BLANK;
-
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("site", Boolean.TRUE);
-
-		List<Long> excludedGroupIds = new ArrayList<Long>();
-
-		excludedGroupIds.add(group.getGroupId());
-
-		groupParams.put("excludedGroupIds", excludedGroupIds);
-
-		List<Group> parentCandidates = GroupLocalServiceUtil.search(
-			group.getCompanyId(), null, keywords, groupParams, -1, -1, null);
-
-		for (Group parentCandidate : parentCandidates) {
-			if (parentCandidate.getGroupId() == group.getGroupId()) {
-				Assert.fail("A group cannot be its own parent");
-			}
-		}
+	@Test
+	public void testGetParentSitesStaging() throws Exception {
+		getParentSites(true);
 	}
 
 	@Test
@@ -285,6 +266,65 @@ public class GroupServiceTest {
 		testGroup(
 			user, group1, group11, null, false, true, false, true, false, true,
 			true);
+	}
+
+	protected void getParentSites(boolean staging) throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(group.isRoot());
+
+		String keywords = StringPool.BLANK;
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("site", Boolean.TRUE);
+
+		List<Long> excludedGroupIds = new ArrayList<Long>();
+
+		excludedGroupIds.add(group.getGroupId());
+
+		if (staging) {
+			GroupTestUtil.enableLocalStaging(group);
+
+			Assert.assertTrue(group.hasStagingGroup());
+
+			if (group.isStagingGroup()) {
+				excludedGroupIds.add(group.getLiveGroupId());
+			}
+			else if (group.hasStagingGroup()) {
+				excludedGroupIds.add(group.getStagingGroup().getGroupId());
+			}
+		}
+
+		groupParams.put("excludedGroupIds", excludedGroupIds);
+
+		List<Group> parentCandidates = GroupLocalServiceUtil.search(
+			group.getCompanyId(), null, keywords, groupParams, -1, -1, null);
+
+		for (Group parentCandidate : parentCandidates) {
+			long parentCandidateGroupId = parentCandidate.getGroupId();
+
+			if (parentCandidateGroupId == group.getGroupId()) {
+				Assert.fail("A group cannot be its own parent");
+			}
+			else if (staging) {
+				if (group.isStagingGroup()) {
+					if (parentCandidateGroupId == group.getLiveGroupId()) {
+						Assert.fail(
+							"A group cannot have its live group as parent");
+					}
+				}
+				else if (group.hasStagingGroup()) {
+					Group stagingGroup = group.getStagingGroup();
+
+					if (parentCandidateGroupId == stagingGroup.getGroupId()) {
+						Assert.fail(
+							"A group cannot have its staying group as parent");
+					}
+				}
+			}
+		}
 	}
 
 	protected void givePermissionToManageSubsites(User user, Group group)
