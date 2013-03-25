@@ -1335,7 +1335,24 @@ public class GroupFinderImpl
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
-			if (key.equals("groupsTree")) {
+			if (key.equals("excludedGroupIds")) {
+				List<Long> excludedGroupIds = (List<Long>)entry.getValue();
+
+				if (!excludedGroupIds.isEmpty()) {
+					sb.append(StringPool.OPEN_PARENTHESIS);
+
+					for (int i = 0; i < excludedGroupIds.size(); i++) {
+						sb.append("(Group_.groupId != ?)");
+
+						if ((i + 1) < excludedGroupIds.size()) {
+							sb.append(" AND ");
+						}
+					}
+
+					sb.append(") AND ");
+				}
+			}
+			else if (key.equals("groupsTree")) {
 				List<Group> groupsTree = (List<Group>)entry.getValue();
 
 				if (!groupsTree.isEmpty()) {
@@ -1454,6 +1471,15 @@ public class GroupFinderImpl
 				Boolean value = (Boolean)entry.getValue();
 
 				qPos.add(value);
+			}
+			else if (key.equals("excludedGroupIds")) {
+				List<Long> excludedGroupIds = (List<Long>)entry.getValue();
+
+				if (!excludedGroupIds.isEmpty()) {
+					for (long excludedGroupId : excludedGroupIds) {
+						qPos.add(excludedGroupId);
+					}
+				}
 			}
 			else if (key.equals("groupsTree")) {
 				List<Group> groupsTree = (List<Group>)entry.getValue();
@@ -1589,14 +1615,21 @@ public class GroupFinderImpl
 	private String _getCacheKey(
 		String sql, LinkedHashMap<String, Object> params) {
 
-		StringBundler sb = new StringBundler(params.size() + 1);
+		StringBundler sb = new StringBundler();
 
 		sb.append(sql);
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
-			if (key.equals("rolePermissions")) {
+			if (key.equals("excludedGroupIds")) {
+				List<Long> excludedGroupIds = (List<Long>)entry.getValue();
+
+				for (int i = 0; i < excludedGroupIds.size(); i++) {
+					sb.append(key + "-" + i);
+				}
+			}
+			else if (key.equals("rolePermissions")) {
 
 				List<Object> values = (List<Object>)entry.getValue();
 
