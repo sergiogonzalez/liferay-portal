@@ -92,6 +92,12 @@ if (selUser != null) {
 
 			if (groupId > 0) {
 				excludedGroupIds.add(groupId);
+
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				if (group.hasStagingGroup()) {
+					excludedGroupIds.add(group.getStagingGroup().getGroupId());
+				}
 			}
 
 			groupParams.put("excludedGroupIds", excludedGroupIds);
