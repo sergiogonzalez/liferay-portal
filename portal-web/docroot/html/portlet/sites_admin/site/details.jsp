@@ -73,6 +73,7 @@ if (showPrototypes && (group != null)) {
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
+<liferay-ui:error exception="<%= GroupParentException.class %>" message="the-site-cannot-be-its-own-parent-site" />
 
 <liferay-ui:error exception="<%= RequiredGroupException.class %>">
 
