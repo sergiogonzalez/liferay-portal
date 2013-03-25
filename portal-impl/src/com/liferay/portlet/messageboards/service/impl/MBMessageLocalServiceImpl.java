@@ -65,6 +65,7 @@ import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
+import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -1885,16 +1886,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		if (Validator.isNull(mailingListAddress)) {
-			MBMailingList mailingList =
-				mbMailingListLocalService.getCategoryMailingList(
-					message.getGroupId(), message.getCategoryId());
+			try {
+				MBMailingList mailingList =
+					mbMailingListLocalService.getCategoryMailingList(
+						message.getGroupId(), message.getCategoryId());
 
-			if (mailingList.isActive()) {
-				mailingListAddress = mailingList.getEmailAddress();
+				if (mailingList.isActive()) {
+					mailingListAddress = mailingList.getEmailAddress();
+				}
 			}
-			else {
-				mailingListAddress = fromAddress;
+			catch (NoSuchMailingListException nsmle) {
 			}
+		}
+
+		if (Validator.isNull(mailingListAddress)) {
+			mailingListAddress = fromAddress;
 		}
 
 		String subjectPrefix = null;
