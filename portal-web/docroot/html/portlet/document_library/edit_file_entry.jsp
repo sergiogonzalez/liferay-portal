@@ -278,7 +278,7 @@ else if (dlFileEntryType != null) {
 			</c:if>
 		</aui:field-wrapper>
 
-		<aui:input name="file" style="width: auto;" type="file" onChange='<%= renderResponse.getNamespace() + "setTitle();" %>' >
+		<aui:input name="file" style="width: auto;" type="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' >
 			<aui:validator name="acceptFiles">
 				'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
 			</aui:validator>
@@ -514,21 +514,7 @@ else if (dlFileEntryType != null) {
 		Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/document_library/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');
 	}
 
-	function <portlet:namespace />setTitle() {
-		var path = document.<portlet:namespace />fm.<portlet:namespace />file.value;
-
-		var index = path.lastIndexOf('\\');
-
-		if (index === -1) {
-			index = path.lastIndexOf('/');
-		}
-
-		if (index >= 0) {
-			path = path.substring(index + 1);
-		}
-
-		document.<portlet:namespace />fm.<portlet:namespace />title.value = path;
-
+	function <portlet:namespace />validateTitle() {
 		Liferay.Form._INSTANCES.<portlet:namespace />fm.formValidator.validateField('<portlet:namespace />title');
 	}
 
