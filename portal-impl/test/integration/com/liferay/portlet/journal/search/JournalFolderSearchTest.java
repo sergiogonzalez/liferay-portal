@@ -92,7 +92,7 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 		JournalFolder parentFolder = (JournalFolder)parentBaseModel;
 
 		return JournalTestUtil.addFolder(
-			parentFolder.getParentFolderId(), keywords, serviceContext);
+			parentFolder.getFolderId(), keywords, serviceContext);
 	}
 
 	@Override

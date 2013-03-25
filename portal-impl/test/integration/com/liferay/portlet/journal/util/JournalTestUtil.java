@@ -178,6 +178,17 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
+			long parentFolderId, String title, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			serviceContext.getScopeGroupId(), parentFolderId, title,
+			"description", "content", LocaleUtil.getDefault(), true, approved,
+			serviceContext);
+	}
+
+	public static JournalArticle addArticleWithWorkflow(
 			long groupId, String title, String content, boolean approved)
 		throws Exception {
 
@@ -197,10 +208,8 @@ public class JournalTestUtil {
 			String title, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		return addArticle(
-			serviceContext.getScopeGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
-			"description", "content", LocaleUtil.getDefault(), true, approved,
+		return addArticleWithWorkflow(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title, approved,
 			serviceContext);
 	}
 
@@ -267,6 +276,17 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
+			long parentFolderId, String xml, String ddmStructureKey,
+			String ddmTemplateKey, ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticleWithXMLContent(
+			serviceContext.getScopeGroupId(), parentFolderId,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, xml, ddmStructureKey,
+			ddmTemplateKey, LocaleUtil.getDefault());
+	}
+
+	public static JournalArticle addArticleWithXMLContent(
 			String xml, String ddmStructureKey, String ddmTemplateKey)
 		throws Exception {
 
@@ -295,10 +315,8 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return addArticleWithXMLContent(
-			serviceContext.getScopeGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, xml, ddmStructureKey,
-			ddmTemplateKey, LocaleUtil.getDefault());
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, xml,
+			ddmStructureKey, ddmTemplateKey, serviceContext);
 	}
 
 	public static void addDynamicContentElement(

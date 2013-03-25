@@ -33,6 +33,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
@@ -63,6 +64,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
 		String xsd = DDMStructureTestUtil.getSampleStructureXSD("name");
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
@@ -76,7 +79,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			"name", getSearchKeywords());
 
 		return JournalTestUtil.addArticleWithXMLContent(
-			content, _ddmStructure.getStructureKey(),
+			folder.getFolderId(), content, _ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey(), serviceContext);
 	}
 
@@ -86,8 +89,10 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
 		return JournalTestUtil.addArticleWithWorkflow(
-			keywords, approved, serviceContext);
+			folder.getFolderId(), keywords, approved, serviceContext);
 	}
 
 	@Override
