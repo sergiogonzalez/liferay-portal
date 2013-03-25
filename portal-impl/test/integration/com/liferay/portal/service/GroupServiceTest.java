@@ -42,6 +42,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -167,6 +168,12 @@ public class GroupServiceTest {
 			new LinkedHashMap<String, Object>();
 
 		groupParams.put("site", Boolean.TRUE);
+
+		List<Long> excludedGroupIds = new ArrayList<Long>();
+
+		excludedGroupIds.add(group.getGroupId());
+
+		groupParams.put("excludedGroupIds", excludedGroupIds);
 
 		List<Group> parentCandidates = GroupLocalServiceUtil.search(
 			group.getCompanyId(), null, keywords, groupParams, -1, -1, null);
