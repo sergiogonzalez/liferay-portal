@@ -77,7 +77,6 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageDisplayImpl;
-import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.base.MBMessageLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.messageboards.util.MBSubscriptionSender;
@@ -1887,7 +1886,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (Validator.isNull(mailingListAddress)) {
 			MBMailingList mailingList =
-				MBMailingListLocalServiceUtil.getCategoryMailingList(
+				mbMailingListLocalService.getCategoryMailingList(
 					message.getGroupId(), message.getCategoryId());
 
 			if (mailingList.isActive()) {
