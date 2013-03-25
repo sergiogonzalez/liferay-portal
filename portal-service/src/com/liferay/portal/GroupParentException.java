@@ -21,8 +21,14 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class GroupParentException extends PortalException {
 
+	public static final int SELF_DESCENDANT = 1;
+
 	public GroupParentException() {
 		super();
+	}
+
+	public GroupParentException(int type) {
+		_type = type;
 	}
 
 	public GroupParentException(String msg) {
@@ -36,5 +42,11 @@ public class GroupParentException extends PortalException {
 	public GroupParentException(Throwable cause) {
 		super(cause);
 	}
+
+	public int getType() {
+		return _type;
+	}
+
+	private int _type;
 
 }
