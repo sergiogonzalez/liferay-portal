@@ -166,6 +166,8 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 <%
 int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
 int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_folders.jsp-total"));
+entryEnd = (request.getAttribute("view_entries.jsp-entryEnd") != null) ? Integer.valueOf((String)request.getAttribute("view_entries.jsp-entryEnd")) : entryEnd;
+entryStart = (request.getAttribute("view_entries.jsp-entryStart") != null) ? Integer.valueOf((String)request.getAttribute("view_entries.jsp-entryStart")) : entryStart;
 
 if (folder != null) {
 	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
@@ -233,7 +235,7 @@ if (folder != null) {
 			paginator: {
 				entriesTotal: <%= entriesTotal %>,
 				entryEnd: <%= entryEnd %>,
-				entryRowsPerPage: <%= entryRowsPerPage %>,
+				entryRowsPerPage: <%= entryEnd - entryStart %>,
 				entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 				entryStart: <%= entryStart %>,
 				folderEnd: <%= folderEnd %>,
