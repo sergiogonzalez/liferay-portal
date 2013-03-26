@@ -65,10 +65,12 @@ import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
+import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -1875,6 +1877,24 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			mailingListAddress = MBUtil.getMailingListAddress(
 				message.getGroupId(), message.getCategoryId(),
 				message.getMessageId(), company.getMx(), fromAddress);
+		}
+
+		if (Validator.isNull(mailingListAddress)) {
+			try {
+				MBMailingList mailingList =
+					mbMailingListLocalService.getCategoryMailingList(
+						message.getGroupId(), message.getCategoryId());
+
+				if (mailingList.isActive()) {
+					mailingListAddress = mailingList.getEmailAddress();
+				}
+			}
+			catch (NoSuchMailingListException nsmle) {
+			}
+		}
+
+		if (Validator.isNull(mailingListAddress)) {
+			mailingListAddress = fromAddress;
 		}
 
 		String subjectPrefix = null;
