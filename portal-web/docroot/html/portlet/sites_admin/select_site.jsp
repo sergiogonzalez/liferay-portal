@@ -88,9 +88,9 @@ if (selUser != null) {
 
 			groupParams.put("site", Boolean.TRUE);
 
-			List<Long> excludedGroupIds = new ArrayList<Long>();
-
 			if (groupId > 0) {
+				List<Long> excludedGroupIds = new ArrayList<Long>();
+
 				excludedGroupIds.add(groupId);
 
 				List<Group> liveGroups = GroupLocalServiceUtil.getLiveGroups();
@@ -98,9 +98,9 @@ if (selUser != null) {
 				for (Group liveGroup : liveGroups) {
 					excludedGroupIds.add(liveGroup.getGroupId());
 				}
-			}
 
-			groupParams.put("excludedGroupIds", excludedGroupIds);
+				groupParams.put("excludedGroupIds", excludedGroupIds);
+			}
 
 			int start = searchContainer.getStart();
 

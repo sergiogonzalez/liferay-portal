@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -157,16 +158,6 @@ public class GroupServiceTest {
 	}
 
 	@Test
-	public void testGetParentSites() throws Exception {
-		getParentSites(false);
-	}
-
-	@Test
-	public void testGetParentSitesStaging() throws Exception {
-		getParentSites(true);
-	}
-
-	@Test
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -183,6 +174,16 @@ public class GroupServiceTest {
 
 		Assert.assertFalse(scope.isRoot());
 		Assert.assertEquals(scope.getParentGroupId(), group.getGroupId());
+	}
+
+	@Test
+	public void testSelectableParentSite() throws Exception {
+		selectableParentSite(false);
+	}
+
+	@Test
+	public void testSelectableParentSiteStaging() throws Exception {
+		selectableParentSite(true);
 	}
 
 	@Test
@@ -268,65 +269,6 @@ public class GroupServiceTest {
 			true);
 	}
 
-	protected void getParentSites(boolean staging) throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		Assert.assertTrue(group.isRoot());
-
-		String keywords = StringPool.BLANK;
-
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("site", Boolean.TRUE);
-
-		List<Long> excludedGroupIds = new ArrayList<Long>();
-
-		excludedGroupIds.add(group.getGroupId());
-
-		if (staging) {
-			GroupTestUtil.enableLocalStaging(group);
-
-			Assert.assertTrue(group.hasStagingGroup());
-
-			if (group.isStagingGroup()) {
-				excludedGroupIds.add(group.getLiveGroupId());
-			}
-			else if (group.hasStagingGroup()) {
-				excludedGroupIds.add(group.getStagingGroup().getGroupId());
-			}
-		}
-
-		groupParams.put("excludedGroupIds", excludedGroupIds);
-
-		List<Group> parentCandidates = GroupLocalServiceUtil.search(
-			group.getCompanyId(), null, keywords, groupParams, -1, -1, null);
-
-		for (Group parentCandidate : parentCandidates) {
-			long parentCandidateGroupId = parentCandidate.getGroupId();
-
-			if (parentCandidateGroupId == group.getGroupId()) {
-				Assert.fail("A group cannot be its own parent");
-			}
-			else if (staging) {
-				if (group.isStagingGroup()) {
-					if (parentCandidateGroupId == group.getLiveGroupId()) {
-						Assert.fail(
-							"A group cannot have its live group as parent");
-					}
-				}
-				else if (group.hasStagingGroup()) {
-					Group stagingGroup = group.getStagingGroup();
-
-					if (parentCandidateGroupId == stagingGroup.getGroupId()) {
-						Assert.fail(
-							"A group cannot have its staying group as parent");
-					}
-				}
-			}
-		}
-	}
-
 	protected void givePermissionToManageSubsites(User user, Group group)
 		throws Exception {
 
@@ -350,6 +292,50 @@ public class GroupServiceTest {
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
 			user.getUserId(), group.getGroupId(), roleIds);
+	}
+
+	protected void selectableParentSite(boolean staging) throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(group.isRoot());
+
+		String keywords = StringPool.BLANK;
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("site", Boolean.TRUE);
+
+		List<Long> excludedGroupIds = new ArrayList<Long>();
+
+		excludedGroupIds.add(group.getGroupId());
+
+		if (staging) {
+			GroupTestUtil.enableLocalStaging(group);
+
+			Assert.assertTrue(group.hasStagingGroup());
+
+			excludedGroupIds.add(group.getLiveGroupId());
+		}
+
+		groupParams.put("excludedGroupIds", excludedGroupIds);
+
+		List<Group> selectableGroups = GroupLocalServiceUtil.search(
+			group.getCompanyId(), null, keywords, groupParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (Group selectableGroup : selectableGroups) {
+			long selectableGroupId = selectableGroup.getGroupId();
+
+			if (selectableGroupId == group.getGroupId()) {
+				Assert.fail("A group cannot be its own parent");
+			}
+			else if (staging) {
+				if (selectableGroupId == group.getLiveGroupId()) {
+					Assert.fail("A group cannot have its live group as parent");
+				}
+			}
+		}
 	}
 
 	protected void testGroup(
