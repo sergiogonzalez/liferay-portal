@@ -1622,14 +1622,7 @@ public class GroupFinderImpl
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
-			if (key.equals("excludedGroupIds")) {
-				List<Long> excludedGroupIds = (List<Long>)entry.getValue();
-
-				for (int i = 0; i < excludedGroupIds.size(); i++) {
-					sb.append(key + "-" + i);
-				}
-			}
-			else if (key.equals("rolePermissions")) {
+			if (key.equals("rolePermissions")) {
 
 				List<Object> values = (List<Object>)entry.getValue();
 
@@ -1640,6 +1633,21 @@ public class GroupFinderImpl
 				}
 				else {
 					key = "rolePermissions_6";
+				}
+			}
+			else {
+				Object value = entry.getValue();
+
+				if (value instanceof List<?>) {
+					List<Object> values = (List<Object>)value;
+
+					if (!values.isEmpty()) {
+						for (int i = 0; i < values.size(); i++) {
+							sb.append(key);
+							sb.append(StringPool.DASH);
+							sb.append(i);
+						}
+					}
 				}
 			}
 
