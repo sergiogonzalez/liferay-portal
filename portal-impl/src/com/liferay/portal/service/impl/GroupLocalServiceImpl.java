@@ -3667,6 +3667,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			throw new GroupParentException(
 				GroupParentException.SELF_DESCENDANT);
 		}
+
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return;
+		}
+
+		Group parentGroup = groupLocalService.getGroup(parentGroupId);
+
+		if (group.isStagingGroup()) {
+			Group stagingGroup = parentGroup.getStagingGroup();
+
+			if (groupId == stagingGroup.getGroupId()) {
+				throw new GroupParentException(
+					GroupParentException.STAGING_DESCENDANT);
+			}
+		}
 	}
 
 	protected File publicLARFile;
