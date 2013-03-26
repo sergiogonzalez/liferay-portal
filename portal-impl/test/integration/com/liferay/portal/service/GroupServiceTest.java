@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -40,6 +41,10 @@ import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -152,6 +157,16 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testGetParentSites() throws Exception {
+		getParentSites(false);
+	}
+
+	@Test
+	public void testGetParentSitesStaging() throws Exception {
+		getParentSites(true);
+	}
+
+	@Test
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -251,6 +266,65 @@ public class GroupServiceTest {
 		testGroup(
 			user, group1, group11, null, false, true, false, true, false, true,
 			true);
+	}
+
+	protected void getParentSites(boolean staging) throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(group.isRoot());
+
+		String keywords = StringPool.BLANK;
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("site", Boolean.TRUE);
+
+		List<Long> excludedGroupIds = new ArrayList<Long>();
+
+		excludedGroupIds.add(group.getGroupId());
+
+		if (staging) {
+			GroupTestUtil.enableLocalStaging(group);
+
+			Assert.assertTrue(group.hasStagingGroup());
+
+			if (group.isStagingGroup()) {
+				excludedGroupIds.add(group.getLiveGroupId());
+			}
+			else if (group.hasStagingGroup()) {
+				excludedGroupIds.add(group.getStagingGroup().getGroupId());
+			}
+		}
+
+		groupParams.put("excludedGroupIds", excludedGroupIds);
+
+		List<Group> parentCandidates = GroupLocalServiceUtil.search(
+			group.getCompanyId(), null, keywords, groupParams, -1, -1, null);
+
+		for (Group parentCandidate : parentCandidates) {
+			long parentCandidateGroupId = parentCandidate.getGroupId();
+
+			if (parentCandidateGroupId == group.getGroupId()) {
+				Assert.fail("A group cannot be its own parent");
+			}
+			else if (staging) {
+				if (group.isStagingGroup()) {
+					if (parentCandidateGroupId == group.getLiveGroupId()) {
+						Assert.fail(
+							"A group cannot have its live group as parent");
+					}
+				}
+				else if (group.hasStagingGroup()) {
+					Group stagingGroup = group.getStagingGroup();
+
+					if (parentCandidateGroupId == stagingGroup.getGroupId()) {
+						Assert.fail(
+							"A group cannot have its staying group as parent");
+					}
+				}
+			}
+		}
 	}
 
 	protected void givePermissionToManageSubsites(User user, Group group)
