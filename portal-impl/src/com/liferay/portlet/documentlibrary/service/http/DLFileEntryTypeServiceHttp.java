@@ -226,6 +226,45 @@ public class DLFileEntryTypeServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFolderFileEntryTypes(
+		HttpPrincipal httpPrincipal, long[] groupIds, long folderId,
+		boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
+					"getFolderFileEntryTypes",
+					_getFolderFileEntryTypesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					groupIds, folderId, inherited);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
 		java.lang.String keywords, boolean includeBasicFileEntryType,
@@ -234,7 +273,7 @@ public class DLFileEntryTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
-					"search", _searchParameterTypes5);
+					"search", _searchParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, keywords, includeBasicFileEntryType,
@@ -268,7 +307,7 @@ public class DLFileEntryTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
-					"searchCount", _searchCountParameterTypes6);
+					"searchCount", _searchCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, keywords, includeBasicFileEntryType);
@@ -303,7 +342,7 @@ public class DLFileEntryTypeServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
-					"updateFileEntryType", _updateFileEntryTypeParameterTypes7);
+					"updateFileEntryType", _updateFileEntryTypeParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryTypeId, name, description, ddmStructureIds,
@@ -348,15 +387,18 @@ public class DLFileEntryTypeServiceHttp {
 	private static final Class<?>[] _getFileEntryTypesCountParameterTypes4 = new Class[] {
 			long[].class
 		};
-	private static final Class<?>[] _searchParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getFolderFileEntryTypesParameterTypes5 = new Class[] {
+			long[].class, long.class, boolean.class
+		};
+	private static final Class<?>[] _searchParameterTypes6 = new Class[] {
 			long.class, long[].class, java.lang.String.class, boolean.class,
 			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchCountParameterTypes6 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes7 = new Class[] {
 			long.class, long[].class, java.lang.String.class, boolean.class
 		};
-	private static final Class<?>[] _updateFileEntryTypeParameterTypes7 = new Class[] {
+	private static final Class<?>[] _updateFileEntryTypeParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			long[].class, com.liferay.portal.service.ServiceContext.class
 		};

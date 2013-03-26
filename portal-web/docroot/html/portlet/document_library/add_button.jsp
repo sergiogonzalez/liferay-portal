@@ -26,7 +26,7 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
 
 if ((folder == null) || folder.isSupportsMetadata()) {
-	fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, true);
+	fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, true);
 }
 %>
 
@@ -75,19 +75,6 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 	</c:if>
 
 	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
-		<c:if test="<%= fileEntryTypes.isEmpty() %>">
-			<portlet:renderURL var="editFileEntryURL">
-				<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
-				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:icon image="copy" message="basic-document" url="<%= editFileEntryURL %>" />
-		</c:if>
-
 		<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 
 			<%

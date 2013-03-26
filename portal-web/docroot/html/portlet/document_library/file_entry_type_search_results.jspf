@@ -18,9 +18,16 @@
 StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSearchTerms();
 
 boolean includeBasicFileEntryType = ParamUtil.getBoolean(renderRequest, "includeBasicFileEntryType");
+boolean includeGlobalFileEntryTypes = ParamUtil.getBoolean(renderRequest, "includeGlobalFileEntryTypes");
 
-results = DLFileEntryTypeServiceUtil.search(company.getCompanyId(), PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), searchTerms.getKeywords(), includeBasicFileEntryType, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-total = DLFileEntryTypeServiceUtil.searchCount(company.getCompanyId(), PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), searchTerms.getKeywords(), includeBasicFileEntryType);
+long[] groupIds = new long[] {themeDisplay.getSiteGroupId()};
+
+if (includeGlobalFileEntryTypes) {
+	groupIds = PortalUtil.getSiteAndCompanyGroupIds(themeDisplay);
+}
+
+results = DLFileEntryTypeServiceUtil.search(company.getCompanyId(), groupIds, searchTerms.getKeywords(), includeBasicFileEntryType, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+total = DLFileEntryTypeServiceUtil.searchCount(company.getCompanyId(), groupIds, searchTerms.getKeywords(), includeBasicFileEntryType);
 
 pageContext.setAttribute("results", results);
 pageContext.setAttribute("total", total);
