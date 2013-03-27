@@ -19,6 +19,8 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.RoleTestUtil;
 
+import org.junit.After;
+
 /**
  * @author Roberto Díaz
  */
@@ -48,6 +50,18 @@ public abstract class BaseSiteMembershipPolicyTestCase
 
 	public static long[] getStandardRoleIds() {
 		return _standardRoleIds;
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		_forbiddenGroupIds = new long[2];
+		_forbiddenRoleIds = new long[2];
+		_requiredGroupIds = new long[2];
+		_requiredRoleIds = new long[2];
+		_standardGroupIds = new long[2];
+		_standardRoleIds = new long[2];
 	}
 
 	protected long[] addForbiddenGroups() throws Exception {

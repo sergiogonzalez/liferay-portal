@@ -26,6 +26,7 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.UserTestUtil;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -74,6 +75,16 @@ public abstract class BaseMembersipPolicyTestCase {
 		FinderCacheUtil.clearCache();
 
 		group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		group = null;
+
+		_propagateMembership = false;
+		_propagateRoles = false;
+		_userIds = new long[2];
+		_verify = false;
 	}
 
 	protected long[] addUsers() throws Exception {

@@ -18,6 +18,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.RoleTestUtil;
 
+import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -55,6 +56,20 @@ public abstract class BaseOrganizationMembershipPolicyTestCase
 		super.setUp();
 
 		organization = OrganizationTestUtil.addOrganization();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		organization = null;
+
+		_forbiddenOrganizationIds = new long[2];
+		_forbiddenRoleIds = new long[2];
+		_requiredOrganizationIds = new long[2];
+		_requiredRoleIds = new long[2];
+		_standardOrganizationIds = new long[2];
+		_standardRoleIds = new long[2];
 	}
 
 	protected long[] addForbiddenOrganizations() throws Exception {
