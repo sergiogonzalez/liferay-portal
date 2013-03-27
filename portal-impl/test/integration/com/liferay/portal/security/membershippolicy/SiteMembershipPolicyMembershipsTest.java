@@ -181,7 +181,7 @@ public class SiteMembershipPolicyMembershipsTest
 		// We have removed the user from their personal Group, but the required
 		// Groups are kept
 
-		groups =  user.getGroups();
+		groups = user.getGroups();
 
 		Assert.assertEquals(userGroupIds.length - 1, groups.size());
 	}

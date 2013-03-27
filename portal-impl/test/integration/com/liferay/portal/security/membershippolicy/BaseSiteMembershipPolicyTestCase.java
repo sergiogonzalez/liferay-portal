@@ -24,7 +24,6 @@ import org.junit.After;
 /**
  * @author Roberto Díaz
  */
-
 public abstract class BaseSiteMembershipPolicyTestCase
 	extends BaseMembersipPolicyTestCase {
 
