@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.GroupParentException;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -184,6 +185,50 @@ public class GroupServiceTest {
 	@Test
 	public void testSelectableParentSitesStaging() throws Exception {
 		testSelectableParentSites(true);
+	}
+
+	@Test
+	public void testSelectLiveGroupAsParentSite() throws Exception {
+		Group group = GroupTestUtil.addGroup("Test 1");
+
+		GroupTestUtil.enableLocalStaging(group);
+
+		Assert.assertTrue(group.hasStagingGroup());
+
+		try {
+			Group stagingGroup = group.getStagingGroup();
+
+			GroupLocalServiceUtil.updateGroup(
+				stagingGroup.getGroupId(), group.getGroupId(),
+				stagingGroup.getName(), stagingGroup.getDescription(),
+				stagingGroup.getType(), stagingGroup.getFriendlyURL(),
+				stagingGroup.isActive(), ServiceTestUtil.getServiceContext());
+
+			Assert.fail("A group cannot has its live group as parent.");
+		}
+		catch (GroupParentException pe) {
+			Assert.assertEquals(
+				GroupParentException.STAGING_DESCENDANT, pe.getType());
+		}
+	}
+
+	@Test
+	public void testSelectOwnGroupAsParentSite() throws Exception {
+		Group group1 = GroupTestUtil.addGroup("Test 1");
+
+		try {
+			GroupLocalServiceUtil.updateGroup(
+				group1.getGroupId(), group1.getGroupId(), group1.getName(),
+				group1.getDescription(), group1.getType(),
+				group1.getFriendlyURL(), group1.isActive(),
+				ServiceTestUtil.getServiceContext());
+
+			Assert.fail("A group cannot be its own parent.");
+		}
+		catch (GroupParentException pe) {
+			Assert.assertEquals(
+				GroupParentException.SELF_DESCENDANT, pe.getType());
+		}
 	}
 
 	@Test
