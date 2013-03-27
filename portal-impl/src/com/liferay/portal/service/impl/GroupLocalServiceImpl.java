@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.DuplicateGroupException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.GroupNameException;
+import com.liferay.portal.GroupParentException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.NoSuchUserException;
@@ -294,6 +295,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		validateFriendlyURL(
 			user.getCompanyId(), groupId, classNameId, classPK, friendlyURL);
+
+		validateParentGroup(groupId, parentGroupId);
 
 		Group group = groupPersistence.create(groupId);
 
@@ -2999,6 +3002,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.getCompanyId(), group.getGroupId(), group.getClassNameId(),
 			group.getClassPK(), friendlyURL);
 
+		validateParentGroup(group.getGroupId(), parentGroupId);
+
 		group.setParentGroupId(parentGroupId);
 		group.setTreePath(group.buildTreePath());
 		group.setName(name);
@@ -3647,6 +3652,42 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			if (name.equals(company.getName())) {
 				throw new DuplicateGroupException();
+			}
+		}
+	}
+
+	protected void validateParentGroup(long groupId, long parentGroupId)
+		throws PortalException, SystemException {
+
+		if (parentGroupId <= 0) {
+			return;
+		}
+
+		if (groupId == parentGroupId) {
+			throw new GroupParentException(
+				GroupParentException.SELF_DESCENDANT);
+		}
+
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return;
+		}
+
+		Group parentGroup = groupLocalService.fetchGroup(parentGroupId);
+
+		if (group.hasStagingGroup()) {
+			if (group.getGroupId() == parentGroup.getLiveGroupId()) {
+				throw new GroupParentException(
+					GroupParentException.LIVE_DESCENDANT);
+			}
+		}
+		else if (group.isStagingGroup()) {
+			Group stagingGroup = parentGroup.getStagingGroup();
+
+			if (groupId == stagingGroup.getGroupId()) {
+				throw new GroupParentException(
+					GroupParentException.STAGING_DESCENDANT);
 			}
 		}
 	}
