@@ -52,6 +52,18 @@ public abstract class BaseSiteMembershipPolicyTestCase
 		return _standardRoleIds;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		_forbiddenGroupIds = new long[2];
+		_forbiddenRoleIds = new long[2];
+		_requiredGroupIds = new long[2];
+		_requiredRoleIds = new long[2];
+		_standardGroupIds = new long[2];
+		_standardRoleIds = new long[2];
+	}
+
 	protected long[] addForbiddenGroups() throws Exception {
 		Group forbiddenGroup1 = GroupTestUtil.addGroup(
 			ServiceTestUtil.randomString());
