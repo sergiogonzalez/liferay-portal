@@ -3682,7 +3682,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (group.isStagingGroup()) {
-			if (groupId == parentGroup.getLiveGroupId()) {
+			Group stagingGroup = parentGroup.getStagingGroup();
+
+			if (groupId == stagingGroup.getGroupId()) {
 				throw new GroupParentException(
 					GroupParentException.STAGING_DESCENDANT);
 			}
