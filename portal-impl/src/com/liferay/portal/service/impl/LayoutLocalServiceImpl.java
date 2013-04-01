@@ -64,6 +64,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -1266,6 +1267,31 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	public List<Layout> getNullFriendlyURLLayouts() throws SystemException {
 		return layoutFinder.findByNullFriendlyURL();
+	}
+
+	public Layout getParentLayout(Layout layout)
+		throws PortalException, SystemException {
+
+		Layout parentLayout = null;
+
+		if (layout instanceof VirtualLayout) {
+			VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+			Layout sourceLayout = virtualLayout.getSourceLayout();
+
+			parentLayout = getLayout(
+				sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(),
+				sourceLayout.getParentLayoutId());
+
+			parentLayout = new VirtualLayout(parentLayout, layout.getGroup());
+		}
+		else {
+			parentLayout = getLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getParentLayoutId());
+		}
+
+		return parentLayout;
 	}
 
 	/**

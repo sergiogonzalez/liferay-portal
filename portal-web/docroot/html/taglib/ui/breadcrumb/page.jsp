@@ -17,5 +17,7 @@
 <%@ include file="/html/taglib/ui/breadcrumb/init.jsp" %>
 
 <c:if test="<%= layout != null %>">
-	<liferay-util:include page='<%= "/html/taglib/ui/breadcrumb/display_style_" + displayStyle + ".jsp" %>' />
+	<ul class="breadcrumbs breadcrumbs-<%= displayStyle %> lfr-component">
+		<%= breadcrumbString %>
+	</ul>
 </c:if>
