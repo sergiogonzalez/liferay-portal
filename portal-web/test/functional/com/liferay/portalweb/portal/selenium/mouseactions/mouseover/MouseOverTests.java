@@ -27,6 +27,7 @@ public class MouseOverTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(MouseOver1Test.class);
 		testSuite.addTestSuite(MouseOver2Test.class);
+		testSuite.addTestSuite(MouseOver3Test.class);
 
 		return testSuite;
 	}

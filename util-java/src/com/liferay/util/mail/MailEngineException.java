@@ -14,7 +14,7 @@
 
 package com.liferay.util.mail;
 
-import org.apache.commons.lang.exception.NestableException;
+import com.liferay.portal.kernel.exception.NestableException;
 
 /**
  * @author Brian Wing Shun Chan
