@@ -591,7 +591,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			repositoryElement, repository, NAMESPACE);
 
-		long importedRepositoryId = 0;
+		Repository importedRepository = null;
 
 		try {
 			boolean hidden = GetterUtil.getBoolean(
@@ -620,7 +620,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 					serviceContext.setUuid(repository.getUuid());
 
-					importedRepositoryId =
+					importedRepository =
 						RepositoryLocalServiceUtil.addRepository(
 							userId, portletDataContext.getScopeGroupId(),
 							repository.getClassNameId(),
@@ -635,11 +635,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 						existingRepository.getRepositoryId(),
 						repository.getName(), repository.getDescription());
 
-					importedRepositoryId = existingRepository.getRepositoryId();
+					importedRepository = existingRepository;
 				}
 			}
 			else {
-				importedRepositoryId = RepositoryLocalServiceUtil.addRepository(
+				importedRepository = RepositoryLocalServiceUtil.addRepository(
 					userId, portletDataContext.getScopeGroupId(),
 					repository.getClassNameId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -658,9 +658,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 					e);
 			}
 		}
-
-		Repository importedRepository =
-			RepositoryLocalServiceUtil.getRepository(importedRepositoryId);
 
 		portletDataContext.importClassedModel(
 			repository, importedRepository, NAMESPACE);
