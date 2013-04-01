@@ -44,8 +44,9 @@ public abstract class BaseOrganizationMembershipPolicy
 	implements OrganizationMembershipPolicy {
 
 	public void checkRoles(
-		List<UserGroupRole> addUserGroupRoles,
-		List<UserGroupRole> removeUserGroupRoles) {
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
+		throws PortalException, SystemException {
 	}
 
 	@SuppressWarnings("unused")
