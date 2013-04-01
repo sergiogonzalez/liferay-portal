@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -250,6 +251,24 @@ public abstract class BaseSeleniumImpl
 	public void keyUpAndWait(String locator, String keySequence) {
 		super.keyUp(locator, keySequence);
 		super.waitForPageToLoad("30000");
+	}
+
+	public void makeVisible(String locator) {
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("var xpathResult = document.evaluate(");
+		sb.append(locator);
+		sb.append(", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, ");
+		sb.append("null);");
+
+		sb.append("if (xpathResult.singleNodeValue) {");
+		sb.append("var element = xpathResult.singleNodeValue;");
+		sb.append("element.style.display = 'inline-block';");
+		sb.append("element.style.overflow = 'visible';");
+		sb.append("element.style.visibility = 'visible';");
+		sb.append("}");
+
+		super.runScript(sb.toString());
 	}
 
 	public void paste(String location) {

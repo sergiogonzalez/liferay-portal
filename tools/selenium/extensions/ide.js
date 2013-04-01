@@ -28,6 +28,18 @@ Selenium.prototype.doGotoIf = function(condition, label) {
 Selenium.prototype.doLabel = function() {
 };
 
+Selenium.prototype.doMakeVisible = function(locator) {
+	var xPathResult = document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+
+	if (xPathResult.singleNodeValue) {
+		var element = xPathResult.singleNodeValue;
+
+		element.style.display = "inline-block";
+		element.style.overflow = "visible";
+		element.style.visibility = "visible";
+	}
+};
+
 Selenium.prototype.doSetBrowserOption = function(value) {
 };
 

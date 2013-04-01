@@ -8,7 +8,13 @@
 			<#list 1..maxWikiPageCount as wikiPageCount>
 				<#assign wikiPage = dataFactory.newWikiPage(wikiNode, wikiPageCount)>
 
-				${sampleSQLBuilder.insertWikiPage(wikiPage)}
+				insert into WikiPage values ('${wikiPage.uuid}', ${wikiPage.pageId}, ${wikiPage.resourcePrimKey}, ${wikiPage.groupId}, ${wikiPage.companyId}, ${wikiPage.userId}, '${wikiPage.userName}', '${dataFactory.getDateString(wikiPage.createDate)}', '${dataFactory.getDateString(wikiPage.modifiedDate)}', ${wikiPage.nodeId}, '${wikiPage.title}', ${wikiPage.version}, ${wikiPage.minorEdit?string}, '${wikiPage.content}', '${wikiPage.summary}', '${wikiPage.format}', ${wikiPage.head?string}, '${wikiPage.parentTitle}', '${wikiPage.redirectTitle}', ${wikiPage.status}, ${wikiPage.statusByUserId}, '${wikiPage.statusByUserName}', ${wikiPage.statusDate!'null'});
+
+				<#assign wikiPageResource = dataFactory.newWikiPageResource(wikiPage)>
+
+				insert into WikiPageResource values ('${wikiPageResource.uuid}', ${wikiPageResource.resourcePrimKey}, ${wikiPageResource.nodeId}, '${wikiPageResource.title}');
+
+				<@insertAssetEntry _entry = wikiPage />
 
 				<#assign mbRootMessageId = counter.get()>
 				<#assign mbThreadId = counter.get()>

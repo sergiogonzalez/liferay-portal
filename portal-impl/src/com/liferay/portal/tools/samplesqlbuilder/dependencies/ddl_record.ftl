@@ -1,17 +1,9 @@
-<#setting number_format = "0">
+<#include "macro.ftl">
 
-<#assign createDate = dataFactory.getDateString(ddlRecord.createDate)>
-
-<#assign ddmContent = dataFactory.newDDMContent(ddlRecord.groupId, ddlRecord.companyId, ddlRecord.userId)>
-
-insert into DDMContent values ('${portalUUIDUtil.generate()}', ${ddmContent.contentId}, ${ddmContent.groupId}, ${ddmContent.companyId}, ${ddmContent.userId}, '', '${createDate}', '${createDate}', 'com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink', '', '<?xml version="1.0"?><root><dynamic-element name="text2102"><dynamic-content><![CDATA[Test Record ${ddlRecordCount}]]></dynamic-content></dynamic-element></root>');
-
-insert into DDLRecord values ('${portalUUIDUtil.generate()}', ${ddlRecord.recordId}, ${ddlRecord.groupId}, ${ddlRecord.companyId}, ${ddlRecord.userId}, '', ${ddlRecord.userId}, '', '${createDate}', '${createDate}', ${ddmContent.contentId}, ${ddlRecord.recordSetId}, '1.0', 0);
+insert into DDLRecord values ('${ddlRecord.uuid}', ${ddlRecord.recordId}, ${ddlRecord.groupId}, ${ddlRecord.companyId}, ${ddlRecord.userId}, '${ddlRecord.userName}', ${ddlRecord.versionUserId}, '${ddlRecord.versionUserName}', '${dataFactory.getDateString(ddlRecord.createDate)}', '${dataFactory.getDateString(ddlRecord.modifiedDate)}', ${ddlRecord.DDMStorageId}, ${ddlRecord.recordSetId}, '${ddlRecord.version}', ${ddlRecord.displayIndex});
 
 <#assign ddlRecordVersion = dataFactory.newDDLRecordVersion(ddlRecord)>
 
-insert into DDLRecordVersion values (${ddlRecordVersion.recordVersionId}, ${ddlRecordVersion.groupId}, ${ddlRecordVersion.companyId}, ${ddlRecordVersion.userId}, '', '${createDate}', ${ddmContent.contentId}, ${ddlRecordVersion.recordSetId}, ${ddlRecordVersion.recordId}, '1.0', 0, 0, ${ddlRecordVersion.userId}, '', '${createDate}');
+insert into DDLRecordVersion values (${ddlRecordVersion.recordVersionId}, ${ddlRecordVersion.groupId}, ${ddlRecordVersion.companyId}, ${ddlRecordVersion.userId}, '${ddlRecordVersion.userName}', '${dataFactory.getDateString(ddlRecordVersion.createDate)}', ${ddlRecordVersion.DDMStorageId}, ${ddlRecordVersion.recordSetId}, ${ddlRecordVersion.recordId}, '${ddlRecordVersion.version}', ${ddlRecordVersion.displayIndex}, ${ddlRecordVersion.status}, ${ddlRecordVersion.statusByUserId}, '${ddlRecordVersion.statusByUserName}', '${dataFactory.getDateString(ddlRecordVersion.statusDate)}');
 
-<#assign ddmStorageLink = dataFactory.newDDMStorageLink(dataFactory.DDMContentClassNameId, ddmContent.contentId, ddlRecordSet.DDMStructureId)>
-
-insert into DDMStorageLink values ('${portalUUIDUtil.generate()}', ${ddmStorageLink.storageLinkId}, ${dataFactory.DDMContentClassNameId}, ${ddmContent.contentId}, ${ddmStorageLink.structureId});
+<@insertDDMContent _currentIndex = ddlRecordCount _ddmStorageLinkId = counter.get() _ddmStructureId = ddmStructureId _entry = ddlRecord />
