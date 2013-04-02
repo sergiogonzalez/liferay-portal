@@ -90,15 +90,10 @@ public class TempFileUtil {
 			long groupId, long userId, String tempFolderName)
 		throws PortalException, SystemException {
 
-		Folder folder = getTempFolder(groupId, userId, tempFolderName);
-
-		if (folder == null) {
-			return new String[]{};
-		}
+		long folderId = addTempFolderId(groupId, userId, tempFolderName);
 
 		List<FileEntry> fileEntries =
-			PortletFileRepositoryUtil.getPortletFileEntries(
-				groupId, folder.getFolderId());
+			PortletFileRepositoryUtil.getPortletFileEntries(groupId, folderId);
 
 		String[] fileEntryNames = new String[fileEntries.size()];
 
