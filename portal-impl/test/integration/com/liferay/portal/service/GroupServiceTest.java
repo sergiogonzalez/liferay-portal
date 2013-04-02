@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -40,6 +41,10 @@ import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -149,6 +154,35 @@ public class GroupServiceTest {
 		Assert.assertNull(
 			BlogsEntryLocalServiceUtil.fetchBlogsEntry(
 				blogsEntry.getEntryId()));
+	}
+
+	@Test
+	public void testGetParentSites() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(group.isRoot());
+
+		String keywords = StringPool.BLANK;
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("site", Boolean.TRUE);
+
+		List<Long> excludedGroupIds = new ArrayList<Long>();
+
+		excludedGroupIds.add(group.getGroupId());
+
+		groupParams.put("excludedGroupIds", excludedGroupIds);
+
+		List<Group> parentCandidates = GroupLocalServiceUtil.search(
+			group.getCompanyId(), null, keywords, groupParams, -1, -1, null);
+
+		for (Group parentCandidate : parentCandidates) {
+			if (parentCandidate.getGroupId() == group.getGroupId()) {
+				Assert.fail("A group cannot be its own parent");
+			}
+		}
 	}
 
 	@Test
