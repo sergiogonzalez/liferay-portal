@@ -182,9 +182,6 @@ public class OrganizationMembershipPolicyMembershipsTest
 			user, standardOrganizationIds, null, null, null,
 			Collections.<UserGroupRole>emptyList());
 
-		// We have tried to remove the user from his required Organizations, but
-		// they are kept
-
 		organizations = user.getOrganizations();
 
 		Assert.assertEquals(userOrganizationIds.length, organizations.size());

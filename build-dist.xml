@@ -1096,7 +1096,7 @@ release was successful.</echo>
 
 		<replace file="${app.server.jetty.bin.dir}/run.bat">
 			<replacetoken>set "JAVA_OPTS=-D</replacetoken>
-			<replacevalue>set "JAVA_OPTS=-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
+			<replacevalue>set "JAVA_OPTS=-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -Djava.io.tmpdir=${app.server.jetty.dir}/temp -D</replacevalue>
 		</replace>
 
 		<loadfile property="run.bat.content" srcfile="${app.server.jetty.bin.dir}/run.bat">
@@ -1755,7 +1755,7 @@ closeTemplate()
 				<fail>
 .
 
-Please download ${app.server.websphere.fix.jdk.name},
+Please download ${app.server.websphere.fix.pack.jdk.name},
 ${app.server.websphere.fix.pack.was.name},
 ${app.server.websphere.update.installer.zip.name}, and
 ${app.server.websphere.zip.name} from ${app.server.websphere.zip.url} and put

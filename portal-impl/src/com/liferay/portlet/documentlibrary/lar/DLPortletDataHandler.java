@@ -139,6 +139,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			return;
 		}
 
+		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+
+		liferayFileEntry.setCachedFileVersion(fileVersion);
+
 		Element fileEntryElement = fileEntriesElement.addElement("file-entry");
 
 		if (foldersElement != null) {
@@ -783,7 +787,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			ddmStructureUuids[i] = ddmStructure.getUuid();
 
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, fileEntryTypeElement, ddmStructure);
+				portletDataContext, ddmStructure);
 		}
 
 		fileEntryTypeElement.addAttribute(
