@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.util;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -36,6 +37,7 @@ import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -151,6 +153,22 @@ public class MBTestUtil {
 		return message;
 	}
 
+	public static MBMessage addMessageWithAttachment(
+			User user, long groupId, String filePath, String fileName,
+			Class<?> clazz)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		return MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), user.getFullName(), groupId,
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject", "Body",
+			MBMessageConstants.DEFAULT_FORMAT,
+			getInputStreamOVPs(filePath, fileName, clazz), false, 0, false,
+			serviceContext);
+	}
+
 	public static MBMessage addMessageWithWorkflow(
 			long groupId, boolean approved)
 		throws Exception {
@@ -180,6 +198,28 @@ public class MBTestUtil {
 
 		return MBThreadFlagLocalServiceUtil.getThreadFlag(
 			TestPropsValues.getUserId(), thread);
+	}
+
+	public static MBMessage updateMessageWithAttachment(
+			User user, MBMessage message, String filePath, String fileName,
+			Class<?> clazz)
+		throws Exception {
+
+		List<FileEntry> fileEntries = message.getAttachmentsFileEntries();
+
+		List<String> existingFiles = new ArrayList<String>();
+
+		for (FileEntry fileEntry : fileEntries) {
+			existingFiles.add(String.valueOf(fileEntry.getFileEntryId()));
+		}
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			message.getGroupId());
+
+		return MBMessageLocalServiceUtil.updateMessage(
+			user.getUserId(), message.getMessageId(), "Subject", "Body",
+			getInputStreamOVPs(filePath, fileName, clazz), existingFiles, 0,
+			false, serviceContext);
 	}
 
 	protected static MBMessage addMessage(
@@ -216,6 +256,29 @@ public class MBTestUtil {
 			allowPingbacks, serviceContext);
 
 		return MBMessageLocalServiceUtil.getMessage(message.getMessageId());
+	}
+
+	protected static List<ObjectValuePair<String, InputStream>>
+			getInputStreamOVPs(
+		String filePath, String fileName, Class<?> clazz) {
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			new ArrayList<ObjectValuePair<String, InputStream>>(1);
+
+		StringBuffer sb = new StringBuffer(3);
+
+		sb.append(filePath);
+		sb.append(StringPool.SLASH);
+		sb.append(fileName);
+
+		InputStream inputStream = clazz.getResourceAsStream(sb.toString());
+
+		ObjectValuePair<String, InputStream> inputStreamOVP =
+			new ObjectValuePair<String, InputStream>(fileName, inputStream);
+
+		inputStreamOVPs.add(inputStreamOVP);
+
+		return inputStreamOVPs;
 	}
 
 }

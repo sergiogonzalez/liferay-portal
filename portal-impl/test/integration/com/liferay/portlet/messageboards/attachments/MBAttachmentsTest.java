@@ -14,23 +14,28 @@
 
 package com.liferay.portlet.messageboards.attachments;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.MBTestUtil;
 
 import java.io.InputStream;
 
@@ -45,49 +50,248 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Julio Camarero
+ * @author Roberto Díaz
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		TransactionalCallbackAwareExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MBAttachmentsTest {
 
+	public static final int NEW_FILE_ENTRY = 1;
+	public static final int NEW_MESSAGE_FOLDER = 1;
+	public static final int NEW_REPOSITORY_FOLDER = 1;
+	public static final int NEW_THREAD_FOLDER = 1;
+
 	@Before
 	public void setUp() throws Exception {
-		User user = TestPropsValues.getUser();
+		FinderCacheUtil.clearCache();
 
 		_group = GroupTestUtil.addGroup();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		_message = MBMessageLocalServiceUtil.addMessage(
-			user.getUserId(), user.getFullName(), _group.getGroupId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject", "Body",
-			MBMessageConstants.DEFAULT_FORMAT,
-			_getInputStreamOVPs("company_logo.png"), false, 0, false,
-			serviceContext);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		if (_group != null) {
-			GroupLocalServiceUtil.deleteGroup(_group);
-
 			_group = null;
 		}
 
 		if (_message != null) {
 			_message = null;
 		}
+
+		if (_category != null) {
+			_category = null;
+		}
 	}
 
 	@Test
-	public void testTrashAndDelete() throws Exception {
+	@Transactional
+	public void testAddMBMessage() throws Exception {
+		int initialFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		addMessage();
+
+		int currentFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		Assert.assertNotNull(_message);
+		Assert.assertEquals(initialFolderCount, currentFolderCount);
+	}
+
+	@Test
+	@Transactional
+	public void testAddMessageAttachment() throws Exception {
+		int initialFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		addMessageWithAttachment();
+
+		int finalFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		int newFolders =
+			NEW_REPOSITORY_FOLDER + NEW_THREAD_FOLDER + NEW_MESSAGE_FOLDER;
+
+		Assert.assertEquals(initialFolderCount + newFolders, finalFolderCount);
+	}
+
+	@Test
+	@Transactional
+	public void testAddMessageAttachments() throws Exception {
+		int initialFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+		int expectedFileEntriesCount = 0;
+
+		addMessageWithAttachment();
+
+		expectedFileEntriesCount += NEW_FILE_ENTRY;
+
+		int firstFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		int newFolders =
+			NEW_REPOSITORY_FOLDER + NEW_THREAD_FOLDER + NEW_MESSAGE_FOLDER;
+
+		List<FileEntry> fileEntries = _message.getAttachmentsFileEntries();
+
+		Assert.assertEquals(expectedFileEntriesCount, fileEntries.size());
+		Assert.assertEquals(initialFolderCount + newFolders, firstFolderCount);
+
+		updateMessageWithAttachment();
+
+		expectedFileEntriesCount += NEW_FILE_ENTRY;
+
+		int finalFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		fileEntries = _message.getAttachmentsFileEntries();
+
+		Assert.assertEquals(expectedFileEntriesCount, fileEntries.size());
+		Assert.assertEquals(firstFolderCount, finalFolderCount);
+	}
+
+	@Test
+	@Transactional
+	public void testCountFoldersWhenMovingToTrashMessageAttachments()
+		throws Exception {
+
+		int initialFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		_message = MBTestUtil.addMessageWithAttachment(
+			TestPropsValues.getUser(), _group.getGroupId(), "dependencies",
+			"company_logo.png", getClass());
+
+		int firstFolderCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		int newFolders =
+			NEW_REPOSITORY_FOLDER + NEW_THREAD_FOLDER + NEW_MESSAGE_FOLDER;
+
+		Assert.assertEquals(initialFolderCount + newFolders, firstFolderCount);
+
+		MBMessageLocalServiceUtil.moveMessageAttachmentToTrash(
+			TestPropsValues.getUserId(), _message.getMessageId(),
+			"company_logo.png");
+
+		int finalFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		Assert.assertNotEquals(initialFolderCount, finalFoldersCount);
+	}
+
+	@Test
+	@Transactional
+	public void testDeleteAttachmentWhenDeletingMessage() throws Exception {
+		int initialFileEntryCount =
+			DLFileEntryLocalServiceUtil.getFileEntriesCount();
+
+		addMessageWithAttachment();
+
+		int firstFileEntryCount =
+			DLFileEntryLocalServiceUtil.getFileEntriesCount();
+
+		Assert.assertEquals(
+			initialFileEntryCount + NEW_FILE_ENTRY, firstFileEntryCount);
+
+		MBMessageLocalServiceUtil.deleteMessage(_message.getMessageId());
+
+		int finalFileEntryCount =
+			DLFileEntryLocalServiceUtil.getFileEntriesCount();
+
+		Assert.assertEquals(initialFileEntryCount, finalFileEntryCount);
+	}
+
+	@Test
+	@Transactional
+	public void testDeleteAttachmentWhenDeletingThread() throws Exception {
+		int initialFileEntryCount =
+			DLFileEntryLocalServiceUtil.getFileEntriesCount();
+
+		addMessageWithAttachment();
+
+		int firstFileEntryCount =
+			DLFileEntryLocalServiceUtil.getFileEntriesCount();
+
+		Assert.assertEquals(
+			initialFileEntryCount + NEW_FILE_ENTRY, firstFileEntryCount);
+
+		MBThreadLocalServiceUtil.deleteThread(_message.getThreadId());
+
+		int finalFileEntryCount =
+			DLFileEntryLocalServiceUtil.getFileEntriesCount();
+
+		Assert.assertEquals(
+			firstFileEntryCount - NEW_FILE_ENTRY, finalFileEntryCount);
+	}
+
+	@Test
+	@Transactional
+	public void testDeleteMessageWithAttachments() throws Exception {
+		addMessageWithAttachment();
+
+		long threadAttachmentsFolderId =
+			_message.getThreadAttachmentsFolderId();
+		long attachmentsFolderId = _message.getAttachmentsFolderId();
+
+		Assert.assertNotEquals(threadAttachmentsFolderId, 0L);
+		Assert.assertNotEquals(attachmentsFolderId, 0L);
+
+		MBMessageLocalServiceUtil.deleteMBMessage(_message.getMessageId());
+	}
+
+	@Test
+	@Transactional
+	public void testDeleteMessageWithoutAttachments() throws Exception {
+		addMessage();
+
+		long threadAttachmentsFolderId =
+			_message.getThreadAttachmentsFolderId();
+		long attachmentsFolderId = _message.getAttachmentsFolderId();
+
+		Assert.assertEquals(threadAttachmentsFolderId, 0L);
+		Assert.assertEquals(attachmentsFolderId, 0L);
+
+		MBMessageLocalServiceUtil.deleteMBMessage(_message.getMessageId());
+	}
+
+	@Test
+	public void testMoveToTrashAndDeleteMessage() throws Exception {
+		_message = MBTestUtil.addMessageWithAttachment(
+			TestPropsValues.getUser(), _group.getGroupId(), "dependencies",
+			"company_logo.png", getClass());
+
 		_trashMBAttachments(false);
+
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
-	public void testTrashAndRestore() throws Exception {
+	public void testMoveToTrashAndRestoreMessage() throws Exception {
+		_message = MBTestUtil.addMessageWithAttachment(
+			TestPropsValues.getUser(), _group.getGroupId(), "dependencies",
+			"company_logo.png", getClass());
+
 		_trashMBAttachments(true);
+
+		GroupLocalServiceUtil.deleteGroup(_group);
+	}
+
+	protected void addMessage() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		_category = MBTestUtil.addCategory(serviceContext);
+
+		_message = MBTestUtil.addMessage(
+			_category.getCategoryId(), ServiceTestUtil.randomString(), true,
+			serviceContext);
+	}
+
+	protected void addMessageWithAttachment() throws Exception {
+		_message = MBTestUtil.addMessageWithAttachment(
+			TestPropsValues.getUser(), _group.getGroupId(), "dependencies",
+			"company_logo.png", getClass());
+	}
+
+	protected void updateMessageWithAttachment() throws Exception {
+		_message = MBTestUtil.updateMessageWithAttachment(
+			TestPropsValues.getUser(), _message, "dependencies",
+			"OSX_Test.docx", getClass());
 	}
 
 	private List<ObjectValuePair<String, InputStream>> _getInputStreamOVPs(
@@ -133,7 +337,7 @@ public class MBAttachmentsTest {
 			serviceContext);
 
 		Assert.assertEquals(
-			initialNotInTrashCount + 1,
+			initialNotInTrashCount + NEW_FILE_ENTRY,
 			_message.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(
 			initialTrashEntriesCount,
@@ -149,7 +353,7 @@ public class MBAttachmentsTest {
 		Assert.assertEquals(
 			initialNotInTrashCount, _message.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(
-			initialTrashEntriesCount + 1,
+			initialTrashEntriesCount + NEW_FILE_ENTRY,
 			_message.getDeletedAttachmentsFileEntriesCount());
 
 		if (restore) {
@@ -158,7 +362,7 @@ public class MBAttachmentsTest {
 				fileEntry.getTitle());
 
 			Assert.assertEquals(
-				initialNotInTrashCount + 1,
+				initialNotInTrashCount + NEW_FILE_ENTRY,
 				_message.getAttachmentsFileEntriesCount());
 			Assert.assertEquals(
 				initialTrashEntriesCount,
@@ -180,6 +384,7 @@ public class MBAttachmentsTest {
 		}
 	}
 
+	private MBCategory _category;
 	private Group _group;
 	private MBMessage _message;
 
