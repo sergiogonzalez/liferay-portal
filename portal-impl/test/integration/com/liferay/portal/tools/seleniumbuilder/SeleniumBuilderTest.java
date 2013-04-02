@@ -33,6 +33,75 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testAction() throws Exception {
+		test("Action.action");
+	}
+
+	@Test
+	public void testActionCommandElement1001() throws Exception {
+		test(
+			"ActionCommandElement1001.action",
+			"Error 1001: Missing (case|default) child element in " + _DIR_NAME +
+				"/ActionCommandElement1001.action:2");
+	}
+
+	@Test
+	public void testActionCommandElement1002() throws Exception {
+		test(
+			"ActionCommandElement1002.action",
+			"Error 1002: Invalid case-fail element in " + _DIR_NAME +
+				"/ActionCommandElement1002.action:3");
+	}
+
+	@Test
+	public void testActionCommandElement1003_1() throws Exception {
+		test(
+			"ActionCommandElement1003_1.action",
+			"Error 1003: Missing name attribute in " + _DIR_NAME +
+				"/ActionCommandElement1003_1.action:2");
+	}
+
+	@Test
+	public void testActionCommandElement1003_2() throws Exception {
+		test(
+			"ActionCommandElement1003_2.action",
+			"Error 1003: Missing name attribute in " + _DIR_NAME +
+				"/ActionCommandElement1003_2.action:2");
+	}
+
+	@Test
+	public void testActionCommandElement1006() throws Exception {
+		test(
+			"ActionCommandElement1006.action",
+			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
+				"/ActionCommandElement1006.action:2");
+	}
+
+	@Test
+	public void testActionDefinitionElement1000() throws Exception {
+		test(
+			"ActionDefinitionElement1000.action",
+			"Error 1000: Invalid root element in " + _DIR_NAME +
+				"/ActionDefinitionElement1000.action:1");
+	}
+
+	@Test
+	public void testActionDefinitionElement1001() throws Exception {
+		test(
+			"ActionDefinitionElement1001.action",
+			"Error 1001: Missing (command) child element in " + _DIR_NAME +
+				"/ActionDefinitionElement1001.action:1");
+	}
+
+	@Test
+	public void testActionDefinitionElement1002() throws Exception {
+		test(
+			"ActionDefinitionElement1002.action",
+			"Error 1002: Invalid command-fail element in " + _DIR_NAME +
+				"/ActionDefinitionElement1002.action:2");
+	}
+
+	@Test
 	public void testFunction() throws Exception {
 		test("Function.function");
 	}

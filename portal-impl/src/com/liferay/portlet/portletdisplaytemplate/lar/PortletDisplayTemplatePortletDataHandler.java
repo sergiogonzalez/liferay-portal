@@ -50,7 +50,18 @@ public class PortletDisplayTemplatePortletDataHandler
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		exportPortletDisplayTemplates(portletDataContext, rootElement);
+		long[] classNameIds = TemplateHandlerRegistryUtil.getClassNameIds();
+
+		for (long classNameId : classNameIds) {
+			List<DDMTemplate> ddmTemplates =
+				DDMTemplateLocalServiceUtil.getTemplates(
+					portletDataContext.getScopeGroupId(), classNameId);
+
+			for (DDMTemplate ddmTemplate : ddmTemplates) {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, ddmTemplate);
+			}
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -61,9 +72,10 @@ public class PortletDisplayTemplatePortletDataHandler
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
+		Element ddmTemplatesElement =
+			portletDataContext.getImportDataGroupElement(DDMTemplate.class);
 
-		List<Element> ddmTemplateElements = rootElement.elements("template");
+		List<Element> ddmTemplateElements = ddmTemplatesElement.elements();
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -71,26 +83,6 @@ public class PortletDisplayTemplatePortletDataHandler
 		}
 
 		return null;
-	}
-
-	protected void exportPortletDisplayTemplates(
-			PortletDataContext portletDataContext,
-			Element portletDisplayTemplatesElement)
-		throws Exception {
-
-		long[] classNameIds = TemplateHandlerRegistryUtil.getClassNameIds();
-
-		for (long classNameId : classNameIds) {
-			List<DDMTemplate> ddmTemplates =
-				DDMTemplateLocalServiceUtil.getTemplates(
-					portletDataContext.getScopeGroupId(), classNameId);
-
-			for (DDMTemplate ddmTemplate : ddmTemplates) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, portletDisplayTemplatesElement,
-					ddmTemplate);
-			}
-		}
 	}
 
 }

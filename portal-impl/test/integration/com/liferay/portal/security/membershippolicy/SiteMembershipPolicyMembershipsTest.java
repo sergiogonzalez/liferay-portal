@@ -155,8 +155,6 @@ public class SiteMembershipPolicyMembershipsTest
 		long[] standardGroupIds = addStandardGroups();
 		long[] requiredGroupIds = addRequiredGroups();
 
-		// Users always have their personal Group
-
 		User user = UserLocalServiceUtil.getUser(userIds[0]);
 
 		List<Group> groups = user.getGroups();
@@ -178,9 +176,6 @@ public class SiteMembershipPolicyMembershipsTest
 			user, null, null, standardGroupIds, null,
 			Collections.<UserGroupRole>emptyList());
 
-		// We have removed the user from their personal Group, but the required
-		// Groups are kept
-
 		groups = user.getGroups();
 
 		Assert.assertEquals(userGroupIds.length - 1, groups.size());
@@ -191,8 +186,6 @@ public class SiteMembershipPolicyMembershipsTest
 		long[] userIds = addUsers();
 		long[] standardGroupIds = addStandardGroups();
 		long[] requiredGroupIds = addRequiredGroups();
-
-		// Users always have their personal Group
 
 		User user = UserLocalServiceUtil.getUser(userIds[0]);
 

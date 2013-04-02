@@ -26,6 +26,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -86,7 +87,7 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			recordSetId);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, rootElement, recordSet);
+			portletDataContext, recordSet);
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -102,14 +103,15 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
+		Element recordSetsElement =
+			portletDataContext.getImportDataGroupElement(DDLRecordSet.class);
 
-		Element recordSetElement = rootElement.element("record-set");
+		List<Element> recordSetElements = recordSetsElement.elements();
 
-		if (recordSetElement != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, recordSetElement);
-		}
+		Element recordSetElement = recordSetElements.get(0);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, recordSetElement);
 
 		long importedRecordSetId = GetterUtil.getLong(
 			portletPreferences.getValue("recordSetId", null));
