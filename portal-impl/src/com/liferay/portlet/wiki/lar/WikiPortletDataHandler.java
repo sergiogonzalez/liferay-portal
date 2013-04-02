@@ -383,7 +383,11 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 						binPath, fileEntry.getContentStream());
 				}
 
-				page.setAttachmentsFolderId(page.getAttachmentsFolderId());
+				long folderId = page.getAttachmentsFolderId();
+
+				if (folderId != 0) {
+					page.setAttachmentsFolderId(folderId);
+				}
 			}
 
 			portletDataContext.addClassedModel(
