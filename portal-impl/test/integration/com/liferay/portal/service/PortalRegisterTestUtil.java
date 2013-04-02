@@ -18,20 +18,29 @@ import com.liferay.portal.asset.LayoutRevisionAssetRendererFactory;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory;
+import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler;
 import com.liferay.portlet.blogs.util.BlogsIndexer;
 import com.liferay.portlet.blogs.workflow.BlogsEntryWorkflowHandler;
 import com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory;
 import com.liferay.portlet.bookmarks.asset.BookmarksFolderAssetRendererFactory;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.util.BookmarksEntryIndexer;
 import com.liferay.portlet.bookmarks.util.BookmarksFolderIndexer;
 import com.liferay.portlet.calendar.asset.CalEventAssetRendererFactory;
+import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.directory.asset.UserAssetRendererFactory;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
 import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.trash.DLFileEntryTrashHandler;
 import com.liferay.portlet.documentlibrary.trash.DLFileShortcutTrashHandler;
 import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
@@ -39,8 +48,11 @@ import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
 import com.liferay.portlet.dynamicdatalists.asset.DDLRecordAssetRendererFactory;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.asset.JournalFolderAssetRendererFactory;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.trash.JournalArticleTrashHandler;
 import com.liferay.portlet.journal.util.JournalArticleIndexer;
 import com.liferay.portlet.journal.util.JournalFolderIndexer;
@@ -48,6 +60,9 @@ import com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler;
 import com.liferay.portlet.messageboards.asset.MBCategoryAssetRendererFactory;
 import com.liferay.portlet.messageboards.asset.MBDiscussionAssetRendererFactory;
 import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
 import com.liferay.portlet.messageboards.trash.MBThreadTrashHandler;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
@@ -58,6 +73,7 @@ import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 import com.liferay.portlet.usersadmin.util.UserIndexer;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRendererFactory;
+import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.trash.WikiNodeTrashHandler;
 import com.liferay.portlet.wiki.trash.WikiPageTrashHandler;
 import com.liferay.portlet.wiki.util.WikiNodeIndexer;
@@ -70,36 +86,26 @@ import com.liferay.portlet.wiki.workflow.WikiPageWorkflowHandler;
 public class PortalRegisterTestUtil {
 
 	protected static void registerAssetRendererFactories() {
-		AssetRendererFactoryRegistryUtil.register(
-			new BlogsEntryAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new BookmarksEntryAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new BookmarksFolderAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new CalEventAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new DDLRecordAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new DLFileEntryAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new DLFolderAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new JournalArticleAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new JournalFolderAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new LayoutRevisionAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new MBCategoryAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new MBDiscussionAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new MBMessageAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new UserAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new WikiPageAssetRendererFactory());
+		for (Class<?>[] array : _ASSET_RENDERER_FACTORY_CLASSES) {
+			try {
+				Class<?> factoryClass = array[0];
+
+				AssetRendererFactory assetRendererFactory =
+					(AssetRendererFactory)factoryClass.newInstance();
+
+				Class<?> entityClass = array[1];
+
+				assetRendererFactory.setClassName(entityClass.getName());
+
+				AssetRendererFactoryRegistryUtil.register(assetRendererFactory);
+			}
+			catch (InstantiationException e) {
+				e.printStackTrace();
+			}
+			catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected static void registerIndexers() {
@@ -141,5 +147,23 @@ public class PortalRegisterTestUtil {
 		WorkflowHandlerRegistryUtil.register(new UserWorkflowHandler());
 		WorkflowHandlerRegistryUtil.register(new WikiPageWorkflowHandler());
 	}
+
+	private static final Class[][] _ASSET_RENDERER_FACTORY_CLASSES = {
+		{BlogsEntryAssetRendererFactory.class, BlogsEntry.class},
+		{BookmarksEntryAssetRendererFactory.class, BookmarksEntry.class},
+		{BookmarksFolderAssetRendererFactory.class, BookmarksFolder.class},
+		{CalEventAssetRendererFactory.class, CalEvent.class},
+		{DDLRecordAssetRendererFactory.class, DDLRecord.class},
+		{DLFileEntryAssetRendererFactory.class, DLFileEntry.class},
+		{DLFolderAssetRendererFactory.class, DLFolder.class},
+		{JournalArticleAssetRendererFactory.class, JournalArticle.class},
+		{JournalFolderAssetRendererFactory.class, JournalFolder.class},
+		{LayoutRevisionAssetRendererFactory.class, LayoutRevision.class},
+		{MBCategoryAssetRendererFactory.class, MBCategory.class},
+		{MBDiscussionAssetRendererFactory.class, MBDiscussion.class},
+		{MBMessageAssetRendererFactory.class, MBMessage.class},
+		{UserAssetRendererFactory.class, User.class},
+		{WikiPageAssetRendererFactory.class, WikiPage.class}
+	};
 
 }
