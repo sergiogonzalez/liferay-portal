@@ -199,15 +199,14 @@ public class SiteMembershipPolicyRolesTest
 
 	@Test
 	public void testVerifyWhenAddingRole() throws Exception {
-		MembershipPolicyTestUtil.addRole(getClass(), RoleConstants.TYPE_SITE);
+		MembershipPolicyTestUtil.addRole(RoleConstants.TYPE_SITE);
 
 		Assert.assertTrue(isVerify());
 	}
 
 	@Test
 	public void testVerifyWhenUpdatingRole() throws Exception {
-		Role role = MembershipPolicyTestUtil.addRole(
-			getClass(), RoleConstants.TYPE_SITE);
+		Role role = MembershipPolicyTestUtil.addRole(RoleConstants.TYPE_SITE);
 
 		RoleServiceUtil.updateRole(
 			role.getRoleId(), ServiceTestUtil.randomString(),

@@ -181,8 +181,7 @@ public class RoleMembershipPolicyRolesTest
 
 	@Test
 	public void testVerifyWhenAddingRole() throws Exception {
-		MembershipPolicyTestUtil.addRole(
-			getClass(), RoleConstants.TYPE_REGULAR);
+		MembershipPolicyTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		Assert.assertTrue(isVerify());
 	}
@@ -190,7 +189,7 @@ public class RoleMembershipPolicyRolesTest
 	@Test
 	public void testVerifyWhenUpdatingRole() throws Exception {
 		Role role = MembershipPolicyTestUtil.addRole(
-			getClass(), RoleConstants.TYPE_REGULAR);
+			RoleConstants.TYPE_REGULAR);
 
 		RoleServiceUtil.updateRole(
 			role.getRoleId(), ServiceTestUtil.randomString(),

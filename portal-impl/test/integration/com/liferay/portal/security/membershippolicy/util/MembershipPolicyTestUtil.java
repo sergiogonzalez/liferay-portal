@@ -86,10 +86,11 @@ public class MembershipPolicyTestUtil {
 			false, populateServiceContext(true));
 	}
 
-	public static Role addRole(Class clazz, int type) throws Exception {
+	public static Role addRole(int type) throws Exception {
+		String name = ServiceTestUtil.randomString();
+
 		return RoleServiceUtil.addRole(
-			clazz.getName(), 0, ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomLocaleStringMap(),
+			null, 0, name, ServiceTestUtil.randomLocaleStringMap(),
 			ServiceTestUtil.randomLocaleStringMap(), type,
 			ServiceTestUtil.randomString(), populateServiceContext(false));
 	}
