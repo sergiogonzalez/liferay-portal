@@ -449,6 +449,7 @@ public class SearchContainer<R> {
 	private void _calculateCur() {
 		if (_total == 0) {
 			_cur = DEFAULT_CUR;
+
 			return;
 		}
 

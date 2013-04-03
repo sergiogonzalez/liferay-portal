@@ -150,7 +150,7 @@ if (fileEntryTypeId >= 0) {
 
 	if (total <= entryStart) {
 		entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
-		entryEnd = entryStart + searchContainer.getDelta();;
+		entryEnd = entryStart + searchContainer.getDelta();
 
 		searchContext.setEnd(entryEnd);
 		searchContext.setStart(entryStart);
@@ -197,8 +197,8 @@ else {
 			searchContainer.setTotal(total);
 
 			if (total <= entryStart) {
-				entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();;
-				entryEnd = entryStart + searchContainer.getDelta();;
+				entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
+				entryEnd = entryStart + searchContainer.getDelta();
 
 				assetEntryQuery.setEnd(entryEnd);
 				assetEntryQuery.setStart(entryStart);
@@ -212,8 +212,8 @@ else {
 			searchContainer.setTotal(total);
 
 			if (total <= entryStart) {
-				entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();;
-				entryEnd = entryStart + searchContainer.getDelta();;
+				entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
+				entryEnd = entryStart + searchContainer.getDelta();
 			}
 
 			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
@@ -231,8 +231,8 @@ else {
 		searchContainer.setTotal(total);
 
 		if (total <= entryStart) {
-			entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();;
-			entryEnd = entryStart + searchContainer.getDelta();;
+			entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
+			entryEnd = entryStart + searchContainer.getDelta();
 		}
 
 		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
