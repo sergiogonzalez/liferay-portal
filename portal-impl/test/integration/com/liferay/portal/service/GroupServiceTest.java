@@ -178,30 +178,12 @@ public class GroupServiceTest {
 
 	@Test
 	public void testSelectableParentSites() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		testSelectableParentSites(false);
+	}
 
-		Assert.assertTrue(group.isRoot());
-
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("site", Boolean.TRUE);
-
-		List<Long> excludedGroupIds = new ArrayList<Long>();
-
-		excludedGroupIds.add(group.getGroupId());
-
-		groupParams.put("excludedGroupIds", excludedGroupIds);
-
-		List<Group> selectableGroups = GroupLocalServiceUtil.search(
-			group.getCompanyId(), null, StringPool.BLANK, groupParams,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		for (Group selectableGroup : selectableGroups) {
-			if (selectableGroup.getGroupId() == group.getGroupId()) {
-				Assert.fail("A group cannot be its own parent");
-			}
-		}
+	@Test
+	public void testSelectableParentSitesStaging() throws Exception {
+		testSelectableParentSites(true);
 	}
 
 	@Test
@@ -440,6 +422,58 @@ public class GroupServiceTest {
 			catch (PrincipalException pe) {
 				if (hasManageSubsitePermisionOnGroup1 || hasManageSite1) {
 					Assert.fail("The user should be able to update this site");
+				}
+			}
+		}
+	}
+
+	protected void testSelectableParentSites(boolean staging) throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(group.isRoot());
+
+		String keywords = StringPool.BLANK;
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("site", Boolean.TRUE);
+
+		List<Long> excludedGroupIds = new ArrayList<Long>();
+
+		excludedGroupIds.add(group.getGroupId());
+
+		if (staging) {
+			GroupTestUtil.enableLocalStaging(group);
+
+			Assert.assertTrue(group.hasStagingGroup());
+
+			if (group.hasStagingGroup()) {
+				excludedGroupIds.add(group.getStagingGroup().getGroupId());
+			}
+		}
+
+		groupParams.put("excludedGroupIds", excludedGroupIds);
+
+		List<Group> selectableGroups = GroupLocalServiceUtil.search(
+			group.getCompanyId(), null, keywords, groupParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (Group selectableGroup : selectableGroups) {
+			long selectableGroupId = selectableGroup.getGroupId();
+
+			if (selectableGroupId == group.getGroupId()) {
+				Assert.fail("A group cannot be its own parent");
+			}
+			else if (staging) {
+
+				// group has been promoted to live group
+
+				if (group.hasStagingGroup()) {
+					if (selectableGroupId == group.getLiveGroupId()) {
+						Assert.fail(
+							"A group cannot have its live group as parent");
+					}
 				}
 			}
 		}
