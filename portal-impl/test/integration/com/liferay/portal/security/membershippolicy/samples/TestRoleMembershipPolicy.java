@@ -33,6 +33,7 @@ import org.junit.Assert;
  */
 public class TestRoleMembershipPolicy extends BaseRoleMembershipPolicy {
 
+	@Override
 	public void checkRoles(
 			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
 		throws PortalException, SystemException {
@@ -64,18 +65,24 @@ public class TestRoleMembershipPolicy extends BaseRoleMembershipPolicy {
 		}
 	}
 
+	@Override
 	public void propagateRoles(
 		long[] userIds, long[] addRoleIds, long[] removeRoleIds) {
 
 		BaseRoleMembershipPolicyTestCase.setPropagateRoles(true);
 	}
 
-	public void verifyPolicy(Role role) {
-		verifyPolicy();
-	} public void verifyPolicy() {
+	@Override
+	public void verifyPolicy() {
 		BaseRoleMembershipPolicyTestCase.setVerify(true);
 	}
 
+	@Override
+	public void verifyPolicy(Role role) {
+		verifyPolicy();
+	}
+
+	@Override
 	public void verifyPolicy(
 		Role role, Role oldRole,
 		Map<String, Serializable> oldExpandoAttributes) {
