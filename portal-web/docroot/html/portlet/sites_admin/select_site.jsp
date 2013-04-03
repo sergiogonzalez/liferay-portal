@@ -68,6 +68,12 @@ portletURL.setParameter("target", target);
 
 				excludedGroupIds.add(groupId);
 
+				List<Group> liveGroups = GroupLocalServiceUtil.getLiveGroups();
+
+				for (Group liveGroup : liveGroups) {
+					excludedGroupIds.add(liveGroup.getGroupId());
+				}
+
 				groupParams.put("excludedGroupIds", excludedGroupIds);
 			}
 
