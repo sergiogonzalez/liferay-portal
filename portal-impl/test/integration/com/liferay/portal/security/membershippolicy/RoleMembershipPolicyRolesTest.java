@@ -180,6 +180,15 @@ public class RoleMembershipPolicyRolesTest
 	}
 
 	@Test
+	public void testUnassignUsersFromRole() throws Exception {
+		long[] standardRoleIds = addStandardRoles();
+
+		UserServiceUtil.unsetRoleUsers(standardRoleIds[0], addUsers());
+
+		Assert.assertTrue(isPropagateRoles());
+	}
+
+	@Test
 	public void testVerifyWhenAddingRole() throws Exception {
 		MembershipPolicyTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
