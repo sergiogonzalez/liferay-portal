@@ -68,6 +68,14 @@ public class AccessControlAdvice extends
 			return AccessControlled.class;
 		}
 
+		public boolean guestAccessEnabled() {
+			return false;
+		}
+
+		public boolean hostAllowedValidationEnabled() {
+			return true;
+		}
+
 	};
 
 	private AccessControlAdvisor _accessControlAdvisor;
