@@ -15,7 +15,6 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,6 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.oro.io.GlobFilenameFilter;
 import org.apache.tools.ant.DirectoryScanner;
@@ -231,7 +232,7 @@ public class PluginsEnvironmentBuilder {
 
 		properties.load(new FileInputStream(propertiesFile));
 
-		List<String> jars = new SortedArrayList<String>();
+		Set<String> jars = new TreeSet<String>();
 
 		jars.addAll(getCommonJars());
 
