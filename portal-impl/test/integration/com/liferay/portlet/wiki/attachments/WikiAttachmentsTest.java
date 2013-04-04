@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -144,6 +145,20 @@ public class WikiAttachmentsTest {
 
 	@Test
 	@Transactional
+	public void testFoldersCountWhenAddingWikiPageAttachment()
+		throws Exception {
+
+		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
+
+		addWikiPageAttachment();
+
+		Assert.assertEquals(
+			initialFoldersCount + 3,
+			DLFolderLocalServiceUtil.getDLFoldersCount());
+	}
+
+	@Test
+	@Transactional
 	public void testFoldersCountWhenAddingWikiPageAttachments()
 		throws Exception {
 
@@ -167,8 +182,8 @@ public class WikiAttachmentsTest {
 
 		foldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
-		_node = null;
 		_page = null;
+		_node = null;
 
 		addWikiPageAttachment();
 
@@ -178,8 +193,8 @@ public class WikiAttachmentsTest {
 		foldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
 		_group = null;
-		_node = null;
 		_page = null;
+		_node = null;
 
 		addWikiPageAttachment();
 
@@ -237,8 +252,6 @@ public class WikiAttachmentsTest {
 
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
-		addWikiNode();
-
 		addWikiPage();
 
 		Assert.assertEquals(
@@ -256,6 +269,8 @@ public class WikiAttachmentsTest {
 		addWikiPage();
 
 		_trashWikiAttachments(false);
+
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -263,6 +278,8 @@ public class WikiAttachmentsTest {
 		addWikiPage();
 
 		_trashWikiAttachments(true);
+
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	protected void addWikiNode() throws Exception {
