@@ -1,0 +1,37 @@
+<definition>
+	<var name="name" value="value" />
+
+	<command name="name">
+		<var name="name" value="value" />
+
+		<execute action="action" locator1="locator1" value1="value1" />
+
+		<execute macro="macro" />
+
+		<execute macro="macro">
+			<var name="name" value="value" />
+		</execute>
+
+		<if>
+			<condition action="isAction" />
+			<then>
+				<var name="name" value="value" />
+
+				<execute action="action" />
+			</then>
+		</if>
+
+		<if>
+			<condition macro="isMacro" />
+			<then>
+				<var name="name" value="value" />
+
+				<execute macro="macro" />
+
+				<execute macro="macro">
+					<var name="name" value="value" />
+				</execute>
+			</then>
+		</if>
+	</command>
+</definition>
