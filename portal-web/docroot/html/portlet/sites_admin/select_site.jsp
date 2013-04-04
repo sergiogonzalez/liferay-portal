@@ -24,6 +24,10 @@ boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPers
 String callback = ParamUtil.getString(request, "callback", "selectGroup");
 String target = ParamUtil.getString(request, "target");
 
+if (groupId == 0) {
+	groupId = ParamUtil.getLong(request, "doAsGroupId");
+}
+
 User selUser = PortalUtil.getSelectedUser(request);
 
 PortletURL portletURL = renderResponse.createRenderURL();
