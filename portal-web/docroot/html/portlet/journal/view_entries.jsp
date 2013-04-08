@@ -78,6 +78,40 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 boolean showAddArticleButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
 %>
 
+<div class="subscribe-action">
+
+	<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (JournalUtil.getEmailArticleAddedEnabled(portletPreferences) || JournalUtil.getEmailArticleApprovalDeniedEnabled(portletPreferences) || JournalUtil.getEmailArticleApprovalGrantedEnabled(portletPreferences) || JournalUtil.getEmailArticleApprovalRequestedEnabled(portletPreferences) || JournalUtil.getEmailArticleReviewEnabled(portletPreferences) || JournalUtil.getEmailArticleUpdatedEnabled(portletPreferences)) %>">
+		<c:choose>
+			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), JournalArticle.class.getName(), scopeGroupId) %>">
+				<portlet:actionURL var="unsubscribeURL">
+					<portlet:param name="struts_action" value="/journal/edit_article" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="unsubscribe"
+					label="<%= true %>"
+					url="<%= unsubscribeURL %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL var="subscribeURL">
+					<portlet:param name="struts_action" value="/journal/edit_article" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="subscribe"
+					label="<%= true %>"
+					url="<%= subscribeURL %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</div>
+
 <c:if test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 	<aui:input name="<%= displayTerms.STRUCTURE_ID %>" type="hidden" value="<%= displayTerms.getStructureId() %>" />
 
