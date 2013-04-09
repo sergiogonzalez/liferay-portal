@@ -37,8 +37,8 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.RepositoryModelImpl
  * @generated
  */
-public interface RepositoryModel extends BaseModel<Repository>, GroupedModel,
-	StagedModel {
+public interface RepositoryModel extends BaseModel<Repository>,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

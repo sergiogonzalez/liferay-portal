@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.impl.RoleModelImpl;
@@ -117,6 +118,14 @@ public class RolePersistenceTest {
 
 		newRole.setCompanyId(ServiceTestUtil.nextLong());
 
+		newRole.setUserId(ServiceTestUtil.nextLong());
+
+		newRole.setUserName(ServiceTestUtil.randomString());
+
+		newRole.setCreateDate(ServiceTestUtil.nextDate());
+
+		newRole.setModifiedDate(ServiceTestUtil.nextDate());
+
 		newRole.setClassNameId(ServiceTestUtil.nextLong());
 
 		newRole.setClassPK(ServiceTestUtil.nextLong());
@@ -138,6 +147,13 @@ public class RolePersistenceTest {
 		Assert.assertEquals(existingRole.getUuid(), newRole.getUuid());
 		Assert.assertEquals(existingRole.getRoleId(), newRole.getRoleId());
 		Assert.assertEquals(existingRole.getCompanyId(), newRole.getCompanyId());
+		Assert.assertEquals(existingRole.getUserId(), newRole.getUserId());
+		Assert.assertEquals(existingRole.getUserName(), newRole.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(existingRole.getCreateDate()),
+			Time.getShortTimestamp(newRole.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingRole.getModifiedDate()),
+			Time.getShortTimestamp(newRole.getModifiedDate()));
 		Assert.assertEquals(existingRole.getClassNameId(),
 			newRole.getClassNameId());
 		Assert.assertEquals(existingRole.getClassPK(), newRole.getClassPK());
@@ -184,9 +200,10 @@ public class RolePersistenceTest {
 
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Role_", "uuid", true,
-			"roleId", true, "companyId", true, "classNameId", true, "classPK",
-			true, "name", true, "title", true, "description", true, "type",
-			true, "subtype", true);
+			"roleId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "name", true, "title", true, "description",
+			true, "type", true, "subtype", true);
 	}
 
 	@Test
@@ -332,6 +349,14 @@ public class RolePersistenceTest {
 		role.setUuid(ServiceTestUtil.randomString());
 
 		role.setCompanyId(ServiceTestUtil.nextLong());
+
+		role.setUserId(ServiceTestUtil.nextLong());
+
+		role.setUserName(ServiceTestUtil.randomString());
+
+		role.setCreateDate(ServiceTestUtil.nextDate());
+
+		role.setModifiedDate(ServiceTestUtil.nextDate());
 
 		role.setClassNameId(ServiceTestUtil.nextLong());
 

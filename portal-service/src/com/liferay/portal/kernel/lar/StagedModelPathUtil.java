@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 
 import java.io.Serializable;
@@ -37,8 +38,8 @@ public class StagedModelPathUtil {
 		String dependentFileName) {
 
 		return getPath(
-			portletDataContext.getSourceGroupId(), className, classPK,
-			dependentFileName);
+			_PATH_PREFIX_GROUP, portletDataContext.getSourceGroupId(),
+			className, classPK, dependentFileName);
 	}
 
 	public static String getPath(StagedModel stagedModel) {
@@ -48,19 +49,34 @@ public class StagedModelPathUtil {
 	public static String getPath(
 		StagedModel stagedModel, String dependentFileName) {
 
-		return getPath(
-			stagedModel.getGroupId(), stagedModel.getModelClassName(),
-			stagedModel.getPrimaryKeyObj(), dependentFileName);
+		if (stagedModel instanceof StagedGroupedModel) {
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)stagedModel;
+
+			return getPath(
+				_PATH_PREFIX_GROUP, stagedGroupedModel.getGroupId(),
+				stagedModel.getModelClassName(), stagedModel.getPrimaryKeyObj(),
+				dependentFileName);
+		}
+		else {
+			return getPath(
+				_PATH_PREFIX_COMPANY, stagedModel.getCompanyId(),
+				stagedModel.getModelClassName(), stagedModel.getPrimaryKeyObj(),
+				dependentFileName);
+		}
 	}
 
 	protected static String getPath(
-		long groupId, String className, Serializable primaryKeyObj,
+			String pathPrefix, long pathPrimaryKey, String className,
+			Serializable primaryKeyObj,
 		String dependentFileName) {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("/groups/");
-		sb.append(groupId);
+		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(pathPrefix);
+		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(pathPrimaryKey);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(className);
 		sb.append(StringPool.FORWARD_SLASH);
@@ -76,5 +92,9 @@ public class StagedModelPathUtil {
 
 		return sb.toString();
 	}
+
+	private static final String _PATH_PREFIX_COMPANY = "company";
+
+	private static final String _PATH_PREFIX_GROUP = "group";
 
 }

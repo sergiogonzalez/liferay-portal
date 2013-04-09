@@ -38,7 +38,7 @@ import java.util.Date;
  * @generated
  */
 public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
-	GroupedModel, StagedModel {
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

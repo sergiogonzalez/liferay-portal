@@ -733,8 +733,16 @@ public class Entity {
 		}
 	}
 
+	public boolean isStagedGroupedModel() {
+		if (isGroupedModel() && isStagedModel()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isStagedModel() {
-		if (isGroupedModel() && hasUuid()) {
+		if (hasUuid() && isAuditedModel()) {
 			return true;
 		}
 

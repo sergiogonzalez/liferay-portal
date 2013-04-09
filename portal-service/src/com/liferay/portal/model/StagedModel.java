@@ -17,10 +17,12 @@ package com.liferay.portal.model;
 /**
  * @author Michael C. Han
  */
-public interface StagedModel extends GroupedModel {
+public interface StagedModel extends AuditedModel {
 
 	public Object clone();
 
 	public String getUuid();
+
+	public void setUuid(String uuid);
 
 }

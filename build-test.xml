@@ -2618,6 +2618,36 @@
 		<delete file="execute-remote-command.bat" />
 	</target>
 
+	<target name="generate-test-properties">
+		<xmlproperty
+			file="portal-web/test-config/database.xml"
+			keeproot="true"
+		/>
+
+		<echoproperties destfile="${basedir}/test.run.properties">
+			<propertyset>
+				<propertyref prefix="database.${database}" />
+			</propertyset>
+		</echoproperties>
+
+		<replaceregexp
+			file="${basedir}/test.run.properties"
+			flags="g"
+			match="database\.${database}"
+			replace="database"
+		/>
+
+		<property file="${basedir}/test.run.properties" />
+
+		<loadfile property="test.properties.expanded" srcfile="${basedir}/test.run.properties">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+
+		<echo file="${basedir}/test.run.properties">${test.properties.expanded}</echo>
+	</target>
+
 	<target name="install-vm-java">
 		<if>
 			<not>
@@ -4237,6 +4267,16 @@ file.
 			</then>
 		</if>
 
+		<if>
+			<or>
+				<equals arg1="${test.browser}" arg2="iehta" />
+				<equals arg1="${test.browser}" arg2="iexplore" />
+			</or>
+			<then>
+				<antcall target="start-ie-driver" />
+			</then>
+		</if>
+
 		<parallel>
 			<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
 				<arg line="${simple.server.start.executable.arg.line}" />
@@ -4286,6 +4326,16 @@ file.
 				<antcall target="stop-chrome-driver" />
 			</then>
 		</if>
+
+		<if>
+			<or>
+				<equals arg1="${test.browser}" arg2="iehta" />
+				<equals arg1="${test.browser}" arg2="iexplore" />
+			</or>
+			<then>
+				<antcall target="stop-ie-driver" />
+			</then>
+		</if>
 	</target>
 
 	<target name="start-chrome-driver">
@@ -4311,6 +4361,28 @@ which can be downloaded from this website: http://code.google.com/p/chromedriver
 		</if>
 	</target>
 
+	<target name="start-ie-driver">
+		<if>
+			<not>
+				<isset property="ie.driver.zip" />
+			</not>
+			<then>
+				<fail>
+.
+
+Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.31.0.zip" or "IEDriverServer_Win32_2.31.0.zip" which can be downloaded from this website: https://code.google.com/p/selenium/wiki/InternetExplorerDriver
+				</fail>
+			</then>
+			<else>
+				<exec executable="taskkill.exe">
+					<arg line="/F /IM IEDriverServer.exe" />
+				</exec>
+
+				<unzip src="${ie.driver.zip}" dest="tools/selenium" />
+			</else>
+		</if>
+	</target>
+
 	<target name="start-selenium">
 		<!--<java
 			jar="lib/development/selenium-server.jar"
@@ -4330,6 +4402,12 @@ which can be downloaded from this website: http://code.google.com/p/chromedriver
 	<target name="stop-chrome-driver">
 		<exec executable="taskkill.exe">
 			<arg line="/F /IM chromedriver.exe" />
+		</exec>
+	</target>
+
+	<target name="stop-ie-driver">
+		<exec executable="taskkill.exe">
+			<arg line="/F /IM IEDriverServer.exe" />
 		</exec>
 	</target>
 

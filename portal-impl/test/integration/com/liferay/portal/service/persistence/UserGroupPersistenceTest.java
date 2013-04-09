@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupModelImpl;
@@ -117,6 +118,14 @@ public class UserGroupPersistenceTest {
 
 		newUserGroup.setCompanyId(ServiceTestUtil.nextLong());
 
+		newUserGroup.setUserId(ServiceTestUtil.nextLong());
+
+		newUserGroup.setUserName(ServiceTestUtil.randomString());
+
+		newUserGroup.setCreateDate(ServiceTestUtil.nextDate());
+
+		newUserGroup.setModifiedDate(ServiceTestUtil.nextDate());
+
 		newUserGroup.setParentUserGroupId(ServiceTestUtil.nextLong());
 
 		newUserGroup.setName(ServiceTestUtil.randomString());
@@ -134,6 +143,16 @@ public class UserGroupPersistenceTest {
 			newUserGroup.getUserGroupId());
 		Assert.assertEquals(existingUserGroup.getCompanyId(),
 			newUserGroup.getCompanyId());
+		Assert.assertEquals(existingUserGroup.getUserId(),
+			newUserGroup.getUserId());
+		Assert.assertEquals(existingUserGroup.getUserName(),
+			newUserGroup.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingUserGroup.getCreateDate()),
+			Time.getShortTimestamp(newUserGroup.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingUserGroup.getModifiedDate()),
+			Time.getShortTimestamp(newUserGroup.getModifiedDate()));
 		Assert.assertEquals(existingUserGroup.getParentUserGroupId(),
 			newUserGroup.getParentUserGroupId());
 		Assert.assertEquals(existingUserGroup.getName(), newUserGroup.getName());
@@ -178,8 +197,10 @@ public class UserGroupPersistenceTest {
 
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserGroup", "uuid", true,
-			"userGroupId", true, "companyId", true, "parentUserGroupId", true,
-			"name", true, "description", true, "addedByLDAPImport", true);
+			"userGroupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"parentUserGroupId", true, "name", true, "description", true,
+			"addedByLDAPImport", true);
 	}
 
 	@Test
@@ -319,6 +340,14 @@ public class UserGroupPersistenceTest {
 		userGroup.setUuid(ServiceTestUtil.randomString());
 
 		userGroup.setCompanyId(ServiceTestUtil.nextLong());
+
+		userGroup.setUserId(ServiceTestUtil.nextLong());
+
+		userGroup.setUserName(ServiceTestUtil.randomString());
+
+		userGroup.setCreateDate(ServiceTestUtil.nextDate());
+
+		userGroup.setModifiedDate(ServiceTestUtil.nextDate());
 
 		userGroup.setParentUserGroupId(ServiceTestUtil.nextLong());
 

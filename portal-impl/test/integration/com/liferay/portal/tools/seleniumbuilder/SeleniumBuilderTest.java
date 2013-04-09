@@ -1753,16 +1753,17 @@ public class SeleniumBuilderTest {
 	}
 
 	protected void test(
-		String fileName, String expectedErrorMessage, boolean expectException)
-			throws Exception {
+			String fileName, String expectedErrorMessage,
+			boolean expectException)
+		throws Exception {
 
 		String actualErrorMessage = null;
 
 		try {
 			_seleniumBuilderFileUtil.getRootElement(_DIR_NAME + "/" + fileName);
 		}
-		catch (IllegalArgumentException e) {
-			actualErrorMessage = e.getMessage();
+		catch (IllegalArgumentException iae) {
+			actualErrorMessage = iae.getMessage();
 		}
 		finally {
 			if (expectException) {

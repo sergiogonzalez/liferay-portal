@@ -15,11 +15,14 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
+
+import java.util.Date;
 
 /**
  * The base model interface for the UserGroup service. Represents a row in the &quot;UserGroup&quot; database table, with each column mapped to a property of this class.
@@ -34,7 +37,7 @@ import java.io.Serializable;
  * @see com.liferay.portal.model.impl.UserGroupModelImpl
  * @generated
  */
-public interface UserGroupModel extends BaseModel<UserGroup> {
+public interface UserGroupModel extends BaseModel<UserGroup>, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -97,6 +100,78 @@ public interface UserGroupModel extends BaseModel<UserGroup> {
 	 * @param companyId the company ID of this user group
 	 */
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this user group.
+	 *
+	 * @return the user ID of this user group
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this user group.
+	 *
+	 * @param userId the user ID of this user group
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this user group.
+	 *
+	 * @return the user uuid of this user group
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this user group.
+	 *
+	 * @param userUuid the user uuid of this user group
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this user group.
+	 *
+	 * @return the user name of this user group
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this user group.
+	 *
+	 * @param userName the user name of this user group
+	 */
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this user group.
+	 *
+	 * @return the create date of this user group
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this user group.
+	 *
+	 * @param createDate the create date of this user group
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this user group.
+	 *
+	 * @return the modified date of this user group
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this user group.
+	 *
+	 * @param modifiedDate the modified date of this user group
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the parent user group ID of this user group.

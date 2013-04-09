@@ -37,8 +37,8 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.PasswordPolicyModelImpl
  * @generated
  */
-public interface PasswordPolicyModel extends AuditedModel,
-	BaseModel<PasswordPolicy> {
+public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

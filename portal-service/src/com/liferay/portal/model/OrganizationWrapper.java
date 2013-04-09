@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,10 @@ public class OrganizationWrapper implements Organization,
 		attributes.put("uuid", getUuid());
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentOrganizationId", getParentOrganizationId());
 		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
@@ -76,6 +81,30 @@ public class OrganizationWrapper implements Organization,
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long parentOrganizationId = (Long)attributes.get("parentOrganizationId");
@@ -203,6 +232,98 @@ public class OrganizationWrapper implements Organization,
 	*/
 	public void setCompanyId(long companyId) {
 		_organization.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this organization.
+	*
+	* @return the user ID of this organization
+	*/
+	public long getUserId() {
+		return _organization.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this organization.
+	*
+	* @param userId the user ID of this organization
+	*/
+	public void setUserId(long userId) {
+		_organization.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this organization.
+	*
+	* @return the user uuid of this organization
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _organization.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this organization.
+	*
+	* @param userUuid the user uuid of this organization
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_organization.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this organization.
+	*
+	* @return the user name of this organization
+	*/
+	public java.lang.String getUserName() {
+		return _organization.getUserName();
+	}
+
+	/**
+	* Sets the user name of this organization.
+	*
+	* @param userName the user name of this organization
+	*/
+	public void setUserName(java.lang.String userName) {
+		_organization.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this organization.
+	*
+	* @return the create date of this organization
+	*/
+	public java.util.Date getCreateDate() {
+		return _organization.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this organization.
+	*
+	* @param createDate the create date of this organization
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_organization.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this organization.
+	*
+	* @return the modified date of this organization
+	*/
+	public java.util.Date getModifiedDate() {
+		return _organization.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this organization.
+	*
+	* @param modifiedDate the modified date of this organization
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_organization.setModifiedDate(modifiedDate);
 	}
 
 	/**

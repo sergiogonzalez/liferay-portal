@@ -1631,8 +1631,13 @@ public class DataFactory {
 	protected Role newRole(String name, int type) {
 		Role role = new RoleImpl();
 
+		role.setUuid(SequentialUUID.generate());
 		role.setRoleId(_counter.get());
 		role.setCompanyId(_companyId);
+		role.setUserId(_sampleUserId);
+		role.setUserName(_SAMPLE_USER_NAME);
+		role.setCreateDate(new Date());
+		role.setModifiedDate(new Date());
 		role.setClassNameId(_classNamesMap.get(Role.class.getName()));
 		role.setClassPK(role.getRoleId());
 		role.setName(name);

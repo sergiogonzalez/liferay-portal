@@ -35,6 +35,12 @@
 		<execute selenium="click" />
 	</command>
 
+	<command name="textClickAndWait">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="clickAndWait" />
+	</command>
+
 	<command name="textClickAt">
 		<execute function="AssertTextEquals#assertText" />
 

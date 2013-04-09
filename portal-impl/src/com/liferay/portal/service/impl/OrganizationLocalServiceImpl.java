@@ -61,6 +61,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1688,6 +1689,7 @@ public class OrganizationLocalServiceImpl
 		long oldParentOrganizationId = organization.getParentOrganizationId();
 		String oldName = organization.getName();
 
+		organization.setModifiedDate(new Date());
 		organization.setParentOrganizationId(parentOrganizationId);
 
 		String treePath = organization.buildTreePath();

@@ -94,8 +94,8 @@ public class PasswordPolicyLocalServiceImpl
 			passwordPolicy.setUuid(serviceContext.getUuid());
 		}
 
-		passwordPolicy.setUserId(userId);
 		passwordPolicy.setCompanyId(user.getCompanyId());
+		passwordPolicy.setUserId(userId);
 		passwordPolicy.setUserName(user.getFullName());
 		passwordPolicy.setCreateDate(now);
 		passwordPolicy.setModifiedDate(now);

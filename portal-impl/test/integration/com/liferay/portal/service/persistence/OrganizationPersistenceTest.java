@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.impl.OrganizationModelImpl;
@@ -117,6 +118,14 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setCompanyId(ServiceTestUtil.nextLong());
 
+		newOrganization.setUserId(ServiceTestUtil.nextLong());
+
+		newOrganization.setUserName(ServiceTestUtil.randomString());
+
+		newOrganization.setCreateDate(ServiceTestUtil.nextDate());
+
+		newOrganization.setModifiedDate(ServiceTestUtil.nextDate());
+
 		newOrganization.setParentOrganizationId(ServiceTestUtil.nextLong());
 
 		newOrganization.setTreePath(ServiceTestUtil.randomString());
@@ -145,6 +154,16 @@ public class OrganizationPersistenceTest {
 			newOrganization.getOrganizationId());
 		Assert.assertEquals(existingOrganization.getCompanyId(),
 			newOrganization.getCompanyId());
+		Assert.assertEquals(existingOrganization.getUserId(),
+			newOrganization.getUserId());
+		Assert.assertEquals(existingOrganization.getUserName(),
+			newOrganization.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingOrganization.getCreateDate()),
+			Time.getShortTimestamp(newOrganization.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingOrganization.getModifiedDate()),
+			Time.getShortTimestamp(newOrganization.getModifiedDate()));
 		Assert.assertEquals(existingOrganization.getParentOrganizationId(),
 			newOrganization.getParentOrganizationId());
 		Assert.assertEquals(existingOrganization.getTreePath(),
@@ -201,7 +220,8 @@ public class OrganizationPersistenceTest {
 
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Organization_", "uuid",
-			true, "organizationId", true, "companyId", true,
+			true, "organizationId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
 			"parentOrganizationId", true, "treePath", true, "name", true,
 			"type", true, "recursable", true, "regionId", true, "countryId",
 			true, "statusId", true, "comments", true);
@@ -346,6 +366,14 @@ public class OrganizationPersistenceTest {
 		organization.setUuid(ServiceTestUtil.randomString());
 
 		organization.setCompanyId(ServiceTestUtil.nextLong());
+
+		organization.setUserId(ServiceTestUtil.nextLong());
+
+		organization.setUserName(ServiceTestUtil.randomString());
+
+		organization.setCreateDate(ServiceTestUtil.nextDate());
+
+		organization.setModifiedDate(ServiceTestUtil.nextDate());
 
 		organization.setParentOrganizationId(ServiceTestUtil.nextLong());
 

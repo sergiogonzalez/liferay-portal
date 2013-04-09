@@ -5253,6 +5253,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		organizationImpl.setUuid(organization.getUuid());
 		organizationImpl.setOrganizationId(organization.getOrganizationId());
 		organizationImpl.setCompanyId(organization.getCompanyId());
+		organizationImpl.setUserId(organization.getUserId());
+		organizationImpl.setUserName(organization.getUserName());
+		organizationImpl.setCreateDate(organization.getCreateDate());
+		organizationImpl.setModifiedDate(organization.getModifiedDate());
 		organizationImpl.setParentOrganizationId(organization.getParentOrganizationId());
 		organizationImpl.setTreePath(organization.getTreePath());
 		organizationImpl.setName(organization.getName());

@@ -4380,6 +4380,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		userGroupImpl.setUuid(userGroup.getUuid());
 		userGroupImpl.setUserGroupId(userGroup.getUserGroupId());
 		userGroupImpl.setCompanyId(userGroup.getCompanyId());
+		userGroupImpl.setUserId(userGroup.getUserId());
+		userGroupImpl.setUserName(userGroup.getUserName());
+		userGroupImpl.setCreateDate(userGroup.getCreateDate());
+		userGroupImpl.setModifiedDate(userGroup.getModifiedDate());
 		userGroupImpl.setParentUserGroupId(userGroup.getParentUserGroupId());
 		userGroupImpl.setName(userGroup.getName());
 		userGroupImpl.setDescription(userGroup.getDescription());

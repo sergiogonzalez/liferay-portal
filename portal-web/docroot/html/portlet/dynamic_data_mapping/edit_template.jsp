@@ -366,10 +366,16 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<aui:script>
 		Liferay.after(
 			'<portlet:namespace />saveTemplate',
-			function(){
+			function() {
 				submitForm(document.<portlet:namespace />fm);
 			}
 		);
+
+		function <portlet:namespace />saveAndContinueTemplate() {
+			document.<portlet:namespace />fm.<portlet:namespace />saveAndContinue.value = '1';
+
+			Liferay.fire('<portlet:namespace />saveTemplate');
+		}
 	</aui:script>
 
 	<%
@@ -377,6 +383,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	%>
 
 	<aui:button onClick="<%= taglibOnClick %>" value='<%= LanguageUtil.get(pageContext, "save") %>' />
+
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueTemplate();" %>' value='<%= LanguageUtil.get(pageContext, "save-and-continue") %>' />
 
 	<aui:button href="<%= redirect %>" type="cancel" />
 </aui:button-row>

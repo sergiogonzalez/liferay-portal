@@ -7394,6 +7394,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		roleImpl.setUuid(role.getUuid());
 		roleImpl.setRoleId(role.getRoleId());
 		roleImpl.setCompanyId(role.getCompanyId());
+		roleImpl.setUserId(role.getUserId());
+		roleImpl.setUserName(role.getUserName());
+		roleImpl.setCreateDate(role.getCreateDate());
+		roleImpl.setModifiedDate(role.getModifiedDate());
 		roleImpl.setClassNameId(role.getClassNameId());
 		roleImpl.setClassPK(role.getClassPK());
 		roleImpl.setName(role.getName());

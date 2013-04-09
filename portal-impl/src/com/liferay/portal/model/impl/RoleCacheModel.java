@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Role in entity cache.
  *
@@ -34,7 +36,7 @@ import java.io.ObjectOutput;
 public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -42,6 +44,14 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 		sb.append(roleId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -73,6 +83,29 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 
 		roleImpl.setRoleId(roleId);
 		roleImpl.setCompanyId(companyId);
+		roleImpl.setUserId(userId);
+
+		if (userName == null) {
+			roleImpl.setUserName(StringPool.BLANK);
+		}
+		else {
+			roleImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			roleImpl.setCreateDate(null);
+		}
+		else {
+			roleImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			roleImpl.setModifiedDate(null);
+		}
+		else {
+			roleImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		roleImpl.setClassNameId(classNameId);
 		roleImpl.setClassPK(classPK);
 
@@ -115,6 +148,10 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 		uuid = objectInput.readUTF();
 		roleId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -135,6 +172,17 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 
 		objectOutput.writeLong(roleId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 
@@ -172,6 +220,10 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 	public String uuid;
 	public long roleId;
 	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
 	public String name;
