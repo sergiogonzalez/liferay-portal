@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
 import com.liferay.portal.kernel.nio.intraband.IntraBandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.RecordCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.RecordDatagramReceiveHandler;
+import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.AdviseWith;
@@ -33,6 +34,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channel;
 import java.nio.channels.GatheringByteChannel;
+import java.nio.channels.Pipe.SinkChannel;
+import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.Pipe;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.channels.SelectableChannel;
@@ -46,6 +49,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -636,6 +640,307 @@ public class SelectorIntraBandTest {
 			peerSocketChannels[0].close();
 			peerSocketChannels[1].close();
 		}
+	}
+
+	@Test
+	public void testRegisterChannelReadWrite() throws Exception {
+
+		// Scattering byte channel is null
+
+		try {
+			_selectorIntraBand.registerChannel(null, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Scattering byte channel is null", npe.getMessage());
+		}
+
+		// Gathering byte channel is null
+
+		try {
+			_selectorIntraBand.registerChannel(
+				IntraBandTestUtil.<ScatteringByteChannel>createProxy(
+					ScatteringByteChannel.class), null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Gathering byte channel is null", npe.getMessage());
+		}
+
+		// Scattering byte channel is not of type SelectableChannel
+
+		try {
+			_selectorIntraBand.registerChannel(
+				IntraBandTestUtil.<ScatteringByteChannel>createProxy(
+					ScatteringByteChannel.class),
+				IntraBandTestUtil.<GatheringByteChannel>createProxy(
+					GatheringByteChannel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Scattering byte channel is not of type SelectableChannel",
+				iae.getMessage());
+		}
+
+		// Gathering byte channel is not of type SelectableChannel
+
+		try {
+			_selectorIntraBand.registerChannel(
+				new MockDuplexSelectableChannel(false, false),
+				IntraBandTestUtil.<GatheringByteChannel>createProxy(
+					GatheringByteChannel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Gathering byte channel is not of type SelectableChannel",
+				iae.getMessage());
+		}
+
+		// Scattering byte channel is not valid for reading
+
+		try {
+			_selectorIntraBand.registerChannel(
+				new MockDuplexSelectableChannel(false, true),
+				new MockDuplexSelectableChannel(true, true));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Scattering byte channel is not valid for reading",
+				iae.getMessage());
+		}
+
+		// Gathering byte channel is not valid for writing
+
+		try {
+			_selectorIntraBand.registerChannel(
+				new MockDuplexSelectableChannel(true, true),
+				new MockDuplexSelectableChannel(true, false));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Gathering byte channel is not valid for writing",
+				iae.getMessage());
+		}
+
+		// Interruptted on register
+
+		Pipe pipe = Pipe.open();
+
+		SourceChannel sourceChannel = pipe.source();
+		SinkChannel sinkChannel = pipe.sink();
+
+		final Thread mainThread = Thread.currentThread();
+
+		Thread wakeUpThread = new Thread(
+			new WakeUpRunnable(_selectorIntraBand));
+
+		Thread interruptThread = new Thread() {
+
+			@Override
+			public void run() {
+				while (mainThread.getState() != Thread.State.WAITING);
+
+				mainThread.interrupt();
+			}
+
+		};
+
+		wakeUpThread.start();
+
+		Selector selector = _selectorIntraBand.selector;
+
+		synchronized (selector) {
+			wakeUpThread.interrupt();
+			wakeUpThread.join();
+
+			interruptThread.start();
+
+			try {
+				_selectorIntraBand.registerChannel(sourceChannel, sinkChannel);
+
+				Assert.fail();
+			}
+			catch (IOException ioe) {
+				Throwable cause = ioe.getCause();
+
+				Assert.assertTrue(cause instanceof InterruptedException);
+			}
+
+			interruptThread.join();
+		}
+
+		// Normal register
+
+		SelectionKeyRegistrationReference selectionKeyRegistrationReference =
+			(SelectionKeyRegistrationReference)
+				_selectorIntraBand.registerChannel(sourceChannel, sinkChannel);
+
+		Assert.assertNotNull(selectionKeyRegistrationReference);
+
+		SelectionKey readSelectionKey =
+			selectionKeyRegistrationReference.readSelectionKey;
+
+		Assert.assertTrue(readSelectionKey.isValid());
+		Assert.assertEquals(
+			SelectionKey.OP_READ, readSelectionKey.interestOps());
+		Assert.assertNotNull(readSelectionKey.attachment());
+
+		SelectionKey writeSelectionKey =
+			selectionKeyRegistrationReference.writeSelectionKey;
+
+		Assert.assertTrue(writeSelectionKey.isValid());
+		Assert.assertEquals(
+			SelectionKey.OP_WRITE, writeSelectionKey.interestOps());
+		Assert.assertNotNull(writeSelectionKey.attachment());
+		Assert.assertSame(
+			readSelectionKey.attachment(), writeSelectionKey.attachment());
+
+		unregisterChannels(selectionKeyRegistrationReference);
+
+		// Register after close
+
+		_selectorIntraBand.close();
+
+		try {
+			_selectorIntraBand.registerChannel(sourceChannel, sinkChannel);
+
+			Assert.fail();
+		}
+		catch (ClosedIntraBandException cibe) {
+		}
+
+		sourceChannel.close();
+		sinkChannel.close();
+	}
+
+	@AdviseWith(adviceClasses = {Jdk14LogImplAdvice.class})
+	@Test
+	public void testSendDatagramWithCallback() throws Exception {
+
+		// Submitted callback
+
+		Pipe readPipe = Pipe.open();
+		Pipe writePipe = Pipe.open();
+
+		GatheringByteChannel gatheringByteChannel = writePipe.sink();
+		ScatteringByteChannel scatteringByteChannel = readPipe.source();
+
+		RegistrationReference registrationReference =
+			_selectorIntraBand.registerChannel(
+				writePipe.source(), readPipe.sink());
+
+		Object attachment = new Object();
+
+		RecordCompletionHandler<Object> recordCompletionHandler =
+			new RecordCompletionHandler<Object>();
+
+		_selectorIntraBand.sendDatagram(
+			registrationReference, Datagram.createRequestDatagram(_type, _data),
+			attachment, EnumSet.of(CompletionType.SUBMITTED),
+			recordCompletionHandler);
+
+		Datagram receiveDatagram = readDatagramFully(scatteringByteChannel);
+
+		recordCompletionHandler.waitUntilSubmitted();
+
+		Assert.assertSame(attachment, recordCompletionHandler.getAttachment());
+		Assert.assertEquals(_type, receiveDatagram.getType());
+
+		ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+		// Callback timeout, with log
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.WARNING);
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>();
+
+		_selectorIntraBand.sendDatagram(
+			registrationReference, Datagram.createRequestDatagram(_type, _data),
+			attachment, EnumSet.of(CompletionType.DELIVERED),
+			recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
+
+		Selector selector = _selectorIntraBand.selector;
+
+		recordCompletionHandler.waitUntilTimeouted(selector);
+
+		Assert.assertSame(attachment, recordCompletionHandler.getAttachment());
+		Assert.assertEquals(1, logRecords.size());
+
+		assertMessageStartWith(
+			logRecords.get(0), "Removed timeout response waiting datagram");
+
+		// Callback timeout, without log
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.OFF);
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>();
+
+		_selectorIntraBand.sendDatagram(
+			registrationReference, Datagram.createRequestDatagram(_type, _data),
+			attachment, EnumSet.of(CompletionType.DELIVERED),
+			recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
+
+		recordCompletionHandler.waitUntilTimeouted(selector);
+
+		Assert.assertSame(attachment, recordCompletionHandler.getAttachment());
+		Assert.assertTrue(logRecords.isEmpty());
+
+		// Callback timeout, completion handler causes NPE
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			SelectorIntraBand.class.getName(), Level.SEVERE);
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>() {
+
+			@Override
+			public void timeouted(Object attachment) {
+				super.timeouted(attachment);
+
+				throw new NullPointerException();
+			}
+
+		};
+
+		Jdk14LogImplAdvice.reset();
+
+		try {
+			_selectorIntraBand.sendDatagram(
+				registrationReference,
+				Datagram.createRequestDatagram(_type, _data), attachment,
+				EnumSet.of(CompletionType.DELIVERED), recordCompletionHandler,
+				10, TimeUnit.MILLISECONDS);
+		}
+		finally {
+			recordCompletionHandler.waitUntilTimeouted(selector);
+
+			Jdk14LogImplAdvice.waitUntilErrorCalled();
+		}
+
+		Assert.assertFalse(selector.isOpen());
+		Assert.assertEquals(1, logRecords.size());
+
+		assertMessageStartWith(
+			logRecords.get(0),
+			SelectorIntraBand.class + ".threadFactory-1 exiting exceptionally");
+
+		gatheringByteChannel.close();
+		scatteringByteChannel.close();
 	}
 
 	@Aspect

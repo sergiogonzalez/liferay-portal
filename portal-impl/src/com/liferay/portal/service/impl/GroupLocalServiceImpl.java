@@ -300,6 +300,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.create(groupId);
 
+		if (serviceContext != null) {
+			group.setUuid(serviceContext.getUuid());
+		}
+
 		group.setCompanyId(user.getCompanyId());
 		group.setCreatorUserId(userId);
 		group.setClassNameId(classNameId);
@@ -818,6 +822,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupLocalService.loadFetchGroup(companyId, name);
+	}
+
+	public Group fetchGroupByUuidandCompanyId(String uuid, long companyId)
+		throws SystemException {
+
+		return groupPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**
@@ -1692,9 +1702,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		List<Group> groups = groupPersistence.findByCompanyId(companyId);
 
 		for (Group group : groups) {
-			String treePath = group.buildTreePath();
-
-			group.setTreePath(treePath);
+			group.setTreePath(group.buildTreePath());
 
 			groupPersistence.update(group);
 		}

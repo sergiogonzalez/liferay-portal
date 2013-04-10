@@ -15,6 +15,11 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 
@@ -25,13 +30,16 @@ import java.sql.Timestamp;
 
 /**
  * @author Michael C. Han
+ * @author Shinn Lok
  */
 public class VerifyAuditedModel extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
 		for (String[] model : _MODELS) {
-			verifyModel(model[0], model[1]);
+			verifyModel(
+				model[0], model[1], model[2], model[3], model[4],
+				GetterUtil.getBoolean(model[5]));
 		}
 	}
 
@@ -57,17 +65,18 @@ public class VerifyAuditedModel extends VerifyProcess {
 				String middleName = rs.getString("middleName");
 				String lastName = rs.getString("lastName");
 
-				Object[] defaultUserArray = new Object[2];
-
-				defaultUserArray[0] = userId;
-
 				FullNameGenerator fullNameGenerator =
 					FullNameGeneratorFactory.getInstance();
 
-				defaultUserArray[1] = fullNameGenerator.getFullName(
+				String userName = fullNameGenerator.getFullName(
 					firstName, middleName, lastName);
 
-				return defaultUserArray;
+				Timestamp createDate = new Timestamp(
+					System.currentTimeMillis());
+
+				return new Object[] {
+					companyId, userId, userName, createDate, createDate
+				};
 			}
 
 			return null;
@@ -77,7 +86,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 	}
 
-	protected void verifyModel(String modelName, String pkColumnName)
+	protected Object[] getModelArray(
+			String modelName, String pkColumnName, long primKey)
 		throws Exception {
 
 		Connection con = null;
@@ -88,42 +98,192 @@ public class VerifyAuditedModel extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select " + pkColumnName + ", companyId from " +
-					modelName + " where userName is null order by companyId");
+				"select companyId, userId, createDate, modifiedDate from " +
+					modelName + " where " + pkColumnName + " = ?");
+
+			ps.setLong(1, primKey);
 
 			rs = ps.executeQuery();
 
-			Timestamp createDate = new Timestamp(System.currentTimeMillis());
+			if (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 
-			Object[] defaultUserArray = null;
+				return new Object[] {
+					companyId, userId, getUserName(userId), createDate,
+					modifiedDate
+				};
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find " + modelName + StringPool.SPACE + primKey);
+			}
+
+			return null;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected String getUserName(long userId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select firstName, middleName, lastName from User_ where " +
+					"userId = ?");
+
+			ps.setLong(1, userId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				String firstName = rs.getString("firstName");
+				String middleName = rs.getString("middleName");
+				String lastName = rs.getString("lastName");
+
+				FullNameGenerator fullNameGenerator =
+					FullNameGeneratorFactory.getInstance();
+
+				return fullNameGenerator.getFullName(
+					firstName, middleName, lastName);
+			}
+
+			return StringPool.BLANK;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void verifyModel(
+			String modelName, String pkColumnName, long primKey,
+			Object[] modelArray, boolean updateDates)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			long companyId = (Long)modelArray[0];
+
+			if (modelArray[2] == null) {
+				modelArray = getDefaultUserArray(con, companyId);
+
+				if (modelArray == null) {
+					return;
+				}
+			}
+
+			long userId = (Long)modelArray[1];
+			String userName = (String)modelArray[2];
+			Timestamp createDate = (Timestamp)modelArray[3];
+			Timestamp modifiedDate = (Timestamp)modelArray[4];
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("update ");
+			sb.append(modelName);
+			sb.append(" set companyId = ?, userId = ?, userName = ?");
+
+			if (updateDates) {
+				sb.append(", createDate = ?, modifiedDate = ?");
+			}
+
+			sb.append(" where ");
+			sb.append(pkColumnName);
+			sb.append(" = ?");
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setLong(1, companyId);
+			ps.setLong(2, userId);
+			ps.setString(3, userName);
+
+			if (updateDates) {
+				ps.setTimestamp(4, createDate);
+				ps.setTimestamp(5, modifiedDate);
+				ps.setLong(6, primKey);
+			}
+			else {
+				ps.setLong(4, primKey);
+			}
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void verifyModel(
+			String modelName, String pkColumnName, String joinByColumnName,
+			String relatedModelName, String relatedPKColumnName,
+			boolean updateDates)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("select ");
+			sb.append(pkColumnName);
+			sb.append(", companyId");
+
+			if (joinByColumnName != null) {
+				sb.append(StringPool.COMMA_AND_SPACE);
+				sb.append(joinByColumnName);
+			}
+
+			sb.append(" from ");
+			sb.append(modelName);
+			sb.append(" where userName is null order by companyId");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			Object[] modelArray = null;
 
 			long previousCompanyId = 0;
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
+				long primKey = rs.getLong(pkColumnName);
 
-				long tablePrimaryKey = rs.getLong(pkColumnName);
+				if (joinByColumnName != null) {
+					long relatedPrimKey = rs.getLong(joinByColumnName);
 
-				if ((previousCompanyId != companyId) ||
-					(defaultUserArray == null)) {
+					modelArray = getModelArray(
+						relatedModelName, relatedPKColumnName, relatedPrimKey);
+				}
+				else if (previousCompanyId != companyId) {
+					modelArray = getDefaultUserArray(con, companyId);
 
-					defaultUserArray = getDefaultUserArray(con, companyId);
+					previousCompanyId = companyId;
 				}
 
-				ps = con.prepareStatement(
-					"update " + modelName + " set userId = ?, userName = ?, " +
-						"createDate = ?, modifiedDate = ? where " +
-						pkColumnName + " = ?");
+				if (modelArray == null) {
+					continue;
+				}
 
-				ps.setLong(1, (Long)defaultUserArray[0]);
-				ps.setString(2, (String)defaultUserArray[1]);
-				ps.setTimestamp(3, createDate);
-				ps.setTimestamp(4, createDate);
-				ps.setLong(5, tablePrimaryKey);
-
-				ps.executeUpdate();
-
-				previousCompanyId = companyId;
+				verifyModel(
+					modelName, pkColumnName, primKey, modelArray, updateDates);
 			}
 		}
 		finally {
@@ -133,14 +293,47 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {
-			"Organization_", "organizationId"
+			"LayoutPrototype", "layoutPrototypeId", null, null, null, "true"
 		},
 		new String[] {
-			"Role_", "roleId"
+			"LayoutSetPrototype", "layoutSetPrototypeId", null, null, null,
+			"false"
 		},
 		new String[] {
-			"UserGroup", "userGroupId"
+			"MBDiscussion", "discussionId", "threadId", "MBThread", "threadId",
+			"true"
 		},
+		new String[] {
+			"MBThread", "threadId", "rootMessageId", "MBMessage", "messageId",
+			"true"
+		},
+		new String[] {
+			"MBThreadFlag", "threadFlagId", "threadId", "MBThread", "threadId",
+			"true"
+		},
+		new String[] {
+			"Organization_", "organizationId", null, null, null, "true"
+		},
+		new String[] {
+			"PollsChoice", "choiceId", "questionId", "PollsQuestion",
+			"questionId", "true"
+		},
+		new String[] {
+			"PollsVote", "voteId", "questionId", "PollsQuestion", "questionId",
+			"true"
+		},
+		new String[] {
+			"RepositoryEntry", "repositoryEntryId", "repositoryId",
+			"Repository", "repositoryId", "true"
+		},
+		new String[] {
+			"Role_", "roleId", null, null, null, "true"
+		},
+		new String[] {
+			"UserGroup", "userGroupId", null, null, null, "true"
+		}
 	};
+
+	private static Log _log = LogFactoryUtil.getLog(VerifyAuditedModel.class);
 
 }
