@@ -41,9 +41,11 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -82,6 +84,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -209,6 +213,20 @@ public class WikiUtil {
 	}
 
 	public static boolean getEmailPageAddedEnabled(
+			HttpServletRequest request, PortletPreferences preferences)
+		throws PortalException, SystemException {
+
+		String portletId = PortalUtil.getPortletId(request);
+
+		if (portletId.contains(PortletKeys.WIKI_DISPLAY)) {
+			preferences = PortletPreferencesFactoryUtil.getPortletPreferences(
+				request, PortletKeys.WIKI);
+		}
+
+		return getEmailPageAddedEnabled(preferences);
+	}
+
+	public static boolean getEmailPageAddedEnabled(
 		PortletPreferences preferences) {
 
 		String emailPageAddedEnabled = preferences.getValue(
@@ -266,6 +284,20 @@ public class WikiUtil {
 			return ContentUtil.get(
 				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
 		}
+	}
+
+	public static boolean getEmailPageUpdatedEnabled(
+			HttpServletRequest request, PortletPreferences preferences)
+		throws PortalException, SystemException {
+
+		String portletId = PortalUtil.getPortletId(request);
+
+		if (portletId.contains(PortletKeys.WIKI_DISPLAY)) {
+			preferences = PortletPreferencesFactoryUtil.getPortletPreferences(
+				request, PortletKeys.WIKI);
+		}
+
+		return getEmailPageUpdatedEnabled(preferences);
 	}
 
 	public static boolean getEmailPageUpdatedEnabled(
