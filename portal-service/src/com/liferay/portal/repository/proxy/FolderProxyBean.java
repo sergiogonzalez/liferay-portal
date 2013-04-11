@@ -92,6 +92,18 @@ public class FolderProxyBean
 		return _folder.getCreateDate();
 	}
 
+	public List<Long> getDescendantFolderIds()
+		throws PortalException, SystemException {
+
+		return _folder.getDescendantFolderIds();
+	}
+
+	public List<Folder> getDescendants()
+		throws PortalException, SystemException {
+
+		return _folder.getDescendants();
+	}
+
 	public String getDescription() {
 		return _folder.getDescription();
 	}

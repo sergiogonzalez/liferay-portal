@@ -51,6 +51,12 @@ public interface Folder extends RepositoryModel<Folder> {
 
 	public Date getCreateDate();
 
+	public List<Long> getDescendantFolderIds()
+		throws PortalException, SystemException;
+
+	public List<Folder> getDescendants()
+		throws PortalException, SystemException;
+
 	public String getDescription();
 
 	public long getFolderId();

@@ -896,6 +896,18 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.getAncestors();
 	}
 
+	public java.util.List<java.lang.Long> getDescendantFolderIds()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolder.getDescendantFolderIds();
+	}
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDescendants()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolder.getDescendants();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder getParentFolder()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
