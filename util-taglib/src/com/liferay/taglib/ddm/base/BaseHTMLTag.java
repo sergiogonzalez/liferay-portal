@@ -38,6 +38,14 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _classPK;
 	}
 
+	public void setFieldName(String fieldName) {
+		_fieldName = fieldName;
+	}
+
+	public java.lang.String getFieldName() {
+		return _fieldName;
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.storage.Fields getFields() {
 		return _fields;
 	}
@@ -114,6 +122,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		_classNameId = 0;
 		_classPK = 0;
+		_fieldName = null;
 		_fields = null;
 		_fieldsNamespace = null;
 		_mode = null;
@@ -136,6 +145,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "classNameId", _classNameId);
 		setNamespacedAttribute(request, "classPK", _classPK);
+		setNamespacedAttribute(request, "fieldName", _fieldName);
 		setNamespacedAttribute(request, "fields", _fields);
 		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
 		setNamespacedAttribute(request, "mode", _mode);
@@ -154,6 +164,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	private long _classNameId = 0;
 	private long _classPK = 0;
+	private java.lang.String _fieldName = null;
 	private com.liferay.portlet.dynamicdatamapping.storage.Fields _fields = null;
 	private java.lang.String _fieldsNamespace = null;
 	private java.lang.String _mode = null;
