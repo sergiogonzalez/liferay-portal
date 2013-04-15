@@ -22,6 +22,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/directory/view");
 portletURL.setParameter("tabs1", tabs1);
 
+long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+if (parentOrganizationId > 0) {
+	portletURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
+}
+
 pageContext.setAttribute("portletURL", portletURL);
 
 String portletURLString = portletURL.toString();
