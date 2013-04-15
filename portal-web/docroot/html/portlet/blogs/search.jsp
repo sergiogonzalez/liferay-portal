@@ -78,11 +78,12 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		hitURL.setParameter("struts_action", "/blogs/view_entry");
 		hitURL.setParameter("redirect", currentURL);
+
+		searchContainer.setTotal(hits.getLength());
 		%>
 
 		<liferay-ui:search-container-results
 			results="<%= SearchResultUtil.getSearchResults(hits, locale, hitURL) %>"
-			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row
