@@ -48,13 +48,29 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
-List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, folderStart, folderEnd);
-
 int total = 0;
 
-if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+if ((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) || expandFolder) {
 	total = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, parentFolderId);
 }
+
+int folderRowsPerPage = folderEnd - folderStart;
+
+if (folderStart >= total) {
+	int cur = 1;
+
+	if ((total % folderRowsPerPage) == 0) {
+		cur = (total / folderRowsPerPage);
+	}
+	else {
+		cur = (total / folderRowsPerPage) + 1;
+	}
+
+	folderStart = (cur -1) * folderRowsPerPage;
+	folderEnd = folderStart + folderRowsPerPage;
+}
+
+List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, folderStart, folderEnd);
 
 request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 
@@ -85,7 +101,7 @@ else {
 					<portlet:param name="entryStart" value="0" />
 					<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 					<portlet:param name="folderStart" value="0" />
-					<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+					<portlet:param name="folderEnd" value="<%= String.valueOf(folderRowsPerPage) %>" />
 				</liferay-portlet:renderURL>
 
 				<%
@@ -312,7 +328,7 @@ else {
 						expandURL="<%= expandViewURL.toString() %>"
 						iconImage='<%= (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) ? "folder_full_document" : "folder_empty" %>'
 						selected="<%= (curFolder.getFolderId() == folderId) %>"
-						showExpand="<%= JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId()) > 0 %>"
+						showExpand="<%= JournalFolderServiceUtil.getFoldersCount(scopeGroupId, parentFolderId) > 0 %>"
 						viewURL="<%= viewURL.toString() %>"
 					/>
 
@@ -323,6 +339,11 @@ else {
 			</c:otherwise>
 		</c:choose>
 	</ul>
+
+	<%
+	request.setAttribute("view_folders.jsp-folderStart", folderStart);
+	request.setAttribute("view_folders.jsp-folderEnd", folderEnd);
+	%>
 
 	<aui:script>
 		Liferay.fire(
