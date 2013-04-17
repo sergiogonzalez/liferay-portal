@@ -129,8 +129,8 @@ public interface SiteMembershipPolicy {
 	 *
 	 * <p>
 	 * Liferay's core services call this method before adding the users to and
-	 * removing the users from the respective site roles. If this method throws
-	 * an exception, the service foregoes making the changes.
+	 * removing the users from the respective site roles. If this method
+	 * throws an exception, the service foregoes making the changes.
 	 * </p>
 	 *
 	 * @param  addUserGroupRoles the user group roles to be added
@@ -316,7 +316,7 @@ public interface SiteMembershipPolicy {
 
 	/**
 	 * Checks the integrity of the membership policy of the site and performs
-	 * operations necessary for the site's compliance.
+	 * operations necessary for the compliance of the site and its site roles.
 	 *
 	 * @param  group the site to verify
 	 * @throws PortalException if a portal exception occurred
@@ -383,7 +383,7 @@ public interface SiteMembershipPolicy {
 
 	/**
 	 * Checks the integrity of the membership policy of the role and performs
-	 * operations necessary for the role's compliance.
+	 * operations necessary for the compliance of the site and its site roles.
 	 *
 	 * @param  role the role to verify
 	 * @throws PortalException if a portal exception occurred
@@ -394,8 +394,8 @@ public interface SiteMembershipPolicy {
 	/**
 	 * Checks the integrity of the membership policy of the role, with respect
 	 * to its expando attributes, and performs operations necessary for the
-	 * role's compliance. Liferay calls this method when adding and updating
-	 * roles.
+	 * compliance of the site and its site roles. Liferay calls this method when
+	 * adding and updating roles.
 	 *
 	 * @param  role the added or updated role to verify
 	 * @param  oldRole the old role
