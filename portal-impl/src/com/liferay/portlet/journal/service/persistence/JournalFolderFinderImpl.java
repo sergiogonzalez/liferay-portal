@@ -120,7 +120,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("SELECT * FROM ((");
 			sb.append(
 				getFoldersSQL(
 					COUNT_F_BY_G_F, groupId, queryDefinition, inlineSQLHelper));
@@ -128,7 +128,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 			sb.append(
 				getArticlesSQL(
 					COUNT_A_BY_G_F, groupId, queryDefinition, inlineSQLHelper));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+			sb.append(")) TEMP_TABLE ORDER BY title ASC");
 
 			String sql = updateSQL(sb.toString(), folderId);
 
