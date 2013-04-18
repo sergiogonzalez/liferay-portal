@@ -58,9 +58,7 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 
-int cur = folderEnd / (folderEnd - folderStart);
-
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", cur, (folderEnd - folderStart), portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", folderEnd / (folderEnd - folderStart), (folderEnd - folderStart), portletURL, null, null);
 
 searchContainer.setTotal(total);
 
@@ -334,6 +332,7 @@ else {
 
 	<%
 	request.setAttribute("view_folders.jsp-total", String.valueOf(total));
+
 	request.setAttribute("view_folders.jsp-folderEnd", searchContainer.getEnd());
 	request.setAttribute("view_folders.jsp-folderStart", searchContainer.getStart());
 	%>
