@@ -50,7 +50,7 @@ int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAU
 
 int total = 0;
 
-if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+if ((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) || expandFolder) {
 	total = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, parentFolderId);
 }
 
