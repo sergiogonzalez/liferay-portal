@@ -80,6 +80,14 @@ public class OrganizationIndexer extends BaseIndexer {
 			return;
 		}
 
+		long parentOrganizationId = GetterUtil.getLong(
+			searchContext.getAttribute("parentOrganizationId"));
+
+		if (parentOrganizationId > 0) {
+			contextQuery.addRequiredTerm(
+				"parentOrganizationId", parentOrganizationId);
+		}
+
 		List<Organization> organizationsTree = (List<Organization>)params.get(
 			"organizationsTree");
 
@@ -102,15 +110,13 @@ public class OrganizationIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		BooleanQuery fieldQuery = BooleanQueryFactoryUtil.create(searchContext);
-
-		addSearchTerm(fieldQuery, searchContext, "city", false);
-		addSearchTerm(fieldQuery, searchContext, "country", false);
-		addSearchTerm(fieldQuery, searchContext, "name", false);
-		addSearchTerm(fieldQuery, searchContext, "region", false);
-		addSearchTerm(fieldQuery, searchContext, "street", false);
-		addSearchTerm(fieldQuery, searchContext, "type", false);
-		addSearchTerm(fieldQuery, searchContext, "zip", false);
+		addSearchTerm(searchQuery, searchContext, "city", false);
+		addSearchTerm(searchQuery, searchContext, "country", false);
+		addSearchTerm(searchQuery, searchContext, "name", false);
+		addSearchTerm(searchQuery, searchContext, "region", false);
+		addSearchTerm(searchQuery, searchContext, "street", false);
+		addSearchTerm(searchQuery, searchContext, "type", false);
+		addSearchTerm(searchQuery, searchContext, "zip", false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -119,25 +125,7 @@ public class OrganizationIndexer extends BaseIndexer {
 			String expandoAttributes = (String)params.get("expandoAttributes");
 
 			if (Validator.isNotNull(expandoAttributes)) {
-				addSearchExpando(fieldQuery, searchContext, expandoAttributes);
-			}
-		}
-
-		if (fieldQuery.hasClauses()) {
-			searchQuery.add(fieldQuery, BooleanClauseOccur.MUST);
-		}
-
-		if (searchContext.getAttribute("parentOrganizationId") != null) {
-			BooleanQuery parentOrganizationQuery =
-				BooleanQueryFactoryUtil.create(searchContext);
-
-			addSearchTerm(
-				parentOrganizationQuery, searchContext, "parentOrganizationId",
-				false);
-
-			if (parentOrganizationQuery.hasClauses()) {
-				searchQuery.add(
-					parentOrganizationQuery, BooleanClauseOccur.MUST);
+				addSearchExpando(searchQuery, searchContext, expandoAttributes);
 			}
 		}
 	}
