@@ -240,6 +240,7 @@ int total = 0;
 searchContainer.setResults(results);
 
 request.setAttribute("view.jsp-total", String.valueOf(total));
+
 request.setAttribute("view_entries.jsp-entryStart", String.valueOf(searchContainer.getStart()));
 request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer.getEnd()));
 %>
