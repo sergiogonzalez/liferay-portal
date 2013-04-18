@@ -184,7 +184,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 							<%
 							for (long assetAvailableClassTypeId : assetAvailableClassTypeIds) {
-								Map<String, Map<String, String>>> classTypeFieldNames = assetRendererFactory.getClassTypeFieldNames(assetAvailableClassTypeId, locale);
+								Map<String, Map<String, String>> classTypeFieldNames = assetRendererFactory.getClassTypeFieldNames(assetAvailableClassTypeId, locale);
 
 								if (classTypeFieldNames.isEmpty()) {
 									continue;
