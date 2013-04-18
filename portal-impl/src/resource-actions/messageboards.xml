@@ -128,6 +128,7 @@
 		</portlet-ref>
 		<permissions>
 			<supports>
+				<action-key>ADD_FILE</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
@@ -135,6 +136,7 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
+				<action-key>ADD_FILE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
@@ -142,6 +144,7 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
+				<action-key>ADD_FILE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>
