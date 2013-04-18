@@ -18,6 +18,12 @@
 
 <%
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+
+long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+if (parentOrganizationId > 0) {
+	portletURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
+}
 %>
 
 <liferay-ui:search-container
@@ -33,8 +39,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-	long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
 	if (parentOrganizationId <= 0) {
 		parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
