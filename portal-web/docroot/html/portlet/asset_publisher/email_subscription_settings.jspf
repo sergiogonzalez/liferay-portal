@@ -25,11 +25,11 @@ String defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHE
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 
-String emailSubject = PrefsParamUtil.getString(preferences, request, emailParam + "Subject_" + currentLanguageId, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(preferences, request, emailParam + "Body_" + currentLanguageId, defaultEmailBody);
+String subjectParam = emailParam + "Subject_" + currentLanguageId;
+String editorParam = GetterUtil.getString((String)request.getAttribute("configuration.jsp-editorParam"), emailParam + "Body_" + currentLanguageId);
 
-String editorParam = (String)request.getAttribute("configuration.jsp-editorParam");
-String editorContent = emailBody;
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(preferences, request, editorParam, defaultEmailBody);
 %>
 
 <liferay-ui:error key="emailAssetEntryAddedBody" message="please-enter-a-valid-body" />
@@ -68,7 +68,7 @@ String editorContent = emailBody;
 
 		</aui:select>
 
-		<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailParam + "Subject_" + currentLanguageId + "--" %>' value="<%= emailSubject %>" />
+		<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam + "--" %>' value="<%= emailSubject %>" />
 
 		<aui:field-wrapper label="body">
 			<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
@@ -154,7 +154,7 @@ String editorContent = emailBody;
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
+		return "<%= UnicodeFormatter.toString(emailBody) %>";
 	}
 
 	function <portlet:namespace />updateLanguage() {

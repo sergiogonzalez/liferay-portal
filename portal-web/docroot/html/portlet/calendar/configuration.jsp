@@ -29,8 +29,8 @@ Boolean emailEventReminderEnabled = ParamUtil.getBoolean(request, "preferences--
 String emailEventReminderSubject = ParamUtil.getString(request, "preferences--emailEventReminderSubject--", CalUtil.getEmailEventReminderSubject(preferences));
 String emailEventReminderBody = ParamUtil.getString(request, "preferences--emailEventReminderBody--", CalUtil.getEmailEventReminderBody(preferences));
 
-String editorParam = "emailEventReminderBody";
-String editorContent = emailEventReminderBody;
+String subjectParam = "emailEventReminderSubject";
+String editorBodyParam = "emailEventReminderBody";
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -68,12 +68,12 @@ String editorContent = emailEventReminderBody;
 			<aui:fieldset>
 				<aui:input label="enabled" name="preferences--emailEventReminderEnabled--" type="checkbox" value="<%= emailEventReminderEnabled %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailEventReminderSubject--" type="text" value="<%= emailEventReminderSubject %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam +"--" %>' type="text" value="<%= emailEventReminderSubject %>" />
 
 				<aui:field-wrapper label="body">
 					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
 
-					<aui:input name='<%= "preferences--" + editorParam + "--" %>' type="hidden" />
+					<aui:input name='<%= "preferences--" + editorBodyParam + "--" %>' type="hidden" />
 				</aui:field-wrapper>
 			</aui:fieldset>
 
@@ -187,12 +187,12 @@ String editorContent = emailEventReminderBody;
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
+		return "<%= UnicodeFormatter.toString(emailEventReminderBody) %>";
 	}
 
 	function <portlet:namespace />saveConfiguration() {
 		<c:if test='<%= tabs2.equals("event-reminder-email") %>'>
-			document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
+			document.<portlet:namespace />fm.<portlet:namespace /><%= editorBodyParam %>.value = window.<portlet:namespace />editor.getHTML();
 		</c:if>
 
 		submitForm(document.<portlet:namespace />fm);
