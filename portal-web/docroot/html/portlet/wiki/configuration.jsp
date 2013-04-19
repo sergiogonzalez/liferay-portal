@@ -25,7 +25,7 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", WikiUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
 String emailParam = StringPool.BLANK;
-String defaultEmailSubjectPrefix = StringPool.BLANK;
+String defaultEmailSubject = StringPool.BLANK;
 String defaultEmailBody = StringPool.BLANK;
 String defaultEmailSignature = StringPool.BLANK;
 
@@ -34,7 +34,7 @@ boolean emailPageUpdatedEnabled = false;
 
 if (tabs2.equals("page-added-email")) {
 	emailParam = "emailPageAdded";
-	defaultEmailSubjectPrefix = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT_PREFIX));
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT));
 	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
 	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SIGNATURE));
 
@@ -42,18 +42,18 @@ if (tabs2.equals("page-added-email")) {
 }
 else if (tabs2.equals("page-updated-email")) {
 	emailParam = "emailPageUpdated";
-	defaultEmailSubjectPrefix= ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT_PREFIX));
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
 	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
 	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE));
 
 	emailPageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailPageUpdatedEnabled--", WikiUtil.getEmailPageUpdatedEnabled(preferences));
 }
 
-String subjectPrefixParam = emailParam + "SubjectPrefix";
+String subjectParam = emailParam + "Subject";
 String editorBodyParam = emailParam + "Body";
 String editorSignatureParam = emailParam + "Signature";
 
-String emailSubjectPrefix = PrefsParamUtil.getString(preferences, request, subjectPrefixParam, defaultEmailSubjectPrefix);
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(preferences, request, editorBodyParam, defaultEmailBody);
 String emailSignatureBody = PrefsParamUtil.getString(preferences, request, editorSignatureParam, defaultEmailSignature);
 %>
@@ -88,10 +88,10 @@ String emailSignatureBody = PrefsParamUtil.getString(preferences, request, edito
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailPageAddedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailPageAddedSignature" message="please-enter-a-valid-signature" />
-	<liferay-ui:error key="emailPageAddedSubjectPrefix" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailPageAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailPageUpdatedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailPageUpdatedSignature" message="please-enter-a-valid-signature" />
-	<liferay-ui:error key="emailPageUpdatedSubjectPrefix" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
 
 	<c:choose>
@@ -165,7 +165,7 @@ String emailSignatureBody = PrefsParamUtil.getString(preferences, request, edito
 					</c:when>
 				</c:choose>
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectPrefixParam + "--" %>' value="<%= emailSubjectPrefix %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam + "--" %>' value="<%= emailSubject %>" />
 
 				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + editorBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" />
 
