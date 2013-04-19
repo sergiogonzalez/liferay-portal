@@ -25,7 +25,7 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", MBUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
 String emailParam = StringPool.BLANK;
-String defaultEmailSubjectPrefix = StringPool.BLANK;
+String defaultEmailSubject = StringPool.BLANK;
 String defaultEmailBody = StringPool.BLANK;
 String defaultEmailSignature = StringPool.BLANK;
 
@@ -34,7 +34,7 @@ boolean emailMessageUpdatedEnabled = false;
 
 if (tabs2.equals("message-added-email")) {
 	emailParam = "emailMessageAdded";
-	defaultEmailSubjectPrefix = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT_PREFIX));
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT));
 	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY));
 	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE));
 
@@ -42,18 +42,18 @@ if (tabs2.equals("message-added-email")) {
 }
 else if (tabs2.equals("message-updated-email")) {
 	emailParam = "emailMessageUpdated";
-	defaultEmailSubjectPrefix = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT_PREFIX));
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT));
 	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY));
 	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE));
 
 	emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", MBUtil.getEmailMessageUpdatedEnabled(preferences));
 }
 
-String subjectPrefixParam = emailParam + "SubjectPrefix";
+String subjectParam = emailParam + "Subject";
 String editorBodyParam = emailParam + "Body";
 String editorSignatureParam = emailParam + "Signature";
 
-String emailSubject = PrefsParamUtil.getString(preferences, request, subjectPrefixParam, defaultEmailSubjectPrefix);
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(preferences, request, editorBodyParam, defaultEmailBody);
 String emailSignatureBody = PrefsParamUtil.getString(preferences, request, editorSignatureParam, defaultEmailSignature);
 %>
@@ -88,10 +88,10 @@ String emailSignatureBody = PrefsParamUtil.getString(preferences, request, edito
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailMessageAddedSignature" message="please-enter-a-valid-signature" />
-	<liferay-ui:error key="emailMessageAddedSubjectPrefix" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailMessageUpdatedSignature" message="please-enter-a-valid-signature" />
-	<liferay-ui:error key="emailMessageUpdatedSubjectPrefix" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
 
 	<c:choose>
@@ -208,7 +208,7 @@ String emailSignatureBody = PrefsParamUtil.getString(preferences, request, edito
 					</c:when>
 				</c:choose>
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailMessageAddedSubject--" value="<%= emailSubject %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam + "--" %>' value="<%= emailSubject %>" />
 
 				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + editorBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" warp="soft" />
 
