@@ -21,11 +21,13 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", CalUtil.getEmailFromName(preferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", CalUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", CalUtil.getEmailFromName(preferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", CalUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
-String emailEventReminderSubject = ParamUtil.getString(request, "emailEventReminderSubject", CalUtil.getEmailEventReminderSubject(preferences));
-String emailEventReminderBody = ParamUtil.getString(request, "emailEventReminderBody", CalUtil.getEmailEventReminderBody(preferences));
+Boolean emailEventReminderEnabled = ParamUtil.getBoolean(request, "preferences--emailEventReminderEnabled--", CalUtil.getEmailEventReminderEnabled(preferences));
+
+String emailEventReminderSubject = ParamUtil.getString(request, "preferences--emailEventReminderSubject--", CalUtil.getEmailEventReminderSubject(preferences));
+String emailEventReminderBody = ParamUtil.getString(request, "preferences--emailEventReminderBody--", CalUtil.getEmailEventReminderBody(preferences));
 
 String editorParam = "emailEventReminderBody";
 String editorContent = emailEventReminderBody;
@@ -64,7 +66,7 @@ String editorContent = emailEventReminderBody;
 		</c:when>
 		<c:when test='<%= tabs2.equals("event-reminder-email") %>'>
 			<aui:fieldset>
-				<aui:input label="enabled" name="preferences--emailEventReminderEnabled--" type="checkbox" value="<%= CalUtil.getEmailEventReminderEnabled(preferences) %>" />
+				<aui:input label="enabled" name="preferences--emailEventReminderEnabled--" type="checkbox" value="<%= emailEventReminderEnabled %>" />
 
 				<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailEventReminderSubject--" type="text" value="<%= emailEventReminderSubject %>" />
 
