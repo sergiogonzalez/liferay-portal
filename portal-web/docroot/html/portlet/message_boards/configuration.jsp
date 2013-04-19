@@ -21,34 +21,41 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "general");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", MBUtil.getEmailFromName(preferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", MBUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", MBUtil.getEmailFromName(preferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", MBUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
-String emailMessageAddedSubjectPrefix = ParamUtil.getString(request, "emailMessageAddedSubjectPrefix", MBUtil.getEmailMessageAddedSubjectPrefix(preferences));
-String emailMessageAddedBody = ParamUtil.getString(request, "emailMessageAddedBody", MBUtil.getEmailMessageAddedBody(preferences));
-String emailMessageAddedSignature = ParamUtil.getString(request, "emailMessageAddedSignature", MBUtil.getEmailMessageAddedSignature(preferences));
+String emailParam = StringPool.BLANK;
+String defaultEmailSubjectPrefix = StringPool.BLANK;
+String defaultEmailBody = StringPool.BLANK;
+String defaultEmailSignature = StringPool.BLANK;
 
-String emailMessageUpdatedSubjectPrefix = ParamUtil.getString(request, "emailMessageUpdatedSubjectPrefix", MBUtil.getEmailMessageUpdatedSubjectPrefix(preferences));
-String emailMessageUpdatedBody = ParamUtil.getString(request, "emailMessageUpdatedBody", MBUtil.getEmailMessageUpdatedBody(preferences));
-String emailMessageUpdatedSignature = ParamUtil.getString(request, "emailMessageUpdatedSignature", MBUtil.getEmailMessageUpdatedSignature(preferences));
-
-String bodyEditorParam = StringPool.BLANK;
-String bodyEditorContent = StringPool.BLANK;
-String signatureEditorParam = StringPool.BLANK;
-String signatureEditorContent = StringPool.BLANK;
+boolean emailMessageAddedEnabled = false;
+boolean emailMessageUpdatedEnabled = false;
 
 if (tabs2.equals("message-added-email")) {
-	bodyEditorParam = "emailMessageAddedBody";
-	bodyEditorContent = emailMessageAddedBody;
-	signatureEditorParam = "emailMessageAddedSignature";
-	signatureEditorContent = emailMessageAddedSignature;
+	emailParam = "emailMessageAdded";
+	defaultEmailSubjectPrefix = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT_PREFIX));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY));
+	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE));
+
+	emailMessageAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", MBUtil.getEmailMessageAddedEnabled(preferences));
 }
 else if (tabs2.equals("message-updated-email")) {
-	bodyEditorParam = "emailMessageUpdatedBody";
-	bodyEditorContent = emailMessageUpdatedBody;
-	signatureEditorParam = "emailMessageUpdatedSignature";
-	signatureEditorContent = emailMessageUpdatedSignature;
+	emailParam = "emailMessageUpdated";
+	defaultEmailSubjectPrefix = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT_PREFIX));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY));
+	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE));
+
+	emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", MBUtil.getEmailMessageUpdatedEnabled(preferences));
 }
+
+String subjectPrefixParam = emailParam + "SubjectPrefix";
+String editorBodyParam = emailParam + "Body";
+String editorSignatureParam = emailParam + "Signature";
+
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectPrefixParam, defaultEmailSubjectPrefix);
+String emailBody = PrefsParamUtil.getString(preferences, request, editorBodyParam, defaultEmailBody);
+String emailSignatureBody = PrefsParamUtil.getString(preferences, request, editorSignatureParam, defaultEmailSignature);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -194,25 +201,18 @@ else if (tabs2.equals("message-updated-email")) {
 			<aui:fieldset>
 				<c:choose>
 					<c:when test='<%= tabs2.equals("message-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailMessageAddedEnabled--" type="checkbox" value="<%= MBUtil.getEmailMessageAddedEnabled(preferences) %>" />
+						<aui:input label="enabled" name="preferences--emailMessageAddedEnabled--" type="checkbox" value="<%= emailMessageAddedEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("message-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailMessageUpdatedEnabled--" type="checkbox" value="<%= MBUtil.getEmailMessageUpdatedEnabled(preferences) %>" />
+						<aui:input label="enabled" name="preferences--emailMessageUpdatedEnabled--" type="checkbox" value="<%= emailMessageUpdatedEnabled %>" />
 					</c:when>
 				</c:choose>
 
-				<c:choose>
-					<c:when test='<%= tabs2.equals("message-added-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject-prefix" name="preferences--emailMessageAddedSubjectPrefix--" value="<%= emailMessageAddedSubjectPrefix %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("message-updated-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject-prefix" name="preferences--emailMessageUpdatedSubjectPrefix--" value="<%= emailMessageUpdatedSubjectPrefix %>" />
-					</c:when>
-				</c:choose>
+				<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailMessageAddedSubject--" value="<%= emailSubject %>" />
 
-				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + bodyEditorParam + "--" %>' type="textarea" value="<%= bodyEditorContent %>" warp="soft" />
+				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + editorBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" warp="soft" />
 
-				<aui:input cssClass="lfr-textarea-container" label="signature" name='<%= "preferences--" + signatureEditorParam + "--" %>' type="textarea" value="<%= signatureEditorContent %>" wrap="soft" />
+				<aui:input cssClass="lfr-textarea-container" label="signature" name='<%= "preferences--" + editorSignatureParam + "--" %>' type="textarea" value="<%= emailSignatureBody %>" wrap="soft" />
 			</aui:fieldset>
 
 			<div class="definition-of-terms">
