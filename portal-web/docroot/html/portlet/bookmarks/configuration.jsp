@@ -21,31 +21,38 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", BookmarksUtil.getEmailFromName(preferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", BookmarksUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", BookmarksUtil.getEmailFromName(preferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", BookmarksUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
 String emailParam = StringPool.BLANK;
 String defaultEmailSubject = StringPool.BLANK;
 String defaultEmailBody = StringPool.BLANK;
 
+boolean emailEntryAddedEnabled = false;
+boolean emailEntryUpdatedEnabled = false;
+
 if (tabs2.equals("entry-added-email")) {
 	emailParam = "emailEntryAdded";
 	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT));
 	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY));
+
+	emailEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailEntryAddedEnabled--", BookmarksUtil.getEmailEntryAddedEnabled(preferences));
 }
 else if (tabs2.equals("entry-updated-email")) {
 	emailParam = "emailEntryUpdated";
 	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT));
 	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY));
+
+	emailEntryUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailEntryUpdatedEnabled--", BookmarksUtil.getEmailEntryUpdatedEnabled(preferences));
 }
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 
-String emailSubject = PrefsParamUtil.getString(preferences, request, emailParam + "Subject_" + currentLanguageId, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(preferences, request, emailParam + "Body_" + currentLanguageId, defaultEmailBody);
-
+String subjectParam = emailParam + "Subject_" + currentLanguageId;
 String editorParam = emailParam + "Body_" + currentLanguageId;
-String editorContent = emailBody;
+
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(preferences, request, editorParam, defaultEmailBody);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -88,10 +95,10 @@ String editorContent = emailBody;
 			<aui:fieldset>
 				<c:choose>
 					<c:when test='<%= tabs2.equals("entry-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailEntryAddedEnabled--" type="checkbox" value="<%= BookmarksUtil.getEmailEntryAddedEnabled(preferences) %>" />
+						<aui:input label="enabled" name="preferences--emailEntryAddedEnabled--" type="checkbox" value="<%= emailEntryAddedEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("entry-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailEntryUpdatedEnabled--" type="checkbox" value="<%= BookmarksUtil.getEmailEntryUpdatedEnabled(preferences) %>" />
+						<aui:input label="enabled" name="preferences--emailEntryUpdatedEnabled--" type="checkbox" value="<%= emailEntryUpdatedEnabled %>" />
 					</c:when>
 				</c:choose>
 
@@ -118,7 +125,7 @@ String editorContent = emailBody;
 
 				</aui:select>
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailParam + "Subject_" + currentLanguageId + "--" %>' value="<%= emailSubject %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + editorParam + "--" %>' value="<%= emailSubject %>" />
 
 				<aui:field-wrapper label="body">
 					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
@@ -200,7 +207,7 @@ String editorContent = emailBody;
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
+		return "<%= UnicodeFormatter.toString(emailBody) %>";
 	}
 
 	function <portlet:namespace />updateLanguage() {

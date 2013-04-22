@@ -25,54 +25,70 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", JournalUtil.getEmailFromName(portletSetup, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", JournalUtil.getEmailFromAddress(portletSetup, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", JournalUtil.getEmailFromName(portletSetup, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", JournalUtil.getEmailFromAddress(portletSetup, company.getCompanyId()));
 
-String emailArticleAddedSubject = ParamUtil.getString(request, "emailArticleAddedSubject", JournalUtil.getEmailArticleAddedSubject(portletSetup));
-String emailArticleAddedBody = ParamUtil.getString(request, "emailArticleAddedBody", JournalUtil.getEmailArticleAddedBody(portletSetup));
+String emailParam = StringPool.BLANK;
+String defaultEmailSubject = StringPool.BLANK;
+String defaultEmailBody = StringPool.BLANK;
 
-String emailArticleApprovalDeniedSubject = ParamUtil.getString(request, "emailArticleApprovalDeniedSubject", JournalUtil.getEmailArticleApprovalDeniedSubject(portletSetup));
-String emailArticleApprovalDeniedBody = ParamUtil.getString(request, "emailArticleApprovalDeniedBody", JournalUtil.getEmailArticleApprovalDeniedBody(portletSetup));
-
-String emailArticleApprovalGrantedSubject = ParamUtil.getString(request, "emailArticleApprovalGrantedSubject", JournalUtil.getEmailArticleApprovalGrantedSubject(portletSetup));
-String emailArticleApprovalGrantedBody = ParamUtil.getString(request, "emailArticleApprovalGrantedBody", JournalUtil.getEmailArticleApprovalGrantedBody(portletSetup));
-
-String emailArticleApprovalRequestedSubject = ParamUtil.getString(request, "emailArticleApprovalRequestedSubject", JournalUtil.getEmailArticleApprovalRequestedSubject(portletSetup));
-String emailArticleApprovalRequestedBody = ParamUtil.getString(request, "emailArticleApprovalRequestedBody", JournalUtil.getEmailArticleApprovalRequestedBody(portletSetup));
-
-String emailArticleReviewSubject = ParamUtil.getString(request, "emailArticleReviewSubject", JournalUtil.getEmailArticleReviewSubject(portletSetup));
-String emailArticleReviewBody = ParamUtil.getString(request, "emailArticleReviewBody", JournalUtil.getEmailArticleReviewBody(portletSetup));
-
-String emailArticleUpdatedSubject = ParamUtil.getString(request, "emailArticleUpdatedSubject", JournalUtil.getEmailArticleUpdatedSubject(portletSetup));
-String emailArticleUpdatedBody = ParamUtil.getString(request, "emailArticleUpdatedBody", JournalUtil.getEmailArticleUpdatedBody(portletSetup));
-
-String editorParam = StringPool.BLANK;
-String editorContent = StringPool.BLANK;
+boolean emailArticleAddedEnabled = false;
+boolean emailArticleApprovalDeniedEnabled = false;
+boolean emailArticleApprovalGrantedEnabled = false;
+boolean emailArticleApprovalRequestedEnabled = false;
+boolean emailArticleReviewEnabled = false;
+boolean emailArticleUpdatedEnabled = false;
 
 if (tabs2.equals("web-content-added-email")) {
-	editorParam = "emailArticleAddedBody";
-	editorContent = emailArticleAddedBody;
+	emailParam = "emailArticleAddedBody";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_ADDED_BODY));
+
+	emailArticleAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleAddedEnabled--", JournalUtil.getEmailArticleAddedEnabled(portletSetup));
 }
 else if (tabs2.equals("web-content-approval-denied-email")) {
-	editorParam = "emailArticleApprovalDeniedBody";
-	editorContent = emailArticleApprovalDeniedBody;
+	emailParam = "emailArticleApprovalDeniedBody";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY));
+
+	emailArticleApprovalDeniedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalDeniedEnabled--", JournalUtil.getEmailArticleApprovalDeniedEnabled(portletSetup));
 }
 else if (tabs2.equals("web-content-approval-granted-email")) {
-	editorParam = "emailArticleApprovalGrantedBody";
-	editorContent = emailArticleApprovalGrantedBody;
+	emailParam = "emailArticleApprovalGrantedBody";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY));
+
+	 emailArticleApprovalGrantedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalGrantedEnabled--", JournalUtil.getEmailArticleApprovalGrantedEnabled(portletSetup));
 }
 else if (tabs2.equals("web-content-approval-requested-email")) {
-	editorParam = "emailArticleApprovalRequestedBody";
-	editorContent = emailArticleApprovalRequestedBody;
+	emailParam = "emailArticleApprovalRequestedBody";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY));
+
+	emailArticleApprovalRequestedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalRequestedEnabled--", JournalUtil.getEmailArticleApprovalRequestedEnabled(portletSetup));
 }
 else if (tabs2.equals("web-content-review-email")) {
-	editorParam = "emailArticleReviewBody";
-	editorContent = emailArticleReviewBody;
+	emailParam = "emailArticleReviewBody";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY));
+
+	emailArticleReviewEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleReviewEnabled--", JournalUtil.getEmailArticleReviewEnabled(portletSetup));
 }
 else if (tabs2.equals("web-content-updated-email")) {
-	editorParam = "emailArticleUpdatedBody";
-	editorContent = emailArticleUpdatedBody;
+	emailParam = "emailArticleUpdatedBody";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY));
+
+	emailArticleUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleUpdatedEnabled--", JournalUtil.getEmailArticleUpdatedEnabled(portletSetup));
 }
+
+String currentLanguageId = LanguageUtil.getLanguageId(request);
+
+String subjectParam = emailParam + "Subject_" + currentLanguageId;
+String editorParam = emailParam + "Body_" + currentLanguageId;
+
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(preferences, request, editorParam, defaultEmailBody);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -128,45 +144,26 @@ else if (tabs2.equals("web-content-updated-email")) {
 			<aui:fieldset>
 				<c:choose>
 					<c:when test='<%= tabs2.equals("web-content-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailArticleAddedEnabled--" type="checkbox" value="<%= JournalUtil.getEmailArticleAddedEnabled(portletSetup) %>" />
+						<aui:input label="enabled" name="preferences--emailArticleAddedEnabled--" type="checkbox" value="<%= emailArticleAddedEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("web-content-approval-denied-email") %>'>
-						<aui:input label="enabled" name="preferences--emailArticleApprovalDeniedEnabled--" type="checkbox" value="<%= JournalUtil.getEmailArticleApprovalDeniedEnabled(portletSetup) %>" />
+						<aui:input label="enabled" name="preferences--emailArticleApprovalDeniedEnabled--" type="checkbox" value="<%= emailArticleApprovalDeniedEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("web-content-approval-granted-email") %>'>
-						<aui:input label="enabled" name="preferences--emailArticleApprovalGrantedEnabled--" type="checkbox" value="<%= JournalUtil.getEmailArticleApprovalGrantedEnabled(portletSetup) %>" />
+						<aui:input label="enabled" name="preferences--emailArticleApprovalGrantedEnabled--" type="checkbox" value="<%= emailArticleApprovalGrantedEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("web-content-approval-requested-email") %>'>
-						<aui:input label="enabled" name="preferences--emailArticleApprovalRequestedEnabled--" type="checkbox" value="<%= JournalUtil.getEmailArticleApprovalRequestedEnabled(portletSetup) %>" />
+						<aui:input label="enabled" name="preferences--emailArticleApprovalRequestedEnabled--" type="checkbox" value="<%= emailArticleApprovalRequestedEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("web-content-review-email") %>'>
-						<aui:input label="enabled" name="preferences--emailArticleReviewEnabled--" type="checkbox" value="<%= JournalUtil.getEmailArticleReviewEnabled(portletSetup) %>" />
+						<aui:input label="enabled" name="preferences--emailArticleReviewEnabled--" type="checkbox" value="<%= emailArticleReviewEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("web-content-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailArticleUpdatedEnabled--" type="checkbox" value="<%= JournalUtil.getEmailArticleUpdatedEnabled(portletSetup) %>" />
+						<aui:input label="enabled" name="preferences--emailArticleUpdatedEnabled--" type="checkbox" value="<%= emailArticleUpdatedEnabled %>" />
 					</c:when>
 				</c:choose>
 
-				<c:choose>
-					<c:when test='<%= tabs2.equals("web-content-added-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailArticleAddedSubject--" type="text" value="<%= emailArticleAddedSubject %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("web-content-approval-denied-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailArticleApprovalDeniedSubject--" type="text" value="<%= emailArticleApprovalDeniedSubject %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("web-content-approval-granted-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailArticleApprovalGrantedSubject--" type="text" value="<%= emailArticleApprovalGrantedSubject %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("web-content-approval-requested-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailArticleApprovalRequestedSubject--" type="text" value="<%= emailArticleApprovalRequestedSubject %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("web-content-review-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailArticleReviewSubject--" type="text" value="<%= emailArticleReviewSubject %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("web-content-updated-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailArticleUpdatedSubject--" type="text" value="<%= emailArticleUpdatedSubject %>" />
-					</c:when>
-				</c:choose>
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam + "--" %>' value="<%= emailSubject %>" />
 
 				<aui:field-wrapper label="body">
 					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
@@ -255,7 +252,7 @@ else if (tabs2.equals("web-content-updated-email")) {
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
+		return "<%= UnicodeFormatter.toString(emailBody) %>";
 	}
 
 	function <portlet:namespace />saveConfiguration() {

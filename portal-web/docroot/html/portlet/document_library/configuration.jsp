@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -27,31 +29,38 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", DLUtil.getEmailFromName(preferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", DLUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", DLUtil.getEmailFromName(preferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", DLUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
 String emailParam = StringPool.BLANK;
 String defaultEmailSubject = StringPool.BLANK;
 String defaultEmailBody = StringPool.BLANK;
 
+boolean emailFileEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailFileEntryAddedEnabled--", DLUtil.getEmailFileEntryAddedEnabled(preferences));
+boolean emailFileEntryUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailFileEntryUpdatedEnabled--", DLUtil.getEmailFileEntryUpdatedEnabled(preferences));
+
 if (tabs2.equals("document-added-email")) {
 	emailParam = "emailFileEntryAdded";
 	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT));
 	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY));
+
+	emailFileEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailFileEntryAddedEnabled--", DLUtil.getEmailFileEntryAddedEnabled(preferences));
 }
 else if (tabs2.equals("document-updated-email")) {
 	emailParam = "emailFileEntryUpdated";
 	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT));
 	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_BODY));
+
+	emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", DLUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 }
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 
-String emailSubject = PrefsParamUtil.getString(preferences, request, emailParam + "Subject_" + currentLanguageId, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(preferences, request, emailParam + "Body_" + currentLanguageId, defaultEmailBody);
-
+String subjectParam = emailParam + "Subject_" + currentLanguageId;
 String editorParam = emailParam + "Body_" + currentLanguageId;
-String editorContent = emailBody;
+
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(preferences, request, editorParam, defaultEmailBody);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -323,10 +332,10 @@ String editorContent = emailBody;
 			<aui:fieldset>
 				<c:choose>
 					<c:when test='<%= tabs2.equals("document-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailFileEntryAddedEnabled--" type="checkbox" value="<%= DLUtil.getEmailFileEntryAddedEnabled(preferences) %>" />
+						<aui:input label="enabled" name="preferences--emailFileEntryAddedEnabled--" type="checkbox" value="<%= emailFileEntryAddedEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("document-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailFileEntryUpdatedEnabled--" type="checkbox" value="<%= DLUtil.getEmailFileEntryUpdatedEnabled(preferences) %>" />
+						<aui:input label="enabled" name="preferences--emailFileEntryUpdatedEnabled--" type="checkbox" value="<%= emailFileEntryUpdatedEnabled %>" />
 					</c:when>
 				</c:choose>
 
@@ -353,7 +362,7 @@ String editorContent = emailBody;
 
 				</aui:select>
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailParam + "Subject_" + currentLanguageId + "--" %>' value="<%= emailSubject %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam + "--" %>' value="<%= emailSubject %>" />
 
 				<aui:field-wrapper label="body">
 					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
@@ -467,7 +476,7 @@ String editorContent = emailBody;
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
+		return "<%= UnicodeFormatter.toString(emailBody) %>";
 	}
 
 	function <portlet:namespace />updateLanguage() {
