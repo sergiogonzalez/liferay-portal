@@ -80,6 +80,14 @@ public class OrganizationIndexer extends BaseIndexer {
 			return;
 		}
 
+		long parentOrganizationId = GetterUtil.getLong(
+			searchContext.getAttribute("parentOrganizationId"));
+
+		if (parentOrganizationId > 0) {
+			contextQuery.addRequiredTerm(
+				"parentOrganizationId", parentOrganizationId);
+		}
+
 		List<Organization> organizationsTree = (List<Organization>)params.get(
 			"organizationsTree");
 
@@ -105,8 +113,6 @@ public class OrganizationIndexer extends BaseIndexer {
 		addSearchTerm(searchQuery, searchContext, "city", false);
 		addSearchTerm(searchQuery, searchContext, "country", false);
 		addSearchTerm(searchQuery, searchContext, "name", false);
-		addSearchTerm(
-			searchQuery, searchContext, "parentOrganizationId", false);
 		addSearchTerm(searchQuery, searchContext, "region", false);
 		addSearchTerm(searchQuery, searchContext, "street", false);
 		addSearchTerm(searchQuery, searchContext, "type", false);
