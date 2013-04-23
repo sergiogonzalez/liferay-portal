@@ -312,10 +312,6 @@ int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(Port
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					</portlet:renderURL>
 
-					<%
-					String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, "select-document-type") + "', uri: '" + editFileEntryURL.toString() + "'});";
-					%>
-
 					<liferay-ui:icon
 						cssClass="aui-helper-hidden upload-multiple-documents"
 						image="../document_library/add_multiple_documents"
@@ -332,7 +328,7 @@ int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(Port
 					</liferay-portlet:renderURL>
 
 					<%
-					taglibEditURL = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
+					String taglibEditURL = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
 					%>
 
 					<liferay-ui:icon
