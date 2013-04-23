@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 
 <project name="cobertura-agent" basedir="." default="deploy">
-	<property name="project.dir" value="../.." />
-
 	<import file="../../build-common-java.xml" />
 
 	<property name="deploy.dir" value="." />

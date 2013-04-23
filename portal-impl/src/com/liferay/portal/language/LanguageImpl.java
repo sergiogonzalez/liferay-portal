@@ -70,6 +70,12 @@ import javax.servlet.jsp.PageContext;
 @DoPrivileged
 public class LanguageImpl implements Language {
 
+	public String format(
+		Locale locale, String pattern, List<Object> arguments) {
+
+		return format(locale, pattern, arguments.toArray(), true);
+	}
+
 	public String format(Locale locale, String pattern, Object argument) {
 		return format(locale, pattern, new Object[] {argument}, true);
 	}
@@ -599,10 +605,10 @@ public class LanguageImpl implements Language {
 			try {
 				localesArray = PrefsPropsUtil.getStringArray(
 					companyId, PropsKeys.LOCALES, StringPool.COMMA,
-					PropsValues.LOCALES);
+					PropsValues.LOCALES_ENABLED);
 			}
 			catch (SystemException se) {
-				localesArray = PropsValues.LOCALES;
+				localesArray = PropsValues.LOCALES_ENABLED;
 			}
 		}
 

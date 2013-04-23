@@ -203,7 +203,19 @@ if (layout.isTypeControlPanel()) {
 			<c:choose>
 				<c:when test="<%= Validator.isNull(errorMessageKey) %>">
 					<aui:fieldset>
-						<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
+						<c:choose>
+							<c:when test='<%= tabs2.equals("export") %>'>
+								<%@ include file="/html/portlet/portlet_configuration/export_options.jspf" %>
+							</c:when>
+							<c:when test='<%= tabs2.equals("import") %>'>
+								<%@ include file="/html/portlet/portlet_configuration/import_options.jspf" %>
+							</c:when>
+							<c:when test='<%= tabs2.equals("staging") %>'>
+								<c:if test="<%= (themeDisplay.getURLPublishToLive() != null) || controlPanel %>">
+									<%@ include file="/html/portlet/portlet_configuration/staging_options.jspf" %>
+								</c:if>
+							</c:when>
+						</c:choose>
 
 						<aui:button-row>
 							<c:choose>

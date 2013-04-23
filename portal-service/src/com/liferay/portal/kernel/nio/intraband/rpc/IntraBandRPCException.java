@@ -12,21 +12,26 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingorganization.blogs;
-
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
+package com.liferay.portal.kernel.nio.intraband.rpc;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class OU_LogoutTest extends BaseTestCase {
-	public void testOU_Logout() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.click(RuntimeVariables.replace("link=Sign Out"));
-		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("//input[@id='_58_login']");
+public class IntraBandRPCException extends Exception {
+
+	public IntraBandRPCException() {
 	}
+
+	public IntraBandRPCException(String message) {
+		super(message);
+	}
+
+	public IntraBandRPCException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public IntraBandRPCException(Throwable cause) {
+		super(cause);
+	}
+
 }

@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 
 <project name="portal-maven" default="zip-maven" xmlns:antelope="antlib:ise.antelope.tasks">
-	<property name="project.dir" value="." />
-
 	<import file="build-common.xml" />
 
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="lib.classpath" name="xmltask" />

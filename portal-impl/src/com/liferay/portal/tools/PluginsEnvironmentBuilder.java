@@ -57,36 +57,37 @@ public class PluginsEnvironmentBuilder {
 	}
 
 	public PluginsEnvironmentBuilder(File dir) throws Exception {
-		DirectoryScanner ds = new DirectoryScanner();
+		DirectoryScanner directoryScanner = new DirectoryScanner();
 
-		ds.setBasedir(dir);
-		ds.setIncludes(new String[] {"**\\liferay-plugin-package.properties"});
+		directoryScanner.setBasedir(dir);
+		directoryScanner.setIncludes(
+			new String[] {"**\\liferay-plugin-package.properties"});
 
-		ds.scan();
+		directoryScanner.scan();
 
 		String dirName = dir.getCanonicalPath();
 
-		for (String fileName : ds.getIncludedFiles()) {
+		for (String fileName : directoryScanner.getIncludedFiles()) {
 			setupWarProject(dirName, fileName);
 		}
 
-		ds = new DirectoryScanner();
+		directoryScanner = new DirectoryScanner();
 
-		ds.setBasedir(dir);
-		ds.setIncludes(new String[] {"**\\build.xml"});
+		directoryScanner.setBasedir(dir);
+		directoryScanner.setIncludes(new String[] {"**\\build.xml"});
 
-		ds.scan();
+		directoryScanner.scan();
 
-		for (String fileName : ds.getIncludedFiles()) {
+		for (String fileName : directoryScanner.getIncludedFiles()) {
 			String content = _fileUtil.read(dirName + "/" + fileName);
 
-			if (!content.contains(
+			if (content.contains(
+					"<import file=\"../../build-common-osgi-plugin.xml\" />") ||
+				content.contains(
 					"<import file=\"../build-common-shared.xml\" />")) {
 
-				continue;
+				setupJarProject(dirName, fileName);
 			}
-
-			setupJarProject(dirName, fileName);
 		}
 	}
 
@@ -117,6 +118,40 @@ public class PluginsEnvironmentBuilder {
 		}
 
 		sb.append("\t\t</attributes>\n\t</classpathentry>\n");
+	}
+
+	protected void addOsgiClasspathEntries(StringBundler sb, String projectDir)
+		throws Exception {
+
+		String content = _fileUtil.read(projectDir + "/build.xml");
+
+		int index = content.indexOf("plugin-lib.classpath");
+
+		if (index == -1) {
+			return;
+		}
+
+		int x = content.indexOf("includes=\"", index);
+
+		x = content.indexOf("\"", x);
+
+		int y = content.indexOf("\"", x + 1);
+
+		if ((x == -1) || (y == -1)) {
+			return;
+		}
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(projectDir + "/../../lib/");
+		directoryScanner.setIncludes(
+			StringUtil.split(content.substring(x + 1, y)));
+
+		directoryScanner.scan();
+
+		for (String file : directoryScanner.getIncludedFiles()) {
+			addClasspathEntry(sb, "../../lib/" + file);
+		}
 	}
 
 	protected List<String> getCommonJars() {
@@ -221,6 +256,29 @@ public class PluginsEnvironmentBuilder {
 		List<String> dependencyJars = Collections.emptyList();
 
 		writeEclipseFiles(libDir, projectDir, dependencyJars);
+
+		List<String> importSharedJars = getImportSharedJars(projectDir);
+
+		File gitignoreFile = new File(
+			projectDir.getCanonicalPath() + "/.gitignore");
+
+		String[] gitIgnores = importSharedJars.toArray(
+			new String[importSharedJars.size()]);
+
+		for (int i = 0; i < gitIgnores.length; i++) {
+			String gitIgnore = gitIgnores[i];
+
+			gitIgnore = "/lib/" + gitIgnore;
+			gitIgnore = gitIgnore.replace(".jar", "-*.jar");
+
+			gitIgnores[i] = gitIgnore;
+		}
+
+		if (gitIgnores.length > 0) {
+			System.out.println("Updating " + gitignoreFile);
+
+			_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
+		}
 	}
 
 	protected void setupWarProject(String dirName, String fileName)
@@ -446,6 +504,8 @@ public class PluginsEnvironmentBuilder {
 				addClasspathEntry(sb, "lib/" + jar);
 			}
 		}
+
+		addOsgiClasspathEntries(sb, projectDirName);
 
 		sb.append("\t<classpathentry kind=\"output\" path=\"bin\" />\n");
 		sb.append("</classpath>");

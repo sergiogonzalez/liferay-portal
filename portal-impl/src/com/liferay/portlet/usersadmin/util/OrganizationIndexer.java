@@ -80,6 +80,23 @@ public class OrganizationIndexer extends BaseIndexer {
 			return;
 		}
 
+		List<Long> excludedOrganizationIds = (List<Long>)params.get(
+			"excludedOrganizationIds");
+
+		if ((excludedOrganizationIds != null) &&
+			!excludedOrganizationIds.isEmpty()) {
+
+			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			for (long excludedOrganizationId : excludedOrganizationIds) {
+				booleanQuery.addTerm(
+					"organizationId", String.valueOf(excludedOrganizationId));
+			}
+
+			contextQuery.add(booleanQuery, BooleanClauseOccur.MUST_NOT);
+		}
+
 		List<Organization> organizationsTree = (List<Organization>)params.get(
 			"organizationsTree");
 
@@ -95,6 +112,15 @@ public class OrganizationIndexer extends BaseIndexer {
 
 			contextQuery.add(booleanQuery, BooleanClauseOccur.MUST);
 		}
+		else {
+			long parentOrganizationId = GetterUtil.getLong(
+				searchContext.getAttribute("parentOrganizationId"));
+
+			if (parentOrganizationId > 0) {
+				contextQuery.addRequiredTerm(
+					"parentOrganizationId", parentOrganizationId);
+			}
+		}
 	}
 
 	@Override
@@ -105,8 +131,6 @@ public class OrganizationIndexer extends BaseIndexer {
 		addSearchTerm(searchQuery, searchContext, "city", false);
 		addSearchTerm(searchQuery, searchContext, "country", false);
 		addSearchTerm(searchQuery, searchContext, "name", false);
-		addSearchTerm(
-			searchQuery, searchContext, "parentOrganizationId", false);
 		addSearchTerm(searchQuery, searchContext, "region", false);
 		addSearchTerm(searchQuery, searchContext, "street", false);
 		addSearchTerm(searchQuery, searchContext, "type", false);

@@ -230,8 +230,9 @@ public class HookHotDeployListener
 		"layout.user.public.layouts.enabled",
 		"layout.user.public.layouts.power.user.required",
 		"ldap.attrs.transformer.impl", "locales", "locales.beta",
-		"lock.listeners", "login.create.account.allow.custom.password",
-		"login.events.post", "login.events.pre", "login.form.navigation.post",
+		"locales.enabled", "lock.listeners",
+		"login.create.account.allow.custom.password", "login.events.post",
+		"login.events.pre", "login.form.navigation.post",
 		"login.form.navigation.pre", "logout.events.post", "logout.events.pre",
 		"mail.hook.impl", "my.sites.show.private.sites.with.no.layouts",
 		"my.sites.show.public.sites.with.no.layouts",
@@ -2454,6 +2455,12 @@ public class HookHotDeployListener
 			containsKey(portalProperties, LOCALES_BETA)) {
 
 			PropsValues.LOCALES = PropsUtil.getArray(LOCALES);
+
+			LanguageUtil.init();
+		}
+
+		if (containsKey(portalProperties, LOCALES_ENABLED)) {
+			PropsValues.LOCALES_ENABLED = PropsUtil.getArray(LOCALES_ENABLED);
 
 			LanguageUtil.init();
 		}

@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 
 <project name="modules" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
-	<property name="project.dir" value="../.." />
-
-	<import file="${project.dir}/build-common.xml" />
+	<import file="../../build-common.xml" />
 
 	<target name="clean">
 		<antcall target="loop-modules">
