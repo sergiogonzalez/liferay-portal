@@ -109,6 +109,8 @@ if ((row == null) && ((portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) 
 }
 
 String iconMenuId = null;
+
+int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay));
 %>
 
 <liferay-util:buffer var="iconMenu">
@@ -321,12 +323,8 @@ String iconMenuId = null;
 						url="<%= editFileEntryURL %>"
 					/>
 
-					<%
-					int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay));
-					%>
-
-					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= fileEntryTypesCount > 0 ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
-						<portlet:param name="struts_action" value='<%= fileEntryTypesCount > 0 ? "/document_library_display/select_file_entry_type" : "/document_library_display/edit_file_entry" %>' />
+					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%=  WindowState.NORMAL.toString() %>">
+						<portlet:param name="struts_action" value=' "/document_library_display/edit_file_entry" %>' />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -334,7 +332,7 @@ String iconMenuId = null;
 					</liferay-portlet:renderURL>
 
 					<%
-					taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {centered: true, modal: true, width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri: '" + editFileEntryURL.toString() + "'});";
+					taglibEditURL = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
 					%>
 
 					<liferay-ui:icon
@@ -518,6 +516,33 @@ String iconMenuId = null;
 				);
 
 				webdavDialog.render();
+			}
+		);
+	}
+</aui:script>
+
+<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%=  LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value='<%= "/document_library_display/select_file_entry_type" %>' />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="backURL" value="<%= currentURL %>" />
+	<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+</liferay-portlet:renderURL>
+
+<aui:script>
+
+	function <portlet:namespace />openFileEntryTypeView() {
+		debugger;
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					centered: true,
+					modal: true,
+					width: 420
+				},
+				id: '<portlet:namespace />selectFileEntryType',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") %>',
+				uri: <%= editFileEntryURL %>
 			}
 		);
 	}
