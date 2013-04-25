@@ -20,12 +20,12 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailAssetEntryAddedEnabled--", AssetPublisherUtil.getEmailAssetEntryAddedEnabled(preferences));
 
+String emailParam = (String)request.getAttribute("configuration.jsp-emailParam");
 String defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
 String defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY));
 
-String bodyParam = (String)request.getAttribute("configuration.jsp-bodyParam");
-String emailParam = (String)request.getAttribute("configuration.jsp-emailParam");
 String subjectParam = (String)request.getAttribute("configuration.jsp-subjectParam");
+String bodyParam = (String)request.getAttribute("configuration.jsp-bodyParam");
 
 String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(preferences, request, bodyParam, defaultEmailBody);
@@ -175,7 +175,7 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 
 	var currentLanguageIndex = languageSelector.attr('selectedIndex');
 
-	var subjectInput = A.one('#<portlet:namespace /><%= emailParam + "Subject_" + currentLanguageId %>');
+	var subjectInput = A.one('#<portlet:namespace /><%= subjectParam %>');
 
 	var originalEmailSubject = subjectInput.val();
 
