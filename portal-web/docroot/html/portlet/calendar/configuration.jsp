@@ -21,14 +21,15 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", CalUtil.getEmailFromName(preferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", CalUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", CalUtil.getEmailFromName(preferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", CalUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
-String emailEventReminderSubject = ParamUtil.getString(request, "emailEventReminderSubject", CalUtil.getEmailEventReminderSubject(preferences));
-String emailEventReminderBody = ParamUtil.getString(request, "emailEventReminderBody", CalUtil.getEmailEventReminderBody(preferences));
+Boolean emailEventReminderEnabled = ParamUtil.getBoolean(request, "preferences--emailEventReminderEnabled--", CalUtil.getEmailEventReminderEnabled(preferences));
 
-String editorParam = "emailEventReminderBody";
-String editorContent = emailEventReminderBody;
+String emailSubject = ParamUtil.getString(request, "preferences--emailEventReminderSubject--", CalUtil.getEmailEventReminderSubject(preferences));
+String emailBody = ParamUtil.getString(request, "preferences--emailEventReminderBody--", CalUtil.getEmailEventReminderBody(preferences));
+
+String bodyParam = "emailEventReminderBody";
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -64,14 +65,14 @@ String editorContent = emailEventReminderBody;
 		</c:when>
 		<c:when test='<%= tabs2.equals("event-reminder-email") %>'>
 			<aui:fieldset>
-				<aui:input label="enabled" name="preferences--emailEventReminderEnabled--" type="checkbox" value="<%= CalUtil.getEmailEventReminderEnabled(preferences) %>" />
+				<aui:input label="enabled" name="preferences--emailEventReminderEnabled--" type="checkbox" value="<%= emailEventReminderEnabled %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailEventReminderSubject--" type="text" value="<%= emailEventReminderSubject %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailEventReminderSubject--" type="text" value="<%= emailSubject %>" />
 
 				<aui:field-wrapper label="body">
 					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
 
-					<aui:input name='<%= "preferences--" + editorParam + "--" %>' type="hidden" />
+					<aui:input name='<%= "preferences--" + emailBody + "--" %>' type="hidden" />
 				</aui:field-wrapper>
 			</aui:fieldset>
 
@@ -185,12 +186,12 @@ String editorContent = emailEventReminderBody;
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
+		return "<%= UnicodeFormatter.toString(emailBody) %>";
 	}
 
 	function <portlet:namespace />saveConfiguration() {
 		<c:if test='<%= tabs2.equals("event-reminder-email") %>'>
-			document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
+			document.<portlet:namespace />fm.<portlet:namespace /><%= bodyParam %>.value = window.<portlet:namespace />editor.getHTML();
 		</c:if>
 
 		submitForm(document.<portlet:namespace />fm);
