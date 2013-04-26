@@ -29,8 +29,8 @@ boolean emailEventReminderEnabled = ParamUtil.getBoolean(request, "preferences--
 String subjectParam = "emailEventReminderSubject";
 String bodyParam = "emailEventReminderBody";
 
-String emailSubject = ParamUtil.getString(request, "preferences--emailEventReminderSubject--", CalUtil.getEmailEventReminderSubject(preferences));
-String emailBody = ParamUtil.getString(request, "preferences--emailEventReminderBody--", CalUtil.getEmailEventReminderBody(preferences));
+String emailSubject = ParamUtil.getString(request, "preferences--" + subjectParam + "--", CalUtil.getEmailEventReminderSubject(preferences));
+String emailBody = ParamUtil.getString(request, "preferences--" + bodyParam + "--", CalUtil.getEmailEventReminderBody(preferences));
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
