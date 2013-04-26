@@ -26,7 +26,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 boolean emailEventReminderEnabled = ParamUtil.getBoolean(request, "preferences--emailEventReminderEnabled--", CalUtil.getEmailEventReminderEnabled(preferences));
 
-String subjectParam = "emailEventReminderBody";
+String subjectParam = "emailEventReminderSubject";
 String bodyParam = "emailEventReminderBody";
 
 String emailSubject = ParamUtil.getString(request, "preferences--emailEventReminderSubject--", CalUtil.getEmailEventReminderSubject(preferences));
