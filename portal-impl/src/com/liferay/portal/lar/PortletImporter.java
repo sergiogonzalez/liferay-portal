@@ -97,6 +97,8 @@ import com.liferay.portlet.asset.service.persistence.AssetTagUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.expando.NoSuchTableException;
@@ -1208,9 +1210,18 @@ public class PortletImporter {
 					portletId);
 
 				if (rootPotletId.equals(PortletKeys.ASSET_PUBLISHER)) {
+
 					xml = updateAssetPublisherPortletPreferences(
 						portletDataContext, companyId, ownerId, ownerType, plid,
 						portletId, xml, layout);
+				}
+				else if (rootPotletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+						 rootPotletId.equals(
+							PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+
+					xml = updateDocumentLibraryPortletPreferences(
+						portletDataContext, companyId, ownerId, ownerType, plid,
+						portletId, xml);
 				}
 				else if (rootPotletId.equals(
 							PortletKeys.TAGS_CATEGORIES_NAVIGATION)) {
@@ -1918,6 +1929,34 @@ public class PortletImporter {
 			key, newValues.toArray(new String[newValues.size()]));
 	}
 
+	protected String updateDocumentLibraryPortletPreferences(
+			PortletDataContext portletDataContext, long companyId, long ownerId,
+			int ownerType, long plid, String portletId, String xml)
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
+
+		Group companyGroup = company.getGroup();
+
+		javax.portlet.PortletPreferences jxPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				companyId, ownerId, ownerType, plid, portletId, xml);
+
+		Enumeration<String> enu = jxPreferences.getNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.equals("rootFolderId")) {
+				updatePreferencesClassPKs(
+					portletDataContext, jxPreferences, name, DLFolder.class,
+					companyGroup.getGroupId());
+			}
+		}
+
+		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
+	}
+
 	protected void updatePortletPreferences(
 			PortletDataContext portletDataContext, long ownerId, int ownerType,
 			long plid, String portletId, String xml, boolean importData)
@@ -2072,6 +2111,15 @@ public class PortletImporter {
 
 						if (ddmStructure != null) {
 							newPrimaryKey = ddmStructure.getStructureId();
+						}
+					}
+					else if (className.equals(DLFolder.class.getName())) {
+						DLFolder dlFolder =
+							DLFolderUtil.fetchByUUID_G(
+								uuid, portletDataContext.getScopeGroupId());
+
+						if (dlFolder != null) {
+							uuid = dlFolder.getUuid();
 						}
 					}
 				}
