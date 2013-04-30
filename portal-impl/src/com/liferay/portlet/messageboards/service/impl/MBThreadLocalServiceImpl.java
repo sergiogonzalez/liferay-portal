@@ -598,6 +598,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		mbThreadPersistence.update(thread);
 
+		assetEntryLocalService.incrementViewCounter(
+			thread.getRootMessageUserId(), MBMessage.class.getName(),
+			thread.getRootMessageId(), 1);
+
 		return thread;
 	}
 
