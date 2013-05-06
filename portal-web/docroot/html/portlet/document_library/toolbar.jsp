@@ -18,7 +18,94 @@
 
 <%
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
+
+Group scopeGroup = themeDisplay.getScopeGroup();
 %>
+
+<aui:nav-bar>
+	<aui:nav>
+		<aui:nav-item dropdown="<%= true %>" label="actions">
+			<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
+				<%
+				String taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'});";
+				%>
+
+				<aui:nav-item href="<%= taglibOnClick %>" iconClass="icon-trash" label="cancel-checkout[document]" />
+
+				<aui:nav-item>
+					<%
+					taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'});";
+					%>
+
+
+					<liferay-ui:icon
+						image="unlock"
+						message="checkin"
+						onClick="<%= taglibOnClick %>"
+						url="javascript:;"
+					/>
+				</aui:nav-item>
+
+				<aui:nav-item>
+						<%
+						taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'});";
+						%>
+
+						<liferay-ui:icon
+							image="lock"
+							message="checkout[document]"
+							onClick="<%= taglibOnClick %>"
+							url="javascript:;"
+						/>
+				</aui:nav-item>
+
+				<aui:nav-item>
+						<%
+						taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
+						%>
+
+						<liferay-ui:icon
+							image="submit"
+							message="move"
+							onClick="<%= taglibOnClick %>"
+							url="javascript:;"
+						/>
+				</aui:nav-item>
+
+			</c:if>
+
+			<aui:nav-item>
+				<%
+				String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'});";
+				%>
+
+				<liferay-ui:icon-delete
+					confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
+					id="moveToTrashAction"
+					trash="<%= true %>"
+					url="<%= taglibURL %>"
+				/>
+
+			</aui:nav-item>
+
+			<aui:nav-item>
+
+				<%
+				taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});";
+				%>
+
+				<liferay-ui:icon-delete
+					confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
+					id="deleteAction"
+					url="<%= taglibURL %>"
+				/>
+			</aui:nav-item>
+		</aui:nav-item>
+
+	</aui:nav>
+
+</aui:nav-bar>
+
 
 <liferay-ui:icon-menu cssClass="actions-button hide" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
