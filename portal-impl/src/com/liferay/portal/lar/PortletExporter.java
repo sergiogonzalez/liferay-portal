@@ -78,6 +78,8 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -1116,6 +1118,11 @@ public class PortletExporter {
 			preferencesXML = updateAssetPublisherPortletPreferences(
 				preferencesXML, plid);
 		}
+		else if (rootPotletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+				 rootPotletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+			preferencesXML = updateDocumentLibraryPortletPreferences(
+				preferencesXML, plid);
+		}
 		else if (rootPotletId.equals(PortletKeys.TAGS_CATEGORIES_NAVIGATION)) {
 			preferencesXML = updateAssetCategoriesNavigationPortletPreferences(
 				preferencesXML, plid);
@@ -1598,6 +1605,27 @@ public class PortletExporter {
 		jxPreferences.setValues(key, newValues);
 	}
 
+	protected String updateDocumentLibraryPortletPreferences(
+			String xml, long plid)
+		throws Exception {
+
+		javax.portlet.PortletPreferences jxPreferences =
+			PortletPreferencesFactoryUtil.fromDefaultXML(xml);
+
+		Enumeration<String> enu = jxPreferences.getNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.equals("rootFolderId")) {
+				updatePreferencesClassPKs(
+					jxPreferences, name, DLFolder.class.getName());
+			}
+		}
+
+		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
+	}
+
 	protected void updatePreferencesClassPKs(
 			javax.portlet.PortletPreferences jxPreferences, String key,
 			String className)
@@ -1652,6 +1680,14 @@ public class PortletExporter {
 
 					if (ddmStructure != null) {
 						uuid = ddmStructure.getUuid();
+					}
+				}
+				else if (className.equals(DLFolder.class.getName())) {
+					DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(
+						primaryKeyLong);
+
+					if (dlFolder != null) {
+						uuid = dlFolder.getUuid();
 					}
 				}
 
