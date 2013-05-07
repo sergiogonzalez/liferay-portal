@@ -27,7 +27,7 @@ String searchJsp = (String)request.getAttribute("liferay-ui:app_view_toolbar:sea
 			<liferay-util:include page="<%= searchJsp %>" />
 		</c:if>
 
-		<div class="toolbar">
+		<div>
 			<c:if test="<%= includeSelectAll %>">
 				<c:if test="<%= !user.isDefaultUser() %>">
 					<aui:input cssClass="select-all-entries" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" type="checkbox" />

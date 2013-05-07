@@ -548,7 +548,7 @@ AUI.add(
 						if (addButton) {
 							var addButtonContainer = instance.byId('addButtonContainer');
 
-							addButtonContainer.setContent(addButton);
+							addButtonContainer.replace(addButton.html());
 						}
 
 						var displayStyleButtons = instance.one('#displayStyleButtons', content);
@@ -566,7 +566,7 @@ AUI.add(
 						if (sortButton) {
 							var sortButtonContainer = instance.byId('sortButtonContainer');
 
-							sortButtonContainer.setContent(sortButton);
+							sortButtonContainer.replace(sortButton.html());
 						}
 					},
 

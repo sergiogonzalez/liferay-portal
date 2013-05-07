@@ -23,8 +23,37 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 %>
 
 <c:if test="<%= displayStyles.length > 1 %>">
+	<div id="<portlet:namespace />displayStyleButtons" class="toolbar">
+		<div class="btn-group btn-group-radio">
+
+			<%
+			for (int i = 0; i < displayStyles.length; i++) {
+				String iconClass = displayStyles[i];
+
+				if (iconClass.equals("icon")) {
+					iconClass = "icon-th-large";
+				}
+				else if (iconClass.equals("descriptive")) {
+					iconClass = "icon-th-list";
+				}
+				else if (iconClass.equals("list")) {
+					iconClass ="icon-align-justify";
+				}
+			%>
+
+				<button class='btn <%= displayStyle.equals(displayStyles[i]) ? "active" : StringPool.BLANK %>'><i class="<%= iconClass %>"></i></button>
+
+			<%
+			}
+			%>
+
+		</div>
+	</div>
+</c:if>
+
+<c:if test="<%= displayStyles.length > 1 %>">
 	<aui:script use="aui-base,aui-toolbar">
-		var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
+		var buttonRow = A.one('#<portlet:namespace />displayStyleButtons');
 
 		function onButtonClick(displayStyle) {
 			var config = {};
@@ -54,26 +83,6 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			);
 		}
 
-		var displayStyleButtonGroup = ['radio'];
-
-		<%
-		for (int i = 0; i < displayStyles.length; i++) {
-		%>
-
-			displayStyleButtonGroup.push(
-				{
-					icon: 'aui-icon-<%= displayStyles[i] %>',
-					on: {
-						click: A.bind(onButtonClick, null, '<%= displayStyles[i] %>')
-					},
-					title: '<%= UnicodeLanguageUtil.get(pageContext, displayStyles[i] + "-view") %>'
-				}
-			);
-
-		<%
-		}
-		%>
-
 		var displayStyleToolbar = buttonRow.getData('displayStyleToolbar');
 
 		if (displayStyleToolbar) {
@@ -82,33 +91,10 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 
 		displayStyleToolbar = new A.Toolbar(
 			{
-				boundingBox: buttonRow,
-				children: [
-					displayStyleButtonGroup
-				]
+				boundingBox: buttonRow
 			}
 		).render();
 
-		displayStyleButtonGroup = displayStyleToolbar.item(0);
-
-		var index = 0;
-
-		<%
-		for (int i = 0; i < displayStyles.length; i++) {
-			if (displayStyle.equals(displayStyles[i])) {
-		%>
-
-				index = <%= i %>;
-
-		<%
-				break;
-			}
-		}
-		%>
-
-		displayStyleButtonGroup.select(index);
-
 		buttonRow.setData('displayStyleToolbar', displayStyleToolbar);
-		buttonRow.setData('displayStyleButtonGroup', displayStyleButtonGroup);
 	</aui:script>
 </c:if>

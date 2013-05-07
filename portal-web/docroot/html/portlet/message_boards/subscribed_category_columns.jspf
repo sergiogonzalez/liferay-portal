@@ -77,7 +77,7 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 		sb.append("\">");
 		sb.append(ancestorCategory.getName());
 		sb.append("</a>");
-		sb.append("<span class=\"divider\">/</span>")
+		sb.append("<span class=\"divider\">/</span>");
 		sb.append("</li>");
 	}
 
