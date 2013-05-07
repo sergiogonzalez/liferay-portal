@@ -359,6 +359,17 @@ create table JournalFolder (
 	statusDate DATE null
 );
 
+create table LayoutFriendlyURL (
+	uuid_ VARCHAR(75) null,
+	layoutFriendlyURLId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	plid LONG,
+	privateLayout BOOLEAN,
+	friendlyURL VARCHAR(255) null,
+	languageId VARCHAR(75) null
+);
+
 alter table LayoutPrototype add userId LONG;
 alter table LayoutPrototype add userName VARCHAR(75) null;
 alter table LayoutPrototype add createDate DATE null;

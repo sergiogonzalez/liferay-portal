@@ -141,7 +141,7 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 			sb.append("<a href=\"");
 		}
 
-		sb.append(portletURL.toString());
+		sb.append(HtmlUtil.escape(portletURL.toString()));
 		sb.append("\">");
 		sb.append(title);
 		sb.append("</a>");

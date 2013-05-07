@@ -741,26 +741,66 @@ release was successful.</echo>
 	</target>
 
 	<target name="prepare-generated-files">
+		<antcall target="clean" />
+		<antcall target="start" />
+
 		<ant dir="portal-impl" target="build-iw" inheritAll="false" />
 		<ant dir="portal-impl" target="build-lib-versions" inheritAll="false" />
 		<ant dir="portal-impl" target="build-services" inheritAll="false" />
 		<ant dir="portal-impl" target="build-wsdds" inheritAll="false" />
 
+		<delete file="portal-impl/classes/META-INF/javadocs-all.xml" />
+		<delete file="portal-impl/classes/META-INF/javadocs-rt.xml" />
+		<delete file="portal-impl/src/META-INF/javadocs-all.xml" />
+		<delete file="portal-impl/src/META-INF/javadocs-rt.xml" />
+
+		<ant dir="portal-impl" inheritall="false" target="compile-test" />
+
+		<ant inheritall="false" target="format-javadoc" />
+
+		<delete>
+			<fileset dir="${lp.plugins.dir}" includes="**/javadocs-all.xml,**/javadocs-rt.xml" />
+		</delete>
+
+		<ant dir="${lp.plugins.dir}" inheritall="false" target="clean" />
+		<ant dir="${lp.plugins.dir}" inheritall="false" target="compile" />
+		<ant dir="${lp.plugins.dir}" inheritall="false" target="format-javadoc" />
+
 		<antcall target="all" />
 
-		<ant dir="sql" target="rebuild-mysql" inheritAll="false" />
-
 		<parallel>
-			<exec dir="${app.server.tomcat.bin.dir}" executable="startup.bat" resolveexecutable="true" />
+			<if>
+				<os family="windows" />
+				<then>
+					<exec executable="cmd">
+						<arg line="/c ${app.server.tomcat.bin.dir}/catalina run" />
+					</exec>
+				</then>
+				<else>
+					<exec executable="${app.server.tomcat.bin.dir}/catalina.sh">
+						<arg line="run" />
+					</exec>
+				</else>
+			</if>
 
 			<sequential>
 				<waitfor>
-					<http url="http://localhost:8080" />
+					<socket server="localhost" port="8080" />
 				</waitfor>
 
 				<ant dir="portal-client" target="build-client" inheritAll="false" />
 
-				<exec dir="${app.server.tomcat.bin.dir}" executable="shutdown.bat" resolveexecutable="true" />
+				<if>
+					<os family="windows" />
+					<then>
+						<exec executable="cmd">
+							<arg line="/c ${app.server.tomcat.bin.dir}/shutdown.bat" />
+						</exec>
+					</then>
+					<else>
+						<exec executable="${app.server.tomcat.bin.dir}/shutdown.sh" />
+					</else>
+				</if>
 			</sequential>
 		</parallel>
 

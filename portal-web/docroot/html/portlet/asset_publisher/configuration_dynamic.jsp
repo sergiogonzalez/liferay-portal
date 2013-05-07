@@ -193,7 +193,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 											<portlet:param name="classTypeId" value="<%= String.valueOf(assetAvailableClassTypeId) %>" />
 										</portlet:renderURL>
 
-										<span class="asset-subtypefields-popup">
+										<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>PopUpButton">
 											<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !subtypeFieldsFilterEnabled %>" value="select" />
 										</span>
 									</span>
@@ -601,6 +601,16 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<%= className %>SubtypeSelector.on(
 			'change',
 			function(event) {
+				setDDMFields('<%= className %>', '', '', '', '');
+
+				var subtypeFieldsFilterEnabled = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+
+				subtypeFieldsFilterEnabled.val(false);
+
+				var subtypeFieldsFilterEnabledCheckbox = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>Checkbox');
+
+				subtypeFieldsFilterEnabledCheckbox.attr('checked', false);
+
 				sourcePanel.all('.asset-subtypefields').hide();
 
 				<%= className %>toggleSubclassesFields(true);
@@ -672,31 +682,35 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						width: 600
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',
-					id: '<portlet:namespace />selectDDMStructure' + event.target.id,
+					id: '<portlet:namespace />selectDDMStructure' + event.currentTarget.attr('id'),
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "structure-field") %>',
 					uri: event.target.attr('data-href')
 				},
 				function(event) {
-					var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
-
-					ddmStructureFieldName.val(event.name);
-
-					var ddmStructureFieldvalue = A.one('#<portlet:namespace />ddmStructureFieldValue');
-
-					ddmStructureFieldvalue.val(event.value);
-
-					var ddmStructureDisplayFieldvalue = A.one('#<portlet:namespace />ddmStructureDisplayFieldValue');
-
-					ddmStructureDisplayFieldvalue.val(event.displayValue);
-
-					var ddmStructureFieldMessage = A.one('#<portlet:namespace />' + event.className + 'ddmStructureFieldMessage');
-
-					ddmStructureFieldMessage.html(event.label + ': ' + event.displayValue);
+					setDDMFields(event.className, event.name, event.value, event.displayValue, event.label + ': ' + event.displayValue);
 				}
 			);
 		},
 		'.asset-subtypefields-popup'
 	);
+
+	function setDDMFields(className, name, value, displayValue, message) {
+		var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
+
+		ddmStructureFieldName.val(name);
+
+		var ddmStructureFieldvalue = A.one('#<portlet:namespace />ddmStructureFieldValue');
+
+		ddmStructureFieldvalue.val(value);
+
+		var ddmStructureDisplayFieldvalue = A.one('#<portlet:namespace />ddmStructureDisplayFieldValue');
+
+		ddmStructureDisplayFieldvalue.val(displayValue);
+
+		var ddmStructureFieldMessage = A.one('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
+
+		ddmStructureFieldMessage.html(message);
+	}
 </aui:script>
 
 <%!

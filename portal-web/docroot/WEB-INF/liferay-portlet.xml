@@ -1198,6 +1198,7 @@
 		<indexer-class>com.liferay.portlet.usersadmin.util.OrganizationIndexer</indexer-class>
 		<indexer-class>com.liferay.portlet.usersadmin.util.UserIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.usersadmin.lar.UsersAdminPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.usersadmin.lar.OrganizationStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>1.0</control-panel-entry-weight>
@@ -1222,6 +1223,7 @@
 		<struts-path>user_groups_admin</struts-path>
 		<indexer-class>com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.usergroupsadmin.lar.UserGroupsAdminPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.usergroupsadmin.lar.UserGroupStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>4.5</control-panel-entry-weight>
@@ -1256,6 +1258,7 @@
 		<icon>/html/icons/password_policies_admin.png</icon>
 		<struts-path>password_policies_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.passwordpoliciesadmin.lar.PasswordPolicyPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.passwordpoliciesadmin.lar.PasswordPolicyStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>6.0</control-panel-entry-weight>

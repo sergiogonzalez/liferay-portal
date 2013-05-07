@@ -32,7 +32,7 @@ import javax.servlet.jsp.PageContext;
 public class LanguageUtil {
 
 	public static String format(
-			Locale locale, String pattern, List<Object> arguments) {
+		Locale locale, String pattern, List<Object> arguments) {
 
 		return getLanguage().format(locale, pattern, arguments);
 	}

@@ -628,6 +628,46 @@
 			<finder-column name="master" />
 		</finder>
 	</entity>
+	<entity name="LayoutFriendlyURL" uuid="true" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="layoutFriendlyURLId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="plid" type="long" />
+		<column name="privateLayout" type="boolean" />
+		<column name="friendlyURL" type="String" />
+		<column name="languageId" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="P_L" return-type="LayoutFriendlyURL" unique="true">
+			<finder-column name="plid" />
+			<finder-column name="languageId" />
+		</finder>
+		<finder name="G_P_F_L" return-type="LayoutFriendlyURL" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="friendlyURL" />
+			<finder-column name="languageId" />
+		</finder>
+	</entity>
 	<entity name="LayoutPrototype" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
@@ -1159,6 +1199,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="C_DP" return-type="PasswordPolicy">
 			<finder-column name="companyId" />
 			<finder-column name="defaultPolicy" />

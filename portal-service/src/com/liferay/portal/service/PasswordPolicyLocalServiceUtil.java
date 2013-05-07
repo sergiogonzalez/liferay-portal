@@ -310,6 +310,12 @@ public class PasswordPolicyLocalServiceUtil {
 		getService().checkDefaultPasswordPolicy(companyId);
 	}
 
+	public static void deleteNondefaultPasswordPolicies(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteNondefaultPasswordPolicies(companyId);
+	}
+
 	public static com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
 		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -24,6 +24,11 @@ public class RoleMembershipPolicyBasicTest
 	extends BaseRoleMembershipPolicyTestCase {
 
 	@Test
+	public void brokenTest() {
+		Assert.fail();
+	}
+
+	@Test
 	public void testIsRoleAllowed() throws Exception {
 		long[] userIds = addUsers();
 		long[] standardRoleIds = addStandardRoles();

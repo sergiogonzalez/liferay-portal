@@ -428,7 +428,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						/>
 					</li>
 
-					<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) && !thread.isLocked() %>">
+					<c:if test="<%= !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 						<li>
 							<portlet:renderURL var="editURL">
 								<portlet:param name="struts_action" value="/message_boards/edit_message" />
@@ -444,7 +444,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						</li>
 					</c:if>
 
-					<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) && !thread.isLocked() %>">
+					<c:if test="<%= !thread.isLocked() && !message.isRoot() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) %>">
 						<li>
 							<liferay-security:permissionsURL
 								modelResource="<%= MBMessage.class.getName() %>"
@@ -479,7 +479,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						</li>
 					</c:if>
 
-					<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) && !thread.isLocked() %>">
+					<c:if test="<%= !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) %>">
 						<li>
 
 							<%
