@@ -53,6 +53,11 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 		/>
 
 		<liferay-ui:search-container-column-text
+			name="scope-type"
+			value="<%= LanguageUtil.get(pageContext, ScopeUtil.getType(themeDisplay, fileEntryType.getGroupId())) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
 			buffer="buffer"
 			name="modified-date"
 		>
