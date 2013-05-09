@@ -60,7 +60,9 @@ public interface DLFileEntryTypeService extends BaseService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
-		long groupId, java.lang.String name, java.lang.String description,
+		long groupId, java.lang.String fileEntryTypeKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -104,7 +106,8 @@ public interface DLFileEntryTypeService extends BaseService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateFileEntryType(long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
