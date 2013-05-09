@@ -41,7 +41,7 @@ if (browseUp) {
 }
 %>
 
-<li class="app-view-navigation-entry <%= selected ? cssClass + " selected" : cssClass %>">
+<aui:nav-item cssClass='<%= "app-view-navigation-entry " + cssClass %>' selected="<%= selected %>">
 
 	<%
 	request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -73,4 +73,4 @@ if (browseUp) {
 			</span>
 		</span>
 	</a>
-</li>
+</aui:nav-item>
