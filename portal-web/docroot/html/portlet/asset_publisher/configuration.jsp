@@ -101,14 +101,14 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 					>
 						<liferay-ui:icon
 							label="<%= true %>"
-							message="<%= ScopeUtil.getName(themeDisplay, group.getGroupId()) %>"
+							message="<%= ScopeUtil.getName(group.getGroupId(), themeDisplay) %>"
 							src="<%= group.getIconURL(themeDisplay) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						name="type"
-						value="<%= LanguageUtil.get(pageContext, ScopeUtil.getType(themeDisplay, group.getGroupId())) %>"
+						value="<%= LanguageUtil.get(pageContext, ScopeUtil.getType(group.getGroupId(), themeDisplay)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

@@ -31,11 +31,12 @@ import java.util.Locale;
  */
 public class ScopeUtil {
 
-	public static String getName(ThemeDisplay themeDisplay, long groupId)
+	public static String getName(long groupId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
-		String name = null;
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		String name = null;
 
 		Locale locale = themeDisplay.getLocale();
 
@@ -73,11 +74,12 @@ public class ScopeUtil {
 		return name;
 	}
 
-	public static String getType(ThemeDisplay themeDisplay, long groupId)
+	public static String getType(long groupId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
-		String type = "site";
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		String type = "site";
 
 		if (groupId == themeDisplay.getScopeGroupId()) {
 			type = "current-site";
