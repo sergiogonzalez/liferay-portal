@@ -53,7 +53,7 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 		/>
 
 		<liferay-ui:search-container-column-text
-			name="scope-type"
+			name="scope"
 			value="<%= LanguageUtil.get(pageContext, ScopeUtil.getType(fileEntryType.getGroupId(), themeDisplay)) %>"
 		/>
 
