@@ -90,7 +90,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= true %>"
-				searchJsp='<%= showFoldersSearch ? "/html/portlet/document_library/file_entry_search.jsp" : StringPool.BLANK %>'
 			>
 				<liferay-util:include page="/html/portlet/document_library/toolbar.jsp" />
 			</liferay-ui:app-view-toolbar>
@@ -152,12 +151,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 		</aui:col>
 	</aui:row>
 </div>
-
-<span id="<portlet:namespace />displayStyleButtonsContainer">
-	<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
-		<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
-	</c:if>
-</span>
 
 <%
 int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));

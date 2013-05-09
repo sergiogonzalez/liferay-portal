@@ -29,10 +29,6 @@
 	.lfr-header-row-content {
 		position: relative;
 
-		.toolbar {
-			float: left;
-		}
-
 		.display-style {
 			float: right;
 		}
