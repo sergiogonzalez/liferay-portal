@@ -179,6 +179,17 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return _publishToLiveByDefault;
 	}
 
+	public void prepareManifestSummary(PortletDataContext portletDataContext)
+		throws PortletDataException {
+
+		try {
+			doPrepareManifestSummary(portletDataContext);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
 	protected Element addExportDataRootElement(
 		PortletDataContext portletDataContext) {
 
@@ -215,6 +226,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		throws Exception {
 
 		return null;
+	}
+
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
 	}
 
 	protected String getExportDataRootElementString(Element rootElement) {

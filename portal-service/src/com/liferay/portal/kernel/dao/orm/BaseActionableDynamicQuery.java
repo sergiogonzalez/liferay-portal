@@ -49,7 +49,8 @@ public abstract class BaseActionableDynamicQuery
 		addDefaultCriteria(dynamicQuery);
 		addCriteria(dynamicQuery);
 
-		List<Object[]> results = dynamicQuery(dynamicQuery);
+		List<Object[]> results = (List<Object[]>)executeDynamicQuery(
+			dynamicQuery, _dynamicQueryMethod);
 
 		Object[] minAndMaxPrimaryKeys = results.get(0);
 
@@ -88,11 +89,23 @@ public abstract class BaseActionableDynamicQuery
 		addDefaultCriteria(dynamicQuery);
 		addCriteria(dynamicQuery);
 
-		List<Object> objects = dynamicQuery(dynamicQuery);
+		List<Object> objects = (List<Object>)executeDynamicQuery(
+			dynamicQuery, _dynamicQueryMethod);
 
 		for (Object object : objects) {
 			performAction(object);
 		}
+	}
+
+	public long performCount() throws PortalException, SystemException {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			_clazz, _classLoader);
+
+		addDefaultCriteria(dynamicQuery);
+		addCriteria(dynamicQuery);
+
+		return (Long)executeDynamicQuery(
+			dynamicQuery, _dynamicQueryCountMethod);
 	}
 
 	public void setBaseLocalService(BaseLocalService baseLocalService)
@@ -105,6 +118,8 @@ public abstract class BaseActionableDynamicQuery
 		try {
 			_dynamicQueryMethod = clazz.getMethod(
 				"dynamicQuery", DynamicQuery.class);
+			_dynamicQueryCountMethod = clazz.getMethod(
+				"dynamicQueryCount", DynamicQuery.class);
 		}
 		catch (NoSuchMethodException nsme) {
 			throw new SystemException(nsme);
@@ -152,13 +167,12 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	protected List dynamicQuery(DynamicQuery dynamicQuery)
+	protected Object executeDynamicQuery(
+			DynamicQuery dynamicQuery, Method dynamicQueryMethod)
 		throws PortalException, SystemException {
 
 		try {
-			return (List)_dynamicQueryMethod.invoke(
-				_baseLocalService, dynamicQuery);
+			return dynamicQueryMethod.invoke(_baseLocalService, dynamicQuery);
 		}
 		catch (InvocationTargetException ite) {
 			Throwable throwable = ite.getCause();
@@ -184,6 +198,7 @@ public abstract class BaseActionableDynamicQuery
 	private ClassLoader _classLoader;
 	private Class<?> _clazz;
 	private long _companyId;
+	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
 	private long _groupId;
 	private int _interval = Indexer.DEFAULT_INTERVAL;
