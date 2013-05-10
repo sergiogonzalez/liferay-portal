@@ -93,6 +93,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getNumberIncrement(String value);
 
+	public String getProjectDir();
+
 	public void goBackAndWait();
 
 	public boolean isConfirmation(String pattern);

@@ -229,6 +229,10 @@ public abstract class BaseWebDriverImpl
 		return LiferaySeleniumHelper.getNumberIncrement(value);
 	}
 
+	public String getProjectDir() {
+		return _projectDir;
+	}
+
 	public void goBackAndWait() {
 		super.goBack();
 		super.waitForPageToLoad("30000");

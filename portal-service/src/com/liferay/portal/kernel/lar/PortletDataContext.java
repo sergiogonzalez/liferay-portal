@@ -215,6 +215,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Map<String, Lock> getLocks();
 
+	public ManifestSummary getManifestSummary();
+
 	public Map<?, ?> getNewPrimaryKeysMap(Class<?> clazz);
 
 	public Map<?, ?> getNewPrimaryKeysMap(String className);

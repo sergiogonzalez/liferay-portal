@@ -192,6 +192,10 @@ public abstract class BaseSeleniumImpl
 		return LiferaySeleniumHelper.getNumberIncrement(value);
 	}
 
+	public String getProjectDir() {
+		return _projectDir;
+	}
+
 	public void goBackAndWait() {
 		super.goBack();
 		super.waitForPageToLoad("30000");
