@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -85,7 +84,7 @@ public class DLFileEntryTypeServiceTest {
 			PortalUtil.getSiteAndCompanyGroupIds(_group.getGroupId()));
 
 		for (DLFileEntryType dlFileEntryType : _dlFileEntryTypes) {
-			String name = dlFileEntryType.getName();
+			String name = dlFileEntryType.getName(Locale.getDefault());
 
 			if (name.equals(DLFileEntryTypeConstants.NAME_CONTRACT)) {
 				_contractDLFileEntryType = dlFileEntryType;
@@ -120,8 +119,9 @@ public class DLFileEntryTypeServiceTest {
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Test Structure", StringPool.BLANK, new long[0],
+				TestPropsValues.getUserId(), _group.getGroupId(), null,
+				ServiceTestUtil.randomLocaleStringMap(),
+				ServiceTestUtil.randomLocaleStringMap(), new long[0],
 				serviceContext);
 
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
