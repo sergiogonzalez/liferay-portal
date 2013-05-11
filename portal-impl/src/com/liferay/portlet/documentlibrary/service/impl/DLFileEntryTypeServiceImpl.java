@@ -28,6 +28,8 @@ import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
@@ -38,16 +40,17 @@ import java.util.List;
 public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 
 	public DLFileEntryType addFileEntryType(
-			long groupId, String name, String description,
-			long[] ddmStructureIds, ServiceContext serviceContext)
+			long groupId, String fileEntryTypeKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, long[] ddmStructureIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_DOCUMENT_TYPE);
 
 		return dlFileEntryTypeLocalService.addFileEntryType(
-			getUserId(), groupId, name, description, ddmStructureIds,
-			serviceContext);
+			getUserId(), groupId, fileEntryTypeKey, nameMap, descriptionMap,
+			ddmStructureIds, serviceContext);
 	}
 
 	public void deleteFileEntryType(long fileEntryTypeId)
@@ -108,16 +111,17 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	}
 
 	public void updateFileEntryType(
-			long fileEntryTypeId, String name, String description,
-			long[] ddmStructureIds, ServiceContext serviceContext)
+			long fileEntryTypeId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, long[] ddmStructureIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileEntryTypePermission.check(
 			getPermissionChecker(), fileEntryTypeId, ActionKeys.UPDATE);
 
 		dlFileEntryTypeLocalService.updateFileEntryType(
-			getUserId(), fileEntryTypeId, name, description, ddmStructureIds,
-			serviceContext);
+			getUserId(), fileEntryTypeId, nameMap, descriptionMap,
+			ddmStructureIds, serviceContext);
 	}
 
 	protected List<DLFileEntryType> filterFileEntryTypes(
