@@ -274,6 +274,24 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		return assetLinkPersistence.findByE2_T(entryId, typeId);
 	}
 
+	public AssetLink updateLink(
+			long userId, long entryId1, long entryId2, int typeId, int weight)
+		throws PortalException, SystemException {
+
+		AssetLink assetLink = assetLinkPersistence.fetchByE_E_T(
+			entryId1, entryId2, typeId);
+
+		if (assetLink == null) {
+			return addLink(userId, entryId1, entryId2, typeId, weight);
+		}
+
+		assetLink.setWeight(weight);
+
+		assetLinkPersistence.update(assetLink);
+
+		return assetLink;
+	}
+
 	/**
 	 * Updates all links of the asset entry, replacing them with links
 	 * associating the asset entry with the asset entries of the given link

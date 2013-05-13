@@ -843,6 +843,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutPersistence.fetchByG_P_L(groupId, privateLayout, layoutId);
 	}
 
+	public Layout fetchLayoutByFriendlyURL(
+			long groupId, boolean privateLayout, String friendlyURL)
+		throws SystemException {
+
+		return layoutPersistence.fetchByG_P_F(
+			groupId, privateLayout, friendlyURL);
+	}
+
 	/**
 	 * Returns the layout matching the UUID, group, and privacy.
 	 *

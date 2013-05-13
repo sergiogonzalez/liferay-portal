@@ -283,6 +283,7 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.copyright.txt=copyright.txt\n"+
 				"\t-Dservice.tpl.ejb_pk=" + _TPL_ROOT + "ejb_pk.ftl\n"+
 				"\t-Dservice.tpl.exception=" + _TPL_ROOT + "exception.ftl\n"+
+				"\t-Dservice.tpl.export_actionable_dynamic_query=" + _TPL_ROOT + "export_actionable_dynamic_query.ftl\n"+
 				"\t-Dservice.tpl.extended_model=" + _TPL_ROOT + "extended_model.ftl\n"+
 				"\t-Dservice.tpl.extended_model_base_impl=" + _TPL_ROOT + "extended_model_base_impl.ftl\n"+
 				"\t-Dservice.tpl.extended_model_impl=" + _TPL_ROOT + "extended_model_impl.ftl\n"+
@@ -365,7 +366,6 @@ public class ServiceBuilder {
 				_args = args;
 			}
 
-			@Override
 			public Void call() throws Exception {
 				main(_args);
 
@@ -818,6 +818,10 @@ public class ServiceBuilder {
 
 						if (entity.hasActionableDynamicQuery()) {
 							_createActionableDynamicQuery(entity);
+
+							if (entity.isStagedModel()) {
+								_createExportActionableDynamicQuery(entity);
+							}
 						}
 
 						if (entity.hasColumns()) {
@@ -1950,6 +1954,27 @@ public class ServiceBuilder {
 				}
 			}
 		}
+	}
+
+	private void _createExportActionableDynamicQuery(Entity entity)
+		throws Exception {
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(
+			_tplExportActionableDynamicQuery, context);
+
+		// Write file
+
+		File ejbFile = new File(
+			_serviceOutputPath + "/service/persistence/" +
+				entity.getName() + "ExportActionableDynamicQuery.java");
+
+		writeFile(ejbFile, content, _author);
 	}
 
 	private void _createExtendedModel(Entity entity) throws Exception {
@@ -5058,6 +5083,8 @@ public class ServiceBuilder {
 	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplEjbPk = _TPL_ROOT + "ejb_pk.ftl";
 	private String _tplException = _TPL_ROOT + "exception.ftl";
+	private String _tplExportActionableDynamicQuery =
+		_TPL_ROOT + "export_actionable_dynamic_query.ftl";
 	private String _tplExtendedModel = _TPL_ROOT + "extended_model.ftl";
 	private String _tplExtendedModelBaseImpl =
 		_TPL_ROOT + "extended_model_base_impl.ftl";

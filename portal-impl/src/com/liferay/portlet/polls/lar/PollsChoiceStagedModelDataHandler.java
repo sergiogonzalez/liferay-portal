@@ -43,6 +43,11 @@ public class PollsChoiceStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(PollsChoice choice) {
+		return choice.getName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, PollsChoice choice)
 		throws Exception {

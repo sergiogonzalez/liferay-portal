@@ -617,6 +617,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		return _layoutLocalService.fetchLayout(groupId, privateLayout, layoutId);
 	}
 
+	public com.liferay.portal.model.Layout fetchLayoutByFriendlyURL(
+		long groupId, boolean privateLayout, java.lang.String friendlyURL)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.fetchLayoutByFriendlyURL(groupId,
+			privateLayout, friendlyURL);
+	}
+
 	/**
 	* Returns the layout matching the UUID, group, and privacy.
 	*

@@ -407,6 +407,14 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		return _assetLinkLocalService.getReverseLinks(entryId, typeId);
 	}
 
+	public com.liferay.portlet.asset.model.AssetLink updateLink(long userId,
+		long entryId1, long entryId2, int typeId, int weight)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetLinkLocalService.updateLink(userId, entryId1, entryId2,
+			typeId, weight);
+	}
+
 	/**
 	* Updates all links of the asset entry, replacing them with links
 	* associating the asset entry with the asset entries of the given link

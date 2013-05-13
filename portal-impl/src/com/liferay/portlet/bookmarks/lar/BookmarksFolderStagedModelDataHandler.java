@@ -43,6 +43,11 @@ public class BookmarksFolderStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(BookmarksFolder folder) {
+		return folder.getName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, BookmarksFolder folder)
 		throws Exception {

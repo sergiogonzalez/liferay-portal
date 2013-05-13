@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
 
 /**
  * @author Mate Thurzo
  * @author Daniel Kocsis
+ * @author Zsolt Berentey
  */
 public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	implements StagedModelDataHandler<T> {
@@ -29,19 +32,32 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
-		if (portletDataContext.isPathProcessed(path)) {
+		if (portletDataContext.isPathExportedInScope(path)) {
 			return;
 		}
 
 		try {
 			doExportStagedModel(portletDataContext, (T)stagedModel.clone());
+
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			manifestSummary.incrementModelCount(getClassName(stagedModel));
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
 	}
 
+	public String getClassName(StagedModel stagedModel) {
+		return stagedModel.getModelClassName();
+	}
+
 	public abstract String[] getClassNames();
+
+	public String getDisplayName(T stagedModel) {
+		return stagedModel.getUuid();
+	}
 
 	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
@@ -55,10 +71,31 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		try {
 			doImportStagedModel(portletDataContext, stagedModel);
+
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			manifestSummary.incrementModelCount(getClassName(stagedModel));
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
+	}
+
+	public boolean validateReference(
+		Element rootElement, Element referenceElement) {
+
+		String elementName = referenceElement.getName();
+
+		if (elementName.equals("missing-reference")) {
+			String uuid = referenceElement.attributeValue("uuid");
+			long groupId = GetterUtil.getLong(
+				referenceElement.attributeValue("group-id"));
+
+			return validateMissingReference(uuid, groupId);
+		}
+
+		return true;
 	}
 
 	protected abstract void doExportStagedModel(
@@ -68,5 +105,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected abstract void doImportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
+
+	protected boolean validateMissingReference(String uuid, long groupId) {
+		return true;
+	}
 
 }

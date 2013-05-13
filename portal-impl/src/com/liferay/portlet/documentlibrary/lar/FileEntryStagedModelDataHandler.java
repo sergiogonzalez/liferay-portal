@@ -34,10 +34,12 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -52,6 +54,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorThreadLocal;
@@ -79,8 +82,18 @@ public class FileEntryStagedModelDataHandler
 	};
 
 	@Override
+	public String getClassName(StagedModel stagedModel) {
+		return FileEntry.class.getName();
+	}
+
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	@Override
+	public String getDisplayName(FileEntry fileEntry) {
+		return fileEntry.getTitle();
 	}
 
 	@Override
@@ -120,13 +133,19 @@ public class FileEntryStagedModelDataHandler
 				portletDataContext, repository);
 
 			portletDataContext.addReferenceElement(
-				fileEntryElement, repository);
+				fileEntry, fileEntryElement, repository,
+				PortletDataContext.REFERENCE_TYPE_STRONG, false);
 
 			portletDataContext.addClassedModel(
 				fileEntryElement, fileEntryPath, fileEntry,
 				DLPortletDataHandler.NAMESPACE);
 
-			return;
+			long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
+				LiferayRepository.class.getName());
+
+			if (repository.getClassNameId() != liferayRepositoryClassNameId) {
+				return;
+			}
 		}
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
@@ -196,7 +215,8 @@ public class FileEntryStagedModelDataHandler
 					portletDataContext, fileRank);
 
 				portletDataContext.addReferenceElement(
-					fileEntryElement, fileRank);
+					fileEntry, fileEntryElement, fileRank,
+					PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
 			}
 		}
 
@@ -244,9 +264,8 @@ public class FileEntryStagedModelDataHandler
 				portletDataContext, referenceStagedModel);
 		}
 
-		if ((fileEntry.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			(fileEntry.getFolderId() == fileEntry.getFolderId())) {
+		if (fileEntry.getFolderId() !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			String folderPath = ExportImportPathUtil.getModelPath(
 				portletDataContext, Folder.class.getName(),
@@ -608,6 +627,23 @@ public class FileEntryStagedModelDataHandler
 			serviceContext.setAttribute(
 				Fields.class.getName() + ddmStructure.getStructureId(), fields);
 		}
+	}
+
+	@Override
+	protected boolean validateMissingReference(String uuid, long groupId) {
+		try {
+			DLFileEntry dlFileEntry = DLFileEntryUtil.fetchByUUID_G(
+				uuid, groupId);
+
+			if (dlFileEntry == null) {
+				return false;
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

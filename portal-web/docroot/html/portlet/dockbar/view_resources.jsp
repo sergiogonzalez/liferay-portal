@@ -35,7 +35,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 			}
 			%>
 
-			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix lfr-component panel-page-category recent" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
+			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix panel-page-category recent unstyled" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
 
 				<%
 				int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
@@ -112,7 +112,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 					data.put("title", title);
 				%>
 
-					<div class="content-item display-style-<%= displayStyle %>">
+					<div class="content-item display-style-<%= HtmlUtil.escapeAttribute(displayStyle) %>">
 						<c:if test='<%= !displayStyle.equals("icon") %>'>
 							<span <%= AUIUtil.buildData(data) %> class="add-content-item">
 								<liferay-ui:message key="add" />

@@ -34,6 +34,13 @@ public class StagedModelDataHandlerUtil {
 			portletDataContext, stagedModel);
 	}
 
+	public static <T extends StagedModel> String getDisplayName(T stagedModel) {
+		StagedModelDataHandler<T> stagedModelDataHandler =
+			_getStagedModelDataHandler(stagedModel);
+
+		return stagedModelDataHandler.getDisplayName(stagedModel);
+	}
+
 	public static void importStagedModel(
 			PortletDataContext portletDataContext, Element element)
 		throws PortletDataException {

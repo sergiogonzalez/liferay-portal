@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -33,14 +34,15 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureActionableDynamicQuery;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureExportActionableDynamicQuery;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
-import com.liferay.portlet.journal.service.persistence.JournalFeedActionableDynamicQuery;
-import com.liferay.portlet.journal.service.persistence.JournalFolderActionableDynamicQuery;
+import com.liferay.portlet.journal.service.permission.JournalPermission;
+import com.liferay.portlet.journal.service.persistence.JournalArticleExportActionableDynamicQuery;
+import com.liferay.portlet.journal.service.persistence.JournalFeedExportActionableDynamicQuery;
+import com.liferay.portlet.journal.service.persistence.JournalFolderExportActionableDynamicQuery;
 
 import java.util.Collections;
 import java.util.List;
@@ -139,7 +141,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.journal",
+			JournalPermission.RESOURCE_NAME,
 			portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
@@ -147,13 +149,12 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery structureActionableDynamicQuery =
-			new DDMStructureActionableDynamicQuery() {
+		ActionableDynamicQuery ddmStructureActionableDynamicQuery =
+			new DDMStructureExportActionableDynamicQuery(portletDataContext) {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
+				super.addCriteria(dynamicQuery);
 
 				Property classNameIdProperty = PropertyFactoryUtil.forName(
 					"classNameId");
@@ -187,116 +188,24 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		};
 
-		structureActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
-
-		structureActionableDynamicQuery.performActions();
+		ddmStructureActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery feedActionableDynamicQuery =
-			new JournalFeedActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				JournalFeed feed = (JournalFeed)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, feed);
-			}
-
-		};
-
-		feedActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+			new JournalFeedExportActionableDynamicQuery(portletDataContext);
 
 		feedActionableDynamicQuery.performActions();
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {
-			getExportDataRootElementString(rootElement);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {
+			ActionableDynamicQuery folderActionableDynamicQuery =
+				getFolderActionableDynamicQuery(portletDataContext);
+
+			folderActionableDynamicQuery.performActions();
+
+			ActionableDynamicQuery articleActionableDynamicQuery =
+				getArticleActionableDynamicQuery(portletDataContext);
+
+			articleActionableDynamicQuery.performActions();
 		}
-
-		ActionableDynamicQuery folderActionableDynamicQuery =
-			new JournalFolderActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				JournalFolder folder = (JournalFolder)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, folder);
-			}
-
-		};
-
-		folderActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
-
-		folderActionableDynamicQuery.performActions();
-
-		ActionableDynamicQuery articleActionableDynamicQuery =
-			new JournalArticleActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					statusProperty.in(
-						new Integer[] {
-							WorkflowConstants.STATUS_APPROVED,
-							WorkflowConstants.STATUS_EXPIRED
-						}));
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				JournalArticle article = (JournalArticle)object;
-
-				boolean latestVersion = false;
-
-				try {
-					latestVersion =
-						JournalArticleLocalServiceUtil.isLatestVersion(
-							article.getGroupId(), article.getArticleId(),
-							article.getVersion(),
-							WorkflowConstants.STATUS_APPROVED);
-				}
-				catch (Exception e) {
-				}
-
-				if (portletDataContext.getBooleanParameter(
-						NAMESPACE, "version-history") || latestVersion) {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, article);
-				}
-			}
-
-		};
-
-		articleActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
-
-		articleActionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -308,7 +217,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.journal",
+			JournalPermission.RESOURCE_NAME,
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
@@ -367,6 +276,113 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return portletPreferences;
+	}
+
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		ActionableDynamicQuery feedActionableDynamicQuery =
+			new JournalFeedExportActionableDynamicQuery(portletDataContext);
+
+		manifestSummary.addModelCount(
+			JournalFeed.class, feedActionableDynamicQuery.performCount());
+
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {
+			ActionableDynamicQuery articleActionableDynamicQuery =
+				getArticleActionableDynamicQuery(portletDataContext);
+
+			manifestSummary.addModelCount(
+				JournalArticle.class,
+				articleActionableDynamicQuery.performCount());
+
+			ActionableDynamicQuery folderActionableDynamicQuery =
+				getFolderActionableDynamicQuery(portletDataContext);
+
+			manifestSummary.addModelCount(
+				JournalFolder.class,
+				folderActionableDynamicQuery.performCount());
+		}
+	}
+
+	protected ActionableDynamicQuery getArticleActionableDynamicQuery(
+			final PortletDataContext portletDataContext)
+		throws SystemException {
+
+		return new JournalArticleExportActionableDynamicQuery(
+			portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				super.addCriteria(dynamicQuery);
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.in(
+						new Integer[] {
+							WorkflowConstants.STATUS_APPROVED,
+							WorkflowConstants.STATUS_EXPIRED
+						}));
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				JournalArticle article = (JournalArticle)object;
+
+				boolean latestVersion = false;
+
+				try {
+					latestVersion =
+						JournalArticleLocalServiceUtil.isLatestVersion(
+							article.getGroupId(), article.getArticleId(),
+							article.getVersion(),
+							WorkflowConstants.STATUS_APPROVED);
+				}
+				catch (Exception e) {
+				}
+
+				if (portletDataContext.getBooleanParameter(
+						NAMESPACE, "version-history") || latestVersion) {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, article);
+				}
+			}
+
+		};
+	}
+
+	protected ActionableDynamicQuery getFolderActionableDynamicQuery(
+			final PortletDataContext portletDataContext)
+		throws SystemException {
+
+		return new JournalFolderExportActionableDynamicQuery(
+			portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				super.addCriteria(dynamicQuery);
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				JournalFolder folder = (JournalFolder)object;
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, folder);
+			}
+
+		};
 	}
 
 }

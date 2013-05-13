@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal.util;
 
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portalweb.portal.util.liferayselenium.ChromeWebDriverImpl;
@@ -21,6 +22,7 @@ import com.liferay.portalweb.portal.util.liferayselenium.DefaultSeleniumImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.FirefoxWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.InternetExplorerWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.portal.util.liferayselenium.LoggerHandler;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -74,26 +76,32 @@ public class SeleniumUtil extends TestPropsValues {
 			0, absolutePath.length() - 1);
 
 		if (SELENIUM_IMPLEMENTATION.equals(Selenium.class.getName())) {
-			_selenium = new DefaultSeleniumImpl(projectDir, PORTAL_URL);
+			LiferaySelenium liferaySelenium = new DefaultSeleniumImpl(
+				projectDir, PORTAL_URL);
 
 			Class<?> clazz = getClass();
 
-			_selenium.setContext(clazz.getName());
+			liferaySelenium.setContext(clazz.getName());
+
+			_selenium = _wrapWithLoggerHandler(liferaySelenium);
 		}
 		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
 			if (BROWSER_TYPE.equals("*chrome") ||
 				BROWSER_TYPE.equals("*firefox")) {
 
-				_selenium = new FirefoxWebDriverImpl(projectDir, PORTAL_URL);
+				_selenium = _wrapWithLoggerHandler(
+					new FirefoxWebDriverImpl(projectDir, PORTAL_URL));
 			}
 			else if (BROWSER_TYPE.equals("*googlechrome")) {
-				_selenium = new ChromeWebDriverImpl(projectDir, PORTAL_URL);
+				_selenium = _wrapWithLoggerHandler(
+					new ChromeWebDriverImpl(projectDir, PORTAL_URL));
+
 			}
 			else if (BROWSER_TYPE.equals("*iehta") ||
 					 BROWSER_TYPE.equals("*iexplore")) {
 
-				_selenium = new InternetExplorerWebDriverImpl(
-					projectDir, PORTAL_URL);
+				_selenium = _wrapWithLoggerHandler(
+					new InternetExplorerWebDriverImpl(projectDir, PORTAL_URL));
 			}
 			else {
 				throw new RuntimeException(
@@ -105,9 +113,23 @@ public class SeleniumUtil extends TestPropsValues {
 	private void _stopSelenium() {
 		if (_selenium != null) {
 			_selenium.stop();
+
+			_selenium.stopLogger();
 		}
 
 		_selenium = null;
+	}
+
+	private LiferaySelenium _wrapWithLoggerHandler(
+		LiferaySelenium liferaySelenium) {
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		return (LiferaySelenium)ProxyUtil.newProxyInstance(
+			classLoader, new Class<?>[] {LiferaySelenium.class},
+			new LoggerHandler(liferaySelenium));
 	}
 
 	private static SeleniumUtil _instance = new SeleniumUtil();

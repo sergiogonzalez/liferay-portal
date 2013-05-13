@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.lar.PortletDataContextImpl;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
@@ -90,8 +91,8 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -277,7 +278,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				throw new IllegalArgumentException();
 			}
 		}
-		else if (!className.equals(Organization.class.getName()) &&
+		else if (!className.equals(Company.class.getName()) &&
+				 !className.equals(Organization.class.getName()) &&
 				 className.startsWith("com.liferay.portal.model.")) {
 
 			if (site) {
@@ -469,7 +471,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				Company.class.getName(), companyId,
 				GroupConstants.DEFAULT_LIVE_GROUP_ID, GroupConstants.GLOBAL,
-				null, 0, GroupConstants.GLOBAL_FRIENDLY_URL, false, true, null);
+				null, 0, GroupConstants.GLOBAL_FRIENDLY_URL, true, true, null);
 		}
 	}
 
@@ -3298,8 +3300,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 
 			PortletDataContext portletDataContext = new PortletDataContextImpl(
-				group.getCompanyId(), group.getGroupId(), null,
-				new HashSet<String>(), null, null, null);
+				group.getCompanyId(), group.getGroupId(),
+				(Map<String, String[]>)null, (Date)null, (Date)null,
+				(ZipWriter)null);
 
 			// For now, we are going to throw an exception if one portlet data
 			// handler has an exception to ensure that the transaction is rolled

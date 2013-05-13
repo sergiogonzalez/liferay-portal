@@ -42,6 +42,11 @@ public class JournalFolderStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(JournalFolder folder) {
+		return folder.getName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, JournalFolder folder)
 		throws Exception {

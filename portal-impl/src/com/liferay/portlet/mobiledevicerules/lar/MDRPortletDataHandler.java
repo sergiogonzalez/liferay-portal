@@ -15,9 +15,8 @@
 package com.liferay.portlet.mobiledevicerules.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -25,9 +24,14 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionActionableDynamicQuery;
-import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleActionableDynamicQuery;
+import com.liferay.portlet.mobiledevicerules.service.permission.MDRPermission;
+import com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionExportActionableDynamicQuery;
+import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleExportActionableDynamicQuery;
+import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupExportActionableDynamicQuery;
+import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstanceExportActionableDynamicQuery;
 
 import java.util.List;
 
@@ -77,56 +81,17 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.mobiledevicerules",
-			portletDataContext.getScopeGroupId());
+			MDRPermission.RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		ActionableDynamicQuery rulesActionableDynamicQuery =
-			new MDRRuleActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				MDRRule rule = (MDRRule)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, rule);
-			}
-
-		};
-
-		rulesActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+			new MDRRuleExportActionableDynamicQuery(portletDataContext);
 
 		rulesActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery actionsActionableDynamicQuery =
-			new MDRActionActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				MDRAction action = (MDRAction)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, action);
-			}
-
-		};
-
-		actionsActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+			new MDRActionExportActionableDynamicQuery(portletDataContext);
 
 		actionsActionableDynamicQuery.performActions();
 
@@ -140,8 +105,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.mobiledevicerules",
-			portletDataContext.getSourceGroupId(),
+			MDRPermission.RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element rulesElement = portletDataContext.getImportDataGroupElement(
@@ -165,6 +129,42 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return null;
+	}
+
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		ActionableDynamicQuery actionsActionableDynamicQuery =
+			new MDRActionExportActionableDynamicQuery(portletDataContext);
+
+		manifestSummary.addModelCount(
+			MDRAction.class, actionsActionableDynamicQuery.performCount());
+
+		ActionableDynamicQuery rulesActionableDynamicQuery =
+			new MDRRuleExportActionableDynamicQuery(portletDataContext);
+
+		manifestSummary.addModelCount(
+			MDRRule.class, rulesActionableDynamicQuery.performCount());
+
+		ActionableDynamicQuery ruleGroupsActionableDynamicQuery =
+			new MDRRuleGroupExportActionableDynamicQuery(portletDataContext);
+
+		manifestSummary.addModelCount(
+			MDRRuleGroup.class,
+			ruleGroupsActionableDynamicQuery.performCount());
+
+		ActionableDynamicQuery ruleGroupInstancesActionableDynamicQuery =
+			new MDRRuleGroupInstanceExportActionableDynamicQuery(
+				portletDataContext);
+
+		manifestSummary.addModelCount(
+			MDRRuleGroupInstance.class,
+			ruleGroupInstancesActionableDynamicQuery.performCount());
 	}
 
 }

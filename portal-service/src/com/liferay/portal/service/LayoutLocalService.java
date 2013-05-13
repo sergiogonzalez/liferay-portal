@@ -565,6 +565,11 @@ public interface LayoutLocalService extends BaseLocalService,
 		boolean privateLayout, long layoutId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Layout fetchLayoutByFriendlyURL(
+		long groupId, boolean privateLayout, java.lang.String friendlyURL)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the layout matching the UUID, group, and privacy.
 	*

@@ -93,6 +93,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getNumberIncrement(String value);
 
+	public String getProjectDir();
+
 	public void goBackAndWait();
 
 	public boolean isConfirmation(String pattern);
@@ -146,6 +148,10 @@ public interface LiferaySelenium extends Selenium {
 	public void setDefaultTimeoutImplicit();
 
 	public void setTimeoutImplicit(String timeout);
+
+	public void startLogger();
+
+	public void stopLogger();
 
 	public void typeFrame(String locator, String value);
 

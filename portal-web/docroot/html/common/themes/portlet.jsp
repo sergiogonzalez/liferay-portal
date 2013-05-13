@@ -18,11 +18,12 @@
 
 <portlet:defineObjects />
 
-<tiles:useAttribute classname="java.lang.String" id="tilesPortletContent" ignore="true" name="portlet_content" />
-<tiles:useAttribute classname="java.lang.String" id="tilesPortletDecorate" ignore="true" name="portlet_decorate" />
-<tiles:useAttribute classname="java.lang.String" id="tilesPortletPadding" ignore="true" name="portlet_padding" />
-
 <%
+String tilesPortletContent = GetterUtil.getString(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_content"));
+boolean tilesPortletDecorate = GetterUtil.getBoolean(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_decorate"), true);
+
+TilesAttributeUtil.removeComponentContext(pageContext);
+
 Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 PortletPreferences portletSetup = portletDisplay.getPortletSetup();
@@ -31,11 +32,9 @@ RenderResponseImpl renderResponseImpl = (RenderResponseImpl)PortletResponseImpl.
 
 // Portlet decorate
 
-boolean tilesPortletDecorateBoolean = GetterUtil.getBoolean(tilesPortletDecorate, true);
-
 boolean portletDecorateDefault = false;
 
-if (tilesPortletDecorateBoolean) {
+if (tilesPortletDecorate) {
 	portletDecorateDefault = GetterUtil.getBoolean(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), PropsValues.THEME_PORTLET_DECORATE_DEFAULT);
 }
 
@@ -139,7 +138,7 @@ boolean wsrp = ParamUtil.getBoolean(request, "wsrp");
 
 				<%
 				boolean showPortletActions =
-					(group.isLayoutPrototype() || tilesPortletDecorateBoolean) &&
+					(group.isLayoutPrototype() || tilesPortletDecorate) &&
 					(portletDisplay.isShowCloseIcon() ||
 					 portletDisplay.isShowConfigurationIcon() ||
 					 portletDisplay.isShowEditDefaultsIcon() ||

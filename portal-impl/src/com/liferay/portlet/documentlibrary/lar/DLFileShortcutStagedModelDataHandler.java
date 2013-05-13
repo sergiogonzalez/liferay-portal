@@ -46,6 +46,11 @@ public class DLFileShortcutStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(DLFileShortcut shortcut) {
+		return shortcut.getToTitle();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, DLFileShortcut fileShortcut)
 		throws Exception {

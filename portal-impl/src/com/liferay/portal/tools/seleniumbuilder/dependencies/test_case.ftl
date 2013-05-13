@@ -23,7 +23,6 @@ import java.util.Map;
 
 public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} extends BaseTestCase {
 
-
 	<#if rootElement.element("var")??>
 		public ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}() {
 			super();
@@ -43,6 +42,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 	@Override
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
+
+		selenium.startLogger();
 
 		commandScopeVariables = new HashMap<String, String>();
 

@@ -635,6 +635,13 @@ public class LayoutLocalServiceUtil {
 		return getService().fetchLayout(groupId, privateLayout, layoutId);
 	}
 
+	public static com.liferay.portal.model.Layout fetchLayoutByFriendlyURL(
+		long groupId, boolean privateLayout, java.lang.String friendlyURL)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLayoutByFriendlyURL(groupId, privateLayout, friendlyURL);
+	}
+
 	/**
 	* Returns the layout matching the UUID, group, and privacy.
 	*

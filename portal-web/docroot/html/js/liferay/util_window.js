@@ -47,7 +47,9 @@ AUI.add(
 
 					instance._bindDOMWinResizeIfNeeded();
 
-					modal.render(A.getBody());
+					var parentNode = config && config.dialog && config.dialog.render;
+
+					modal.render(parentNode);
 
 					return modal;
 				},
@@ -299,11 +301,11 @@ AUI.add(
 					var width = modal.get('width');
 					var height = modal.get('height');
 
-					if (width !== 'auto' || width !== '') {
+					if (width === 'auto' || width === '') {
 						modal.set('width', instance._getWinDefaultWidth());
 					}
 
-					if (height !== 'auto' || height !== '') {
+					if (height === 'auto' || height === '') {
 						modal.set('height', instance._getWinDefaultHeight());
 					}
 				},

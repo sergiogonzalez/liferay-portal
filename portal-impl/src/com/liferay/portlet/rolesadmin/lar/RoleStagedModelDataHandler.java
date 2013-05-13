@@ -36,6 +36,11 @@ public class RoleStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(Role role) {
+		return role.getName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Role role)
 		throws Exception {

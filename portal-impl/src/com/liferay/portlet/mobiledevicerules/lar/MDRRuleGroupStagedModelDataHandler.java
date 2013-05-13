@@ -37,6 +37,11 @@ public class MDRRuleGroupStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(MDRRuleGroup ruleGroup) {
+		return ruleGroup.getNameCurrentValue();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, MDRRuleGroup ruleGroup)
 		throws Exception {

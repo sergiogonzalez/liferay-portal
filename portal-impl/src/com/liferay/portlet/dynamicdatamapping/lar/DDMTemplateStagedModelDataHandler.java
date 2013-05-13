@@ -55,6 +55,11 @@ public class DDMTemplateStagedModelDataHandler
 		return CLASS_NAMES;
 	}
 
+	@Override
+	public String getDisplayName(DDMTemplate template) {
+		return template.getNameCurrentValue();
+	}
+
 	protected DDMTemplate addTemplate(
 			long userId, long groupId, DDMTemplate template, long classPK,
 			File smallFile, ServiceContext serviceContext)
@@ -119,7 +124,7 @@ public class DDMTemplateStagedModelDataHandler
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
 					ExportImportUtil.exportContentReferences(
-						portletDataContext, templateElement,
+						portletDataContext, template, templateElement,
 						template.getSmallImageURL().concat(StringPool.SPACE));
 
 				template.setSmallImageURL(smallImageURL);
@@ -143,7 +148,8 @@ public class DDMTemplateStagedModelDataHandler
 				DDMPortletDataHandler.NAMESPACE, "embedded-assets")) {
 
 			String content = ExportImportUtil.exportContentReferences(
-				portletDataContext, templateElement, template.getScript());
+				portletDataContext, template, templateElement,
+				template.getScript());
 
 			template.setScript(content);
 		}

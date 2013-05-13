@@ -56,6 +56,11 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(Organization organization) {
+		return organization.getName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Organization organization)
 		throws Exception {

@@ -15,7 +15,14 @@
 package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
+
+import java.io.File;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Zsolt Berentey
@@ -23,21 +30,23 @@ import com.liferay.portal.kernel.xml.Element;
 public class ExportImportUtil {
 
 	public static String exportContentReferences(
-			PortletDataContext portletDataContext, Element entityElement,
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
 			String content)
 		throws Exception {
 
 		return getExportImport().exportContentReferences(
-			portletDataContext, entityElement, content);
+			portletDataContext, entityStagedModel, entityElement, content);
 	}
 
 	public static String exportDLReferences(
-			PortletDataContext portletDataContext, Element entityElement,
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
 			String content)
 		throws Exception {
 
 		return getExportImport().exportDLReferences(
-			portletDataContext, entityElement, content);
+			portletDataContext, entityStagedModel, entityElement, content);
 	}
 
 	public static String exportLayoutReferences(
@@ -60,6 +69,15 @@ public class ExportImportUtil {
 		PortalRuntimePermission.checkGetBeanProperty(ExportImportUtil.class);
 
 		return _exportImport;
+	}
+
+	public static ManifestSummary getManifestSummary(
+			long userId, long groupId, Map<String, String[]> parameterMap,
+			File file)
+		throws Exception {
+
+		return getExportImport().getManifestSummary(
+			userId, groupId, parameterMap, file);
 	}
 
 	public static String importContentReferences(
@@ -94,6 +112,21 @@ public class ExportImportUtil {
 
 		return getExportImport().importLinksToLayouts(
 			portletDataContext, content);
+	}
+
+	public static List<MissingReference> validateMissingReferences(
+			long userId, long groupId, Map<String, String[]> parameterMap,
+			File file)
+		throws Exception {
+
+		return getExportImport().validateMissingReferences(
+			userId, groupId, parameterMap, file);
+	}
+
+	public static void writeManifestSummary(
+		Document document, ManifestSummary manifestSummary) {
+
+		getExportImport().writeManifestSummary(document, manifestSummary);
 	}
 
 	public void setExportImport(ExportImport exportImport) {

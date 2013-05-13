@@ -42,6 +42,11 @@ public class MBCategoryStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(MBCategory category) {
+		return category.getName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, MBCategory category)
 		throws Exception {

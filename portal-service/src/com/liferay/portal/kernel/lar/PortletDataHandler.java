@@ -165,4 +165,7 @@ public interface PortletDataHandler {
 	 */
 	public boolean isPublishToLiveByDefault();
 
+	public void prepareManifestSummary(PortletDataContext portletDataContext)
+		throws PortletDataException;
+
 }

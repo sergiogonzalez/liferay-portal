@@ -44,6 +44,11 @@ public class BookmarksEntryStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(BookmarksEntry entry) {
+		return entry.getName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, BookmarksEntry entry)
 		throws Exception {

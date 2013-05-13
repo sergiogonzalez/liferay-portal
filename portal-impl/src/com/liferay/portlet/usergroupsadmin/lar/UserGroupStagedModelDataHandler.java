@@ -36,6 +36,11 @@ public class UserGroupStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(UserGroup userGroup) {
+		return userGroup.getName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, UserGroup userGroup)
 		throws Exception {

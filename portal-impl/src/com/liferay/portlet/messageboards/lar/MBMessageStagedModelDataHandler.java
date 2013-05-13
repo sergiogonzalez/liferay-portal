@@ -58,6 +58,11 @@ public class MBMessageStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(MBMessage message) {
+		return message.getSubject();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, MBMessage message)
 		throws Exception {

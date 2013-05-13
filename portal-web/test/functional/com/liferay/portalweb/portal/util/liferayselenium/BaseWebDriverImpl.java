@@ -229,6 +229,10 @@ public abstract class BaseWebDriverImpl
 		return LiferaySeleniumHelper.getNumberIncrement(value);
 	}
 
+	public String getProjectDir() {
+		return _projectDir;
+	}
+
 	public void goBackAndWait() {
 		super.goBack();
 		super.waitForPageToLoad("30000");
@@ -363,6 +367,12 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public void setDefaultTimeout() {
+	}
+
+	public void startLogger() {
+	}
+
+	public void stopLogger() {
 	}
 
 	public void typeFrame(String locator, String value) {

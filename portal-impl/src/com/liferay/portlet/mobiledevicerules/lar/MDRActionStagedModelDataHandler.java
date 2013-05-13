@@ -51,6 +51,11 @@ public class MDRActionStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(MDRAction action) {
+		return action.getNameCurrentValue();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, MDRAction action)
 		throws Exception {

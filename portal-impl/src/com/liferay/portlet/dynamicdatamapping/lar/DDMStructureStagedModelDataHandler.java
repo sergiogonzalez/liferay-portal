@@ -46,6 +46,11 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(DDMStructure structure) {
+		return structure.getNameCurrentValue();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, DDMStructure structure)
 		throws Exception {
