@@ -401,12 +401,6 @@ public class JournalArticleStagedModelDataHandler
 
 			if (existingDDMStructure == null) {
 				existingDDMStructure = DDMStructureUtil.fetchByUUID_G(
-					ddmStructure.getUuid(),
-					portletDataContext.getSourceGroupId());
-			}
-
-			if (existingDDMStructure == null) {
-				existingDDMStructure = DDMStructureUtil.fetchByUUID_G(
 					ddmStructure.getUuid(), companyGroup.getGroupId());
 			}
 
@@ -463,12 +457,6 @@ public class JournalArticleStagedModelDataHandler
 
 			DDMTemplate existingDDMTemplate = DDMTemplateUtil.fetchByUUID_G(
 				ddmTemplate.getUuid(), portletDataContext.getScopeGroupId());
-
-			if (existingDDMTemplate == null) {
-				existingDDMTemplate = DDMTemplateUtil.fetchByUUID_G(
-					ddmTemplate.getUuid(),
-					portletDataContext.getSourceGroupId());
-			}
 
 			if (existingDDMTemplate == null) {
 				existingDDMTemplate = DDMTemplateUtil.fetchByUUID_G(
