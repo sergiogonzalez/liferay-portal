@@ -27,21 +27,6 @@ import java.util.List;
  */
 public class PermissionConverterUtil {
 
-	public static List<Permission> convertPermissions(
-			Role role, PermissionConversionFilter permissionConversionFilter)
-		throws PortalException, SystemException {
-
-		return getPermissionConverter().convertPermissions(
-			role, permissionConversionFilter);
-	}
-
-	public static PermissionConverter getPermissionConverter() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PermissionConverterUtil.class);
-
-		return _permissionConverter;
-	}
-
 	public static List<Permission> convertPermissions(long roleId)
 		throws PortalException, SystemException {
 
@@ -60,6 +45,21 @@ public class PermissionConverterUtil {
 		throws PortalException, SystemException {
 
 		return getPermissionConverter().convertPermissions(role);
+	}
+
+	public static List<Permission> convertPermissions(
+			Role role, PermissionConversionFilter permissionConversionFilter)
+		throws PortalException, SystemException {
+
+		return getPermissionConverter().convertPermissions(
+			role, permissionConversionFilter);
+	}
+
+	public static PermissionConverter getPermissionConverter() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PermissionConverterUtil.class);
+
+		return _permissionConverter;
 	}
 
 	public void setPermissionConverter(
