@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -125,9 +126,16 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.createDLFileEntryType(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
+		String fileEntryTypeKey = DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT;
+
+		fileEntryTypeKey = fileEntryTypeKey.trim().toUpperCase();
+
 		dlFileEntryType.setCreateDate(now);
 		dlFileEntryType.setModifiedDate(now);
-		dlFileEntryType.setName(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
+		dlFileEntryType.setName(
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT,
+			LocaleUtil.getDefault());
 
 		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(dlFileEntryType);
 	}
