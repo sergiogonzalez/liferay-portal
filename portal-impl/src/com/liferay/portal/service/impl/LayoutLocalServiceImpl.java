@@ -276,7 +276,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Layout friendly URLs
 
-		layoutFriendlyURLLocalService.addLayoutFriendlyURLs(
+		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
 			user.getCompanyId(), groupId, plid, privateLayout, friendlyURLMap,
 			serviceContext);
 
