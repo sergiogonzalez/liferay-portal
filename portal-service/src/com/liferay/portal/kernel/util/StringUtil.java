@@ -641,6 +641,36 @@ public class StringUtil {
 		return _highlight(s, pattern, highlight1, highlight2);
 	}
 
+	/**
+	 * Returns the index within the string of the first occurrence of any
+	 * character from the array.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * indexOfAny(null, *) returns -1
+	 * indexOfAny(*, null) returns -1
+	 * indexOfAny(*, []) returns -1
+	 * indexOfAny("zzabyycdxx", ['a','c']) returns 2
+	 * indexOfAny("zzabyycdxx", ['c','a']) returns 2
+	 * indexOfAny("zzabyycdxx", ['m','n']) returns -1
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  chars the characters to search for (optionally <code>null</code>)
+	 * @return the index within the string of the first occurrence of any
+	 *         character from the array, or <code>-1</code> if none of the
+	 *         characters occur
+	 */
 	public static int indexOfAny(String s, char[] chars) {
 		if (s == null) {
 			return -1;
@@ -649,6 +679,37 @@ public class StringUtil {
 		return indexOfAny(s, chars, 0, s.length() - 1);
 	}
 
+	/**
+	 * Returns the index within the string of the first occurrence of any
+	 * character from the array, starting the search at the specified index
+	 * within the string.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * indexOfAny(null, *, *) returns -1
+	 * indexOfAny(*, null, *) returns -1
+	 * indexOfAny(*, [], *) returns -1
+	 * indexOfAny("zzabyycdxx", ['a','c'], 3) returns 6
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  chars the characters to search for (optionally <code>null</code>)
+	 * @param  fromIndex the start index within the string
+	 * @return the index within the string of the first occurrence of any
+	 *         character from the array, starting the search at the specified
+	 *         index within the string, or <code>-1</code> if none of the
+	 *         characters occur
+	 */
 	public static int indexOfAny(String s, char[] chars, int fromIndex) {
 		if (s == null) {
 			return -1;
@@ -657,6 +718,40 @@ public class StringUtil {
 		return indexOfAny(s, chars, fromIndex, s.length() - 1);
 	}
 
+	/**
+	 * Returns the index within the string of the first occurrence of any
+	 * character from the array, up to and including the specified end index
+	 * within the string, starting the search at the specified start index
+	 * within the string.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * indexOfAny(null, *, *, *) returns -1
+	 * indexOfAny(*, null, *, *) returns -1
+	 * indexOfAny(*, [], *, *) returns -1
+	 * indexOfAny("zzabyycdxx", ['a','c'], 3, 7) returns 6
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  chars the characters to search for (optionally <code>null</code>)
+	 * @param  fromIndex the start index within the string
+	 * @param  toIndex the end index within the string
+	 * @return the index within the string of the first occurrence of any
+	 *         character from the array, up to and including the specified end
+	 *         index within the string, starting the search at the specified
+	 *         start index within the string, or <code>-1</code> if none of the
+	 *         characters occur
+	 */
 	public static int indexOfAny(
 		String s, char[] chars, int fromIndex, int toIndex) {
 
@@ -693,6 +788,40 @@ public class StringUtil {
 		return -1;
 	}
 
+	/**
+	 * Returns the index within the string of the first occurrence of any string
+	 * from the array.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>, but an array containing
+	 * <code>""</code> returns <code>0</code> if the string is not
+	 * <code>null</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * indexOfAny(null, *) returns -1
+	 * indexOfAny(*, null) returns -1
+	 * indexOfAny(*, [null]) returns -1
+	 * indexOfAny(*, []) returns -1
+	 * indexOfAny("zzabyycdxx", ["ab","cd"]) returns 2
+	 * indexOfAny("zzabyycdxx", ["cd","ab"]) returns 2
+	 * indexOfAny("zzabyycdxx", ["mn","op"]) returns -1
+	 * indexOfAny("zzabyycdxx", ["mn",""]) returns 0
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string (optionally <code>null</code>)
+	 * @param  texts the strings to search for (optionally <code>null</code>)
+	 * @return the index within the string of the first occurrence of any string
+	 *         from the array, <code>0</code> if the search array contains
+	 *         <code>""</code>, or <code>-1</code> if none of the strings occur
+	 */
 	public static int indexOfAny(String s, String[] texts) {
 		if (s == null) {
 			return -1;
@@ -701,6 +830,43 @@ public class StringUtil {
 		return indexOfAny(s, texts, 0, s.length() - 1);
 	}
 
+	/**
+	 * Returns the index within the string of the first occurrence of any string
+	 * from the array, starting the search at the specified index within the
+	 * string.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>, but an array containing
+	 * <code>""</code> returns the specified start index if the string is not
+	 * <code>null</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * indexOfAny(null, *, *) returns -1
+	 * indexOfAny(*, null, *) returns -1
+	 * indexOfAny(*, [null], *) returns -1
+	 * indexOfAny(*, [], *) returns -1
+	 * indexOfAny("zzabyycdxx", ["ab","cd"], 3) returns 6
+	 * indexOfAny("zzabyycdxx", ["cd","ab"], 3) returns 6
+	 * indexOfAny("zzabyycdxx", ["mn","op"], *) returns -1
+	 * indexOfAny("zzabyycdxx", ["mn",""], 3) returns 3
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  texts the strings to search for (optionally <code>null</code>)
+	 * @param  fromIndex the start index within the string
+	 * @return the index within the string of the first occurrence of any string
+	 *         from the array, starting the search at the specified index within
+	 *         the string, the start index if the search array contains
+	 *         <code>""</code>, or <code>-1</code> if none of the strings occur
+	 */
 	public static int indexOfAny(String s, String[] texts, int fromIndex) {
 		if (s == null) {
 			return -1;
@@ -709,6 +875,47 @@ public class StringUtil {
 		return indexOfAny(s, texts, fromIndex, s.length() - 1);
 	}
 
+	/**
+	 * Returns the index within the string of the first occurrence of any string
+	 * from the array, up to and including the specified end index within the
+	 * string, starting the search at the specified start index within the
+	 * string.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>, but an array containing
+	 * <code>""</code> returns the specified start index if the string is not
+	 * <code>null</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * indexOfAny(null, *, *, *) returns -1
+	 * indexOfAny(*, null, *, *) returns -1
+	 * indexOfAny(*, [null], *, *) returns -1
+	 * indexOfAny(*, [], *, *) returns -1
+	 * indexOfAny("zzabyycdxx", ["ab","cd"], 3, 7) returns 6
+	 * indexOfAny("zzabyycdxx", ["cd","ab"], 2, 7) returns 2
+	 * indexOfAny("zzabyycdxx", ["mn","op"], *, *) returns -1
+	 * indexOfAny("zzabyycdxx", ["mn",""], 3, *) returns 3
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  texts the strings to search for (optionally <code>null</code>)
+	 * @param  fromIndex the start index within the string
+	 * @param  toIndex the end index within the string
+	 * @return the index within the string of the first occurrence of any string
+	 *         from the array, up to and including the specified end index
+	 *         within the string, starting the search at the specified start
+	 *         index within the string, the start index if the search array
+	 *         contains <code>""</code>, or <code>-1</code> if none of the
+	 *         strings occur
+	 */
 	public static int indexOfAny(
 		String s, String[] texts, int fromIndex, int toIndex) {
 
@@ -780,6 +987,36 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Returns the index within the string of the last occurrence of any
+	 * character from the array.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * lastIndexOfAny(null, *) returns -1
+	 * lastIndexOfAny(*, null) returns -1
+	 * lastIndexOfAny(*, []) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ['a','c']) returns 6
+	 * lastIndexOfAny("zzabyycdxx", ['c','a']) returns 6
+	 * lastIndexOfAny("zzabyycdxx", ['m','n']) returns -1
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  chars the characters to search for (optionally <code>null</code>)
+	 * @return the index within the string of the last occurrence of any
+	 *         character from the array, or <code>-1</code> if none of the
+	 *         characters occur
+	 */
 	public static int lastIndexOfAny(String s, char[] chars) {
 		if (s == null) {
 			return -1;
@@ -788,6 +1025,38 @@ public class StringUtil {
 		return lastIndexOfAny(s, chars, 0, s.length() - 1);
 	}
 
+	/**
+	 * Returns the index within the string of the last occurrence of any
+	 * character from the array, starting the search at the specified index
+	 * within the string.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * lastIndexOfAny(null, *, *) returns -1
+	 * lastIndexOfAny(*, null, *) returns -1
+	 * lastIndexOfAny(*, [], *) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ['a','c'], 5) returns 2
+	 * lastIndexOfAny("zzabyycdxx", ['m','n'], *) returns -1
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  chars the characters to search for (optionally <code>null</code>)
+	 * @param  toIndex the end index within the string
+	 * @return the index within the string of the last occurrence of any
+	 *         character from the array, starting the search at the specified
+	 *         index within the string, or <code>-1</code> if none of the
+	 *         characters occur
+	 */
 	public static int lastIndexOfAny(String s, char[] chars, int toIndex) {
 		if (s == null) {
 			return -1;
@@ -796,6 +1065,41 @@ public class StringUtil {
 		return lastIndexOfAny(s, chars, 0, toIndex);
 	}
 
+	/**
+	 * Returns the index within the string of the last occurrence of any
+	 * character from the array, up to and including the specified end index
+	 * within the string, starting the search at the specified start index
+	 * within the string.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * lastIndexOfAny(null</code>, *, *, *) returns -1
+	 * lastIndexOfAny(*, null</code>, *, *) returns -1
+	 * lastIndexOfAny(*, [], *, *) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ['a','c'], 5, 7) returns 6
+	 * lastIndexOfAny("zzabyycdxx", ['m','n'], *, *) returns -1
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  chars the characters to search for (optionally <code>null</code>)
+	 * @param  fromIndex the start index within the string
+	 * @param  toIndex the end index within the string
+	 * @return the index within the string of the last occurrence of any
+	 *         character from the array, up to and including the specified end
+	 *         index within the string, starting the search at the specified
+	 *         start index within the string, or <code>-1</code> if none of the
+	 *         characters occur
+	 */
 	public static int lastIndexOfAny(
 		String s, char[] chars, int fromIndex, int toIndex) {
 
@@ -832,6 +1136,40 @@ public class StringUtil {
 		return -1;
 	}
 
+	/**
+	 * Returns the index within the string of the last occurrence of any string
+	 * from the array.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>, but an array containing
+	 * <code>""</code> returns <code>0</code> if the string is not
+	 * <code>null</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * lastIndexOfAny(null</code>, *) returns -1
+	 * lastIndexOfAny(*, null</code>) returns -1
+	 * lastIndexOfAny(*, []) returns -1
+	 * lastIndexOfAny(*, [null</code>]) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ["ab","cd"]) returns 6
+	 * lastIndexOfAny("zzabyycdxx", ["cd","ab"]) returns 6
+	 * lastIndexOfAny("zzabyycdxx", ["mn","op"]) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ["mn",""]) returns 10
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  texts the strings to search for (optionally <code>null</code>)
+	 * @return the index within the string of the last occurrence of any string
+	 *         from the array, <code>0</code> if the search array contains
+	 *         <code>""</code>, or <code>-1</code> if none of the strings occur
+	 */
 	public static int lastIndexOfAny(String s, String[] texts) {
 		if (s == null) {
 			return -1;
@@ -840,6 +1178,43 @@ public class StringUtil {
 		return lastIndexOfAny(s, texts, 0, s.length() - 1);
 	}
 
+	/**
+	 * Returns the index within the string of the last occurrence of any string
+	 * from the array, starting the search at the specified index within the
+	 * string.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>, but an array containing
+	 * <code>""</code> returns the specified start index if the string is not
+	 * <code>null</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * lastIndexOfAny(null, *, *) returns -1
+	 * lastIndexOfAny(*, null, *) returns -1
+	 * lastIndexOfAny(*, [], *) returns -1
+	 * lastIndexOfAny(*, [null], *) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ["ab","cd"], 5) returns 2
+	 * lastIndexOfAny("zzabyycdxx", ["cd","ab"], 5) returns 2
+	 * lastIndexOfAny("zzabyycdxx", ["mn","op"], *) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ["mn",""], 5) returns 5
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  texts the strings to search for (optionally <code>null</code>)
+	 * @param  toIndex the end index within the string
+	 * @return the index within the string of the last occurrence of any string
+	 *         from the array, starting the search at the specified index within
+	 *         the string, the start index if the search array contains
+	 *         <code>""</code>, or <code>-1</code> if none of the strings occur
+	 */
 	public static int lastIndexOfAny(String s, String[] texts, int toIndex) {
 		if (s == null) {
 			return -1;
@@ -848,6 +1223,46 @@ public class StringUtil {
 		return lastIndexOfAny(s, texts, 0, toIndex);
 	}
 
+	/**
+	 * Returns the index within the string of the last occurrence of any string
+	 * from the array, up to and including the specified end index within the
+	 * string, starting the search at the specified start index within the
+	 * string.
+	 *
+	 * <p>
+	 * A <code>null</code> string returns <code>-1</code>. A <code>null</code>
+	 * or empty array returns <code>-1</code>, but an array containing
+	 * <code>""</code> returns the specified end index if the string is not
+	 * <code>null</code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * lastIndexOfAny(null, *, *, *) returns -1
+	 * lastIndexOfAny(*, null, *, *) returns -1
+	 * lastIndexOfAny(*, [], *, *) returns -1
+	 * lastIndexOfAny(*, [null], *, *) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ["ab","cd"], 2, 5) returns 2
+	 * lastIndexOfAny("zzabyycdxx", ["mn","op"], *, *) returns -1
+	 * lastIndexOfAny("zzabyycdxx", ["mn",""], 2, 5) returns 5
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  texts the strings to search for (optionally <code>null</code>)
+	 * @param  fromIndex the start index within the string
+	 * @param  toIndex the end index within the string
+	 * @return the index within the string of the last occurrence of any string
+	 *         from the array, up to and including the specified end index
+	 *         within the string, starting the search at the specified start
+	 *         index within the string, the end index if the search array
+	 *         contains <code>""</code>, or <code>-1</code> if none of the
+	 *         strings occur
+	 */
 	public static int lastIndexOfAny(
 		String s, String[] texts, int fromIndex, int toIndex) {
 

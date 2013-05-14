@@ -153,6 +153,10 @@ compound key will be created.
 See com.liferay.portal.service.persistence.LayoutPK for an example of a compound
 primary key.
 
+The mapping-key attribute is no longer supported. See LPS-32250 for more
+information. The value of the mapping-key is now always assumed to be the column
+entity's primary key.
+
 If the entity and mapping-table attributes are specified, then the Service
 Builder will assume you are specifying a many to many relationship.
 

@@ -67,6 +67,8 @@ public interface Http {
 
 	public String decodeURL(String url, boolean unescapeSpaces);
 
+	public String encodeParameters(String url);
+
 	public String encodePath(String path);
 
 	public String encodeURL(String url);

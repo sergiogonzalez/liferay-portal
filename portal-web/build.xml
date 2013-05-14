@@ -216,49 +216,6 @@
 							dir="docroot/html/js/editor/ckeditor/dev/builder/release"
 						/>
 
-						<replace file="docroot/html/js/editor/ckeditor/core/htmlparser/fragment.js">
-							<replacetoken><![CDATA[function sendPendingBRs()]]></replacetoken>
-							<replacevalue><![CDATA[function sendPendingBRs( brsToIgnore )]]></replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/core/htmlparser/fragment.js">
-							<replacetoken><![CDATA[while ( pendingBRs.length )]]></replacetoken>
-							<replacevalue><![CDATA[while ( pendingBRs.length - ( brsToIgnore || 0 ) > 0 )]]></replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/plugins/indent/plugin.js">
-							<replacetoken><![CDATA[return node.type == CKEDITOR.NODE_ELEMENT && node.is( 'li' );]]></replacetoken>
-							<replacevalue>
-								<![CDATA[return node.type == CKEDITOR.NODE_ELEMENT && node.is && node.is( 'li' );]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/plugins/popup/plugin.js">
-							<replacetoken><![CDATA[popupWindow.moveTo( left, top );]]></replacetoken>
-							<replacevalue><![CDATA[// Chrome is problematic, but it's not really needed here (#8855)]]></replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/plugins/popup/plugin.js">
-							<replacetoken><![CDATA[popupWindow.resizeTo( width, height );]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									var ua = navigator.userAgent.toLowerCase();
-
-									if (ua.indexOf(' chrome/') == -1) {
-										popupWindow.moveTo(left, top);
-										popupWindow.resizeTo(width, height);
-									}
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/plugins/indent/plugin.js">
-							<replacetoken><![CDATA[return node.type == CKEDITOR.NODE_ELEMENT && node.is( 'li' );]]></replacetoken>
-							<replacevalue>
-								<![CDATA[return node.type == CKEDITOR.NODE_ELEMENT && node.is && node.is( 'li' );]]>
-							</replacevalue>
-						</replace>
-
 						<replace file="docroot/html/js/editor/ckeditor/plugins/wysiwygarea/plugin.js">
 							<replacetoken><![CDATA[var data = fullPage]]></replacetoken>
 							<replacevalue>

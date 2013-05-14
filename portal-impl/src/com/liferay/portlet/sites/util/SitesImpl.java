@@ -217,7 +217,7 @@ public class SitesImpl implements Sites {
 			targetLayout.getNameMap(), targetLayout.getTitleMap(),
 			targetLayout.getDescriptionMap(), targetLayout.getKeywordsMap(),
 			targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
-			targetLayout.getHidden(), targetLayout.getFriendlyURL(),
+			targetLayout.getHidden(), targetLayout.getFriendlyURLMap(),
 			targetLayout.getIconImage(), null, serviceContext);
 
 		targetLayout = LayoutLocalServiceUtil.updateLayout(

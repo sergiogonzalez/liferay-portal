@@ -87,7 +87,8 @@ public class RSSWebCacheItem implements WebCacheItem {
 				PropsValues.RSS_CONNECTION_TIMEOUT);
 			httpClientParams.setSoTimeout(PropsValues.RSS_CONNECTION_TIMEOUT);
 
-			GetMethod getMethod = new GetMethod(_url);
+			GetMethod getMethod = new GetMethod(
+				httpImpl.encodeParameters(_url));
 
 			httpClient.executeMethod(hostConfiguration, getMethod);
 
