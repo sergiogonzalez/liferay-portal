@@ -42,13 +42,13 @@ public class PermissionConverterUtil {
 		return _permissionConverter;
 	}
 
-	public List<Permission> convertPermissions(long roleId)
+	public static List<Permission> convertPermissions(long roleId)
 		throws PortalException, SystemException {
 
 		return getPermissionConverter().convertPermissions(roleId);
 	}
 
-	public List<Permission> convertPermissions(
+	public static List<Permission> convertPermissions(
 			long roleId, PermissionConversionFilter permissionConversionFilter)
 		throws PortalException, SystemException {
 
@@ -56,7 +56,7 @@ public class PermissionConverterUtil {
 			roleId, permissionConversionFilter);
 	}
 
-	public List<Permission> convertPermissions(Role role)
+	public static List<Permission> convertPermissions(Role role)
 		throws PortalException, SystemException {
 
 		return getPermissionConverter().convertPermissions(role);
