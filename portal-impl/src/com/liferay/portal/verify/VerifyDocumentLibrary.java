@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -57,7 +58,10 @@ import java.io.InputStream;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Raymond Augé
@@ -116,18 +120,24 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
-		if (dlFileEntryType != null) {
-			return;
-		}
-
 		Date now = new Date();
 
-		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.createDLFileEntryType(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		if (dlFileEntryType == null) {
+			dlFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.createDLFileEntryType(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
-		dlFileEntryType.setCreateDate(now);
+			String fileEntryTypeKey =
+				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT;
+
+			fileEntryTypeKey = fileEntryTypeKey.trim().toUpperCase();
+
+			dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
+			dlFileEntryType.setCreateDate(now);
+		}
+
 		dlFileEntryType.setModifiedDate(now);
-		dlFileEntryType.setName(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+		dlFileEntryType.setNameMap(getNameMap());
 
 		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(dlFileEntryType);
 	}
@@ -340,6 +350,21 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		removeOrphanedDLFileEntries();
 		updateFileEntryAssets();
 		updateFolderAssets();
+	}
+
+	protected Map<Locale, String> getNameMap() {
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String localizedBasicDocument = LanguageUtil.get(
+				locale, DLFileEntryTypeConstants.KEY_BASIC_DOCUMENT);
+
+			nameMap.put(locale, localizedBasicDocument);
+		}
+
+		return nameMap;
 	}
 
 	protected void removeOrphanedDLFileEntries() throws Exception {
