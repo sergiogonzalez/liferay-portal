@@ -1589,6 +1589,16 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.getCssText();
 	}
 
+	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layout.getFriendlyURLMap();
+	}
+
+	public java.lang.String getFriendlyURLsXML()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layout.getFriendlyURLsXML();
+	}
+
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

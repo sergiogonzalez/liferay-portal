@@ -70,6 +70,10 @@ public class HttpUtil {
 		return getHttp().decodeURL(url, unescapeSpaces);
 	}
 
+	public static String encodeParameters(String url) {
+		return getHttp().encodeParameters(url);
+	}
+
 	public static String encodePath(String path) {
 		return getHttp().encodePath(path);
 	}

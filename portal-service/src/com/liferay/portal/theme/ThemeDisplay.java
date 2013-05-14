@@ -1007,7 +1007,16 @@ public class ThemeDisplay
 			setPathThemeJavaScript(
 				cdnBaseURL + themeStaticResourcePath +
 					theme.getJavaScriptPath());
-			setPathThemeRoot(themeStaticResourcePath + theme.getRootPath());
+
+			String rootPath = theme.getRootPath();
+
+			if (rootPath.equals(StringPool.SLASH)) {
+				setPathThemeRoot(themeStaticResourcePath);
+			}
+			else {
+				setPathThemeRoot(themeStaticResourcePath + rootPath);
+			}
+
 			setPathThemeTemplates(
 				cdnBaseURL + themeStaticResourcePath +
 					theme.getTemplatesPath());

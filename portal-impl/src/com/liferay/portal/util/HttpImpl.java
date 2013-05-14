@@ -245,6 +245,19 @@ public class HttpImpl implements Http {
 		MultiThreadedHttpConnectionManager.shutdownAll();
 	}
 
+	public String encodeParameters(String url) {
+		String queryString = getQueryString(url);
+
+		if (Validator.isNull(queryString)) {
+			return url;
+		}
+
+		String encodedQueryString = parameterMapToString(
+			parameterMapFromString(queryString), false);
+
+		return StringUtil.replace(url, queryString, encodedQueryString);
+	}
+
 	public String encodePath(String path) {
 		path = StringUtil.replace(path, StringPool.SLASH, _TEMP_SLASH);
 		path = encodeURL(path, true);
