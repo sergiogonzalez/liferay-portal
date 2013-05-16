@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -86,10 +84,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileEntryType.getUserUuid());
 
-		String name = getFileEntryTypeName(
-			fileEntryType.getUuid(), portletDataContext.getScopeGroupId(),
-			fileEntryType.getName(), 2);
-
 		List<Element> ddmStructureElements =
 			portletDataContext.getReferenceDataElements(
 				fileEntryType, DDMStructure.class);
@@ -138,8 +132,10 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 				importedDLFileEntryType =
 					DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-						userId, portletDataContext.getScopeGroupId(), name,
-						fileEntryType.getDescription(), ddmStructureIdsArray,
+						userId, portletDataContext.getScopeGroupId(),
+						fileEntryType.getFileEntryTypeKey(),
+						fileEntryType.getNameMap(),
+						fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
 						serviceContext);
 			}
 			else {
@@ -149,8 +145,9 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 					DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
 						userId, existingDLFileEntryType.getFileEntryTypeId(),
-						name, fileEntryType.getDescription(),
-						ddmStructureIdsArray, serviceContext);
+						fileEntryType.getNameMap(),
+						fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
+						serviceContext);
 				}
 
 				importedDLFileEntryType = existingDLFileEntryType;
@@ -159,8 +156,10 @@ public class DLFileEntryTypeStagedModelDataHandler
 		else {
 			importedDLFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-					userId, portletDataContext.getScopeGroupId(), name,
-					fileEntryType.getDescription(), ddmStructureIdsArray,
+					userId, portletDataContext.getScopeGroupId(),
+					fileEntryType.getFileEntryTypeKey(),
+					fileEntryType.getNameMap(),
+					fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
 					serviceContext);
 		}
 
@@ -199,34 +198,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 					importedDDMStructure);
 			}
 		}
-	}
-
-	/**
-	 * @see com.liferay.portal.lar.PortletImporter#getAssetCategoryName(String,
-	 *      long, long, String, int)
-	 * @see com.liferay.portal.lar.PortletImporter#getAssetVocabularyName(
-	 *      String, long, String, int)
-	 */
-	protected String getFileEntryTypeName(
-			String uuid, long groupId, String name, int count)
-		throws Exception {
-
-		DLFileEntryType dlFileEntryType = DLFileEntryTypeUtil.fetchByG_N(
-			groupId, name);
-
-		if (dlFileEntryType == null) {
-			return name;
-		}
-
-		if (Validator.isNotNull(uuid) &&
-			uuid.equals(dlFileEntryType.getUuid())) {
-
-			return name;
-		}
-
-		name = StringUtil.appendParentheticalSuffix(name, count);
-
-		return getFileEntryTypeName(uuid, groupId, name, ++count);
 	}
 
 	protected boolean isFileEntryTypeGlobal(

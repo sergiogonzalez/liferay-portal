@@ -48,8 +48,8 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 		modelVar="fileEntryType"
 	>
 		<liferay-ui:search-container-column-text
-			name="name"
-			property="name"
+			name="title"
+			value="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

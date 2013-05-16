@@ -53,8 +53,11 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
  */
 public class DLFileEntryTypeServiceHttp {
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
+		HttpPrincipal httpPrincipal, long groupId,
+		java.lang.String fileEntryTypeKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long[] ddmStructureIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -63,7 +66,8 @@ public class DLFileEntryTypeServiceHttp {
 					"addFileEntryType", _addFileEntryTypeParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					name, description, ddmStructureIds, serviceContext);
+					fileEntryTypeKey, nameMap, descriptionMap, ddmStructureIds,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -333,8 +337,10 @@ public class DLFileEntryTypeServiceHttp {
 	}
 
 	public static void updateFileEntryType(HttpPrincipal httpPrincipal,
-		long fileEntryTypeId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
+		long fileEntryTypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long[] ddmStructureIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -343,7 +349,7 @@ public class DLFileEntryTypeServiceHttp {
 					"updateFileEntryType", _updateFileEntryTypeParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryTypeId, name, description, ddmStructureIds,
+					fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
 					serviceContext);
 
 			try {
@@ -370,8 +376,9 @@ public class DLFileEntryTypeServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryTypeServiceHttp.class);
 	private static final Class<?>[] _addFileEntryTypeParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			long[].class, com.liferay.portal.service.ServiceContext.class
+			long.class, java.lang.String.class, java.util.Map.class,
+			java.util.Map.class, long[].class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFileEntryTypeParameterTypes1 = new Class[] {
 			long.class
@@ -397,7 +404,7 @@ public class DLFileEntryTypeServiceHttp {
 			long.class, long[].class, java.lang.String.class, boolean.class
 		};
 	private static final Class<?>[] _updateFileEntryTypeParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			long[].class, com.liferay.portal.service.ServiceContext.class
+			long.class, java.util.Map.class, java.util.Map.class, long[].class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 }

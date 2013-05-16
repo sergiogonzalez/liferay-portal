@@ -74,7 +74,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (fileEntryType == null) %>"
-		title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName() %>'
+		title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName(locale) %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />

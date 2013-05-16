@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
@@ -79,7 +78,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				"Structure", StringPool.BLANK,
+				null, ServiceTestUtil.randomLocaleStringMap(),
+				ServiceTestUtil.randomLocaleStringMap(),
 				new long[] {_ddmStructure.getStructureId()}, serviceContext);
 
 		String content = "Content: Enterprise. Open Source. For Life.";

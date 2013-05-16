@@ -54,6 +54,7 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("fileEntryTypeKey", getFileEntryTypeKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 
@@ -107,6 +108,12 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String fileEntryTypeKey = (String)attributes.get("fileEntryTypeKey");
+
+		if (fileEntryTypeKey != null) {
+			setFileEntryTypeKey(fileEntryTypeKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -305,12 +312,90 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	/**
+	* Returns the file entry type key of this document library file entry type.
+	*
+	* @return the file entry type key of this document library file entry type
+	*/
+	public java.lang.String getFileEntryTypeKey() {
+		return _dlFileEntryType.getFileEntryTypeKey();
+	}
+
+	/**
+	* Sets the file entry type key of this document library file entry type.
+	*
+	* @param fileEntryTypeKey the file entry type key of this document library file entry type
+	*/
+	public void setFileEntryTypeKey(java.lang.String fileEntryTypeKey) {
+		_dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
+	}
+
+	/**
 	* Returns the name of this document library file entry type.
 	*
 	* @return the name of this document library file entry type
 	*/
 	public java.lang.String getName() {
 		return _dlFileEntryType.getName();
+	}
+
+	/**
+	* Returns the localized name of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this document library file entry type
+	*/
+	public java.lang.String getName(java.util.Locale locale) {
+		return _dlFileEntryType.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this document library file entry type in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this document library file entry type. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _dlFileEntryType.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this document library file entry type
+	*/
+	public java.lang.String getName(java.lang.String languageId) {
+		return _dlFileEntryType.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this document library file entry type in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this document library file entry type
+	*/
+	public java.lang.String getName(java.lang.String languageId,
+		boolean useDefault) {
+		return _dlFileEntryType.getName(languageId, useDefault);
+	}
+
+	public java.lang.String getNameCurrentLanguageId() {
+		return _dlFileEntryType.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _dlFileEntryType.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this document library file entry type.
+	*
+	* @return the locales and localized names of this document library file entry type
+	*/
+	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _dlFileEntryType.getNameMap();
 	}
 
 	/**
@@ -323,6 +408,54 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	/**
+	* Sets the localized name of this document library file entry type in the language.
+	*
+	* @param name the localized name of this document library file entry type
+	* @param locale the locale of the language
+	*/
+	public void setName(java.lang.String name, java.util.Locale locale) {
+		_dlFileEntryType.setName(name, locale);
+	}
+
+	/**
+	* Sets the localized name of this document library file entry type in the language, and sets the default locale.
+	*
+	* @param name the localized name of this document library file entry type
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	public void setName(java.lang.String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_dlFileEntryType.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_dlFileEntryType.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized names of this document library file entry type from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this document library file entry type
+	*/
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+		_dlFileEntryType.setNameMap(nameMap);
+	}
+
+	/**
+	* Sets the localized names of this document library file entry type from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this document library file entry type
+	* @param defaultLocale the default locale
+	*/
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Locale defaultLocale) {
+		_dlFileEntryType.setNameMap(nameMap, defaultLocale);
+	}
+
+	/**
 	* Returns the description of this document library file entry type.
 	*
 	* @return the description of this document library file entry type
@@ -332,12 +465,122 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	/**
+	* Returns the localized description of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this document library file entry type
+	*/
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _dlFileEntryType.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this document library file entry type in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this document library file entry type. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _dlFileEntryType.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this document library file entry type
+	*/
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _dlFileEntryType.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this document library file entry type in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this document library file entry type
+	*/
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _dlFileEntryType.getDescription(languageId, useDefault);
+	}
+
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _dlFileEntryType.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _dlFileEntryType.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this document library file entry type.
+	*
+	* @return the locales and localized descriptions of this document library file entry type
+	*/
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _dlFileEntryType.getDescriptionMap();
+	}
+
+	/**
 	* Sets the description of this document library file entry type.
 	*
 	* @param description the description of this document library file entry type
 	*/
 	public void setDescription(java.lang.String description) {
 		_dlFileEntryType.setDescription(description);
+	}
+
+	/**
+	* Sets the localized description of this document library file entry type in the language.
+	*
+	* @param description the localized description of this document library file entry type
+	* @param locale the locale of the language
+	*/
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale) {
+		_dlFileEntryType.setDescription(description, locale);
+	}
+
+	/**
+	* Sets the localized description of this document library file entry type in the language, and sets the default locale.
+	*
+	* @param description the localized description of this document library file entry type
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale, java.util.Locale defaultLocale) {
+		_dlFileEntryType.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_dlFileEntryType.setDescriptionCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized descriptions of this document library file entry type from the map of locales and localized descriptions.
+	*
+	* @param descriptionMap the locales and localized descriptions of this document library file entry type
+	*/
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		_dlFileEntryType.setDescriptionMap(descriptionMap);
+	}
+
+	/**
+	* Sets the localized descriptions of this document library file entry type from the map of locales and localized descriptions, and sets the default locale.
+	*
+	* @param descriptionMap the locales and localized descriptions of this document library file entry type
+	* @param defaultLocale the default locale
+	*/
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Locale defaultLocale) {
+		_dlFileEntryType.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	public boolean isNew() {
@@ -385,6 +628,12 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_dlFileEntryType.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_dlFileEntryType.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override

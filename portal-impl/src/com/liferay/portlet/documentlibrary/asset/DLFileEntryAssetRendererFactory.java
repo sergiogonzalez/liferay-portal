@@ -143,7 +143,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			classTypes.put(
 				dlFileEntryType.getFileEntryTypeId(),
-				dlFileEntryType.getName());
+				dlFileEntryType.getFileEntryTypeKey());
 		}
 
 		return classTypes;
