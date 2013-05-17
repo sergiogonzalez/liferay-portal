@@ -328,8 +328,15 @@ public class FriendlyURLServlet extends HttpServlet {
 				requestContext);
 
 			LayoutFriendlyURL layoutFriendlyURL =
-				LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
+				LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
 					layoutActual.getPlid(), LocaleUtil.toLanguageId(locale));
+
+			if (layoutFriendlyURL == null) {
+				layoutFriendlyURL =
+					LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
+						layoutActual.getPlid(),
+						LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+			}
 
 			if (!friendlyURL.equals(layoutFriendlyURL.getFriendlyURL())) {
 				String redirect = getRedirect(
