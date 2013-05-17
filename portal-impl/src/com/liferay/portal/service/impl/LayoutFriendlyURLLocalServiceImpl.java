@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -112,6 +113,29 @@ public class LayoutFriendlyURLLocalServiceImpl
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
 			deleteLayoutFriendlyURL(layoutFriendlyURL);
 		}
+	}
+
+	@Override
+	public LayoutFriendlyURL getLayoutFriendlyURL(long plid, String languageId)
+		throws PortalException, SystemException {
+
+		return getLayoutFriendlyURL(plid, languageId, true);
+	}
+
+	@Override
+	public LayoutFriendlyURL getLayoutFriendlyURL(
+			long plid, String languageId, boolean useDefault)
+		throws PortalException, SystemException {
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			layoutFriendlyURLPersistence.fetchByP_L(plid, languageId);
+
+		if (layoutFriendlyURL == null) {
+			layoutFriendlyURL = layoutFriendlyURLPersistence.findByP_L(
+				plid, LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+		}
+
+		return layoutFriendlyURL;
 	}
 
 	@Override
