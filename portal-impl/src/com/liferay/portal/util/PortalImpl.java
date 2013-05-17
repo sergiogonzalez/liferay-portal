@@ -838,6 +838,37 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public Object[] getActualLayout(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		Layout layout = null;
+		String queryString = StringPool.BLANK;
+
+		if (Validator.isNull(friendlyURL)) {
+			layout = LayoutLocalServiceUtil.fetchFirstLayout(
+				groupId, privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (layout == null) {
+				throw new NoSuchLayoutException(
+					"{groupId=" + groupId + ",privateLayout=" + privateLayout +
+						"} does not have any layouts");
+			}
+		}
+		else {
+			Object[] friendlyURLMapper = getPortletFriendlyURLMapper(
+				groupId, privateLayout, friendlyURL, params, requestContext);
+
+			layout = (Layout)friendlyURLMapper[0];
+			queryString = (String)friendlyURLMapper[1];
+		}
+
+		return new Object[] {layout, queryString};
+	}
+
+	@Override
 	public String getActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
@@ -2577,27 +2608,11 @@ public class PortalImpl implements Portal {
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 
-		Layout layout = null;
-		String queryString = StringPool.BLANK;
+		Object[] actualLayout = getActualLayout(
+			groupId, privateLayout, friendlyURL, params, requestContext);
 
-		if (Validator.isNull(friendlyURL)) {
-			layout = LayoutLocalServiceUtil.fetchFirstLayout(
-				groupId, privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (layout == null) {
-				throw new NoSuchLayoutException(
-					"{groupId=" + groupId + ",privateLayout=" + privateLayout +
-						"} does not have any layouts");
-			}
-		}
-		else {
-			Object[] friendlyURLMapper = getPortletFriendlyURLMapper(
-				groupId, privateLayout, friendlyURL, params, requestContext);
-
-			layout = (Layout)friendlyURLMapper[0];
-			queryString = (String)friendlyURLMapper[1];
-		}
+		Layout layout = (Layout)actualLayout[0];
+		String queryString = (String)actualLayout[1];
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 

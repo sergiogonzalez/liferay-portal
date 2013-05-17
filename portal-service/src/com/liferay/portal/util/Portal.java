@@ -240,6 +240,11 @@ public interface Portal {
 	 */
 	public String generateRandomKey(HttpServletRequest request, String input);
 
+	public Object[] getActualLayout(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException;
+
 	public String getActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
