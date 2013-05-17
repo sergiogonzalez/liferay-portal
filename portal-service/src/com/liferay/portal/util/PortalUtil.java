@@ -663,6 +663,15 @@ public class PortalUtil {
 		return getPortal().getJsSafePortletId(portletId);
 	}
 
+	public static Layout getLayoutActual(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		return getPortal().getLayoutActual(
+			groupId, privateLayout, friendlyURL, params, requestContext);
+	}
+
 	public static String getLayoutActualURL(Layout layout) {
 		return getPortal().getLayoutActualURL(layout);
 	}
