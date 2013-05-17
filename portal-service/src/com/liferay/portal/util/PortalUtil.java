@@ -657,6 +657,13 @@ public class PortalUtil {
 		return getPortal().getHttpServletResponse(portletResponse);
 	}
 
+	public static String getI18nPathLanguageId(
+		Locale locale, String defaultI18nPathLanguageId) {
+
+		return getPortal().getI18nPathLanguageId(
+			locale, defaultI18nPathLanguageId);
+	}
+
 	public static String getJournalArticleActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
@@ -668,8 +675,25 @@ public class PortalUtil {
 			requestContext);
 	}
 
+	public static Layout getJournalArticleLayout(
+			long groupId, boolean privateLayout, String friendlyURL)
+		throws PortalException, SystemException {
+
+		return getPortal().getJournalArticleLayout(
+			groupId, privateLayout, friendlyURL);
+	}
+
 	public static String getJsSafePortletId(String portletId) {
 		return getPortal().getJsSafePortletId(portletId);
+	}
+
+	public static Object[] getLayout(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		return getPortal().getLayout(
+			groupId, privateLayout, friendlyURL, params, requestContext);
 	}
 
 	public static String getLayoutActualURL(Layout layout) {
@@ -818,6 +842,13 @@ public class PortalUtil {
 
 	public static Locale getLocale(RenderRequest renderRequest) {
 		return getPortal().getLocale(renderRequest);
+	}
+
+	public static String getLocalizedFriendlyURL(
+			HttpServletRequest request, Layout layout, Locale locale)
+		throws Exception {
+
+		return getPortal().getLocalizedFriendlyURL(request, layout, locale);
 	}
 
 	public static String getMailId(
@@ -1435,6 +1466,15 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getValidUserId(companyId, userId);
+	}
+
+	public static Object[] getVirtualLayout(
+			boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		return getPortal().getVirtualLayout(
+			privateLayout, friendlyURL, params, requestContext);
 	}
 
 	public static String getVirtualLayoutActualURL(
