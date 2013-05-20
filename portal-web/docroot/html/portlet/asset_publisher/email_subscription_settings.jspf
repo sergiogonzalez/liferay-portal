@@ -24,13 +24,13 @@ String emailParam = (String)request.getAttribute("configuration.jsp-emailParam")
 String defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
 String defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY));
 
+String currentLanguageId = LanguageUtil.getLanguageId(request);
+
 String subjectParam = (String)request.getAttribute("configuration.jsp-subjectParam");
 String bodyParam = (String)request.getAttribute("configuration.jsp-bodyParam");
 
 String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(preferences, request, bodyParam, defaultEmailBody);
-
-String currentLanguageId = LanguageUtil.getLanguageId(request);
 %>
 
 <liferay-ui:error key="emailAssetEntryAddedBody" message="please-enter-a-valid-body" />
