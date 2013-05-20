@@ -218,13 +218,14 @@ public class GroupServiceTest {
 	public void testGroupIsChildSiteScopeType() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group scopeGroup = GroupTestUtil.addGroup();
-		Group group = GroupTestUtil.addGroup(
-			scopeGroup.getGroupId(), ServiceTestUtil.randomString());
+		Group group = GroupTestUtil.addGroup();
 
-		themeDisplay.setScopeGroupId(scopeGroup.getGroupId());
+		Group childrenGroup = GroupTestUtil.addGroup(
+			group.getGroupId(), ServiceTestUtil.randomString());
 
-		String scopeType = group.getScopeType(themeDisplay);
+		themeDisplay.setScopeGroupId(group.getGroupId());
+
+		String scopeType = childrenGroup.getScopeType(themeDisplay);
 
 		Assert.assertEquals("child-site", scopeType);
 	}
@@ -281,10 +282,10 @@ public class GroupServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		Group scopeGroup = GroupTestUtil.addGroup(
+		Group childrenGroup = GroupTestUtil.addGroup(
 			group.getGroupId(), ServiceTestUtil.randomString());
 
-		themeDisplay.setScopeGroupId(scopeGroup.getGroupId());
+		themeDisplay.setScopeGroupId(childrenGroup.getGroupId());
 
 		String scopeType = group.getScopeType(themeDisplay);
 
