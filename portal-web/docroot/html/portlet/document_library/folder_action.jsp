@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portal.repository.cmis.model.CMISFolder" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -325,8 +326,8 @@ String iconMenuId = null;
 					int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay));
 					%>
 
-					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
-						<portlet:param name="struts_action" value='<%= fileEntryTypesCount > 0 ? "/document_library_display/select_file_entry_type" : "/document_library_display/edit_file_entry" %>' />
+					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= (((folder == null) || (folder.isSupportsMetadata() && !(folder.isMountPoint()))) && (fileEntryTypesCount > 0)) ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
+						<portlet:param name="struts_action" value='<%= (((folder == null) || (folder.isSupportsMetadata() && !(folder.isMountPoint()))) && (fileEntryTypesCount > 0)) ? "/document_library_display/select_file_entry_type" : "/document_library_display/edit_file_entry" %>' />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -340,7 +341,7 @@ String iconMenuId = null;
 					<liferay-ui:icon
 						image="../document_library/add_document"
 						message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
-						url="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? taglibEditURL : editFileEntryURL %>"
+						url="<%= (((folder == null) || (folder.isSupportsMetadata() && !(folder.isMountPoint()))) && (fileEntryTypesCount > 0)) ? taglibEditURL : editFileEntryURL %>"
 					/>
 				</c:if>
 
