@@ -284,8 +284,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Layout friendly URLs
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
-			user.getCompanyId(), groupId, plid, privateLayout, friendlyURLMap,
-			serviceContext);
+			user.getUserId(), user.getCompanyId(), groupId, plid, privateLayout,
+			friendlyURLMap, serviceContext);
 
 		// Layout set
 
@@ -1951,8 +1951,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			friendlyURL);
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
-			layout.getCompanyId(), layout.getGroupId(), layout.getPlid(),
-			layout.isPrivateLayout(), friendlyURL, languageId,
+			layout.getUserId(), layout.getCompanyId(), layout.getGroupId(),
+			layout.getPlid(), layout.isPrivateLayout(), friendlyURL, languageId,
 			new ServiceContext());
 
 		layout.setModifiedDate(now);
@@ -2084,8 +2084,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Layout friendly URLs
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
-			layout.getCompanyId(), layout.getGroupId(), layout.getPlid(),
-			layout.isPrivateLayout(), friendlyURLMap, serviceContext);
+			layout.getUserId(), layout.getCompanyId(), layout.getGroupId(),
+			layout.getPlid(), layout.isPrivateLayout(), friendlyURLMap,
+			serviceContext);
 
 		return layout;
 	}
