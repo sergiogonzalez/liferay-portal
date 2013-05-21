@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -26,6 +27,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeServiceBa
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -51,6 +53,28 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 		return dlFileEntryTypeLocalService.addFileEntryType(
 			getUserId(), groupId, fileEntryTypeKey, nameMap, descriptionMap,
 			ddmStructureIds, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addFileEntryType(long,
+	 *             String, Map, Map, long[], ServiceContext)}
+	 */
+	public DLFileEntryType addFileEntryType(
+			long groupId, String name, String description,
+			long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), name);
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), description);
+
+		return addFileEntryType(
+			groupId, null, nameMap, descriptionMap, ddmStructureIds,
+			serviceContext);
 	}
 
 	public void deleteFileEntryType(long fileEntryTypeId)
@@ -122,6 +146,28 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 		dlFileEntryTypeLocalService.updateFileEntryType(
 			getUserId(), fileEntryTypeId, nameMap, descriptionMap,
 			ddmStructureIds, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #updateFileEntryType(long,
+	 *             Map, Map, long[], ServiceContext)}
+	 */
+	public void updateFileEntryType(
+			long fileEntryTypeId, String name, String description,
+			long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), name);
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), description);
+
+		updateFileEntryType(
+			fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
+			serviceContext);
 	}
 
 	protected List<DLFileEntryType> filterFileEntryTypes(
