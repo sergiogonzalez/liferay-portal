@@ -173,23 +173,6 @@ public interface Portal {
 			long companyId, Layout layout, Portlet portlet)
 		throws PortalException, SystemException;
 
-	/**
-	 * Adds the preserved parameters doAsGroupId and refererPlid to the URL,
-	 * optionally adding doAsUserId and doAsUserLanguageId as well.
-	 *
-	 * <p>
-	 * Preserved parameters are parameters that should be sent with every
-	 * request as the user navigates the portal.
-	 * </p>
-	 *
-	 * @param  themeDisplay the current theme display
-	 * @param  layout the current layout
-	 * @param  url the URL
-	 * @param  doAsUser whether to include doAsUserId and doAsLanguageId in the
-	 *         URL if they are available. If <code>false</code>, doAsUserId and
-	 *         doAsUserLanguageId will never be added.
-	 * @return the URL with the preserved parameters added
-	 */
 	public String addPreservedParameters(
 		ThemeDisplay themeDisplay, Layout layout, String url, boolean doAsUser);
 
@@ -709,6 +692,28 @@ public interface Portal {
 
 	public String getJsSafePortletId(String portletId);
 
+	public Layout getLayoutActual(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException;
+
+		/**
+		 * Adds the preserved parameters doAsGroupId and refererPlid to the URL,
+		 * optionally adding doAsUserId and doAsUserLanguageId as well.
+		 *
+		 * <p>
+		 * Preserved parameters are parameters that should be sent with every
+		 * request as the user navigates the portal.
+		 * </p>
+		 *
+		 * @param  themeDisplay the current theme display
+		 * @param  layout the current layout
+		 * @param  url the URL
+		 * @param  doAsUser whether to include doAsUserId and doAsLanguageId in the
+		 *         URL if they are available. If <code>false</code>, doAsUserId and
+		 *         doAsUserLanguageId will never be added.
+		 * @return the URL with the preserved parameters added
+		 */
 	public String getLayoutActualURL(Layout layout);
 
 	public String getLayoutActualURL(Layout layout, String mainPath);

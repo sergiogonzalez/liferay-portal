@@ -95,6 +95,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -131,6 +132,7 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -2438,6 +2440,34 @@ public class PortalImpl implements Portal {
 		return JS.getSafeName(portletId);
 	}
 
+	public Layout getLayoutActual(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		Layout layout = null;
+
+		if (Validator.isNull(friendlyURL)) {
+			layout = LayoutLocalServiceUtil.fetchFirstLayout(
+				groupId, privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (layout == null) {
+				throw new NoSuchLayoutException(
+					"{groupId=" + groupId + ",privateLayout=" + privateLayout +
+						"} does not have any layouts");
+			}
+		}
+		else {
+			Object[] friendlyURLMapper = getPortletFriendlyURLMapper(
+				groupId, privateLayout, friendlyURL, params, requestContext);
+
+			layout = (Layout)friendlyURLMapper[0];
+		}
+
+		return layout;
+	}
+
 	public String getLayoutActualURL(Layout layout) {
 		return getLayoutActualURL(layout, getPathMain());
 	}
@@ -2553,7 +2583,19 @@ public class PortalImpl implements Portal {
 		String groupFriendlyURL = getGroupFriendlyURL(
 			layout.getGroup(), layout.isPrivateLayout(), themeDisplay);
 
-		return groupFriendlyURL.concat(layout.getFriendlyURL());
+		LayoutFriendlyURL layoutFriendlyURL =
+			LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
+				layout.getPlid(),
+				LocaleUtil.toLanguageId(themeDisplay.getLocale()));
+
+		if (layoutFriendlyURL == null) {
+			layoutFriendlyURL =
+				LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
+					layout.getPlid(),
+					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+		}
+
+		return groupFriendlyURL.concat(layoutFriendlyURL.getFriendlyURL());
 	}
 
 	public String getLayoutFriendlyURL(
