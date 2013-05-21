@@ -406,7 +406,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 
-		return updateFileEntryType(
+		updateFileEntryType(
 			userId, fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
 			serviceContext);
 	}
