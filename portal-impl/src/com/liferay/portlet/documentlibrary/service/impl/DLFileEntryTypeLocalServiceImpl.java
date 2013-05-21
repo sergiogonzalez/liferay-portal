@@ -97,13 +97,13 @@ public class DLFileEntryTypeLocalServiceImpl
 			fileEntryTypeId);
 
 		dlFileEntryType.setUuid(fileEntryTypeUuid);
-		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
 		dlFileEntryType.setGroupId(groupId);
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());
 		dlFileEntryType.setUserName(user.getFullName());
 		dlFileEntryType.setCreateDate(serviceContext.getCreateDate(now));
 		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(now));
+		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);
 
@@ -232,7 +232,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			long groupId, String fileEntryTypeKey)
 		throws PortalException, SystemException {
 
-		return dlFileEntryTypePersistence.findByG_K(groupId, fileEntryTypeKey);
+		return dlFileEntryTypePersistence.findByG_F(groupId, fileEntryTypeKey);
 	}
 
 	@Override
@@ -583,7 +583,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			long[] ddmStructureIds)
 		throws PortalException, SystemException {
 
-		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.fetchByG_K(
+		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.fetchByG_F(
 			groupId, fileEntryTypeKey);
 
 		if ((dlFileEntryType != null) &&
