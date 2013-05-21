@@ -274,7 +274,7 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
-		<finder name="G_K" return-type="DLFileEntryType" unique="true">
+		<finder name="G_F" return-type="DLFileEntryType" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="fileEntryTypeKey" />
 		</finder>
