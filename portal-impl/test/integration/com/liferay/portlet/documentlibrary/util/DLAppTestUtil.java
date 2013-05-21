@@ -40,6 +40,9 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * @author Alexander Chow
  */
@@ -50,25 +53,27 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		long userId = TestPropsValues.getUserId();
-		String name = ServiceTestUtil.randomString();
-		String description = ServiceTestUtil.randomString();
+		Map<Locale, String> descriptionMap =
+			ServiceTestUtil.randomLocaleStringMap();
+		Map<Locale, String> titleMap = ServiceTestUtil.randomLocaleStringMap();
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
 
 		return addDLFileEntryType(
-			userId, groupId, name, description, new long[] {ddmStructureId},
-			serviceContext);
+			userId, groupId, null, titleMap, descriptionMap,
+			new long[] {ddmStructureId}, serviceContext);
 	}
 
 	public static DLFileEntryType addDLFileEntryType(
-			long userId, long groupId, String name, String description,
+			long userId, long groupId, String fileEntryTypeKey,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws Exception {
 
 		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-			userId, groupId, name, description, ddmStructureIds,
-			serviceContext);
+			userId, groupId, fileEntryTypeKey, titleMap, descriptionMap,
+			ddmStructureIds, serviceContext);
 	}
 
 	public static DLFileRank addDLFileRank(long groupId, long fileEntryId)

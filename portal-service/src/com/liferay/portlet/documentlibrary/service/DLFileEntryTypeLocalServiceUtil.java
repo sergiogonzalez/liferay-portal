@@ -567,6 +567,23 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
+		long userId, long groupId, java.lang.String fileEntryTypeKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long[] ddmStructureIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFileEntryType(userId, groupId, fileEntryTypeKey,
+			nameMap, descriptionMap, ddmStructureIds, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addFileEntryType(long, long,
+	String, Map, Map, long[], ServiceContext)}
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -623,10 +640,10 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
-		long groupId, java.lang.String name)
+		long groupId, java.lang.String fileEntryTypeKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileEntryType(groupId, name);
+		return getService().getFileEntryType(groupId, fileEntryTypeKey);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
@@ -675,6 +692,22 @@ public class DLFileEntryTypeLocalServiceUtil {
 				   .updateFileEntryFileEntryType(dlFileEntry, serviceContext);
 	}
 
+	public static void updateFileEntryType(long userId, long fileEntryTypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long[] ddmStructureIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateFileEntryType(userId, fileEntryTypeId, nameMap,
+			descriptionMap, ddmStructureIds, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #updateFileEntryType(long,
+	long, Map, Map, long[], ServiceContext)}
+	*/
 	public static void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
