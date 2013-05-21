@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -43,6 +44,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -125,6 +127,24 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		return dlFileEntryType;
+	}
+
+	public DLFileEntryType addFileEntryType(
+			long userId, long groupId, String name, String description,
+			long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), name);
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), description);
+
+		return addFileEntryType(
+			userId, groupId, null, nameMap, descriptionMap, ddmStructureIds,
+			serviceContext);
 	}
 
 	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
@@ -363,6 +383,24 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		dlFileEntryTypePersistence.setDDMStructures(
 			fileEntryTypeId, ddmStructureIds);
+	}
+
+	public void updateFileEntryType(
+			long userId, long fileEntryTypeId, String name, String description,
+			long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), name);
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), description);
+
+		updateFileEntryType(
+			userId, fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
+			serviceContext);
 	}
 
 	public void updateFolderFileEntryTypes(
