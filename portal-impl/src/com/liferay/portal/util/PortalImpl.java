@@ -1182,17 +1182,20 @@ public class PortalImpl implements Portal {
 			layout = themeDisplay.getLayout();
 		}
 
-		String layoutFriendlyURL = StringPool.BLANK;
+		String canonicalLayoutFriendlyURL = StringPool.BLANK;
 
-		if ((groupFriendlyURL.contains(layout.getFriendlyURL()) ||
+		String layoutFriendlyURL = layout.getFriendlyURL(
+			themeDisplay.getLocale());
+
+		if ((groupFriendlyURL.contains(layoutFriendlyURL) ||
 			 groupFriendlyURL.contains(
 				StringPool.SLASH + layout.getLayoutId())) &&
 			(!layout.isFirstParent() || Validator.isNotNull(parametersURL))) {
 
-			layoutFriendlyURL = layout.getFriendlyURL();
+			canonicalLayoutFriendlyURL = layoutFriendlyURL;
 		}
 		else if (forceLayoutFriendlyURL) {
-			layoutFriendlyURL = layout.getFriendlyURL();
+			canonicalLayoutFriendlyURL = layoutFriendlyURL;
 		}
 
 		Group group = layout.getGroup();
@@ -1200,7 +1203,8 @@ public class PortalImpl implements Portal {
 		groupFriendlyURL = getGroupFriendlyURL(
 			group, layout.isPrivateLayout(), themeDisplay, true);
 
-		return groupFriendlyURL.concat(layoutFriendlyURL).concat(parametersURL);
+		return groupFriendlyURL.concat(
+			canonicalLayoutFriendlyURL).concat(parametersURL);
 	}
 
 	/**
@@ -4555,7 +4559,8 @@ public class PortalImpl implements Portal {
 		}
 
 		for (Layout layout : layouts) {
-			String friendlyURL = layout.getFriendlyURL();
+			String friendlyURL = layout.getFriendlyURL(
+				themeDisplay.getLocale());
 
 			if (friendlyURL.equals(PropsValues.AUTH_LOGIN_SITE_URL)) {
 				if (themeDisplay.getLayout() == null) {
@@ -7096,7 +7101,7 @@ public class PortalImpl implements Portal {
 		}
 
 		sb.append(group.getFriendlyURL());
-		sb.append(layout.getFriendlyURL());
+		sb.append(layout.getFriendlyURL(themeDisplay.getLocale()));
 
 		sb.append(FRIENDLY_URL_SEPARATOR);
 
