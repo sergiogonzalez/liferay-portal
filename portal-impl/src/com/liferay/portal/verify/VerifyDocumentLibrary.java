@@ -122,21 +122,20 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		Date now = new Date();
 
-		if (dlFileEntryType == null) {
-			dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.createDLFileEntryType(
-					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-
-			String fileEntryTypeKey =
-				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT;
-
-			fileEntryTypeKey = fileEntryTypeKey.trim().toUpperCase();
-
-			dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
-			dlFileEntryType.setCreateDate(now);
+		if (dlFileEntryType != null) {
+			return;
 		}
 
+		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.createDLFileEntryType(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+		String fileEntryTypeKey = DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT;
+
+		fileEntryTypeKey = fileEntryTypeKey.trim().toUpperCase();
+
+		dlFileEntryType.setCreateDate(now);
 		dlFileEntryType.setModifiedDate(now);
+		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
 		dlFileEntryType.setNameMap(getNameMap());
 
 		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(dlFileEntryType);
@@ -355,9 +354,9 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 	protected Map<Locale, String> getNameMap() {
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		Locale locale = LocaleUtil.getDefault();
-
-		nameMap.put(locale, DLFileEntryTypeConstants.KEY_BASIC_DOCUMENT);
+		nameMap.put(
+			LocaleUtil.getDefault(),
+			DLFileEntryTypeConstants.KEY_BASIC_DOCUMENT);
 
 		return nameMap;
 	}

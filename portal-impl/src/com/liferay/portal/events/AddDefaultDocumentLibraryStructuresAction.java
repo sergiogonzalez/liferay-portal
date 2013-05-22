@@ -70,8 +70,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 	protected void addDLFileEntryType(
 			long userId, long groupId, String dlFileEntryTypeKey,
-			Map<Locale, String> dlFileEntryTypeNameMap,
-			Map<Locale, String> dlFileEntryTypeDescriptionMap,
+			String dlFileEntryTypeName, String dlFileEntryTypeDescription,
 			String dynamicDDMStructureName, List<String> ddmStructureNames,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -104,6 +103,18 @@ public class AddDefaultDocumentLibraryStructuresAction
 				groupId, dlFileEntryTypeKey);
 		}
 		catch (NoSuchFileEntryTypeException nsfete) {
+			Map<Locale, String> dlFileEntryTypeNameMap =
+				new HashMap<Locale, String>();
+
+			dlFileEntryTypeNameMap.put(
+				LocaleUtil.getDefault(), dlFileEntryTypeName);
+
+			Map<Locale, String> dlFileEntryTypeDescriptionMap =
+				new HashMap<Locale, String>();
+
+			dlFileEntryTypeDescriptionMap.put(
+				LocaleUtil.getDefault(), dlFileEntryTypeDescription);
+
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				userId, groupId, dlFileEntryTypeKey, dlFileEntryTypeNameMap,
 				dlFileEntryTypeDescriptionMap,
@@ -118,30 +129,14 @@ public class AddDefaultDocumentLibraryStructuresAction
 		throws Exception {
 
 		List<String> ddmStructureNames = getDDMStructureNames();
-		List<String> ddlFileEntryTypeNames = getDefaultDLFileEntryTypeNames();
+		List<String> dlFileEntryTypeNames = getDLFileEntryTypeNames();
 
-		for (String dlFileEntryTypeName : ddlFileEntryTypeNames) {
-			addDLFileEntryTypes(
-				userId, groupId, dlFileEntryTypeName, ddmStructureNames,
+		for (String dlFileEntryTypeName : dlFileEntryTypeNames) {
+			addDLFileEntryType(
+				userId, groupId, dlFileEntryTypeName, dlFileEntryTypeName,
+				dlFileEntryTypeName, dlFileEntryTypeName, ddmStructureNames,
 				serviceContext);
 		}
-	}
-
-	protected void addDLFileEntryTypes(
-			long userId, long groupId, String defaultDLFileEntryTypeName,
-			List<String> ddmStructureName, ServiceContext serviceContext)
-		throws Exception {
-
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-
-		nameMap.put(LocaleUtil.getDefault(), defaultDLFileEntryTypeName);
-		descriptionMap.put(LocaleUtil.getDefault(), defaultDLFileEntryTypeName);
-
-		addDLFileEntryType(
-			userId, groupId, defaultDLFileEntryTypeName, nameMap,
-			descriptionMap, defaultDLFileEntryTypeName, ddmStructureName,
-			serviceContext);
 	}
 
 	protected void addDLRawMetadataStructures(
@@ -299,8 +294,9 @@ public class AddDefaultDocumentLibraryStructuresAction
 		return ddmStructureNames;
 	}
 
-	private List<String> getDefaultDLFileEntryTypeNames() {
-		List<String> dlFileEntryTypeNames = new UniqueList<String>();
+	private List<String> getDLFileEntryTypeNames() {
+		List<String> dlFileEntryTypeNames = new ArrayList<String>();
+
 		dlFileEntryTypeNames.add(DLFileEntryTypeConstants.NAME_CONTRACT);
 		dlFileEntryTypeNames.add(
 			DLFileEntryTypeConstants.NAME_MARKETING_BANNER);

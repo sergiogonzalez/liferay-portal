@@ -44,7 +44,7 @@ import java.util.Map;
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
-	public static void updateDLFileEntryTypes() throws Exception {
+	protected static void updateDLFileEntryTypes() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -252,7 +252,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"update DLFileEntryType set fileEntryTypeKey = ?,name = ?, " +
+				"update DLFileEntryType set fileEntryTypeKey = ?, name = ?, " +
 					"description = ?");
 
 			ps.setString(1, fileEntryTypeKey);
@@ -266,7 +266,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			nameMap.put(locale, name);
 
 			name = LocalizationUtil.updateLocalization(
-				nameMap, "name", "Name", LocaleUtil.toLanguageId(locale));
+				nameMap, StringPool.BLANK, "Name",
+				LocaleUtil.toLanguageId(locale));
 
 			ps.setString(2, name);
 
@@ -277,7 +278,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			descriptionMap.put(locale, description);
 
 			description = LocalizationUtil.updateLocalization(
-				descriptionMap, "description", "Description",
+				descriptionMap, StringPool.BLANK, "Description",
 				LocaleUtil.toLanguageId(locale));
 
 			ps.setString(3, description);
