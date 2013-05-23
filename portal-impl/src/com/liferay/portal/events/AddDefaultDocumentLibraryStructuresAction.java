@@ -69,9 +69,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 	protected void addDLFileEntryType(
 			long userId, long groupId, String dlFileEntryTypeKey,
-			String dlFileEntryTypeName, String dlFileEntryTypeDescription,
-			String dynamicDDMStructureName, List<String> ddmStructureNames,
-			ServiceContext serviceContext)
+			List<String> ddmStructureNames, ServiceContext serviceContext)
 		throws Exception {
 
 		List<Long> ddmStructureIds = new ArrayList<Long>();
@@ -93,7 +91,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		}
 
 		String xsd = getDynamicDDMStructureXSD(
-			"document-library-structures.xml", dynamicDDMStructureName);
+			"document-library-structures.xml", dlFileEntryTypeKey);
 
 		serviceContext.setAttribute("xsd", xsd);
 
@@ -102,23 +100,14 @@ public class AddDefaultDocumentLibraryStructuresAction
 				groupId, dlFileEntryTypeKey);
 		}
 		catch (NoSuchFileEntryTypeException nsfete) {
-
-
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				userId, groupId, dlFileEntryTypeKey,
-				getLocalizedMap(dlFileEntryTypeName),
-				getLocalizedMap(dlFileEntryTypeDescription),
+				_getLocalizedMap(dlFileEntryTypeKey),
+				_getLocalizedMap(dlFileEntryTypeKey),
 				ArrayUtil.toArray(
 					ddmStructureIds.toArray(new Long[ddmStructureIds.size()])),
 				serviceContext);
 		}
-	}
-
-	private Map<Locale,String> getLocalizedMap(String data) {
-		Map localizedMap = new HashMap(1);
-		localizedMap.put(LocaleUtil.getDefault(), data);
-
-		return localizedMap;
 	}
 
 	protected void addDLFileEntryTypes(
@@ -129,10 +118,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_CONTRACT,
-			DLFileEntryTypeConstants.NAME_CONTRACT,
-			DLFileEntryTypeConstants.NAME_CONTRACT,
-			DLFileEntryTypeConstants.NAME_CONTRACT, ddmStructureNames,
-			serviceContext);
+			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
 
@@ -140,10 +126,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
-			DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
-			DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
-			DLFileEntryTypeConstants.NAME_MARKETING_BANNER, ddmStructureNames,
-			serviceContext);
+			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
 
@@ -151,10 +134,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
-			DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
-			DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
-			DLFileEntryTypeConstants.NAME_ONLINE_TRAINING, ddmStructureNames,
-			serviceContext);
+			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
 
@@ -162,18 +142,12 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
-			DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
-			DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
-			DLFileEntryTypeConstants.NAME_SALES_PRESENTATION, ddmStructureNames,
-			serviceContext);
+			ddmStructureNames, serviceContext);
 
 		if (UpgradeProcessUtil.isCreateIGImageDocumentType()) {
 			addDLFileEntryType(
 				userId, groupId, DLFileEntryTypeConstants.NAME_IG_IMAGE,
-				DLFileEntryTypeConstants.NAME_IG_IMAGE,
-				DLFileEntryTypeConstants.NAME_IG_IMAGE,
-				DLFileEntryTypeConstants.NAME_IG_IMAGE, ddmStructureNames,
-				serviceContext);
+				ddmStructureNames, serviceContext);
 		}
 	}
 
@@ -317,35 +291,11 @@ public class AddDefaultDocumentLibraryStructuresAction
 			defaultUserId, group.getGroupId(), serviceContext);
 	}
 
-	private List<String> getDDMStructureNames() {
-		List<String> ddmStructureNames = new UniqueList<String>();
+	private Map<Locale, String> _getLocalizedMap(String data) {
+		Map localizedMap = new HashMap(1);
+		localizedMap.put(LocaleUtil.getDefault(), data);
 
-		ddmStructureNames.add("Contract Metadata");
-		ddmStructureNames.add("Marketing Campaign Theme Metadata");
-		ddmStructureNames.add("Learning Module Metadata");
-		ddmStructureNames.add("Meeting Metadata");
-
-		if (UpgradeProcessUtil.isCreateIGImageDocumentType()) {
-			ddmStructureNames.add("IG Image metadata");
-		}
-
-		return ddmStructureNames;
-	}
-
-	private List<String> getDefaultDLFileEntryTypeNames() {
-		List<String> dlFileEntryTypeNames = new UniqueList<String>();
-		dlFileEntryTypeNames.add(DLFileEntryTypeConstants.NAME_CONTRACT);
-		dlFileEntryTypeNames.add(
-			DLFileEntryTypeConstants.NAME_MARKETING_BANNER);
-		dlFileEntryTypeNames.add(DLFileEntryTypeConstants.NAME_ONLINE_TRAINING);
-		dlFileEntryTypeNames.add(
-			DLFileEntryTypeConstants.NAME_SALES_PRESENTATION);
-
-		if (UpgradeProcessUtil.isCreateIGImageDocumentType()) {
-			dlFileEntryTypeNames.add(DLFileEntryTypeConstants.NAME_IG_IMAGE);
-		}
-
-		return dlFileEntryTypeNames;
+		return localizedMap;
 	}
 
 }
