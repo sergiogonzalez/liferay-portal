@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
@@ -559,6 +560,11 @@ public class LayoutImporter {
 			importLayout(portletDataContext, newLayouts, layoutElement);
 		}
 
+		for (Element layoutFriendlyURLElement : _layoutFriendlyURLElements) {
+			importLayoutFriendlyURL(
+				portletDataContext, layoutFriendlyURLElement);
+		}
+
 		Element portletsElement = _rootElement.element("portlets");
 
 		List<Element> portletElements = portletsElement.elements("portlet");
@@ -812,6 +818,20 @@ public class LayoutImporter {
 		portletDataContextNewLayouts.clear();
 	}
 
+	protected void importLayoutFriendlyURL(
+			PortletDataContext portletDataContext,
+			Element layoutFriendlyURLElement)
+		throws Exception {
+
+		String path = layoutFriendlyURLElement.attributeValue("path");
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			(LayoutFriendlyURL)portletDataContext.getZipEntryAsObject(path);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, layoutFriendlyURL);
+	}
+
 	protected String importTheme(LayoutSet layoutSet, InputStream themeZip)
 		throws Exception {
 
@@ -927,6 +947,12 @@ public class LayoutImporter {
 			Layout.class);
 
 		_layoutElements = _layoutsElement.elements();
+
+		_layoutFriendlyURLsElement =
+			portletDataContext.getImportDataGroupElement(
+				LayoutFriendlyURL.class);
+
+		_layoutFriendlyURLElements = _layoutFriendlyURLsElement.elements();
 	}
 
 	protected void validateFile(PortletDataContext portletDataContext)
@@ -1047,6 +1073,8 @@ public class LayoutImporter {
 
 	private Element _headerElement;
 	private List<Element> _layoutElements;
+	private List<Element> _layoutFriendlyURLElements;
+	private Element _layoutFriendlyURLsElement;
 	private Element _layoutsElement;
 	private PermissionImporter _permissionImporter = new PermissionImporter();
 	private PortletImporter _portletImporter = new PortletImporter();
