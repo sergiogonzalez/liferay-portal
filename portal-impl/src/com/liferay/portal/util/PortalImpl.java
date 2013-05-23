@@ -95,6 +95,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -131,6 +132,7 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -825,6 +827,36 @@ public class PortalImpl implements Portal {
 		else {
 			return DeterminateKeyGenerator.generate(input);
 		}
+	}
+
+	public Object[] getActualLayout(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		Layout layout = null;
+		String queryString = StringPool.BLANK;
+
+		if (Validator.isNull(friendlyURL)) {
+			layout = LayoutLocalServiceUtil.fetchFirstLayout(
+				groupId, privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (layout == null) {
+				throw new NoSuchLayoutException(
+					"{groupId=" + groupId + ",privateLayout=" + privateLayout +
+						"} does not have any layouts");
+			}
+		}
+		else {
+			Object[] friendlyURLMapper = getPortletFriendlyURLMapper(
+				groupId, privateLayout, friendlyURL, params, requestContext);
+
+			layout = (Layout)friendlyURLMapper[0];
+			queryString = (String)friendlyURLMapper[1];
+		}
+
+		return new Object[] {layout, queryString};
 	}
 
 	public String getActualURL(
@@ -2486,27 +2518,11 @@ public class PortalImpl implements Portal {
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 
-		Layout layout = null;
-		String queryString = StringPool.BLANK;
+		Object[] actualLayout = getActualLayout(
+			groupId, privateLayout, friendlyURL, params, requestContext);
 
-		if (Validator.isNull(friendlyURL)) {
-			layout = LayoutLocalServiceUtil.fetchFirstLayout(
-				groupId, privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (layout == null) {
-				throw new NoSuchLayoutException(
-					"{groupId=" + groupId + ",privateLayout=" + privateLayout +
-						"} does not have any layouts");
-			}
-		}
-		else {
-			Object[] friendlyURLMapper = getPortletFriendlyURLMapper(
-				groupId, privateLayout, friendlyURL, params, requestContext);
-
-			layout = (Layout)friendlyURLMapper[0];
-			queryString = (String)friendlyURLMapper[1];
-		}
+		Layout layout = (Layout)actualLayout[0];
+		String queryString = (String)actualLayout[1];
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
@@ -2555,7 +2571,12 @@ public class PortalImpl implements Portal {
 		String groupFriendlyURL = getGroupFriendlyURL(
 			layout.getGroup(), layout.isPrivateLayout(), themeDisplay);
 
-		return groupFriendlyURL.concat(layout.getFriendlyURL());
+		LayoutFriendlyURL layoutFriendlyURL =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
+				layout.getPlid(),
+				LocaleUtil.toLanguageId(themeDisplay.getLocale()));
+
+		return groupFriendlyURL.concat(layoutFriendlyURL.getFriendlyURL());
 	}
 
 	public String getLayoutFriendlyURL(

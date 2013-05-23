@@ -194,6 +194,15 @@ public class PortalUtil {
 		return getPortal().generateRandomKey(request, input);
 	}
 
+	public static Object[] getActualLayout(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		return getPortal().getActualLayout(
+			groupId, privateLayout, friendlyURL, params, requestContext);
+	}
+
 	public static String getActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,

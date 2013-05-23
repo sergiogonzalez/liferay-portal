@@ -291,6 +291,22 @@ public class LayoutFriendlyURLLocalServiceWrapper
 		_layoutFriendlyURLLocalService.deleteLayoutFriendlyURLs(plid);
 	}
 
+	public com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long plid, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(plid,
+			languageId);
+	}
+
+	public com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long plid, java.lang.String languageId, boolean useDefault)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(plid,
+			languageId, useDefault);
+	}
+
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
 		long plid) throws com.liferay.portal.kernel.exception.SystemException {
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(plid);
