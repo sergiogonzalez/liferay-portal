@@ -38,7 +38,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -56,6 +56,8 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", fileEntryTypeKey=");
+		sb.append(fileEntryTypeKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -101,6 +103,13 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 			dlFileEntryTypeImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (fileEntryTypeKey == null) {
+			dlFileEntryTypeImpl.setFileEntryTypeKey(StringPool.BLANK);
+		}
+		else {
+			dlFileEntryTypeImpl.setFileEntryTypeKey(fileEntryTypeKey);
+		}
+
 		if (name == null) {
 			dlFileEntryTypeImpl.setName(StringPool.BLANK);
 		}
@@ -129,6 +138,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		fileEntryTypeKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 	}
@@ -157,6 +167,13 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (fileEntryTypeKey == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(fileEntryTypeKey);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -180,6 +197,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String fileEntryTypeKey;
 	public String name;
 	public String description;
 }

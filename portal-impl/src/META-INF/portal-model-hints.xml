@@ -1445,9 +1445,15 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
+		<field name="fileEntryTypeKey" type="String" />
+		<field name="name" type="String" localized="true">
+			<hint name="max-length">4000</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint name="display-height">105</hint>
+			<hint name="display-width">500</hint>
+			<hint-collection name="CLOB" />
 		</field>
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileRank">
