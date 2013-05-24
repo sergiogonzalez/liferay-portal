@@ -15,15 +15,12 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -157,65 +154,6 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 	}
 
-	protected static String getI18nPathLanguageId(Locale locale) {
-		String i18nPathLanguageId = LocaleUtil.toLanguageId(locale);
-
-		if (!LanguageUtil.isDuplicateLanguageCode(locale.getLanguage())) {
-			i18nPathLanguageId = locale.getLanguage();
-		}
-		else {
-			Locale priorityLocale = LanguageUtil.getLocale(
-				locale.getLanguage());
-
-			if (locale.equals(priorityLocale)) {
-				i18nPathLanguageId = locale.getLanguage();
-			}
-		}
-
-		return i18nPathLanguageId;
-	}
-
-	protected String getRedirect(
-			HttpServletRequest request, Locale locale, String oldFriendlyURL,
-			String newFriendlyURL)
-		throws Exception {
-
-		String contextPath = PortalUtil.getPathContext();
-
-		String requestURI = request.getRequestURI();
-
-		if (Validator.isNotNull(contextPath) &&
-			requestURI.contains(contextPath)) {
-
-			requestURI = requestURI.substring(contextPath.length());
-		}
-
-		requestURI = StringUtil.replace(
-			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
-
-		if (!LanguageUtil.isAvailableLocale(locale)) {
-			return null;
-		}
-
-		String i18nPath = getI18nPathLanguageId(locale);
-
-		String redirect =
-			contextPath + StringPool.SLASH.concat(i18nPath) + requestURI;
-
-		if (redirect.contains(oldFriendlyURL)) {
-			redirect = StringUtil.replaceLast(
-				redirect, oldFriendlyURL, newFriendlyURL);
-		}
-
-		String queryString = request.getQueryString();
-
-		if (Validator.isNotNull(queryString)) {
-			redirect += StringPool.QUESTION + request.getQueryString();
-		}
-
-		return redirect;
-	}
-
 	protected Object[] getRedirect(
 			HttpServletRequest request, String path, String mainPath,
 			Map<String, String[]> params)
@@ -331,27 +269,31 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			Layout layout = (Layout)actualLayout[0];
 
-			LayoutFriendlyURL layoutFriendlyURL =
-				LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
-					layout.getPlid(), LocaleUtil.toLanguageId(locale));
-
-			if (!friendlyURL.startsWith(layoutFriendlyURL.getFriendlyURL())) {
-				String newFriendlyURL = layoutFriendlyURL.getFriendlyURL();
-
-				if (friendlyURL.contains(layout.getFriendlyURL())) {
-					newFriendlyURL = StringUtil.replace(
-						friendlyURL, layout.getFriendlyURL(),
-						layoutFriendlyURL.getFriendlyURL());
-				}
-
-				String redirect = getRedirect(
-					request, locale, friendlyURL, newFriendlyURL);
+			if (isInvalidLocalizedFriendlyURL(layout, friendlyURL, locale)) {
+				String redirect = PortalUtil.getLocalizedFriendlyURL(
+					request, locale, layout);
 
 				return new Object[] {redirect, true};
 			}
 		}
 
 		return new Object[] {actualURL, false};
+	}
+
+	protected boolean isInvalidLocalizedFriendlyURL(
+			Layout layout, String friendlyURL, Locale locale)
+		throws Exception {
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
+				layout.getPlid(), LocaleUtil.toLanguageId(locale));
+
+		if (!friendlyURL.startsWith(layoutFriendlyURL.getFriendlyURL())) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FriendlyURLServlet.class);

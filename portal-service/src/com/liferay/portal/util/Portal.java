@@ -706,6 +706,9 @@ public interface Portal {
 	public HttpServletResponse getHttpServletResponse(
 		PortletResponse portletResponse);
 
+	public String getI18nPathLanguageId(
+		Locale locale, String defaultI18nPathLanguageId);
+
 	public String getJournalArticleActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
@@ -790,6 +793,10 @@ public interface Portal {
 		boolean initialize);
 
 	public Locale getLocale(RenderRequest renderRequest);
+
+	public String getLocalizedFriendlyURL(
+			HttpServletRequest request, Locale locale, Layout layout)
+		throws Exception;
 
 	public String getMailId(String mx, String popPortletPrefix, Object... ids);
 

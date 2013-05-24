@@ -17,7 +17,6 @@ package com.liferay.portlet.layoutsadmin.lar;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
@@ -48,11 +47,12 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			LayoutFriendlyURL layoutFriendlyURL)
 		throws Exception {
 
-		Element folderElement = portletDataContext.getExportDataElement(
-			layoutFriendlyURL);
+		Element layoutFriendlyURLElement =
+			portletDataContext.getExportDataElement(layoutFriendlyURL);
 
 		portletDataContext.addClassedModel(
-			folderElement, ExportImportPathUtil.getModelPath(layoutFriendlyURL),
+			layoutFriendlyURLElement,
+			ExportImportPathUtil.getModelPath(layoutFriendlyURL),
 			layoutFriendlyURL, LayoutPortletDataHandler.NAMESPACE);
 	}
 
@@ -64,16 +64,6 @@ public class LayoutFriendlyURLStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(
 			layoutFriendlyURL.getUserUuid());
-
-		String layoutPath = ExportImportPathUtil.getModelPath(
-			portletDataContext, Layout.class.getName(),
-			layoutFriendlyURL.getPlid());
-
-		Layout layout = (Layout)portletDataContext.getZipEntryAsObject(
-			layoutPath);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, layout);
 
 		Map<Long, Long> plids =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

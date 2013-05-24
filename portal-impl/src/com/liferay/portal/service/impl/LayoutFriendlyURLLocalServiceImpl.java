@@ -142,8 +142,13 @@ public class LayoutFriendlyURLLocalServiceImpl
 			layoutFriendlyURLPersistence.fetchByP_L(plid, languageId);
 
 		if (layoutFriendlyURL == null) {
-			layoutFriendlyURL = layoutFriendlyURLPersistence.findByP_L(
+			layoutFriendlyURL = layoutFriendlyURLPersistence.fetchByP_L(
 				plid, LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+		}
+
+		if (layoutFriendlyURL == null) {
+			layoutFriendlyURL = layoutFriendlyURLPersistence.findByPlid_First(
+				plid, null);
 		}
 
 		return layoutFriendlyURL;

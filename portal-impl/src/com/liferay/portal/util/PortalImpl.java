@@ -2462,6 +2462,27 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getI18nPathLanguageId(
+		Locale locale, String defaultI18nPathLanguageId) {
+
+		String i18nPathLanguageId = defaultI18nPathLanguageId;
+
+		if (!LanguageUtil.isDuplicateLanguageCode(locale.getLanguage())) {
+			i18nPathLanguageId = locale.getLanguage();
+		}
+		else {
+			Locale priorityLocale = LanguageUtil.getLocale(
+				locale.getLanguage());
+
+			if (locale.equals(priorityLocale)) {
+				i18nPathLanguageId = locale.getLanguage();
+			}
+		}
+
+		return i18nPathLanguageId;
+	}
+
+	@Override
 	public String getJournalArticleActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
@@ -3122,6 +3143,50 @@ public class PortalImpl implements Portal {
 	@Override
 	public Locale getLocale(RenderRequest renderRequest) {
 		return getLocale(getHttpServletRequest(renderRequest));
+	}
+
+	@Override
+	public String getLocalizedFriendlyURL(
+			HttpServletRequest request, Locale locale, Layout layout)
+		throws Exception {
+
+		String contextPath = PortalUtil.getPathContext();
+
+		String requestURI = request.getRequestURI();
+
+		if (Validator.isNotNull(contextPath) &&
+			requestURI.contains(contextPath)) {
+
+			requestURI = requestURI.substring(contextPath.length());
+		}
+
+		requestURI = StringUtil.replace(
+			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
+				layout.getPlid(), LocaleUtil.toLanguageId(locale));
+
+		if (requestURI.contains(layout.getFriendlyURL())) {
+			requestURI = StringUtil.replaceFirst(
+				requestURI, layout.getFriendlyURL(),
+				layoutFriendlyURL.getFriendlyURL());
+		}
+
+		String i18nPath = getI18nPathLanguageId(
+			locale, LocaleUtil.toLanguageId(locale));
+
+		String localizedFriendlyURL =
+			contextPath + StringPool.SLASH.concat(i18nPath) + requestURI;
+
+		String queryString = request.getQueryString();
+
+		if (Validator.isNotNull(queryString)) {
+			localizedFriendlyURL +=
+				StringPool.QUESTION + request.getQueryString();
+		}
+
+		return localizedFriendlyURL;
 	}
 
 	@Override
