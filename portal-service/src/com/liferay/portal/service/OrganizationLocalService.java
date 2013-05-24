@@ -967,6 +967,14 @@ public interface OrganizationLocalService extends BaseLocalService,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long parentOrganizationId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort,
+		boolean fallbackToAnyParent)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns a name ordered range of all the organizations that match the
 	* keywords, type, region, and country, without using the indexer. It is
@@ -1060,6 +1068,17 @@ public interface OrganizationLocalService extends BaseLocalService,
 		java.lang.Long countryId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Organization> search(
+		long companyId, long parentOrganizationId, java.lang.String keywords,
+		java.lang.String type, java.lang.Long regionId,
+		java.lang.Long countryId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc,
+		boolean fallbackToAnyParent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1174,6 +1193,18 @@ public interface OrganizationLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Organization> search(
+		long companyId, long parentOrganizationId, java.lang.String name,
+		java.lang.String type, java.lang.String street, java.lang.String city,
+		java.lang.String zip, java.lang.Long regionId,
+		java.lang.Long countryId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc,
+		boolean fallbackToAnyParent)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns an ordered range of all the organizations whose name, type, or
 	* location fields match the keywords specified for them, using the indexer.
@@ -1226,6 +1257,17 @@ public interface OrganizationLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long parentOrganizationId, java.lang.String name,
+		java.lang.String type, java.lang.String street, java.lang.String city,
+		java.lang.String zip, java.lang.String region,
+		java.lang.String country,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort, boolean fallbackToAnyParent)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the number of organizations that match the keywords, type,
 	* region, and country.
@@ -1253,6 +1295,14 @@ public interface OrganizationLocalService extends BaseLocalService,
 		java.lang.String keywords, java.lang.String type,
 		java.lang.Long regionId, java.lang.Long countryId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long parentOrganizationId,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.Long regionId, java.lang.Long countryId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean fallbackToAnyParent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1291,6 +1341,15 @@ public interface OrganizationLocalService extends BaseLocalService,
 		java.lang.Long countryId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long parentOrganizationId,
+		java.lang.String name, java.lang.String type, java.lang.String street,
+		java.lang.String city, java.lang.String zip, java.lang.Long regionId,
+		java.lang.Long countryId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, boolean fallbackToAnyParent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
