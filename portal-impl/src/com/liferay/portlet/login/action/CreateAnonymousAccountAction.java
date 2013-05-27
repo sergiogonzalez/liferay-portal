@@ -79,12 +79,6 @@ public class CreateAnonymousAccountAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Company company = themeDisplay.getCompany();
-
-		if (!company.isStrangers()) {
-			throw new PrincipalException();
-		}
-
 		if (actionRequest.getRemoteUser() != null) {
 			actionResponse.sendRedirect(themeDisplay.getPathMain());
 
@@ -167,12 +161,6 @@ public class CreateAnonymousAccountAction extends PortletAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		Company company = themeDisplay.getCompany();
-
-		if (!company.isStrangers()) {
-			return mapping.findForward("portlet.login.login");
-		}
 
 		renderResponse.setTitle(themeDisplay.translate("anonymous-account"));
 
