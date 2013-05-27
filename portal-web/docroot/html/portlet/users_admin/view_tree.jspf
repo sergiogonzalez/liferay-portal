@@ -474,25 +474,6 @@ if (filterManageableOrganizations) {
 </c:choose>
 
 <%!
-private Long[][] _filterSuborganizations(Long[][]leftAndRightOrganizationIds, Long[][]leftAndRightParentOrganizationIds) {
-	if (leftAndRightOrganizationIds != null) {
-		if (leftAndRightOrganizationIds[0][0] < leftAndRightParentOrganizationIds[0][0]) {
-			leftAndRightParentOrganizationIds[0][0] = leftAndRightOrganizationIds[0][0];
-		}
-
-		if (leftAndRightOrganizationIds[0][1] > leftAndRightParentOrganizationIds[0][1]) {
-			leftAndRightParentOrganizationIds[0][1] = leftAndRightOrganizationIds[0][1];
-		}
-	}
-
-	if ((leftAndRightParentOrganizationIds[0][1] - leftAndRightParentOrganizationIds[0][0]) > 1) {
-		leftAndRightParentOrganizationIds[0][0] = leftAndRightParentOrganizationIds[0][0] + 1;
-		leftAndRightParentOrganizationIds[0][1] = leftAndRightParentOrganizationIds[0][1] - 1;
-	}
-
-	return leftAndRightParentOrganizationIds;
-}
-
 private long _getParentOrganizationId(
 	long parentOrganizationId, LinkedHashMap<String, Object> params) {
 
