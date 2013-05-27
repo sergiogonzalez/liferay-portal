@@ -44,43 +44,6 @@ import java.util.Map;
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
-	protected void updateDLFileEntryTypes() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select fileEntryTypeId, name, description from " +
-					"DLFileEntryType");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long dlFileEntryTypeId = rs.getLong("fileEntryTypeId");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-
-				if (dlFileEntryTypeId ==
-						DLFileEntryTypeConstants.
-							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
-
-					name = DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT;
-				}
-
-				String dlFileEntryTypeKey = name.trim().toUpperCase();
-
-				updateDLFileEntryType(
-					dlFileEntryTypeId, dlFileEntryTypeKey, name, description);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
 	protected void deleteChecksumDirectory() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -197,6 +160,43 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
+	protected void updateDLFileEntryTypes() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select fileEntryTypeId, name, description from " +
+					"DLFileEntryType");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long dlFileEntryTypeId = rs.getLong("fileEntryTypeId");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+
+				if (dlFileEntryTypeId ==
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+					name = DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT;
+				}
+
+				String dlFileEntryTypeKey = name.trim().toUpperCase();
+
+				updateDLFileEntryType(
+					dlFileEntryTypeId, dlFileEntryTypeKey, name, description);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void updateFileRank(
 			long fileRankId, long userId, Timestamp modifiedDate)
 		throws Exception {
@@ -248,6 +248,18 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
+	private String localize(String content, String key) {
+		Locale locale = LocaleUtil.getDefault();
+
+		Map<Locale, String> localizedMap = new HashMap<Locale, String>();
+
+		localizedMap.put(locale, content);
+
+		return LocalizationUtil.updateLocalization(
+			localizedMap, StringPool.BLANK, key,
+			LocaleUtil.toLanguageId(locale));
+	}
+
 	private void updateDLFileEntryType(
 			long dlFileEntryTypeId, String dlFileEntryTypeKey, String name,
 			String description)
@@ -273,18 +285,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
-	}
-
-	private String localize(String content, String key) {
-		Locale locale = LocaleUtil.getDefault();
-
-		Map<Locale, String> localizedMap = new HashMap<Locale, String>();
-
-		localizedMap.put(locale, content);
-
-		return LocalizationUtil.updateLocalization(
-			localizedMap, StringPool.BLANK, key,
-			LocaleUtil.toLanguageId(locale));
 	}
 
 }
