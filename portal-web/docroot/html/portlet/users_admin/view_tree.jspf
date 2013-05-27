@@ -61,7 +61,11 @@ if (filterManageableOrganizations) {
 	<c:when test="<%= showList %>">
 
 		<%
-		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), (organization != null) ? organization.getOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
+		long parentOrganizationId = (organization != null) ? organization.getOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+
+		parentOrganizationId = _getParentOrganizationId(parentOrganizationId, organizationParams);
+
+		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), parentOrganizationId, null, null, null, null, organizationParams);
 		%>
 
 		<aui:row>
@@ -69,7 +73,7 @@ if (filterManageableOrganizations) {
 				<c:when test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
 					<%
-					long parentOrganizationId = 0;
+					parentOrganizationId = 0;
 					String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
 
 					if (!organization.isRoot()) {
@@ -283,11 +287,13 @@ if (filterManageableOrganizations) {
 								<%
 								OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
-								long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+								parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
 
 								if (organization != null) {
 									parentOrganizationId = organization.getOrganizationId();
 								}
+
+								parentOrganizationId = _getParentOrganizationId(parentOrganizationId, organizationParams);
 								%>
 
 								<c:choose>
@@ -316,6 +322,8 @@ if (filterManageableOrganizations) {
 											if (parentOrganizationId <= 0) {
 												parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 											}
+
+											parentOrganizationId = _getParentOrganizationId(parentOrganizationId, organizationParams);
 											%>
 
 											<c:choose>
@@ -466,22 +474,28 @@ if (filterManageableOrganizations) {
 </c:choose>
 
 <%!
-private Long[][] _filterSuborganizations(Long[][]leftAndRightOrganizationIds, Long[][]leftAndRightParentOrganizationIds) {
-	if (leftAndRightOrganizationIds != null) {
-		if (leftAndRightOrganizationIds[0][0] < leftAndRightParentOrganizationIds[0][0]) {
-			leftAndRightParentOrganizationIds[0][0] = leftAndRightOrganizationIds[0][0];
-		}
+private long _getParentOrganizationId(
+	long parentOrganizationId, LinkedHashMap<String, Object> params) {
 
-		if (leftAndRightOrganizationIds[0][1] > leftAndRightParentOrganizationIds[0][1]) {
-			leftAndRightParentOrganizationIds[0][1] = leftAndRightOrganizationIds[0][1];
+	List<Organization> organizationsTree = (List<Organization>)params.get(
+		"organizationsTree");
+
+	if ((organizationsTree != null) &&
+		(parentOrganizationId ==
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
+
+		for (Organization organizationNode : organizationsTree) {
+			if (organizationNode.getOrganizationId() !=
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+				parentOrganizationId =
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
+
+				break;
+			}
 		}
 	}
 
-	if ((leftAndRightParentOrganizationIds[0][1] - leftAndRightParentOrganizationIds[0][0]) > 1) {
-		leftAndRightParentOrganizationIds[0][0] = leftAndRightParentOrganizationIds[0][0] + 1;
-		leftAndRightParentOrganizationIds[0][1] = leftAndRightParentOrganizationIds[0][1] - 1;
-	}
-
-	return leftAndRightParentOrganizationIds;
+	return parentOrganizationId;
 }
 %>
