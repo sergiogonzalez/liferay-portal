@@ -44,7 +44,7 @@ import java.util.Map;
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
-	protected static void updateDLFileEntryTypes() throws Exception {
+	protected void updateDLFileEntryTypes() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -53,33 +53,27 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select fileEntryTypeId, name, description" +
-					" from DLFileEntryType");
+				"select fileEntryTypeId, name, description from " +
+					"DLFileEntryType");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long fileEntryTypeId = rs.getLong("fileEntryTypeId");
+				long dlFileEntryTypeId = rs.getLong("fileEntryTypeId");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 
-				String fileEntryKey = name.trim().toUpperCase();
-
-				if (fileEntryTypeId ==
+				if (dlFileEntryTypeId ==
 						DLFileEntryTypeConstants.
 							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
 
 					name = DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT;
-
-					fileEntryKey = name.trim().toUpperCase();
-
-					updateDLFileEntryType(
-						fileEntryTypeId, fileEntryKey, name, StringPool.BLANK);
 				}
-				else {
-					updateDLFileEntryType(
-						fileEntryTypeId, fileEntryKey, name, description);
-				}
+
+				String dlFileEntryTypeKey = name.trim().toUpperCase();
+
+				updateDLFileEntryType(
+					dlFileEntryTypeId, dlFileEntryTypeKey, name, description);
 			}
 		}
 		finally {
@@ -126,6 +120,23 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 
+		// DLFileEntryType
+
+		try {
+			runSQL("alter table DLFileEntryType add fileEntryTypeKey STRING");
+
+			runSQL("alter table DLFileEntryType modify name STRING");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DLFileEntryTypeTable.TABLE_NAME,
+				DLFileEntryTypeTable.TABLE_COLUMNS,
+				DLFileEntryTypeTable.TABLE_SQL_CREATE,
+				DLFileEntryTypeTable.TABLE_SQL_ADD_INDEXES);
+		}
+
+		updateDLFileEntryTypes();
+
 		// DLFileRank
 
 		try {
@@ -149,23 +160,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		// Temp directory
 
 		deleteTempDirectory();
-
-		// DLFileEntryType
-
-		try {
-			runSQL("alter table DLFileEntryType add fileEntryTypeKey STRING");
-
-			runSQL("alter table DLFileEntryType modify name STRING");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DLFileEntryTypeTable.TABLE_NAME,
-				DLFileEntryTypeTable.TABLE_COLUMNS,
-				DLFileEntryTypeTable.TABLE_SQL_CREATE,
-				DLFileEntryTypeTable.TABLE_SQL_ADD_INDEXES);
-		}
-
-		updateDLFileEntryTypes();
 	}
 
 	protected String getUserName(long userId) throws Exception {
@@ -254,8 +248,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
-	private static void updateDLFileEntryType(
-			long fileEntryTypeId, String fileEntryTypeKey, String name,
+	private void updateDLFileEntryType(
+			long dlFileEntryTypeId, String dlFileEntryTypeKey, String name,
 			String description)
 		throws Exception {
 
@@ -269,40 +263,28 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				"update DLFileEntryType set fileEntryTypeKey = ?, name = ?, " +
 					"description = ? where fileEntryTypeId = ?");
 
-			ps.setString(1, fileEntryTypeKey);
-
-			Locale locale = LocaleUtil.getDefault();
-
-			// Localized name
-
-			Map<Locale, String> nameMap = new HashMap<Locale, String>();
-
-			nameMap.put(locale, name);
-
-			name = LocalizationUtil.updateLocalization(
-				nameMap, StringPool.BLANK, "Name",
-				LocaleUtil.toLanguageId(locale));
-
-			ps.setString(2, name);
-
-			// Localized description
-
-			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-
-			descriptionMap.put(locale, description);
-
-			description = LocalizationUtil.updateLocalization(
-				descriptionMap, StringPool.BLANK, "Description",
-				LocaleUtil.toLanguageId(locale));
-
-			ps.setString(3, description);
-			ps.setLong(4, fileEntryTypeId);
+			ps.setString(1, dlFileEntryTypeKey);
+			ps.setString(2, localize(name, "Name"));
+			ps.setString(3, localize(description, "Description"));
+			ps.setLong(4, dlFileEntryTypeId);
 
 			ps.executeUpdate();
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
+	}
+
+	private String localize(String content, String key) {
+		Locale locale = LocaleUtil.getDefault();
+
+		Map<Locale, String> localizedMap = new HashMap<Locale, String>();
+
+		localizedMap.put(locale, content);
+
+		return LocalizationUtil.updateLocalization(
+			localizedMap, StringPool.BLANK, key,
+			LocaleUtil.toLanguageId(locale));
 	}
 
 }

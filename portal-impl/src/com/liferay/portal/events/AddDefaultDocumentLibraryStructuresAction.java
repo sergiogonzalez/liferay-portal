@@ -102,8 +102,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 		catch (NoSuchFileEntryTypeException nsfete) {
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				userId, groupId, dlFileEntryTypeKey,
-				_getLocalizedMap(dlFileEntryTypeKey),
-				_getLocalizedMap(dlFileEntryTypeKey),
+				_getDefaultLocalizedMap(dlFileEntryTypeKey),
+				_getDefaultLocalizedMap(dlFileEntryTypeKey),
 				ArrayUtil.toArray(
 					ddmStructureIds.toArray(new Long[ddmStructureIds.size()])),
 				serviceContext);
@@ -291,9 +291,10 @@ public class AddDefaultDocumentLibraryStructuresAction
 			defaultUserId, group.getGroupId(), serviceContext);
 	}
 
-	private Map<Locale, String> _getLocalizedMap(String data) {
-		Map localizedMap = new HashMap(1);
-		localizedMap.put(LocaleUtil.getDefault(), data);
+	private Map<Locale, String> _getDefaultLocalizedMap(String content) {
+		Map<Locale, String> localizedMap = new HashMap<Locale, String>();
+
+		localizedMap.put(LocaleUtil.getDefault(), content);
 
 		return localizedMap;
 	}
