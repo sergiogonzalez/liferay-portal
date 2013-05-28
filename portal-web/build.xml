@@ -586,6 +586,20 @@
 					</replacevalue>
 				</replace>
 
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html">
+					<replacetoken><![CDATA[oConnector.ResourceType		= GetUrlParam( 'Type' ) ;]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							oConnector.ResourceType		= GetUrlParam( 'Type' );
+
+							oConnector.ResourceTypes	= GetUrlParam( 'Types' ).split( ',' );
+
+							if ( oConnector.ResourceTypes.length > 0 && !oConnector.ResourceType )
+								oConnector.ResourceType = oConnector.ResourceTypes[0];
+						]]>
+					</replacevalue>
+				</replace>
+
 				<!-- frmfolders.html -->
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
@@ -660,16 +674,24 @@
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
 					<replacetoken><![CDATA[AddSelectOption( oCombo, defaultTypes[i][1], defaultTypes[i][0] ) ;]]></replacetoken>
+					<replacevalue><![CDATA[]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
+					<replacetoken><![CDATA[if ( oConnector.ShowAllTypes || defaultTypes[i][0] == oConnector.ResourceType )]]></replacetoken>
 					<replacevalue>
 						<![CDATA[
-								AddSelectOption( oCombo, defaultTypes[i][1], defaultTypes[i][0] ) ;
+								if ( oConnector.ShowAllTypes || defaultTypes[i][0] == oConnector.ResourceType ||
+									(oConnector.ResourceTypes.indexOf(defaultTypes[i][0]) > -1) )
+									AddSelectOption( oCombo, defaultTypes[i][1], defaultTypes[i][0] ) ;
 							}
 
 							var len = customTypes.length;
 
 							for ( i = 0; i < len; i++ ) {
-								if ( customTypes[i][0] == oConnector.ResourceType )
-									AddSelectOption( oCombo, customTypes[i][1], customTypes[i][0] ) ;
+								if ( customTypes[i][0] == oConnector.ResourceType ||
+									(oConnector.ResourceTypes.indexOf(customTypes[i][0]) > -1))
+										AddSelectOption( oCombo, customTypes[i][1], customTypes[i][0] );
 						]]>
 					</replacevalue>
 				</replace>
