@@ -133,6 +133,8 @@ public class OrganizationIndexer extends BaseIndexer {
 		addSearchTerm(searchQuery, searchContext, "city", false);
 		addSearchTerm(searchQuery, searchContext, "country", false);
 		addSearchTerm(searchQuery, searchContext, "name", false);
+		addSearchTerm(
+			searchQuery, searchContext, "parentOrganizationId", false);
 		addSearchTerm(searchQuery, searchContext, "region", false);
 		addSearchTerm(searchQuery, searchContext, "street", false);
 		addSearchTerm(searchQuery, searchContext, "type", false);

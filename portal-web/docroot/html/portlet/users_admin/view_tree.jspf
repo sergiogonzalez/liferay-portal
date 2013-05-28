@@ -61,7 +61,7 @@ if (filterManageableOrganizations) {
 	<c:when test="<%= showList %>">
 
 		<%
-		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), (organization != null) ? organization.getOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
+		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), _getParentOrganizationId(organization, organizationParams), null, null, null, null, organizationParams);
 		%>
 
 		<aui:row>
@@ -283,11 +283,7 @@ if (filterManageableOrganizations) {
 								<%
 								OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
-								long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
-
-								if (organization != null) {
-									parentOrganizationId = organization.getOrganizationId();
-								}
+								long parentOrganizationId = _getParentOrganizationId(organization, organizationParams);
 								%>
 
 								<c:choose>
@@ -313,9 +309,7 @@ if (filterManageableOrganizations) {
 											<%
 											parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
-											if (parentOrganizationId <= 0) {
-												parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-											}
+											parentOrganizationId = _getParentOrganizationId(parentOrganizationId, organizationParams);
 											%>
 
 											<c:choose>
@@ -466,22 +460,30 @@ if (filterManageableOrganizations) {
 </c:choose>
 
 <%!
-private Long[][] _filterSuborganizations(Long[][]leftAndRightOrganizationIds, Long[][]leftAndRightParentOrganizationIds) {
-	if (leftAndRightOrganizationIds != null) {
-		if (leftAndRightOrganizationIds[0][0] < leftAndRightParentOrganizationIds[0][0]) {
-			leftAndRightParentOrganizationIds[0][0] = leftAndRightOrganizationIds[0][0];
-		}
+private long _getParentOrganizationId(
+	long parentOrganizationId, Map<String, Object> organizationParams) {
 
-		if (leftAndRightOrganizationIds[0][1] > leftAndRightParentOrganizationIds[0][1]) {
-			leftAndRightParentOrganizationIds[0][1] = leftAndRightOrganizationIds[0][1];
-		}
+	if (organizationParams.containsKey("organizationsTree") &&
+		(parentOrganizationId <= 0)) {
+
+		parentOrganizationId =
+			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 	}
 
-	if ((leftAndRightParentOrganizationIds[0][1] - leftAndRightParentOrganizationIds[0][0]) > 1) {
-		leftAndRightParentOrganizationIds[0][0] = leftAndRightParentOrganizationIds[0][0] + 1;
-		leftAndRightParentOrganizationIds[0][1] = leftAndRightParentOrganizationIds[0][1] - 1;
+	return parentOrganizationId;
+}
+
+private long _getParentOrganizationId(
+	Organization organization, Map<String, Object> organizationParams) {
+
+	long parentOrganizationId =
+		OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+
+	if (organization != null) {
+		parentOrganizationId = organization.getOrganizationId();
 	}
 
-	return leftAndRightParentOrganizationIds;
+	return _getParentOrganizationId(
+		parentOrganizationId, organizationParams);
 }
 %>
