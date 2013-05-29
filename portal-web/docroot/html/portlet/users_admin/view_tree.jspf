@@ -61,7 +61,7 @@ if (filterManageableOrganizations) {
 	<c:when test="<%= showList %>">
 
 		<%
-		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), (organization != null) ? organization.getOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
+		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), getParentOrganizationId(request, organization, filterManageableOrganizations), null, null, null, null, organizationParams);
 		%>
 
 		<aui:row>
@@ -69,7 +69,7 @@ if (filterManageableOrganizations) {
 				<c:when test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
 					<%
-					long parentOrganizationId = 0;
+					long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
 					String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
 
 					if (!organization.isRoot()) {
@@ -283,11 +283,7 @@ if (filterManageableOrganizations) {
 								<%
 								OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
-								long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
-
-								if (organization != null) {
-									parentOrganizationId = organization.getOrganizationId();
-								}
+								long parentOrganizationId = getParentOrganizationId(request, organization, filterManageableOrganizations);
 								%>
 
 								<c:choose>
@@ -309,15 +305,6 @@ if (filterManageableOrganizations) {
 									</c:when>
 									<c:otherwise>
 										<liferay-ui:search-container-results>
-
-											<%
-											parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
-
-											if (parentOrganizationId <= 0) {
-												parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-											}
-											%>
-
 											<c:choose>
 												<c:when test="<%= PropsValues.ORGANIZATIONS_INDEXER_ENABLED && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
 													<%@ include file="/html/portlet/users_admin/organization_search_results_index.jspf" %>
@@ -466,22 +453,17 @@ if (filterManageableOrganizations) {
 </c:choose>
 
 <%!
-private Long[][] _filterSuborganizations(Long[][]leftAndRightOrganizationIds, Long[][]leftAndRightParentOrganizationIds) {
-	if (leftAndRightOrganizationIds != null) {
-		if (leftAndRightOrganizationIds[0][0] < leftAndRightParentOrganizationIds[0][0]) {
-			leftAndRightParentOrganizationIds[0][0] = leftAndRightOrganizationIds[0][0];
-		}
+private long getParentOrganizationId(HttpServletRequest request, Organization organization, boolean filterManageableOrganizations) {
+	long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
-		if (leftAndRightOrganizationIds[0][1] > leftAndRightParentOrganizationIds[0][1]) {
-			leftAndRightParentOrganizationIds[0][1] = leftAndRightOrganizationIds[0][1];
-		}
+	if (filterManageableOrganizations) {
+		parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 	}
 
-	if ((leftAndRightParentOrganizationIds[0][1] - leftAndRightParentOrganizationIds[0][0]) > 1) {
-		leftAndRightParentOrganizationIds[0][0] = leftAndRightParentOrganizationIds[0][0] + 1;
-		leftAndRightParentOrganizationIds[0][1] = leftAndRightParentOrganizationIds[0][1] - 1;
+	if (organization != null) {
+		parentOrganizationId = organization.getOrganizationId();
 	}
 
-	return leftAndRightParentOrganizationIds;
+	return parentOrganizationId;
 }
 %>
