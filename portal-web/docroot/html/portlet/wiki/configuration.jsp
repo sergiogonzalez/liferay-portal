@@ -78,10 +78,8 @@ String emailBody = PrefsParamUtil.getString(preferences, request, emailBodyParam
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailPageAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailPageAddedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailPageAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailPageUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailPageUpdatedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
 
