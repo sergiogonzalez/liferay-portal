@@ -56,8 +56,6 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 			"mailPageUpdatedSubject", "mailPageUpdatedSubjectPrefix",
 			portletPreferences);
 
-		// Email Subscription Body
-
 		portletPreferences = upgradeSubscriptionBody(
 			"mailPageAddedBody", "mailPageAddedSignature", portletPreferences);
 
@@ -69,21 +67,21 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 	}
 
 	protected PortletPreferences upgradeSubscriptionBody(
-			String valueKey, String oldValueKey,
+			String bodyName, String signatureName,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		String bodyValue = GetterUtil.getString(
-			portletPreferences.getValue(valueKey, StringPool.BLANK));
+		String body = GetterUtil.getString(
+			portletPreferences.getValue(bodyName, StringPool.BLANK));
 
-		String signatureValue = GetterUtil.getString(
-			portletPreferences.getValue(oldValueKey, StringPool.BLANK));
+		String signature = GetterUtil.getString(
+			portletPreferences.getValue(signatureName, StringPool.BLANK));
 
-		if (Validator.isNull(signatureValue) && Validator.isNull(bodyValue)) {
+		if (Validator.isNull(signature) && Validator.isNull(body)) {
 			return portletPreferences;
 		}
 
-		if (Validator.isNull(signatureValue)) {
+		if (Validator.isNull(signature)) {
 			StringBundler sb = new StringBundler(8);
 
 			sb.append(
@@ -91,7 +89,7 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 					"color: #999; margin: 5px; padding: 5px; " +
 					"text-align: center;\">\n");
 
-			if (valueKey.startsWith("mailPageAdded")) {
+			if (bodyName.startsWith("mailPageAdded")) {
 				sb.append(
 					"\t<a href=\"[$PAGE_URL$]\">View Page ([$PAGE_TITLE$])\n");
 			}
@@ -109,9 +107,10 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 			sb.append("\t</p>\n");
 			sb.append("</div>");
 
-			signatureValue = sb.toString();
+			signature = sb.toString();
 		}
-		else if (Validator.isNull(bodyValue)) {
+
+		if (Validator.isNull(body)) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(
@@ -122,7 +121,7 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 				"\tBy <strong>[$PAGE_USER_NAME$]</strong> "+
 					"([$PAGE_DATE_UPDATE$])<br />\n");
 
-			if (valueKey.startsWith("mailPageAdded")) {
+			if (bodyName.startsWith("mailPageAdded")) {
 				sb.append("\tPage Title: [$PAGE_TITLE$]\n");
 				sb.append("</div>\n");
 				sb.append("\n");
@@ -135,14 +134,14 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 				sb.append("[$PAGE_DIFFS$]");
 			}
 
-			bodyValue = sb.toString();
+			body = sb.toString();
 		}
 
-		bodyValue = bodyValue.concat("\n--\n" + signatureValue);
+		body = body.concat("\n--\n").concat(signature);
 
-		portletPreferences.setValue(valueKey, bodyValue);
+		portletPreferences.setValue(bodyName, body);
 
-		portletPreferences.reset(oldValueKey);
+		portletPreferences.reset(signatureName);
 
 		return portletPreferences;
 	}
