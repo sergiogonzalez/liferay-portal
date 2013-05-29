@@ -71,8 +71,6 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 			"mailMessageUpdatedSubject", "mailMessageUpdatedSubjectPrefix",
 			portletPreferences);
 
-		// Email Subscription Body
-
 		portletPreferences = upgradeSubscriptionBody(
 			"mailMessageAddedBody", "mailMessageAddedSignature",
 			portletPreferences);
@@ -85,34 +83,35 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 	}
 
 	protected PortletPreferences upgradeSubscriptionBody(
-			String valueKey, String oldValueKey,
+			String bodyName, String signatureName,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		String bodyValue = GetterUtil.getString(
-			portletPreferences.getValue(valueKey, StringPool.BLANK));
+		String body = GetterUtil.getString(
+			portletPreferences.getValue(bodyName, StringPool.BLANK));
 
-		String signatureValue = GetterUtil.getString(
-			portletPreferences.getValue(oldValueKey, StringPool.BLANK));
+		String signature = GetterUtil.getString(
+			portletPreferences.getValue(signatureName, StringPool.BLANK));
 
-		if (Validator.isNull(signatureValue) && Validator.isNull(bodyValue)) {
+		if (Validator.isNull(signature) && Validator.isNull(body)) {
 			return portletPreferences;
 		}
 
-		if (Validator.isNull(signatureValue)) {
-			signatureValue =
+		if (Validator.isNull(signature)) {
+			signature =
 				"[$COMPANY_NAME$] Message Boards [$MESSAGE_URL$]" +
 					"[$MAILING_LIST_ADDRESS$][$PORTAL_URL$]";
 		}
-		else if (Validator.isNull(bodyValue)) {
-			bodyValue = "[$MESSAGE_BODY$]";
+
+		if (Validator.isNull(body)) {
+			body = "[$MESSAGE_BODY$]";
 		}
 
-		bodyValue = bodyValue.concat("\n--\n" + signatureValue);
+		body = body.concat("\n--\n").concat(signature);
 
-		portletPreferences.setValue(valueKey, bodyValue);
+		portletPreferences.setValue(bodyName, body);
 
-		portletPreferences.reset(oldValueKey);
+		portletPreferences.reset(signatureName);
 
 		return portletPreferences;
 	}
