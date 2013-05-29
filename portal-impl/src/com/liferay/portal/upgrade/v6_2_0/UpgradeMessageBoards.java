@@ -26,6 +26,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Eduardo Garcia
  * @author Daniel Kocsis
+ * @author Roberto Díaz
  */
 public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
@@ -74,7 +75,50 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 			"mailMessageUpdatedSubject", "mailMessageUpdatedSubjectPrefix",
 			portletPreferences);
 
+		// Email Subscription Body
+
+		portletPreferences = upgradeSubscriptionBody(
+			"mailMessageAddedBody", "mailMessageAddedSignature",
+			portletPreferences);
+
+		portletPreferences = upgradeSubscriptionBody(
+			"mailMessageUpdatedBody", "mailMessageUpdatedSignature",
+			portletPreferences);
+
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	protected PortletPreferences upgradeSubscriptionBody(
+			String valueKey, String oldValueKey,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		String bodyValue = GetterUtil.getString(
+			portletPreferences.getValue(valueKey, StringPool.BLANK));
+
+		String signatureValue = GetterUtil.getString(
+			portletPreferences.getValue(oldValueKey, StringPool.BLANK));
+
+		if (Validator.isNull(signatureValue) && Validator.isNull(bodyValue)) {
+			return portletPreferences;
+		}
+
+		if (Validator.isNull(signatureValue)) {
+			signatureValue =
+				"[$COMPANY_NAME$] Message Boards [$MESSAGE_URL$]" +
+					"[$MAILING_LIST_ADDRESS$][$PORTAL_URL$]";
+		}
+		else if (Validator.isNull(bodyValue)) {
+			bodyValue = "[$MESSAGE_BODY$]";
+		}
+
+		bodyValue = bodyValue.concat("\n--\n" + signatureValue);
+
+		portletPreferences.setValue(valueKey, bodyValue);
+
+		portletPreferences.reset(oldValueKey);
+
+		return portletPreferences;
 	}
 
 	protected PortletPreferences upgradeSubscriptionSubject(
