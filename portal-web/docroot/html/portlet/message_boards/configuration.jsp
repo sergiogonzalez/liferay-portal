@@ -44,7 +44,6 @@ else if (tabs2.equals("message-updated-email")) {
 
 String emailSubjectParam = emailParam + "Subject";
 String emailBodyParam = emailParam + "Body";
-String emailSignatureParam = emailParam + "Signature";
 
 String emailSubject = PrefsParamUtil.getString(preferences, request, emailSubjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(preferences, request, emailBodyParam, defaultEmailBody);
@@ -79,10 +78,8 @@ String emailBody = PrefsParamUtil.getString(preferences, request, emailBodyParam
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailMessageAddedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailMessageUpdatedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
 
