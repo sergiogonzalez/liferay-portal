@@ -27,6 +27,7 @@ import com.liferay.portal.model.LayoutWrapper;
 import com.liferay.portal.model.VirtualLayoutConstants;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 /**
  * @author Raymond Augé
@@ -43,6 +44,26 @@ public class VirtualLayout extends LayoutWrapper {
 	@Override
 	public Object clone() {
 		return new VirtualLayout((Layout)_sourceLayout.clone(), _targetGroup);
+	}
+
+	@Override
+	public String getFriendlyURL(Locale locale) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
+
+		try {
+			Group group = _sourceLayout.getGroup();
+
+			sb.append(group.getFriendlyURL());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		sb.append(_sourceLayout.getFriendlyURL(locale));
+
+		return sb.toString();
 	}
 
 	@Override
