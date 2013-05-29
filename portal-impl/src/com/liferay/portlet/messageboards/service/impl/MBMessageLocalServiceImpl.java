@@ -1929,33 +1929,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String subject = null;
 		String body = null;
-		String signature = null;
 
 		if (serviceContext.isCommandUpdate()) {
 			subject = MBUtil.getEmailMessageUpdatedSubject(preferences);
 			body = MBUtil.getEmailMessageUpdatedBody(preferences);
-			signature = MBUtil.getEmailMessageUpdatedSignature(preferences);
 		}
 		else {
 			subject = MBUtil.getEmailMessageAddedSubject(preferences);
 			body = MBUtil.getEmailMessageAddedBody(preferences);
-			signature = MBUtil.getEmailMessageAddedSignature(preferences);
 		}
 
 		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
-
-		if (Validator.isNotNull(signature)) {
-			String signatureSeparator = null;
-
-			if (htmlFormat) {
-				signatureSeparator = "<br />--<br />";
-			}
-			else {
-				signatureSeparator = "\n--\n";
-			}
-
-			body += signatureSeparator + signature;
-		}
 
 		String messageBody = message.getBody();
 
