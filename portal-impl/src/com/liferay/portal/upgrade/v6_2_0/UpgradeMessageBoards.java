@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.util.ContentUtil;
 import com.liferay.util.RSSUtil;
 
 import javax.portlet.PortletPreferences;
@@ -98,13 +99,27 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 		}
 
 		if (Validator.isNull(signature)) {
-			signature =
-				"[$COMPANY_NAME$] Message Boards [$MESSAGE_URL$]" +
-					"[$MAILING_LIST_ADDRESS$][$PORTAL_URL$]";
+			if (bodyName.startsWith("mailMessageAdded")) {
+				signature = ContentUtil.get(
+					_RESOURCE_PATH +
+						_MESSAGE_BOARDS_EMAIL_PAGE_ADDED_SIGNATURE);
+			}
+			else {
+				signature = ContentUtil.get(
+					_RESOURCE_PATH +
+						_MESSAGE_BOARDS_EMAIL_PAGE_UPDATED_SIGNATURE);
+			}
 		}
 
 		if (Validator.isNull(body)) {
-			body = "[$MESSAGE_BODY$]";
+			if (bodyName.startsWith("mailMessageAdded")) {
+				body = ContentUtil.get(
+					_RESOURCE_PATH + _MESSAGE_BOARDS_EMAIL_PAGE_ADDED_BODY);
+			}
+			else {
+				body = ContentUtil.get(
+					_RESOURCE_PATH + _MESSAGE_BOARDS_EMAIL_PAGE_UPDATED_BODY);
+			}
 		}
 
 		body = body.concat("\n--\n").concat(signature);
@@ -128,7 +143,9 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 			String subject = subjectPrefix;
 
 			if (!subjectPrefix.contains("[$MESSAGE_SUBJECT$]")) {
-				subject = subject.concat(" [$MESSAGE_SUBJECT$]");
+				subject =
+					subjectPrefix.trim() + StringPool.SPACE +
+						_MESSAGE_BOARDS_EMAIL_MESSAGE_SUBJECT;
 			}
 
 			portletPreferences.setValue(subjectName, subject);
@@ -138,5 +155,19 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
 		return portletPreferences;
 	}
+
+	private static final String _MESSAGE_BOARDS_EMAIL_PAGE_ADDED_BODY =
+		"email_message_added_body.tmpl";
+	private static final String _MESSAGE_BOARDS_EMAIL_PAGE_ADDED_SIGNATURE =
+		"email_message_added_signature.tmpl";
+	private static final String _MESSAGE_BOARDS_EMAIL_MESSAGE_SUBJECT =
+		"[$MESSAGE_SUBJECT$]";
+	private static final String _MESSAGE_BOARDS_EMAIL_PAGE_UPDATED_BODY =
+		"email_message_updated_body.tmpl";
+	private static final String
+		_MESSAGE_BOARDS_EMAIL_PAGE_UPDATED_SIGNATURE =
+			"email_message_updated_signature.tmpl";
+	private static final String _RESOURCE_PATH =
+		"com/liferay/portal/upgrade/v6_2_0/dependencies/messageboards/";
 
 }

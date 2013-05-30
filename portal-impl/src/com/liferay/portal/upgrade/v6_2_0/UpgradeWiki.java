@@ -16,10 +16,10 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -82,59 +82,25 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 		}
 
 		if (Validator.isNull(signature)) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(
-				"<div style=\"background: #eee; border-top: 1px solid #ccc; " +
-					"color: #999; margin: 5px; padding: 5px; " +
-					"text-align: center;\">\n");
-
 			if (bodyName.startsWith("mailPageAdded")) {
-				sb.append(
-					"\t<a href=\"[$PAGE_URL$]\">View Page ([$PAGE_TITLE$])\n");
+				signature = ContentUtil.get(
+					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_ADDED_SIGNATURE);
 			}
 			else {
-				sb.append(
-					"\t<a href=\"[$PAGE_URL$]\">View Page " +
-						"([$PAGE_TITLE$])</a> | <a href=\"[$DIFFS_URL$]\">" +
-						"View Changes</a>\n");
+				signature = ContentUtil.get(
+					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_UPDATED_SIGNATURE);
 			}
-
-			sb.append("\n");
-			sb.append("\t<p>\n");
-			sb.append("\t\t[$COMPANY_NAME$] Wiki<br />\n");
-			sb.append("\t\t[$PORTAL_URL$]\n");
-			sb.append("\t</p>\n");
-			sb.append("</div>");
-
-			signature = sb.toString();
 		}
 
 		if (Validator.isNull(body)) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(
-				"<div style=\"background: #dff4ff; " +
-					"border: 1px solid #a7cedf; color: #34404f; " +
-					"margin: 5px; padding: 5px;\">\n");
-			sb.append(
-				"\tBy <strong>[$PAGE_USER_NAME$]</strong> "+
-					"([$PAGE_DATE_UPDATE$])<br />\n");
-
 			if (bodyName.startsWith("mailPageAdded")) {
-				sb.append("\tPage Title: [$PAGE_TITLE$]\n");
-				sb.append("</div>\n");
-				sb.append("\n");
-				sb.append("[$PAGE_CONTENT$]");
+				body = ContentUtil.get(
+					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_ADDED_BODY);
 			}
 			else {
-				sb.append("\tSummary: [$PAGE_SUMMARY$]\n");
-				sb.append("</div>\n");
-				sb.append("\n");
-				sb.append("[$PAGE_DIFFS$]");
+				body = ContentUtil.get(
+					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_UPDATED_BODY);
 			}
-
-			body = sb.toString();
 		}
 
 		body = body.concat("\n--\n").concat(signature);
@@ -158,7 +124,9 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 			String subject = subjectPrefix;
 
 			if (!subjectPrefix.contains("[$PAGE_TITLE$]")) {
-				subject = subject.concat(" [$PAGE_TITLE$]");
+				subject =
+					subjectPrefix.trim() + StringPool.SPACE +
+						_WIKI_EMAIL_PAGE_TITLE;
 			}
 
 			portletPreferences.setValue(subjectName, subject);
@@ -168,5 +136,17 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 
 		return portletPreferences;
 	}
+
+	private static final String _RESOURCE_PATH =
+		"com/liferay/portal/upgrade/v6_2_0/dependencies/wiki/";
+	private static final String _WIKI_EMAIL_PAGE_ADDED_BODY =
+		"email_message_added_body.tmpl";
+	private static final String _WIKI_EMAIL_PAGE_ADDED_SIGNATURE =
+		"email_page_added_signature.tmpl";
+	private static final String _WIKI_EMAIL_PAGE_TITLE = "[$PAGE_TITLE$]";
+	private static final String _WIKI_EMAIL_PAGE_UPDATED_BODY =
+		"email_page_updated_body.tmpl";
+	private static final String _WIKI_EMAIL_PAGE_UPDATED_SIGNATURE =
+		"email_page_updated_signature.tmpl";
 
 }
