@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.layout.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.LastPath;
@@ -260,12 +261,13 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (Validator.isNotNull(friendlyURL)) {
 			Locale locale = PortalUtil.getLocale(request);
 
-			Object[] object = PortalUtil.getLayout(
-				group.getGroupId(), _private, friendlyURL, params,
-				requestContext);
+			LayoutFriendlyURLComposite layoutFriendlyURLComposite =
+				PortalUtil.getLayoutFriendlyURLComposite(
+					group.getGroupId(), _private, friendlyURL, params,
+					requestContext);
 
-			Layout layout = (Layout)object[0];
-			friendlyURL = (String)object[1];
+			Layout layout = layoutFriendlyURLComposite.getLayout();
+			friendlyURL = layoutFriendlyURLComposite.getFriendlyURL();
 
 			if (isInvalidLocalizedFriendlyURL(layout, friendlyURL, locale)) {
 				String redirect = PortalUtil.getLocalizedFriendlyURL(

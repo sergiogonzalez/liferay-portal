@@ -16,6 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.layout.LayoutFriendlyURLComposite;
+import com.liferay.portal.kernel.layout.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -240,7 +242,7 @@ public interface Portal {
 	 */
 	public String generateRandomKey(HttpServletRequest request, String input);
 
-	public Object[] getActualLayout(
+	public LayoutQueryStringComposite getActualLayoutQueryStringComposite(
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException;
@@ -721,11 +723,6 @@ public interface Portal {
 
 	public String getJsSafePortletId(String portletId);
 
-	public Object[] getLayout(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
-		throws PortalException, SystemException;
-
 	public String getLayoutActualURL(Layout layout);
 
 	public String getLayoutActualURL(Layout layout, String mainPath);
@@ -750,6 +747,11 @@ public interface Portal {
 
 	public String getLayoutFriendlyURL(
 			Layout layout, ThemeDisplay themeDisplay, Locale locale)
+		throws PortalException, SystemException;
+
+	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException;
 
 	public String getLayoutFullURL(Layout layout, ThemeDisplay themeDisplay)
@@ -1106,15 +1108,15 @@ public interface Portal {
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException, SystemException;
 
-	public Object[] getVirtualLayout(
-			boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
-		throws PortalException, SystemException;
-
 	public String getVirtualLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
+		throws PortalException, SystemException;
+
+	public LayoutFriendlyURLComposite getVirtualLayoutFriendlyURLComposite(
+			boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException;
 
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)

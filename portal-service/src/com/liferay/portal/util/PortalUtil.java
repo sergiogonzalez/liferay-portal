@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.layout.LayoutFriendlyURLComposite;
+import com.liferay.portal.kernel.layout.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -194,12 +196,13 @@ public class PortalUtil {
 		return getPortal().generateRandomKey(request, input);
 	}
 
-	public static Object[] getActualLayout(
+	public static LayoutQueryStringComposite
+		getActualLayoutQueryStringComposite(
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 
-		return getPortal().getActualLayout(
+		return getPortal().getActualLayoutQueryStringComposite(
 			groupId, privateLayout, friendlyURL, params, requestContext);
 	}
 
@@ -687,15 +690,6 @@ public class PortalUtil {
 		return getPortal().getJsSafePortletId(portletId);
 	}
 
-	public static Object[] getLayout(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
-		throws PortalException, SystemException {
-
-		return getPortal().getLayout(
-			groupId, privateLayout, friendlyURL, params, requestContext);
-	}
-
 	public static String getLayoutActualURL(Layout layout) {
 		return getPortal().getLayoutActualURL(layout);
 	}
@@ -744,6 +738,15 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getLayoutFriendlyURL(layout, themeDisplay, locale);
+	}
+
+	public static LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		return getPortal().getLayoutFriendlyURLComposite(
+			groupId, privateLayout, friendlyURL, params, requestContext);
 	}
 
 	public static String getLayoutFullURL(
@@ -1468,12 +1471,13 @@ public class PortalUtil {
 		return getPortal().getValidUserId(companyId, userId);
 	}
 
-	public static Object[] getVirtualLayout(
+	public static LayoutFriendlyURLComposite
+		getVirtualLayoutFriendlyURLComposite(
 			boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 
-		return getPortal().getVirtualLayout(
+		return getPortal().getVirtualLayoutFriendlyURLComposite(
 			privateLayout, friendlyURL, params, requestContext);
 	}
 
