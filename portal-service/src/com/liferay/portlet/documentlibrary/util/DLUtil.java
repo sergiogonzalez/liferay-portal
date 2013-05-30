@@ -269,6 +269,16 @@ public class DLUtil {
 			absoluteURL);
 	}
 
+	public static String getPreviewURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean absoluteURL,
+		boolean appendTime) {
+
+		return getDL().getPreviewURL(
+			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
+			absoluteURL, appendTime);
+	}
+
 	public static OrderByComparator getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType) {
 

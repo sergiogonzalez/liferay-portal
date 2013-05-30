@@ -492,7 +492,7 @@ public class ExportImportImpl implements ExportImport {
 
 			String url = DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, false);
+				false, false, false);
 
 			content = StringUtil.replace(
 				content, "[$dl-reference=" + path + "$]", url);

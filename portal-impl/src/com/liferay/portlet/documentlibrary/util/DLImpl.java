@@ -739,6 +739,16 @@ public class DLImpl implements DL {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
+		return getPreviewURL(
+			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
+			absoluteURL, true);
+	}
+
+	public String getPreviewURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean absoluteURL,
+		boolean appendTime) {
+
 		StringBundler sb = new StringBundler(17);
 
 		if (themeDisplay != null) {
@@ -770,7 +780,7 @@ public class DLImpl implements DL {
 			sb.append(fileVersion.getVersion());
 		}
 
-		if (ImageProcessorUtil.isImageSupported(fileVersion)) {
+		if (ImageProcessorUtil.isImageSupported(fileVersion) && appendTime) {
 			if (appendVersion) {
 				sb.append("&t=");
 			}
