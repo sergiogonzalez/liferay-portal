@@ -2080,32 +2080,23 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			pageContent = WikiUtil.processContent(pageContent);
 		}
 
-		long controlPanelPlid = 0;
-
 		String pageURL = StringPool.BLANK;
 		String diffsURL = StringPool.BLANK;
 
 		if (Validator.isNotNull(layoutFullURL)) {
-			pageURL =
-				layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
-					node.getNodeId() + StringPool.SLASH +
-						HttpUtil.encodeURL(page.getTitle());
-
 			Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
 				serviceContext.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
-			controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(
+			long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(
 				controlPanelGroup.getGroupId(), true);
 
 			if (controlPanelPlid == serviceContext.getPlid()) {
-				StringBundler sb = new StringBundler(15);
+				StringBundler sb = new StringBundler(13);
 
 				sb.append(layoutFullURL);
 				sb.append("&p_p_id=");
 				sb.append(PortletKeys.WIKI_ADMIN);
-				sb.append("&p_p_lifecycle=");
-				sb.append("0");
-				sb.append("&p_p_state=");
+				sb.append("&p_p_lifecycle=0&p_p_state=");
 				sb.append(WindowState.MAXIMIZED);
 				sb.append("&p_p_mode=");
 				sb.append(PortletMode.VIEW);
@@ -2119,9 +2110,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 				pageURL = sb.toString();
 			}
+			else {
+				pageURL =
+					layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
+						node.getNodeId() + StringPool.SLASH +
+							HttpUtil.encodeURL(page.getTitle());
+			}
 
 			if (previousVersionPage != null) {
-				StringBundler sb = new StringBundler(22);
+				StringBundler sb = new StringBundler(16);
 
 				sb.append(layoutFullURL);
 
@@ -2139,9 +2136,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					sb.append(HttpUtil.encodeURL("/wiki/compare_versions"));
 				}
 
-				sb.append("&p_p_lifecycle=");
-				sb.append("0");
-				sb.append("&p_p_state=");
+				sb.append("&p_p_lifecycle=0&p_p_state=");
 				sb.append(WindowState.MAXIMIZED);
 				sb.append("&nodeId=");
 				sb.append(node.getNodeId());
