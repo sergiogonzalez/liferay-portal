@@ -2084,10 +2084,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String diffsURL = StringPool.BLANK;
 
 		if (Validator.isNotNull(layoutFullURL)) {
-			Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
+			Group controlPanelGroup = groupLocalService.getGroup(
 				serviceContext.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
-			long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(
+			long controlPanelPlid = layoutLocalService.getDefaultPlid(
 				controlPanelGroup.getGroupId(), true);
 
 			if (controlPanelPlid == serviceContext.getPlid()) {
