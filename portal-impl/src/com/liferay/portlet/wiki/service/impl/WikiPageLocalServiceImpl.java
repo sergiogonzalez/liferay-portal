@@ -42,9 +42,13 @@ import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.Portal;
@@ -93,6 +97,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
@@ -2079,21 +2084,60 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String diffsURL = StringPool.BLANK;
 
 		if (Validator.isNotNull(layoutFullURL)) {
-			pageURL =
-				layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
-					node.getNodeId() + StringPool.SLASH +
-						HttpUtil.encodeURL(page.getTitle());
+			Group controlPanelGroup = groupLocalService.getGroup(
+				serviceContext.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
+			long controlPanelPlid = layoutLocalService.getDefaultPlid(
+				controlPanelGroup.getGroupId(), true);
+
+			if (controlPanelPlid == serviceContext.getPlid()) {
+				StringBundler sb = new StringBundler(13);
+
+				sb.append(layoutFullURL);
+				sb.append("&p_p_id=");
+				sb.append(PortletKeys.WIKI_ADMIN);
+				sb.append("&p_p_lifecycle=0&p_p_state=");
+				sb.append(WindowState.MAXIMIZED);
+				sb.append("&p_p_mode=");
+				sb.append(PortletMode.VIEW);
+				sb.append("&struts_action=");
+				sb.append(
+					HttpUtil.encodeURL("/wiki_admin/view_page_activities"));
+				sb.append("&nodeName=");
+				sb.append(node.getName());
+				sb.append("&title=");
+				sb.append(HttpUtil.encodeURL(page.getTitle()));
+
+				pageURL = sb.toString();
+			}
+			else {
+				pageURL =
+					layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
+						node.getNodeId() + StringPool.SLASH +
+							HttpUtil.encodeURL(page.getTitle());
+			}
 
 			if (previousVersionPage != null) {
 				StringBundler sb = new StringBundler(16);
 
 				sb.append(layoutFullURL);
-				sb.append("?p_p_id=");
-				sb.append(PortletKeys.WIKI);
-				sb.append("&p_p_state=");
+
+				if (controlPanelPlid == serviceContext.getPlid()) {
+					sb.append("&p_p_id=");
+					sb.append(PortletKeys.WIKI_ADMIN);
+					sb.append("&struts_action=");
+					sb.append(
+						HttpUtil.encodeURL("/wiki_admin/compare_versions"));
+				}
+				else {
+					sb.append("?p_p_id=");
+					sb.append(PortletKeys.WIKI);
+					sb.append("&struts_action=");
+					sb.append(HttpUtil.encodeURL("/wiki/compare_versions"));
+				}
+
+				sb.append("&p_p_lifecycle=0&p_p_state=");
 				sb.append(WindowState.MAXIMIZED);
-				sb.append("&struts_action=");
-				sb.append(HttpUtil.encodeURL("/wiki/compare_versions"));
 				sb.append("&nodeId=");
 				sb.append(node.getNodeId());
 				sb.append("&title=");
