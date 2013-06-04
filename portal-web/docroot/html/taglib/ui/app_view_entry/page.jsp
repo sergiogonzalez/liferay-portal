@@ -22,23 +22,32 @@ String assetCategoryClassName = GetterUtil.getString(request.getAttribute("lifer
 long assetCategoryClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetCategoryClassPK"));
 String assetTagClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:assetTagClassName"));
 long assetTagClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetTagClassPK"));
+String author = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:author"));
+Date createDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:createDate"), DateFormatFactoryUtil.getDate(locale), null);
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-entry:cssClass"));
+Date expirationDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:expirationDate"), DateFormatFactoryUtil.getDate(locale), null);
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-entry:data");
 String description = (String)request.getAttribute("liferay-ui:app-view-entry:description");
+Date displayDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:displayDate"), DateFormatFactoryUtil.getDate(locale), null);
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-entry:displayStyle");
 boolean folder = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:folder"));
+String latestApprovedVersion = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:latestApprovedVersion"));
+String latestApprovedVersionAuthor = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:latestApprovedVersionAuthor"));
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:locked"));
+Date modifiedDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:modifiedDate"), DateFormatFactoryUtil.getDate(locale), null);
+Date reviewDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:reviewDate"), DateFormatFactoryUtil.getDate(locale), null);
 String rowCheckerId = (String)request.getAttribute("liferay-ui:app-view-entry:rowCheckerId");
 String rowCheckerName = (String)request.getAttribute("liferay-ui:app-view-entry:rowCheckerName");
 boolean shortcut = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:shortcut"));
 boolean showCheckbox = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:showCheckbox"));
 boolean showLinkTitle = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:showLinkTitle"));
-int status = GetterUtil.getInteger(request.getAttribute("liferay-ui:app-view-entry:status"));
+int status = GetterUtil.getInteger(request.getAttribute("liferay-ui:app-view-entry:status"), WorkflowConstants.STATUS_ANY);
 String thumbnailDivStyle = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailDivStyle");
 String thumbnailSrc = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailSrc");
 String thumbnailStyle = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailStyle");
 String title = (String)request.getAttribute("liferay-ui:app-view-entry:title");
 String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
+String version = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:version"));
 
 String shortTitle = StringUtil.shorten(title, 60);
 
@@ -88,18 +97,18 @@ if (showLinkTitle) {
 			<span class="entry-title">
 				<span class="entry-title-text">
 					<%= HtmlUtil.escape(shortTitle) %>
+
+					<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
+
+						<%
+						String statusLabel = WorkflowConstants.toLabel(status);
+						%>
+
+						<span class="workflow-status-<%= statusLabel %>">
+							(<liferay-ui:message key="<%= statusLabel %>" />)
+						</span>
+					 </c:if>
 				</span>
-
-				<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
-
-					<%
-					String statusLabel = WorkflowConstants.toLabel(status);
-					%>
-
-					<span class="workflow-status-<%= statusLabel %>">
-						(<liferay-ui:message key="<%= statusLabel %>" />)
-					</span>
-				</c:if>
 
 				<span class="entry-result-icon"></span>
 			</span>
@@ -114,7 +123,6 @@ if (showLinkTitle) {
 			</c:choose>
 		</div>
 	</c:when>
-
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %> <%= cssClass %>" <%= AUIUtil.buildData(data) %> data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 			<c:choose>
@@ -138,46 +146,146 @@ if (showLinkTitle) {
 				</c:if>
 			</div>
 
-			<span class="entry-title">
-				<span class="entry-title-text">
-					<%= HtmlUtil.escape(title) %>
+			<div class="entry-metadata">
+				<span class="entry-title">
+					<span class="entry-title-text">
+						<%= HtmlUtil.escape(title) %>
+					</span>
+
+					<span class="entry-result-icon"></span>
 				</span>
 
-				<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
+				<span class="entry-description">
+					<c:if test="<%= Validator.isNotNull(description) %>">
+						<%= HtmlUtil.escape(description) %>
+					</c:if>
+				</span>
+
+				<dl>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(version) %>">
+							<dt class="entry-version">
+								<liferay-ui:message key="version" />
+							</dt>
+
+							<dd class="entry-version">
+								<liferay-ui:message key="<%= String.valueOf(version) %>" />
+
+								<c:if test="<%= (status != -1) && (status > WorkflowConstants.STATUS_APPROVED) %>">
+
+									<%
+									String statusLabel = WorkflowConstants.toLabel(status);
+									%>
+
+									<span class="workflow-status-<%= statusLabel %>">
+										(<liferay-ui:message key="<%= statusLabel %>" />)
+									</span>
+								</c:if>
+							</dd>
+						</c:when>
+						<c:when test="<%= status > WorkflowConstants.STATUS_APPROVED %>">
+							<dt class="entry-version">
+								<liferay-ui:message key="status" />
+							</dt>
+
+							<%
+							String statusLabel = WorkflowConstants.toLabel(status);
+							%>
+
+							<dd class="entry-version">
+								<span class="workflow-status-<%= statusLabel %>">
+									<liferay-ui:message key="<%= statusLabel %>" />
+								</span>
+							</dd>
+						</c:when>
+					</c:choose>
+
+					<c:if test="<%= (modifiedDate != null) && Validator.isNotNull(author) %>">
+						<c:choose>
+							<c:when test="<%= (createDate != null) && modifiedDate.equals(createDate) %>">
+								<dt class="entry-author">
+									<liferay-ui:message key="created" />
+								</dt>
+							</c:when>
+							<c:otherwise >
+								<dt class="entry-author">
+									<liferay-ui:message key="last-updated" />
+								</dt>
+							</c:otherwise>
+						</c:choose>
+						<dd class="entry-author">
+							<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - createDate.getTime(), true), author} %>" key="x-ago-by-x" />
+						</dd>
+					</c:if>
 
 					<%
-					String statusLabel = WorkflowConstants.toLabel(status);
+					Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 					%>
 
-					<span class="workflow-status-<%= statusLabel %>">
-						(<liferay-ui:message key="<%= statusLabel %>" />)
-					</span>
-				</c:if>
+					<c:choose>
+						<c:when test="<%= (displayDate != null) && (expirationDate != null) %>">
+							<dt class="entry-schedule">
+								<liferay-ui:message key="schedule" />
+							</dt>
+							<dd class="entry-schedule">
+								<c:choose>
+									<c:when test="<%= reviewDate != null %>">
+										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(dateFormatDateTime.format(displayDate)), HtmlUtil.escape(dateFormatDateTime.format(expirationDate)), HtmlUtil.escape(dateFormatDateTime.format(reviewDate))} %>" key="x-to-x-review-date-x" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(dateFormatDateTime.format(displayDate)), HtmlUtil.escape(dateFormatDateTime.format(expirationDate))} %>" key="x-to-x" />
+									</c:otherwise>
+								</c:choose>
+							</dd>
+						</c:when>
 
-				<span class="entry-result-icon"></span>
-			</span>
-
-			<span class="entry-description">
-				<%= HtmlUtil.escape(description) %>
+						<c:when test="<%= (displayDate != null) && (expirationDate == null) %>">
+							<dt class="entry-schedule">
+								<liferay-ui:message key="display-date" />
+							</dt>
+							<dd class="entry-schedule">
+								<c:choose>
+									<c:when test="<%= reviewDate != null %>">
+										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(dateFormatDateTime.format(displayDate)), HtmlUtil.escape(dateFormatDateTime.format(reviewDate))} %>" key="x-review-date-x" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="<%= HtmlUtil.escape(dateFormatDateTime.format(displayDate)) %>" />
+									</c:otherwise>
+								</c:choose>
+							</dd>
+						</c:when>
+					</c:choose>
+				</dl>
 
 				<c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
-					<div class="categories">
+					<span class="entry-categories">
 						<liferay-ui:asset-categories-summary
 							className="<%= assetCategoryClassName %>"
 							classPK="<%= assetCategoryClassPK %>"
 						/>
-					</div>
+					</span>
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(assetTagClassName) && (assetTagClassPK > 0) %>">
-					<div class="tags">
+					<span class="entry-tags">
 						<liferay-ui:asset-tags-summary
 							className="<%= assetTagClassName %>"
 							classPK="<%= assetTagClassPK %>"
 						/>
-					</div>
+					</span>
 				</c:if>
-			</span>
+
+				<c:if test="<%= Validator.isNotNull(latestApprovedVersion) && (status > WorkflowConstants.STATUS_APPROVED) %>">
+					<dl class="entry-latest-approved-container">
+						<dt class="entry-latest-approved">
+							<liferay-ui:message key="latest-aproved-version" />
+						</dt>
+						<dd class="entry-latest-approved">
+							<liferay-ui:message arguments="<%= new String[] {latestApprovedVersion, latestApprovedVersionAuthor} %>" key="x-by-x" />
+						</dd>
+					</dl>
+				</c:if>
+			</div>
 
 			<c:choose>
 				<c:when test="<%= Validator.isNull(url) %>">
@@ -201,7 +309,6 @@ if (showLinkTitle) {
 			</c:if>
 		</div>
 	</c:when>
-
 	<c:when test='<%= displayStyle.equals("list") %>'>
 		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= locked ? "locked" : StringPool.BLANK %> <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 			<liferay-ui:icon

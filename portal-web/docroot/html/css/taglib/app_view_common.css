@@ -29,7 +29,7 @@
 		display: block;
 		font-size: 1.15em;
 		font-weight: bold;
-		padding: 5px 0 0;
+		padding: 5px 0 10px 0;
 		word-wrap: break-word;
 	}
 
@@ -40,10 +40,94 @@
 		text-decoration: none;
 	}
 
-	.entry-description {
+	.entry-metadata {
+		margin:10px 0 20px 170px;
+	}
+
+	.entry-version {
+		.entry-version-number {
+			color: #999;
+			line-height: 1.5em;
+		}
+	}
+
+	.entry-description, {
+		color: #999;
 		display: block;
+		line-height: 1.5em;
 		overflow: hidden;
 		word-wrap: break-word;
+	}
+
+	.entry-author, .entry-latest-approved, .entry-schedule, {
+		color: #999;
+		line-height: 1.5em;
+		overflow: hidden;
+		word-wrap: break-word;
+		display: inline;
+	}
+
+	dl {
+		margin: 0px;
+
+		&.entry-latest-approved-container {
+			margin: 20px 0 20px 0;
+		}
+
+		div.entry-latest-approved {
+			margin: 20px 0 20px 0;
+		}
+
+		.entry-metadata-row {
+			display: block;
+		}
+	}
+
+	dt, dd {
+		display: inline;
+	}
+
+	dt:after {
+		content:":";
+	}
+
+	.workflow-status-approved {
+		color: #41801D;
+		font-weight: bold;
+	}
+
+	.workflow-status-draft {
+		color: #3068BA;
+		font-weight: bold;
+	}
+	.workflow-status-expired {
+		color: #933;
+		font-weight: bold;
+	}
+
+	.workflow-status-pending {
+		color: #F7A233;
+		font-weight: bold;
+	}
+
+	.entry-categories, .entry-tags {
+		color: #999 !important;
+		display: block;
+		line-height: 1.5em;
+		overflow: hidden;
+		word-wrap: break-word;
+	}
+
+	.entry-tags .tag {
+		margin-left: 15px;
+	}
+
+	.entry-tags .tag:first-child {
+		margin-left: 0;
+	}
+
+	.entry-latest-approved {
+		margin-top: 10px;
 	}
 
 	.folder-action, .entry-action {
@@ -101,5 +185,21 @@
 
 	&:hover .overlay, &.hover .overlay, &:hover .entry-selector, &.selected .entry-selector {
 		clip: rect(auto auto auto auto);
+	}
+
+	a>.entry-metadata .entry-title {
+		padding-bottom: 3px;
+	}
+
+	a>.entry-title .entry-categories, a>.entry-title .entry-tags,{
+		font-size: 16px ;
+	}
+
+	a:hover >.entry-metadata .entry-title .entry-title-text {
+		text-decoration: underline;
+	}
+
+	a:hover {
+		text-decoration: none;
 	}
 }
