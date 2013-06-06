@@ -37,7 +37,8 @@ fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey)
 
 if (format.equals("html")) {
 	fileBrowserParams.put("Types", "Document,Attachment");
-} else {
+}
+else {
 	fileBrowserParams.put("Type", "Attachment");
 }
 %>

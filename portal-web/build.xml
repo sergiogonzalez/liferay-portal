@@ -594,8 +594,9 @@
 
 							oConnector.ResourceTypes	= GetUrlParam( 'Types' ).split( ',' );
 
-							if ( oConnector.ResourceTypes.length > 0 && !oConnector.ResourceType )
+							if ( oConnector.ResourceTypes.length > 0 && !oConnector.ResourceType ) {
 								oConnector.ResourceType = oConnector.ResourceTypes[0];
+							}
 						]]>
 					</replacevalue>
 				</replace>
@@ -682,16 +683,20 @@
 					<replacevalue>
 						<![CDATA[
 								if ( oConnector.ShowAllTypes || defaultTypes[i][0] == oConnector.ResourceType ||
-									(oConnector.ResourceTypes.indexOf(defaultTypes[i][0]) > -1) )
+									(oConnector.ResourceTypes.indexOf(defaultTypes[i][0]) > -1) ) {
+
 									AddSelectOption( oCombo, defaultTypes[i][1], defaultTypes[i][0] ) ;
+								}
 							}
 
 							var len = customTypes.length;
 
 							for ( i = 0; i < len; i++ ) {
 								if ( customTypes[i][0] == oConnector.ResourceType ||
-									(oConnector.ResourceTypes.indexOf(customTypes[i][0]) > -1))
-										AddSelectOption( oCombo, customTypes[i][1], customTypes[i][0] );
+									(oConnector.ResourceTypes.indexOf(customTypes[i][0]) > -1) ) {
+
+									AddSelectOption( oCombo, customTypes[i][1], customTypes[i][0] );
+								}
 						]]>
 					</replacevalue>
 				</replace>
