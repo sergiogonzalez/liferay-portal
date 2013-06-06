@@ -2512,6 +2512,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>portal-message</name>
+		<tag-class>com.liferay.taglib.ui.PortalMessageTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>progress</name>
 		<tag-class>com.liferay.taglib.ui.ProgressTag</tag-class>
 		<body-content>JSP</body-content>
