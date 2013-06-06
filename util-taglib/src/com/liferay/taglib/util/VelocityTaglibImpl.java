@@ -59,6 +59,7 @@ import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.JournalContentSearchTag;
 import com.liferay.taglib.ui.LanguageTag;
+import com.liferay.taglib.ui.LayoutFriendlyURLSuggestionsTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.RatingsTag;
@@ -412,6 +413,18 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
+	public LayoutFriendlyURLSuggestionsTag getLayoutFriendlyURLSuggestionsTag()
+		throws Exception {
+
+		LayoutFriendlyURLSuggestionsTag layoutFriendlyURLSuggestionsTag =
+			new LayoutFriendlyURLSuggestionsTag();
+
+		setUp(layoutFriendlyURLSuggestionsTag);
+
+		return layoutFriendlyURLSuggestionsTag;
+	}
+
+	@Override
 	public LayoutTag getLayoutTag() throws Exception {
 		LayoutTag layoutTag = new LayoutTag();
 
@@ -709,6 +722,13 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		languageTag.setName(name);
 
 		languageTag.runTag();
+	}
+
+	public void layoutFriendlyURLSuggestions() throws Exception {
+		LayoutFriendlyURLSuggestionsTag layoutFriendlyURLSuggestionsTag =
+			new LayoutFriendlyURLSuggestionsTag();
+
+		layoutFriendlyURLSuggestionsTag.runTag();
 	}
 
 	@Override

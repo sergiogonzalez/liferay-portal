@@ -28,6 +28,7 @@ import com.liferay.taglib.ui.DiscussionTag;
 import com.liferay.taglib.ui.FlagsTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
+import com.liferay.taglib.ui.LayoutFriendlyURLSuggestionsTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.RatingsTag;
@@ -185,6 +186,13 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public JournalArticleTag getJournalArticleTag() throws Exception {
+		return null;
+	}
+
+	@Override
+	public LayoutFriendlyURLSuggestionsTag getLayoutFriendlyURLSuggestionsTag()
+		throws Exception {
+
 		return null;
 	}
 
@@ -387,6 +395,9 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 			String formName, String formAction, String name,
 			String[] languageIds, int displayStyle)
 		throws Exception {
+	}
+
+	public void layoutFriendlyURLSuggestions() throws Exception {
 	}
 
 	@Override

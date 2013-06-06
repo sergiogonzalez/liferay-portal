@@ -27,6 +27,7 @@ import com.liferay.taglib.ui.DiscussionTag;
 import com.liferay.taglib.ui.FlagsTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
+import com.liferay.taglib.ui.LayoutFriendlyURLSuggestionsTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.RatingsTag;
@@ -130,6 +131,9 @@ public interface VelocityTaglib {
 	public IconTag getIconTag() throws Exception;
 
 	public JournalArticleTag getJournalArticleTag() throws Exception;
+
+	public LayoutFriendlyURLSuggestionsTag getLayoutFriendlyURLSuggestionsTag()
+		throws Exception;
 
 	public LayoutTag getLayoutTag() throws Exception;
 
@@ -248,6 +252,8 @@ public interface VelocityTaglib {
 			String formName, String formAction, String name,
 			String[] languageIds, int displayStyle)
 		throws Exception;
+
+	public void layoutFriendlyURLSuggestions() throws Exception;
 
 	public void layoutIcon(Layout layout) throws Exception;
 

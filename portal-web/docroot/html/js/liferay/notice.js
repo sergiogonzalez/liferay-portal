@@ -12,7 +12,9 @@ AUI.add(
 		 * closeText {string}: Use for the "close" button. Set to false to not have a close button.
 		 * toggleText {object}: The text to use for the "hide" and "show" button. Set to false to not have a hide button.
 		 * noticeClass {string}: A class to add to the notice toolbar.
-		 * type {string}: Either 'notice' or 'warning', depending on the type of the toolbar. Defaults to notice.
+		 * timeout {Number}: The timeout in milliseconds, after it the notice will be automatically closed. Disabled by default.
+		 * animationConfig {Object}: The Transition config, defaults to {easing: 'ease-out', duration: 2, top: '50px'}. If you don't specify 'left', it will be automatically calculated.
+		 * useAnimation {boolean}: To animate show/hide of the notice, defaults to true. If useAnimation is set to true, but there is no timeout, 5000 will be used as timeout.
 		 *
 		 * Callbacks
 		 * onClose {function}: Called when the toolbar is closed.
@@ -29,6 +31,21 @@ AUI.add(
 			instance._useCloseButton = true;
 			instance._onClose = options.onClose;
 			instance._closeText = options.closeText;
+
+			if (options.useAnimation && !A.Lang.isNumber(options.timeout)) {
+				options.timeout = 5000;	
+			}
+
+			instance._animationConfig = options.animationConfig || {
+				easing: 'ease-out',
+				duration: 2,
+				top: '50px'
+			};
+
+			instance._useAnimation = options.useAnimation;
+
+			instance._timeout = options.timeout;
+
 			instance._body = A.getBody();
 
 			instance._useToggleButton = false;
@@ -95,6 +112,61 @@ AUI.add(
 				}
 			},
 
+			_beforeNoticeHide: function(event) {
+				var instance = this;
+
+				var returnVal;
+
+				if (instance._useAnimation) {
+					var animationConfig = A.merge(
+						instance._animationConfig,
+						{
+							top: - instance._notice.get('offsetHeight') + 'px'
+						}
+					);
+
+					instance._notice.transition(
+						{
+							easing: 'ease-out',
+							duration: 2,
+							top: - instance._notice.get('offsetHeight') + 'px'
+						}
+					);
+
+					returnVal = new A.Do.Halt(null);
+				}
+
+				return returnVal;
+			},
+
+			_afterNoticeShow: function(event) {
+				var instance = this;
+
+				if (instance._useAnimation) {
+					if (!instance._animationConfig.left) {
+						var viewportWidth = A.DOM.winWidth();
+
+						var noticeRegion = A.DOM.region(A.Node.getDOMNode(instance._notice));
+
+						var noticeLeft = (viewportWidth / 2) - (noticeRegion.width / 2);
+
+						instance._animationConfig.left = noticeLeft + 'px';
+					}
+
+					instance._notice.setXY([noticeLeft, -noticeRegion.height]);
+
+					instance._notice.transition(
+						instance._animationConfig,
+						function() {
+							A.later(instance._timeout, instance._notice, 'hide');
+						}
+					);
+				}
+				else {
+					A.later(instance._timeout, instance._notice, 'hide');
+				}
+			},
+
 			_createHTML: function() {
 				var instance = this;
 
@@ -117,6 +189,12 @@ AUI.add(
 				}
 
 				instance._body.addClass('has-alerts');
+
+				if (instance._timeout) {
+					A.Do.before(instance._beforeNoticeHide, notice, 'hide', instance);
+
+					A.Do.after(instance._afterNoticeShow, notice, 'show', instance);
+				}
 
 				instance._notice = notice;
 			},

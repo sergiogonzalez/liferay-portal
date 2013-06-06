@@ -88,6 +88,12 @@ img, .png {
 	#end
 #end
 
+#macro (layout_friendly_url_suggestions)
+	#set ($layout_friendly_url_suggestions_tag = $theme.getLayoutFriendlyURLSuggestionsTag())
+
+	$layout_friendly_url_suggestions_tag.runTag()
+#end
+
 #macro (silently $foo)
 	#set ($foo = $foo)
 #end
