@@ -45,10 +45,8 @@
 	}
 
 	.entry-version {
-		.entry-version-number {
-			color: #999;
-			line-height: 1.5em;
-		}
+		color: #999;
+		line-height: 1.5em;
 	}
 
 	.entry-description, {
@@ -83,12 +81,12 @@
 		}
 	}
 
-	dt, dd {
-		display: inline;
+	dt {
+		float: left;
 	}
 
 	dt:after {
-		content:":";
+		content: ":";
 	}
 
 	.workflow-status-approved {
@@ -187,19 +185,19 @@
 		clip: rect(auto auto auto auto);
 	}
 
-	a>.entry-metadata .entry-title {
+	.entry-metadata .entry-title {
 		padding-bottom: 3px;
 	}
 
-	a>.entry-title .entry-categories, a>.entry-title .entry-tags,{
+	.entry-title .entry-categories, a.entry-title .entry-tags {
 		font-size: 16px ;
 	}
 
-	a:hover >.entry-metadata .entry-title .entry-title-text {
-		text-decoration: underline;
-	}
-
-	a:hover {
+	a.entry-link:hover {
 		text-decoration: none;
+
+		.entry-metadata .entry-title .entry-title-text {
+			text-decoration: underline;
+		}
 	}
 }
