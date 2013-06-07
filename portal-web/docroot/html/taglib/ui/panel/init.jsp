@@ -28,6 +28,8 @@ boolean persistState = GetterUtil.getBoolean((String)request.getAttribute("lifer
 String title = (String)request.getAttribute("liferay-ui:panel:title");
 
 IntegerWrapper panelCount = (IntegerWrapper)request.getAttribute("liferay-ui:panel-container:panelCount" + parentId);
+	System.out.println("parentId: " + parentId);
+	System.out.println("panelCount: " + panelCount);
 
 if (panelCount != null) {
 	panelCount.increment();

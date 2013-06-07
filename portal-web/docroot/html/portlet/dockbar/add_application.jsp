@@ -49,13 +49,14 @@ refererURL.setParameter("updateLayout", "true");
 		}
 		%>
 
-		<c:if test="<%= portlets.size() > 0 %>">
 
-			<%
-			String panelId = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
-			%>
+		<liferay-ui:panel-container cssClass="lfr-add-content" extended="<%= true %>" id="addContentPanelContainer" persistState="<%= true %>">
+			<c:if test="<%= portlets.size() > 0 %>">
 
-			<div class="lfr-add-content">
+				<%
+				String panelId = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
+				%>
+
 				<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category lfr-component panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
 
 					<aui:nav cssClass="nav-list">
@@ -106,7 +107,6 @@ refererURL.setParameter("updateLayout", "true");
 					</aui:nav>
 
 				</liferay-ui:panel>
-			</div>
 
 			<%
 			portletCategoryIndex++;
@@ -142,6 +142,8 @@ refererURL.setParameter("updateLayout", "true");
 			portletCategoryIndex++;
 		}
 		%>
+
+		</liferay-ui:panel-container>
 
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="alert alert-info">
