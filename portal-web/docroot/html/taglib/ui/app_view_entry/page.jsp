@@ -72,37 +72,38 @@ if (showLinkTitle) {
 					<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> href="<%= url %>" title="<%= linkTitle %>">
 				</c:otherwise>
 			</c:choose>
-				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
-					<img alt="" border="no" class="img-polaroid" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
-					<c:if test="<%= shortcut %>">
-						<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
-					</c:if>
+			<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
+				<img alt="" border="no" class="img-polaroid" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
-					<c:if test="<%= locked %>">
-						<img alt="<liferay-ui:message key="locked" />" class="locked-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
-					</c:if>
+				<c:if test="<%= shortcut %>">
+					<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
+				</c:if>
 
-				</div>
+				<c:if test="<%= locked %>">
+					<img alt="<liferay-ui:message key="locked" />" class="locked-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
+				</c:if>
+			</div>
 
-				<span class="entry-title">
-					<span class="entry-title-text">
-						<%= HtmlUtil.escape(shortTitle) %>
-					</span>
-
-					<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
-
-						<%
-						String statusLabel = WorkflowConstants.toLabel(status);
-						%>
-
-						<span class="workflow-status-<%= statusLabel %>">
-							(<liferay-ui:message key="<%= statusLabel %>" />)
-						</span>
-					</c:if>
-
-					<span class="entry-result-icon"></span>
+			<span class="entry-title">
+				<span class="entry-title-text">
+					<%= HtmlUtil.escape(shortTitle) %>
 				</span>
+
+				<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
+
+					<%
+					String statusLabel = WorkflowConstants.toLabel(status);
+					%>
+
+					<span class="workflow-status-<%= statusLabel %>">
+						(<liferay-ui:message key="<%= statusLabel %>" />)
+					</span>
+				</c:if>
+
+				<span class="entry-result-icon"></span>
+			</span>
+
 			<c:choose>
 				<c:when test="<%= Validator.isNull(url) %>">
 					</span>
@@ -113,6 +114,7 @@ if (showLinkTitle) {
 			</c:choose>
 		</div>
 	</c:when>
+
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %> <%= cssClass %>" <%= AUIUtil.buildData(data) %> data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 			<c:choose>
@@ -123,58 +125,60 @@ if (showLinkTitle) {
 					<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" href="<%= url %>" title="<%= linkTitle %>">
 				</c:otherwise>
 			</c:choose>
-				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
-					<img alt="" border="no" class="img-polaroid" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
-					<c:if test="<%= shortcut %>">
-						<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
-					</c:if>
+			<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
+				<img alt="" border="no" class="img-polaroid" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
-					<c:if test="<%= locked %>">
-						<img alt="<liferay-ui:message key="locked" />" class="locked-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
-					</c:if>
-				</div>
+				<c:if test="<%= shortcut %>">
+					<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
+				</c:if>
 
-				<span class="entry-title">
-					<span class="entry-title-text">
-						<%= HtmlUtil.escape(title) %>
+				<c:if test="<%= locked %>">
+					<img alt="<liferay-ui:message key="locked" />" class="locked-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
+				</c:if>
+			</div>
+
+			<span class="entry-title">
+				<span class="entry-title-text">
+					<%= HtmlUtil.escape(title) %>
+				</span>
+
+				<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
+
+					<%
+					String statusLabel = WorkflowConstants.toLabel(status);
+					%>
+
+					<span class="workflow-status-<%= statusLabel %>">
+						(<liferay-ui:message key="<%= statusLabel %>" />)
 					</span>
+				</c:if>
 
-					<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
+				<span class="entry-result-icon"></span>
+			</span>
 
-						<%
-						String statusLabel = WorkflowConstants.toLabel(status);
-						%>
+			<span class="entry-description">
+				<%= HtmlUtil.escape(description) %>
 
-						<span class="workflow-status-<%= statusLabel %>">
-							(<liferay-ui:message key="<%= statusLabel %>" />)
-						</span>
-					</c:if>
+				<c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
+					<div class="categories">
+						<liferay-ui:asset-categories-summary
+							className="<%= assetCategoryClassName %>"
+							classPK="<%= assetCategoryClassPK %>"
+						/>
+					</div>
+				</c:if>
 
-					<span class="entry-result-icon"></span>
-				</span>
+				<c:if test="<%= Validator.isNotNull(assetTagClassName) && (assetTagClassPK > 0) %>">
+					<div class="tags">
+						<liferay-ui:asset-tags-summary
+							className="<%= assetTagClassName %>"
+							classPK="<%= assetTagClassPK %>"
+						/>
+					</div>
+				</c:if>
+			</span>
 
-				<span class="entry-description">
-					<%= HtmlUtil.escape(description) %>
-
-					<c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
-						<div class="categories">
-							<liferay-ui:asset-categories-summary
-								className="<%= assetCategoryClassName %>"
-								classPK="<%= assetCategoryClassPK %>"
-							/>
-						</div>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(assetTagClassName) && (assetTagClassPK > 0) %>">
-						<div class="tags">
-							<liferay-ui:asset-tags-summary
-								className="<%= assetTagClassName %>"
-								classPK="<%= assetTagClassPK %>"
-							/>
-						</div>
-					</c:if>
-				</span>
 			<c:choose>
 				<c:when test="<%= Validator.isNull(url) %>">
 					</span>
@@ -197,6 +201,7 @@ if (showLinkTitle) {
 			</c:if>
 		</div>
 	</c:when>
+
 	<c:when test='<%= displayStyle.equals("list") %>'>
 		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= locked ? "locked" : StringPool.BLANK %> <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 			<liferay-ui:icon
