@@ -21,8 +21,14 @@
 		border-color: #7ABFDD;
 	}
 
-	&.selected .entry-thumbnail {
-		border-color: #057CB0;
+	&.selected{
+		.entry-thumbnail {
+			border-color: #057CB0;
+		}
+
+		.entry-author, .entry-latest-approved, .entry-schedule, .entry-categories, .entry-tags, .entry-description, .entry-version, .workflow-status-approved, .workflow-status-draft, .workflow-status-expired, .workflow-status-pending {
+			color: #f0f0f0;
+		}
 	}
 
 	.entry-title {
@@ -42,27 +48,21 @@
 
 	.entry-metadata {
 		margin:10px 0 20px 170px;
+
+		.entry-title {
+			padding-bottom: 3px;
+		}
 	}
 
-	.entry-version {
+	.entry-author, .entry-latest-approved, .entry-schedule, .entry-categories, .entry-tags, .entry-description, .entry-version {
 		color: #999;
-		line-height: 1.5em;
+		line-height:1.5em;
+		overflow: hidden;
+		word-wrap: break-word;
 	}
 
 	.entry-description, {
-		color: #999;
 		display: block;
-		line-height: 1.5em;
-		overflow: hidden;
-		word-wrap: break-word;
-	}
-
-	.entry-author, .entry-latest-approved, .entry-schedule, {
-		color: #999;
-		line-height: 1.5em;
-		overflow: hidden;
-		word-wrap: break-word;
-		display: inline;
 	}
 
 	dl {
@@ -72,21 +72,20 @@
 			margin: 20px 0 20px 0;
 		}
 
-		div.entry-latest-approved {
-			margin: 20px 0 20px 0;
+		dt {
+			float: left;
+
+			&:after {
+				content:":";
+			}
 		}
 
-		.entry-metadata-row {
-			display: block;
+		dd {
+			&.entry-version, &.entry-schedule, &.entry-author, &.entry-latest-approved {
+				text-indent: .5em;
+				display: block;
+			}
 		}
-	}
-
-	dt {
-		float: left;
-	}
-
-	dt:after {
-		content: ":";
 	}
 
 	.workflow-status-approved {
@@ -107,25 +106,25 @@
 		color: #F7A233;
 		font-weight: bold;
 	}
-
 	.entry-categories, .entry-tags {
-		color: #999 !important;
 		display: block;
-		line-height: 1.5em;
-		overflow: hidden;
-		word-wrap: break-word;
+	}
+
+	.entry-categories .taglib-asset-categories-summary {
+		font-weight: bold;
+
+		.asset-category {
+			font-weight: normal;
+			margin-left: .8em;
+		}
 	}
 
 	.entry-tags .tag {
 		margin-left: 15px;
-	}
 
-	.entry-tags .tag:first-child {
-		margin-left: 0;
-	}
-
-	.entry-latest-approved {
-		margin-top: 10px;
+		&:first-child {
+			margin-left:0;
+		}
 	}
 
 	.folder-action, .entry-action {
@@ -183,10 +182,6 @@
 
 	&:hover .overlay, &.hover .overlay, &:hover .entry-selector, &.selected .entry-selector {
 		clip: rect(auto auto auto auto);
-	}
-
-	.entry-metadata .entry-title {
-		padding-bottom: 3px;
 	}
 
 	.entry-title .entry-categories, a.entry-title .entry-tags {
