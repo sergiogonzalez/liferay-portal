@@ -49,18 +49,19 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
 		portletPreferences = upgradeSubscriptionSubject(
-			"mailPageAddedSubject", "mailPageAddedSubjectPrefix",
+			"emailPageAddedSubject", "emailPageAddedSubjectPrefix",
 			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionSubject(
-			"mailPageUpdatedSubject", "mailPageUpdatedSubjectPrefix",
+			"emailPageUpdatedSubject", "emailPageUpdatedSubjectPrefix",
 			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionBody(
-			"mailPageAddedBody", "mailPageAddedSignature", portletPreferences);
+			"emailPageAddedBody", "emailPageAddedSignature",
+			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionBody(
-			"mailPageUpdatedBody", "mailPageUpdatedSignature",
+			"emailPageUpdatedBody", "emailPageUpdatedSignature",
 			portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
@@ -82,7 +83,7 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 		}
 
 		if (Validator.isNull(signature)) {
-			if (bodyName.startsWith("mailPageAdded")) {
+			if (bodyName.startsWith("emailPageAdded")) {
 				signature = ContentUtil.get(
 					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_ADDED_SIGNATURE);
 			}
@@ -93,7 +94,7 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 		}
 
 		if (Validator.isNull(body)) {
-			if (bodyName.startsWith("mailPageAdded")) {
+			if (bodyName.startsWith("emailPageAdded")) {
 				body = ContentUtil.get(
 					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_ADDED_BODY);
 			}
