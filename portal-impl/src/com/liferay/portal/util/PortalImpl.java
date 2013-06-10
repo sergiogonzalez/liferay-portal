@@ -546,6 +546,42 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public void addPortalMessage(HttpServletRequest request, String message) {
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_MESSAGE, message);
+	}
+
+	@Override
+	public void addPortalMessage(
+		HttpServletRequest request, String jspPath, String portletId) {
+
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_JSP_PATH, jspPath);
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_PORTLET_ID, portletId);
+	}
+
+	@Override
+	public void addPortalMessage(
+		HttpServletRequest request, String message, String cssClass,
+		boolean animation, int timeout) {
+
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_MESSAGE, message);
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_ANIMATION, animation);
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_CSS_CLASS, cssClass);
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_TIMEOUT, timeout);
+	}
+
+	@Override
+	public void addPortalMessage(
+		HttpServletRequest request, String jspPath, String portletId,
+		String cssClass, boolean animation, int timeout) {
+
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_JSP_PATH, jspPath);
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_PORTLET_ID, portletId);
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_ANIMATION, animation);
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_CSS_CLASS, cssClass);
+		request.setAttribute(WebKeys.PORTAL_MESSAGE_TIMEOUT, timeout);
+	}
+
+	@Override
 	public void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
