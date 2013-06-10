@@ -39,13 +39,13 @@ String defaultEmailBody = StringPool.BLANK;
 
 if (tabs2.equals("document-added-email")) {
 	emailParam = "emailFileEntryAdded";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_BODY);
 }
 else if (tabs2.equals("document-updated-email")) {
 	emailParam = "emailFileEntryUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_BODY);
 }
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
@@ -81,10 +81,8 @@ String emailBody = PrefsParamUtil.getString(preferences, request, emailBodyParam
 
 	<liferay-ui:error key="displayViewsInvalid" message="display-style-views-cannot-be-empty" />
 	<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailFileEntryAddedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailFileEntryAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailFileEntryUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailFileEntryUpdatedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailFileEntryUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
