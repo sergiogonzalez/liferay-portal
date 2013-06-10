@@ -191,7 +191,7 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 								<aui:fieldset>
 									<aui:input cssClass="lfr-blogs-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
 
-									<aui:input cssClass="lfr-blogs-small-image-value" inlineField="<%= true %>" label="" name="smallFile" type="file" />
+									<aui:input cssClass="lfr-blogs-small-image-value" inlineField="<%= true %>" label="" name="smallFile" onChange='<%= renderResponse.getNamespace() + "manageAttachments();" %>' type="file" />
 								</aui:fieldset>
 							</aui:col>
 						</aui:row>
