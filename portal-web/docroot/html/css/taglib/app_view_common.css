@@ -21,15 +21,21 @@
 		border-color: #7ABFDD;
 	}
 
-	&.selected .entry-thumbnail {
-		border-color: #057CB0;
+	&.selected{
+		.entry-thumbnail {
+			border-color: #057CB0;
+		}
+
+		.entry-author, .entry-latest-approved, .entry-schedule, .entry-categories, .entry-tags, .entry-description, .entry-version, .workflow-status-approved, .workflow-status-draft, .workflow-status-expired, .workflow-status-pending {
+			color: #f0f0f0;
+		}
 	}
 
 	.entry-title {
 		display: block;
 		font-size: 1.15em;
 		font-weight: bold;
-		padding: 5px 0 0;
+		padding: 5px 0 10px 0;
 		word-wrap: break-word;
 	}
 
@@ -40,10 +46,85 @@
 		text-decoration: none;
 	}
 
-	.entry-description {
-		display: block;
+	.entry-metadata {
+		margin:10px 0 20px 170px;
+
+		.entry-title {
+			padding-bottom: 3px;
+		}
+	}
+
+	.entry-author, .entry-latest-approved, .entry-schedule, .entry-categories, .entry-tags, .entry-description, .entry-version {
+		color: #999;
+		line-height:1.5em;
 		overflow: hidden;
 		word-wrap: break-word;
+	}
+
+	.entry-description, {
+		display: block;
+	}
+
+	dl {
+		margin: 0px;
+
+		&.entry-latest-approved-container {
+			margin: 20px 0 20px 0;
+		}
+
+		dt {
+			float: left;
+
+			&:after {
+				content:":";
+			}
+		}
+
+		dd {
+			&.entry-version, &.entry-schedule, &.entry-author, &.entry-latest-approved {
+				text-indent: .5em;
+				display: block;
+			}
+		}
+	}
+
+	.workflow-status-approved {
+		color: #41801D;
+		font-weight: bold;
+	}
+
+	.workflow-status-draft {
+		color: #3068BA;
+		font-weight: bold;
+	}
+	.workflow-status-expired {
+		color: #933;
+		font-weight: bold;
+	}
+
+	.workflow-status-pending {
+		color: #F7A233;
+		font-weight: bold;
+	}
+	.entry-categories, .entry-tags {
+		display: block;
+	}
+
+	.entry-categories .taglib-asset-categories-summary {
+		font-weight: bold;
+
+		.asset-category {
+			font-weight: normal;
+			margin-left: .8em;
+		}
+	}
+
+	.entry-tags .tag {
+		margin-left: 15px;
+
+		&:first-child {
+			margin-left:0;
+		}
 	}
 
 	.folder-action, .entry-action {
@@ -101,5 +182,17 @@
 
 	&:hover .overlay, &.hover .overlay, &:hover .entry-selector, &.selected .entry-selector {
 		clip: rect(auto auto auto auto);
+	}
+
+	.entry-title .entry-categories, a.entry-title .entry-tags {
+		font-size: 16px ;
+	}
+
+	a.entry-link:hover {
+		text-decoration: none;
+
+		.entry-metadata .entry-title .entry-title-text {
+			text-decoration: underline;
+		}
 	}
 }
