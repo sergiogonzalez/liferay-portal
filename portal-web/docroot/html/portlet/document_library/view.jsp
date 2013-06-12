@@ -147,6 +147,10 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				</div>
 
 				<div class="document-entries-pagination"></div>
+				
+				<%
+				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+				%>
 			</aui:form>
 		</aui:col>
 	</aui:row>
