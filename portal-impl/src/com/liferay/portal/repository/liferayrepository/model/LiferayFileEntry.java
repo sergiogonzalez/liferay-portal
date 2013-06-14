@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -202,7 +203,15 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
-		return new LiferayFileVersion(_dlFileEntry.getLatestFileVersion(false));
+		return getLatestFileVersion(WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public FileVersion getLatestFileVersion(int status)
+		throws PortalException, SystemException {
+
+		return new LiferayFileVersion(
+			_dlFileEntry.getLatestFileVersion(status));
 	}
 
 	@Override

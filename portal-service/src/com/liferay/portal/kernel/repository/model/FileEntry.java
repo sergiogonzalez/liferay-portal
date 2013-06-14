@@ -104,16 +104,23 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public String getIcon();
 
 	/**
-	 * Retrieves the latest file version. In a Liferay repository, this means
-	 * the latest version regardless of workflow state. In third-party
-	 * repositories, this may have an identical functionality with {@link
-	 * #getFileVersion()}.
+	 * Retrieves the latest file version.
 	 *
 	 * @return latest file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public FileVersion getLatestFileVersion()
+		throws PortalException, SystemException;
+
+	/**
+	 * Retrieves the latest file version regarding status.
+	 *
+	 * @return latest file version
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public FileVersion getLatestFileVersion(int status)
 		throws PortalException, SystemException;
 
 	public Lock getLock();
