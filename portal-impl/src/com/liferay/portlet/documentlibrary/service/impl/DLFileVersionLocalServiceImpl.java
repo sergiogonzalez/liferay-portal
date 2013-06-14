@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileVersionLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
@@ -84,34 +82,42 @@ public class DLFileVersionLocalServiceImpl
 		return dlFileVersionPersistence.countByF_S(fileEntryId, status);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #getLatestFileVersion(long,
+	 *            int)}
+	 */
 	@Override
 	public DLFileVersion getLatestFileVersion(
 			long fileEntryId, boolean excludeWorkingCopy)
 		throws PortalException, SystemException {
 
-		List<DLFileVersion> dlFileVersions =
-			dlFileVersionPersistence.findByFileEntryId(fileEntryId);
+		if (excludeWorkingCopy) {
+			return getLatestFileVersion(
+				fileEntryId, WorkflowConstants.STATUS_APPROVED);
+		}
+		else {
+			return getLatestFileVersion(
+				fileEntryId, WorkflowConstants.STATUS_ANY);
+		}
+	}
 
-		if (dlFileVersions.isEmpty()) {
-			throw new NoSuchFileVersionException(
-				"No file versions found for fileEntryId " + fileEntryId);
+	@Override
+	public DLFileVersion getLatestFileVersion(long fileEntryId, int status)
+		throws SystemException {
+
+		List<DLFileVersion> dlFileVersions = dlFileVersionPersistence.findByF_S(
+			fileEntryId, status);
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			dlFileVersions = dlFileVersionPersistence.findByFileEntryId(
+				fileEntryId);
 		}
 
 		dlFileVersions = ListUtil.copy(dlFileVersions);
 
 		Collections.sort(dlFileVersions, new FileVersionVersionComparator());
 
-		DLFileVersion dlFileVersion = dlFileVersions.get(0);
-
-		String version = dlFileVersion.getVersion();
-
-		if (excludeWorkingCopy &&
-			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
-			return dlFileVersions.get(1);
-		}
-
-		return dlFileVersion;
+		return dlFileVersions.get(0);
 	}
 
 	@Override
@@ -125,7 +131,14 @@ public class DLFileVersionLocalServiceImpl
 				userId, fileEntryId);
 		}
 
-		return getLatestFileVersion(fileEntryId, excludeWorkingCopy);
+		if (excludeWorkingCopy) {
+			return getLatestFileVersion(
+				fileEntryId, WorkflowConstants.STATUS_APPROVED);
+		}
+		else {
+			return getLatestFileVersion(
+				fileEntryId, WorkflowConstants.STATUS_ANY);
+		}
 	}
 
 }

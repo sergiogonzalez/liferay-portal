@@ -299,6 +299,13 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
+	public FileVersion getLatestFileVersion(int status)
+		throws PortalException, SystemException {
+
+		return getLatestFileVersion();
+	}
+
+	@Override
 	public Lock getLock() {
 		if (!isCheckedOut()) {
 			return null;

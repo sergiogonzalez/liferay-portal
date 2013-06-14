@@ -67,8 +67,16 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 
 	public java.lang.String getIcon();
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getLatestFileVersion(int)}
+	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		boolean trusted)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

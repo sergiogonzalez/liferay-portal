@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -179,9 +180,17 @@ public class FileEntryProxyBean
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
-		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
+		FileVersion fileVersion = _fileEntry.getLatestFileVersion(
+			WorkflowConstants.STATUS_ANY);
 
 		return newFileVersionProxyBean(fileVersion);
+	}
+
+	@Override
+	public FileVersion getLatestFileVersion(int status)
+		throws PortalException, SystemException {
+
+		return _fileEntry.getLatestFileVersion(status);
 	}
 
 	@Override
