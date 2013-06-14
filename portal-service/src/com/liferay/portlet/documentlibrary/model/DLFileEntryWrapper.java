@@ -1103,12 +1103,23 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.getIcon();
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getLatestFileVersion(int)}
+	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntry.getLatestFileVersion(trusted);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntry.getLatestFileVersion(status);
 	}
 
 	@Override

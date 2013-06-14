@@ -300,11 +300,21 @@ public class DLFileVersionLocalServiceUtil {
 		return getService().getFileVersionsCount(fileEntryId, status);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getLatestFileVersion(long,
+	int)}
+	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		long fileEntryId, boolean excludeWorkingCopy)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getLatestFileVersion(fileEntryId, excludeWorkingCopy);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		long fileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLatestFileVersion(fileEntryId, status);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
