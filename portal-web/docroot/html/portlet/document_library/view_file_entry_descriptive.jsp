@@ -36,13 +36,28 @@ if (fileShortcut != null) {
 	rowCheckerName = DLFileShortcut.class.getSimpleName();
 	rowCheckerId = fileShortcut.getFileShortcutId();
 }
+
+FileVersion latestApprovedFileVersion = null;
+
+if ((latestFileVersion.getStatus() == WorkflowConstants.STATUS_DRAFT) || (latestFileVersion.getStatus() == WorkflowConstants.STATUS_PENDING) && !Validator.equals(latestFileVersion.getVersion(), DLFileEntryConstants.VERSION_DEFAULT)) {
+	latestApprovedFileVersion = fileEntry.getLatestFileVersion(WorkflowConstants.STATUS_APPROVED);
+}
 %>
 
 <liferay-ui:app-view-entry
 	actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+	assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
+	assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"
+	assetTagClassName="<%= DLFileEntry.class.getName() %>"
+	assetTagClassPK="<%= fileEntry.getFileEntryId() %>"
+	author="<%= fileEntry.getUserName() %>"
+	createDate="<%= fileEntry.getCreateDate() %>"
 	description="<%= fileEntry.getDescription() %>"
 	displayStyle="descriptive"
+	latestApprovedVersion="<%= (latestApprovedFileVersion != null) ? latestApprovedFileVersion.getVersion() : null %>"
+	latestApprovedVersionAuthor="<%= (latestApprovedFileVersion != null) ? latestApprovedFileVersion.getUserName() : null %>"
 	locked="<%= fileEntry.isCheckedOut() %>"
+	modifiedDate="<%= fileEntry.getModifiedDate() %>"
 	rowCheckerId="<%= String.valueOf(rowCheckerId) %>"
 	rowCheckerName="<%= rowCheckerName %>"
 	shortcut="<%= fileShortcut != null %>"
@@ -53,4 +68,5 @@ if (fileShortcut != null) {
 	thumbnailStyle="<%= DLUtil.getThumbnailStyle() %>"
 	title="<%= fileEntry.getTitle() %>"
 	url="<%= tempRowURL.toString() %>"
+	version="<%= String.valueOf(fileEntry.getVersion()) %>"
 />
