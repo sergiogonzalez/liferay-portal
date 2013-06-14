@@ -33,13 +33,13 @@ String defaultEmailBody = StringPool.BLANK;
 
 if (tabs2.equals("entry-added-email")) {
 	emailParam = "emailEntryAdded";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY);
 }
 else if (tabs2.equals("entry-updated-email")) {
 	emailParam = "emailEntryUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY);
 }
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
@@ -72,10 +72,8 @@ String emailBody = PrefsParamUtil.getString(preferences, request, emailBodyParam
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailEntryAddedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailEntryUpdatedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
 

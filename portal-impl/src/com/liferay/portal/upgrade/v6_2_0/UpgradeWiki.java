@@ -20,16 +20,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.util.ContentUtil;
-import com.liferay.util.RSSUtil;
 
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Eduardo Garcia
- * @author Daniel Kocsis
  * @author Roberto Díaz
  */
-public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
+public class UpgradeWiki extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -38,7 +35,7 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {"19"};
+		return new String[] {"36"};
 	}
 
 	@Override
@@ -51,33 +48,20 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		String rssFormat = GetterUtil.getString(
-			portletPreferences.getValue("rssFormat", null));
-
-		if (Validator.isNotNull(rssFormat)) {
-			String rssFeedType = RSSUtil.getFeedType(
-				RSSUtil.getFormatType(rssFormat),
-				RSSUtil.getFormatVersion(rssFormat));
-
-			portletPreferences.setValue("rssFeedType", rssFeedType);
-		}
-
-		portletPreferences.reset("rssFormat");
-
 		portletPreferences = upgradeSubscriptionSubject(
-			"emailMessageAddedSubject", "emailMessageAddedSubjectPrefix",
+			"emailPageAddedSubject", "emailPageAddedSubjectPrefix",
 			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionSubject(
-			"emailMessageUpdatedSubject", "emailMessageUpdatedSubjectPrefix",
+			"emailPageUpdatedSubject", "emailPageUpdatedSubjectPrefix",
 			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionBody(
-			"emailMessageAddedBody", "emailMessageAddedSignature",
+			"emailPageAddedBody", "emailPageAddedSignature",
 			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionBody(
-			"emailMessageUpdatedBody", "emailMessageUpdatedSignature",
+			"emailPageUpdatedBody", "emailPageUpdatedSignature",
 			portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
@@ -99,27 +83,24 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 		}
 
 		if (Validator.isNull(signature)) {
-			if (bodyName.startsWith("emailMessageAdded")) {
+			if (bodyName.startsWith("emailPageAdded")) {
 				signature = ContentUtil.get(
-					_RESOURCE_PATH +
-						_MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE);
+					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_ADDED_SIGNATURE);
 			}
 			else {
 				signature = ContentUtil.get(
-					_RESOURCE_PATH +
-						_MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE);
+					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_UPDATED_SIGNATURE);
 			}
 		}
 
 		if (Validator.isNull(body)) {
-			if (bodyName.startsWith("emailMessageAdded")) {
+			if (bodyName.startsWith("emailPageAdded")) {
 				body = ContentUtil.get(
-					_RESOURCE_PATH + _MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY);
+					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_ADDED_BODY);
 			}
 			else {
 				body = ContentUtil.get(
-					_RESOURCE_PATH +
-						_MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY);
+					_RESOURCE_PATH + _WIKI_EMAIL_PAGE_UPDATED_BODY);
 			}
 		}
 
@@ -143,10 +124,10 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 		if (Validator.isNotNull(subjectPrefix)) {
 			String subject = subjectPrefix;
 
-			if (!subjectPrefix.contains("[$MESSAGE_SUBJECT$]")) {
+			if (!subjectPrefix.contains("[$PAGE_TITLE$]")) {
 				subject =
 					subjectPrefix.trim() + StringPool.SPACE +
-						_MESSAGE_BOARDS_EMAIL_MESSAGE_SUBJECT;
+						_WIKI_EMAIL_PAGE_TITLE;
 			}
 
 			portletPreferences.setValue(subjectName, subject);
@@ -157,18 +138,16 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 		return portletPreferences;
 	}
 
-	private static final String _MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY =
-		"email_message_added_body.tmpl";
-	private static final String _MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE =
-		"email_message_added_signature.tmpl";
-	private static final String _MESSAGE_BOARDS_EMAIL_MESSAGE_SUBJECT =
-		"[$MESSAGE_SUBJECT$]";
-	private static final String _MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY =
-		"email_message_updated_body.tmpl";
-	private static final String
-		_MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE =
-			"email_message_updated_signature.tmpl";
 	private static final String _RESOURCE_PATH =
-		"com/liferay/portal/upgrade/v6_2_0/dependencies/messageboards/";
+		"com/liferay/portal/upgrade/v6_2_0/dependencies/wiki/";
+	private static final String _WIKI_EMAIL_PAGE_ADDED_BODY =
+		"email_message_added_body.tmpl";
+	private static final String _WIKI_EMAIL_PAGE_ADDED_SIGNATURE =
+		"email_page_added_signature.tmpl";
+	private static final String _WIKI_EMAIL_PAGE_TITLE = "[$PAGE_TITLE$]";
+	private static final String _WIKI_EMAIL_PAGE_UPDATED_BODY =
+		"email_page_updated_body.tmpl";
+	private static final String _WIKI_EMAIL_PAGE_UPDATED_SIGNATURE =
+		"email_page_updated_signature.tmpl";
 
 }

@@ -2113,31 +2113,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String fromAddress = WikiUtil.getEmailFromAddress(
 			preferences, page.getCompanyId());
 
-		String subjectPrefix = null;
+		String subject = null;
 		String body = null;
-		String signature = null;
 
 		if (update) {
-			subjectPrefix = WikiUtil.getEmailPageUpdatedSubjectPrefix(
-				preferences);
+			subject = WikiUtil.getEmailPageUpdatedSubject(preferences);
 			body = WikiUtil.getEmailPageUpdatedBody(preferences);
-			signature = WikiUtil.getEmailPageUpdatedSignature(preferences);
 		}
 		else {
-			subjectPrefix = WikiUtil.getEmailPageAddedSubjectPrefix(
-				preferences);
+			subject = WikiUtil.getEmailPageAddedSubject(preferences);
 			body = WikiUtil.getEmailPageAddedBody(preferences);
-			signature = WikiUtil.getEmailPageAddedSignature(preferences);
-		}
-
-		String subject = page.getTitle();
-
-		if (!subject.contains(subjectPrefix)) {
-			subject = subjectPrefix + StringPool.SPACE + subject;
-		}
-
-		if (Validator.isNotNull(signature)) {
-			body += "\n" + signature;
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();

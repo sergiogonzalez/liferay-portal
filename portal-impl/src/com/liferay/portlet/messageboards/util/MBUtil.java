@@ -403,33 +403,18 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageAddedSignature(
+	public static String getEmailMessageAddedSubject(
 		PortletPreferences preferences) {
 
-		String emailMessageAddedSignature = preferences.getValue(
-			"emailMessageAddedSignature", StringPool.BLANK);
+		String emailMessageAddedSubject = preferences.getValue(
+			"emailMessageAddedSubject", StringPool.BLANK);
 
-		if (Validator.isNotNull(emailMessageAddedSignature)) {
-			return emailMessageAddedSignature;
+		if (Validator.isNotNull(emailMessageAddedSubject)) {
+			return emailMessageAddedSubject;
 		}
 		else {
 			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE);
-		}
-	}
-
-	public static String getEmailMessageAddedSubjectPrefix(
-		PortletPreferences preferences) {
-
-		String emailMessageAddedSubjectPrefix = preferences.getValue(
-			"emailMessageAddedSubjectPrefix", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageAddedSubjectPrefix)) {
-			return emailMessageAddedSubjectPrefix;
-		}
-		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT_PREFIX);
+				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT);
 		}
 	}
 
@@ -462,34 +447,18 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageUpdatedSignature(
-		PortletPreferences preferences) {
-
-		String emailMessageUpdatedSignature = preferences.getValue(
-			"emailMessageUpdatedSignature", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageUpdatedSignature)) {
-			return emailMessageUpdatedSignature;
-		}
-		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE);
-		}
-	}
-
-	public static String getEmailMessageUpdatedSubjectPrefix(
+	public static String getEmailMessageUpdatedSubject(
 		PortletPreferences preferences) {
 
 		String emailMessageUpdatedSubject = preferences.getValue(
-			"emailMessageUpdatedSubjectPrefix", StringPool.BLANK);
+			"emailMessageUpdatedSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageUpdatedSubject)) {
 			return emailMessageUpdatedSubject;
 		}
 		else {
 			return ContentUtil.get(
-				PropsValues.
-					MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT_PREFIX);
+				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT);
 		}
 	}
 

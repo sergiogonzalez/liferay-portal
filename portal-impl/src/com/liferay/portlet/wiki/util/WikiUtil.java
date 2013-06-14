@@ -223,33 +223,18 @@ public class WikiUtil {
 		}
 	}
 
-	public static String getEmailPageAddedSignature(
+	public static String getEmailPageAddedSubject(
 		PortletPreferences preferences) {
 
-		String emailPageAddedSignature = preferences.getValue(
-			"emailPageAddedSignature", StringPool.BLANK);
+		String emailPageAddedSubject = preferences.getValue(
+			"emailPageAddedSubject", StringPool.BLANK);
 
-		if (Validator.isNotNull(emailPageAddedSignature)) {
-			return emailPageAddedSignature;
+		if (Validator.isNotNull(emailPageAddedSubject)) {
+			return emailPageAddedSubject;
 		}
 		else {
 			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SIGNATURE));
-		}
-	}
-
-	public static String getEmailPageAddedSubjectPrefix(
-		PortletPreferences preferences) {
-
-		String emailPageAddedSubjectPrefix = preferences.getValue(
-			"emailPageAddedSubjectPrefix", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageAddedSubjectPrefix)) {
-			return emailPageAddedSubjectPrefix;
-		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT_PREFIX));
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT));
 		}
 	}
 
@@ -283,34 +268,18 @@ public class WikiUtil {
 		}
 	}
 
-	public static String getEmailPageUpdatedSignature(
-		PortletPreferences preferences) {
-
-		String emailPageUpdatedSignature = preferences.getValue(
-			"emailPageUpdatedSignature", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageUpdatedSignature)) {
-			return emailPageUpdatedSignature;
-		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE));
-		}
-	}
-
-	public static String getEmailPageUpdatedSubjectPrefix(
+	public static String getEmailPageUpdatedSubject(
 		PortletPreferences preferences) {
 
 		String emailPageUpdatedSubject = preferences.getValue(
-			"emailPageUpdatedSubjectPrefix", StringPool.BLANK);
+			"emailPageUpdatedSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailPageUpdatedSubject)) {
 			return emailPageUpdatedSubject;
 		}
 		else {
 			return ContentUtil.get(
-				PropsUtil.get(
-					PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT_PREFIX));
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
 		}
 	}
 
