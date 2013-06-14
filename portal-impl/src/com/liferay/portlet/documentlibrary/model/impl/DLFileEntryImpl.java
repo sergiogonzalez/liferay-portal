@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.LockLocalServiceUtil;
@@ -38,7 +39,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -221,18 +221,27 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return DLUtil.getFileIcon(getExtension());
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #getLatestFileVersion(int)}
+	 */
 	@Override
 	public DLFileVersion getLatestFileVersion(boolean trusted)
 		throws PortalException, SystemException {
 
 		if (trusted) {
-			return DLFileVersionLocalServiceUtil.getLatestFileVersion(
-				getFileEntryId(), false);
+			return getLatestFileVersion(WorkflowConstants.STATUS_APPROVED);
 		}
 		else {
-			return DLFileVersionServiceUtil.getLatestFileVersion(
-				getFileEntryId());
+			return getLatestFileVersion(WorkflowConstants.STATUS_ANY);
 		}
+	}
+
+	@Override
+	public DLFileVersion getLatestFileVersion(int status)
+		throws PortalException, SystemException {
+
+		return DLFileVersionLocalServiceUtil.getLatestFileVersion(
+			getFileEntryId(), status);
 	}
 
 	@Override
