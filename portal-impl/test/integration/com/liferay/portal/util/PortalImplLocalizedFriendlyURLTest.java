@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -35,6 +36,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -55,7 +57,36 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class PortalImplLocalizedFriendlyURLTest {
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		StringBundler sb = new StringBundler((2 * locales.length) - 1);
+
+		for (int i = 0; i < locales.length; i++) {
+			Locale locale = locales[i];
+
+			sb.append(locale);
+
+			if (i < (locales.length - 1)) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		_availableLocales = sb.toString();
+
+		sb = new StringBundler(7);
+
+		sb.append(_deLocale.getDisplayName());
+		sb.append(StringPool.COMMA);
+		sb.append(_enLocale.getDisplayName());
+		sb.append(StringPool.COMMA);
+		sb.append(_esLocale.getDisplayName());
+		sb.append(StringPool.COMMA);
+		sb.append(_frLocale.getDisplayName());
+
+		CompanyTestUtil.resetCompanyLanguages(
+			PortalUtil.getDefaultCompanyId(), sb.toString());
+
 		_nameMap = new HashMap<Locale, String>();
 
 		_nameMap.put(_enLocale, "Home");
@@ -67,6 +98,12 @@ public class PortalImplLocalizedFriendlyURLTest {
 		_friendlyURLMap.put(_enLocale, "/home");
 		_friendlyURLMap.put(_esLocale, "/inicio");
 		_friendlyURLMap.put(_frLocale, "/accueil");
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyTestUtil.resetCompanyLanguages(
+			PortalUtil.getDefaultCompanyId(), _availableLocales);
 	}
 
 	@Test
@@ -332,7 +369,8 @@ public class PortalImplLocalizedFriendlyURLTest {
 		Group userGroupGroup = userGroup.getGroup();
 
 		Layout layout = LayoutTestUtil.addLayout(
-			userGroupGroup.getGroupId(), privateLayout, _nameMap, _friendlyURLMap);
+			userGroupGroup.getGroupId(), privateLayout, _nameMap,
+			_friendlyURLMap);
 
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			serviceContext.getUserId(), userGroup.getUserGroupId());
@@ -466,6 +504,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
 
+	private static String _availableLocales;
 	private static Locale _deLocale = new Locale("de", "DE");
 	private static Locale _enLocale = new Locale("en", "US");
 	private static Locale _esLocale = new Locale("es", "ES");
