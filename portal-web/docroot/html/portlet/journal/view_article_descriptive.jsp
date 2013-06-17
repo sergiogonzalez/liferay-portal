@@ -25,6 +25,8 @@ JournalArticle latestApprovedArticleVersion = null;
 
 Date createDate = article.getCreateDate();
 
+String articleImageURL = article.getArticleImageURL(themeDisplay);
+
 if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT) {
 	JournalArticle firstArticleVersion = JournalArticleLocalServiceUtil.getArticle(article.getGroupId(), article.getArticleId(), JournalArticleConstants.VERSION_DEFAULT);
 
@@ -32,18 +34,18 @@ if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT) {
 
 	if (article.getStatus() > WorkflowConstants.STATUS_APPROVED) {
 		latestApprovedArticleVersion = JournalArticleLocalServiceUtil.getLatestArticle(article.getGroupId(), article.getArticleId(), WorkflowConstants.STATUS_APPROVED);
+
+		articleImageURL = latestApprovedArticleVersion.getArticleImageURL(themeDisplay);
 	}
 }
-
-String articleImageURL = article.getArticleImageURL(themeDisplay);
 %>
 
 <liferay-ui:app-view-entry
 	actionJsp="/html/portlet/journal/article_action.jsp"
 	assetCategoryClassName="<%= JournalArticle.class.getName() %>"
-	assetCategoryClassPK="<%= article.getResourcePrimKey() %>"
+	assetCategoryClassPK="<%= (article.getStatus() > WorkflowConstants.STATUS_APPROVED) ? article.getPrimaryKey() : latestApprovedArticleVersion.getResourcePrimKey() %>"
 	assetTagClassName="<%= JournalArticle.class.getName() %>"
-	assetTagClassPK="<%= article.getResourcePrimKey() %>"
+	assetTagClassPK="<%= (article.getStatus() > WorkflowConstants.STATUS_APPROVED) ? article.getPrimaryKey() : latestApprovedArticleVersion.getResourcePrimKey() %>"
 	author="<%= article.getUserName() %>"
 	createDate="<%= createDate %>"
 	description="<%= article.getDescription(locale) %>"
