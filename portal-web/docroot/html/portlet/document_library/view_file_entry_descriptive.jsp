@@ -23,7 +23,7 @@ FileVersion fileVersion = fileEntry.getFileVersion();
 
 FileVersion latestFileVersion = fileVersion;
 
-if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && (user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 	latestFileVersion = fileEntry.getLatestFileVersion();
 }
 
@@ -38,14 +38,24 @@ if (fileShortcut != null) {
 	rowCheckerName = DLFileShortcut.class.getSimpleName();
 	rowCheckerId = fileShortcut.getFileShortcutId();
 }
+
+long assetClassPK = 0;
+
+if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && !(latestFileVersion.getStatus() > WorkflowConstants.STATUS_APPROVED)) {
+	assetClassPK = fileVersion.getFileVersionId();
+}
+else {
+	assetClassPK = latestFileVersion.getFileEntryId();
+}
+
 %>
 
 <liferay-ui:app-view-entry
 	actionJsp="/html/portlet/document_library/file_entry_action.jsp"
 	assetCategoryClassName="<%= DLFileEntryConstants.getClassName() %>"
-	assetCategoryClassPK="<%= (latestFileVersion.getStatus() > WorkflowConstants.STATUS_APPROVED) ? latestFileVersion.getFileVersionId() : fileEntry.getFileEntryId() %>"
+	assetCategoryClassPK="<%= assetClassPK %>"
 	assetTagClassName="<%= DLFileEntryConstants.getClassName() %>"
-	assetTagClassPK="<%= (latestFileVersion.getStatus() > WorkflowConstants.STATUS_APPROVED) ? latestFileVersion.getFileVersionId() : fileEntry.getFileEntryId() %>"
+	assetTagClassPK="<%= assetClassPK %>"
 	author="<%= latestFileVersion.getUserName() %>"
 	createDate="<%= latestFileVersion.getCreateDate() %>"
 	description="<%= latestFileVersion.getDescription() %>"
