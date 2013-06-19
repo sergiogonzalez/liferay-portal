@@ -47,7 +47,6 @@ if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)
 else {
 	assetClassPK = latestFileVersion.getFileEntryId();
 }
-
 %>
 
 <liferay-ui:app-view-entry
