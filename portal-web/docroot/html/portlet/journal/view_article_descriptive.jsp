@@ -25,12 +25,12 @@ JournalArticle latestApprovedArticleVersion = null;
 
 Date createDate = article.getCreateDate();
 
-if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT) {
+if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT ) {
 	JournalArticle firstArticleVersion = JournalArticleLocalServiceUtil.getArticle(article.getGroupId(), article.getArticleId(), JournalArticleConstants.VERSION_DEFAULT);
 
 	createDate = firstArticleVersion.getCreateDate();
 
-	if (article.getStatus() > WorkflowConstants.STATUS_APPROVED) {
+	if ((article.getStatus() > WorkflowConstants.STATUS_APPROVED) && (article.getStatus() != WorkflowConstants.STATUS_EXPIRED)) {
 		latestApprovedArticleVersion = JournalArticleLocalServiceUtil.getLatestArticle(article.getGroupId(), article.getArticleId(), WorkflowConstants.STATUS_APPROVED);
 	}
 }
