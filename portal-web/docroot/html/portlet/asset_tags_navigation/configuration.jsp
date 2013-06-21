@@ -54,6 +54,24 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 						</aui:select>
 					</li>
+					<li class="tree-item">
+						<aui:select helpMessage="asset-type-asset-count-help" label="scope" name="preferences--assetEntryScope--">
+							<aui:option label="any" value="<%= classNameId == 0 %>" />
+
+							<%
+							List<AssetRendererFactory> assetRendererFactories = AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId());
+
+							for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
+							%>
+
+								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= classNameId == assetRendererFactory.getClassNameId() %>" value="<%= assetRendererFactory.getClassNameId() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</li>
 				</ul>
 			</li>
 
