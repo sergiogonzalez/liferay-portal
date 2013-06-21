@@ -23,7 +23,7 @@ FileVersion fileVersion = fileEntry.getFileVersion();
 
 FileVersion latestFileVersion = fileVersion;
 
-if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && (user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 	latestFileVersion = fileEntry.getLatestFileVersion();
 }
 
@@ -41,11 +41,11 @@ if (fileShortcut != null) {
 
 long assetClassPK = 0;
 
-if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && !(latestFileVersion.getStatus() > WorkflowConstants.STATUS_APPROVED)) {
-	assetClassPK = fileVersion.getFileVersionId();
+if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && (latestFileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+	assetClassPK = latestFileVersion.getFileVersionId();
 }
 else {
-	assetClassPK = latestFileVersion.getFileEntryId();
+	assetClassPK = fileEntry.getFileEntryId();
 }
 %>
 
@@ -59,8 +59,8 @@ else {
 	createDate="<%= latestFileVersion.getCreateDate() %>"
 	description="<%= latestFileVersion.getDescription() %>"
 	displayStyle="descriptive"
-	latestApprovedVersion="<%= fileVersion.getVersion() %>"
-	latestApprovedVersionAuthor="<%= fileVersion.getUserName() %>"
+	latestApprovedVersion="<%= fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)? null : fileVersion.getVersion() %>"
+	latestApprovedVersionAuthor="<%= fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)? null : fileVersion.getUserName() %>"
 	locked="<%= fileEntry.isCheckedOut() %>"
 	modifiedDate="<%= latestFileVersion.getModifiedDate() %>"
 	rowCheckerId="<%= String.valueOf(rowCheckerId) %>"
