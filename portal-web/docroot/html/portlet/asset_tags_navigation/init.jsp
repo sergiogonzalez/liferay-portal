@@ -26,11 +26,21 @@ page import="com.liferay.portlet.asset.util.comparator.AssetTagCountComparator" 
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %>
 
 <%
+String assetScopeType = GetterUtil.getString(portletPreferences.getValue("assetScopeType", null));
+String assetScopeLayoutUuid = GetterUtil.getString(portletPreferences.getValue("assetScopeLayoutUuid", null));
 long classNameId = PrefsParamUtil.getLong(portletPreferences, request, "classNameId");
 String displayStyle = PrefsParamUtil.getString(portletPreferences, request, "displayStyle", "cloud");
 int maxAssetTags = PrefsParamUtil.getInteger(portletPreferences, request, "maxAssetTags", 10);
 boolean showAssetCount = PrefsParamUtil.getBoolean(portletPreferences, request, "showAssetCount");
 boolean showZeroAssetCount = PrefsParamUtil.getBoolean(portletPreferences, request, "showZeroAssetCount");
+
+long assetScopeGroupId = scopeGroupId;
+if ("company".equals(assetScopeType)) {
+	assetScopeGroupId = company.getGroup().getGroupId();
+} else if ("layout".equals(assetScopeType)) {
+	Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(assetScopeLayoutUuid, scopeGroupId, layout.isPrivateLayout());
+	assetScopeGroupId = scopeLayout.getScopeGroup().getGroupId();
+}
 %>
 
 <%@ include file="/html/portlet/asset_tags_navigation/init-ext.jsp" %>
