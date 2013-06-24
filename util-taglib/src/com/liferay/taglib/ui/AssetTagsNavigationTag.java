@@ -25,6 +25,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetTagsNavigationTag extends IncludeTag {
 
+	public void setAssetScopeGroupId(long assetScopeGroupId) {
+		_assetScopeGroupId = assetScopeGroupId;
+	}
+
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
 	}
@@ -51,6 +55,7 @@ public class AssetTagsNavigationTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_assetScopeGroupId = 0;
 		_classNameId = 0;
 		_displayStyle = "cloud";
 		_hidePortletWhenEmpty = false;
@@ -66,6 +71,9 @@ public class AssetTagsNavigationTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:asset-tags-navigation:assetScopeGroupId",
+			String.valueOf(_assetScopeGroupId));
 		request.setAttribute(
 			"liferay-ui:asset-tags-navigation:classNameId",
 			String.valueOf(_classNameId));
@@ -88,6 +96,7 @@ public class AssetTagsNavigationTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/asset_tags_navigation/page.jsp";
 
+	private long _assetScopeGroupId;
 	private long _classNameId;
 	private String _displayStyle = "cloud";
 	private boolean _hidePortletWhenEmpty;

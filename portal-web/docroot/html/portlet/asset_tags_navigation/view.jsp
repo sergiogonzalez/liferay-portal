@@ -27,19 +27,24 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		List<AssetTag> assetTags = null;
 
 		if (classNameId > 0) {
-			assetTags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
+			assetTags = AssetTagServiceUtil.getTags(assetScopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
 		}
 		else {
 			assetTags = AssetTagServiceUtil.getGroupTags(scopeGroupId, 0, maxAssetTags, new AssetTagCountComparator());
 		}
 
 		assetTags = ListUtil.sort(assetTags);
+
+		Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+		contextObjects.put("assetScopeGroupId", new Long(assetScopeGroupId));
 		%>
 
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, assetTags) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, assetTags, contextObjects) %>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:asset-tags-navigation
+			assetScopeGroupId = "<%= assetScopeGroupId %>"
 			classNameId="<%= classNameId %>"
 			displayStyle="<%= displayStyle %>"
 			hidePortletWhenEmpty="<%= true %>"
