@@ -4,14 +4,16 @@
 
 		<#assign classNameId = getterUtil.getLong(classNameId, 0) />
 
+		<#assign assetScopeGroupId = getterUtil.getLong(assetScopeGroupId, themeDisplay.getScopeGroupId()) />
+
 		<#assign maxCount = 1 />
 		<#assign minCount = 1 />
 
 		<#list entries as entry>
 			<#if (classNameId > 0)>
-				<#assign count = assetTagService.getTagsCount(themeDisplay.getScopeGroupId(), classNameId, entry.getName()) />
+				<#assign count = assetTagService.getTagsCount(assetScopeGroupId, classNameId, entry.getName()) />
 			<#else>
-				<#assign count = assetTagService.getTagsCount(themeDisplay.getScopeGroupId(), entry.getName()) />
+				<#assign count = assetTagService.getTagsCount(assetScopeGroupId, entry.getName()) />
 			</#if>
 
 			<#assign maxCount = liferay.max(maxCount, count) />
@@ -29,9 +31,9 @@
 				<#assign count = 0 />
 
 				<#if (classNameId > 0)>
-					<#assign count = assetTagService.getTagsCount(themeDisplay.getScopeGroupId(), classNameId, entry.getName()) />
+					<#assign count = assetTagService.getTagsCount(assetScopeGroupId, classNameId, entry.getName()) />
 				<#else>
-					<#assign count = assetTagService.getTagsCount(themeDisplay.getScopeGroupId(), entry.getName()) />
+					<#assign count = assetTagService.getTagsCount(assetScopeGroupId, entry.getName()) />
 				</#if>
 
 				<#assign popularity = (maxCount - (maxCount - (count - minCount))) * multiplier />
