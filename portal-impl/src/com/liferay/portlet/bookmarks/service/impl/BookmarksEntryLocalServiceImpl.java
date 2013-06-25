@@ -27,14 +27,20 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.bookmarks.EntryURLException;
@@ -54,6 +60,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -545,6 +555,29 @@ public class BookmarksEntryLocalServiceImpl
 		return entry;
 	}
 
+	protected String getEntryLayoutURL(
+		Layout layout, ServiceContext serviceContext) {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		if (request == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			String entryLayoutURL = PortalUtil.getLayoutURL(
+				layout, themeDisplay);
+
+			return entryLayoutURL;
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
+	}
+
 	protected long getFolder(BookmarksEntry entry, long folderId)
 		throws SystemException {
 
@@ -609,9 +642,45 @@ public class BookmarksEntryLocalServiceImpl
 			_log.error(e, e);
 		}
 
-		String entryURL =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
-				StringPool.SLASH + entry.getEntryId();
+		String entryURL = StringPool.BLANK;
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		if (Validator.isNotNull(layoutFullURL) && (request != null)) {
+			long controlPanelPlid = PortalUtil.getControlPanelPlid(
+				serviceContext.getCompanyId());
+
+			long bookmarksPlid = serviceContext.getPlid();
+
+			if (bookmarksPlid == controlPanelPlid) {
+				bookmarksPlid = PortalUtil.getPlidFromPortletId(
+					entry.getGroupId(), PortletKeys.BOOKMARKS);
+
+				if (bookmarksPlid != LayoutConstants.DEFAULT_PLID) {
+					Layout layout = layoutLocalService.getLayout(bookmarksPlid);
+
+					layoutFullURL = getEntryLayoutURL(layout, serviceContext);
+				}
+			}
+
+			if (bookmarksPlid != LayoutConstants.DEFAULT_PLID) {
+				entryURL =
+					layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR +
+						"bookmarks" + StringPool.SLASH + entry.getEntryId();
+			}
+			else {
+				PortletURL portletURL = PortletURLFactoryUtil.create(
+					request, PortletKeys.BOOKMARKS, controlPanelPlid,
+					PortletRequest.RENDER_PHASE);
+
+				portletURL.setParameter(
+					"struts_action", "/bookmarks/view_entry");
+				portletURL.setParameter(
+					"entryId", String.valueOf(entry.getEntryId()));
+
+				entryURL = portletURL.toString();
+			}
+		}
 
 		String fromAddress = BookmarksUtil.getEmailFromAddress(
 			preferences, entry.getCompanyId());
