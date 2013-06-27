@@ -1221,7 +1221,7 @@ public class PortalImpl implements Portal {
 		String canonicalLayoutFriendlyURL = StringPool.BLANK;
 
 		String layoutFriendlyURL = layout.getFriendlyURL(
-			themeDisplay.getLocale());
+			LocaleUtil.getDefault());
 
 		if ((groupFriendlyURL.contains(layoutFriendlyURL) ||
 			 groupFriendlyURL.contains(
