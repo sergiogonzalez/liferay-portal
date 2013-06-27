@@ -965,7 +965,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getAlternateURL(
-		String canonicalURL, ThemeDisplay themeDisplay, Locale locale) {
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
+		Layout layout) {
 
 		LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
@@ -1002,6 +1003,37 @@ public class PortalImpl implements Portal {
 			}
 
 			if ((pos > 0) && (pos < canonicalURL.length())) {
+				String friendlyURL = canonicalURL.substring(pos);
+
+				int[] friendlyURLPos = getGroupFriendlyURLPos(friendlyURL);
+
+				if (friendlyURLPos != null) {
+					int y = friendlyURLPos[1];
+
+					friendlyURL = friendlyURL.substring(y);
+
+					if (friendlyURL.equals(StringPool.SLASH)) {
+						friendlyURL = StringPool.BLANK;
+					}
+				}
+
+				if (Validator.isNotNull(friendlyURL)) {
+					String canonicalURLPrefix = canonicalURL.substring(0, pos);
+
+					String canonicalURLSuffix = canonicalURL.substring(pos);
+
+					canonicalURLSuffix = StringUtil.replaceFirst(
+						canonicalURLSuffix, friendlyURL,
+						layout.getFriendlyURL(locale));
+
+					canonicalURL = canonicalURLPrefix.concat(
+						canonicalURLSuffix);
+				}
+
+				if (LocaleUtil.getDefault() == locale) {
+					return canonicalURL;
+				}
+
 				return canonicalURL.substring(0, pos).concat(
 					i18nPath).concat(canonicalURL.substring(pos));
 			}
