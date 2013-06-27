@@ -1153,15 +1153,15 @@ public class PortletExporter {
 
 		// Zip
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler pathSB = new StringBundler(4);
 
-		sb.append(
+		pathSB.append(
 			ExportImportPathUtil.getPortletPath(portletDataContext, portletId));
-		sb.append(StringPool.SLASH);
-		sb.append(plid);
-		sb.append("/portlet.xml");
+		pathSB.append(StringPool.SLASH);
+		pathSB.append(plid);
+		pathSB.append("/portlet.xml");
 
-		String path = sb.toString();
+		String path = pathSB.toString();
 
 		Element element = parentElement.addElement("portlet");
 
@@ -1169,8 +1169,30 @@ public class PortletExporter {
 		element.addAttribute("layout-id", String.valueOf(layoutId));
 		element.addAttribute("path", path);
 		element.addAttribute("portlet-data", String.valueOf(exportPortletData));
+
+		StringBundler configurationOptionsSB = new StringBundler(6);
+
+		if (exportPortletSetup) {
+			configurationOptionsSB.append("setup");
+			configurationOptionsSB.append(StringPool.COMMA);
+		}
+
+		if (exportPortletArchivedSetups) {
+			configurationOptionsSB.append("archived-setups");
+			configurationOptionsSB.append(StringPool.COMMA);
+		}
+
+		if (exportPortletUserPreferences) {
+			configurationOptionsSB.append("user-preferences");
+			configurationOptionsSB.append(StringPool.COMMA);
+		}
+
+		if (configurationOptionsSB.index() > 0) {
+			configurationOptionsSB.setIndex(configurationOptionsSB.index() -1);
+		}
+
 		element.addAttribute(
-			"portlet-setup", String.valueOf(exportPortletSetup));
+			"portlet-configuration", configurationOptionsSB.toString());
 
 		if (portletDataContext.isPathNotProcessed(path)) {
 			try {

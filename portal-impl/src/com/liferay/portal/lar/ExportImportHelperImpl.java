@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -302,78 +303,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		SAXParser saxParser = new SAXParser();
 
 		ElementHandler elementHandler = new ElementHandler(
-			new ElementProcessor() {
-
-				@Override
-				public void processElement(Element element) {
-					String elementName = element.getName();
-
-					if (elementName.equals("header")) {
-						String exportDateString = element.attributeValue(
-							"export-date");
-
-						Date exportDate = GetterUtil.getDate(
-							exportDateString,
-							DateFormatFactoryUtil.getSimpleDateFormat(
-								Time.RFC822_FORMAT));
-
-						manifestSummary.setExportDate(exportDate);
-					}
-					else if (elementName.equals("portlet")) {
-						String portletId = element.attributeValue("portlet-id");
-
-						try {
-							Portlet portlet =
-								PortletLocalServiceUtil.getPortletById(
-									group.getCompanyId(), portletId);
-
-							String portletDataHandlerClass =
-								portlet.getPortletDataHandlerClass();
-
-							if (Validator.isNotNull(portletDataHandlerClass)) {
-								if (!portletDataHandlerClass.equals(
-										DefaultConfigurationPortletDataHandler.
-											class.getName()) &&
-									GetterUtil.getBoolean(
-										element.attributeValue(
-											"portlet-data"))) {
-
-									manifestSummary.addDataPortlet(portlet);
-								}
-
-								if (portletDataHandlerClass.equals(
-										DefaultConfigurationPortletDataHandler.
-											class.getName()) &&
-									GetterUtil.getBoolean(
-										element.attributeValue(
-											"portlet-setup"))) {
-
-									manifestSummary.addSetupPortlet(portlet);
-								}
-							}
-						}
-						catch (SystemException se) {
-						}
-					}
-					else if (elementName.equals("staged-model")) {
-						String manifestSummaryKey = element.attributeValue(
-							"manifest-summary-key");
-
-						long modelAdditionCount = GetterUtil.getLong(
-							element.attributeValue("addition-count"));
-
-						manifestSummary.addModelAdditionCount(
-							manifestSummaryKey, modelAdditionCount);
-
-						long modelDeletionCount = GetterUtil.getLong(
-							element.attributeValue("deletion-count"));
-
-						manifestSummary.addModelDeletionCount(
-							manifestSummaryKey, modelDeletionCount);
-					}
-				}
-
-			},
+			new ManifestSummaryElementProcessor(group, manifestSummary),
 			new String[] {"header", "portlet", "staged-model"});
 
 		saxParser.setContentHandler(elementHandler);
@@ -1457,5 +1387,88 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private Pattern _importLinksToLayoutPattern = Pattern.compile(
 		"\\[([0-9]+)@(public|private\\-[a-z]*)@(\\p{XDigit}{8}\\-" +
 		"(?:\\p{XDigit}{4}\\-){3}\\p{XDigit}{12})@([^\\]]*)\\]");
+
+	private class ManifestSummaryElementProcessor implements ElementProcessor {
+
+		public ManifestSummaryElementProcessor(
+			Group group, ManifestSummary manifestSummary) {
+
+			_group = group;
+			_manifestSummary = manifestSummary;
+		}
+
+		@Override
+		public void processElement(Element element) {
+			String elementName = element.getName();
+
+			if (elementName.equals("header")) {
+				String exportDateString = element.attributeValue("export-date");
+
+				Date exportDate = GetterUtil.getDate(
+					exportDateString,
+					DateFormatFactoryUtil.getSimpleDateFormat(
+						Time.RFC822_FORMAT));
+
+				_manifestSummary.setExportDate(exportDate);
+			}
+			else if (elementName.equals("portlet")) {
+				String portletId = element.attributeValue("portlet-id");
+
+				Portlet portlet = null;
+
+				try {
+					portlet = PortletLocalServiceUtil.getPortletById(
+						_group.getCompanyId(), portletId);
+				}
+				catch (Exception e) {
+					return;
+				}
+
+				PortletDataHandler portletDataHandler =
+					portlet.getPortletDataHandlerInstance();
+
+				if (portletDataHandler == null) {
+					return;
+				}
+
+				if (Validator.isNotNull(
+						portlet.getConfigurationActionClass())) {
+
+					_manifestSummary.addConfigurationPortlet(
+						portlet,
+						StringUtil.split(
+							element.attributeValue("portlet-configuration")));
+				}
+
+				if (!(portletDataHandler instanceof
+						DefaultConfigurationPortletDataHandler) &&
+					GetterUtil.getBoolean(
+						element.attributeValue("portlet-data"))) {
+
+					_manifestSummary.addDataPortlet(portlet);
+				}
+			}
+			else if (elementName.equals("staged-model")) {
+				String manifestSummaryKey = element.attributeValue(
+					"manifest-summary-key");
+
+				long modelAdditionCount = GetterUtil.getLong(
+					element.attributeValue("addition-count"));
+
+				_manifestSummary.addModelAdditionCount(
+					manifestSummaryKey, modelAdditionCount);
+
+				long modelDeletionCount = GetterUtil.getLong(
+					element.attributeValue("deletion-count"));
+
+				_manifestSummary.addModelDeletionCount(
+					manifestSummaryKey, modelDeletionCount);
+			}
+		}
+
+		private Group _group;
+		private ManifestSummary _manifestSummary;
+
+	}
 
 }
