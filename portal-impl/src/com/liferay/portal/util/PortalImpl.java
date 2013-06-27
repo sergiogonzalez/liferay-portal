@@ -2375,6 +2375,42 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	public int[] getGroupFriendlyURLPos(String requestURI) {
+		int x = 0;
+		int y = 0;
+
+		if (requestURI.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING) ||
+			requestURI.startsWith(_PRIVATE_USER_SERVLET_MAPPING) ||
+			requestURI.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+
+			x = requestURI.indexOf(StringPool.SLASH, 1);
+
+			if (x == -1) {
+
+				// /web
+
+				requestURI += StringPool.SLASH;
+
+				x = requestURI.indexOf(CharPool.SLASH, 1);
+			}
+
+			y = requestURI.indexOf(CharPool.SLASH, x + 1);
+
+			if (y == -1) {
+
+				// /web/alpha
+
+				requestURI += StringPool.SLASH;
+
+				y = requestURI.indexOf(CharPool.SLASH, x + 1);
+			}
+
+			return new int[] {x, y};
+		}
+
+		return null;
+	}
+
 	@Override
 	public String[] getGroupPermissions(HttpServletRequest request) {
 		return request.getParameterValues("groupPermissions");

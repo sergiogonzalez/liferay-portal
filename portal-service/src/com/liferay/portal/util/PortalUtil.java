@@ -607,6 +607,10 @@ public class PortalUtil {
 			group, privateLayoutSet, themeDisplay, locale);
 	}
 
+	public static int[] getGroupFriendlyURLPos(String requestURI) {
+		return getPortal().getGroupFriendlyURLPos(requestURI);
+	}
+
 	public static String[] getGroupPermissions(HttpServletRequest request) {
 		return getPortal().getGroupPermissions(request);
 	}

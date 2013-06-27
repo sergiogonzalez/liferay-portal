@@ -682,6 +682,8 @@ public interface Portal {
 			Locale locale)
 		throws PortalException, SystemException;
 
+	public int[] getGroupFriendlyURLPos(String requestURI);
+
 	public String[] getGroupPermissions(HttpServletRequest request);
 
 	public String[] getGroupPermissions(
