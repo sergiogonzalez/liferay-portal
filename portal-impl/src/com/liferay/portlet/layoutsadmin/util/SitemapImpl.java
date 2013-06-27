@@ -74,7 +74,7 @@ public class SitemapImpl implements Sitemap {
 		document.setXMLEncoding(StringPool.UTF8);
 
 		Element rootElement = document.addElement(
-			"urlset", "http://www.google.com/schemas/sitemap/0.84");
+			"urlset", "http://www.google.com/schemas/sitemap/0.9");
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
