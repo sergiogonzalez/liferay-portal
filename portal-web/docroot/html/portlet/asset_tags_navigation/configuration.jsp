@@ -54,6 +54,33 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 						</aui:select>
 					</li>
+					<li class="tree-item">
+
+						<aui:fieldset>
+							<aui:select label="scope" name="preferences--assetScopeType--">
+								<aui:option label="default" selected="<%= Validator.isNull(assetScopeType) %>" value="" />
+								<aui:option label="global" selected='<%= assetScopeType.equals("company") %>' value="company" />
+								<aui:option label="select-layout" selected='<%= assetScopeType.equals("layout") %>' value="layout" />
+							</aui:select>
+
+							<div id="<portlet:namespace />assetScopeLayoutUuidContainer">
+								<aui:select label="scope-layout"  name="preferences--assetScopeLayoutUuid--">
+
+									<%
+									for (Layout curLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
+									%>
+
+										<aui:option label="<%= HtmlUtil.escape(curLayout.getName(locale)) %>" selected="<%= assetScopeLayoutUuid.equals(curLayout.getUuid()) %>" value="<%= curLayout.getUuid() %>" />
+
+									<%
+									}
+									%>
+
+								</aui:select>
+							</div>
+						</aui:fieldset>
+
+					</li>
 				</ul>
 			</li>
 
@@ -110,4 +137,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	showHiddenFields();
 
 	showAssetCount.on('change', showHiddenFields);
+
+	Liferay.Util.toggleSelectBox('<portlet:namespace />assetScopeType', 'layout', '<portlet:namespace />assetScopeLayoutUuidContainer');
+
 </aui:script>
