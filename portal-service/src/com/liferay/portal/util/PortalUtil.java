@@ -224,9 +224,11 @@ public class PortalUtil {
 	}
 
 	public static String getAlternateURL(
-		String canonicalURL, ThemeDisplay themeDisplay, Locale locale) {
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
+		Layout layout) {
 
-		return getPortal().getAlternateURL(canonicalURL, themeDisplay, locale);
+		return getPortal().getAlternateURL(
+			canonicalURL, themeDisplay, locale, layout);
 	}
 
 	public static Set<String> getAuthTokenIgnoreActions() {
@@ -605,6 +607,10 @@ public class PortalUtil {
 
 		return getPortal().getGroupFriendlyURL(
 			group, privateLayoutSet, themeDisplay, locale);
+	}
+
+	public static int[] getGroupFriendlyURLPos(String requestURI) {
+		return getPortal().getGroupFriendlyURLPos(requestURI);
 	}
 
 	public static String[] getGroupPermissions(HttpServletRequest request) {

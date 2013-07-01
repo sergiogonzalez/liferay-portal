@@ -275,7 +275,8 @@ public interface Portal {
 	 * @return the alternate URL
 	 */
 	public String getAlternateURL(
-		String canonicalURL, ThemeDisplay themeDisplay, Locale locale);
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
+		Layout layout);
 
 	/**
 	 * Returns the set of struts actions that should not be checked for an
@@ -681,6 +682,8 @@ public interface Portal {
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
 			Locale locale)
 		throws PortalException, SystemException;
+
+	public int[] getGroupFriendlyURLPos(String requestURI);
 
 	public String[] getGroupPermissions(HttpServletRequest request);
 
