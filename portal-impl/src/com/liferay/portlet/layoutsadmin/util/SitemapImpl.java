@@ -78,7 +78,7 @@ public class SitemapImpl implements Sitemap {
 		Element rootElement = document.addElement(
 			"urlset", "http://www.google.com/schemas/sitemap/0.9");
 
-		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+		rootElement.addNamespace("xhtml", "http://www.w3.org/1999/xhtml");
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -166,7 +166,7 @@ public class SitemapImpl implements Sitemap {
 				Locale locale = entry.getKey();
 				String href = entry.getValue();
 
-				Element alternateURLElement = urlElement.addElement("link");
+				Element alternateURLElement = urlElement.addElement("xhtml:link");
 
 				alternateURLElement.addAttribute("rel", "alternate");
 				alternateURLElement.addAttribute(
