@@ -465,6 +465,14 @@
 		margin: 0 0 1em 0;
 	}
 
+	.article-status-wrapper .taglib-workflow-status {
+		margin: 0;
+
+		.workflow-status {
+			padding-left: 0;
+		}
+	}
+
 	.default-link {
 		font-size: 0.9em;
 		font-weight: normal;
