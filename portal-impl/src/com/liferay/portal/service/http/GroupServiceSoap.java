@@ -88,13 +88,14 @@ public class GroupServiceSoap {
 	public static com.liferay.portal.model.GroupSoap addGroup(
 		long parentGroupId, long liveGroupId, java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,
-		boolean site, boolean active,
+		boolean site, boolean active, boolean manualMembership,
+		int membershipType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(parentGroupId,
 					liveGroupId, name, description, type, friendlyURL, site,
-					active, serviceContext);
+					active, manualMembership, membershipType, serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}
@@ -1076,12 +1077,14 @@ public class GroupServiceSoap {
 	public static com.liferay.portal.model.GroupSoap updateGroup(long groupId,
 		long parentGroupId, java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active, boolean manualMembership, int membershipRestriction,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.updateGroup(groupId,
 					parentGroupId, name, description, type, friendlyURL,
-					active, serviceContext);
+					active, manualMembership, membershipRestriction,
+					serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}

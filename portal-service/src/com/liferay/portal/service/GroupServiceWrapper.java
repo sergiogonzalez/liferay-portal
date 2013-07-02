@@ -72,14 +72,19 @@ public class GroupServiceWrapper implements GroupService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public com.liferay.portal.model.Group addGroup(long parentGroupId,
-		long liveGroupId, java.lang.String name, java.lang.String description,
-		int type, java.lang.String friendlyURL, boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public com.liferay.portal.model.Group addGroup(
+		long parentGroupId,
+		long liveGroupId, String name, String description,
+		int type, boolean manualMembership, int membershipRestriction,
+		String friendlyURL,
+		boolean site, boolean active,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _groupService.addGroup(parentGroupId, liveGroupId, name,
-			description, type, friendlyURL, site, active, serviceContext);
+			description, type, manualMembership, membershipRestriction,
+			friendlyURL, site, active,
+			serviceContext);
 	}
 
 	/**
@@ -827,11 +832,13 @@ public class GroupServiceWrapper implements GroupService,
 	public com.liferay.portal.model.Group updateGroup(long groupId,
 		long parentGroupId, java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active, boolean manualMembership, int membershipRestriction,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _groupService.updateGroup(groupId, parentGroupId, name,
-			description, type, friendlyURL, active, serviceContext);
+			description, type, friendlyURL, active, manualMembership,
+			membershipRestriction, serviceContext);
 	}
 
 	/**

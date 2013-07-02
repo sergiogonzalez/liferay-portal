@@ -83,12 +83,14 @@ public class GroupServiceUtil {
 	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
 		long liveGroupId, java.lang.String name, java.lang.String description,
 		int type, java.lang.String friendlyURL, boolean site, boolean active,
+		boolean manualMembership, int membershipType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addGroup(parentGroupId, liveGroupId, name, description,
-			type, friendlyURL, site, active, serviceContext);
+			type, manualMembership, membershipType, friendlyURL, site, active,
+		   serviceContext);
 	}
 
 	/**
@@ -807,12 +809,14 @@ public class GroupServiceUtil {
 	public static com.liferay.portal.model.Group updateGroup(long groupId,
 		long parentGroupId, java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active, boolean manualMembership, int membershipRestriction,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateGroup(groupId, parentGroupId, name, description,
-			type, friendlyURL, active, serviceContext);
+			type, friendlyURL, active, manualMembership, membershipRestriction,
+			serviceContext);
 	}
 
 	/**
