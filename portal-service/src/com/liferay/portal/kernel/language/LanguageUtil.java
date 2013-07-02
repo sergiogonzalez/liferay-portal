@@ -298,6 +298,10 @@ public class LanguageUtil {
 		return Validator.isNotNull(value);
 	}
 
+	public static void resetAvailableGroupLocales(long groupId) {
+		getLanguage().resetAvailableGroupLocales(groupId);
+	}
+
 	public static void resetAvailableLocales(long companyId) {
 		getLanguage().resetAvailableLocales(companyId);
 	}
