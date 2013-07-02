@@ -693,6 +693,11 @@ public class LanguageImpl implements Language {
 	}
 
 	@Override
+	public void resetAvailableGroupLocales(long groupId) {
+		_resetAvailableGroupLocales(groupId);
+	}
+
+	@Override
 	public void resetAvailableLocales(long companyId) {
 		_resetAvailableLocales(companyId);
 	}
@@ -951,6 +956,11 @@ public class LanguageImpl implements Language {
 
 		_groupLocalesMap.put(groupId, groupLocales);
 		_groupLocalesSetMap.put(groupId, groupLocalesSet);
+	}
+
+	private void _resetAvailableGroupLocales(long groupId) {
+		_groupLocalesMap.remove(groupId);
+		_groupLocalesSetMap.remove(groupId);
 	}
 
 	private void _resetAvailableLocales(long companyId) {

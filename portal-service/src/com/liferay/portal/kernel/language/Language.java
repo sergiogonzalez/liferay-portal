@@ -155,6 +155,8 @@ public interface Language {
 
 	public boolean isDuplicateLanguageCode(String languageCode);
 
+	public void resetAvailableGroupLocales(long groupId);
+
 	public void resetAvailableLocales(long companyId);
 
 	public void updateCookie(
