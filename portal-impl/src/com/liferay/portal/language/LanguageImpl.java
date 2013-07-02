@@ -455,11 +455,34 @@ public class LanguageImpl implements Language {
 			return getAvailableLocales();
 		}
 
-		if (_groupLocalesMap.get(groupId) == null) {
-			_initGroupLocales(groupId);
-		}
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		return _groupLocalesMap.get(groupId);
+			Group liveGroup = group;
+
+			if (group.isStagingGroup()) {
+				liveGroup = group.getLiveGroup();
+			}
+
+			UnicodeProperties groupTypeSettings =
+				liveGroup.getTypeSettingsProperties();
+
+			boolean inheritLocales = GetterUtil.getBoolean(
+				groupTypeSettings.getProperty("inheritLocales"), true);
+
+			if (inheritLocales) {
+				return getAvailableLocales();
+			}
+
+			if (_groupLocalesMap.get(groupId) == null) {
+				_initGroupLocales(groupId);
+			}
+
+			return _groupLocalesMap.get(groupId);
+		}
+		catch (Exception e) {
+			return getAvailableLocales();
+		}
 	}
 
 	@Override
@@ -486,8 +509,15 @@ public class LanguageImpl implements Language {
 		UnicodeProperties groupTypeSettings =
 			liveGroup.getTypeSettingsProperties();
 
+		boolean inheritLocales = GetterUtil.getBoolean(
+			groupTypeSettings.getProperty("inheritLocales"), true);
+
 		User defaultUser = UserLocalServiceUtil.getDefaultUser(
 			group.getCompanyId());
+
+		if (inheritLocales) {
+			return defaultUser.getLanguageId();
+		}
 
 		return GetterUtil.getString(
 			groupTypeSettings.getProperty("languageId"),
@@ -974,7 +1004,8 @@ public class LanguageImpl implements Language {
 
 	private Map<String, String> _charEncodings;
 	private Set<String> _duplicateLanguageCodes;
-	private Map<Long, Locale[]> _groupLocalesMap = new HashMap<Long, Locale[]>();
+	private Map<Long, Locale[]> _groupLocalesMap =
+		new HashMap<Long, Locale[]>();
 	private Map<Long, Set<Locale>> _groupLocalesSetMap =
 		new HashMap<Long, Set<Locale>>();
 	private Locale[] _locales;
