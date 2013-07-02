@@ -451,6 +451,14 @@ public class LanguageImpl implements Language {
 			return getAvailableLocales();
 		}
 
+		try {
+			if (LocaleUtil.inheritLocales(groupId)) {
+				return getAvailableLocales();
+			}
+		}
+		catch (Exception e) {
+		}
+
 		if (_groupLocalesMap.get(groupId) == null) {
 			_initGroupLocales(groupId);
 		}
@@ -612,6 +620,14 @@ public class LanguageImpl implements Language {
 	public boolean isAvailableLocale(long groupId, Locale locale) {
 		if (groupId <= 0) {
 			return isAvailableLocale(locale);
+		}
+
+		try {
+			if (LocaleUtil.inheritLocales(groupId)) {
+				return isAvailableLocale(locale);
+			}
+		}
+		catch (Exception e) {
 		}
 
 		Set<Locale> localesSet = _groupLocalesSetMap.get(groupId);
@@ -943,7 +959,8 @@ public class LanguageImpl implements Language {
 
 	private Map<String, String> _charEncodings;
 	private Set<String> _duplicateLanguageCodes;
-	private Map<Long, Locale[]> _groupLocalesMap = new HashMap<Long, Locale[]>();
+	private Map<Long, Locale[]> _groupLocalesMap =
+		new HashMap<Long, Locale[]>();
 	private Map<Long, Set<Locale>> _groupLocalesSetMap =
 		new HashMap<Long, Set<Locale>>();
 	private Locale[] _locales;

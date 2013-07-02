@@ -4653,6 +4653,10 @@ public class PortalImpl implements Portal {
 			liveGroup = group.getLiveGroup();
 		}
 
+		if (LocaleUtil.inheritLocales(liveGroup.getGroupId())) {
+			return LocaleUtil.getDefault();
+		}
+
 		UnicodeProperties groupTypeSettings =
 			liveGroup.getTypeSettingsProperties();
 
