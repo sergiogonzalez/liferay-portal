@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.language;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -103,7 +106,12 @@ public interface Language {
 
 	public Locale[] getAvailableLocales();
 
+	public Locale[] getAvailableLocales(long groupId);
+
 	public String getCharset(Locale locale);
+
+	public String getDefaultLanguageId(long groupId)
+		throws PortalException, SystemException;
 
 	public String getLanguageId(HttpServletRequest request);
 
@@ -136,6 +144,10 @@ public interface Language {
 	public boolean isAvailableLanguageCode(String languageCode);
 
 	public boolean isAvailableLocale(Locale locale);
+
+	public boolean isAvailableLocale(long groupId, Locale locale);
+
+	public boolean isAvailableLocale(long groupId, String languageId);
 
 	public boolean isAvailableLocale(String languageId);
 
