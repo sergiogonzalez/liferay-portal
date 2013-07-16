@@ -31,6 +31,7 @@ import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import org.apache.struts.Globals;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -40,6 +41,7 @@ import java.util.Set;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
@@ -148,6 +150,10 @@ public class I18nFilter extends BasePortalFilter {
 		}
 		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) {
 			if (!Validator.isBlank(userLanguageId)) {
+				HttpSession session = request.getSession();
+
+				session.removeAttribute(Globals.LOCALE_KEY);
+
 				return null;
 			}
 		}
