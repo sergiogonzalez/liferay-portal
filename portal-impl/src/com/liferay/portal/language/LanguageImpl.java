@@ -471,6 +471,10 @@ public class LanguageImpl implements Language {
 	public String getDefaultLanguageId(long groupId)
 		throws PortalException, SystemException {
 
+		if (groupId <= 0) {
+			return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+		}
+
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		Group liveGroup = group;
