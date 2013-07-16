@@ -456,33 +456,18 @@ public class LanguageImpl implements Language {
 		}
 
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			Group liveGroup = group;
-
-			if (group.isStagingGroup()) {
-				liveGroup = group.getLiveGroup();
-			}
-
-			UnicodeProperties groupTypeSettings =
-				liveGroup.getTypeSettingsProperties();
-
-			boolean inheritLocales = GetterUtil.getBoolean(
-				groupTypeSettings.getProperty("inheritLocales"), true);
-
-			if (inheritLocales) {
+			if (inheritLocales(groupId)) {
 				return getAvailableLocales();
 			}
-
-			if (_groupLocalesMap.get(groupId) == null) {
-				_initGroupLocales(groupId);
-			}
-
-			return _groupLocalesMap.get(groupId);
 		}
 		catch (Exception e) {
-			return getAvailableLocales();
 		}
+
+		if (_groupLocalesMap.get(groupId) == null) {
+			_initGroupLocales(groupId);
+		}
+
+		return _groupLocalesMap.get(groupId);
 	}
 
 	@Override
@@ -500,6 +485,13 @@ public class LanguageImpl implements Language {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
+		User defaultUser = UserLocalServiceUtil.getDefaultUser(
+			group.getCompanyId());
+
+		if (inheritLocales(groupId)) {
+			return defaultUser.getLanguageId();
+		}
+
 		Group liveGroup = group;
 
 		if (group.isStagingGroup()) {
@@ -508,16 +500,6 @@ public class LanguageImpl implements Language {
 
 		UnicodeProperties groupTypeSettings =
 			liveGroup.getTypeSettingsProperties();
-
-		boolean inheritLocales = GetterUtil.getBoolean(
-			groupTypeSettings.getProperty("inheritLocales"), true);
-
-		User defaultUser = UserLocalServiceUtil.getDefaultUser(
-			group.getCompanyId());
-
-		if (inheritLocales) {
-			return defaultUser.getLanguageId();
-		}
 
 		return GetterUtil.getString(
 			groupTypeSettings.getProperty("languageId"),
@@ -673,6 +655,14 @@ public class LanguageImpl implements Language {
 	public boolean isAvailableLocale(long groupId, Locale locale) {
 		if (groupId <= 0) {
 			return isAvailableLocale(locale);
+		}
+
+		try {
+			if (inheritLocales(groupId)) {
+				return isAvailableLocale(locale);
+			}
+		}
+		catch (Exception e) {
 		}
 
 		Set<Locale> localesSet = _groupLocalesSetMap.get(groupId);
@@ -995,6 +985,24 @@ public class LanguageImpl implements Language {
 
 	private void _resetAvailableLocales(long companyId) {
 		_instances.remove(companyId);
+	}
+
+	private boolean inheritLocales(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group liveGroup = group;
+
+		if (group.isStagingGroup()) {
+			liveGroup = group.getLiveGroup();
+		}
+
+		UnicodeProperties groupTypeSettings =
+			liveGroup.getTypeSettingsProperties();
+
+		return GetterUtil.getBoolean(
+			groupTypeSettings.getProperty("inheritLocales"), true);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
