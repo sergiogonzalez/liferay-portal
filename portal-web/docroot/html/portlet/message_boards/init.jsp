@@ -95,8 +95,8 @@ page import="com.liferay.util.RSSUtil" %>
 <%
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 Locale currentLocale = LocaleUtil.fromLanguageId(currentLanguageId);
-Locale defaultLocale = LocaleUtil.getDefault();
-String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+String defaultLanguageId = LanguageUtil.getDefaultLanguageId(themeDisplay.getSiteGroupId());
+Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
 Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
