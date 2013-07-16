@@ -115,7 +115,6 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		String guestLanguageId = null;
 		String userLanguageId = null;
 
 		User user = (User)request.getAttribute(WebKeys.USER);
@@ -124,10 +123,8 @@ public class I18nFilter extends BasePortalFilter {
 			userLanguageId = user.getLanguageId();
 		}
 
-		if (Validator.isNull(guestLanguageId)) {
-			guestLanguageId = CookieKeys.getCookie(
-				request, CookieKeys.GUEST_LANGUAGE_ID, false);
-		}
+		String guestLanguageId = CookieKeys.getCookie(
+			request, CookieKeys.GUEST_LANGUAGE_ID, false);
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());
