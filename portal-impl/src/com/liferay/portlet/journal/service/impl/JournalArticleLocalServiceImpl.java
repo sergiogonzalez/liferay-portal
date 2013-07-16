@@ -331,7 +331,8 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = journalArticlePersistence.create(id);
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getDefaultLanguageId(groupId));
 
 		String defaultLanguageId = ParamUtil.getString(
 			serviceContext, "defaultLanguageId");
@@ -4424,7 +4425,8 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(latestArticle.getSmallImageId());
 		}
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getDefaultLanguageId(groupId));
 
 		String defaultLanguageId = ParamUtil.getString(
 			serviceContext, "defaultLanguageId");
@@ -5525,7 +5527,7 @@ public class JournalArticleLocalServiceImpl
 
 				if (Validator.isNull(elLanguage)) {
 					defaultElLanguage =
-						"_" + LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+						"_" + LanguageUtil.getDefaultLanguageId(groupId);
 				}
 
 				long defaultImageId =
@@ -5626,7 +5628,7 @@ public class JournalArticleLocalServiceImpl
 
 			if (Validator.isNull(elLanguage)) {
 				defaultElLanguage =
-					"_" + LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					"_" + LanguageUtil.getDefaultLanguageId(groupId);
 			}
 
 			long defaultImageId =

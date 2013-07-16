@@ -91,7 +91,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		User reporterUser = UserLocalServiceUtil.getUserById(
 			serviceContext.getUserId());
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getDefaultLanguageId(group.getGroupId()));
 
 		if (reporterUser.isDefaultUser()) {
 			reporterUserName = LanguageUtil.get(locale, "anonymous");

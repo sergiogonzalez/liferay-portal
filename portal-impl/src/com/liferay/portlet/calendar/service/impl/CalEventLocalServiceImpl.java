@@ -157,7 +157,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			timeZone = user.getTimeZone();
 		}
 		else {
-			locale = LocaleUtil.getDefault();
+			locale = LocaleUtil.fromLanguageId(
+				LanguageUtil.getDefaultLanguageId(groupId));
 			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 
@@ -799,6 +800,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		CalEvent event = calEventPersistence.findByPrimaryKey(eventId);
+
 		Locale locale = null;
 		TimeZone timeZone = null;
 
@@ -807,7 +810,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			timeZone = user.getTimeZone();
 		}
 		else {
-			locale = LocaleUtil.getDefault();
+			locale = LocaleUtil.fromLanguageId(
+				LanguageUtil.getDefaultLanguageId(event.getGroupId()));
 			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 
@@ -832,8 +836,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		validate(
 			title, startDateMonth, startDateDay, startDateYear, durationHour,
 			durationMinute, allDay, repeating, recurrence);
-
-		CalEvent event = calEventPersistence.findByPrimaryKey(eventId);
 
 		event.setModifiedDate(serviceContext.getModifiedDate(null));
 		event.setTitle(title);

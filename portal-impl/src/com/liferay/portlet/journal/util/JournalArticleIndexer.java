@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -337,9 +338,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String articleDefaultLanguageId = LocalizationUtil.getDefaultLocale(
 			article.getContent());
 
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+		String defaultLanguageId = LanguageUtil.getDefaultLanguageId(
+			article.getGroupId());
 
 		String[] languageIds = getLanguageIds(
 			defaultLanguageId, article.getContent());

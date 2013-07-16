@@ -41,7 +41,7 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-u
 <c:if test="<%= !TrashUtil.isInTrash(className, classPK) %>">
 	<c:choose>
 		<c:when test="<%= PropsValues.FLAGS_GUEST_USERS_ENABLED || themeDisplay.isSignedIn() %>">
-			<aui:script use="aui-io-plugin-deprecated,aui-modal">
+			<aui:script use="aui-io-plugin-deprecated,aui-modal,liferay-util-window">
 				var icon = A.one('.<%= randomNamespace %>');
 
 				if (icon) {

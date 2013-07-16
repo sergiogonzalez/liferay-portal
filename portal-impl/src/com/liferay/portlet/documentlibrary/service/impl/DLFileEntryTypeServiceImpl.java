@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -62,13 +63,16 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getDefaultLanguageId(groupId));
+
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(LocaleUtil.getDefault(), name);
+		nameMap.put(defaultLocale, name);
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		descriptionMap.put(LocaleUtil.getDefault(), description);
+		descriptionMap.put(defaultLocale, description);
 
 		return addFileEntryType(
 			groupId, null, nameMap, descriptionMap, ddmStructureIds,
@@ -160,13 +164,19 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getDefaultLanguageId(dlFileEntryType.getGroupId()));
+
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(LocaleUtil.getDefault(), name);
+		nameMap.put(defaultLocale, name);
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		descriptionMap.put(LocaleUtil.getDefault(), description);
+		descriptionMap.put(defaultLocale, description);
 
 		updateFileEntryType(
 			fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
