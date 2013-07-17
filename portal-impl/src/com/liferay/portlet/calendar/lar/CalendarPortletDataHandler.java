@@ -16,6 +16,7 @@ package com.liferay.portlet.calendar.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -196,7 +197,9 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 				timeZone = user.getTimeZone();
 			}
 			else {
-				locale = LocaleUtil.getDefault();
+				locale = LocaleUtil.fromLanguageId(
+					LanguageUtil.getDefaultLanguageId(
+						portletDataContext.getScopeGroupId()));
 				timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 			}
 

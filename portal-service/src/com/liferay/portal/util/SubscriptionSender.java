@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.mail.model.FileAttachment;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
@@ -137,7 +138,8 @@ public class SubscriptionSender implements Serializable {
 				}
 
 				if (bulk) {
-					Locale locale = LocaleUtil.getDefault();
+					Locale locale = LocaleUtil.fromLanguageId(
+						LanguageUtil.getDefaultLanguageId(groupId));
 
 					InternetAddress to = new InternetAddress(
 						replaceContent(replyToAddress, locale),
@@ -179,7 +181,10 @@ public class SubscriptionSender implements Serializable {
 
 				InternetAddress to = new InternetAddress(toAddress, toName);
 
-				sendEmail(to, LocaleUtil.getDefault());
+				sendEmail(
+					to,
+					LocaleUtil.fromLanguageId(
+						LanguageUtil.getDefaultLanguageId(groupId)));
 			}
 
 			_runtimeSubscribersOVPs.clear();
@@ -561,7 +566,8 @@ public class SubscriptionSender implements Serializable {
 			String localizedSubject = localizedSubjectMap.get(locale);
 
 			if (Validator.isNull(localizedSubject)) {
-				Locale defaultLocale = LocaleUtil.getDefault();
+				Locale defaultLocale = LocaleUtil.fromLanguageId(
+					LanguageUtil.getDefaultLanguageId(groupId));
 
 				processedSubject = localizedSubjectMap.get(defaultLocale);
 			}
@@ -579,7 +585,8 @@ public class SubscriptionSender implements Serializable {
 			String localizedBody = localizedBodyMap.get(locale);
 
 			if (Validator.isNull(localizedBody)) {
-				Locale defaultLocale = LocaleUtil.getDefault();
+				Locale defaultLocale = LocaleUtil.fromLanguageId(
+					LanguageUtil.getDefaultLanguageId(groupId));
 
 				processedBody = localizedBodyMap.get(defaultLocale);
 			}

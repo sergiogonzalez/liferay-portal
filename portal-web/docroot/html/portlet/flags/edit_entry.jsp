@@ -110,15 +110,18 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 		A.io.request(
 			'<liferay-portlet:actionURL portletName="<%= PortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/flags/edit_entry" /></liferay-portlet:actionURL>',
 			{
-				data: {
-					className: '<%= HtmlUtil.escape(className) %>',
-					classPK: '<%= classPK %>',
-					contentTitle: '<%= HtmlUtil.escape(contentTitle) %>',
-					contentURL: '<%= HtmlUtil.escape(contentURL) %>',
-					reason: reason,
-					reportedUserId: '<%= reportedUserId %>',
-					reporterEmailAddress: reporterEmailAddress
-				},
+				data: Liferay.Util.ns(
+					'<portlet:namespace />',
+					{
+						className: '<%= HtmlUtil.escape(className) %>',
+						classPK: '<%= classPK %>',
+						contentTitle: '<%= HtmlUtil.escape(contentTitle) %>',
+						contentURL: '<%= HtmlUtil.escape(contentURL) %>',
+						reason: reason,
+						reportedUserId: '<%= reportedUserId %>',
+						reporterEmailAddress: reporterEmailAddress
+					}
+				),
 				on: {
 					failure: function() {
 						setDialogContent(errorMessage);

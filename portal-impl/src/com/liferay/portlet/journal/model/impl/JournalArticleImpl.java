@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.model.impl;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -150,8 +151,14 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		String defaultLanguageId = LocalizationUtil.getDefaultLocale(xml);
 
 		if (isTemplateDriven() && Validator.isNull(defaultLanguageId)) {
-			defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getDefault());
+			try {
+				defaultLanguageId = LanguageUtil.getDefaultLanguageId(
+					getGroupId());
+			}
+			catch (Exception e) {
+				defaultLanguageId = LocaleUtil.toLanguageId(
+					LocaleUtil.getDefault());
+			}
 		}
 
 		return defaultLanguageId;

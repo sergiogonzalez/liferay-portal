@@ -16,6 +16,7 @@ package com.liferay.portlet.polls.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
@@ -69,7 +70,7 @@ public class PollsQuestionLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(titleMap, descriptionMap, choices);
+		validate(groupId, titleMap, descriptionMap, choices);
 
 		long questionId = counterLocalService.increment();
 
@@ -266,10 +267,10 @@ public class PollsQuestionLocalServiceImpl
 				QuestionExpirationDateException.class);
 		}
 
-		validate(titleMap, descriptionMap, choices);
-
 		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
 			questionId);
+
+		validate(question.getGroupId(), titleMap, descriptionMap, choices);
 
 		question.setModifiedDate(serviceContext.getModifiedDate(null));
 		question.setTitleMap(titleMap);
@@ -313,11 +314,12 @@ public class PollsQuestionLocalServiceImpl
 	}
 
 	protected void validate(
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			List<PollsChoice> choices)
-		throws PortalException {
+			long groupId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, List<PollsChoice> choices)
+		throws PortalException, SystemException {
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getDefaultLanguageId(groupId));
 
 		String title = titleMap.get(locale);
 
