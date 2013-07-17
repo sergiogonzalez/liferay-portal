@@ -251,7 +251,7 @@ public class SitemapImpl implements Sitemap {
 				layout.getGroupId());
 
 			if (availableLocales.length > 1) {
-				Locale defaultLocale = LocaleUtil.getDefault();
+				Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 				for (Locale availableLocale : availableLocales) {
 					if (!availableLocale.equals(defaultLocale)) {
@@ -299,7 +299,7 @@ public class SitemapImpl implements Sitemap {
 			layout.getGroupId());
 
 		if (availableLocales.length > 1) {
-			Locale defaultLocale = LocaleUtil.getDefault();
+			Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 			for (Locale availableLocale : availableLocales) {
 				if (availableLocale.equals(defaultLocale)) {

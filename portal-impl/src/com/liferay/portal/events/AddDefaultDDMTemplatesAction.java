@@ -70,7 +70,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		nameMap.put(locale, LanguageUtil.get(locale, name));
 

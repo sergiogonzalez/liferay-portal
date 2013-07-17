@@ -78,11 +78,11 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 			Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-			nameMap.put(LocaleUtil.getDefault(), name);
+			nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-			descriptionMap.put(LocaleUtil.getDefault(), description);
+			descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 
 			Attribute defaultLocaleAttribute =
 				structureElementRootElement.attribute("default-locale");
@@ -91,7 +91,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 				defaultLocaleAttribute.getValue());
 
 			xsd = DDMXMLUtil.updateXMLDefaultLocale(
-				xsd, ddmStructureDefaultLocale, LocaleUtil.getDefault());
+				xsd, ddmStructureDefaultLocale, LocaleUtil.getSiteDefault());
 
 			if (name.equals(DLFileEntryTypeConstants.NAME_IG_IMAGE) &&
 				!UpgradeProcessUtil.isCreateIGImageDocumentType()) {
@@ -113,7 +113,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 		String xml = ContentUtil.get(
 			"com/liferay/portal/events/dependencies/" + fileName);
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
 
