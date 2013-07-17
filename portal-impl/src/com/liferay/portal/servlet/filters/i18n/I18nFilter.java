@@ -116,7 +116,9 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		i18nLanguageId = prependI18nLanguage(request, i18nLanguageId);
+		i18nLanguageId = prependI18nLanguage(
+			request, i18nLanguageId,
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (i18nLanguageId == null) {
 			return null;
@@ -190,7 +192,8 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String prependI18nLanguage(
-		HttpServletRequest request, String i18nLanguageId) {
+		HttpServletRequest request, String i18nLanguageId,
+		int prependFriendlyUrlStyle) {
 
 		String userLanguageId = null;
 
@@ -210,7 +213,7 @@ public class I18nFilter extends BasePortalFilter {
 			guestLanguageId = defaultLanguageId;
 		}
 
-		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) {
+		if (prependFriendlyUrlStyle == 1) {
 			if (!defaultLanguageId.equals(guestLanguageId)) {
 				i18nLanguageId = guestLanguageId;
 			}
@@ -218,11 +221,11 @@ public class I18nFilter extends BasePortalFilter {
 				return null;
 			}
 		}
-		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
+		else if (prependFriendlyUrlStyle == 2) {
 			i18nLanguageId = LocaleUtil.toLanguageId(
 				PortalUtil.getLocale(request));
 		}
-		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) {
+		else if (prependFriendlyUrlStyle == 3) {
 			if (!Validator.isBlank(userLanguageId)) {
 				HttpSession session = request.getSession();
 
