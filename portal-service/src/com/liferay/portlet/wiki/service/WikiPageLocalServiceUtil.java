@@ -431,6 +431,22 @@ public class WikiPageLocalServiceUtil {
 			.changeParent(userId, nodeId, title, newParentTitle, serviceContext);
 	}
 
+	public static void copyPageAttachment(long userId,
+		com.liferay.portlet.wiki.model.WikiPage page,
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		com.liferay.portal.kernel.repository.model.FileEntry templateFileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().copyPageAttachment(userId, page, folder, templateFileEntry);
+	}
+
+	public static void copyPageAttachments(long userId, long nodeId,
+		java.lang.String templateTitle, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().copyPageAttachments(userId, nodeId, templateTitle, title);
+	}
+
 	public static void deletePage(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
