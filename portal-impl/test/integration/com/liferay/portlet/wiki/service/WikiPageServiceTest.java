@@ -91,6 +91,11 @@ public class WikiPageServiceTest {
 	}
 
 	@Test
+	public void testCopyWikiPageAttachments() throws Exception {
+		Assert.fail("Operation not supported");
+	}
+
+	@Test
 	public void testGetPage() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
