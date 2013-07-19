@@ -706,6 +706,14 @@ create table DLFolder (
 	statusDate DATE null
 );
 
+create table DLSyncEvent (
+	syncEventId LONG not null primary key,
+	modifiedDate LONG,
+	event VARCHAR(75) null,
+	type_ VARCHAR(75) null,
+	typePK LONG
+);
+
 create table EmailAddress (
 	uuid_ VARCHAR(75) null,
 	emailAddressId LONG not null primary key,

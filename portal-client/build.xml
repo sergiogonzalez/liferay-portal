@@ -26,6 +26,7 @@
 			failonerror="true"
 			fork="true"
 			newenvironment="true"
+			outputproperty="build-client.output"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="${project.dir}/portal-web/docroot/WEB-INF/server-config.wsdd" />
@@ -33,6 +34,15 @@
 			<arg value="namespace-mapping.properties" />
 			<arg value="${client.url}" />
 		</java>
+
+		<echo>${build-client.output}</echo>
+
+		<if>
+			<contains string="${build-client.output}" substring="IOException" />
+			<then>
+				<fail>Portal Client Builder generated exceptions.</fail>
+			</then>
+		</if>
 
 		<antcall target="jar" />
 	</target>

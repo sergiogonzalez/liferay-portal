@@ -23,6 +23,12 @@ public class DLSyncConstants {
 
 	public static final String EVENT_DELETE = "delete";
 
+	public static final String EVENT_GET = "get";
+
+	public static final String EVENT_MOVE = "move";
+
+	public static final String EVENT_RESTORE = "restore";
+
 	public static final String EVENT_UPDATE = "update";
 
 	public static final String TYPE_FILE = "file";

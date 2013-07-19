@@ -567,6 +567,37 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
+	<entity name="DLSyncEvent" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="syncEventId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="modifiedDate" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="event" type="String" />
+		<column name="type" type="String" />
+		<column name="typePK" type="long" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="ModifiedDate" return-type="Collection">
+			<finder-column name="modifiedDate" comparator="&gt;" />
+		</finder>
+		<finder name="TypePK" return-type="DLSyncEvent" unique="true">
+			<finder-column name="typePK" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>DirectoryName</exception>
 		<exception>DuplicateDirectory</exception>

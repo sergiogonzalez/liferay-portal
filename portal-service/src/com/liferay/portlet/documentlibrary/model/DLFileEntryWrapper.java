@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -1125,11 +1126,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.lar.StagedModelType getStagedModelType() {
-		return _dlFileEntry.getStagedModelType();
-	}
-
-	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1181,6 +1177,11 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _dlFileEntry.getStagedModelType();
 	}
 
 	/**

@@ -53,7 +53,7 @@ public class CacheManagerUtil {
 
 				_workQueueField.set(
 					scheduledThreadPoolExecutor,
-					new DelayQueue<RunnableScheduledFuture>() {
+					new DelayQueue<RunnableScheduledFuture<?>>() {
 
 						@Override
 						public int remainingCapacity() {

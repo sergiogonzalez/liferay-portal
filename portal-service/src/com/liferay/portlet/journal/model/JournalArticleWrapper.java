@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -1554,11 +1555,6 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.lar.StagedModelType getStagedModelType() {
-		return _journalArticle.getStagedModelType();
-	}
-
-	@Override
 	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1600,6 +1596,11 @@ public class JournalArticleWrapper implements JournalArticle,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _journalArticle.getStagedModelType();
 	}
 
 	/**

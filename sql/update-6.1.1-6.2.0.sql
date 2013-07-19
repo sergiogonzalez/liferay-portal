@@ -347,6 +347,14 @@ update DLFolder set statusDate = modifiedDate;
 
 drop table DLSync;
 
+create table DLSyncEvent (
+	syncEventId LONG not null primary key,
+	modifiedDate LONG,
+	event VARCHAR(75) null,
+	type_ VARCHAR(75) null,
+	typePK LONG
+);
+
 alter table EmailAddress add uuid_ VARCHAR(75) null;
 
 alter table ExpandoRow add modifiedDate DATE null;

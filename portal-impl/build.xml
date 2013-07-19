@@ -728,6 +728,7 @@ public class Creole10Parser]]></replacevalue>
 			classpathref="project.classpath"
 			fork="true"
 			newenvironment="true"
+			outputproperty="build-service.output"
 		>
 			<jvmarg value="-Xms512m" />
 			<jvmarg value="-Xmx1024m" />
@@ -755,6 +756,15 @@ public class Creole10Parser]]></replacevalue>
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
+
+		<echo>${build-service.output}</echo>
+
+		<if>
+			<contains string="${build-service.output}" substring="Error" />
+			<then>
+				<fail>Service Builder generated exceptions.</fail>
+			</then>
+		</if>
 
 		<ant dir="../portal-service" target="compile" inheritAll="false" />
 	</target>
@@ -1048,6 +1058,7 @@ public class Creole10Parser]]></replacevalue>
 			fork="true"
 			maxmemory="512m"
 			newenvironment="true"
+			outputproperty="build-wsdd.output"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<jvmarg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
@@ -1056,6 +1067,15 @@ public class Creole10Parser]]></replacevalue>
 			<arg value="wsdd.service.namespace=Portlet" />
 			<arg value="wsdd.input.file=${service.file}" />
 		</java>
+
+		<echo>${build-wsdd.output}</echo>
+
+		<if>
+			<contains string="${build-wsdd.output}" substring="IOException" />
+			<then>
+				<fail>WSDD Builder generated exceptions.</fail>
+			</then>
+		</if>
 	</target>
 
 	<target name="build-wsdd-portal">
