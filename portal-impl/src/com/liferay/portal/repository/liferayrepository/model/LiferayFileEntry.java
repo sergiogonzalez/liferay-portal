@@ -322,7 +322,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	@Override
 	public String getUserName() {
-		return _dlFileEntry.getVersionUserName();
+		return _dlFileEntry.getUserName();
 	}
 
 	@Override
