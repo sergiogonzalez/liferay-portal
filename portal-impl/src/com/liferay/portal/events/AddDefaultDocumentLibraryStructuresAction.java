@@ -188,12 +188,12 @@ public class AddDefaultDocumentLibraryStructuresAction
 			else {
 				Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-				nameMap.put(LocaleUtil.getDefault(), name);
+				nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 				Map<Locale, String> descriptionMap =
 					new HashMap<Locale, String>();
 
-				descriptionMap.put(LocaleUtil.getDefault(), description);
+				descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 
 				DDMStructureLocalServiceUtil.addStructure(
 					userId, groupId,
@@ -217,7 +217,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		sb.append(field.getName());
 		sb.append("\" type=\"text\">");
 		sb.append("<meta-data locale=\"");
-		sb.append(LocaleUtil.getDefault());
+		sb.append(LocaleUtil.getSiteDefault());
 		sb.append("\">");
 		sb.append("<entry name=\"label\"><![CDATA[metadata.");
 		sb.append(fieldClass.getSimpleName());
@@ -243,9 +243,9 @@ public class AddDefaultDocumentLibraryStructuresAction
 		sb.append(name);
 		sb.append("]]></description>");
 		sb.append("<root available-locales=\"");
-		sb.append(LocaleUtil.getDefault());
+		sb.append(LocaleUtil.getSiteDefault());
 		sb.append("\" default-locale=\"");
-		sb.append(LocaleUtil.getDefault());
+		sb.append(LocaleUtil.getSiteDefault());
 		sb.append("\">");
 
 		for (Field field : fields) {
@@ -294,7 +294,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 	protected Map<Locale, String> getLocalizationMap(String content) {
 		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
 
-		localizationMap.put(LocaleUtil.getDefault(), content);
+		localizationMap.put(LocaleUtil.getSiteDefault(), content);
 
 		return localizationMap;
 	}

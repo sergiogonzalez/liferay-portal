@@ -103,6 +103,8 @@ public interface Language {
 
 	public Locale[] getAvailableLocales();
 
+	public Locale[] getAvailableLocales(long groupId);
+
 	public String getCharset(Locale locale);
 
 	public String getLanguageId(HttpServletRequest request);
@@ -137,11 +139,17 @@ public interface Language {
 
 	public boolean isAvailableLocale(Locale locale);
 
+	public boolean isAvailableLocale(long groupId, Locale locale);
+
+	public boolean isAvailableLocale(long groupId, String languageId);
+
 	public boolean isAvailableLocale(String languageId);
 
 	public boolean isBetaLocale(Locale locale);
 
 	public boolean isDuplicateLanguageCode(String languageCode);
+
+	public void resetAvailableGroupLocales(long groupId);
 
 	public void resetAvailableLocales(long companyId);
 
