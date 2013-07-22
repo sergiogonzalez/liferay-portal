@@ -762,11 +762,11 @@ release was successful.</echo>
 			<fileset dir="${lp.plugins.dir}" includes="**/javadocs-all.xml,**/javadocs-rt.xml" />
 		</delete>
 
+		<antcall target="deploy" />
+
 		<ant dir="${lp.plugins.dir}" inheritall="false" target="clean" />
 		<ant dir="${lp.plugins.dir}" inheritall="false" target="compile" />
 		<ant dir="${lp.plugins.dir}" inheritall="false" target="format-javadoc" />
-
-		<antcall target="all" />
 
 		<parallel>
 			<if>
@@ -785,7 +785,7 @@ release was successful.</echo>
 
 			<sequential>
 				<waitfor>
-					<socket server="localhost" port="8080" />
+					<http url="http://localhost:8080" />
 				</waitfor>
 
 				<ant dir="portal-client" target="build-client" inheritAll="false" />

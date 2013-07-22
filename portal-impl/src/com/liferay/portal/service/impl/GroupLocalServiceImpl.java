@@ -18,6 +18,7 @@ import com.liferay.portal.DuplicateGroupException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.GroupNameException;
 import com.liferay.portal.GroupParentException;
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.PendingBackgroundTaskException;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -2729,6 +2731,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ThreadLocalCachable
 	public List<Group> search(
 			long companyId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end)
@@ -3435,6 +3438,27 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
+		UnicodeProperties oldTypeSettingsProperties =
+			group.getTypeSettingsProperties();
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.fastLoad(typeSettings);
+
+		String newLanguageIds = typeSettingsProperties.getProperty(
+			PropsKeys.LOCALES);
+
+		if (newLanguageIds != null) {
+			String oldLanguageIds = oldTypeSettingsProperties.getProperty(
+				PropsKeys.LOCALES, StringPool.BLANK);
+
+			if (!Validator.equals(oldLanguageIds, newLanguageIds)) {
+				validateLanguageIds(newLanguageIds);
+
+				LanguageUtil.resetAvailableGroupLocales(groupId);
+			}
+		}
+
 		group.setTypeSettings(typeSettings);
 
 		groupPersistence.update(group);
@@ -4015,6 +4039,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (StringUtil.count(friendlyURL, StringPool.SLASH) > 1) {
 			throw new GroupFriendlyURLException(
 				GroupFriendlyURLException.TOO_DEEP);
+		}
+	}
+
+	protected void validateLanguageIds(String languageIds)
+		throws PortalException {
+
+		for (String languageId : StringUtil.split(languageIds)) {
+			if (!ArrayUtil.contains(PropsValues.LOCALES, languageId)) {
+				throw new LocaleException();
+			}
 		}
 	}
 

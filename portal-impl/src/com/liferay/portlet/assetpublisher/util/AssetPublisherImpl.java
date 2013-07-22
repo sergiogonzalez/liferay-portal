@@ -605,8 +605,10 @@ public class AssetPublisherImpl implements AssetPublisher {
 		boolean anyAssetType = GetterUtil.getBoolean(
 			portletPreferences.getValue(
 				"anyAssetType", Boolean.TRUE.toString()));
+		String selectionStyle = portletPreferences.getValue(
+			"selectionStyle", "dynamic");
 
-		if (anyAssetType) {
+		if (anyAssetType || selectionStyle.equals("manual")) {
 			return availableClassNameIds;
 		}
 
@@ -620,7 +622,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		long[] classNameIds = GetterUtil.getLongValues(
 			portletPreferences.getValues("classNameIds", null));
 
-		if (classNameIds != null) {
+		if ((classNameIds != null) && (classNameIds.length > 0)) {
 			return classNameIds;
 		}
 		else {

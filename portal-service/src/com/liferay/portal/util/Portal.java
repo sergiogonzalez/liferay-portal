@@ -242,6 +242,8 @@ public interface Portal {
 	 */
 	public String generateRandomKey(HttpServletRequest request, String input);
 
+	public String getAbsoluteURL(HttpServletRequest request, String url);
+
 	public LayoutQueryStringComposite getActualLayoutQueryStringComposite(
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
@@ -1048,6 +1050,9 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	public long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException;
+
+	public Locale getSiteDefaultLocale(long groupId)
 		throws PortalException, SystemException;
 
 	public long getSiteGroupId(long groupId)

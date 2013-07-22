@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -1008,11 +1009,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.lar.StagedModelType getStagedModelType() {
-		return _dlFolder.getStagedModelType();
-	}
-
-	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer() {
 		return _dlFolder.getTrashContainer();
 	}
@@ -1064,6 +1060,11 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _dlFolder.getStagedModelType();
 	}
 
 	/**

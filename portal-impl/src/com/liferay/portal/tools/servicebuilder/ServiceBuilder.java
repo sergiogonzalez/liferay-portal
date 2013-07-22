@@ -1895,6 +1895,18 @@ public class ServiceBuilder {
 		List<JavaMethod> methods = ListUtil.fromArray(
 			_getMethods(modelImplJavaClass));
 
+		Iterator<JavaMethod> itr = methods.iterator();
+
+		while (itr.hasNext()) {
+			JavaMethod method = itr.next();
+
+			String methodName = method.getName();
+
+			if (methodName.equals("getStagedModelType")) {
+				itr.remove();
+			}
+		}
+
 		JavaClass modelJavaClass = _getJavaClass(
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
 

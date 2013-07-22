@@ -1040,14 +1040,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			companyId);
 
 		try {
-			String newLocales = properties.getProperty(PropsKeys.LOCALES);
+			String newLanguageIds = properties.getProperty(PropsKeys.LOCALES);
 
-			if (newLocales != null) {
-				String oldLocales = preferences.getValue(
+			if (newLanguageIds != null) {
+				String oldLanguageIds = preferences.getValue(
 					PropsKeys.LOCALES, StringPool.BLANK);
 
-				if (!Validator.equals(oldLocales, newLocales)) {
-					validateLocales(newLocales);
+				if (!Validator.equals(oldLanguageIds, newLanguageIds)) {
+					validateLanguageIds(newLanguageIds);
 
 					LanguageUtil.resetAvailableLocales(companyId);
 
@@ -1315,11 +1315,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateLocales(String locales) throws PortalException {
-		String[] localesArray = StringUtil.split(locales, StringPool.COMMA);
+	protected void validateLanguageIds(String languageIds)
+		throws PortalException {
 
-		for (String locale : localesArray) {
-			if (!ArrayUtil.contains(PropsValues.LOCALES, locale)) {
+		for (String languageId : StringUtil.split(languageIds)) {
+			if (!ArrayUtil.contains(PropsValues.LOCALES, languageId)) {
 				throw new LocaleException();
 			}
 		}

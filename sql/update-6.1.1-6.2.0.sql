@@ -313,6 +313,9 @@ alter table DDMTemplate add smallImageURL STRING;
 update DDMTemplate set type_ = 'display' where type_ = 'list';
 update DDMTemplate set type_ = 'form' where type_ = 'detail';
 
+alter table DLFileEntry drop column versionUserId;
+alter table DLFileEntry drop column versionUserName;
+
 alter table DLFileEntry add classNameId LONG;
 alter table DLFileEntry add classPK LONG;
 alter table DLFileEntry add manualCheckInRequired BOOLEAN;
@@ -346,6 +349,14 @@ update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
 
 drop table DLSync;
+
+create table DLSyncEvent (
+	syncEventId LONG not null primary key,
+	modifiedDate LONG,
+	event VARCHAR(75) null,
+	type_ VARCHAR(75) null,
+	typePK LONG
+);
 
 alter table EmailAddress add uuid_ VARCHAR(75) null;
 

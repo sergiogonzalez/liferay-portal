@@ -13,67 +13,62 @@
  * details.
  */
 --%>
+
 <%@ include file="/html/portal/init.jsp" %>
 
-<c:if test="<%= !themeDisplay.isStatePopUp() %>">
-	<div id="main-content">
-		<table class="lfr-panel-page">
-		<tr>
-			<td class="lfr-top panel-page-menu" width="200">
-				<liferay-portlet:runtime portletName="87" />
-			</td>
-			<td class="lfr-top panel-page-content <%= (!layoutTypePortlet.hasStateMax()) ? "panel-page-frontpage" : "panel-page-application" %>">
-</c:if>
+<c:choose>
+	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
+		<aui:container class="lfr-panel-page" id="main-content">
+			<aui:row>
 
-<%
-if (themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax()) {
-	String ppid = ParamUtil.getString(request, "p_p_id");
+				<%
+				String panelBodyCssClass = "panel-page-body";
 
-	String velocityTemplateId = null;
-	String velocityTemplateContent = null;
+				if (!layoutTypePortlet.hasStateMax()) {
+					panelBodyCssClass += " panel-page-frontpage";
+				}
+				else {
+					panelBodyCssClass += "panel-page-application";
+				}
+				%>
 
-	if (themeDisplay.isStatePopUp()) {
-		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "pop_up";
-		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
-	}
-	else {
-		ppid = StringUtil.split(layoutTypePortlet.getStateMax())[0];
+				<aui:col cssClass="panel-page-menu" width="<%= 20 %>">
 
-		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
-		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
-	}
+					<%
+					PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
-	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
-		RuntimePageUtil.processTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
-	}
-}
-else {
-	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
+					portletCategory = PortletCategoryUtil.getRelevantPortletCategory(permissionChecker, user.getCompanyId(), layout, portletCategory, layoutTypePortlet);
 
-	String description = typeSettingsProperties.getProperty("description");
+					List<PortletCategory> portletCategories = ListUtil.fromCollection(portletCategory.getCategories());
 
-	if (Validator.isNull(description)) {
-		description = LanguageUtil.get(pageContext, "please-select-a-tool-from-the-left-menu");
-	}
-%>
+					portletCategories = ListUtil.sort(portletCategories, new PortletCategoryComparator(locale));
 
-	<h2>
-		<%= HtmlUtil.escape(layout.getName(locale)) %>
-	</h2>
+					for (PortletCategory curPortletCategory : portletCategories) {
+					%>
 
-	<div class="alert alert-info">
-		<%= HtmlUtil.escape(description) %>
-	</div>
+						<c:if test="<%= !curPortletCategory.isHidden() %>">
 
-<%
-}
-%>
+							<%
+							request.setAttribute(WebKeys.PORTLET_CATEGORY, curPortletCategory);
+							%>
 
-<c:if test="<%= !themeDisplay.isStatePopUp() %>">
-			</td>
-		</tr>
-		</table>
-	</div>
-</c:if>
+							<liferay-util:include page="/html/portal/layout/view/view_category.jsp" />
+						</c:if>
+
+					<%
+					}
+					%>
+
+				</aui:col>
+				<aui:col cssClass="<%= panelBodyCssClass %>"  width="<%= 80 %>">
+					<%@ include file="/html/portal/layout/view/panel_description.jspf" %>
+				</aui:col>
+			</aui:row>
+		</aui:container>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="/html/portal/layout/view/panel_description.jspf" %>
+	</c:otherwise>
+</c:choose>
 
 <%@ include file="/html/portal/layout/view/common.jspf" %>

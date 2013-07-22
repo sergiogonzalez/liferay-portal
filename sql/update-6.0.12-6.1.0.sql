@@ -268,6 +268,9 @@ update JournalArticle set classPK = 0;
 
 drop index IX_FAD05595 on Layout;
 
+alter table Layout drop column layoutPrototypeId;
+alter table Layout drop column dlFolderId;
+
 alter table Layout add createDate DATE null;
 alter table Layout add modifiedDate DATE null;
 alter table Layout add keywords STRING null;
@@ -275,8 +278,6 @@ alter table Layout add robots STRING null;
 alter table Layout add layoutPrototypeUuid VARCHAR(75) null;
 alter table Layout add layoutPrototypeLinkEnabled BOOLEAN null;
 alter table Layout add sourcePrototypeLayoutUuid VARCHAR(75) null;
-alter table Layout drop column layoutPrototypeId;
-alter table Layout drop column dlFolderId;
 
 COMMIT_TRANSACTION;
 
@@ -332,11 +333,12 @@ create table LayoutRevision (
 	statusDate DATE null
 );
 
+alter table LayoutSet drop column layoutSetPrototypeId;
+
 alter table LayoutSet add createDate DATE null;
 alter table LayoutSet add modifiedDate DATE null;
 alter table LayoutSet add layoutSetPrototypeUuid VARCHAR(75) null;
 alter table LayoutSet add layoutSetPrototypeLinkEnabled BOOLEAN null;
-alter table LayoutSet drop column layoutSetPrototypeId;
 
 COMMIT_TRANSACTION;
 
@@ -450,9 +452,10 @@ create table MDRRuleGroupInstance (
 	priority INTEGER
 );
 
-alter table Organization_ add treePath STRING null;
 alter table Organization_ drop column leftOrganizationId;
 alter table Organization_ drop column rightOrganizationId;
+
+alter table Organization_ add treePath STRING null;
 
 alter table PollsVote add companyId LONG;
 alter table PollsVote add userName VARCHAR(75) null;

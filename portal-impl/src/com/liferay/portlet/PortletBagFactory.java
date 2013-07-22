@@ -322,14 +322,14 @@ public class PortletBagFactory {
 			initResourceBundle(
 				resourceBundles, portlet, LocaleUtil.getDefault());
 
-			Set<String> supportedLocales = portlet.getSupportedLocales();
+			Set<String> supportedLanguageIds = portlet.getSupportedLocales();
 
-			if (supportedLocales.isEmpty()) {
-				supportedLocales = SetUtil.fromArray(PropsValues.LOCALES);
+			if (supportedLanguageIds.isEmpty()) {
+				supportedLanguageIds = SetUtil.fromArray(PropsValues.LOCALES);
 			}
 
-			for (String supportedLocale : supportedLocales) {
-				Locale locale = LocaleUtil.fromLanguageId(supportedLocale);
+			for (String supportedLanguageId : supportedLanguageIds) {
+				Locale locale = LocaleUtil.fromLanguageId(supportedLanguageId);
 
 				initResourceBundle(resourceBundles, portlet, locale);
 			}

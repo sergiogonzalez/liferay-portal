@@ -33,15 +33,8 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
- * <p>
- * <table>
- * <tr>
- * <th colspan = 3>
- * Test Classes Inherited Hierarchy
- * </th>
- * </tr>
- * <tr valign="top">
- * <td>
+ * <p><tr> <th colspan = 3> Test Classes Inherited Hierarchy </th> </tr> <tr
+ * valign="top"> <td>
  * <pre>
  * &#64;Type(value = 5)
  * OriginClass {    -------->
