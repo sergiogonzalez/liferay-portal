@@ -40,6 +40,9 @@ import java.util.Set;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts.Globals;
 
 /**
  * @author Brian Wing Shun Chan
@@ -113,38 +116,9 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		String guestLanguageId = null;
-
-		User user = (User)request.getAttribute(WebKeys.USER);
-
-		if (user != null) {
-			guestLanguageId = user.getLanguageId();
-		}
-
-		if (Validator.isNull(guestLanguageId)) {
-			guestLanguageId = CookieKeys.getCookie(
-				request, CookieKeys.GUEST_LANGUAGE_ID, false);
-		}
-
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getDefault());
-
-		if (Validator.isNull(guestLanguageId)) {
-			guestLanguageId = defaultLanguageId;
-		}
-
-		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) {
-			if (!defaultLanguageId.equals(guestLanguageId)) {
-				i18nLanguageId = guestLanguageId;
-			}
-			else {
-				return null;
-			}
-		}
-		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			i18nLanguageId = LocaleUtil.toLanguageId(
-				PortalUtil.getLocale(request));
-		}
+		i18nLanguageId = prependI18nLanguage(
+			request, i18nLanguageId,
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (i18nLanguageId == null) {
 			return null;
@@ -215,6 +189,53 @@ public class I18nFilter extends BasePortalFilter {
 		else {
 			return false;
 		}
+	}
+
+	protected String prependI18nLanguage(
+		HttpServletRequest request, String i18nLanguageId,
+		int prependFriendlyUrlStyle) {
+
+		String userLanguageId = null;
+
+		User user = (User)request.getAttribute(WebKeys.USER);
+
+		if (user != null) {
+			userLanguageId = user.getLanguageId();
+		}
+
+		String guestLanguageId = CookieKeys.getCookie(
+			request, CookieKeys.GUEST_LANGUAGE_ID, false);
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getDefault());
+
+		if (Validator.isNull(guestLanguageId)) {
+			guestLanguageId = defaultLanguageId;
+		}
+
+		if (prependFriendlyUrlStyle == 1) {
+			if (!defaultLanguageId.equals(guestLanguageId)) {
+				i18nLanguageId = guestLanguageId;
+			}
+			else {
+				return null;
+			}
+		}
+		else if (prependFriendlyUrlStyle == 2) {
+			i18nLanguageId = LocaleUtil.toLanguageId(
+				PortalUtil.getLocale(request));
+		}
+		else if (prependFriendlyUrlStyle == 3) {
+			if (!Validator.isBlank(userLanguageId)) {
+				HttpSession session = request.getSession();
+
+				session.removeAttribute(Globals.LOCALE_KEY);
+
+				return null;
+			}
+		}
+
+		return i18nLanguageId;
 	}
 
 	@Override
