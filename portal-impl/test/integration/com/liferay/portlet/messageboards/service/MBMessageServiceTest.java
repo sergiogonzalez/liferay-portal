@@ -15,26 +15,25 @@
 package com.liferay.portlet.messageboards.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.UserTestUtil;
-import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -47,69 +46,31 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(
 	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalCallbackAwareExecutionTestListener.class
+		MainServletExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class MBMessageServiceTest {
 
 	@Before
+	@SuppressWarnings("unchecked")
 	public void setUp() throws Exception {
-		String name = "Test Category";
-		String description = "This is a test category.";
-		String displayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
-		String emailAddress = null;
-		String inProtocol = null;
-		String inServerName = null;
-		int inServerPort = 0;
-		boolean inUseSSL = false;
-		String inUserName = null;
-		String inPassword = null;
-		int inReadInterval = 0;
-		String outEmailAddress = null;
-		boolean outCustom = false;
-		String outServerName = null;
-		int outServerPort = 0;
-		boolean outUseSSL = false;
-		String outUserName = null;
-		String outPassword = null;
-		boolean allowAnonymous = false;
-		boolean mailingListActive = false;
-
 		_group = GroupTestUtil.addGroup();
-
-		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
-			UserTestUtil.addUser(
-				ServiceTestUtil.randomString(), _group.getGroupId());
-		}
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		serviceContext.setGroupPermissions(
-			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW});
-		serviceContext.setGuestPermissions(
-			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW});
-
-		_category = MBCategoryServiceUtil.addCategory(
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, name, description,
-			displayStyle, emailAddress, inProtocol, inServerName, inServerPort,
-			inUseSSL, inUserName, inPassword, inReadInterval, outEmailAddress,
-			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
-			outPassword, allowAnonymous, mailingListActive, serviceContext);
-
-		_userIds = UserLocalServiceUtil.getGroupUserIds(_group.getGroupId());
 	}
 
 	@Test
 	public void testAddMessagesConcurrently() throws Exception {
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_userIds.length];
+		long[] userIds = new long[ServiceTestUtil.THREAD_COUNT];
 
-		for (int i = 0; i < doAsUserThreads.length; i++) {
-			String subject = "Test Message " + i;
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[userIds.length];
 
-			doAsUserThreads[i] = new AddMessageThread(_userIds[i], subject);
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
+			User user = UserTestUtil.addUser(
+				ServiceTestUtil.randomString(), _group.getGroupId());
+
+			userIds[i] = user.getUserId();
+
+			doAsUserThreads[i] = new AddMessageThread(
+				userIds[i], _group.getGroupId());
 		}
 
 		for (DoAsUserThread doAsUserThread : doAsUserThreads) {
@@ -128,50 +89,54 @@ public class MBMessageServiceTest {
 			}
 		}
 
+		long userId = PrincipalThreadLocal.getUserId();
+
+		PrincipalThreadLocal.setName(null);
+
+		for (int i = 0; i < doAsUserThreads.length; i++) {
+			UserLocalServiceUtil.deleteUser(userIds[i]);
+		}
+
+		GroupLocalServiceUtil.deleteGroup(_group);
+
+		PrincipalThreadLocal.setName(userId);
+
 		Assert.assertTrue(
-			"Only " + successCount + " out of " + _userIds.length +
+			"Only " + successCount + " out of " + userIds.length +
 				" threads added messages successfully",
-			successCount == _userIds.length);
+			successCount == userIds.length);
 	}
 
-	private MBCategory _category;
 	private Group _group;
-	private long[] _userIds;
 
 	private class AddMessageThread extends DoAsUserThread {
 
-		public AddMessageThread(long userId, String subject) {
+		public AddMessageThread(long userId, long groupId) {
 			super(userId);
 
-			_subject = subject;
-		}
-
-		@Override
-		public boolean isSuccess() {
-			return true;
+			_groupId = groupId;
 		}
 
 		@Override
 		protected void doRun() throws Exception {
-			String body = "This is a test message.";
-			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-				new ArrayList<ObjectValuePair<String, InputStream>>();
-			boolean anonymous = false;
-			double priority = 0.0;
-			boolean allowPingbacks = false;
-
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			MBMessageServiceUtil.addMessage(
-				_category.getGroupId(), _category.getCategoryId(), _subject,
-				body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
-				anonymous, priority, allowPingbacks, serviceContext);
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+				Collections.emptyList();
+
+			MBMessageLocalServiceUtil.addMessage(
+				PrincipalThreadLocal.getUserId(),
+				ServiceTestUtil.randomString(), _groupId,
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, 0, 0,
+				ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+				MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+				false, serviceContext);
 		}
 
-		private String _subject;
+		private long _groupId;
 
 	}
 
