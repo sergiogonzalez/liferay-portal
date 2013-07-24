@@ -136,14 +136,7 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addMessage(
-			long categoryId, ServiceContext serviceContext)
-		throws Exception {
-
-		return addMessage(categoryId, StringPool.BLANK, false, serviceContext);
-	}
-
-	public static MBMessage addMessage(
-			long categoryId, String keywords, boolean approved,
+			long userId, long categoryId, String keywords, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -155,9 +148,23 @@ public class MBTestUtil {
 			body = keywords;
 		}
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			categoryId, subject, body, serviceContext);
+		MBMessage message;
+
+		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+				Collections.emptyList();
+
+			message = MBMessageLocalServiceUtil.addMessage(
+				userId, ServiceTestUtil.randomString(),
+				serviceContext.getScopeGroupId(), categoryId, 0, 0, subject,
+				body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
+				0.0, false, serviceContext);
+		}
+		else {
+			message = MBMessageLocalServiceUtil.addMessage(
+				userId, ServiceTestUtil.randomString(), categoryId, subject,
+				body, serviceContext);
+		}
 
 		if (!approved) {
 			return MBMessageLocalServiceUtil.updateStatus(
@@ -166,6 +173,23 @@ public class MBTestUtil {
 		}
 
 		return message;
+	}
+
+	public static MBMessage addMessage(
+			long categoryId, ServiceContext serviceContext)
+		throws Exception {
+
+		return addMessage(categoryId, StringPool.BLANK, false, serviceContext);
+	}
+
+	public static MBMessage addMessage(
+			long categoryId, String keywords, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addMessage(
+			TestPropsValues.getUserId(), categoryId, keywords, approved,
+			serviceContext);
 	}
 
 	public static MBMessage addMessageWithWorkflow(
