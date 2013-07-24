@@ -757,14 +757,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long groupId, long categoryId, int status, int start, int end)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByG_C(
-				groupId, categoryId, start, end);
-		}
-		else {
-			return mbMessagePersistence.findByG_C_S(
-				groupId, categoryId, status, start, end);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return getCategoryMessages(groupId, categoryId, queryDefinition);
 	}
 
 	/**
@@ -777,14 +773,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByG_C(
-				groupId, categoryId, start, end, obc);
-		}
-		else {
-			return mbMessagePersistence.findByG_C_S(
-				groupId, categoryId, status, start, end, obc);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return getCategoryMessages(groupId, categoryId, queryDefinition);
 	}
 
 	@Override
@@ -807,13 +799,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long groupId, long categoryId, int status)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.countByG_C(groupId, categoryId);
-		}
-		else {
-			return mbMessagePersistence.countByG_C_S(
-				groupId, categoryId, status);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return getCategoryMessagesCount(groupId, categoryId, queryDefinition);
 	}
 
 	@Override
@@ -836,13 +824,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long companyId, int status, int start, int end)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByCompanyId(companyId, start, end);
-		}
-		else {
-			return mbMessagePersistence.findByC_S(
-				companyId, status, start, end);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return getCompanyMessages(companyId, queryDefinition);
 	}
 
 	/**
@@ -855,14 +840,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByCompanyId(
-				companyId, start, end, obc);
-		}
-		else {
-			return mbMessagePersistence.findByC_S(
-				companyId, status, start, end, obc);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return getCompanyMessages(companyId, queryDefinition);
 	}
 
 	@Override
@@ -884,12 +865,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public int getCompanyMessagesCount(long companyId, int status)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.countByCompanyId(companyId);
-		}
-		else {
-			return mbMessagePersistence.countByC_S(companyId, status);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return getCompanyMessagesCount(companyId, queryDefinition);
 	}
 
 	@Override
@@ -1031,12 +1009,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long groupId, int status, int start, int end)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByGroupId(groupId, start, end);
-		}
-		else {
-			return mbMessagePersistence.findByG_S(groupId, status, start, end);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return getGroupMessages(groupId, queryDefinition);
 	}
 
 	/**
@@ -1047,13 +1023,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long groupId, int status, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByGroupId(groupId, start, end, obc);
-		}
-		else {
-			return mbMessagePersistence.findByG_S(
-				groupId, status, start, end, obc);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return getGroupMessages(groupId, queryDefinition);
 	}
 
 	/**
@@ -1065,13 +1038,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long groupId, long userId, int status, int start, int end)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByG_U(groupId, userId, start, end);
-		}
-		else {
-			return mbMessagePersistence.findByG_U_S(
-				groupId, userId, status, start, end);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return getGroupMessages(groupId, userId, queryDefinition);
 	}
 
 	/**
@@ -1084,14 +1054,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByG_U(
-				groupId, userId, start, end, obc);
-		}
-		else {
-			return mbMessagePersistence.findByG_U_S(
-				groupId, userId, status, start, end, obc);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return getGroupMessages(groupId, userId, queryDefinition);
 	}
 
 	@Override
@@ -1124,12 +1090,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public int getGroupMessagesCount(long groupId, int status)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.countByGroupId(groupId);
-		}
-		else {
-			return mbMessagePersistence.countByG_S(groupId, status);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return getGroupMessagesCount(groupId, queryDefinition);
 	}
 
 	/**
@@ -1140,12 +1103,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public int getGroupMessagesCount(long groupId, long userId, int status)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.countByG_U(groupId, userId);
-		}
-		else {
-			return mbMessagePersistence.countByG_U_S(groupId, userId, status);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return getGroupMessagesCount(groupId, userId, queryDefinition);
 	}
 
 	@Override
@@ -1309,16 +1269,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long threadId, int status, Comparator<MBMessage> comparator)
 		throws SystemException {
 
-		List<MBMessage> messages = null;
+		QueryDefinition queryDefinition = new QueryDefinition(status);
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			messages = mbMessagePersistence.findByThreadId(threadId);
-		}
-		else {
-			messages = mbMessagePersistence.findByT_S(threadId, status);
-		}
-
-		return ListUtil.sort(messages, comparator);
+		return getThreadMessages(threadId, queryDefinition, comparator);
 	}
 
 	/**
@@ -1329,11 +1282,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long threadId, int status, int start, int end)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByThreadId(threadId, start, end);
-		}
-		else {
-			return mbMessagePersistence.findByT_S(threadId, status, start, end);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return getThreadMessages(threadId, queryDefinition);
 	}
 
 	@Override
@@ -1373,11 +1325,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public int getThreadMessagesCount(long threadId, int status)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.countByThreadId(threadId);
-		}
-		else {
-			return mbMessagePersistence.countByT_S(threadId, status);
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return getThreadMessagesCount(threadId, queryDefinition);
 	}
 
 	@Override
@@ -1407,14 +1357,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long threadId, int status, int start, int end)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.findByThreadReplies(
-				threadId, start, end);
-		}
-		else {
-			return mbMessagePersistence.findByTR_S(
-				threadId, status, start, end);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return getThreadRepliesMessages(threadId, queryDefinition);
 	}
 
 	@Override
