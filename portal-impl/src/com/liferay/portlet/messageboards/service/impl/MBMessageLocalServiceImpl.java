@@ -747,6 +747,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getGroupId(), folderId);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getCategoryMessages(long, long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end)
@@ -762,6 +766,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getCategoryMessages(long, long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end,
@@ -779,6 +787,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	/**
+	 * @deprecated As of 6.2.0 {@link #getCategoryMessagesCount(long, long,
+	 *             QueryDefinition)}
+	 */
 	public int getCategoryMessagesCount(
 			long groupId, long categoryId, int status)
 		throws SystemException {
@@ -792,6 +804,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getCompanyMessages(long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getCompanyMessages(
 			long companyId, int status, int start, int end)
@@ -806,6 +822,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getCompanyMessages(long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getCompanyMessages(
 			long companyId, int status, int start, int end,
@@ -822,6 +842,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getCompanyMessagesCount(long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public int getCompanyMessagesCount(long companyId, int status)
 		throws SystemException {
@@ -953,6 +977,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return mbDiscussionPersistence.findByClassNameId(classNameId);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getGroupMessages(long, QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getGroupMessages(
 			long groupId, int status, int start, int end)
@@ -966,6 +993,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getGroupMessages(long, QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getGroupMessages(
 			long groupId, int status, int start, int end, OrderByComparator obc)
@@ -980,6 +1010,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getGroupMessages(long, long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getGroupMessages(
 			long groupId, long userId, int status, int start, int end)
@@ -994,6 +1028,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getGroupMessages(long, long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getGroupMessages(
 			long groupId, long userId, int status, int start, int end,
@@ -1011,6 +1049,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	/**
+	 * @deprecated As of 6.2.0 {@link #getGroupMessagesCount(long,
+	 *             QueryDefinition)}
+	 */
 	public int getGroupMessagesCount(long groupId, int status)
 		throws SystemException {
 
@@ -1022,6 +1064,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getGroupMessagesCount(long, long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public int getGroupMessagesCount(long groupId, long userId, int status)
 		throws SystemException {
@@ -1152,6 +1198,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getCreateDate(), message.getThreadId());
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getThreadMessages(long, QueryDefinition,
+	 *             java.util.Comparator)}
+	 */
 	@Override
 	public List<MBMessage> getThreadMessages(long threadId, int status)
 		throws SystemException {
@@ -1160,6 +1210,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			threadId, status, new MessageThreadComparator());
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getThreadMessages(long, QueryDefinition,
+	 *             java.util.Comparator)}
+	 */
 	@Override
 	public List<MBMessage> getThreadMessages(
 			long threadId, int status, Comparator<MBMessage> comparator)
@@ -1177,6 +1231,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return ListUtil.sort(messages, comparator);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getThreadMessages(long, QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getThreadMessages(
 			long threadId, int status, int start, int end)
@@ -1191,6 +1248,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	/**
+	 * @deprecated As of 6.2.0 {@link #getThreadMessagesCount(long,
+	 *             QueryDefinition)}
+	 */
 	public int getThreadMessagesCount(long threadId, int status)
 		throws SystemException {
 
@@ -1202,6 +1263,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 {@link #getThreadRepliesMessages(long,
+	 *             QueryDefinition)}
+	 */
 	@Override
 	public List<MBMessage> getThreadRepliesMessages(
 			long threadId, int status, int start, int end)
