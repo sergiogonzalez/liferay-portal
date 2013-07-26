@@ -17,6 +17,7 @@ package com.liferay.portlet.mobiledevicerules.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -95,43 +96,39 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public void deleteGroupRuleGroupInstances(long groupId)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		List<MDRRuleGroupInstance> ruleGroupInstances =
 			mdrRuleGroupInstancePersistence.findByGroupId(groupId);
 
 		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
-			deleteRuleGroupInstance(ruleGroupInstance);
+			mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
+				ruleGroupInstance);
 		}
 	}
 
 	@Override
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		MDRRuleGroupInstance ruleGroupInstance =
 			mdrRuleGroupInstancePersistence.fetchByPrimaryKey(
 				ruleGroupInstanceId);
 
-		deleteRuleGroupInstance(ruleGroupInstance);
+		mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
+			ruleGroupInstance);
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		// Rule group instance
 
 		mdrRuleGroupInstancePersistence.remove(ruleGroupInstance);
-
-		// System event
-
-		systemEventLocalService.addSystemEvent(
-			0, ruleGroupInstance.getGroupId(),
-			MDRRuleGroupInstance.class.getName(),
-			ruleGroupInstance.getRuleGroupInstanceId(),
-			ruleGroupInstance.getUuid(), null, SystemEventConstants.TYPE_DELETE,
-			null);
 
 		// Rule actions
 
@@ -141,13 +138,14 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public void deleteRuleGroupInstances(long ruleGroupId)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		List<MDRRuleGroupInstance> ruleGroupInstances =
 			mdrRuleGroupInstancePersistence.findByRuleGroupId(ruleGroupId);
 
 		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
-			deleteRuleGroupInstance(ruleGroupInstance);
+			mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
+				ruleGroupInstance);
 		}
 	}
 

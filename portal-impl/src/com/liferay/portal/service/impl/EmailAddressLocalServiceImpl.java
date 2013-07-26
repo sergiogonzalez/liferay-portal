@@ -17,9 +17,11 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.ListTypeConstants;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.EmailAddressLocalServiceBaseImpl;
@@ -87,6 +89,28 @@ public class EmailAddressLocalServiceImpl
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
+	public EmailAddress deleteEmailAddress(EmailAddress emailAddress)
+		throws SystemException {
+
+		emailAddressPersistence.remove(emailAddress);
+
+		return emailAddress;
+	}
+
+	@Override
+	public EmailAddress deleteEmailAddress(long emailAddressId)
+		throws PortalException, SystemException {
+
+		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(
+			emailAddressId);
+
+		return emailAddressLocalService.deleteEmailAddress(emailAddress);
+	}
+
+	@Override
 	public void deleteEmailAddresses(
 			long companyId, String className, long classPK)
 		throws SystemException {
@@ -97,7 +121,7 @@ public class EmailAddressLocalServiceImpl
 			companyId, classNameId, classPK);
 
 		for (EmailAddress emailAddress : emailAddresses) {
-			deleteEmailAddress(emailAddress);
+			emailAddressLocalService.deleteEmailAddress(emailAddress);
 		}
 	}
 

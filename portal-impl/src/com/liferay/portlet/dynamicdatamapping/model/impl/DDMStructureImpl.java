@@ -535,6 +535,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		privateField.put("dataType", dataType);
 
+		privateField.put("name", privateFieldName);
 		privateField.put("private", Boolean.TRUE.toString());
 
 		String repeatable = PropsUtil.get(

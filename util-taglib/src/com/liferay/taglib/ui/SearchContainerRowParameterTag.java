@@ -40,7 +40,7 @@ public class SearchContainerRowParameterTag<R> extends TagSupport {
 		ResultRow resultRow = searchContainerRowTag.getRow();
 
 		if (_name.equals("className")) {
-			resultRow.setClassName(_name);
+			resultRow.setClassName((String)_value);
 		}
 		else if (_name.equals("classHoverName")) {
 			resultRow.setClassHoverName((String)_value);

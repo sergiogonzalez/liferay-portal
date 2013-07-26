@@ -109,11 +109,11 @@ plugins.includes=${plugins.includes}</echo>
 
 		<echo file="wsadmin-plugins.jacl">$AdminApp list</echo>
 
-		<for list="${plugins.includes}" param="plugin.deploy">
+		<for list="${plugins.includes}" param="plugin.name">
 			<sequential>
 				<echo file="wsadmin-plugins.jacl" append="true">
 
-$AdminApp update liferay-portal modulefile {-operation addupdate -contents C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy/@{plugin.deploy}.war -contextroot /@{plugin.deploy} -contenturi @{plugin.deploy} -usedefaultbindings}
+$AdminApp update liferay-portal modulefile {-operation addupdate -contents C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy/@{plugin.name}.war -contextroot /@{plugin.name} -contenturi @{plugin.name} -usedefaultbindings}
 
 $AdminConfig save</echo>
 			</sequential>
@@ -157,11 +157,11 @@ plugins.includes=${plugins.includes}</echo>
 
 		<echo file="wsadmin-plugins.py">print AdminApp.list()</echo>
 
-		<for list="${plugins.includes}" param="plugin.deploy">
+		<for list="${plugins.includes}" param="plugin.name">
 			<sequential>
 				<echo file="wsadmin-plugins.py" append="true">
 
-print AdminApp.update('liferay-portal','modulefile','[-operation addupdate -contents C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy/@{plugin.deploy}.war -contextroot /@{plugin.deploy} -contenturi @{plugin.deploy} -usedefaultbindings]')
+print AdminApp.update('liferay-portal','modulefile','[-operation addupdate -contents C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy/@{plugin.name}.war -contextroot /@{plugin.name} -contenturi @{plugin.name} -usedefaultbindings]')
 
 print AdminConfig.save()</echo>
 			</sequential>

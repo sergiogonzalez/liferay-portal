@@ -195,18 +195,20 @@ public abstract class BaseBSFPortlet extends GenericPortlet {
 		StringBundler sb = new StringBundler();
 
 		for (int i = 0; i < globalFiles.length; i++) {
-			InputStream is = getPortletContext().getResourceAsStream(
+			PortletContext portletContext = getPortletContext();
+
+			InputStream inputStream = portletContext.getResourceAsStream(
 				globalFiles[i]);
 
-			if (is == null) {
+			if (inputStream == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Global file " + globalFiles[i] + " does not exist");
 				}
 			}
 
-			if (is != null) {
-				sb.append(new String(FileUtil.getBytes(is)));
+			if (inputStream != null) {
+				sb.append(new String(FileUtil.getBytes(inputStream)));
 				sb.append(StringPool.NEW_LINE);
 			}
 		}
@@ -225,9 +227,11 @@ public abstract class BaseBSFPortlet extends GenericPortlet {
 			PortletResponse portletResponse)
 		throws IOException {
 
-		InputStream is = getPortletContext().getResourceAsStream(path);
+		PortletContext portletContext = getPortletContext();
 
-		if (is == null) {
+		InputStream inputStream = portletContext.getResourceAsStream(path);
+
+		if (inputStream == null) {
 			_log.error(
 				path + " is not a valid " + getScriptingEngineLanguage() +
 					" file");
@@ -236,13 +240,13 @@ public abstract class BaseBSFPortlet extends GenericPortlet {
 		}
 
 		try {
-			declareBeans(is, portletRequest, portletResponse);
+			declareBeans(inputStream, portletRequest, portletResponse);
 		}
 		catch (BSFException bsfe) {
 			logBSFException(bsfe, path);
 		}
 		finally {
-			is.close();
+			inputStream.close();
 		}
 	}
 

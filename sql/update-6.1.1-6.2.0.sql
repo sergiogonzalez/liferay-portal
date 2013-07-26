@@ -498,6 +498,8 @@ alter table PollsChoice add modifiedDate DATE null;
 alter table PollsVote add uuid_ VARCHAR(75) null;
 alter table PollsVote add groupId LONG;
 
+update Portlet set active_ = FALSE where portletId = "62";
+
 alter table RepositoryEntry add companyId LONG;
 alter table RepositoryEntry add userId LONG;
 alter table RepositoryEntry add userName VARCHAR(75) null;

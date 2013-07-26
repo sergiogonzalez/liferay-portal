@@ -19,6 +19,7 @@ import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Address;
@@ -26,6 +27,7 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
@@ -104,6 +106,25 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
+	public Address deleteAddress(Address address) throws SystemException {
+		addressPersistence.remove(address);
+
+		return address;
+	}
+
+	@Override
+	public Address deleteAddress(long addressId)
+		throws PortalException, SystemException {
+
+		Address address = addressPersistence.findByPrimaryKey(addressId);
+
+		return addressLocalService.deleteAddress(address);
+	}
+
+	@Override
 	public void deleteAddresses(long companyId, String className, long classPK)
 		throws SystemException {
 
@@ -113,7 +134,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			companyId, classNameId, classPK);
 
 		for (Address address : addresses) {
-			deleteAddress(address);
+			addressLocalService.deleteAddress(address);
 		}
 	}
 

@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
@@ -122,6 +123,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<liferay-ui:header
 		backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, portletResource) %>"
 		localizeTitle="<%= false %>"
+		showBackURL="<%= showBackURL %>"
 		title="<%= HtmlUtil.escape(title) %>"
 	/>
 

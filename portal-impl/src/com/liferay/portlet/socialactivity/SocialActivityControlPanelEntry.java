@@ -12,24 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.search;
+package com.liferay.portlet.socialactivity;
 
-import com.liferay.portal.kernel.dao.search.DAOParamUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-
-import javax.portlet.PortletRequest;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portlet.BaseControlPanelEntry;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
-public class CouponSearchTerms extends CouponDisplayTerms {
+public class SocialActivityControlPanelEntry extends BaseControlPanelEntry {
 
-	public CouponSearchTerms(PortletRequest portletRequest) {
-		super(portletRequest);
+	@Override
+	protected boolean hasAccessPermissionDenied(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
 
-		active = ParamUtil.getBoolean(portletRequest, ACTIVE, true);
-		code = DAOParamUtil.getLike(portletRequest, CODE);
-		discountType = DAOParamUtil.getString(portletRequest, DISCOUNT_TYPE);
+		if (group.isLayoutSetPrototype()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

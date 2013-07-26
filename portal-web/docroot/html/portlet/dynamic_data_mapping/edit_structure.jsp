@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
 String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace");
 
@@ -105,6 +106,7 @@ if (Validator.isNotNull(script)) {
 	<liferay-ui:header
 		backURL="<%= viewRecordsURL %>"
 		localizeTitle="<%= localizeTitle %>"
+		showBackURL="<%= showBackURL %>"
 		title="<%= title %>"
 	/>
 

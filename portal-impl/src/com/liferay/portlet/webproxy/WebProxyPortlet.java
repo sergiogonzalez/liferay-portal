@@ -29,6 +29,7 @@ import com.liferay.portlet.RenderResponseImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequestDispatcher;
@@ -58,8 +59,10 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 		String initUrl = preferences.getValue("initUrl", StringPool.BLANK);
 
 		if (Validator.isNull(initUrl)) {
+			PortletContext portletContext = getPortletContext();
+
 			PortletRequestDispatcher portletRequestDispatcher =
-				getPortletContext().getRequestDispatcher(
+				portletContext.getRequestDispatcher(
 					StrutsUtil.TEXT_HTML_DIR + "/portal/portlet_not_setup.jsp");
 
 			portletRequestDispatcher.include(renderRequest, renderResponse);

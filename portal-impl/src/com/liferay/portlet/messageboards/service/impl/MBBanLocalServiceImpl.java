@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.SystemEventConstants;
@@ -83,36 +84,30 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	public void deleteBan(long banId) throws PortalException, SystemException {
 		MBBan ban = mbBanPersistence.findByPrimaryKey(banId);
 
-		deleteBan(ban);
+		mbBanLocalService.deleteBan(ban);
 	}
 
 	@Override
 	public void deleteBan(long banUserId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		long groupId = serviceContext.getScopeGroupId();
 
 		MBBan ban = mbBanPersistence.fetchByG_B(groupId, banUserId);
 
 		if (ban != null) {
-			deleteBan(ban);
+			mbBanLocalService.deleteBan(ban);
 		}
 	}
 
 	@Override
-	public void deleteBan(MBBan ban) throws PortalException, SystemException {
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteBan(MBBan ban) throws SystemException {
 		mbBanPersistence.remove(ban);
-
-		systemEventLocalService.addSystemEvent(
-			0, ban.getGroupId(), MBBan.class.getName(), ban.getBanId(),
-			ban.getUuid(), null, SystemEventConstants.TYPE_DELETE, null);
-
 	}
 
 	@Override
-	public void deleteBansByBanUserId(long banUserId)
-		throws PortalException, SystemException {
-
+	public void deleteBansByBanUserId(long banUserId) throws SystemException {
 		List<MBBan> bans = mbBanPersistence.findByBanUserId(banUserId);
 
 		for (MBBan ban : bans) {
@@ -121,9 +116,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteBansByGroupId(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteBansByGroupId(long groupId) throws SystemException {
 		List<MBBan> bans = mbBanPersistence.findByGroupId(groupId);
 
 		for (MBBan ban : bans) {

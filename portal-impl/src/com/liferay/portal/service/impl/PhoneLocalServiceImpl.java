@@ -18,12 +18,14 @@ import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Phone;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.PhoneLocalServiceBaseImpl;
@@ -90,6 +92,25 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Phone deletePhone(long phoneId)
+		throws PortalException, SystemException {
+
+		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
+
+		return phoneLocalService.deletePhone(phone);
+	}
+
+	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
+	public Phone deletePhone(Phone phone) throws SystemException {
+		phonePersistence.remove(phone);
+
+		return phone;
+	}
+
+	@Override
 	public void deletePhones(long companyId, String className, long classPK)
 		throws SystemException {
 
@@ -99,7 +120,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 			companyId, classNameId, classPK);
 
 		for (Phone phone : phones) {
-			deletePhone(phone);
+			phoneLocalService.deletePhone(phone);
 		}
 	}
 

@@ -2101,8 +2101,8 @@ plugins.includes=</echo>
 						<mkdir dir="${zip.executable.dir}/../patching-tool/patches" />
 
 						<antcall target="exec-patching-tool">
-							<param name="patching.tool.dir" value="${zip.executable.dir}/../patching-tool" />
 							<param name="patching.tool.arg.line" value="auto-discovery" />
+							<param name="patching.tool.dir" value="${zip.executable.dir}/../patching-tool" />
 						</antcall>
 
 						<zip

@@ -30,7 +30,9 @@ public class WorkflowControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
+		if (group.isLayoutSetPrototype() ||
+			!WorkflowEngineManagerUtil.isDeployed()) {
+
 			return true;
 		}
 

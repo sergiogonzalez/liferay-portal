@@ -374,6 +374,9 @@ public class LuceneHelperImpl implements LuceneHelper {
 				indexAccessor = new IndexAccessorImpl(companyId);
 
 				if (isLoadIndexFromClusterEnabled()) {
+					indexAccessor = new SynchronizedIndexAccessorImpl(
+						indexAccessor);
+
 					boolean clusterForwardMessage = GetterUtil.getBoolean(
 						MessageValuesThreadLocal.getValue(
 							ClusterLink.CLUSTER_FORWARD_MESSAGE));
@@ -386,9 +389,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 						}
 					}
 					else {
-						indexAccessor = new SynchronizedIndexAccessorImpl(
-							indexAccessor);
-
 						try {
 							_loadIndexFromCluster(
 								indexAccessor,

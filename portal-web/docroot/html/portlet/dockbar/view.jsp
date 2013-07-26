@@ -86,7 +86,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		%>
 
 		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
-			<span class="brand">
+			<div class="brand">
 				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 					<i class="control-panel-back-icon icon-chevron-sign-left"></i>
 
@@ -95,17 +95,19 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 					</span>
 				</a>
 
-				<c:choose>
-					<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-						<liferay-ui:message key="site-administration" />
-					</c:when>
-					<c:otherwise>
-						<a href="<%= themeDisplay.getURLControlPanel() %>">
-							<liferay-ui:message key="control-panel" />
-						</a>
-					</c:otherwise>
-				</c:choose>
-			</span>
+				<h1>
+					<c:choose>
+						<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
+							<liferay-ui:message key="site-administration" />
+						</c:when>
+						<c:otherwise>
+							<a href="<%= themeDisplay.getURLControlPanel() %>">
+								<liferay-ui:message key="control-panel" />
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</h1>
+			</div>
 		</c:if>
 	</c:if>
 
@@ -183,15 +185,11 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				<portlet:param name="selPlid" value="<%= String.valueOf(plid) %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item anchorId="editLayoutPanel" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconClass="icon-edit" label="preview" />
+			<aui:nav-item anchorId="editLayoutPanel" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconClass="icon-edit" label="edit" />
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
-			<liferay-util:buffer var="editControlsLabel">
-				<i class="controls-state-icon <%= toggleControlsState.equals("visible") ? "icon-ok" : "icon-remove" %>"></i>
-			</liferay-util:buffer>
-
-			<aui:nav-item anchorCssClass="toggle-controls-link" cssClass="toggle-controls" id="toggleControls" label="<%= editControlsLabel %>" />
+			<aui:nav-item anchorCssClass="toggle-controls-link" cssClass="toggle-controls" iconClass='<%= "controls-state-icon " + (toggleControlsState.equals("visible") ? "icon-eye-open" : "icon-eye-close") %>' id="toggleControls" label="edit-controls" />
 		</c:if>
 	</aui:nav>
 

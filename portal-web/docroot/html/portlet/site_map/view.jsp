@@ -19,7 +19,7 @@
 <%
 List<Layout> rootLayouts = LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout(), rootLayoutId);
 
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay.getScopeGroupId(), displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 %>
 
 <c:choose>
@@ -84,9 +84,9 @@ private void _buildSiteMap(Layout layout, List<Layout> layouts, Layout rootLayou
 
 		_buildLayoutView(rootLayout, cssClass, useHtmlTitle, themeDisplay, sb);
 
-		sb.append("</li>");
-
 		_buildSiteMap(layout, layouts, rootLayout, includeRootInTree, displayDepth, showCurrentPage, useHtmlTitle, showHiddenPages, curDepth +1, themeDisplay, sb);
+
+		sb.append("</li>");
 	}
 	else {
 		for (Layout curLayout : layouts) {

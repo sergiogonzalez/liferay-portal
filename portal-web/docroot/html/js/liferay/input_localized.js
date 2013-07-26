@@ -7,6 +7,8 @@ AUI.add(
 
 		var STR_INPUT_VALUE_CHANGE = '_onInputValueChange';
 
+		var STR_SUBMIT = '_onSubmit';
+
 		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
 		var userLanguageId = themeDisplay.getLanguageId();
 
@@ -23,6 +25,10 @@ AUI.add(
 						value: 'highlight-animation'
 					},
 
+					defaultLanguageId: {
+						value: defaultLanguageId
+					},
+
 					editor: {},
 
 					inputNamespace: {},
@@ -37,7 +43,13 @@ AUI.add(
 
 					selected: {
 						valueFn: function() {
-							return AArray.indexOf(availableLanguageIds, defaultLanguageId);
+							var instance = this;
+
+							var items = instance.get('items');
+
+							defaultLanguageId = instance.get('defaultLanguageId');
+
+							return AArray.indexOf(items, defaultLanguageId);
 						}
 					},
 
@@ -87,7 +99,8 @@ AUI.add(
 								}
 							),
 							inputPlaceholder.on('input', A.debounce(STR_INPUT_VALUE_CHANGE, 100, instance)),
-							Liferay.on('submitForm', A.rbind(STR_INPUT_VALUE_CHANGE, instance, inputPlaceholder))
+							Liferay.on('submitForm', A.rbind(STR_SUBMIT, instance, inputPlaceholder)),
+							inputPlaceholder.get('form').on('submit', A.rbind(STR_SUBMIT, instance, inputPlaceholder))
 						];
 
 						instance._eventHandles = eventHandles;
@@ -314,6 +327,14 @@ AUI.add(
 						}
 					},
 
+					_onSubmit: function(event, input) {
+						var instance = this;
+
+						instance._onInputValueChange.apply(instance, arguments);
+
+						InputLocalized.unregister(input.attr('id'));
+					},
+
 					_syncTranslatedLanguagesUI: function() {
 						var instance = this;
 
@@ -365,6 +386,12 @@ AUI.add(
 					else {
 						Liferay.component(id).render();
 					}
+				},
+
+				unregister: function(id) {
+					var instance = this;
+
+					delete InputLocalized._instances[id];
 				},
 
 				_onInputUserInteraction: function(event) {
