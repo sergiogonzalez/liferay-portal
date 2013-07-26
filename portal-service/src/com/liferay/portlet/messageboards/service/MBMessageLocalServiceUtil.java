@@ -468,6 +468,9 @@ public class MBMessageLocalServiceUtil {
 		getService().deleteMessageAttachments(messageId);
 	}
 
+	/**
+	* @deprecated {@link #getCategoryMessages(long, long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -475,6 +478,9 @@ public class MBMessageLocalServiceUtil {
 				   .getCategoryMessages(groupId, categoryId, status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getCategoryMessages(long, long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -484,17 +490,43 @@ public class MBMessageLocalServiceUtil {
 			end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getCategoryMessages(groupId, categoryId, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getCategoryMessagesCount(long, long,
+	QueryDefinition)}
+	*/
 	public static int getCategoryMessagesCount(long groupId, long categoryId,
 		int status) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCategoryMessagesCount(groupId, categoryId, status);
 	}
 
+	public static int getCategoryMessagesCount(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getCategoryMessagesCount(groupId, categoryId,
+			queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getCompanyMessages(long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCompanyMessages(
 		long companyId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCompanyMessages(companyId, status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getCompanyMessages(long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCompanyMessages(
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -503,9 +535,25 @@ public class MBMessageLocalServiceUtil {
 				   .getCompanyMessages(companyId, status, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCompanyMessages(
+		long companyId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCompanyMessages(companyId, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getCompanyMessagesCount(long, QueryDefinition)}
+	*/
 	public static int getCompanyMessagesCount(long companyId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCompanyMessagesCount(companyId, status);
+	}
+
+	public static int getCompanyMessagesCount(long companyId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCompanyMessagesCount(companyId, queryDefinition);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getDiscussionMessageDisplay(
@@ -548,12 +596,18 @@ public class MBMessageLocalServiceUtil {
 		return getService().getDiscussions(className);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessages(long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupMessages(groupId, status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessages(long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -561,12 +615,18 @@ public class MBMessageLocalServiceUtil {
 		return getService().getGroupMessages(groupId, status, start, end, obc);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessages(long, long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
 		long groupId, long userId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupMessages(groupId, userId, status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessages(long, long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
 		long groupId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -575,14 +635,47 @@ public class MBMessageLocalServiceUtil {
 				   .getGroupMessages(groupId, userId, status, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
+		long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupMessages(groupId, userId, queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getGroupMessages(
+		long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupMessages(groupId, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupMessagesCount(long, QueryDefinition)}
+	*/
 	public static int getGroupMessagesCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupMessagesCount(groupId, status);
 	}
 
+	/**
+	* @deprecated {@link #getGroupMessagesCount(long, long, QueryDefinition)}
+	*/
 	public static int getGroupMessagesCount(long groupId, long userId,
 		int status) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupMessagesCount(groupId, userId, status);
+	}
+
+	public static int getGroupMessagesCount(long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupMessagesCount(groupId, userId, queryDefinition);
+	}
+
+	public static int getGroupMessagesCount(long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupMessagesCount(groupId, queryDefinition);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage getMessage(
@@ -629,12 +722,20 @@ public class MBMessageLocalServiceUtil {
 		return getService().getPositionInThread(messageId);
 	}
 
+	/**
+	* @deprecated {@link #getThreadMessages(long, QueryDefinition,
+	java.util.Comparator)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
 		long threadId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getThreadMessages(threadId, status);
 	}
 
+	/**
+	* @deprecated {@link #getThreadMessages(long, QueryDefinition,
+	java.util.Comparator)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
 		long threadId, int status,
 		java.util.Comparator<com.liferay.portlet.messageboards.model.MBMessage> comparator)
@@ -642,22 +743,60 @@ public class MBMessageLocalServiceUtil {
 		return getService().getThreadMessages(threadId, status, comparator);
 	}
 
+	/**
+	* @deprecated {@link #getThreadMessages(long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
 		long threadId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getThreadMessages(threadId, status, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
+		long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getThreadMessages(threadId, queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
+		long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition,
+		java.util.Comparator<com.liferay.portlet.messageboards.model.MBMessage> comparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getThreadMessages(threadId, queryDefinition, comparator);
+	}
+
+	/**
+	* @deprecated {@link #getThreadMessagesCount(long, QueryDefinition)}
+	*/
 	public static int getThreadMessagesCount(long threadId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getThreadMessagesCount(threadId, status);
 	}
 
+	public static int getThreadMessagesCount(long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getThreadMessagesCount(threadId, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getThreadRepliesMessages(long, QueryDefinition)}
+	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadRepliesMessages(
 		long threadId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getThreadRepliesMessages(threadId, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadRepliesMessages(
+		long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getThreadRepliesMessages(threadId, queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getUserDiscussionMessages(
