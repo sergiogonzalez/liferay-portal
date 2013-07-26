@@ -43,6 +43,23 @@ Group group = layoutSetPrototype.getGroup();
 			url="<%= editURL %>"
 		/>
 
+		<%
+		ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();
+
+		siteThemeDisplay.setScopeGroupId(group.getGroupId());
+
+		PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(renderResponse, siteThemeDisplay);
+		%>
+
+		<c:if test="<%= siteAdministrationURL != null %>">
+			<liferay-ui:icon
+				image="edit"
+				message="manage"
+				method="get"
+				url="<%= siteAdministrationURL.toString() %>"
+			/>
+		</c:if>
+
 		<portlet:renderURL var="managePagesURL">
 			<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layouts" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
