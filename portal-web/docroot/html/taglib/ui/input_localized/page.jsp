@@ -251,9 +251,6 @@ List<String> languageIds = new ArrayList<String>();
 
 <c:if test="<%= (availableLocales.length > 1) && Validator.isNull(languageId) %>">
 	<aui:script use="liferay-input-localized">
-		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
-		var userLanguageId = themeDisplay.getLanguageId();
-
 		var available = {};
 
 		<%
@@ -266,10 +263,6 @@ List<String> languageIds = new ArrayList<String>();
 		<%
 		}
 		%>
-
-		var availableLanguageIds = A.Array.dedupe(
-			[defaultLanguageId, userLanguageId].concat(A.Object.keys(available))
-		);
 
 		Liferay.InputLocalized.register(
 			'<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
@@ -284,7 +277,7 @@ List<String> languageIds = new ArrayList<String>();
 
 				inputNamespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
 				inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
-				items: availableLanguageIds,
+				items: A.Object.keys(available),
 				lazy: <%= !type.equals("editor") %>,
 				toggleSelection: false,
 				translatedLanguages: '<%= StringUtil.merge(languageIds) %>'
