@@ -1063,7 +1063,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		Set<Long> userIds = new HashSet<Long>();
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
-			threadId, WorkflowConstants.STATUS_ANY);
+			threadId, new QueryDefinition());
 
 		for (MBMessage message : messages) {
 			if (message.isDiscussion()) {

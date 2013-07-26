@@ -1024,9 +1024,12 @@ public class MBUtil {
 					return null;
 				}
 
+				QueryDefinition queryDefinition = new QueryDefinition(
+					WorkflowConstants.STATUS_APPROVED);
+
 				int messageCount =
 					MBMessageLocalServiceUtil.getThreadMessagesCount(
-						threadId, WorkflowConstants.STATUS_APPROVED);
+						threadId, queryDefinition);
 
 				thread.setMessageCount(messageCount);
 
@@ -1071,19 +1074,11 @@ public class MBUtil {
 	private static int _getMessageCount(MBCategory category)
 		throws SystemException {
 
-		int messageCount = MBMessageLocalServiceUtil.getCategoryMessagesCount(
-			category.getGroupId(), category.getCategoryId(),
+		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_APPROVED);
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_IN_TRASH);
-
-		List<MBThread> threads = MBThreadLocalServiceUtil.getGroupThreads(
-			category.getGroupId(), queryDefinition);
-
-		for (MBThread thread : threads) {
-			messageCount = messageCount - thread.getMessageCount();
-		}
+		int messageCount = MBMessageLocalServiceUtil.getCategoryMessagesCount(
+			category.getGroupId(), category.getCategoryId(), queryDefinition);
 
 		return messageCount;
 	}

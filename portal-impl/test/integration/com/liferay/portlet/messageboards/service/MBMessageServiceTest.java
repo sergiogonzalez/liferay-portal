@@ -14,12 +14,17 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -30,11 +35,14 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
+import com.liferay.portlet.messageboards.util.MBTestUtil;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -44,6 +52,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
+ * @author Zsolt Berentey
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -51,38 +60,12 @@ import org.junit.runner.RunWith;
 		TransactionalCallbackAwareExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class MBMessageServiceTest {
 
 	@Before
+	@SuppressWarnings("unchecked")
 	public void setUp() throws Exception {
-		String name = "Test Category";
-		String description = "This is a test category.";
-		String displayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
-		String emailAddress = null;
-		String inProtocol = null;
-		String inServerName = null;
-		int inServerPort = 0;
-		boolean inUseSSL = false;
-		String inUserName = null;
-		String inPassword = null;
-		int inReadInterval = 0;
-		String outEmailAddress = null;
-		boolean outCustom = false;
-		String outServerName = null;
-		int outServerPort = 0;
-		boolean outUseSSL = false;
-		String outUserName = null;
-		String outPassword = null;
-		boolean allowAnonymous = false;
-		boolean mailingListActive = false;
-
 		_group = GroupTestUtil.addGroup();
-
-		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
-			UserTestUtil.addUser(
-				ServiceTestUtil.randomString(), _group.getGroupId());
-		}
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -92,24 +75,55 @@ public class MBMessageServiceTest {
 		serviceContext.setGuestPermissions(
 			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW});
 
-		_category = MBCategoryServiceUtil.addCategory(
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, name, description,
-			displayStyle, emailAddress, inProtocol, inServerName, inServerPort,
-			inUseSSL, inUserName, inPassword, inReadInterval, outEmailAddress,
-			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
-			outPassword, allowAnonymous, mailingListActive, serviceContext);
+		MBTestUtil.addMessage(
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Approved", true,
+			serviceContext);
 
-		_userIds = UserLocalServiceUtil.getGroupUserIds(_group.getGroupId());
+		MBMessage message = MBTestUtil.addMessage(
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Trashed", true,
+			serviceContext);
+
+		MBThreadServiceUtil.moveThreadToTrash(message.getThreadId());
+
+		MBCategory category = MBTestUtil.addCategory(_group.getGroupId());
+
+		_user = UserTestUtil.addUser(
+			ServiceTestUtil.randomString(), _group.getGroupId());
+
+		MBTestUtil.addMessage(
+			_user.getUserId(), category.getCategoryId(), "Approved", true,
+			serviceContext);
+
+		message = MBTestUtil.addMessage(
+			category.getCategoryId(), "Trashed", true, serviceContext);
+
+		MBThreadServiceUtil.moveThreadToTrash(message.getThreadId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		MBTestUtil.addMessage(
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Draft", false,
+			serviceContext);
+
+		MBTestUtil.addMessage(
+			_user.getUserId(), category.getCategoryId(), "Draft", false,
+			serviceContext);
 	}
 
 	@Test
 	public void testAddMessagesConcurrently() throws Exception {
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_userIds.length];
+		long[] userIds = new long[ServiceTestUtil.THREAD_COUNT];
 
-		for (int i = 0; i < doAsUserThreads.length; i++) {
-			String subject = "Test Message " + i;
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[userIds.length];
 
-			doAsUserThreads[i] = new AddMessageThread(_userIds[i], subject);
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
+			User user = UserTestUtil.addUser(
+				ServiceTestUtil.randomString(), _group.getGroupId());
+
+			userIds[i] = user.getUserId();
+
+			doAsUserThreads[i] = new AddMessageThread(
+				userIds[i], _group.getGroupId());
 		}
 
 		for (DoAsUserThread doAsUserThread : doAsUserThreads) {
@@ -128,50 +142,201 @@ public class MBMessageServiceTest {
 			}
 		}
 
+		long userId = PrincipalThreadLocal.getUserId();
+
+		PrincipalThreadLocal.setName(null);
+
+		for (int i = 0; i < doAsUserThreads.length; i++) {
+			UserLocalServiceUtil.deleteUser(userIds[i]);
+		}
+
+		UserLocalServiceUtil.deleteUser(_user.getUserId());
+
+		GroupLocalServiceUtil.deleteGroup(_group);
+
+		PrincipalThreadLocal.setName(userId);
+
 		Assert.assertTrue(
-			"Only " + successCount + " out of " + _userIds.length +
+			"Only " + successCount + " out of " + userIds.length +
 				" threads added messages successfully",
-			successCount == _userIds.length);
+			successCount == userIds.length);
 	}
 
-	private MBCategory _category;
+	@Test
+	@Transactional
+	public void testGetCategoryMessages() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		List<MBMessage> list = MBMessageLocalServiceUtil.getCategoryMessages(
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			queryDefinition);
+
+		assertMessageList(list, 2, new String[] {"Approved", "Draft"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		list = MBMessageLocalServiceUtil.getCategoryMessages(
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			queryDefinition);
+
+		assertMessageList(list, 1, new String[] {"Approved"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		list = MBMessageLocalServiceUtil.getCategoryMessages(
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			queryDefinition);
+
+		assertMessageList(list, 2, new String[] {"Approved", "Draft"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT, true);
+
+		list = MBMessageLocalServiceUtil.getCategoryMessages(
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			queryDefinition);
+
+		assertMessageList(list, 1, new String[] {"Approved"});
+	}
+
+	@Test
+	@Transactional
+	public void testGetCompanyMessages() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		List<MBMessage> list = MBMessageLocalServiceUtil.getCompanyMessages(
+			_group.getCompanyId(), queryDefinition);
+
+		assertMessageList(list, 4, new String[] {"Approved", "Draft"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		list = MBMessageLocalServiceUtil.getCompanyMessages(
+			_group.getCompanyId(), queryDefinition);
+
+		assertMessageList(list, 2, new String[] {"Approved"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		list = MBMessageLocalServiceUtil.getCompanyMessages(
+			_group.getCompanyId(), queryDefinition);
+
+		assertMessageList(list, 4, new String[] {"Approved", "Draft"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT, true);
+
+		list = MBMessageLocalServiceUtil.getCompanyMessages(
+			_group.getCompanyId(), queryDefinition);
+
+		assertMessageList(list, 2, new String[] {"Approved"});
+	}
+
+	@Test
+	@Transactional
+	public void testGetGroupMessages() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		List<MBMessage> list = MBMessageLocalServiceUtil.getGroupMessages(
+			_group.getGroupId(), queryDefinition);
+
+		assertMessageList(list, 4, new String[] {"Approved", "Draft"});
+
+		list = MBMessageLocalServiceUtil.getGroupMessages(
+			_group.getGroupId(), _user.getUserId(), queryDefinition);
+
+		assertMessageList(list, 2, new String[] {"Approved", "Draft"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		list = MBMessageLocalServiceUtil.getGroupMessages(
+			_group.getGroupId(), queryDefinition);
+
+		assertMessageList(list, 2, new String[] {"Approved"});
+
+		list = MBMessageLocalServiceUtil.getGroupMessages(
+			_group.getGroupId(), _user.getUserId(), queryDefinition);
+
+		assertMessageList(list, 1, new String[] {"Approved"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		list = MBMessageLocalServiceUtil.getGroupMessages(
+			_group.getGroupId(), queryDefinition);
+
+		assertMessageList(list, 4, new String[] {"Approved", "Draft"});
+
+		list = MBMessageLocalServiceUtil.getGroupMessages(
+			_group.getGroupId(), _user.getUserId(), queryDefinition);
+
+		assertMessageList(list, 2, new String[] {"Approved", "Draft"});
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT, true);
+
+		list = MBMessageLocalServiceUtil.getGroupMessages(
+			_group.getGroupId(), queryDefinition);
+
+		assertMessageList(list, 2, new String[] {"Approved"});
+
+		list = MBMessageLocalServiceUtil.getGroupMessages(
+			_group.getGroupId(), _user.getUserId(), queryDefinition);
+
+		assertMessageList(list, 1, new String[] {"Approved"});
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void assertMessageList(
+		List<MBMessage> messages, int expectedSize, String[] subjects) {
+
+		Assert.assertNotNull(messages);
+
+		if (subjects != null) {
+			List<String> subjectList = Arrays.asList(subjects);
+
+			int actualSize = 0;
+
+			for (MBMessage message : messages) {
+				if (subjectList.contains(message.getSubject())) {
+					actualSize++;
+				}
+			}
+
+			Assert.assertEquals(expectedSize, actualSize);
+		}
+		else {
+			Assert.assertEquals(expectedSize, messages.size());
+		}
+	}
+
 	private Group _group;
-	private long[] _userIds;
+	private User _user;
 
 	private class AddMessageThread extends DoAsUserThread {
 
-		public AddMessageThread(long userId, String subject) {
+		public AddMessageThread(long userId, long groupId) {
 			super(userId);
 
-			_subject = subject;
-		}
-
-		@Override
-		public boolean isSuccess() {
-			return true;
+			_groupId = groupId;
 		}
 
 		@Override
 		protected void doRun() throws Exception {
-			String body = "This is a test message.";
-			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-				new ArrayList<ObjectValuePair<String, InputStream>>();
-			boolean anonymous = false;
-			double priority = 0.0;
-			boolean allowPingbacks = false;
-
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			MBMessageServiceUtil.addMessage(
-				_category.getGroupId(), _category.getCategoryId(), _subject,
-				body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
-				anonymous, priority, allowPingbacks, serviceContext);
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+				Collections.emptyList();
+
+			MBMessageLocalServiceUtil.addMessage(
+				PrincipalThreadLocal.getUserId(),
+				ServiceTestUtil.randomString(), _groupId,
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, 0, 0,
+				ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+				MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+				false, serviceContext);
 		}
 
-		private String _subject;
+		private long _groupId;
 
 	}
 
