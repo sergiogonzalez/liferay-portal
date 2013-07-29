@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -449,7 +450,22 @@ public class GroupServiceTest {
 		Locale[] groupAvailableLocales = new Locale[] {_enLocale, _deLocale};
 
 		testChangeDisplaySettings(
-			portalAvailableLocales, groupAvailableLocales, false);
+			portalAvailableLocales, StringPool.BLANK, groupAvailableLocales,
+			false);
+	}
+
+	@Test
+	public void testInvalidChangeDefaultLanguageId() throws Exception {
+		Locale _enLocale = Locale.US;
+		Locale _esLocale = new Locale("es", "ES");
+
+		Locale[] portalAvailableLocales = new Locale[] {_enLocale, _esLocale};
+
+		Locale _frLocale = new Locale("fr", "CA");
+
+		testChangeDisplaySettings(
+			portalAvailableLocales, LocaleUtil.toLanguageId(_frLocale),
+			portalAvailableLocales, false);
 	}
 
 	@Test
@@ -674,7 +690,22 @@ public class GroupServiceTest {
 		Locale[] groupAvailableLocales = new Locale[] {_enLocale, _esLocale};
 
 		testChangeDisplaySettings(
-			portalAvailableLocales, groupAvailableLocales, true);
+			portalAvailableLocales, StringPool.BLANK, groupAvailableLocales,
+			true);
+	}
+
+	@Test
+	public void testValidChangeDefaultLanguageId() throws Exception {
+		Locale _enLocale = Locale.US;
+		Locale _esLocale = new Locale("es", "ES");
+		Locale _frLocale = new Locale("fr", "CA");
+
+		Locale[] portalAvailableLocales = new Locale[] {
+			_enLocale, _esLocale, _frLocale};
+
+		testChangeDisplaySettings(
+			portalAvailableLocales, LocaleUtil.toLanguageId(_frLocale),
+			portalAvailableLocales, true);
 	}
 
 	protected Group addGroup(
@@ -738,8 +769,8 @@ public class GroupServiceTest {
 	}
 
 	protected void testChangeDisplaySettings(
-			Locale[] portalAvailableLocales, Locale[] groupAvailableLocales,
-			boolean validChange)
+			Locale[] portalAvailableLocales, String groupDefaultLanguageId,
+			Locale[] groupAvailableLocales, boolean validChange)
 		throws Exception {
 
 		UnicodeProperties properties = new UnicodeProperties();
@@ -760,6 +791,10 @@ public class GroupServiceTest {
 		typeSettingsProperties.put(
 			PropsKeys.LOCALES,
 			StringUtil.merge(LocaleUtil.toLanguageIds(groupAvailableLocales)));
+
+		if (Validator.isNotNull(groupDefaultLanguageId)) {
+			typeSettingsProperties.put("languageId", groupDefaultLanguageId);
+		}
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
