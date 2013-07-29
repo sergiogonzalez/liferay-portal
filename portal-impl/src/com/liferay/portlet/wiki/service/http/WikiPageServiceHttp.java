@@ -1620,6 +1620,44 @@ public class WikiPageServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPage withdrawSubmission(
+		HttpPrincipal httpPrincipal, long nodeId, java.lang.String title,
+		double version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class,
+					"withdrawSubmission", _withdrawSubmissionParameterTypes43);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
+					title, version);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.wiki.model.WikiPage)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(WikiPageServiceHttp.class);
 	private static final Class<?>[] _addPageParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
@@ -1774,5 +1812,8 @@ public class WikiPageServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _withdrawSubmissionParameterTypes43 = new Class[] {
+			long.class, java.lang.String.class, double.class
 		};
 }

@@ -702,4 +702,9 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	public void validateTitle(java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portlet.wiki.model.WikiPage withdrawSubmission(
+		long userId, long nodeId, java.lang.String title, double version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }
