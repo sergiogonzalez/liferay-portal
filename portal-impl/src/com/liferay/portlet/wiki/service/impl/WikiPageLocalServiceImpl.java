@@ -1966,6 +1966,24 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public WikiPage withdrawSubmission(
+			long userId, long nodeId, String title, double version)
+		throws PortalException, SystemException {
+
+		WikiPage page = wikiPagePersistence.findByN_T_V(nodeId, title, version);
+
+		page.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		wikiPagePersistence.update(page);
+
+		workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+			page.getCompanyId(), page.getGroupId(), WikiPage.class.getName(),
+			page.getPageId());
+
+		return page;
+	}
+
 	protected void clearPageCache(WikiPage page) {
 		if (!WikiCacheThreadLocal.isClearCache()) {
 			return;

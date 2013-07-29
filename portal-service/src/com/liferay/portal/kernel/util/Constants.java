@@ -144,6 +144,8 @@ public interface Constants {
 
 	public static final String VOTE = "vote";
 
+	public static final String WITHDRAW_SUBMISSION = "withdraw_submission";
+
 	public static final String WRITE = "write";
 
 }

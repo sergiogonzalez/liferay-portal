@@ -367,6 +367,9 @@ for (int i = 0; i < results.size(); i++) {
 	if (type.equals("all_pages") || type.equals("categorized_pages") || type.equals("draft_pages") || type.equals("orphan_pages") || type.equals("recent_changes") || type.equals("tagged_pages")) {
 		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/wiki/page_action.jsp");
 	}
+	else if (type.equals("pending_pages")) {
+		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/wiki/pending_page_action.jsp");
+	}
 
 	// Add result row
 
