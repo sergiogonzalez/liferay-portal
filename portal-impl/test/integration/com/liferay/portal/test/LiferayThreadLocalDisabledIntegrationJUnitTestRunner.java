@@ -18,19 +18,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
+import org.junit.runners.model.InitializationError;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.runners.model.InitializationError;
-
 /**
  * @author Miguel Pastor
  */
-public class LiferayPersistenceIntegrationJUnitTestRunner
+public class LiferayThreadLocalDisabledIntegrationJUnitTestRunner
 	extends LiferayIntegrationJUnitTestRunner {
 
-	public LiferayPersistenceIntegrationJUnitTestRunner(Class<?> clazz)
+	public LiferayThreadLocalDisabledIntegrationJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
 
 		super(clazz);
@@ -40,7 +39,7 @@ public class LiferayPersistenceIntegrationJUnitTestRunner
 	public void initApplicationContext() {
 		List<String> extraConfigLocations = new ArrayList<String>(1);
 
-		extraConfigLocations.add("META-INF/test-persistence-spring.xml");
+		extraConfigLocations.add("META-INF/test-thread-local-spring.xml");
 
 		InitUtil.initWithSpring(extraConfigLocations);
 	}
