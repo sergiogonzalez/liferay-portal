@@ -14,34 +14,27 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.util.InitUtil;
 import org.junit.runners.model.InitializationError;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Miguel Pastor
  */
-public class LiferayThreadLocalDisabledIntegrationJUnitTestRunner
-	extends LiferayIntegrationJUnitTestRunner {
+public class NullableThreadLocalCacheJUnitTestRunner
+	extends CustomizableSpringContextJUnitTestRunner {
 
-	public LiferayThreadLocalDisabledIntegrationJUnitTestRunner(Class<?> clazz)
+	public NullableThreadLocalCacheJUnitTestRunner(
+		Class<?> clazz)
 		throws InitializationError {
 
 		super(clazz);
 	}
 
 	@Override
-	public void initApplicationContext() {
-		List<String> extraConfigLocations = new ArrayList<String>(1);
-
-		extraConfigLocations.add("META-INF/test-thread-local-spring.xml");
-
-		InitUtil.initWithSpring(extraConfigLocations);
+	public List<String> getExtraConfigLocations() {
+		return Arrays.asList("META-INF/test-thread-local-spring.xml");
 	}
 
 }

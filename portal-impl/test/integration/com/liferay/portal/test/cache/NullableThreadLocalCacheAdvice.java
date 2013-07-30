@@ -30,19 +30,15 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
 /**
- * @author Shuyang Zhou
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class TestThreadLocalCacheAdvice extends ThreadLocalCacheAdvice {
+public class NullableThreadLocalCacheAdvice extends ThreadLocalCacheAdvice {
 
 	@Override
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
-		throws Throwable {
-	}
+	protected ThreadLocalCachable findAnnotation(
+		MethodInvocation methodInvocation) {
 
-	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		return new Object();
+		return getNullAnnotation();
 	}
 
 }
