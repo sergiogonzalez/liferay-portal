@@ -37,4 +37,8 @@ public class NullableThreadLocalCacheJUnitTestRunner
 		return Arrays.asList("META-INF/test-thread-local-spring.xml");
 	}
 
+	@Override
+	public void doAfterApplicationContextInit() {
+	}
+
 }

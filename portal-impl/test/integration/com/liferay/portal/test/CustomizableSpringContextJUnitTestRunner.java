@@ -34,9 +34,7 @@ public abstract class CustomizableSpringContextJUnitTestRunner
 
 	public abstract List<String> getExtraConfigLocations();
 
-	public void customize() {
-
-	}
+	public abstract void doAfterApplicationContextInit();
 
 	@Override
 	public void initApplicationContext() {

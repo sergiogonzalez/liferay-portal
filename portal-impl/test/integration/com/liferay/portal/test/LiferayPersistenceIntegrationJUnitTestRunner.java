@@ -35,7 +35,7 @@ public class LiferayPersistenceIntegrationJUnitTestRunner
 	}
 
 	@Override
-	public void customize() {
+	public void doAfterApplicationContextInit() {
 		try {
 			DBUpgrader.upgrade();
 		}
