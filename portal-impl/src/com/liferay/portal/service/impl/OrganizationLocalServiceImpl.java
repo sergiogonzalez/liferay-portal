@@ -1444,7 +1444,7 @@ public class OrganizationLocalServiceImpl
 			searchContext.setQueryConfig(queryConfig);
 
 			if (sort != null) {
-				searchContext.setSorts(new Sort[] {sort});
+				searchContext.setSorts(sort);
 			}
 
 			searchContext.setStart(start);

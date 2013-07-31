@@ -338,7 +338,7 @@ public class JournalArticleLocalServiceImpl
 			serviceContext, "defaultLanguageId");
 
 		if (Validator.isNull(defaultLanguageId)) {
-			defaultLanguageId = LocalizationUtil.getDefaultLocale(content);
+			defaultLanguageId = LocalizationUtil.getDefaultLanguageId(content);
 		}
 
 		if (Validator.isNotNull(defaultLanguageId)) {
@@ -464,7 +464,7 @@ public class JournalArticleLocalServiceImpl
 				new HashMap<String, Serializable>(), serviceContext);
 		}
 
-		return getArticle(article.getPrimaryKey());
+		return journalArticlePersistence.findByPrimaryKey(article.getId());
 	}
 
 	/**
@@ -1401,6 +1401,36 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, version);
 	}
 
+	@Override
+	public JournalArticle fetchLatestArticle(
+			long resourcePrimKey, int status, boolean preferApproved)
+		throws SystemException {
+
+		JournalArticle article = null;
+
+		OrderByComparator orderByComparator = new ArticleVersionComparator();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			if (preferApproved) {
+				article = journalArticlePersistence.fetchByR_ST_First(
+					resourcePrimKey, WorkflowConstants.STATUS_APPROVED,
+					orderByComparator);
+			}
+
+			if (article == null) {
+				article =
+					journalArticlePersistence.fetchByResourcePrimKey_First(
+						resourcePrimKey, orderByComparator);
+			}
+		}
+		else {
+			article = journalArticlePersistence.fetchByR_ST_First(
+				resourcePrimKey, status, orderByComparator);
+		}
+
+		return article;
+	}
+
 	/**
 	 * Returns the web content article with the ID.
 	 *
@@ -1921,11 +1951,11 @@ public class JournalArticleLocalServiceImpl
 			article.getResourcePrimKey(), article.getGroupId(),
 			article.getUserId(), article.getArticleId(), article.getVersion(),
 			article.getTitle(languageId), article.getUrlTitle(),
-			article.getDescription(languageId), article.getAvailableLocales(),
-			content, article.getType(), article.getStructureId(),
-			ddmTemplateKey, article.isSmallImage(), article.getSmallImageId(),
-			article.getSmallImageURL(), numberOfPages, page, paginate,
-			cacheable);
+			article.getDescription(languageId),
+			article.getAvailableLanguageIds(), content, article.getType(),
+			article.getStructureId(), ddmTemplateKey, article.isSmallImage(),
+			article.getSmallImageId(), article.getSmallImageURL(),
+			numberOfPages, page, paginate, cacheable);
 	}
 
 	/**
@@ -3966,7 +3996,7 @@ public class JournalArticleLocalServiceImpl
 			searchContext.setQueryConfig(queryConfig);
 
 			if (sort != null) {
-				searchContext.setSorts(new Sort[] {sort});
+				searchContext.setSorts(sort);
 			}
 
 			searchContext.setStart(start);
@@ -3979,6 +4009,39 @@ public class JournalArticleLocalServiceImpl
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	@Override
+	public Hits search(
+			long groupId, long userId, long creatorUserId, int status,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			JournalArticle.class.getName());
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute(Field.STATUS, status);
+
+		searchContext.setAttribute("paginationType", "none");
+
+		if (creatorUserId > 0) {
+			searchContext.setAttribute(
+				Field.USER_ID, String.valueOf(creatorUserId));
+		}
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		searchContext.setCompanyId(group.getCompanyId());
+
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setSorts(new Sort(Field.MODIFIED_DATE, true));
+		searchContext.setStart(start);
+		searchContext.setUserId(userId);
+
+		return indexer.search(searchContext);
 	}
 
 	/**
@@ -4574,7 +4637,7 @@ public class JournalArticleLocalServiceImpl
 			serviceContext, "defaultLanguageId");
 
 		if (Validator.isNull(defaultLanguageId)) {
-			defaultLanguageId = LocalizationUtil.getDefaultLocale(content);
+			defaultLanguageId = LocalizationUtil.getDefaultLanguageId(content);
 		}
 
 		if (Validator.isNotNull(defaultLanguageId)) {
@@ -4685,7 +4748,7 @@ public class JournalArticleLocalServiceImpl
 			reindex(article);
 		}
 
-		return article;
+		return journalArticlePersistence.findByPrimaryKey(article.getId());
 	}
 
 	/**
@@ -6327,7 +6390,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-			LocalizationUtil.getDefaultLocale(content));
+			LocalizationUtil.getDefaultLanguageId(content));
 
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales(groupId);
 

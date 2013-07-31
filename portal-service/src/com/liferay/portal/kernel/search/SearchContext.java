@@ -345,7 +345,7 @@ public class SearchContext implements Serializable {
 		}
 	}
 
-	public void setSorts(Sort[] sorts) {
+	public void setSorts(Sort... sorts) {
 		_sorts = sorts;
 	}
 

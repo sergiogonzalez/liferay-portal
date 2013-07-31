@@ -780,6 +780,11 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long groupId, java.lang.String articleId, double version)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the web content article with the ID.
 	*
@@ -2423,6 +2428,12 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the number of web content articles matching the parameters,

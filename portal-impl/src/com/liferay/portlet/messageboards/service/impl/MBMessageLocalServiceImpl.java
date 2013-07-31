@@ -567,6 +567,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				MBUtil.updateCategoryStatistics(
 					message.getCompanyId(), message.getCategoryId());
 			}
+
+			// Indexer
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				MBThread.class);
+
+			MBThread thread = mbThreadPersistence.findByPrimaryKey(
+				message.getThreadId());
+
+			indexer.delete(thread);
 		}
 		else {
 			MBThread thread = mbThreadPersistence.findByPrimaryKey(
@@ -671,6 +681,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				MBUtil.updateCategoryMessageCount(
 					message.getCompanyId(), message.getCategoryId());
 			}
+
+			// Indexer
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				MBThread.class);
+
+			indexer.reindex(thread);
 		}
 
 		// Asset
@@ -2281,6 +2298,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					category.getCompanyId(), category.getCategoryId());
 			}
 		}
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.reindex(thread);
 
 		mbThreadPersistence.update(thread);
 	}

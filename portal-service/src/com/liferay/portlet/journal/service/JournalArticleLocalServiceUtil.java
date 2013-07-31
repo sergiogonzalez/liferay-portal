@@ -884,6 +884,13 @@ public class JournalArticleLocalServiceUtil {
 		return getService().fetchArticle(groupId, articleId, version);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLatestArticle(resourcePrimKey, status, preferApproved);
+	}
+
 	/**
 	* Returns the web content article with the ID.
 	*
@@ -2651,6 +2658,14 @@ public class JournalArticleLocalServiceUtil {
 				   .search(companyId, groupId, folderIds, classNameId,
 			articleId, title, description, content, type, status,
 			ddmStructureKey, ddmTemplateKey, params, andSearch, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(groupId, userId, creatorUserId, status, start, end);
 	}
 
 	/**

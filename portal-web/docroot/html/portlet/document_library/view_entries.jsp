@@ -150,7 +150,7 @@ if (fileEntryTypeId >= 0) {
 
 	Sort sort = new Sort(orderByCol, !orderByType.equalsIgnoreCase("asc"));
 
-	searchContext.setSorts(new Sort[] {sort});
+	searchContext.setSorts(sort);
 
 	searchContext.setStart(entryStart);
 
