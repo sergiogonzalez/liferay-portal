@@ -103,6 +103,9 @@ public class EditPageAction extends PortletAction {
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
 				unsubscribePage(actionRequest);
 			}
+			else if (cmd.equals(Constants.WITHDRAW_SUBMISSION)) {
+				withdrawSubmission(actionRequest);
+			}
 
 			if (Validator.isNotNull(cmd)) {
 				String redirect = ParamUtil.getString(
@@ -413,6 +416,16 @@ public class EditPageAction extends PortletAction {
 		}
 
 		return page;
+	}
+
+	protected void withdrawSubmission(ActionRequest actionRequest)
+		throws Exception {
+
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String title = ParamUtil.getString(actionRequest, "title");
+		double version = ParamUtil.getDouble(actionRequest, "version");
+
+		WikiPageServiceUtil.withdrawSubmission(nodeId, title, version);
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

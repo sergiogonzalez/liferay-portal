@@ -892,6 +892,13 @@ public class WikiPageLocalServiceUtil {
 		getService().validateTitle(title);
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPage withdrawSubmission(
+		long userId, long nodeId, java.lang.String title, double version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().withdrawSubmission(userId, nodeId, title, version);
+	}
+
 	public static WikiPageLocalService getService() {
 		if (_service == null) {
 			_service = (WikiPageLocalService)PortalBeanLocatorUtil.locate(WikiPageLocalService.class.getName());

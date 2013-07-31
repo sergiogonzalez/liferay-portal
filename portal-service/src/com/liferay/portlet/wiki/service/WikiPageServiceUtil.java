@@ -403,6 +403,13 @@ public class WikiPageServiceUtil {
 			minorEdit, format, parentTitle, redirectTitle, serviceContext);
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPage withdrawSubmission(
+		long nodeId, java.lang.String title, double version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().withdrawSubmission(nodeId, title, version);
+	}
+
 	public static WikiPageService getService() {
 		if (_service == null) {
 			_service = (WikiPageService)PortalBeanLocatorUtil.locate(WikiPageService.class.getName());
