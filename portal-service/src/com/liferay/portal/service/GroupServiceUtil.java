@@ -526,24 +526,25 @@ public class GroupServiceUtil {
 		return getService().getUserPlacesCount();
 	}
 
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups()
+	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserPlacesGroups();
+		return getService().getUserSitesGroups();
 	}
 
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId, java.lang.String[] classNames,
 		boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getUserPlacesGroups(userId, classNames,
-			includeControlPanel, max);
+				   .getUserSitesGroups(
+					   userId, classNames, includeControlPanel,
+					   max);
 	}
 
 	/**
-	* Returns the user's group &quot;places&quot; associated with the group
+	* Returns the user's group &quot;sites&quot; associated with the group
 	* entity class names, including the Control Panel group if the user is
 	* permitted to view the Control Panel.
 	*
@@ -576,21 +577,22 @@ public class GroupServiceUtil {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId, java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserPlacesGroups(userId, classNames, max);
+		return getService().getUserSitesGroups(userId, classNames, max);
 	}
 
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId, java.lang.String[] classNames, java.lang.String name,
 		boolean active, boolean includeControlPanel, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getUserPlacesGroups(userId, classNames, name, active,
-			includeControlPanel, start, end);
+				   .getUserSitesGroups(
+					   userId, classNames, name, active,
+					   includeControlPanel, start, end);
 	}
 
 	/**
@@ -626,11 +628,11 @@ public class GroupServiceUtil {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserPlacesGroups(classNames, max);
+		return getService().getUserSitesGroups(classNames, max);
 	}
 
 	/**
@@ -646,7 +648,7 @@ public class GroupServiceUtil {
 	public static int getUserPlacesGroupsCount()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserPlacesGroupsCount();
+		return getService().getUserSitesGroupsCount();
 	}
 
 	/**
