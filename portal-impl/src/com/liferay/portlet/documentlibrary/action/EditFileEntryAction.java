@@ -747,6 +747,8 @@ public class EditFileEntryAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
+				PortalUtil.copyRequestParameters(actionRequest, actionResponse);
+
 				return;
 			}
 
