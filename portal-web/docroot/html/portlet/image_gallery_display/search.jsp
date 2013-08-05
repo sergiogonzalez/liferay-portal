@@ -87,6 +87,7 @@ boolean useAssetEntryQuery = false;
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setFolderIds(folderIdsArray);
 		searchContext.setKeywords(keywords);
+		searchContext.setLike(true);
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);
