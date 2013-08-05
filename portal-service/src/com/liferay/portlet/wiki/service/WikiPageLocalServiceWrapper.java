@@ -452,6 +452,26 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public void copyPageAttachment(long userId,
+		com.liferay.portlet.wiki.model.WikiPage page,
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		com.liferay.portal.kernel.repository.model.FileEntry templateFileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.copyPageAttachment(userId, page, folder,
+			templateFileEntry);
+	}
+
+	@Override
+	public void copyPageAttachments(long userId, long nodeId,
+		java.lang.String templateTitle, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.copyPageAttachments(userId, nodeId,
+			templateTitle, title);
+	}
+
+	@Override
 	public void deletePage(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
