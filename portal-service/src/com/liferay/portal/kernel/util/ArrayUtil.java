@@ -1002,6 +1002,72 @@ public class ArrayUtil {
 		return list.toArray(new String[list.size()]);
 	}
 
+	public static void reverse(boolean[] array) {
+		for (int left = 0, right = array.length - 1; left < right;
+				left++, right--) {
+
+			boolean value = array[left];
+
+			array[left] = array[right];
+			array[right] = value;
+		}
+	}
+
+	public static void reverse(char[] array) {
+		for (int left = 0, right = array.length - 1; left < right;
+				left++, right--) {
+
+			char value = array[left];
+
+			array[left] = array[right];
+			array[right] = value;
+		}
+	}
+
+	public static void reverse(double[] array) {
+		for (int left = 0, right = array.length - 1; left < right;
+				left++, right--) {
+
+			double value = array[left];
+
+			array[left] = array[right];
+			array[right] = value;
+		}
+	}
+
+	public static void reverse(int[] array) {
+		for (int left = 0, right = array.length - 1; left < right;
+				left++, right--) {
+
+			int value = array[left];
+
+			array[left] = array[right];
+			array[right] = value;
+		}
+	}
+
+	public static void reverse(long[] array) {
+		for (int left = 0, right = array.length - 1; left < right;
+				left++, right--) {
+
+			long value = array[left];
+
+			array[left] = array[right];
+			array[right] = value;
+		}
+	}
+
+	public static void reverse(short[] array) {
+		for (int left = 0, right = array.length - 1; left < right;
+				left++, right--) {
+
+			short value = array[left];
+
+			array[left] = array[right];
+			array[right] = value;
+		}
+	}
+
 	public static void reverse(String[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
 				left++, right--) {

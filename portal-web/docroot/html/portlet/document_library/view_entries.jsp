@@ -137,6 +137,7 @@ if (fileEntryTypeId >= 0) {
 
 	searchContext.setAttribute("paginationType", "none");
 	searchContext.setEnd(entryEnd);
+	searchContext.setLike(true);
 
 	if (orderByCol.equals("creationDate")) {
 		orderByCol = "createDate";

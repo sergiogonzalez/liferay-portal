@@ -82,13 +82,17 @@ boolean useAssetEntryQuery = false;
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
+		searchContext.setAttribute("mimeTypes", mediaGalleryMimeTypes);
 		searchContext.setAttribute("paginationType", "more");
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setFolderIds(folderIdsArray);
 		searchContext.setKeywords(keywords);
+		searchContext.setLike(true);
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);
+
+		searchContainer.setTotal(hits.getLength());
 
 		List results = new ArrayList(hits.getDocs().length);
 
@@ -98,20 +102,16 @@ boolean useAssetEntryQuery = false;
 			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-
-				if (ArrayUtil.contains(mediaGalleryMimeTypes, fileEntry.getMimeType())) {
-					results.add(fileEntry);
-				}
+				results.add(DLAppLocalServiceUtil.getFileEntry(fileEntryId));
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Documents and Media search index is stale and contains document " + fileEntryId);
 				}
 			}
-		}
 
-		searchContainer.setTotal(results.size());
+			searchContainer.setResults(results);
+		}
 	%>
 
 	<div id="<portlet:namespace />imageGalleryAssetInfo">
@@ -132,7 +132,6 @@ boolean useAssetEntryQuery = false;
 
 		request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
-		request.setAttribute("view.jsp-results", results);
 		request.setAttribute("view.jsp-searchContainer", searchContainer);
 		%>
 

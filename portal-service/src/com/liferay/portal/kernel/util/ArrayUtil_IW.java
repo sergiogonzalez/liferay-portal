@@ -327,6 +327,30 @@ public class ArrayUtil_IW {
 		return ArrayUtil.removeByPrefix(array, prefix);
 	}
 
+	public void reverse(boolean[] array) {
+		ArrayUtil.reverse(array);
+	}
+
+	public void reverse(char[] array) {
+		ArrayUtil.reverse(array);
+	}
+
+	public void reverse(double[] array) {
+		ArrayUtil.reverse(array);
+	}
+
+	public void reverse(int[] array) {
+		ArrayUtil.reverse(array);
+	}
+
+	public void reverse(long[] array) {
+		ArrayUtil.reverse(array);
+	}
+
+	public void reverse(short[] array) {
+		ArrayUtil.reverse(array);
+	}
+
 	public void reverse(java.lang.String[] array) {
 		ArrayUtil.reverse(array);
 	}

@@ -215,6 +215,8 @@ cobertura.ser
 
 /tools/cobertura-agent/classes
 
+/tools/jrebel/*-overwrite.xml
+
 /tools/maven/*.asc
 
 /tools/liferay-doclet

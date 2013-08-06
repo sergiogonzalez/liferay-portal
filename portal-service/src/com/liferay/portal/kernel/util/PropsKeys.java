@@ -883,6 +883,8 @@ public interface PropsKeys {
 
 	public static final String GOOGLE_GADGET_SERVLET_MAPPING = "google.gadget.servlet.mapping";
 
+	public static final String GROUPS_COMPLEX_SQL_CLASS_NAMES = "groups.complex.sql.class.names";
+
 	public static final String GZIP_COMPRESSION_LEVEL = "gzip.compression.level";
 
 	public static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";

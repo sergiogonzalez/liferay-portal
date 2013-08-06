@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -102,9 +104,11 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -2353,9 +2357,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			andOperator = true;
 		}
 
-		return groupFinder.findByC_C_PG_N_D(
+		if (isUseComplexSQL(classNameIds)) {
+			return groupFinder.findByC_C_PG_N_D(
+				companyId, classNameIds, parentGroupId, keywordsArray,
+				keywordsArray, params, andOperator, start, end, obc);
+		}
+
+		List<Group> groups = doSearch(
 			companyId, classNameIds, parentGroupId, keywordsArray,
-			keywordsArray, params, andOperator, start, end, obc);
+			keywordsArray, params, andOperator);
+
+		return sort(groups, start, end, obc);
 	}
 
 	/**
@@ -2460,9 +2472,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String[] names = getSearchNames(companyId, name);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return groupFinder.findByC_C_PG_N_D(
+		if (isUseComplexSQL(classNameIds)) {
+			return groupFinder.findByC_C_PG_N_D(
+				companyId, classNameIds, parentGroupId, names, descriptions,
+				params, andOperator, start, end, obc);
+		}
+
+		List<Group> groups = doSearch(
 			companyId, classNameIds, parentGroupId, names, descriptions, params,
-			andOperator, start, end, obc);
+			andOperator);
+
+		return sort(groups, start, end, obc);
 	}
 
 	/**
@@ -2935,9 +2955,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			andOperator = true;
 		}
 
-		return groupFinder.countByC_C_PG_N_D(
+		if (isUseComplexSQL(classNameIds)) {
+			return groupFinder.countByC_C_PG_N_D(
+				companyId, classNameIds, parentGroupId, keywordsArray,
+				keywordsArray, params, andOperator);
+		}
+
+		List<Group> groups = doSearch(
 			companyId, classNameIds, parentGroupId, keywordsArray,
 			keywordsArray, params, andOperator);
+
+		return groups.size();
 	}
 
 	/**
@@ -2975,9 +3003,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String[] names = getSearchNames(companyId, name);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return groupFinder.countByC_C_PG_N_D(
+		if (isUseComplexSQL(classNameIds)) {
+			return groupFinder.countByC_C_PG_N_D(
+				companyId, classNameIds, parentGroupId, names, descriptions,
+				params, andOperator);
+		}
+
+		List<Group> groups = doSearch(
 			companyId, classNameIds, parentGroupId, names, descriptions, params,
 			andOperator);
+
+		return groups.size();
 	}
 
 	/**
@@ -3600,6 +3636,256 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
+	protected List<Group> doSearch(
+			long companyId, long[] classNameIds, long parentGroupId,
+			String[] names, String[] descriptions,
+			LinkedHashMap<String, Object> params, boolean andOperator)
+		throws SystemException {
+
+		boolean parentGroupIdEquals = true;
+
+		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
+			parentGroupIdEquals = false;
+		}
+
+		params = new LinkedHashMap<String, Object>(params);
+
+		Boolean active = (Boolean)params.remove("active");
+		List<Long> excludedGroupIds = (List<Long>)params.remove(
+			"excludedGroupIds");
+		List<Group> groupsTree = (List<Group>)params.remove("groupsTree");
+		Boolean manualMembership = (Boolean)params.remove("manualMembership");
+		Integer membershipRestriction = (Integer)params.remove(
+			"membershipRestriction");
+		Boolean site = (Boolean)params.remove("site");
+		List<Integer> types = (List<Integer>)params.remove("types");
+
+		List<Group> groups = new ArrayList<Group>();
+
+		for (long classNameId : classNameIds) {
+			groups.addAll(groupPersistence.findByC_C(companyId, classNameId));
+		}
+
+		Iterator<Group> iterator = groups.iterator();
+
+		while (iterator.hasNext()) {
+			Group group = iterator.next();
+
+			// Filter by live group ID
+
+			long liveGroupId = group.getLiveGroupId();
+
+			if (liveGroupId != 0) {
+				iterator.remove();
+
+				continue;
+			}
+
+			// Filter by parent group ID
+
+			long groupParentGroupId = group.getParentGroupId();
+
+			if ((parentGroupIdEquals &&
+				 (groupParentGroupId != parentGroupId)) ||
+				(!parentGroupIdEquals &&
+				 (groupParentGroupId == parentGroupId))) {
+
+				iterator.remove();
+
+				continue;
+			}
+
+			// Filter by name and description
+
+			String name = group.getName();
+
+			if (name.equals(GroupConstants.CONTROL_PANEL)) {
+				iterator.remove();
+
+				continue;
+			}
+
+			boolean containsName = matches(name, names);
+			boolean containsDescription = matches(
+				group.getDescription(), descriptions);
+
+			if ((andOperator && (!containsName || !containsDescription)) ||
+				(!andOperator && (!containsName && !containsDescription))) {
+
+				iterator.remove();
+
+				continue;
+			}
+
+			// Filter by active
+
+			if (active != null) {
+				if (active != group.isActive()) {
+					iterator.remove();
+
+					continue;
+				}
+			}
+
+			// Filter by excluded group IDs
+
+			if ((excludedGroupIds != null) &&
+				excludedGroupIds.contains(group.getGroupId())) {
+
+				iterator.remove();
+
+				continue;
+			}
+
+			// Filter by groups tree
+
+			if (groupsTree != null) {
+				String treePath = group.getTreePath();
+
+				boolean matched = false;
+
+				for (Group groupTree : groupsTree) {
+					String groupTreePath = StringUtil.quote(
+						String.valueOf(groupTree.getGroupId()),
+						StringPool.SLASH);
+
+					if (treePath.contains(groupTreePath)) {
+						matched = true;
+
+						break;
+					}
+				}
+
+				if (!matched) {
+					iterator.remove();
+
+					continue;
+				}
+			}
+
+			// Filter by manual membership
+
+			if ((manualMembership != null) &&
+				(manualMembership != group.isManualMembership())) {
+
+				iterator.remove();
+
+				continue;
+			}
+
+			// Filter by membership restriction
+
+			if ((membershipRestriction != null) &&
+				(membershipRestriction != group.getMembershipRestriction())) {
+
+				iterator.remove();
+
+				continue;
+			}
+
+			// Filter by site
+
+			if (site != null) {
+				if (site != group.isSite()) {
+					iterator.remove();
+
+					continue;
+				}
+			}
+
+			// Filter by type and types
+
+			int type = group.getType();
+
+			if (type == 4) {
+				iterator.remove();
+
+				continue;
+			}
+
+			if ((types != null) && !types.contains(type)) {
+				iterator.remove();
+
+				continue;
+			}
+		}
+
+		Long userId = (Long)params.remove("usersGroups");
+
+		if (userId == null) {
+			return groups;
+		}
+
+		// Join by Groups_Roles
+
+		Set<Group> resultGroups = new HashSet<Group>(groups);
+
+		Long roleId = (Long)params.remove("groupsRoles");
+
+		if (roleId != null) {
+			resultGroups.retainAll(rolePersistence.getGroups(roleId));
+		}
+
+		// Join by Users_Groups
+
+		resultGroups.retainAll(userPersistence.getGroups(userId));
+
+		boolean inherit = GetterUtil.getBoolean(params.remove("inherit"), true);
+
+		if (inherit) {
+
+			// Join by Users_Orgs
+
+			List<Organization> organizations = userPersistence.getOrganizations(
+				userId);
+
+			for (Organization organization : organizations) {
+				long organizationId = organization.getOrganizationId();
+
+				for (Group group : groups) {
+					if (organizationId == group.getClassPK()) {
+						resultGroups.add(group);
+					}
+				}
+			}
+
+			// Join by Groups_Orgs and Users_Orgs
+
+			for (Organization organization : organizations) {
+				List<Group> tempGroups = new ArrayList<Group>(groups);
+
+				tempGroups.retainAll(
+					organizationPersistence.getGroups(
+						organization.getOrganizationId()));
+
+				if (!tempGroups.isEmpty()) {
+					resultGroups.addAll(tempGroups);
+				}
+			}
+
+			// Join by Groups_UserGroups and Users_UserGroups
+
+			List<UserGroup> userGroups = userPersistence.getUserGroups(userId);
+
+			for (UserGroup userGroup : userGroups) {
+				List<Group> tempGroups = new ArrayList<Group>(groups);
+
+				tempGroups.retainAll(
+					userGroupPersistence.getGroups(userGroup.getUserGroupId()));
+
+				if (!tempGroups.isEmpty()) {
+					resultGroups.addAll(tempGroups);
+				}
+			}
+		}
+
+		if (_log.isDebugEnabled() && !params.isEmpty()) {
+			_log.debug("Unprocessed parameters " + MapUtil.toString(params));
+		}
+
+		return new ArrayList<Group>(resultGroups);
+	}
+
 	protected long[] getClassNameIds() {
 		if (_classNameIds == null) {
 			_classNameIds = new long[] {
@@ -3816,6 +4102,56 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return false;
 	}
 
+	protected boolean isUseComplexSQL(long[] classNameIds) {
+		if ((classNameIds == null) || (classNameIds.length == 0)) {
+			return true;
+		}
+
+		if (_complexSQLClassNameIds == null) {
+			String[] complexSQLClassNames =
+				PropsValues.GROUPS_COMPLEX_SQL_CLASS_NAMES;
+
+			long[] complexSQLClassNameIds =
+				new long[complexSQLClassNames.length];
+
+			for (int i = 0; i < complexSQLClassNames.length; i++) {
+				String complexSQLClassName = complexSQLClassNames[i];
+
+				complexSQLClassNameIds[i] = PortalUtil.getClassNameId(
+					complexSQLClassName);
+			}
+
+			_complexSQLClassNameIds = complexSQLClassNameIds;
+		}
+
+		for (long classNameId : classNameIds) {
+			if (ArrayUtil.contains(_complexSQLClassNameIds, classNameId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean matches(String s, String[] keywords) {
+		if ((keywords == null) ||
+			((keywords.length == 1) && (keywords[0] == null))) {
+
+			return true;
+		}
+
+		for (String keyword : keywords) {
+			if (StringUtil.wildcardMatches(
+					s, keyword, CharPool.UNDERLINE, CharPool.PERCENT,
+					CharPool.BACK_SLASH, false)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected void setCompanyPermissions(
 			Role role, String name, String[] actionIds)
 		throws PortalException, SystemException {
@@ -3858,6 +4194,19 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				String.valueOf(group.getGroupId()), role.getRoleId(),
 				actionIds);
 		}
+	}
+
+	protected List<Group> sort(
+		List<Group> groups, int start, int end, OrderByComparator obc) {
+
+		if (obc == null) {
+			obc = new GroupNameComparator(true);
+		}
+
+		Collections.sort(groups, obc);
+
+		return Collections.unmodifiableList(
+			ListUtil.subList(groups, start, end));
 	}
 
 	protected void unscheduleStaging(Group group) {
@@ -4067,6 +4416,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		GroupLocalServiceImpl.class);
 
 	private volatile long[] _classNameIds;
+	private volatile long[] _complexSQLClassNameIds;
 	private Map<String, Group> _systemGroupsMap = new HashMap<String, Group>();
 
 }
