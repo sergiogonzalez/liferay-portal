@@ -515,6 +515,8 @@ public class AssetCategoryLocalServiceImpl
 		List<AssetCategoryProperty> oldCategoryProperties =
 			assetCategoryPropertyPersistence.findByCategoryId(categoryId);
 
+		oldCategoryProperties = ListUtil.copy(oldCategoryProperties);
+
 		for (int i = 0; i < categoryProperties.length; i++) {
 			String[] categoryProperty = StringUtil.split(
 				categoryProperties[i], CharPool.COLON);

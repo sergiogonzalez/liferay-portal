@@ -40,7 +40,6 @@ page import="com.liferay.portal.kernel.lar.UserIdStrategy" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletModeFactory" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" %><%@
-page import="com.liferay.portal.kernel.util.MapUtil" %><%@
 page import="com.liferay.portal.lar.backgroundtask.PortletExportBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.lar.backgroundtask.PortletImportBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor" %><%@

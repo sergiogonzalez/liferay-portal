@@ -345,6 +345,8 @@ public class EditArticleAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String deleteEntryTitle = null;
+
 		String[] deleteArticleIds = null;
 
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
@@ -367,6 +369,11 @@ public class EditArticleAction extends PortletAction {
 					JournalArticleServiceUtil.moveArticleToTrash(
 						themeDisplay.getScopeGroupId(), deleteArticleId);
 
+				if (i == 0) {
+					deleteEntryTitle = article.getTitle(
+						themeDisplay.getLocale());
+				}
+
 				restoreArticleIds[i] = article.getResourcePrimKey();
 			}
 			else {
@@ -376,6 +383,14 @@ public class EditArticleAction extends PortletAction {
 
 		if (moveToTrash && (deleteArticleIds.length > 0)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"deleteEntryClassName",
+				new String[] {JournalArticle.class.getName()});
+
+			if (Validator.isNotNull(deleteEntryTitle)) {
+				data.put("deleteEntryTitle", new String[] {deleteEntryTitle});
+			}
 
 			data.put(
 				"restoreArticleIds",
