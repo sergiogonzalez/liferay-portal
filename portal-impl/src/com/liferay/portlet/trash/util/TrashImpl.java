@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.trash.TrashConstants;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -37,10 +38,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -49,8 +52,10 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 import com.liferay.portlet.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.portlet.trash.util.comparator.EntryTypeComparator;
 import com.liferay.portlet.trash.util.comparator.EntryUserNameComparator;
@@ -60,7 +65,11 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -116,6 +125,98 @@ public class TrashImpl implements Trash {
 	}
 
 	@Override
+	public void addDependentStatus(
+			long trashEntryId, ServiceContext serviceContext)
+		throws SystemException {
+
+		Map<String, Map<Long, Integer>> dependentStatusMaps =
+			(Map<String, Map<Long, Integer>>)serviceContext.getAttribute(
+				TrashConstants.TRASH_DEPENDENT_STATUS_MAP);
+
+		if (dependentStatusMaps == null) {
+			dependentStatusMaps = new HashMap<String, Map<Long, Integer>>();
+
+			serviceContext.setAttribute(
+				TrashConstants.TRASH_DEPENDENT_STATUS_MAP,
+				(HashMap<String, Map<Long, Integer>>)dependentStatusMaps);
+		}
+
+		List<TrashVersion> trashVersions =
+			TrashVersionLocalServiceUtil.getVersions(trashEntryId);
+
+		for (TrashVersion trashVersion : trashVersions) {
+			Map<Long, Integer> dependentStatusMap = dependentStatusMaps.get(
+				trashVersion.getClassName());
+
+			if (dependentStatusMap == null) {
+				dependentStatusMap = new HashMap<Long, Integer>();
+
+				dependentStatusMaps.put(
+					trashVersion.getClassName(), dependentStatusMap);
+			}
+
+			dependentStatusMap.put(
+				trashVersion.getClassPK(), trashVersion.getStatus());
+		}
+	}
+
+	@Override
+	public void addDependentStatus(
+			long trashEntryId, String className, ServiceContext serviceContext)
+		throws SystemException {
+
+		Map<String, Map<Long, Integer>> dependentStatusMaps =
+			(Map<String, Map<Long, Integer>>)serviceContext.getAttribute(
+				TrashConstants.TRASH_DEPENDENT_STATUS_MAP);
+
+		if (dependentStatusMaps == null) {
+			dependentStatusMaps = new HashMap<String, Map<Long, Integer>>();
+
+			serviceContext.setAttribute(
+				TrashConstants.TRASH_DEPENDENT_STATUS_MAP,
+				(HashMap<String, Map<Long, Integer>>)dependentStatusMaps);
+		}
+
+		Map<Long, Integer> dependentStatusMap = getDependentStatusMap(
+			trashEntryId, className);
+
+		dependentStatusMaps.put(className, dependentStatusMap);
+	}
+
+	@Override
+	public void addTrashEntries(
+			long groupId, String className, ServiceContext serviceContext)
+		throws SystemException {
+
+		HashSet<Long> trashEntryClassPKs = new HashSet<Long>();
+
+		List<TrashEntry> trashEntries = TrashEntryLocalServiceUtil.getEntries(
+			groupId, className);
+
+		if (trashEntries.isEmpty()) {
+			return;
+		}
+
+		for (TrashEntry trashEntry : trashEntries) {
+			trashEntryClassPKs.add(trashEntry.getClassPK());
+		}
+
+		Map<String, Set<Long>> trashEntryClassPKMap =
+			(Map<String, Set<Long>>)serviceContext.getAttribute(
+				TrashConstants.TRASH_ENTRY_CLASS_PK_MAP);
+
+		if (trashEntryClassPKMap == null) {
+			trashEntryClassPKMap = new HashMap<String, Set<Long>>();
+
+			serviceContext.setAttribute(
+				TrashConstants.TRASH_ENTRY_CLASS_PK_MAP,
+				(HashMap<String, Set<Long>>)trashEntryClassPKMap);
+		}
+
+		trashEntryClassPKMap.put(className, trashEntryClassPKs);
+	}
+
+	@Override
 	public void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
@@ -132,6 +233,34 @@ public class TrashImpl implements Trash {
 					companyId, repositoryId, attachmentFileName);
 			}
 		}
+	}
+
+	@Override
+	public int getDependentStatus(
+		String className, long classPK, ServiceContext serviceContext) {
+
+		Map<String, Map<Long, Integer>> dependentStatusMaps =
+			(Map<String, Map<Long, Integer>>)serviceContext.getAttribute(
+				TrashConstants.TRASH_DEPENDENT_STATUS_MAP);
+
+		if (dependentStatusMaps == null) {
+			return WorkflowConstants.STATUS_APPROVED;
+		}
+
+		Map<Long, Integer> dependentStatusMap = dependentStatusMaps.get(
+			className);
+
+		if (dependentStatusMap == null) {
+			return WorkflowConstants.STATUS_APPROVED;
+		}
+
+		Integer status = dependentStatusMap.get(classPK);
+
+		if (status == null) {
+			return WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return status;
 	}
 
 	@Override
@@ -365,6 +494,29 @@ public class TrashImpl implements Trash {
 	}
 
 	@Override
+	public boolean hasTrashEntry(
+		String className, long classPK, ServiceContext serviceContext) {
+
+		Map<String, Set<Long>> trashEntryClassPKMap =
+			(Map<String, Set<Long>>)serviceContext.getAttribute(
+				TrashConstants.TRASH_ENTRY_CLASS_PK_MAP);
+
+		if (trashEntryClassPKMap == null) {
+			return false;
+		}
+
+		Set<Long> trashEntryClassPKs = trashEntryClassPKMap.get(className);
+
+		if (trashEntryClassPKs == null) {
+			trashEntryClassPKs = new HashSet<Long>();
+
+			trashEntryClassPKMap.put(className, trashEntryClassPKs);
+		}
+
+		return trashEntryClassPKs.contains(classPK);
+	}
+
+	@Override
 	public boolean isInTrash(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -462,6 +614,22 @@ public class TrashImpl implements Trash {
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, trashRenderer.getTitle(themeDisplay.getLocale()), null);
+	}
+
+	protected Map<Long, Integer> getDependentStatusMap(
+			long entryId, String className)
+		throws SystemException {
+
+		List<TrashVersion> versions = TrashVersionLocalServiceUtil.getVersions(
+			entryId, className);
+
+		Map<Long, Integer> dependentStatusMap = new HashMap<Long, Integer>();
+
+		for (TrashVersion version : versions) {
+			dependentStatusMap.put(version.getClassPK(), version.getStatus());
+		}
+
+		return dependentStatusMap;
 	}
 
 	protected String getOriginalTitle(String title, String prefix) {
