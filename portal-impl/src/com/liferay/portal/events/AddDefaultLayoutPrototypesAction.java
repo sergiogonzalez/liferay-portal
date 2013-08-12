@@ -27,7 +27,10 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +70,20 @@ public class AddDefaultLayoutPrototypesAction
 		}
 
 		addPortletId(layout, PortletKeys.BLOGS, "column-1");
-		addPortletId(layout, PortletKeys.TAGS_CLOUD, "column-2");
+
+		String portletId = addPortletId(
+			layout, PortletKeys.TAGS_CLOUD, "column-2");
+
+		Map<String, String> preferences = new HashMap<String, String>();
+
+		preferences.put(
+			"classNameId",
+			String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class)));
+
+		preferences.put("showAssetCount", Boolean.TRUE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
+
 		addPortletId(layout, PortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
@@ -158,7 +174,19 @@ public class AddDefaultLayoutPrototypesAction
 		addPortletId(layout, PortletKeys.WIKI, "column-1");
 		addPortletId(
 			layout, PortletKeys.ASSET_CATEGORIES_NAVIGATION, "column-2");
-		addPortletId(layout, PortletKeys.ASSET_TAGS_NAVIGATION, "column-2");
+
+		String portletId = addPortletId(
+			layout, PortletKeys.ASSET_TAGS_NAVIGATION, "column-2");
+
+		Map<String, String> preferences = new HashMap<String, String>();
+
+		preferences.put(
+			"classNameId",
+			String.valueOf(PortalUtil.getClassNameId(WikiPage.class)));
+
+		preferences.put("showAssetCount", Boolean.TRUE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
 	}
 
 	protected void doRun(long companyId) throws Exception {
