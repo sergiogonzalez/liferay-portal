@@ -16,25 +16,17 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.HashMap;
@@ -46,7 +38,8 @@ import java.util.Map;
  * @author Sergio González
  * @author Juan Fernández
  */
-public class AddDefaultLayoutPrototypesAction extends SimpleAction {
+public class AddDefaultLayoutPrototypesAction
+	extends BaseDefaultLayoutPrototypesAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -76,30 +69,6 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 		addPortletId(layout, PortletKeys.BLOGS, "column-1");
 		addPortletId(layout, PortletKeys.TAGS_CLOUD, "column-2");
 		addPortletId(layout, PortletKeys.RECENT_BLOGGERS, "column-2");
-	}
-
-	protected Layout addLayout(
-			LayoutSet layoutSet, String name, String friendlyURL,
-			String layouteTemplateId)
-		throws Exception {
-
-		Group group = layoutSet.getGroup();
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		Layout layout = LayoutLocalServiceUtil.addLayout(
-			group.getCreatorUserId(), group.getGroupId(),
-			layoutSet.isPrivateLayout(),
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
-
-		return layout;
 	}
 
 	protected Layout addLayoutPrototype(
@@ -133,33 +102,6 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
 
 		return layout;
-	}
-
-	protected String addPortletId(
-			Layout layout, String portletId, String columnId)
-		throws Exception {
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		portletId = layoutTypePortlet.addPortletId(
-			0, portletId, columnId, -1, false);
-
-		updateLayout(layout);
-
-		addResourcePermissions(layout, portletId);
-
-		return portletId;
-	}
-
-	protected void addResourcePermissions(Layout layout, String portletId)
-		throws Exception {
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			layout.getCompanyId(), portletId);
-
-		PortalUtil.addPortletDefaultResource(
-			layout.getCompanyId(), layout, portlet);
 	}
 
 	protected void addWebContentPage(
@@ -229,12 +171,6 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 		addBlogPage(companyId, defaultUserId, layoutPrototypes);
 		addWebContentPage(companyId, defaultUserId, layoutPrototypes);
 		addWikiPage(companyId, defaultUserId, layoutPrototypes);
-	}
-
-	protected void updateLayout(Layout layout) throws Exception {
-		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
 	}
 
 }
