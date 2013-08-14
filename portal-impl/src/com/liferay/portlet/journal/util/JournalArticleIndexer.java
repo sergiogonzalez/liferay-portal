@@ -305,7 +305,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		deleteDocument(article.getCompanyId(), article.getId());
 
-		setHead(article.getResourcePrimKey());
+		setHead(article);
 	}
 
 	@Override
@@ -467,7 +467,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		SearchEngineUtil.updateDocument(
 			getSearchEngineId(), article.getCompanyId(), document);
 
-		setHead(article.getResourcePrimKey());
+		setHead(article);
 	}
 
 	@Override
@@ -625,33 +625,43 @@ public class JournalArticleIndexer extends BaseIndexer {
 			getSearchEngineId(), companyId, documents);
 	}
 
-	protected void setHead(long classPK) throws Exception {
+	protected void setHead(JournalArticle article) throws Exception {
 		JournalArticle latestIndexableArticle =
-			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(classPK);
+			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
+				article.getResourcePrimKey());
 
 		List<JournalArticle> articles =
 			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
-				classPK);
+				article.getResourcePrimKey());
 
-		for (JournalArticle article : articles) {
-			if (!article.isIndexable() ||
+		for (JournalArticle curArticle : articles) {
+			if (!curArticle.isIndexable() ||
 				((latestIndexableArticle != null) &&
-				 (article.getArticleId() ==
+				 (curArticle.getArticleId() ==
 					latestIndexableArticle.getArticleId()))) {
 
 				continue;
 			}
 
-			Document document = getDocument(article);
+			Document document = getDocument(curArticle);
 
 			document.addKeyword("head", false);
 
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), article.getCompanyId(), document);
+				getSearchEngineId(), curArticle.getCompanyId(), document);
 		}
 
 		if (latestIndexableArticle != null) {
 			Document document = getDocument(latestIndexableArticle);
+
+			document.addKeyword("head", true);
+
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), latestIndexableArticle.getCompanyId(),
+				document);
+		}
+		else if (article.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+			Document document = getDocument(article);
 
 			document.addKeyword("head", true);
 
