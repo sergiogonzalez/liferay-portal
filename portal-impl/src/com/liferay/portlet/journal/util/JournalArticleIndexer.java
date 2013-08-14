@@ -112,6 +112,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
+		boolean relatedClassName = GetterUtil.getBoolean(
+			searchContext.getAttribute("relatedClassName"), false);
+
 		Long classNameId = (Long)searchContext.getAttribute(
 			Field.CLASS_NAME_ID);
 
@@ -201,7 +204,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		boolean head = GetterUtil.getBoolean(
 			searchContext.getAttribute("head"), true);
 
-		if (head) {
+		if (head && !relatedClassName) {
 			contextQuery.addRequiredTerm("head", true);
 		}
 	}
