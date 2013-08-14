@@ -3438,6 +3438,15 @@ public class JournalArticleLocalServiceImpl
 				JournalArticle.class.getName(), article.getId());
 		}
 
+		if (!articleVersions.isEmpty()) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				JournalArticle.class);
+
+			for (JournalArticle curArticleVersion : articleVersions) {
+				indexer.reindex(curArticleVersion);
+			}
+		}
+
 		return article;
 	}
 
@@ -3600,6 +3609,15 @@ public class JournalArticleLocalServiceImpl
 			article.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		if (!articleVersions.isEmpty()) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				JournalArticle.class);
+
+			for (JournalArticle curArticleVersion : articleVersions) {
+				indexer.reindex(curArticleVersion);
+			}
+		}
 
 		return article;
 	}
