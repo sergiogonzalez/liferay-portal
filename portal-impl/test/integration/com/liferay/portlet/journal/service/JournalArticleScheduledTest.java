@@ -159,7 +159,11 @@ public class JournalArticleScheduledTest {
 		// Modify the article Date surpassing the service to simulate the time
 		// has passed
 
-		article.setDisplayDate(now);
+		Calendar displayDateCalendar = new GregorianCalendar();
+
+		displayDateCalendar.setTime(new Date(now.getTime() - Time.MINUTE * 5));
+
+		article.setDisplayDate(displayDateCalendar.getTime());
 
 		article = JournalArticleLocalServiceUtil.updateJournalArticle(article);
 
