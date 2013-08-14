@@ -460,6 +460,12 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getGroupVocabulary(groupId, name);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetVocabulary fetchGroupVocabulary(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchGroupVocabulary(groupId, name);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getVocabularies(
 		long[] vocabularyIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
