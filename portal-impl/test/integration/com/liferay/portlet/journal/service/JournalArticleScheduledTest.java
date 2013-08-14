@@ -74,12 +74,12 @@ public class JournalArticleScheduledTest {
 
 	@Test
 	public void testScheduledApprovedArticle() throws Exception {
-		testScheduledArticle(true);
+		testScheduleArticle(true);
 	}
 
 	@Test
 	public void testScheduledDraftArticle() throws Exception {
-		testScheduledArticle(false);
+		testScheduleArticle(false);
 	}
 
 	protected JournalArticle addJournalArticle(
@@ -135,7 +135,7 @@ public class JournalArticleScheduledTest {
 		return calendar;
 	}
 
-	protected void testScheduledArticle(boolean approved) throws Exception {
+	protected void testScheduleArticle(boolean approved) throws Exception {
 		int initialSearchArticlesCount = JournalTestUtil.getSearchArticlesCount(
 			_group.getCompanyId(), _group.getGroupId());
 
