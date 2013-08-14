@@ -686,6 +686,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.asset.model.AssetEntry getEntry(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetEntryLocalService.getEntry(classNameId, classPK);
+	}
+
+	@Override
 	public com.liferay.portlet.asset.model.AssetEntry getEntry(long groupId,
 		java.lang.String classUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
