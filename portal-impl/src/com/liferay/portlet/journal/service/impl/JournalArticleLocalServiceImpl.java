@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -256,6 +255,7 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle addArticle(
 			long userId, long groupId, long folderId, long classNameId,
@@ -452,14 +452,6 @@ public class JournalArticleLocalServiceImpl
 				user.getCompanyId(), groupId, userId,
 				JournalArticle.class.getName(), article.getId(), article,
 				serviceContext);
-
-			if (serviceContext.getWorkflowAction() !=
-					WorkflowConstants.ACTION_PUBLISH) {
-
-				// Indexer
-
-				reindex(article);
-			}
 		}
 		else {
 			updateStatus(
@@ -499,6 +491,7 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle addArticle(
 			long userId, long groupId, long folderId,
@@ -658,105 +651,11 @@ public class JournalArticleLocalServiceImpl
 	public void checkArticles() throws PortalException, SystemException {
 		Date now = new Date();
 
-		List<JournalArticle> articles =
-			journalArticleFinder.findByExpirationDate(
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				new Date(now.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL),
-				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
+		checkArticlesByExpirationDate(now);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Expiring " + articles.size() + " articles");
-		}
+		checkArticlesByReviewDate(now);
 
-		Set<Long> companyIds = new HashSet<Long>();
-
-		for (JournalArticle article : articles) {
-			if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
-				List<JournalArticle> currentArticles =
-					journalArticlePersistence.findByG_A(
-						article.getGroupId(), article.getArticleId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						new ArticleVersionComparator(true));
-
-				for (JournalArticle currentArticle : currentArticles) {
-					currentArticle.setExpirationDate(
-						article.getExpirationDate());
-					currentArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-					journalArticlePersistence.update(currentArticle);
-				}
-			}
-			else {
-				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-				journalArticlePersistence.update(article);
-			}
-
-			updatePreviousApprovedArticle(article);
-
-			JournalContentUtil.clearCache(
-				article.getGroupId(), article.getArticleId(),
-				article.getTemplateId());
-
-			companyIds.add(article.getCompanyId());
-		}
-
-		for (long companyId : companyIds) {
-			CacheUtil.clearCache(companyId);
-		}
-
-		if (_previousCheckDate == null) {
-			_previousCheckDate = new Date(
-				now.getTime() - _JOURNAL_ARTICLE_CHECK_INTERVAL);
-		}
-
-		articles = journalArticleFinder.findByReviewDate(
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, now,
-			_previousCheckDate);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Sending review notifications for " + articles.size() +
-					" articles");
-		}
-
-		for (JournalArticle article : articles) {
-			String articleURL = StringPool.BLANK;
-
-			long ownerId = article.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.JOURNAL;
-
-			PortletPreferences preferences =
-				portletPreferencesLocalService.getPreferences(
-					article.getCompanyId(), ownerId, ownerType, plid,
-					portletId);
-
-			sendEmail(
-				article, articleURL, preferences, "review",
-				new ServiceContext());
-		}
-
-		articles = journalArticlePersistence.findByLtD_S(
-			now, WorkflowConstants.STATUS_SCHEDULED);
-
-		for (JournalArticle article : articles) {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCommand(Constants.UPDATE);
-
-			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				article.getGroupId(), PortletKeys.JOURNAL);
-
-			serviceContext.setLayoutFullURL(layoutFullURL);
-
-			serviceContext.setScopeGroupId(article.getGroupId());
-
-			updateStatus(
-				article.getUserId(), article, WorkflowConstants.STATUS_APPROVED,
-				null, new HashMap<String, Serializable>(), serviceContext);
-		}
+		checkArticlesByDisplayDate(now);
 
 		_previousCheckDate = now;
 	}
@@ -836,6 +735,7 @@ public class JournalArticleLocalServiceImpl
 	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle copyArticle(
 			long userId, long groupId, String oldArticleId, String newArticleId,
@@ -957,13 +857,14 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP, send = false)
-	public void deleteArticle(JournalArticle article)
+	public JournalArticle deleteArticle(JournalArticle article)
 		throws PortalException, SystemException {
 
-		deleteArticle(article, StringPool.BLANK, null);
+		return deleteArticle(article, StringPool.BLANK, null);
 	}
 
 	/**
@@ -980,10 +881,11 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP, send = false)
-	public void deleteArticle(
+	public JournalArticle deleteArticle(
 			JournalArticle article, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -998,12 +900,6 @@ public class JournalArticleLocalServiceImpl
 				article.getVersion(), WorkflowConstants.STATUS_APPROVED)) {
 
 			updatePreviousApprovedArticle(article);
-		}
-		else if (article.isInTrash()) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
-
-			indexer.delete(article);
 		}
 
 		// Email
@@ -1111,6 +1007,8 @@ public class JournalArticleLocalServiceImpl
 				SystemEventConstants.TYPE_DELETE,
 				extraDataJSONObject.toString());
 		}
+
+		return article;
 	}
 
 	/**
@@ -1129,8 +1027,9 @@ public class JournalArticleLocalServiceImpl
 	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public void deleteArticle(
+	public JournalArticle deleteArticle(
 			long groupId, String articleId, double version, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1138,7 +1037,7 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		journalArticleLocalService.deleteArticle(
+		return journalArticleLocalService.deleteArticle(
 			article, articleURL, serviceContext);
 	}
 
@@ -1172,7 +1071,8 @@ public class JournalArticleLocalServiceImpl
 				new ArticleVersionComparator(true));
 
 			for (JournalArticle article : articles) {
-				deleteArticle(article, null, serviceContext);
+				journalArticleLocalService.deleteArticle(
+					article, null, serviceContext);
 			}
 		}
 		finally {
@@ -1220,7 +1120,7 @@ public class JournalArticleLocalServiceImpl
 					articleResources.add(articleResource);
 				}
 
-				deleteArticle(article, null, null);
+				journalArticleLocalService.deleteArticle(article, null, null);
 			}
 		}
 		finally {
@@ -1290,7 +1190,8 @@ public class JournalArticleLocalServiceImpl
 				}
 
 				if (includeTrashedEntries || !article.isInTrash()) {
-					deleteArticle(article, null, null);
+					journalArticleLocalService.deleteArticle(
+						article, null, null);
 				}
 				else {
 					articleResources.remove(articleResource);
@@ -1355,6 +1256,7 @@ public class JournalArticleLocalServiceImpl
 	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle expireArticle(
 			long userId, long groupId, String articleId, double version,
@@ -1402,7 +1304,7 @@ public class JournalArticleLocalServiceImpl
 				new ArticleVersionComparator(true));
 
 			for (JournalArticle article : articles) {
-				expireArticle(
+				journalArticleLocalService.expireArticle(
 					userId, groupId, article.getArticleId(),
 					article.getVersion(), articleURL, serviceContext);
 			}
@@ -1411,7 +1313,7 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle article = getLatestArticle(
 				groupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
-			expireArticle(
+			journalArticleLocalService.expireArticle(
 				userId, groupId, article.getArticleId(), article.getVersion(),
 				articleURL, serviceContext);
 		}
@@ -1479,7 +1381,9 @@ public class JournalArticleLocalServiceImpl
 		OrderByComparator orderByComparator = new ArticleVersionComparator();
 
 		int[] statuses = new int[] {
-			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_IN_TRASH
+			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_IN_TRASH,
+			WorkflowConstants.STATUS_SCHEDULED
 		};
 
 		List<JournalArticle> articles =
@@ -3334,6 +3238,7 @@ public class JournalArticleLocalServiceImpl
 	 *         key could not be found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle moveArticleFromTrash(
 			long userId, long groupId, JournalArticle article, long newFolderId,
@@ -3366,6 +3271,7 @@ public class JournalArticleLocalServiceImpl
 	 *         article to the Recycle Bin or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle moveArticleToTrash(
 			long userId, JournalArticle article)
@@ -3395,13 +3301,6 @@ public class JournalArticleLocalServiceImpl
 			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
 			workflowContext, new ServiceContext());
 
-		// Remove the existing index because we are changing article ID
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			JournalArticle.class);
-
-		indexer.delete(article);
-
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
@@ -3426,12 +3325,7 @@ public class JournalArticleLocalServiceImpl
 
 		article.setArticleId(trashArticleId);
 
-		reindex(article);
-
 		article = journalArticlePersistence.update(article);
-
-		socialActivityCounterLocalService.disableActivityCounters(
-			JournalFolder.class.getName(), article.getFolderId());
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -3447,6 +3341,15 @@ public class JournalArticleLocalServiceImpl
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
 				article.getCompanyId(), article.getGroupId(),
 				JournalArticle.class.getName(), article.getId());
+		}
+
+		if (!articleVersions.isEmpty()) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				JournalArticle.class);
+
+			for (JournalArticle curArticleVersion : articleVersions) {
+				indexer.reindex(curArticleVersion);
+			}
 		}
 
 		return article;
@@ -3475,7 +3378,8 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, 0, 1, new ArticleVersionComparator());
 
 		if (!articles.isEmpty()) {
-			return moveArticleToTrash(userId, articles.get(0));
+			return journalArticleLocalService.moveArticleToTrash(
+				userId, articles.get(0));
 		}
 
 		return null;
@@ -3494,6 +3398,7 @@ public class JournalArticleLocalServiceImpl
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle removeArticleLocale(
 			long groupId, String articleId, double version, String languageId)
@@ -3545,16 +3450,11 @@ public class JournalArticleLocalServiceImpl
 	 *         occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void restoreArticleFromTrash(long userId, JournalArticle article)
+	public JournalArticle restoreArticleFromTrash(
+			long userId, JournalArticle article)
 		throws PortalException, SystemException {
-
-		// Remove the existing index because we are changing article ID
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			JournalArticle.class);
-
-		indexer.delete(article);
 
 		String trashArticleId = TrashUtil.getOriginalTitle(
 			article.getArticleId());
@@ -3589,7 +3489,7 @@ public class JournalArticleLocalServiceImpl
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
-		List<TrashVersion> trashVersions = trashEntryLocalService.getVersions(
+		List<TrashVersion> trashVersions = trashVersionLocalService.getVersions(
 			trashEntry.getEntryId());
 
 		workflowContext.put("trashVersions", (Serializable)trashVersions);
@@ -3602,9 +3502,6 @@ public class JournalArticleLocalServiceImpl
 			userId, article, trashEntry.getStatus(), null, workflowContext,
 			serviceContext);
 
-		socialActivityCounterLocalService.enableActivityCounters(
-			JournalFolder.class.getName(), article.getFolderId());
-
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put("title", article.getTitle());
@@ -3614,6 +3511,17 @@ public class JournalArticleLocalServiceImpl
 			article.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		if (!articleVersions.isEmpty()) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				JournalArticle.class);
+
+			for (JournalArticle curArticleVersion : articleVersions) {
+				indexer.reindex(curArticleVersion);
+			}
+		}
+
+		return article;
 	}
 
 	/**
@@ -4376,6 +4284,7 @@ public class JournalArticleLocalServiceImpl
 	 *         occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
@@ -4568,6 +4477,7 @@ public class JournalArticleLocalServiceImpl
 	 *         occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
@@ -4812,15 +4722,8 @@ public class JournalArticleLocalServiceImpl
 				JournalArticle.class.getName(), article.getId(), article,
 				serviceContext);
 		}
-		else if (article.getVersion() ==
-					JournalArticleConstants.VERSION_DEFAULT) {
 
-			// Indexer
-
-			reindex(article);
-		}
-
-		return journalArticlePersistence.findByPrimaryKey(article.getId());
+		return article;
 	}
 
 	/**
@@ -4852,6 +4755,7 @@ public class JournalArticleLocalServiceImpl
 	 *         occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
@@ -4872,6 +4776,7 @@ public class JournalArticleLocalServiceImpl
 	 *             #updateArticleTranslation(long, String, double, Locale,
 	 *             String, String, String, Map, ServiceContext)}
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,
@@ -4906,6 +4811,7 @@ public class JournalArticleLocalServiceImpl
 	 *         occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,
@@ -5100,6 +5006,7 @@ public class JournalArticleLocalServiceImpl
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateContent(
 			long groupId, String articleId, double version, String content)
@@ -5138,6 +5045,7 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateStatus(
 			long userId, JournalArticle article, int status, String articleURL,
@@ -5316,10 +5224,6 @@ public class JournalArticleLocalServiceImpl
 						JournalActivityKeys.ADD_ARTICLE,
 						extraDataJSONObject.toString(), 0);
 				}
-
-				// Indexer
-
-				reindex(article);
 			}
 			else if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 				updatePreviousApprovedArticle(article);
@@ -5345,19 +5249,6 @@ public class JournalArticleLocalServiceImpl
 
 			trashEntryLocalService.deleteEntry(
 				JournalArticle.class.getName(), article.getResourcePrimKey());
-
-			// Indexer
-
-			if (status == WorkflowConstants.STATUS_APPROVED) {
-				reindex(article);
-			}
-			else {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					JournalArticle.class);
-
-				indexer.delete(article);
-			}
-
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			assetEntryLocalService.updateVisible(
@@ -5380,10 +5271,6 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), JournalArticle.class.getName(),
 				article.getResourcePrimKey(), oldArticleVersionStatus,
 				articleVersionStatusOVPs, typeSettingsProperties);
-
-			// Indexer
-
-			reindex(article);
 		}
 
 		if ((article.getClassNameId() ==
@@ -5424,17 +5311,6 @@ public class JournalArticleLocalServiceImpl
 			notifySubscribers(article, serviceContext);
 		}
 
-		if (status == WorkflowConstants.STATUS_EXPIRED) {
-			List<JournalArticle> approvedArticles =
-				journalArticlePersistence.findByG_A_ST(
-					article.getGroupId(), article.getArticleId(),
-					WorkflowConstants.STATUS_APPROVED, 0, 1);
-
-			if (approvedArticles.isEmpty()) {
-				reindex(article);
-			}
-		}
-
 		return article;
 	}
 
@@ -5459,6 +5335,7 @@ public class JournalArticleLocalServiceImpl
 	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateStatus(
 			long userId, long classPK, int status,
@@ -5494,6 +5371,7 @@ public class JournalArticleLocalServiceImpl
 	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateStatus(
 			long userId, long groupId, String articleId, double version,
@@ -5538,6 +5416,119 @@ public class JournalArticleLocalServiceImpl
 			article.setTemplateId(newDDMTemplateKey);
 
 			journalArticlePersistence.update(article);
+		}
+	}
+
+	protected void checkArticlesByDisplayDate(Date displayDate)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> articles = journalArticlePersistence.findByLtD_S(
+			displayDate, WorkflowConstants.STATUS_SCHEDULED);
+
+		for (JournalArticle article : articles) {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCommand(Constants.UPDATE);
+
+			String layoutFullURL = PortalUtil.getLayoutFullURL(
+				article.getGroupId(), PortletKeys.JOURNAL);
+
+			serviceContext.setLayoutFullURL(layoutFullURL);
+
+			serviceContext.setScopeGroupId(article.getGroupId());
+
+			updateStatus(
+				article.getUserId(), article, WorkflowConstants.STATUS_APPROVED,
+				null, new HashMap<String, Serializable>(), serviceContext);
+		}
+	}
+
+	protected void checkArticlesByExpirationDate(Date expirationDate)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> articles =
+			journalArticleFinder.findByExpirationDate(
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				new Date(
+					expirationDate.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL),
+				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Expiring " + articles.size() + " articles");
+		}
+
+		Set<Long> companyIds = new HashSet<Long>();
+
+		for (JournalArticle article : articles) {
+			if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
+				List<JournalArticle> currentArticles =
+					journalArticlePersistence.findByG_A(
+						article.getGroupId(), article.getArticleId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						new ArticleVersionComparator(true));
+
+				for (JournalArticle currentArticle : currentArticles) {
+					currentArticle.setExpirationDate(
+						article.getExpirationDate());
+					currentArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+					journalArticlePersistence.update(currentArticle);
+				}
+			}
+			else {
+				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+				journalArticlePersistence.update(article);
+			}
+
+			updatePreviousApprovedArticle(article);
+
+			JournalContentUtil.clearCache(
+				article.getGroupId(), article.getArticleId(),
+				article.getTemplateId());
+
+			companyIds.add(article.getCompanyId());
+		}
+
+		for (long companyId : companyIds) {
+			CacheUtil.clearCache(companyId);
+		}
+
+		if (_previousCheckDate == null) {
+			_previousCheckDate = new Date(
+				expirationDate.getTime() - _JOURNAL_ARTICLE_CHECK_INTERVAL);
+		}
+	}
+
+	protected void checkArticlesByReviewDate(Date reviewDate)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> articles = journalArticleFinder.findByReviewDate(
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, reviewDate,
+			_previousCheckDate);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Sending review notifications for " + articles.size() +
+					" articles");
+		}
+
+		for (JournalArticle article : articles) {
+			String articleURL = StringPool.BLANK;
+
+			long ownerId = article.getGroupId();
+			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
+			long plid = PortletKeys.PREFS_PLID_SHARED;
+			String portletId = PortletKeys.JOURNAL;
+
+			PortletPreferences preferences =
+				portletPreferencesLocalService.getPreferences(
+					article.getCompanyId(), ownerId, ownerType, plid,
+					portletId);
+
+			sendEmail(
+				article, articleURL, preferences, "review",
+				new ServiceContext());
 		}
 	}
 
@@ -6234,13 +6225,6 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	protected void reindex(JournalArticle article) throws SearchException {
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			JournalArticle.class);
-
-		indexer.reindex(article);
-	}
-
 	protected void saveImages(
 			boolean smallImage, long smallImageId, File smallImageFile,
 			byte[] smallImageBytes)
@@ -6404,13 +6388,6 @@ public class JournalArticleLocalServiceImpl
 			((approvedArticles.size() == 1) &&
 			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
 
-			if (article.isIndexable()) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					JournalArticle.class);
-
-				indexer.delete(article);
-			}
-
 			assetEntryLocalService.updateVisible(
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
 				false);
@@ -6439,10 +6416,6 @@ public class JournalArticleLocalServiceImpl
 				previousApprovedArticle.getModifiedDate());
 
 			assetEntryPersistence.update(assetEntry);
-
-			if (article.isIndexable()) {
-				reindex(previousApprovedArticle);
-			}
 		}
 	}
 

@@ -108,7 +108,7 @@ public class JournalArticleServiceTest {
 		article = JournalTestUtil.updateArticle(
 			article, "Version 2", article.getContent());
 
-		Assert.assertTrue(article.isApproved());
+		Assert.assertTrue(!article.isApproved());
 		Assert.assertEquals(1.1, article.getVersion(), 0);
 
 		if (expireLatestVersion) {
