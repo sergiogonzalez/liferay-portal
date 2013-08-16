@@ -159,12 +159,28 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected int getNotInTrashBaseModelsCount(
+			BaseModel<?> parentBaseModel, boolean approved)
+		throws Exception {
+
+		boolean head = true;
+
+		if (!approved) {
+			head = false;
+		}
+
+		return WikiPageLocalServiceUtil.getPagesCount(
+			(Long)parentBaseModel.getPrimaryKeyObj(), head,
+			WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		return WikiPageLocalServiceUtil.getPagesCount(
 			(Long)parentBaseModel.getPrimaryKeyObj(), true,
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override
