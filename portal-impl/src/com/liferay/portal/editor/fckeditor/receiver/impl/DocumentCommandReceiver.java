@@ -26,7 +26,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -36,6 +35,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -111,6 +111,62 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 		return "0";
 	}
 
+	protected Element getFileElement(
+			CommandArgument commandArgument, Element fileElement,
+			FileEntry fileEntry)
+		throws Exception {
+
+		String name = fileEntry.getTitle();
+
+		String extension = fileEntry.getExtension();
+
+		if (Validator.isNotNull(extension)) {
+			String periodAndExtension = StringPool.PERIOD.concat(extension);
+
+			if (!name.endsWith(periodAndExtension)) {
+				name = name.concat(periodAndExtension);
+			}
+		}
+
+		fileElement.setAttribute("name", name);
+
+		String description = fileEntry.getDescription();
+
+		fileElement.setAttribute(
+			"desc", Validator.isNotNull(description) ? description : name);
+
+		fileElement.setAttribute("size", getSize(fileEntry.getSize()));
+
+		String url = DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(),
+			commandArgument.getThemeDisplay(), StringPool.BLANK, false, false);
+
+		fileElement.setAttribute("url", url);
+
+		return fileElement;
+	}
+
+	protected List<Element> getFileElements(
+			CommandArgument commandArgument, Document document, Folder folder)
+		throws Exception {
+
+		List<FileEntry> fileEntries = DLAppServiceUtil.getFileEntries(
+			folder.getRepositoryId(), folder.getFolderId());
+
+		List<Element> fileElements = new ArrayList<Element>(fileEntries.size());
+
+		for (FileEntry fileEntry : fileEntries) {
+			Element fileElement = document.createElement("File");
+
+			fileElement = getFileElement(
+				commandArgument, fileElement, fileEntry);
+
+			fileElements.add(fileElement);
+		}
+
+		return fileElements;
+	}
+
 	@Override
 	protected void getFolders(
 		CommandArgument commandArgument, Document document, Node rootNode) {
@@ -163,38 +219,11 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 		Folder folder = _getFolder(
 			group.getGroupId(), commandArgument.getCurrentFolder());
 
-		List<FileEntry> fileEntries = DLAppServiceUtil.getFileEntries(
-			folder.getRepositoryId(), folder.getFolderId());
+		List<Element> fileElements = getFileElements(
+			commandArgument, document, folder);
 
-		for (FileEntry fileEntry : fileEntries) {
-			Element fileElement = document.createElement("File");
-
+		for (Element fileElement : fileElements) {
 			filesElement.appendChild(fileElement);
-
-			String name = fileEntry.getTitle();
-
-			String extension = fileEntry.getExtension();
-
-			if (Validator.isNotNull(extension)) {
-				String periodAndExtension = StringPool.PERIOD.concat(extension);
-
-				if (!name.endsWith(periodAndExtension)) {
-					name = name.concat(periodAndExtension);
-				}
-			}
-
-			fileElement.setAttribute("name", name);
-			fileElement.setAttribute("desc", name);
-
-			fileElement.setAttribute("size", getSize(fileEntry.getSize()));
-
-			ThemeDisplay themeDisplay = commandArgument.getThemeDisplay();
-
-			String url = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, false);
-
-			fileElement.setAttribute("url", url);
 		}
 	}
 

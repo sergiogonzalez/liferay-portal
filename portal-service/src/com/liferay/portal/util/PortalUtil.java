@@ -885,8 +885,8 @@ public class PortalUtil {
 		return getPortal().getLocale(request, response, initialize);
 	}
 
-	public static Locale getLocale(RenderRequest renderRequest) {
-		return getPortal().getLocale(renderRequest);
+	public static Locale getLocale(PortletRequest portletRequest) {
+		return getPortal().getLocale(portletRequest);
 	}
 
 	public static String getLocalizedFriendlyURL(

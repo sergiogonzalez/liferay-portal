@@ -23,6 +23,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,6 +90,10 @@ public class CommandArgument {
 
 	public HttpServletRequest getHttpServletRequest() {
 		return _request;
+	}
+
+	public Locale getLocale() {
+		return _themeDisplay.getLocale();
 	}
 
 	public String getNewFolder() {

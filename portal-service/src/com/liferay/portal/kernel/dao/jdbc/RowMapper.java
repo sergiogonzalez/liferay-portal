@@ -24,6 +24,8 @@ public interface RowMapper<T> {
 
 	public static final RowMapper<Integer> COUNT = new CountRowMapper();
 
+	public static final RowMapper<Long> PRIMARY_KEY = new PrimaryKeyRowMapper();
+
 	public T mapRow(ResultSet rs, int rowNumber) throws SQLException;
 
 }

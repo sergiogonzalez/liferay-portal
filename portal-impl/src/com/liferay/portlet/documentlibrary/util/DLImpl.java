@@ -753,6 +753,8 @@ public class DLImpl implements DL {
 		sb.append(StringPool.SLASH);
 		sb.append(fileEntry.getFolderId());
 		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getUuid());
+		sb.append(StringPool.SLASH);
 
 		String title = fileEntry.getTitle();
 
@@ -761,9 +763,6 @@ public class DLImpl implements DL {
 		}
 
 		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(title)));
-
-		sb.append(StringPool.SLASH);
-		sb.append(fileEntry.getUuid());
 
 		if (appendVersion) {
 			sb.append("?version=");

@@ -1362,6 +1362,10 @@
 				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
 			}
 
+			if ('showHeader' in config) {
+				ddmURL.setParameter('showHeader', config.showHeader);
+			}
+
 			if ('showManageTemplates' in config) {
 				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);
 			}
@@ -1422,6 +1426,29 @@
 			}
 		},
 		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
+		'openInDialog',
+		function(event) {
+			event.preventDefault();
+
+			var currentTarget = event.currentTarget;
+
+			var config = currentTarget.getData();
+
+			if (!config.uri) {
+				config.uri = currentTarget.getData('href') || currentTarget.attr('href');
+			}
+
+			if (!config.title) {
+				config.title = currentTarget.attr('title');
+			}
+
+			Liferay.Util.openWindow(config);
+		},
+		['aui-base', 'liferay-util-window']
 	);
 
 	Liferay.provide(
