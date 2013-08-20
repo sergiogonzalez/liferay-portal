@@ -349,7 +349,7 @@ window.YUI_config = {
 				'liferay-layout-freeform': {
 					path: 'layout_freeform.js',
 					requires: [
-						'aui-resize-deprecated',
+						'resize',
 						'liferay-layout-column'
 					]
 				},
@@ -667,12 +667,6 @@ window.YUI_config = {
 			base: PATH_JAVASCRIPT + '/liferay/',
 			combine: false,
 			modules: {
-				'portal-aui-lang': {
-					path: LiferayAUI.getLangPath(),
-					requires: [
-						'aui-calendar'
-					]
-				},
 				'portal-available-languages': {
 					path: LiferayAUI.getAvailableLangPath(),
 					requires: [
@@ -683,6 +677,7 @@ window.YUI_config = {
 			root: PATH_JAVASCRIPT + '/liferay/'
 		}
 	},
+	lang: themeDisplay.getBCP47LanguageId(),
 	root: PATH_JAVASCRIPT + '/aui/',
 	useBrowserConsole: false
 };

@@ -827,7 +827,7 @@ public interface Portal {
 		HttpServletRequest request, HttpServletResponse response,
 		boolean initialize);
 
-	public Locale getLocale(RenderRequest renderRequest);
+	public Locale getLocale(PortletRequest portletRequest);
 
 	public String getLocalizedFriendlyURL(
 			HttpServletRequest request, Layout layout, Locale locale)

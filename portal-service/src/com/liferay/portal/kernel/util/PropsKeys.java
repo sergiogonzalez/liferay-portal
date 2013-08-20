@@ -2527,6 +2527,8 @@ public interface PropsKeys {
 
 	public static final String VALUE_OBJECT_LISTENER = "value.object.listener.";
 
+	public static final String VELOCITY_ENGINE_DIRECTIVE_IF_TO_STRING_NUL_LCHECK = "velocity.engine.directive.if.to.string.null.check";
+
 	public static final String VELOCITY_ENGINE_LOGGER = "velocity.engine.logger";
 
 	public static final String VELOCITY_ENGINE_LOGGER_CATEGORY = "velocity.engine.logger.category";

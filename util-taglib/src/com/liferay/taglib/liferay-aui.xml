@@ -113,6 +113,12 @@
 				<defaultValue>button</defaultValue>
 			</attribute>
 			<attribute>
+				<name>useDialog</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>false</defaultValue>
+			</attribute>
+			<attribute>
 				<name>value</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -683,6 +689,16 @@
 	<component name="Nav" bodyContent="true">
 		<attributes>
 			<attribute>
+				<name>ariaLabel</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>ariaRole</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -750,6 +766,16 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>ariaLabel</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>ariaRole</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -794,6 +820,12 @@
 				<name>title</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>useDialog</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>false</defaultValue>
 			</attribute>
 			<attribute>
 				<name>wrapDropDownMenu</name>
