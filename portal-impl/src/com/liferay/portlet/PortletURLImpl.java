@@ -211,7 +211,7 @@ public class PortletURLImpl
 	public String getParameter(String name) {
 		String[] values = _params.get(name);
 
-		if ((values != null) && (values.length > 0)) {
+		if (ArrayUtil.isNotEmpty(values)) {
 			return values[0];
 		}
 		else {
@@ -1089,7 +1089,9 @@ public class PortletURLImpl
 		}
 
 		if (_encrypt) {
-			sb.append(StringPool.AMPERSAND + WebKeys.ENCRYPT + "=1");
+			sb.append(StringPool.AMPERSAND);
+			sb.append(WebKeys.ENCRYPT);
+			sb.append("=1");
 		}
 
 		if (PropsValues.PORTLET_URL_ANCHOR_ENABLE) {

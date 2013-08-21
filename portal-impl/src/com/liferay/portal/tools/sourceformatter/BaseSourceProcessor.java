@@ -157,9 +157,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		ifClause = stripQuotes(ifClause, StringPool.QUOTE);
+		ifClause = stripQuotes(ifClause, CharPool.QUOTE);
 
-		ifClause = stripQuotes(ifClause, StringPool.APOSTROPHE);
+		ifClause = stripQuotes(ifClause, CharPool.APOSTROPHE);
 
 		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
 			ifClause.contains("/*") || ifClause.contains("*/")) {
@@ -269,6 +269,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			for (String languageKey : languageKeys) {
 				if (Validator.isNumber(languageKey) ||
 					languageKey.endsWith(StringPool.DASH) ||
+					languageKey.endsWith(StringPool.OPEN_BRACKET) ||
 					languageKey.endsWith(StringPool.PERIOD) ||
 					languageKey.endsWith(StringPool.UNDERLINE) ||
 					languageKey.startsWith(StringPool.DASH) ||
@@ -288,6 +289,45 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 			}
 		}
+	}
+
+	protected void checkStringBundler(
+		String line, String fileName, int lineCount) {
+
+		if ((!line.startsWith("sb.append(") && !line.contains("SB.append(")) ||
+			!line.endsWith(");")) {
+
+			return;
+		}
+
+		int pos = line.indexOf(".append(");
+
+		line = line.substring(pos + 8, line.length() - 2);
+
+		line = stripQuotes(line, CharPool.QUOTE);
+
+		if (!line.contains(" + ")) {
+			return;
+		}
+
+		String[] lineParts = StringUtil.split(line, " + ");
+
+		for (String linePart : lineParts) {
+			int closeParenthesesCount = StringUtil.count(
+				linePart, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				linePart, StringPool.OPEN_PARENTHESIS);
+
+			if (closeParenthesesCount != openParenthesesCount) {
+				return;
+			}
+
+			if (Validator.isNumber(linePart)) {
+				return;
+			}
+		}
+
+		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
 	}
 
 	protected String fixCompatClassImports(File file, String content)
@@ -583,7 +623,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		directoryScanner.setBasedir(basedir);
 
 		excludes = ArrayUtil.append(
-			excludes, _excludes, new String[] {"**\\.git\\**"});
+			excludes, _excludes, new String[] {"**\\.git\\**", "**\\tmp\\**"});
 
 		directoryScanner.setExcludes(excludes);
 
@@ -834,19 +874,34 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newLine;
 	}
 
-	protected String stripQuotes(String s, String delimeter) {
-		String[] parts = StringUtil.split(s, delimeter);
+	protected String stripQuotes(String s, char delimeter) {
+		boolean insideQuotes = false;
 
-		int i = 1;
+		StringBundler sb = new StringBundler();
 
-		while (i < parts.length) {
-			s = StringUtil.replaceFirst(
-				s, delimeter + parts[i] + delimeter, StringPool.BLANK);
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
 
-			i = i + 2;
+			if (insideQuotes) {
+				if (c == delimeter) {
+					if ((c > 1) && (s.charAt(i - 1) == CharPool.BACK_SLASH) &&
+						(s.charAt(i - 2) != CharPool.BACK_SLASH)) {
+
+						continue;
+					}
+
+					insideQuotes = false;
+				}
+			}
+			else if (c == delimeter) {
+				insideQuotes = true;
+			}
+			else {
+				sb.append(c);
+			}
 		}
 
-		return s;
+		return sb.toString();
 	}
 
 	protected String stripRedundantParentheses(String s) {

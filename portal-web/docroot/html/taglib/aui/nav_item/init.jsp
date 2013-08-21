@@ -35,6 +35,8 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 java.lang.String anchorCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:anchorCssClass"));
 java.util.Map anchorData = (java.util.Map)request.getAttribute("aui:nav-item:anchorData");
 java.lang.String anchorId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:anchorId"));
+java.lang.String ariaLabel = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:ariaLabel"));
+java.lang.String ariaRole = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:ariaRole"));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:cssClass"));
 java.util.Map data = (java.util.Map)request.getAttribute("aui:nav-item:data");
 boolean dropdown = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:dropdown")));
@@ -44,11 +46,14 @@ java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribut
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:label"));
 boolean selected = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:selected")));
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:title"));
+boolean useDialog = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:useDialog")), false);
 boolean wrapDropDownMenu = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:wrapDropDownMenu")), true);
 
 _updateOptions(_options, "anchorCssClass", anchorCssClass);
 _updateOptions(_options, "anchorData", anchorData);
 _updateOptions(_options, "anchorId", anchorId);
+_updateOptions(_options, "ariaLabel", ariaLabel);
+_updateOptions(_options, "ariaRole", ariaRole);
 _updateOptions(_options, "cssClass", cssClass);
 _updateOptions(_options, "data", data);
 _updateOptions(_options, "dropdown", dropdown);
@@ -58,6 +63,7 @@ _updateOptions(_options, "id", id);
 _updateOptions(_options, "label", label);
 _updateOptions(_options, "selected", selected);
 _updateOptions(_options, "title", title);
+_updateOptions(_options, "useDialog", useDialog);
 _updateOptions(_options, "wrapDropDownMenu", wrapDropDownMenu);
 %>
 

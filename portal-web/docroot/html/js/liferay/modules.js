@@ -89,9 +89,9 @@ window.YUI_config = {
 						'aui-data-set-deprecated',
 						'aui-io-request',
 						'aui-parse-content',
-						'sortable',
 						'base',
-						'liferay-undo-manager'
+						'liferay-undo-manager',
+						'sortable'
 					]
 				},
 				'liferay-browser-selectors': {
@@ -256,7 +256,11 @@ window.YUI_config = {
 				},
 				'liferay-history': {
 					path: 'history.js',
-					requires: [ 'history-hash', 'liferay-history-html5', 'querystring-parse-simple' ]
+					requires: [
+						'history-hash',
+						'liferay-history-html5',
+						'querystring-parse-simple'
+					]
 				},
 				'liferay-history-html5': {
 					path: 'history_html5.js',
@@ -349,8 +353,8 @@ window.YUI_config = {
 				'liferay-layout-freeform': {
 					path: 'layout_freeform.js',
 					requires: [
-						'aui-resize-deprecated',
-						'liferay-layout-column'
+						'liferay-layout-column',
+						'resize'
 					]
 				},
 				'liferay-list-view': {
@@ -618,8 +622,8 @@ window.YUI_config = {
 				'liferay-util-window': {
 					path: 'util_window.js',
 					requires: [
-						'aui-modal',
 						'aui-dialog-iframe-deprecated',
+						'aui-modal',
 						'event-resize',
 						'liferay-widget-zindex'
 					]
@@ -667,12 +671,6 @@ window.YUI_config = {
 			base: PATH_JAVASCRIPT + '/liferay/',
 			combine: false,
 			modules: {
-				'portal-aui-lang': {
-					path: LiferayAUI.getLangPath(),
-					requires: [
-						'aui-calendar'
-					]
-				},
 				'portal-available-languages': {
 					path: LiferayAUI.getAvailableLangPath(),
 					requires: [
@@ -683,6 +681,7 @@ window.YUI_config = {
 			root: PATH_JAVASCRIPT + '/liferay/'
 		}
 	},
+	lang: themeDisplay.getBCP47LanguageId(),
 	root: PATH_JAVASCRIPT + '/aui/',
 	useBrowserConsole: false
 };

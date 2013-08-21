@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -51,12 +52,15 @@ public class ManifestSummary implements Serializable {
 		return modelName.concat(StringPool.POUND).concat(referrerModelName);
 	}
 
-	public void addConfigurationPortlet(Portlet portlet, String[] options) {
+	public void addConfigurationPortlet(
+		Portlet portlet, String[] configurationPortletOptions) {
+
 		String rootPortletId = portlet.getRootPortletId();
 
 		if (!_configurationPortletOptions.containsKey(rootPortletId)) {
 			_configurationPortlets.add(portlet);
-			_configurationPortletOptions.put(rootPortletId, options);
+			_configurationPortletOptions.put(
+				rootPortletId, configurationPortletOptions);
 		}
 	}
 
@@ -189,7 +193,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public long getModelDeletionCount(StagedModelType[] stagedModelTypes) {
-		if (Validator.isNull(stagedModelTypes)) {
+		if (ArrayUtil.isEmpty(stagedModelTypes)) {
 			return 0;
 		}
 

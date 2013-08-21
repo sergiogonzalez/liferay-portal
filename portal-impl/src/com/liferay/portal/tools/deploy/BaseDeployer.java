@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.servlet.SecurePluginContextListener;
 import com.liferay.portal.kernel.servlet.SecureServlet;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -425,9 +426,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			String[] commonsLoggingJars = pluginLibDir.list(
 				new GlobFilenameFilter("commons-logging*.jar"));
 
-			if ((commonsLoggingJars == null) ||
-				(commonsLoggingJars.length == 0)) {
-
+			if (ArrayUtil.isEmpty(commonsLoggingJars)) {
 				String portalJarPath =
 					PortalUtil.getPortalLibDir() + "commons-logging.jar";
 
@@ -443,7 +442,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			String[] log4jJars = pluginLibDir.list(
 				new GlobFilenameFilter("log4j*.jar"));
 
-			if ((log4jJars == null) || (log4jJars.length == 0)) {
+			if (ArrayUtil.isEmpty(log4jJars)) {
 				String portalJarPath =
 					PortalUtil.getPortalLibDir() + "log4j.jar";
 

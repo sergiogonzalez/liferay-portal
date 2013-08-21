@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -121,7 +122,7 @@ public class InstanceWrapperBuilder {
 
 			DocletTag[] docletTags = javaMethod.getTagsByName("deprecated");
 
-			if ((docletTags != null) && (docletTags.length > 0)) {
+			if (ArrayUtil.isNotEmpty(docletTags)) {
 				sb.append("\t/**\n");
 				sb.append("\t * @deprecated\n");
 				sb.append("\t */\n");
@@ -200,7 +201,10 @@ public class InstanceWrapperBuilder {
 				sb.append("return ");
 			}
 
-			sb.append(javaClass.getName() + "." + javaMethod.getName() + "(");
+			sb.append(javaClass.getName());
+			sb.append(".");
+			sb.append(javaMethod.getName());
+			sb.append("(");
 
 			for (int j = 0; j < javaParameters.length; j++) {
 				JavaParameter javaParameter = javaParameters[j];

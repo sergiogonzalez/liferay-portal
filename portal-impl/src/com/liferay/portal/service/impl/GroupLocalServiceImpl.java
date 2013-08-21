@@ -3478,6 +3478,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected void addDefaultGuestPublicLayoutByProperties(Group group)
 		throws PortalException, SystemException {
 
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		if (portlets.isEmpty()) {
+
+			// LPS-38457
+
+			return;
+		}
+
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 		String friendlyURL = getFriendlyURL(
@@ -4109,7 +4119,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected boolean isUseComplexSQL(long[] classNameIds) {
-		if ((classNameIds == null) || (classNameIds.length == 0)) {
+		if (ArrayUtil.isEmpty(classNameIds)) {
 			return true;
 		}
 

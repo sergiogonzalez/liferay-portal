@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -600,15 +601,17 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			try {
 				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, fileEntry);
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, entityStagedModel, entityElement,
+						fileEntry, FileEntry.class,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
-
-				portletDataContext.addReferenceElement(
-					entityStagedModel, entityElement, fileEntry,
-					FileEntry.class,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-					!exportReferencedContent);
+				else {
+					portletDataContext.addReferenceElement(
+						entityStagedModel, entityElement, fileEntry,
+						FileEntry.class,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				}
 
 				String path = ExportImportPathUtil.getModelPath(
 					fileEntry.getGroupId(), FileEntry.class.getName(),
@@ -812,14 +815,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				newLinksToLayout.add(newLinkToLayout);
 
 				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, layout);
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, entityStagedModel, layout,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
-
-				portletDataContext.addReferenceElement(
-					entityStagedModel, entityElement, layout, Layout.class,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-					!exportReferencedContent);
+				else {
+					portletDataContext.addReferenceElement(
+						entityStagedModel, entityElement, layout,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				}
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
@@ -886,25 +890,25 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				continue;
 			}
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, referenceDataElement);
+			FileEntry fileEntry =
+				(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
-			FileEntry fileEntry = null;
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, fileEntry);
+
+			Map<Long, Long> fileEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DLFileEntry.class);
+
+			long importedFileEntryId = MapUtil.getLong(
+				fileEntryIds, fileEntry.getFileEntryId(),
+				fileEntry.getFileEntryId());
+
+			FileEntry importedFileEntry = null;
 
 			try {
-				long groupId = portletDataContext.getScopeGroupId();
-
-				long fileEntryGroupId = GetterUtil.getLong(
-					referenceDataElement.attributeValue("group-id"));
-
-				if (fileEntryGroupId ==
-						portletDataContext.getSourceCompanyGroupId()) {
-
-					groupId = portletDataContext.getSourceCompanyGroupId();
-				}
-
-				fileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					fileEntryUUID, groupId);
+				importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
+					importedFileEntryId);
 			}
 			catch (NoSuchFileEntryException nsfee) {
 				if (_log.isWarnEnabled()) {
@@ -915,8 +919,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 
 			String url = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, false);
+				importedFileEntry, importedFileEntry.getFileVersion(), null,
+				StringPool.BLANK, false, false);
 
 			content = StringUtil.replace(
 				content, "[$dl-reference=" + path + "$]", url);
@@ -1634,13 +1638,20 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					return;
 				}
 
-				_manifestSummary.addConfigurationPortlet(
-					portlet,
-					StringUtil.split(
-						element.attributeValue("portlet-configuration")));
-
 				PortletDataHandler portletDataHandler =
 					portlet.getPortletDataHandlerInstance();
+
+				String[] configurationPortletOptions = StringUtil.split(
+					element.attributeValue("portlet-configuration"));
+
+				PortletDataHandlerControl[] portletDataHandlerControls =
+					portletDataHandler.getImportConfigurationControls(
+						configurationPortletOptions);
+
+				if (ArrayUtil.isNotEmpty(portletDataHandlerControls)) {
+					_manifestSummary.addConfigurationPortlet(
+						portlet, configurationPortletOptions);
+				}
 
 				if (!(portletDataHandler instanceof
 						DefaultConfigurationPortletDataHandler) &&

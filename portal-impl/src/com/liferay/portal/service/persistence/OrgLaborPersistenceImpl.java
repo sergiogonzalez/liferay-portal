@@ -579,6 +579,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 	private static final String _FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2 = "orgLabor.organizationId = ?";
 
+	public OrgLaborPersistenceImpl() {
+		setModelClass(OrgLabor.class);
+	}
+
 	/**
 	 * Caches the org labor in the entity cache if it is enabled.
 	 *

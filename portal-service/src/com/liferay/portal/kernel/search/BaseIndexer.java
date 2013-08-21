@@ -222,7 +222,7 @@ public abstract class BaseIndexer implements Indexer {
 				entryClassNames = ArrayUtil.append(
 					entryClassNames, MBMessage.class.getName());
 
-				searchContext.setAttribute("discussion", true);
+				searchContext.setAttribute("discussion", Boolean.TRUE);
 			}
 
 			searchContext.setEntryClassNames(entryClassNames);
@@ -601,12 +601,12 @@ public abstract class BaseIndexer implements Indexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
+		searchContext.setAttribute("relatedClassName", Boolean.TRUE);
+
 		String[] relatedEntryClassNames = (String[])searchContext.getAttribute(
 			"relatedEntryClassNames");
 
-		if ((relatedEntryClassNames == null) ||
-			(relatedEntryClassNames.length == 0)) {
-
+		if (ArrayUtil.isEmpty(relatedEntryClassNames)) {
 			return;
 		}
 
@@ -634,6 +634,8 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		contextQuery.add(relatedQueries, BooleanClauseOccur.MUST);
+
+		searchContext.setAttribute("relatedClassName", Boolean.FALSE);
 	}
 
 	protected void addSearchArrayQuery(

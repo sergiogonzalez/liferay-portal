@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -114,7 +115,7 @@ public class WikiTestUtil {
 
 		File file = null;
 
-		if ((fileBytes != null) && (fileBytes.length > 0)) {
+		if (ArrayUtil.isNotEmpty(fileBytes)) {
 			file = FileUtil.createTempFile(fileBytes);
 		}
 

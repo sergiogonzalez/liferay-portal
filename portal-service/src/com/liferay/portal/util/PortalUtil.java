@@ -885,8 +885,8 @@ public class PortalUtil {
 		return getPortal().getLocale(request, response, initialize);
 	}
 
-	public static Locale getLocale(RenderRequest renderRequest) {
-		return getPortal().getLocale(renderRequest);
+	public static Locale getLocale(PortletRequest portletRequest) {
+		return getPortal().getLocale(portletRequest);
 	}
 
 	public static String getLocalizedFriendlyURL(
@@ -1314,6 +1314,10 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getSelectedUser(portletRequest, checkPermission);
+	}
+
+	public static String getServletContextName() {
+		return getPortal().getServletContextName();
 	}
 
 	public static Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(

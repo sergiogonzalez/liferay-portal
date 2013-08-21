@@ -118,7 +118,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 					<aui:input name="layoutIds" type="hidden" />
 
-					<c:if test="<%= !group.isLayoutPrototype() %>">
+					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
 							<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
 
@@ -189,50 +189,48 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 												PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), groupId, portlet, privateLayout);
 
-												if ((configurationControls != null) && (configurationControls.length > 0)) {
-													String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
+												String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 											%>
 
-													<li class="tree-item">
-														<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
+												<li class="tree-item">
+													<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
 
-														<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
-															<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
-																<ul class="lfr-tree unstyled">
-
-																	<%
-																	request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-																	request.setAttribute("render_controls.jsp-controls", configurationControls);
-																	request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
-																	%>
-
-																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-																</ul>
-															</aui:fieldset>
-														 </div>
-
-														<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= portlet.getRootPortletId() %>">
-															<li>
-																<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></span>
+													<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
+														<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
+															<ul class="lfr-tree unstyled">
 
 																<%
-																Map<String,Object> data = new HashMap<String,Object>();
-
-																data.put("portletid", portlet.getRootPortletId());
-																data.put("portlettitle", portletTitle);
+																request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+																request.setAttribute("render_controls.jsp-controls", configurationControls);
+																request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
 																%>
 
-																<aui:a cssClass="configuration-link modify-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
-															</li>
-														</ul>
+																<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+															</ul>
+														</aui:fieldset>
+													 </div>
 
-														<aui:script>
-															Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + portlet.getRootPortletId() %>');
-														</aui:script>
-													</li>
+													<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= portlet.getRootPortletId() %>">
+														<li>
+															<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></span>
+
+															<%
+															Map<String,Object> data = new HashMap<String,Object>();
+
+															data.put("portletid", portlet.getRootPortletId());
+															data.put("portlettitle", portletTitle);
+															%>
+
+															<aui:a cssClass="configuration-link modify-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
+														</li>
+													</ul>
+
+													<aui:script>
+														Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + portlet.getRootPortletId() %>');
+													</aui:script>
+												</li>
 
 											<%
-												}
 											}
 											%>
 
@@ -409,7 +407,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 															PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
 															PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();
 
-															if (Validator.isNotNull(exportControls) || Validator.isNotNull(metadataControls)) {
+															if (ArrayUtil.isNotEmpty(exportControls) || ArrayUtil.isNotEmpty(metadataControls)) {
 															%>
 
 																<div class="hide" id="<portlet:namespace />content_<%= portlet.getPortletId() %>">
@@ -425,7 +423,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																					request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 																				%>
 
-																					<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
+																					<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
 																						<ul class="lfr-tree unstyled">
 																							<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																						</ul>
@@ -447,7 +445,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 																						PortletDataHandlerControl[] childrenControls = control.getChildren();
 
-																						if ((childrenControls != null) && (childrenControls.length > 0)) {
+																						if (ArrayUtil.isNotEmpty(childrenControls)) {
 																							request.setAttribute("render_controls.jsp-controls", childrenControls);
 																						%>
 

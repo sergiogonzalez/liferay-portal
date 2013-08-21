@@ -375,8 +375,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return ifClause;
 			}
 
-			line = stripQuotes(line, StringPool.QUOTE);
-			line = stripQuotes(line, StringPool.APOSTROPHE);
+			line = stripQuotes(line, CharPool.QUOTE);
+			line = stripQuotes(line, CharPool.APOSTROPHE);
 
 			closeParenthesesCount += StringUtil.count(
 				line, StringPool.CLOSE_PARENTHESIS);
@@ -1098,6 +1098,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
+			checkStringBundler(trimmedLine, fileName, lineCount);
+
 			if (trimmedLine.startsWith("* @deprecated") &&
 				mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_2_0)) {
 
@@ -1173,8 +1175,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String excluded = null;
 
 			if (line.startsWith(StringPool.TAB + "private ") ||
+				line.equals(StringPool.TAB + "private") ||
 				line.startsWith(StringPool.TAB + "protected ") ||
-				line.startsWith(StringPool.TAB + "public ")) {
+				line.equals(StringPool.TAB + "protected") ||
+				line.startsWith(StringPool.TAB + "public ") ||
+				line.equals(StringPool.TAB + "public")) {
 
 				Tuple tuple = getJavaTermTuple(line, content, index, 1, 3);
 
@@ -1252,6 +1257,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					!previousLine.endsWith("&&") &&
 					!previousLine.endsWith("||") &&
 					!previousLine.contains(StringPool.TAB + "((") &&
+					!previousLine.contains(
+						StringPool.TAB + StringPool.LESS_THAN) &&
 					!previousLine.contains(StringPool.TAB + StringPool.SPACE) &&
 					!previousLine.contains(StringPool.TAB + "implements ") &&
 					!previousLine.contains(StringPool.TAB + "throws ")) {
@@ -1351,7 +1358,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
 
 					String strippedQuotesLine = stripQuotes(
-						trimmedLine, StringPool.QUOTE);
+						trimmedLine, CharPool.QUOTE);
 
 					int closeParenthesisCount = StringUtil.count(
 						strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
@@ -2320,7 +2327,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\service\\persistence\\BatchSession*.java",
 			"**\\service\\persistence\\*FinderImpl.java",
 			"**\\service\\persistence\\*Query.java",
-			"**\\service\\persistence\\impl\\BasePersistenceImpl.java",
+			"**\\service\\persistence\\impl\\*.java",
 			"**\\portal-impl\\test\\**\\*.java",
 			"**\\portal-service\\**\\liferay\\documentlibrary\\**.java",
 			"**\\portal-service\\**\\liferay\\lock\\**.java",
@@ -2393,7 +2400,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return false;
 		}
 
-		javaParameter = stripQuotes(javaParameter, StringPool.QUOTE);
+		javaParameter = stripQuotes(javaParameter, CharPool.QUOTE);
 
 		int openParenthesisCount = StringUtil.count(
 			javaParameter, StringPool.OPEN_PARENTHESIS);

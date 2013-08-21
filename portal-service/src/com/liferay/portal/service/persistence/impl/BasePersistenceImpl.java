@@ -224,6 +224,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
+	public Class<T> getModelClass() {
+		return _modelClass;
+	}
+
+	@Override
 	public Session openNewSession(Connection connection) throws ORMException {
 		return _sessionFactory.openNewSession(connection);
 	}
@@ -481,6 +486,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		throw new UnsupportedOperationException();
 	}
 
+	protected void setModelClass(Class<T> modelClass) {
+		_modelClass = modelClass;
+	}
+
 	/**
 	 * Updates the model instance in the database or adds it if it does not yet
 	 * exist. {@link #remove(BaseModel)} depends on this method to implement the
@@ -532,6 +541,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private DataSource _dataSource;
 	private DB _db;
 	private Dialect _dialect;
+	private Class<T> _modelClass;
 	private SessionFactory _sessionFactory;
 
 }

@@ -827,7 +827,7 @@ public interface Portal {
 		HttpServletRequest request, HttpServletResponse response,
 		boolean initialize);
 
-	public Locale getLocale(RenderRequest renderRequest);
+	public Locale getLocale(PortletRequest portletRequest);
 
 	public String getLocalizedFriendlyURL(
 			HttpServletRequest request, Layout layout, Locale locale)
@@ -1025,6 +1025,8 @@ public interface Portal {
 	public User getSelectedUser(
 			PortletRequest portletRequest, boolean checkPermission)
 		throws PortalException, SystemException;
+
+	public String getServletContextName();
 
 	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
 			HttpServletRequest request)

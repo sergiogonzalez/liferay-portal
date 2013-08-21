@@ -41,6 +41,7 @@ int yearValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:i
 
 Calendar calendar = CalendarFactoryUtil.getCalendar(yearValue, monthValue, dayValue);
 
+String mask = _MASK_MDY;
 String simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_MDY;
 
 if (BrowserSnifferUtil.isMobile(request)) {
@@ -54,14 +55,16 @@ else {
 	String shortDateFormatSimpleDateFormatPattern = shortDateFormatSimpleDateFormat.toPattern();
 
 	if (shortDateFormatSimpleDateFormatPattern.indexOf("y") == 0) {
+		mask = _MASK_YMD;
 		simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_YMD;
 	}
 	else if (shortDateFormatSimpleDateFormatPattern.indexOf("d") == 0) {
+		mask = _MASK_DMY;
 		simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_DMY;
 	}
 }
 
-Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern);
+Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
 %>
 
 <span class="lfr-input-date <%= cssClass %>" id="<%= randomNamespace %>displayDate">
@@ -83,24 +86,27 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 	Liferay.component(
 		'<%= namespace + name %>DatePicker',
 		function() {
-			return new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>({
-				container: '#<%= randomNamespace %>displayDate',
-				on: {
-					selectionChange: function(event) {
-						var date = event.newSelection[0];
+			return new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
+				{
+					container: '#<%= randomNamespace %>displayDate',
+					mask: '<%= mask %>',
+					on: {
+						selectionChange: function(event) {
+							var date = event.newSelection[0];
 
-						if (date) {
-							A.one('#<%= dayParamId %>').val(date.getDate());
-							A.one('#<%= monthParamId %>').val(date.getMonth());
-							A.one('#<%= yearParamId %>').val(date.getFullYear());
+							if (date) {
+								A.one('#<%= dayParamId %>').val(date.getDate());
+								A.one('#<%= monthParamId %>').val(date.getMonth());
+								A.one('#<%= yearParamId %>').val(date.getFullYear());
+							}
 						}
-					}
-				},
-				popover: {
-					zIndex: Liferay.zIndex.TOOLTIP
-				},
-				trigger: '#<%= namespace + name %>'
-			});
+					},
+					popover: {
+						zIndex: Liferay.zIndex.TOOLTIP
+					},
+					trigger: '#<%= namespace + name %>'
+				}
+			);
 		}
 	);
 
@@ -115,4 +121,10 @@ private static final String _SIMPLE_DATE_FORMAT_PATTERN_HTML5 = "yyyy-MM-dd";
 private static final String _SIMPLE_DATE_FORMAT_PATTERN_MDY = "MM/dd/yyyy";
 
 private static final String _SIMPLE_DATE_FORMAT_PATTERN_YMD = "yyyy/MM/dd";
+
+private static final String _MASK_DMY = "%d/%m/%Y";
+
+private static final String _MASK_MDY = "%m/%d/%Y";
+
+private static final String _MASK_YMD = "%Y/%m/%d";
 %>
