@@ -197,7 +197,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
 		return MBThreadLocalServiceUtil.getThreadsCount(
-			category.getGroupId(), classPK, WorkflowConstants.STATUS_APPROVED);
+			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	@Override
@@ -210,7 +210,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
 		List<MBThread> threads = MBThreadLocalServiceUtil.getThreads(
-			category.getGroupId(), classPK, WorkflowConstants.STATUS_APPROVED,
+			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
 			start, end);
 
 		for (MBThread thread : threads) {
@@ -239,7 +239,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
 		return MBCategoryLocalServiceUtil.getCategoriesCount(
-			category.getGroupId(), classPK, WorkflowConstants.STATUS_APPROVED);
+			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	@Override
@@ -252,7 +252,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
 		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
-			category.getGroupId(), classPK, WorkflowConstants.STATUS_APPROVED,
+			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
 			start, end);
 
 		for (MBCategory curCategory : categories) {
