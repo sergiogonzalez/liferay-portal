@@ -51,6 +51,40 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getRestoreEntityLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		String portletId = PortletKeys.BLOGS;
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			entry.getGroupId(), PortletKeys.BLOGS);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			portletId = PortletKeys.BLOGS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+
+		if (portletId.equals(PortletKeys.BLOGS)) {
+			portletURL.setParameter("struts_action", "/blogs/view_entry");
+		}
+		else {
+			portletURL.setParameter("struts_action", "/blogs_admin/view_entry");
+		}
+
+		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+		portletURL.setParameter("urlTitle", entry.getUrlTitle());
+
+		return portletURL.toString();
+	}
+
+	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 

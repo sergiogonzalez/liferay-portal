@@ -104,12 +104,23 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
+	public String getRestoreEntityLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+
+		return DLUtil.getDLFileEntryControlPanelLink(
+			portletRequest, dlFileEntry.getFileEntryId());
+	}
+
+	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		return DLUtil.getDLControlPanelLink(
+		return DLUtil.getDLFolderControlPanelLink(
 			portletRequest, dlFileEntry.getFolderId());
 	}
 

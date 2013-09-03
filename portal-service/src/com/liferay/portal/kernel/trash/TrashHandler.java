@@ -259,6 +259,10 @@ public interface TrashHandler {
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException, SystemException;
 
+	public String getRestoreEntityLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the link to the location to which the model entity was restored.
 	 *
