@@ -41,10 +41,10 @@
 				}
 				%>
 
-				<liferay-ui:message arguments="<%= sb.toString() %>" key="the-item-has-been-restored-to-x" />
+				<liferay-ui:message arguments="<%= sb.toString() %>" key="the-item-was-restored-to-x" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="the-item-has-been-restored" />
+				<liferay-ui:message key="the-item-was-restored" />
 			</c:otherwise>
 		</c:choose>
 	</div>
