@@ -91,6 +91,40 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getRestoreEntityLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		String portletId = PortletKeys.WIKI;
+
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			node.getGroupId(), PortletKeys.WIKI);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			portletId = PortletKeys.WIKI_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+
+		if (portletId.equals(PortletKeys.WIKI)) {
+			portletURL.setParameter("struts_action", "/wiki/view_all_pages");
+		}
+		else {
+			portletURL.setParameter(
+				"struts_action", "/wiki_admin/view_all_pages");
+		}
+
+		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+
+		return portletURL.toString();
+	}
+
+	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 

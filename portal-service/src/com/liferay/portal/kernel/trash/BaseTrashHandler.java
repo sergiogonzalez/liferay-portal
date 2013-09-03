@@ -114,6 +114,15 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	@Override
 	@SuppressWarnings("unused")
+	public String getRestoreEntityLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	@SuppressWarnings("unused")
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 

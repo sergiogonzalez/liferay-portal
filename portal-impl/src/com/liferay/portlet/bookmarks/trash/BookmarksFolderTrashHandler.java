@@ -70,6 +70,17 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
+	public String getRestoreEntityLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = getBookmarksFolder(classPK);
+
+		return BookmarksUtil.getControlPanelLink(
+			portletRequest, folder.getFolderId());
+	}
+
+	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 

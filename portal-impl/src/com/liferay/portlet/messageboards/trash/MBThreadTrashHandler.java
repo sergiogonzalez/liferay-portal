@@ -104,6 +104,44 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getRestoreEntityLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		String portletId = PortletKeys.MESSAGE_BOARDS;
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			thread.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+
+		if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
+			portletURL.setParameter(
+				"struts_action", "/message_boards/view_message");
+		}
+		else {
+			portletURL.setParameter(
+				"struts_action", "/message_boards_admin/view_message");
+		}
+
+		portletURL.setParameter(
+			"mbCategoryId", String.valueOf(thread.getCategoryId()));
+		portletURL.setParameter(
+			"messageId", String.valueOf(thread.getRootMessageId()));
+
+		return portletURL.toString();
+	}
+
+	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 

@@ -94,6 +94,17 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 	}
 
 	@Override
+	public String getRestoreEntityLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
+
+		return JournalUtil.getJournalControlPanelLink(
+			portletRequest, folder.getFolderId());
+	}
+
+	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
