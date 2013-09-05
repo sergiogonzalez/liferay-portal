@@ -743,14 +743,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		if (thread.isInTrash()) {
-			restoreThreadFromTrash(userId, threadId);
-		}
-		else {
-			updateStatus(
-				userId, threadId, thread.getStatus(),
-				WorkflowConstants.STATUS_ANY);
-		}
+		restoreThreadFromTrash(userId, threadId);
 
 		return moveThread(thread.getGroupId(), categoryId, threadId);
 	}

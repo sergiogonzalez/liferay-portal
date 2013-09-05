@@ -544,15 +544,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			long userId, long categoryId, long newCategoryId)
 		throws PortalException, SystemException {
 
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		if (category.isInTrash()) {
-			restoreCategoryFromTrash(userId, categoryId);
-		}
-		else {
-			updateStatus(userId, categoryId, category.getStatus());
-		}
+		restoreCategoryFromTrash(userId, categoryId);
 
 		return moveCategory(categoryId, newCategoryId, false);
 	}
