@@ -518,7 +518,7 @@ public class JournalTestUtil {
 	public static String createLocalizedContent(
 		String content, Locale defaultLocale) {
 
-		Map<Locale, String> contentMap = new HashMap();
+		Map<Locale, String> contentMap = new HashMap<Locale, String>();
 
 		for (Locale locale : _locales) {
 			contentMap.put(locale, content);
