@@ -65,6 +65,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
+@Transactional
 public class JournalIndexerTest {
 
 	@Before
@@ -80,19 +81,16 @@ public class JournalIndexerTest {
 	}
 
 	@Test
-	@Transactional
 	public void testAddArticleApprove() throws Exception {
 		addArticle(true);
 	}
 
 	@Test
-	@Transactional
 	public void testAddArticleNotApprove() throws Exception {
 		addArticle(false);
 	}
 
 	@Test
-	@Transactional
 	public void testCopyArticle() throws Exception {
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -124,13 +122,11 @@ public class JournalIndexerTest {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteAllArticleVersion() throws Exception {
 		allArticleVersions(true);
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteArticles() throws Exception {
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -180,25 +176,21 @@ public class JournalIndexerTest {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteArticleVersion() throws Exception {
 		articleVersion(true);
 	}
 
 	@Test
-	@Transactional
 	public void testExpireAllArticleVersions() throws Exception {
 		allArticleVersions(false);
 	}
 
 	@Test
-	@Transactional
 	public void testExpireArticleVersion() throws Exception {
 		articleVersion(false);
 	}
 
 	@Test
-	@Transactional
 	public void testIndexVersions() throws Exception {
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -247,43 +239,36 @@ public class JournalIndexerTest {
 	}
 
 	@Test
-	@Transactional
 	public void testIndexVersionsDelete() throws Exception {
 		indexVersionsDelete(false);
 	}
 
 	@Test
-	@Transactional
 	public void testIndexVersionsDeleteAll() throws Exception {
 		indexVersionsDelete(true);
 	}
 
 	@Test
-	@Transactional
 	public void testIndexVersionsExpire() throws Exception {
 		indexVersionsExpire(false);
 	}
 
 	@Test
-	@Transactional
 	public void testIndexVersionsExpireAll() throws Exception {
 		indexVersionsExpire(true);
 }
 
 	@Test
-	@Transactional
 	public void testMoveArticle() throws Exception {
 		moveArticle(false);
 	}
 
 	@Test
-	@Transactional
 	public void testMoveArticleFromTrash() throws Exception {
 		moveArticle(true);
 	}
 
 	@Test
-	@Transactional
 	public void testMoveArticleToTrashAndRestore() throws Exception {
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -332,7 +317,6 @@ public class JournalIndexerTest {
 	}
 
 	@Test
-	@Transactional
 	public void testRemoveArticleLocale() throws Exception {
 		SearchContext searchContext1 = ServiceTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -384,19 +368,16 @@ public class JournalIndexerTest {
 	}
 
 	@Test
-	@Transactional
 	public void testUpdateArticleAndApprove() throws Exception {
 		updateArticle(true);
 	}
 
 	@Test
-	@Transactional
 	public void testUpdateArticleAndDraft() throws Exception {
 		updateArticle(false);
 	}
 
 	@Test
-	@Transactional
 	public void testUpdateArticleTranslation() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -467,13 +448,11 @@ public class JournalIndexerTest {
 	}
 
 	@Test
-	@Transactional
 	public void testUpdateBasicContent() throws Exception {
 		updateContent(true);
 	}
 
 	@Test
-	@Transactional
 	public void testUpdateStructuredContent() throws Exception {
 		updateContent(false);
 	}
