@@ -417,7 +417,7 @@ public class WebServerServlet extends HttpServlet {
 		else {
 			long groupId = GetterUtil.getLong(pathArray[0]);
 
-			String uuid = pathArray[3];
+			String uuid = pathArray[2];
 
 			return DLAppServiceUtil.getFileEntryByUuidAndGroupId(uuid, groupId);
 		}
@@ -1252,7 +1252,7 @@ public class WebServerServlet extends HttpServlet {
 		else {
 			long groupId = GetterUtil.getLong(pathArray[0]);
 
-			String uuid = pathArray[3];
+			String uuid = pathArray[2];
 
 			try {
 				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(

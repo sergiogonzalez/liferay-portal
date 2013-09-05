@@ -171,7 +171,7 @@ public class JournalRSSUtil {
 			String title = null;
 
 			if (pathArray.length == 4) {
-				uuid = pathArray[3];
+				uuid = pathArray[2];
 			}
 			else if (pathArray.length == 5) {
 				folderId = GetterUtil.getLong(pathArray[3]);

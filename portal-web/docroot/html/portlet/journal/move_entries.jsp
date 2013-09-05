@@ -27,9 +27,9 @@ List<JournalFolder> invalidMoveFolders = new ArrayList<JournalFolder>();
 List<JournalFolder> validMoveFolders = new ArrayList<JournalFolder>();
 
 for (JournalFolder curFolder : folders) {
-	boolean movePermission = JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE);
+	boolean hasUpdatePermission = JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE);
 
-	if (movePermission) {
+	if (hasUpdatePermission) {
 		validMoveFolders.add(curFolder);
 	}
 	else {
@@ -54,9 +54,9 @@ List<JournalArticle> validMoveArticles = new ArrayList<JournalArticle>();
 List<JournalArticle> invalidMoveArticles = new ArrayList<JournalArticle>();
 
 for (JournalArticle curArticle : articles) {
-	boolean movePermission = JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE);
+	boolean hasUpdatePermission = JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE);
 
-	if (movePermission) {
+	if (hasUpdatePermission) {
 		validMoveArticles.add(curArticle);
 	}
 	else {
