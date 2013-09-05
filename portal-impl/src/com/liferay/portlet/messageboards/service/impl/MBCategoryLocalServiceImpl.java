@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.trash.TrashConstants;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -37,6 +38,8 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashVersion;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -836,6 +839,82 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		mbCategoryPersistence.update(toCategory);
 
 		deleteCategory(fromCategory);
+	}
+
+	protected void moveDependentsToTrash(
+			long groupId, long userId, long parentCategoryId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<MBCategory> categories = getCategories(
+			groupId, parentCategoryId, WorkflowConstants.STATUS_ANY,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (MBCategory category : categories) {
+			if (category.isInTrash()) {
+				continue;
+			}
+
+			moveCategoryToTrash(userId, category, serviceContext);
+		}
+
+		List<MBThread> threads = mbThreadLocalService.getThreads(
+			groupId, parentCategoryId, WorkflowConstants.STATUS_ANY,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (MBThread thread : threads) {
+			if (thread.isInTrash()) {
+				continue;
+			}
+
+			mbThreadLocalService.moveThreadToTrash(
+				userId, thread, serviceContext);
+		}
+	}
+
+	protected void restoreDependentsFromTrash(
+			long groupId, long userId, long parentCategoryId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<MBCategory> categories = getCategories(
+			groupId, parentCategoryId, WorkflowConstants.STATUS_ANY,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (MBCategory category : categories) {
+			if (TrashUtil.hasTrashEntry(
+					MBCategory.class.getName(), category.getCategoryId(),
+					serviceContext)) {
+
+				continue;
+			}
+
+			Integer oldStatus = TrashUtil.getDependentStatus(
+				MBCategory.class.getName(), category.getCategoryId(),
+				serviceContext);
+
+			restoreCategoryFromTrash(
+				userId, category, oldStatus, serviceContext);
+		}
+
+		List<MBThread> threads = mbThreadLocalService.getThreads(
+			groupId, parentCategoryId, WorkflowConstants.STATUS_ANY,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (MBThread thread : threads) {
+			if (TrashUtil.hasTrashEntry(
+					MBThread.class.getName(), thread.getThreadId(),
+					serviceContext)) {
+
+				continue;
+			}
+
+			Integer oldStatus = TrashUtil.getDependentStatus(
+				MBThread.class.getName(), thread.getThreadId(), serviceContext);
+
+			mbThreadLocalService.restoreThreadFromTrash(
+				userId, thread, oldStatus, serviceContext);
+		}
 	}
 
 	protected void updateChildCategoriesDisplayStyle(
