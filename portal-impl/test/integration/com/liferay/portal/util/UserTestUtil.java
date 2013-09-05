@@ -105,7 +105,7 @@ public class UserTestUtil {
 	public static User addUser(long groupId, Locale locale) throws Exception {
 		return addUser(
 			ServiceTestUtil.randomString(), false, locale, "ServiceTestSuite",
-			"ServiceTestSuite", new long[]{groupId});
+			"ServiceTestSuite", new long[] {groupId});
 	}
 
 	public static User addUser(
