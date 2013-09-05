@@ -125,24 +125,6 @@ public class JournalFolderIndexer extends BaseIndexer {
 			Field.TREE_PATH,
 			StringUtil.split(folder.getTreePath(), CharPool.SLASH));
 
-		if (!folder.isInTrash() && folder.isInTrashContainer()) {
-			JournalFolder trashedFolder = folder.getTrashContainer();
-
-			if (trashedFolder != null) {
-				addTrashFields(
-					document, JournalFolder.class.getName(),
-					trashedFolder.getFolderId(), null, null,
-					JournalFolderAssetRendererFactory.TYPE);
-
-				document.addKeyword(
-					Field.ROOT_ENTRY_CLASS_NAME, JournalFolder.class.getName());
-				document.addKeyword(
-					Field.ROOT_ENTRY_CLASS_PK, trashedFolder.getFolderId());
-				document.addKeyword(
-					Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
-			}
-		}
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + folder + " indexed successfully");
 		}

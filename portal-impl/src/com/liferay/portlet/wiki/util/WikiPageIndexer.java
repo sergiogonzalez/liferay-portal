@@ -223,18 +223,6 @@ public class WikiPageIndexer extends BaseIndexer {
 		document.addKeyword(Field.NODE_ID, page.getNodeId());
 		document.addText(Field.TITLE, page.getTitle());
 
-		if (!page.isInTrash() && page.isInTrashContainer()) {
-			addTrashFields(
-				document, WikiNode.class.getName(), page.getNodeId(), null,
-				null, WikiPageAssetRendererFactory.TYPE);
-
-			document.addKeyword(
-				Field.ROOT_ENTRY_CLASS_NAME, WikiNode.class.getName());
-			document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, page.getNodeId());
-			document.addKeyword(
-				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
-		}
-
 		return document;
 	}
 

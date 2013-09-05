@@ -349,21 +349,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		addDDMStructureAttributes(document, article);
 
-		if (!article.isInTrash() && article.isInTrashContainer()) {
-			JournalFolder folder = article.getTrashContainer();
-
-			addTrashFields(
-				document, JournalFolder.class.getName(), folder.getFolderId(),
-				null, null, JournalArticleAssetRendererFactory.TYPE);
-
-			document.addKeyword(
-				Field.ROOT_ENTRY_CLASS_NAME, JournalFolder.class.getName());
-			document.addKeyword(
-				Field.ROOT_ENTRY_CLASS_PK, folder.getFolderId());
-			document.addKeyword(
-				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
-		}
-
 		return document;
 	}
 

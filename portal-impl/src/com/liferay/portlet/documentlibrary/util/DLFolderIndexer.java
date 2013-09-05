@@ -132,24 +132,6 @@ public class DLFolderIndexer extends BaseIndexer {
 			Field.TREE_PATH,
 			StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH));
 
-		if (!dlFolder.isInTrash() && dlFolder.isInTrashContainer()) {
-			DLFolder trashedFolder = dlFolder.getTrashContainer();
-
-			if (trashedFolder != null) {
-				addTrashFields(
-					document, DLFolder.class.getName(),
-					trashedFolder.getFolderId(), null, null,
-					DLFileEntryAssetRendererFactory.TYPE);
-
-				document.addKeyword(
-					Field.ROOT_ENTRY_CLASS_NAME, DLFolder.class.getName());
-				document.addKeyword(
-					Field.ROOT_ENTRY_CLASS_PK, trashedFolder.getFolderId());
-				document.addKeyword(
-					Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
-			}
-		}
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + dlFolder + " indexed successfully");
 		}

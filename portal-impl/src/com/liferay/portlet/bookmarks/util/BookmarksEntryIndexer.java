@@ -102,21 +102,6 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 			StringUtil.split(entry.getTreePath(), CharPool.SLASH));
 		document.addText(Field.URL, entry.getUrl());
 
-		if (!entry.isInTrash() && entry.isInTrashContainer()) {
-			BookmarksFolder folder = entry.getTrashContainer();
-
-			addTrashFields(
-				document, BookmarksFolder.class.getName(), folder.getFolderId(),
-				null, null, BookmarksEntryAssetRendererFactory.TYPE);
-
-			document.addKeyword(
-				Field.ROOT_ENTRY_CLASS_NAME, BookmarksFolder.class.getName());
-			document.addKeyword(
-				Field.ROOT_ENTRY_CLASS_PK, folder.getFolderId());
-			document.addKeyword(
-				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
-		}
-
 		return document;
 	}
 
