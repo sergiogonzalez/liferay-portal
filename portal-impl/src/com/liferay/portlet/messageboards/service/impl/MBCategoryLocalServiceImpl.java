@@ -680,38 +680,27 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public MBCategory updateStatus(long userId, long categoryId, int status)
+	public MBCategory updateStatus(
+			long userId, MBCategory category, int status,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		TrashEntry trashEntry = (TrashEntry)serviceContext.getAttribute(
+			TrashConstants.TRASH_ENTRY);
 
 		// Category
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
 		category.setStatus(status);
-		category.setStatusByUserId(user.getUserId());
-		category.setStatusByUserName(user.getFullName());
-		category.setStatusDate(new Date());
+
+		if ((trashEntry == null) || trashEntry.isTrashEntry(category)) {
+			category.setStatusByUserId(user.getUserId());
+			category.setStatusByUserName(user.getFullName());
+			category.setStatusDate(new Date());
+		}
 
 		mbCategoryPersistence.update(category);
-
-		// Categories and threads
-
-		List<Object> categoriesAndThreads = getCategoriesAndThreads(
-			category.getGroupId(), categoryId);
-
-		updateDependentStatus(user, categoriesAndThreads, status);
-
-		// Trash
-
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			trashEntryLocalService.addTrashEntry(
-				userId, category.getGroupId(), MBCategory.class.getName(),
-				categoryId, category.getUuid(), null,
-				WorkflowConstants.STATUS_APPROVED, null, null);
-		}
 
 		return category;
 	}
