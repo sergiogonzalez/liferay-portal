@@ -113,25 +113,16 @@ public class JournalTestUtil {
 			descriptionMap.put(locale, description);
 		}
 
-		if (workflowEnabled) {
-			serviceContext = (ServiceContext)serviceContext.clone();
+		Map<Locale, String> contentMap = new HashMap<Locale, String>();
 
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			if (approved) {
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_PUBLISH);
-			}
+		for (Locale locale : _locales) {
+			contentMap.put(locale, content);
 		}
 
-		return JournalArticleLocalServiceUtil.addArticle(
-			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
-			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
-			titleMap, descriptionMap,
-			createLocalizedContent(content, defaultLocale), "general", null,
-			null, null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0,
-			true, true, false, null, null, null, null, serviceContext);
+		return addArticle(
+			groupId, folderId, classNameId, titleMap, descriptionMap,
+			contentMap, defaultLocale, workflowEnabled, approved,
+			serviceContext);
 	}
 
 	public static JournalArticle addArticle(
