@@ -102,13 +102,13 @@ public class FacebookConnectAction extends PortletAction {
 			themeDisplay.getCompanyId(), redirect, code);
 
 		if (Validator.isNotNull(token)) {
-			session.setAttribute(WebKeys.FACEBOOK_ACCESS_TOKEN, token);
-
 			User user = setFacebookCredentials(
 				session, themeDisplay.getCompanyId(), token);
 
 			if ((user != null) &&
 				(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
+
+				session.setAttribute(WebKeys.FACEBOOK_ACCESS_TOKEN, token);
 
 				redirectUpdateAccount(request, response, user);
 
