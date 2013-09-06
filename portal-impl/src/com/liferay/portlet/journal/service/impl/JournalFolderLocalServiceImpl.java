@@ -82,6 +82,7 @@ public class JournalFolderLocalServiceImpl
 		folder.setCreateDate(serviceContext.getCreateDate(now));
 		folder.setModifiedDate(serviceContext.getModifiedDate(now));
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
@@ -397,6 +398,7 @@ public class JournalFolderLocalServiceImpl
 
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		journalFolderPersistence.update(folder);
@@ -455,6 +457,22 @@ public class JournalFolderLocalServiceImpl
 			extraDataJSONObject.toString(), 0);
 
 		return folder;
+	}
+
+	@Override
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		List<JournalFolder> folders = journalFolderPersistence.findByCompanyId(
+			companyId);
+
+		for (JournalFolder folder : folders) {
+			String treePath = folder.buildTreePath();
+
+			folder.setTreePath(treePath);
+
+			journalFolderPersistence.update(folder);
+		}
 	}
 
 	@Override
@@ -532,6 +550,7 @@ public class JournalFolderLocalServiceImpl
 
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);

@@ -128,4 +128,20 @@ public class DLFileVersionLocalServiceImpl
 		return getLatestFileVersion(fileEntryId, excludeWorkingCopy);
 	}
 
+	@Override
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		List<DLFileVersion> fileVersions =
+			dlFileVersionPersistence.findByCompanyId(companyId);
+
+		for (DLFileVersion fileVersion : fileVersions) {
+			String treePath = fileVersion.buildTreePath();
+
+			fileVersion.setTreePath(treePath);
+
+			dlFileVersionPersistence.update(fileVersion);
+		}
+	}
+
 }
