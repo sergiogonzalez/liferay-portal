@@ -92,7 +92,7 @@
 			<finder-column name="version" />
 		</finder>
 	</entity>
-	<entity name="DLFileEntry" human-name="document library file entry" uuid="true" local-service="true" remote-service="true">
+	<entity name="DLFileEntry" human-name="document library file entry" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 
@@ -340,7 +340,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Layout" />
 	</entity>
-	<entity name="DLFileShortcut" human-name="document library file shortcut" uuid="true" local-service="true" remote-service="true">
+	<entity name="DLFileShortcut" human-name="document library file shortcut" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 
@@ -396,7 +396,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
-	<entity name="DLFileVersion" human-name="document library file version" uuid="true" local-service="true" remote-service="true">
+	<entity name="DLFileVersion" human-name="document library file version" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 
@@ -469,7 +469,7 @@
 			<finder-column name="version" />
 		</finder>
 	</entity>
-	<entity name="DLFolder" human-name="document library folder" uuid="true" local-service="true" remote-service="true">
+	<entity name="DLFolder" human-name="document library folder" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 

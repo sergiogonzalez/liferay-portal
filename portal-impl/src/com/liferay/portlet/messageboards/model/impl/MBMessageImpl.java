@@ -246,19 +246,6 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public ContainerModel getTrashContainer()
-		throws PortalException, SystemException {
-
-		MBThread thread = getThread();
-
-		if (thread.isInTrash()) {
-			return thread;
-		}
-
-		return thread.getTrashContainer();
-	}
-
-	@Override
 	public String getWorkflowClassName() {
 		if (isDiscussion()) {
 			return MBDiscussion.class.getName();
@@ -283,18 +270,6 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		String format = getFormat();
 
 		if (format.equals("bbcode")) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isInTrashThread() throws PortalException, SystemException {
-		MBThread thread = getThread();
-
-		if (thread.isInTrash() || thread.isInTrashContainer()) {
 			return true;
 		}
 		else {

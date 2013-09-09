@@ -233,7 +233,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		return category.getTrashContainer();
+		return (MBCategory)category.getTrashContainer();
 	}
 
 	@Override

@@ -259,7 +259,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		DLFolder dlFolder = null;
 
 		try {
-			dlFolder = _dlFileVersion.getTrashContainer();
+			dlFolder = (DLFolder)_dlFileVersion.getTrashContainer();
 		}
 		catch (Exception e) {
 			return null;

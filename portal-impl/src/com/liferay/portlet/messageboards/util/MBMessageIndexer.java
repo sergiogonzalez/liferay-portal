@@ -275,7 +275,7 @@ public class MBMessageIndexer extends BaseIndexer {
 			}
 		}
 
-		if (!message.isInTrash() && message.isInTrashThread()) {
+		if (!message.isInTrash() && message.isInTrashContainer()) {
 			addTrashFields(
 				document, MBThread.class.getName(), message.getThreadId(), null,
 				null, MBMessageAssetRendererFactory.TYPE);
@@ -286,7 +286,7 @@ public class MBMessageIndexer extends BaseIndexer {
 			MBThread thread = message.getThread();
 
 			if (thread.isInTrashContainer()) {
-				MBCategory category = thread.getTrashContainer();
+				MBCategory category = (MBCategory)thread.getTrashContainer();
 
 				className = MBCategory.class.getName();
 				classPK = category.getCategoryId();

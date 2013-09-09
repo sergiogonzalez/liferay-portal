@@ -96,7 +96,7 @@ public class ActionUtil {
 		}
 
 		if ((message != null) &&
-			(message.isInTrash() || message.isInTrashThread())) {
+			(message.isInTrash() || message.isInTrashContainer())) {
 
 			throw new NoSuchMessageException();
 		}
@@ -128,7 +128,7 @@ public class ActionUtil {
 		}
 
 		if ((message != null) &&
-			(message.isInTrash() || message.isInTrashThread())) {
+			(message.isInTrash() || message.isInTrashContainer())) {
 
 			throw new NoSuchMessageException();
 		}

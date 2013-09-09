@@ -131,7 +131,7 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 
 		JournalFolder folder = getJournalFolder(classPK);
 
-		return folder.getTrashContainer();
+		return (JournalFolder)folder.getTrashContainer();
 	}
 
 	@Override
