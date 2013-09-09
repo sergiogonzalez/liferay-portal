@@ -109,18 +109,15 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	public ContainerModel getParentContainerModel(TrashedModel trashedModel)
 		throws PortalException, SystemException {
 
-		if (trashedModel == null) {
+		if ((trashedModel == null) ||
+			!(trashedModel instanceof ContainerModel)) {
+
 			return null;
 		}
 
-		if (trashedModel instanceof ContainerModel) {
-			ContainerModel containerModel = (ContainerModel)trashedModel;
+		ContainerModel containerModel = (ContainerModel)trashedModel;
 
-			return getContainerModel(
-				containerModel.getParentContainerModelId());
-		}
-
-		return null;
+		return getContainerModel(containerModel.getParentContainerModelId());
 	}
 
 	@Override
