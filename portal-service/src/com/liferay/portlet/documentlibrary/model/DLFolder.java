@@ -51,15 +51,11 @@ public interface DLFolder extends DLFolderModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer();
-
 	public boolean hasInheritableLock();
 
 	public boolean hasLock();
 
 	public boolean isInHiddenFolder();
-
-	public boolean isInTrashContainer();
 
 	public boolean isLocked();
 

@@ -12,29 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.model.impl;
+package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.bookmarks.NoSuchFolderException;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
-public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
+public interface TrashedModel {
 
-	public BookmarksEntryImpl() {
-	}
+	public int getStatus();
 
-	@Override
-	public BookmarksFolder getFolder() throws PortalException, SystemException {
-		if (getFolderId() <= 0) {
-			return new BookmarksFolderImpl();
-		}
+	public TrashedModel getTrashContainer();
 
-		return BookmarksFolderLocalServiceUtil.getFolder(getFolderId());
-	}
+	public TrashEntry getTrashEntry() throws PortalException, SystemException;
+
+	public TrashHandler getTrashHandler();
+
+	public boolean isInTrash();
+
+	public boolean isInTrashContainer();
 
 }

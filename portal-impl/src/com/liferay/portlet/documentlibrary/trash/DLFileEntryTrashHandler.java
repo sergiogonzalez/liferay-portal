@@ -143,7 +143,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		try {
 			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-			return dlFileEntry.getTrashContainer();
+			return (DLFolder)dlFileEntry.getTrashContainer();
 		}
 		catch (InvalidRepositoryException ire) {
 			return null;

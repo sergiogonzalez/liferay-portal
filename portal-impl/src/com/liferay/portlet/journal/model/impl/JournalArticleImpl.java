@@ -186,26 +186,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public JournalFolder getTrashContainer()
-		throws PortalException, SystemException {
-
-		JournalFolder folder = null;
-
-		try {
-			folder = getFolder();
-		}
-		catch (NoSuchFolderException nsfe) {
-			return null;
-		}
-
-		if (folder.isInTrash()) {
-			return folder;
-		}
-
-		return folder.getTrashContainer();
-	}
-
-	@Override
 	public boolean hasApprovedVersion() throws SystemException {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(
@@ -217,18 +197,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 
 		return true;
-	}
-
-	@Override
-	public boolean isInTrashContainer()
-		throws PortalException, SystemException {
-
-		if (getTrashContainer() != null) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	@Override

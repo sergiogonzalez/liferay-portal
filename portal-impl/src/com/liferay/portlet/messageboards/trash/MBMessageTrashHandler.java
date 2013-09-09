@@ -22,6 +22,7 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
@@ -50,7 +51,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
 
-		return message.getTrashContainer();
+		return (MBCategory)message.getTrashContainer();
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
 
-		return message.isInTrashThread();
+		return message.isInTrashContainer();
 	}
 
 	@Override

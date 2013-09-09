@@ -565,6 +565,59 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	/**
+	* Returns the trash container model of the document library file shortcut.
+	*
+	* @return the trash container model of the document library file shortcut.
+	*/
+	@Override
+	public com.liferay.portal.model.TrashedModel getTrashContainer() {
+		return _dlFileShortcut.getTrashContainer();
+	}
+
+	/**
+	* Returns the trash entry created when this document library file shortcut was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file shortcut.
+	*
+	* @return the trash entry created when this document library file shortcut was moved to the Recycle Bin
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileShortcut.getTrashEntry();
+	}
+
+	/**
+	* Returns the trash handler for this document library file shortcut.
+	*
+	* @return the trash handler for this document library file shortcut
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _dlFileShortcut.getTrashHandler();
+	}
+
+	/**
+	* Returns <code>true</code> if this document library file shortcut is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this document library file shortcut is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _dlFileShortcut.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this document library file shortcut is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this document library file shortcut is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _dlFileShortcut.isInTrashContainer();
+	}
+
+	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	@Override
@@ -630,16 +683,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public boolean isIncomplete() {
 		return _dlFileShortcut.isIncomplete();
-	}
-
-	/**
-	* Returns <code>true</code> if this document library file shortcut is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this document library file shortcut is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _dlFileShortcut.isInTrash();
 	}
 
 	/**
@@ -780,22 +823,8 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileShortcut.getTrashContainer();
-	}
-
-	@Override
 	public boolean isInHiddenFolder() {
 		return _dlFileShortcut.isInHiddenFolder();
-	}
-
-	@Override
-	public boolean isInTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileShortcut.isInTrashContainer();
 	}
 
 	@Override

@@ -106,38 +106,6 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 	}
 
 	@Override
-	public DLFolder getTrashContainer()
-		throws PortalException, SystemException {
-
-		DLFolder dlFolder = null;
-
-		try {
-			dlFolder = getFolder();
-		}
-		catch (NoSuchFolderException nsfe) {
-			return null;
-		}
-
-		if (dlFolder.isInTrash()) {
-			return dlFolder;
-		}
-
-		return dlFolder.getTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashContainer()
-		throws PortalException, SystemException {
-
-		if (getTrashContainer() != null) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
 	public void setExtraSettings(String extraSettings) {
 		_extraSettingsProperties = null;
 

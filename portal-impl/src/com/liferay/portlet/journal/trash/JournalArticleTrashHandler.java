@@ -26,6 +26,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -130,7 +131,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
-		return article.getTrashContainer();
+		return (JournalFolder)article.getTrashContainer();
 	}
 
 	@Override

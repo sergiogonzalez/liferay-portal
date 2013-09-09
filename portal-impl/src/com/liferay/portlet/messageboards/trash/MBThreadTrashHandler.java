@@ -150,7 +150,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
 
-		return thread.getTrashContainer();
+		return (MBCategory)thread.getTrashContainer();
 	}
 
 	@Override

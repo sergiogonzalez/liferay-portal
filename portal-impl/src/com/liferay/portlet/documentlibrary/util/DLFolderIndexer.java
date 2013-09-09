@@ -127,7 +127,7 @@ public class DLFolderIndexer extends BaseIndexer {
 		document.addText(Field.TITLE, dlFolder.getName());
 
 		if (!dlFolder.isInTrash() && dlFolder.isInTrashContainer()) {
-			DLFolder trashedFolder = dlFolder.getTrashContainer();
+			DLFolder trashedFolder = (DLFolder)dlFolder.getTrashContainer();
 
 			if (trashedFolder != null) {
 				addTrashFields(

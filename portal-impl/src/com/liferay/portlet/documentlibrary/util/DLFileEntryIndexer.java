@@ -461,7 +461,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			if (!dlFileVersion.isInTrash() &&
 				dlFileVersion.isInTrashContainer()) {
 
-				DLFolder folder = dlFileVersion.getTrashContainer();
+				DLFolder folder = (DLFolder)dlFileVersion.getTrashContainer();
 
 				addTrashFields(
 					document, DLFolder.class.getName(), folder.getFolderId(),

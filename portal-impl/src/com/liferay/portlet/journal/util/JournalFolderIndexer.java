@@ -121,7 +121,8 @@ public class JournalFolderIndexer extends BaseIndexer {
 		document.addText(Field.TITLE, folder.getName());
 
 		if (!folder.isInTrash() && folder.isInTrashContainer()) {
-			JournalFolder trashedFolder = folder.getTrashContainer();
+			JournalFolder trashedFolder =
+				(JournalFolder)folder.getTrashContainer();
 
 			if (trashedFolder != null) {
 				addTrashFields(

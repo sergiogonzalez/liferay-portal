@@ -373,7 +373,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		addDDMStructureAttributes(document, article);
 
 		if (!article.isInTrash() && article.isInTrashContainer()) {
-			JournalFolder folder = article.getTrashContainer();
+			JournalFolder folder = (JournalFolder)article.getTrashContainer();
 
 			addTrashFields(
 				document, JournalFolder.class.getName(), folder.getFolderId(),

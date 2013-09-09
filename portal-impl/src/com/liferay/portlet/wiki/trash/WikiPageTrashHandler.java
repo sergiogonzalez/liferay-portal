@@ -196,7 +196,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		return page.getTrashContainer();
+		return (WikiNode)page.getTrashContainer();
 	}
 
 	@Override

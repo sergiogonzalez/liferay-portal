@@ -107,7 +107,7 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		return folder.getTrashContainer();
+		return (BookmarksFolder)folder.getTrashContainer();
 	}
 
 	@Override
