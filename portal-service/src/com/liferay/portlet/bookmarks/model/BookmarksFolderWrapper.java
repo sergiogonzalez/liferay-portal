@@ -555,6 +555,52 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
+	* Returns the trash entry created when this bookmarks folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this bookmarks folder.
+	*
+	* @return the trash entry created when this bookmarks folder was moved to the Recycle Bin
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolder.getTrashEntry();
+	}
+
+	/**
+	* Returns the trash handler for this bookmarks folder.
+	*
+	* @return the trash handler for this bookmarks folder
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _bookmarksFolder.getTrashHandler();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _bookmarksFolder.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this bookmarks folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean isInTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolder.isInTrashContainer();
+	}
+
+	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	@Override
@@ -620,16 +666,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public boolean isIncomplete() {
 		return _bookmarksFolder.isIncomplete();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _bookmarksFolder.isInTrash();
 	}
 
 	/**
@@ -831,11 +867,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder getTrashContainer() {
 		return _bookmarksFolder.getTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		return _bookmarksFolder.isInTrashContainer();
 	}
 
 	@Override

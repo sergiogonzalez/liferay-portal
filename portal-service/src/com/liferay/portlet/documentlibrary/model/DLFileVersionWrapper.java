@@ -798,6 +798,52 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	/**
+	* Returns the trash entry created when this document library file version was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file version.
+	*
+	* @return the trash entry created when this document library file version was moved to the Recycle Bin
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersion.getTrashEntry();
+	}
+
+	/**
+	* Returns the trash handler for this document library file version.
+	*
+	* @return the trash handler for this document library file version
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _dlFileVersion.getTrashHandler();
+	}
+
+	/**
+	* Returns <code>true</code> if this document library file version is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this document library file version is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _dlFileVersion.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this document library file version is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this document library file version is in the Recycle Bin; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean isInTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersion.isInTrashContainer();
+	}
+
+	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	@Override
@@ -863,16 +909,6 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public boolean isIncomplete() {
 		return _dlFileVersion.isIncomplete();
-	}
-
-	/**
-	* Returns <code>true</code> if this document library file version is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this document library file version is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _dlFileVersion.isInTrash();
 	}
 
 	/**
@@ -1036,13 +1072,6 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileVersion.getTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileVersion.isInTrashContainer();
 	}
 
 	@Override
