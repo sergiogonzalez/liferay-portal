@@ -123,7 +123,7 @@ public class JournalIndexerTest {
 
 	@Test
 	public void testDeleteAllArticleVersion() throws Exception {
-		allArticleVersions(true);
+		articleVersions(true, true);
 	}
 
 	@Test
@@ -177,17 +177,17 @@ public class JournalIndexerTest {
 
 	@Test
 	public void testDeleteArticleVersion() throws Exception {
-		articleVersion(true);
+		articleVersions(true, false);
 	}
 
 	@Test
 	public void testExpireAllArticleVersions() throws Exception {
-		allArticleVersions(false);
+		articleVersions(false, true);
 	}
 
 	@Test
 	public void testExpireArticleVersion() throws Exception {
-		articleVersion(false);
+		articleVersions(false, false);
 	}
 
 	@Test
@@ -240,23 +240,23 @@ public class JournalIndexerTest {
 
 	@Test
 	public void testIndexVersionsDelete() throws Exception {
-		indexVersionsDelete(false);
+		indexVersions(true, false);
 	}
 
 	@Test
 	public void testIndexVersionsDeleteAll() throws Exception {
-		indexVersionsDelete(true);
+		indexVersions(true, true);
 	}
 
 	@Test
 	public void testIndexVersionsExpire() throws Exception {
-		indexVersionsExpire(false);
+		indexVersions(false, false);
 	}
 
 	@Test
 	public void testIndexVersionsExpireAll() throws Exception {
-		indexVersionsExpire(true);
-}
+		indexVersions(false, true);
+	}
 
 	@Test
 	public void testMoveArticle() throws Exception {
@@ -506,65 +506,9 @@ public class JournalIndexerTest {
 			ddmTemplate.getTemplateKey(), serviceContext);
 	}
 
-	protected void allArticleVersions(boolean delete) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+	protected void articleVersions(boolean delete, boolean all)
+		throws Exception {
 
-		SearchContext searchContext1 = ServiceTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		searchContext1.setKeywords("Architectural");
-
-		SearchContext searchContext2 = ServiceTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		searchContext2.setKeywords("Apple");
-
-		int initialBaseModelsSearchCountKeywords1 = searchCount(
-			_group.getGroupId(), searchContext1);
-		int initialBaseModelsSearchCountKeywords2 = searchCount(
-			_group.getGroupId(), searchContext2);
-
-		JournalFolder folder = JournalTestUtil.addFolder(
-			_group.getGroupId(), ServiceTestUtil.randomString());
-
-		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title",
-			"Liferay Architectural Approach", true);
-
-		Assert.assertEquals(
-			initialBaseModelsSearchCountKeywords1 + 1,
-			searchCount(_group.getGroupId(), searchContext1));
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), "Apple tablet", serviceContext);
-
-		Assert.assertEquals(
-			initialBaseModelsSearchCountKeywords2 + 1,
-			searchCount(_group.getGroupId(), searchContext2));
-
-		if (delete) {
-			JournalArticleLocalServiceUtil.deleteArticle(
-				_group.getGroupId(), article.getArticleId(), serviceContext);
-		}
-		else {
-			JournalArticleLocalServiceUtil.expireArticle(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				article.getArticleId(), article.getUrlTitle(), serviceContext);
-		}
-
-		Assert.assertEquals(
-			initialBaseModelsSearchCountKeywords2,
-			searchCount(_group.getGroupId(), searchContext2));
-
-		Assert.assertEquals(
-			initialBaseModelsSearchCountKeywords1,
-			searchCount(_group.getGroupId(), searchContext1));
-	}
-
-	protected void articleVersion(boolean delete) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
@@ -607,26 +551,45 @@ public class JournalIndexerTest {
 			initialBaseModelsSearchCountKeywords2 + 1,
 			searchCount(_group.getGroupId(), searchContext2));
 
-		if (delete) {
-			JournalArticleLocalServiceUtil.deleteArticle(article);
+		if (all) {
+			if (delete) {
+				JournalArticleLocalServiceUtil.deleteArticle(
+					_group.getGroupId(), article.getArticleId(),
+					serviceContext);
+			}
+			else {
+				JournalArticleLocalServiceUtil.expireArticle(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					article.getArticleId(), article.getUrlTitle(),
+					serviceContext);
+			}
+
+			Assert.assertEquals(
+				initialBaseModelsSearchCountKeywords1,
+				searchCount(_group.getGroupId(), searchContext1));
 		}
 		else {
-			JournalArticleLocalServiceUtil.expireArticle(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				article.getArticleId(), article.getVersion(),
-				article.getUrlTitle(), serviceContext);
+			if (delete) {
+				JournalArticleLocalServiceUtil.deleteArticle(article);
+			}
+			else {
+				JournalArticleLocalServiceUtil.expireArticle(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					article.getArticleId(), article.getVersion(),
+					article.getUrlTitle(), serviceContext);
+			}
+
+			Assert.assertEquals(
+				initialBaseModelsSearchCountKeywords1 + 1,
+				searchCount(_group.getGroupId(), searchContext1));
 		}
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCountKeywords2,
 			searchCount(_group.getGroupId(), searchContext2));
-
-		Assert.assertEquals(
-			initialBaseModelsSearchCountKeywords1 + 1,
-			searchCount(_group.getGroupId(), searchContext1));
 	}
 
-	protected void indexVersionsDelete(boolean deleteAll) throws Exception {
+	protected void indexVersions(boolean delete, boolean all) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
@@ -659,77 +622,48 @@ public class JournalIndexerTest {
 				_group.getGroupId(), false, WorkflowConstants.STATUS_ANY,
 				searchContext));
 
-		if (deleteAll) {
-			JournalArticleLocalServiceUtil.deleteArticle(
-				_group.getGroupId(), article.getArticleId(), serviceContext);
+		if (delete) {
+			if (all) {
+				JournalArticleLocalServiceUtil.deleteArticle(
+					_group.getGroupId(), article.getArticleId(),
+					serviceContext);
+
+				Assert.assertEquals(
+					initialBaseModelsSearchCount,
+					searchCount(
+						_group.getGroupId(), false,
+						WorkflowConstants.STATUS_ANY, searchContext));
+			}
+			else {
+				JournalArticleLocalServiceUtil.deleteArticle(article);
+
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 1,
+					searchCount(
+						_group.getGroupId(), false,
+						WorkflowConstants.STATUS_ANY, searchContext));
+			}
+		}
+		else {
+			if (all) {
+				JournalArticleLocalServiceUtil.expireArticle(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					article.getArticleId(), article.getUrlTitle(),
+					serviceContext);
+			}
+			else {
+				JournalArticleLocalServiceUtil.expireArticle(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					article.getArticleId(), article.getVersion(),
+					article.getUrlTitle(), serviceContext);
+			}
 
 			Assert.assertEquals(
-				initialBaseModelsSearchCount,
+				initialBaseModelsSearchCount + 2,
 				searchCount(
 					_group.getGroupId(), false, WorkflowConstants.STATUS_ANY,
 					searchContext));
 		}
-		else {
-			JournalArticleLocalServiceUtil.deleteArticle(article);
-
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchCount(
-					_group.getGroupId(), false, WorkflowConstants.STATUS_ANY,
-					searchContext));
-		}
-	}
-
-	protected void indexVersionsExpire(boolean expireAll) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		SearchContext searchContext = ServiceTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		JournalFolder folder = JournalTestUtil.addFolder(
-			_group.getGroupId(), ServiceTestUtil.randomString());
-
-		int initialBaseModelsSearchCount = searchCount(
-			_group.getGroupId(), searchContext);
-
-		String content = "Liferay Architectural Approach";
-
-		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title", content, true);
-
-		Assert.assertEquals(
-			initialBaseModelsSearchCount + 1,
-			searchCount(_group.getGroupId(), searchContext));
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
-
-		Assert.assertEquals(
-			initialBaseModelsSearchCount + 2,
-			searchCount(
-				_group.getGroupId(), false, WorkflowConstants.STATUS_ANY,
-				searchContext));
-
-		if (expireAll) {
-			JournalArticleLocalServiceUtil.expireArticle(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				article.getArticleId(), article.getUrlTitle(), serviceContext);
-		}
-		else {
-			JournalArticleLocalServiceUtil.expireArticle(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				article.getArticleId(), article.getVersion(),
-				article.getUrlTitle(), serviceContext);
-		}
-
-		Assert.assertEquals(
-			initialBaseModelsSearchCount + 2,
-			searchCount(
-				_group.getGroupId(), false, WorkflowConstants.STATUS_ANY,
-				searchContext));
 	}
 
 	protected void moveArticle(boolean moveToTrash) throws Exception {
