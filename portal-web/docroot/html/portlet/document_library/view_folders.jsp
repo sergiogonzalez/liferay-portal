@@ -402,30 +402,32 @@ else {
 								viewURL="<%= viewURL.toString() %>"
 							/>
 
-					<%
+						<%
 						}
 						catch (Exception e) {
-							if (_log.isWarnEnabled()) {
-								_log.warn("Unable to access repository", e);
-							}
-					%>
+						%>
 
-							<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+							<c:if test="<%= permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) %>">
 
-								<%
-								request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-								%>
+								<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, (e instanceof PrincipalException) ? "an-authentication-error-occurred-while-connecting-to-the-repository" : "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
 
-								<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
+									<%
+									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+									%>
 
-								<span class="browse-folder">
-									<liferay-ui:icon image="drive_error" />
+									<liferay-util:include page="/html/portlet/document_library/folder_action.jsp">
+										<liferay-util:param name="showAddFolderButton" value="<%= StringPool.FALSE %>" />
+									</liferay-util:include>
 
-									<span class="entry-title">
-										<%= mountFolder.getName() %>
+									<span class="browse-folder">
+										<liferay-ui:icon image="drive_error" />
+
+										<span class="entry-title">
+											<%= mountFolder.getName() %>
+										</span>
 									</span>
-								</span>
-							</li>
+								</li>
+							</c:if>
 
 					<%
 						}
