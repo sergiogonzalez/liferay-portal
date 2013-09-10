@@ -40,6 +40,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.awt.image.RenderedImage;
@@ -234,7 +235,16 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		catch (DuplicateDirectoryException dde) {
 		}
 
-		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, srcFile);
+		try {
+			DLStoreUtil.addFile(
+				companyId, REPOSITORY_ID, filePath, false, srcFile);
+		}
+		catch (DuplicateFileException dfe) {
+			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, filePath);
+
+			DLStoreUtil.addFile(
+				companyId, REPOSITORY_ID, filePath, false, srcFile);
+		}
 	}
 
 	protected void addFileToStore(
@@ -247,7 +257,14 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		catch (DuplicateDirectoryException dde) {
 		}
 
-		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, is);
+		try {
+			DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, is);
+		}
+		catch (DuplicateFileException dfe) {
+			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, filePath);
+
+			DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, is);
+		}
 	}
 
 	protected void copyPreviews(
