@@ -215,7 +215,7 @@ String iconMenuId = null;
 						<liferay-ui:icon-delete url="<%= deleteURL %>" />
 					</c:if>
 
-					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && showAddFolderButton %>">
 						<portlet:renderURL var="addFolderURL">
 							<portlet:param name="struts_action" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -266,7 +266,7 @@ String iconMenuId = null;
 						/>
 					</c:if>
 
-					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && showAddFolderButton %>">
 						<portlet:renderURL var="addFolderURL">
 							<portlet:param name="struts_action" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -308,7 +308,9 @@ else {
 									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 									%>
 
-									<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
+									<liferay-util:include page="/html/portlet/document_library/folder_action.jsp">
+										<liferay-util:param name="showAddFolderButton" value="<%= StringPool.FALSE %>" />
+									</liferay-util:include>
 
 									<span class="browse-folder">
 										<liferay-ui:icon alt="drive-error" image="drive_error" />
