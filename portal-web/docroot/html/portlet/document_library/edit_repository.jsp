@@ -76,19 +76,6 @@ long folderId = ParamUtil.getLong(request, "folderId");
 				<div id="<portlet:namespace />settingsConfiguration"></div>
 
 				<div id="<portlet:namespace />settingsParameters"></div>
-
-				<aui:script use="aui-base">
-					var selectRepositoryTypes = A.one('#<portlet:namespace />repositoryTypes');
-
-					selectRepositoryTypes.on(
-						'change',
-						function(event) {
-							showConfiguration(event.currentTarget);
-						}
-					);
-
-					showConfiguration(selectRepositoryTypes);
-				</aui:script>
 			</c:when>
 			<c:otherwise>
 				<div class="repository-settings-display">
@@ -226,6 +213,19 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 		settingsSupported.append(settingsParametersChildren);
 		settingsParameters.append(repositoryParameters);
+	}
+
+	var selectRepositoryTypes = A.one('#<portlet:namespace />repositoryTypes');
+
+	if ( selectRepositoryTypes) {
+		selectRepositoryTypes.on(
+			'change',
+			function(event) {
+				showConfiguration(event.currentTarget);
+			}
+		);
+
+		showConfiguration(selectRepositoryTypes);
 	}
 
 	var selectConfiguration = A.all('.repository-configuration')
