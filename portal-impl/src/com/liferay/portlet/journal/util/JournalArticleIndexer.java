@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -62,9 +61,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -217,7 +218,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, false);
+				searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.TYPE, false);
@@ -571,7 +572,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return DDMIndexerUtil.extractAttributes(
-			ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
+				ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
 	}
 
 	protected String[] getLanguageIds(
@@ -592,10 +593,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexArticles(long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexArticles(long companyId) throws Exception {
 		final Collection<Document> documents = new ArrayList<Document>();
+
+		final Map<Long, JournalArticle> articles =
+			new HashMap<Long, JournalArticle>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new JournalArticleActionableDynamicQuery() {
@@ -612,6 +614,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 			protected void performAction(Object object) throws PortalException {
 				JournalArticle article = (JournalArticle)object;
 
+				articles.put(article.getResourcePrimKey(), article);
+
 				Document document = getDocument(article);
 
 				documents.add(document);
@@ -625,6 +629,16 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);
+
+		updateArticles(articles.values());
+	}
+
+	protected void updateArticles(Collection<JournalArticle> articles)
+		throws Exception {
+
+		for (JournalArticle article : articles) {
+			updateArticles(article);
+		}
 	}
 
 	protected void updateArticles(JournalArticle article) throws Exception {
