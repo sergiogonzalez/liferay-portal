@@ -157,7 +157,7 @@ public class WikiPageServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
+	* @deprecated As of 6.2.0, replaced by {@link #discardDraft(long, String,
 	double)}
 	*/
 	public static void deletePage(long nodeId, java.lang.String title,
@@ -550,6 +550,10 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
+	String, ServiceContext)}
+	*/
 	public static void movePage(long nodeId, java.lang.String title,
 		java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -603,6 +607,21 @@ public class WikiPageServiceSoap {
 					title, version);
 
 			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void renamePage(long nodeId, java.lang.String title,
+		java.lang.String newTitle,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			WikiPageServiceUtil.renamePage(nodeId, title, newTitle,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

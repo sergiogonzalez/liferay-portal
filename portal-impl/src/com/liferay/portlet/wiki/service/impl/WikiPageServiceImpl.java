@@ -198,7 +198,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
+	 * @deprecated As of 6.2.0, replaced by {@link #discardDraft(long, String,
 	 *             double)}
 	 */
 	@Override
@@ -557,20 +557,17 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			node.getGroupId(), getUserId(), tempFolderName);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
+	 *             String, ServiceContext)}
+	 */
 	@Override
 	public void movePage(
 			long nodeId, String title, String newTitle,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		WikiPagePermission.check(
-			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
-
-		WikiNodePermission.check(
-			getPermissionChecker(), nodeId, ActionKeys.ADD_PAGE);
-
-		wikiPageLocalService.movePage(
-			getUserId(), nodeId, title, newTitle, serviceContext);
+		renamePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	@Override
@@ -604,6 +601,22 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		return wikiPageLocalService.movePageToTrash(
 			getUserId(), nodeId, title, version);
+	}
+
+	@Override
+	public void renamePage(
+			long nodeId, String title, String newTitle,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		WikiPagePermission.check(
+			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_PAGE);
+
+		wikiPageLocalService.renamePage(
+			getUserId(), nodeId, title, newTitle, serviceContext);
 	}
 
 	@Override

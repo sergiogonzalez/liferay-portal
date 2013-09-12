@@ -136,12 +136,12 @@ public class WikiPageServiceTest {
 	}
 
 	@Test
-	public void testMovePage() throws Exception {
-		testMovePage(false);
+	public void testRenamePage() throws Exception {
+		testRenamePage(false);
 	}
 
 	@Test(expected = DuplicatePageException.class)
-	public void testMovePageSameName() throws Exception {
+	public void testRenamePageSameName() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			ServiceTestUtil.randomString(), true);
@@ -149,14 +149,14 @@ public class WikiPageServiceTest {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
-		WikiPageLocalServiceUtil.movePage(
+		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
 			page.getTitle(), true, serviceContext);
 	}
 
 	@Test
-	public void testMovePageWithExpando() throws Exception {
-		testMovePage(true);
+	public void testRenamePageWithExpando() throws Exception {
+		testRenamePage(true);
 	}
 
 	@Test
@@ -256,7 +256,7 @@ public class WikiPageServiceTest {
 			serviceContext, retrievedPage, hasExpandoValues);
 	}
 
-	protected void testMovePage(boolean hasExpandoValues) throws Exception {
+	protected void testRenamePage(boolean hasExpandoValues) throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			ServiceTestUtil.randomString(), true);
@@ -268,17 +268,17 @@ public class WikiPageServiceTest {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
-		WikiPageLocalServiceUtil.movePage(
+		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
 			"New Title", true, serviceContext);
 
-		WikiPage movedPage = WikiPageLocalServiceUtil.getPage(
+		WikiPage renamedPage = WikiPageLocalServiceUtil.getPage(
 			_node.getNodeId(), "New Title");
 
-		Assert.assertNotNull(movedPage);
+		Assert.assertNotNull(renamedPage);
 
 		checkPopulatedServiceContext(
-			serviceContext, movedPage, hasExpandoValues);
+			serviceContext, renamedPage, hasExpandoValues);
 	}
 
 	protected void testRestorePageFromTrash(boolean hasExpandoValues)

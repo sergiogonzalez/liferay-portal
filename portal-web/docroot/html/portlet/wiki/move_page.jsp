@@ -24,6 +24,8 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
 String title = wikiPage.getTitle();
 String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
+
+boolean hasWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName());
 %>
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
@@ -52,7 +54,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 		<%
 		boolean pending = false;
 
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName())) {
+		if (hasWorkflowDefinitionLink) {
 			WikiPage latestWikiPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), null);
 
 			pending = latestWikiPage.isPending();
@@ -78,7 +80,14 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 				</c:if>
 
 				<aui:button-row>
-					<aui:button disabled="<%= pending %>" onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value="rename" />
+					<c:choose>
+						<c:when test="<%= hasWorkflowDefinitionLink %>">
+							<aui:button disabled="<%= pending %>" name="publishRenameButton" onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value="submit-for-publication" />
+						</c:when>
+						<c:otherwise>
+							<aui:button onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value="rename" />
+						</c:otherwise>
+					</c:choose>
 
 					<aui:button href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
@@ -169,8 +178,8 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 				<aui:button-row>
 					<c:choose>
-						<c:when test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName()) %>">
-							<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
+						<c:when test="<%= hasWorkflowDefinitionLink %>">
+							<aui:button disabled="<%= !newParentAvailable || pending %>" name="publishChangeParentButton" onClick='<%= renderResponse.getNamespace() + "changeParent();" %>' value="submit-for-publication" />
 						</c:when>
 						<c:otherwise>
 							<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
@@ -188,17 +197,19 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 	function <portlet:namespace />changeParent() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "changeParent";
 
+		<c:if test="<%= hasWorkflowDefinitionLink %>">
+			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = "<%= WorkflowConstants.ACTION_PUBLISH %>";
+		</c:if>
+
 		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />publishPage() {
-		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = "<%= WorkflowConstants.ACTION_PUBLISH %>";
-
-		<portlet:namespace />changeParent();
 	}
 
 	function <portlet:namespace />renamePage() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "rename";
+
+		<c:if test="<%= hasWorkflowDefinitionLink %>">
+			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = "<%= WorkflowConstants.ACTION_PUBLISH %>";
+		</c:if>
 
 		submitForm(document.<portlet:namespace />fm);
 	}
