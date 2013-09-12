@@ -118,10 +118,6 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			long companyId, long repositoryId, String dirName)
 		throws SystemException {
 
-		if (!dirName.endsWith(StringPool.SLASH)) {
-			dirName = dirName.concat(StringPool.SLASH);
-		}
-
 		dirName = dirName.concat(StringPool.PERCENT);
 
 		dlContentPersistence.removeByC_R_LikeP(
