@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
-import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -42,15 +41,6 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	@Override
 	public String getClassName() {
 		return MBMessage.class.getName();
-	}
-
-	@Override
-	public ContainerModel getTrashContainer(long classPK)
-		throws PortalException, SystemException {
-
-		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
-
-		return message.getTrashContainer();
 	}
 
 	@Override
