@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReferenceEntry;
+import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
@@ -83,6 +85,7 @@ import java.security.AccessController;
 import java.security.Permission;
 import java.security.Policy;
 import java.security.PrivilegedAction;
+import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
 
@@ -103,8 +106,6 @@ import javax.sql.DataSource;
 
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.beans.factory.BeanFactory;
-
-import sun.security.util.SecurityConstants;
 
 /**
  * This is the portal's implementation of a security manager. The goal is to
@@ -216,7 +217,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 			_checkMemberAccessClassLoader.set(null);
 
-			checkPermission(SecurityConstants.CHECK_MEMBER_ACCESS_PERMISSION);
+			checkPermission(_checkMemberAccessPermission);
 		}
 		else {
 			_checkMemberAccessClassLoader.set(clazzClassLoader);
@@ -420,6 +421,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(
 			PortletApplicationContext.class,
 			new DoPortletApplicationContextPACL());
+		initPACLImpl(ReferenceRegistry.class, new DoReferenceRegistryPACL());
 		initPACLImpl(
 			ServiceBeanAopProxy.class, new DoServiceBeanAopProxyPACL());
 		initPACLImpl(
@@ -433,6 +435,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		new AutoResetThreadLocal<ClassLoader>(
 			PortalSecurityManagerImpl.class +
 				"._checkMembersAccessClassLoader");
+	private static RuntimePermission _checkMemberAccessPermission =
+		new RuntimePermission("accessDeclaredMembers");
 
 	private Policy _policy;
 
@@ -1131,6 +1135,42 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				}
 
 				_classes.put(clazz.getName(), clazz);
+			}
+		}
+
+	}
+
+	private static class DoReferenceRegistryPACL
+		implements ReferenceRegistry.PACL {
+
+		@Override
+		public ReferenceEntry getReferenceEntry(
+				final Class<?> clazz, final Object object,
+				final String fieldName)
+			throws NoSuchFieldException, SecurityException {
+
+			try {
+				return AccessController.doPrivileged(
+					new PrivilegedExceptionAction<ReferenceEntry> () {
+
+						@Override
+						public ReferenceEntry run() throws Exception {
+							Field field = clazz.getDeclaredField(fieldName);
+
+							return new ReferenceEntry(object, field);
+						}
+
+					}
+				);
+			}
+			catch (PrivilegedActionException pae) {
+				Exception exception = pae.getException();
+
+				if (exception instanceof NoSuchFieldException) {
+					throw (NoSuchFieldException)exception;
+				}
+
+				throw (SecurityException)exception;
 			}
 		}
 

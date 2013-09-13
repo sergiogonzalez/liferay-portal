@@ -214,13 +214,15 @@ public class FileChecker extends BaseChecker {
 
 		Package callerClass1Package = callerClass1.getPackage();
 
-		String callerClass1PackageName = callerClass1Package.getName();
+		if (callerClass1Package != null) {
+			String callerClass1PackageName = callerClass1Package.getName();
 
-		if (callerClass1PackageName.startsWith("java.") &&
-			!callerClass1.equals(ProcessBuilder.class) &&
-			isTrustedCaller(callerClass2, permission)) {
+			if (callerClass1PackageName.startsWith("java.") &&
+				!callerClass1.equals(ProcessBuilder.class) &&
+				isTrustedCaller(callerClass2, permission)) {
 
-			return true;
+				return true;
+			}
 		}
 
 		logSecurityException(
@@ -430,6 +432,15 @@ public class FileChecker extends BaseChecker {
 
 					if (pos != -1) {
 						fileName = fileName.substring(0, pos + 1);
+					}
+
+					if (ServerDetector.isJBoss7()) {
+						String jBossHomeDir = System.getProperty(
+							"jboss.home.dir");
+
+						if (fileName.startsWith(jBossHomeDir)) {
+							continue;
+						}
 					}
 
 					addCanonicalPath(paths, fileName);

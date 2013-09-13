@@ -12,25 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.kernel.xml;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import org.xml.sax.InputSource;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Marcellus Tavares
  */
-public class PortletPreferencesThreadLocal {
+public interface XMLSchema {
 
-	public static boolean isStrict() {
-		return _strict.get();
-	}
+	public String getPublicId();
 
-	public static void setStrict(boolean strict) {
-		_strict.set(strict);
-	}
+	public String getSchemaLanguage();
 
-	private static ThreadLocal<Boolean> _strict =
-		new InitialThreadLocal<Boolean>(
-			PortletPreferencesThreadLocal.class + "._strict", false);
+	public InputSource getSchemaSource();
+
+	public String getSystemId();
 
 }
