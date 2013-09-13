@@ -117,9 +117,11 @@ public class ConvertDocumentLibraryTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceTestUtil.randomString());
 
-		DLAppTestUtil.addFileEntry(
+		FileEntry initialFileEntry = DLAppTestUtil.addFileEntry(
 			TestPropsValues.getGroupId(), folder.getFolderId(),
 			ServiceTestUtil.randomString() + ".txt");
+
+		DLFileEntry dlFileEntry = getDLFileEntry(initialFileEntry);
 
 		_convertProcess.convert();
 
@@ -133,6 +135,14 @@ public class ConvertDocumentLibraryTest {
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".txt"));
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
@@ -148,11 +158,18 @@ public class ConvertDocumentLibraryTest {
 		String expectedImageType = image.getType();
 
 		Assert.assertEquals(expectedImageType, "jpg");
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			0, 0, image.getImageId() + ".jpg");
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
 	public void testMigrateMB() throws Exception {
 		MBMessage mbMessage = addMBMessageAttachement();
+
+		DLFileEntry dlFileEntry = getDLFileEntry(mbMessage);
 
 		_convertProcess.convert();
 
@@ -168,6 +185,14 @@ public class ConvertDocumentLibraryTest {
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".docx"));
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
@@ -195,6 +220,8 @@ public class ConvertDocumentLibraryTest {
 
 		addWikiPageAttachment(wikiPage);
 
+		DLFileEntry dlFileEntry = getDLFileEntry(wikiPage);
+
 		_convertProcess.convert();
 
 		List<FileEntry> wikiPageAttachments =
@@ -205,6 +232,14 @@ public class ConvertDocumentLibraryTest {
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".docx"));
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	protected void addImage() throws Exception {
@@ -281,6 +316,29 @@ public class ConvertDocumentLibraryTest {
 					dlContent.getContentId());
 			}
 		}
+	}
+
+	protected DLFileEntry getDLFileEntry(Object o) throws Exception {
+		FileEntry fileEntry = null;
+
+		if (o instanceof WikiPage) {
+			List<FileEntry> initialFileEntries =
+				((WikiPage)o).getAttachmentsFileEntries();
+
+			fileEntry = initialFileEntries.get(0);
+		}
+		else if (o instanceof MBMessage) {
+			List<FileEntry> initialFileEntries =
+				((MBMessage)o).getAttachmentsFileEntries();
+
+			fileEntry = initialFileEntries.get(0);
+		}
+		else {
+			fileEntry = (FileEntry)o;
+		}
+
+		return DLFileEntryLocalServiceUtil.getDLFileEntry(
+			fileEntry.getFileEntryId());
 	}
 
 	protected String[] getExpectedMessages() throws Exception {
