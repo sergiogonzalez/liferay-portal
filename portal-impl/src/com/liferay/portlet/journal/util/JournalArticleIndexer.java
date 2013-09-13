@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -59,9 +58,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -568,10 +569,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexArticles(long companyId)
-		throws PortalException, SystemException {
-
-		final Collection<Document> documents = new ArrayList<Document>();
+	protected void reindexArticles(long companyId) throws Exception {
+		final Map<Long, JournalArticle> articles =
+			new HashMap<Long, JournalArticle>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new JournalArticleActionableDynamicQuery() {
@@ -588,9 +588,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			protected void performAction(Object object) throws PortalException {
 				JournalArticle article = (JournalArticle)object;
 
-				Document document = getDocument(article);
-
-				documents.add(document);
+				articles.put(article.getResourcePrimKey(), article);
 			}
 
 		};
@@ -599,11 +597,20 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		updateArticles(articles.values());
+	}
+
+	protected void updateArticles(Collection<JournalArticle> articles)
+		throws Exception {
+
+		for (JournalArticle article : articles) {
+			updateArticles(article);
+		}
 	}
 
 	protected void updateArticles(JournalArticle article) throws Exception {
+		Collection<Document> documents = new ArrayList<Document>();
+
 		JournalArticle latestIndexableArticle =
 			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
 				article.getResourcePrimKey());
@@ -624,8 +631,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 			document.addKeyword("head", false);
 
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), curArticle.getCompanyId(), document);
+			documents.add(document);
 		}
 
 		if (latestIndexableArticle != null) {
@@ -633,18 +639,19 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 			document.addKeyword("head", true);
 
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), latestIndexableArticle.getCompanyId(),
-				document);
+			documents.add(document);
 		}
 		else if (article.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 			Document document = getDocument(article);
 
 			document.addKeyword("head", true);
 
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), article.getCompanyId(), document);
+			documents.add(document);
 		}
+
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), article.getCompanyId(), documents);
+
 	}
 
 }
