@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -47,8 +46,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -62,7 +59,6 @@ import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.util.WikiTestUtil;
 
-import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -101,7 +97,7 @@ public class ConvertDocumentLibraryTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Store store = (Store) InstanceFactory.newInstance(
+		Store store = (Store)InstanceFactory.newInstance(
 			ClassLoaderUtil.getPortalClassLoader(),
 			_FILE_SYSTEM_STORE_CLASSNAME);
 
@@ -154,18 +150,6 @@ public class ConvertDocumentLibraryTest {
 		String expectedImageType = image.getType();
 
 		Assert.assertEquals(expectedImageType, "jpg");
-	}
-
-	private void addImage() throws Exception {
-		Image image = ImageLocalServiceUtil.createImage(
-			CounterLocalServiceUtil.increment());
-
-		ImageLocalServiceUtil.addImage(image);
-
-		ImageLocalServiceUtil.updateImage(
-			image.getImageId(),
-			FileUtil.getBytes(
-				getClass().getResourceAsStream("dependencies/liferay.jpg")));
 	}
 
 	@Test
@@ -248,6 +232,18 @@ public class ConvertDocumentLibraryTest {
 			getClass());
 	}
 
+	private void addImage() throws Exception {
+		Image image = ImageLocalServiceUtil.createImage(
+			CounterLocalServiceUtil.increment());
+
+		ImageLocalServiceUtil.addImage(image);
+
+		ImageLocalServiceUtil.updateImage(
+			image.getImageId(),
+			FileUtil.getBytes(
+				getClass().getResourceAsStream("dependencies/liferay.jpg")));
+	}
+
 	private WikiPage addWikiPage() throws Exception {
 		WikiNode wikiNode = WikiTestUtil.addNode(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
@@ -282,6 +278,7 @@ public class ConvertDocumentLibraryTest {
 			List<DLContent> dlContents =
 				DLContentLocalServiceUtil.getDLContents(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 			for (DLContent dlContent : dlContents) {
 				DLContentLocalServiceUtil.deleteDLContent(
 					dlContent.getContentId());
