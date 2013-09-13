@@ -37,7 +37,6 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLContent;
@@ -56,7 +55,6 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBTestUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import java.io.InputStream;
@@ -85,8 +83,6 @@ public class ConvertDocumentLibraryTest {
 	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
 
-		cleanRepositories();
-
 		_group = GroupTestUtil.addGroup();
 
 		_convertProcess = (ConvertProcess)InstancePool.get(
@@ -106,8 +102,6 @@ public class ConvertDocumentLibraryTest {
 		PropsValues.DL_STORE_IMPL = _FILE_SYSTEM_STORE_CLASSNAME;
 
 		GroupLocalServiceUtil.deleteGroup(_group);
-
-		cleanRepositories();
 	}
 
 	@Test
@@ -117,9 +111,11 @@ public class ConvertDocumentLibraryTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceTestUtil.randomString());
 
-		DLAppTestUtil.addFileEntry(
+		FileEntry initialFileEntry = DLAppTestUtil.addFileEntry(
 			TestPropsValues.getGroupId(), folder.getFolderId(),
 			ServiceTestUtil.randomString() + ".txt");
+
+		DLFileEntry dlFileEntry = getDLFileEntry(initialFileEntry);
 
 		_convertProcess.convert();
 
@@ -133,26 +129,41 @@ public class ConvertDocumentLibraryTest {
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".txt"));
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
 	public void testMigrateImages() throws Exception {
-		addImage();
+		Image initialImage = addImage();
+
+		long imageId = initialImage.getImageId();
 
 		_convertProcess.convert();
 
-		List<Image> images = ImageLocalServiceUtil.getImages();
-
-		Image image = images.get(0);
+		Image image = ImageLocalServiceUtil.getImage(imageId);
 
 		String expectedImageType = image.getType();
 
 		Assert.assertEquals(expectedImageType, "jpg");
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			0, 0, imageId + ".jpg");
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
 	public void testMigrateMB() throws Exception {
 		MBMessage mbMessage = addMBMessageAttachement();
+
+		DLFileEntry dlFileEntry = getDLFileEntry(mbMessage);
 
 		_convertProcess.convert();
 
@@ -168,25 +179,14 @@ public class ConvertDocumentLibraryTest {
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".docx"));
-	}
 
-	@Test
-	public void testMigratePortlets() throws Exception {
-		_convertProcess.convert();
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
 
-		Store sourceStore = StoreFactory.getInstance();
-
-		Assert.assertEquals(
-			_DB_STORE_CLASSNAME, sourceStore.getClass().getCanonicalName());
-
-		String status = MaintenanceUtil.getStatus();
-
-		String[] expectedMesages = getExpectedMessages();
-
-		Assert.assertTrue(status.contains(expectedMesages[0]));
-		Assert.assertTrue(status.contains(expectedMesages[1]));
-		Assert.assertTrue(status.contains(expectedMesages[2]));
-		Assert.assertTrue(status.contains(expectedMesages[3]));
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
@@ -194,6 +194,8 @@ public class ConvertDocumentLibraryTest {
 		WikiPage wikiPage = addWikiPage();
 
 		addWikiPageAttachment(wikiPage);
+
+		DLFileEntry dlFileEntry = getDLFileEntry(wikiPage);
 
 		_convertProcess.convert();
 
@@ -205,15 +207,33 @@ public class ConvertDocumentLibraryTest {
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".docx"));
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
+
+		Assert.assertNotNull(dlContent);
 	}
 
-	protected void addImage() throws Exception {
+	@Test
+	public void testStoreUpdatedInAfterMigration() throws Exception {
+		_convertProcess.convert();
+
+		Store sourceStore = StoreFactory.getInstance();
+
+		Assert.assertEquals(
+			_DB_STORE_CLASSNAME, sourceStore.getClass().getCanonicalName());
+	}
+
+	protected Image addImage() throws Exception {
 		Image image = ImageLocalServiceUtil.createImage(
 			CounterLocalServiceUtil.increment());
 
 		ImageLocalServiceUtil.addImage(image);
 
-		ImageLocalServiceUtil.updateImage(
+		return ImageLocalServiceUtil.updateImage(
 			image.getImageId(),
 			FileUtil.getBytes(
 				getClass().getResourceAsStream("dependencies/liferay.jpg")));
@@ -251,54 +271,27 @@ public class ConvertDocumentLibraryTest {
 			getClass());
 	}
 
-	protected void cleanRepositories() throws Exception {
-		if (ImageLocalServiceUtil.getImagesCount() > 0) {
-			List<Image> images = ImageLocalServiceUtil.getImages();
+	protected DLFileEntry getDLFileEntry(Object o) throws Exception {
+		FileEntry fileEntry = null;
 
-			for (Image image : images) {
-				ImageLocalServiceUtil.deleteImage(image);
-			}
+		if (o instanceof WikiPage) {
+			List<FileEntry> initialFileEntries =
+				((WikiPage)o).getAttachmentsFileEntries();
+
+			fileEntry = initialFileEntries.get(0);
+		}
+		else if (o instanceof MBMessage) {
+			List<FileEntry> initialFileEntries =
+				((MBMessage)o).getAttachmentsFileEntries();
+
+			fileEntry = initialFileEntries.get(0);
+		}
+		else {
+			fileEntry = (FileEntry)o;
 		}
 
-		if (DLFileEntryLocalServiceUtil.getFileEntriesCount() > 0) {
-			List<DLFileEntry> dlFileEntries =
-				DLFileEntryLocalServiceUtil.getDLFileEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				DLAppLocalServiceUtil.deleteFileEntry(
-					dlFileEntry.getFileEntryId());
-			}
-		}
-
-		if (DLContentLocalServiceUtil.getDLContentsCount() > 0) {
-			List<DLContent> dlContents =
-				DLContentLocalServiceUtil.getDLContents(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (DLContent dlContent : dlContents) {
-				DLContentLocalServiceUtil.deleteDLContent(
-					dlContent.getContentId());
-			}
-		}
-	}
-
-	protected String[] getExpectedMessages() throws Exception {
-		String[] expectedMessages = new String[4];
-
-		expectedMessages[0] =
-			"Migrating " + ImageLocalServiceUtil.getImagesCount() + " images";
-		expectedMessages[1] =
-			"Migrating " + DLFileEntryLocalServiceUtil.getFileEntriesCount() +
-				" documents and media files";
-		expectedMessages[2] =
-			"Migrating message boards attachments in " +
-			MBMessageLocalServiceUtil.getMBMessagesCount() + " messages";
-		expectedMessages[3] =
-			"Migrating wiki page attachments in " +
-			WikiPageLocalServiceUtil.getWikiPagesCount() + " pages";
-
-		return expectedMessages;
+		return DLFileEntryLocalServiceUtil.getDLFileEntry(
+			fileEntry.getFileEntryId());
 	}
 
 	private static final String _CONVERT_DOCUMENT_LIBRARY_CLASSNAME =
