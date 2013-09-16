@@ -805,6 +805,132 @@ public class ArrayUtil {
 		return true;
 	}
 
+	public static boolean containsAny(boolean[] array1, boolean[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(byte[] array1, byte[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(char[] array1, char[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(double[] array1, double[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(float[] array1, float[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(int[] array1, int[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(long[] array1, long[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(Object[] array1, Object[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(short[] array1, short[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static String[] distinct(String[] array) {
 		return distinct(array, null);
 	}

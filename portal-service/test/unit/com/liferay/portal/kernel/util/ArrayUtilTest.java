@@ -114,6 +114,101 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testContainsAnyBooleanArray() throws Exception {
+		boolean[] array1 = {true, true, true};
+		boolean[] array2 = {true, false};
+		boolean[] array3 = {false};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
+	public void testContainsAnyByteArray() throws Exception {
+		byte[] array1 = {1, 2, 3, 4};
+		byte[] array2 = {1, 5, 6, 7};
+		byte[] array3 = {5, 6, 7};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
+	public void testContainsAnyCharArray() throws Exception {
+		char[] array1 = {'a', 'b', 'c', 'd'};
+		char[] array2 = {'a', 'e', 'f', 'g'};
+		char[] array3 = {'e', 'f', 'g'};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
+	public void testContainsAnyDoubleArray() throws Exception {
+		double[] array1 = {1.5D, 2.5D};
+		double[] array2 = {1.5D, 3.5D, 4.5D};
+		double[] array3 = {3.5D, 4.5D};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
+	public void testContainsAnyFloatArray() throws Exception {
+		float[] array1 = {1.5f, 2.5f};
+		float[] array2 = {1.5f, 3.5f, 4.5f};
+		float[] array3 = {3.5f, 4.5f};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
+	public void testContainsAnyIntArray() throws Exception {
+		int[] array1 = {1, 2, 3};
+		int[] array2 = {1, 4, 5};
+		int[] array3 = {4, 5};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
+	public void testContainsAnyLongArray() throws Exception {
+		long[] array1 = {1L, 2L};
+		long[] array2 = {1L, 3L, 4L};
+		long[] array3 = {3L, 4L};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
+	public void testContainsAnyShortArray() throws Exception {
+		short[] array1 = {1, 2};
+		short[] array2 = {1, 4, 5};
+		short[] array3 = {4, 5};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
+	public void testContainsAnyUserArray() throws Exception {
+		User brian = new User("brian", 20);
+		User eudaldo = new User("eudaldo", 20);
+		User julio = new User("julio", 20);
+		User sergio = new User("sergio", 20);
+
+		User[] array1 = {brian, julio};
+		User[] array2 = {julio, sergio, eudaldo};
+		User[] array3 = {sergio, eudaldo};
+
+		Assert.assertTrue(ArrayUtil.containsAny(array1, array2));
+		Assert.assertFalse(ArrayUtil.containsAny(array1, array3));
+	}
+
+	@Test
 	public void testContainsBooleanArray() throws Exception {
 		boolean[] array1 = {true, true};
 
