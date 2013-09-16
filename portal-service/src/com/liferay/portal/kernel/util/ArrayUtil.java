@@ -1224,6 +1224,102 @@ public class ArrayUtil {
 		return list.toArray(new String[list.size()]);
 	}
 
+	public static boolean[] removeAll(boolean[] array1, boolean[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static byte[] removeAll(byte[] array1, byte[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static char[] removeAll(char[] array1, char[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static double[] removeAll(double[] array1, double[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static int[] removeAll(int[] array1, int[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static long[] removeAll(long[] array1, long[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static short[] removeAll(short[] array1, short[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static String[] removeAll(String[] array1, String[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
 	public static String[] removeByPrefix(String[] array, String prefix) {
 		List<String> list = new ArrayList<String>();
 

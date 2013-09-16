@@ -406,6 +406,94 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testRemoveAllBooleanArray() {
+		boolean[] array1 = {true, true, false, false};
+		boolean[] array2 = {true, true};
+
+		boolean[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertEquals(result[0], false);
+		Assert.assertEquals(result[1], false);
+	}
+
+	@Test
+	public void testRemoveAllByteArray() {
+		byte[] array1 = {1, 2, 3, 4};
+		byte[] array2 = {1, 2, 5};
+
+		byte[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertEquals(result[0], 3);
+		Assert.assertEquals(result[1], 4);
+	}
+
+	@Test
+	public void testRemoveAllCharArray() {
+		char[] array1 = {'a', 'b', 'c', 'd'};
+		char[] array2 = {'a', 'b', 'e'};
+
+		char[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertEquals(result[0], 'c');
+		Assert.assertEquals(result[1], 'd');
+	}
+
+	@Test
+	public void testRemoveAllDoubleArray() {
+		double[] array1 = {1.5D, 2.5D, 3.5D, 4.5D};
+		double[] array2 = {1.5D, 2.5D, 5.5D};
+
+		double[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertTrue(result[0] == 3.5D);
+		Assert.assertTrue(result[1] == 4.5D);
+	}
+
+	@Test
+	public void testRemoveAllIntArray() {
+		int[] array1 = {1, 2, 3, 4};
+		int[] array2 = {1, 2, 5};
+
+		int[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertEquals(result[0], 3);
+		Assert.assertEquals(result[1], 4);
+	}
+
+	@Test
+	public void testRemoveAllLongArray() {
+		long[] array1 = {1L, 2L, 3L, 4L};
+		long[] array2 = {1L, 2L, 5L};
+
+		long[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertEquals(result[0], 3L);
+		Assert.assertEquals(result[1], 4L);
+	}
+
+	@Test
+	public void testRemoveAllShortArray() {
+		short[] array1 = {1, 2, 3, 4};
+		short[] array2 = {1, 2, 5};
+
+		short[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertEquals(result[0], 3);
+		Assert.assertEquals(result[1], 4);
+	}
+
+	@Test
+	public void testRemoveAllStringArray() {
+		String[] array1 = {"a", "b", "c", "d"};
+		String[] array2 = {"c", "d", "e"};
+
+		String[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertEquals(result[0], "a");
+		Assert.assertEquals(result[1], "b");
+	}
+
+	@Test
 	public void testReverseBooleanArray() throws Exception {
 		boolean[] array = new boolean[] {true, true, false};
 
