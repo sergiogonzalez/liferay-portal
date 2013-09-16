@@ -1176,6 +1176,18 @@ public class ArrayUtil {
 		return toArray(list.toArray(new Double[list.size()]));
 	}
 
+	public static float[] remove(float[] array, float value) {
+		List<Float> list = new ArrayList<Float>();
+
+		for (int i = 0; i < array.length; i++) {
+			if (value != array[i]) {
+				list.add(new Float(array[i]));
+			}
+		}
+
+		return toArray(list.toArray(new Float[list.size()]));
+	}
+
 	public static int[] remove(int[] array, int value) {
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -1261,6 +1273,18 @@ public class ArrayUtil {
 	}
 
 	public static double[] removeAll(double[] array1, double[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static float[] removeAll(float[] array1, float[] array2) {
 		if (isEmpty(array1) || isEmpty(array2)) {
 			return array1;
 		}

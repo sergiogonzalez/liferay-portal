@@ -450,6 +450,17 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testRemoveAllFloatArray() {
+		float[] array1 = {1.5f, 2.5f, 3.5f, 4.5f};
+		float[] array2 = {1.5f, 2.5f, 5.5f};
+
+		float[] result = ArrayUtil.removeAll(array1, array2);
+
+		Assert.assertTrue(result[0] == 3.5f);
+		Assert.assertTrue(result[1] == 4.5f);
+	}
+
+	@Test
 	public void testRemoveAllIntArray() {
 		int[] array1 = {1, 2, 3, 4};
 		int[] array2 = {1, 2, 5};
