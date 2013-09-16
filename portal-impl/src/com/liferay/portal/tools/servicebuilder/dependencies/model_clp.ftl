@@ -470,7 +470,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	</#if>
 
-	<#if entity.isTrashedModel()>
+	<#if entity.isTrashEnabled()>
 		<#if !entity.isWorkflowEnabled()>
 			@Override
 			public int getStatus() {
@@ -618,16 +618,6 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		@Override
 		public boolean isIncomplete() {
 			if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-
-		@Override
-		public boolean isInTrash() {
-			if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 				return true;
 			}
 			else {

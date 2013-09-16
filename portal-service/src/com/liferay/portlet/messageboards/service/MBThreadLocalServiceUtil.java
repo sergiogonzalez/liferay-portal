@@ -606,10 +606,27 @@ public class MBThreadLocalServiceUtil {
 		return getService().moveThreadToTrash(userId, thread);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
+		long userId, com.liferay.portlet.messageboards.model.MBThread thread,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveThreadToTrash(userId, thread, serviceContext);
+	}
+
 	public static void restoreThreadFromTrash(long userId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().restoreThreadFromTrash(userId, threadId);
+	}
+
+	public static void restoreThreadFromTrash(long userId,
+		com.liferay.portlet.messageboards.model.MBThread thread, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.restoreThreadFromTrash(userId, thread, status, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long groupId,
@@ -645,11 +662,20 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBThread updateStatus(
-		long userId, long threadId, int status, int categoryStatus)
+		long userId, long threadId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateStatus(userId, threadId, status, categoryStatus);
+				   .updateStatus(userId, threadId, status, serviceContext);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBThread updateStatus(
+		long userId, com.liferay.portlet.messageboards.model.MBThread thread,
+		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateStatus(userId, thread, status, serviceContext);
 	}
 
 	/**

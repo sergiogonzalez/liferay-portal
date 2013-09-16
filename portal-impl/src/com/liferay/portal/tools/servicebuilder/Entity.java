@@ -98,7 +98,7 @@ public class Entity {
 		boolean uuidAccessor, boolean localService, boolean remoteService,
 		String persistenceClass, String finderClass, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
-		boolean jsonEnabled, boolean trashedModel, boolean deprecated,
+		boolean jsonEnabled, boolean trashEnabled, boolean deprecated,
 		List<EntityColumn> pkList, List<EntityColumn> regularColList,
 		List<EntityColumn> blobList, List<EntityColumn> collectionList,
 		List<EntityColumn> columnList, EntityOrder order,
@@ -125,7 +125,7 @@ public class Entity {
 		_txManager = GetterUtil.getString(txManager, DEFAULT_TX_MANAGER);
 		_cacheEnabled = cacheEnabled;
 		_jsonEnabled = jsonEnabled;
-		_trashedModel = trashedModel;
+		_trashEnabled = trashEnabled;
 		_deprecated = deprecated;
 		_pkList = pkList;
 		_regularColList = regularColList;
@@ -769,8 +769,8 @@ public class Entity {
 		return false;
 	}
 
-	public boolean isTrashedModel() {
-		return _trashedModel;
+	public boolean isTrashEnabled() {
+		return _trashEnabled;
 	}
 
 	public boolean isTypedModel() {
@@ -848,7 +848,7 @@ public class Entity {
 	private String _sessionFactory;
 	private String _table;
 	private List<String> _transients;
-	private boolean _trashedModel;
+	private boolean _trashEnabled;
 	private String _txManager;
 	private List<String> _txRequiredList;
 	private boolean _uuid;

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -53,6 +54,27 @@ public class TrashUtil {
 			request, className, classPK, containerModelURL);
 	}
 
+	public static void addDependentStatus(
+			long trashEntryId, ServiceContext serviceContext)
+		throws SystemException {
+
+		getTrash().addDependentStatus(trashEntryId, serviceContext);
+	}
+
+	public static void addDependentStatus(
+			long trashEntryId, String className, ServiceContext serviceContext)
+		throws SystemException {
+
+		getTrash().addDependentStatus(trashEntryId, className, serviceContext);
+	}
+
+	public static void addTrashEntries(
+			long groupId, String className, ServiceContext serviceContext)
+		throws SystemException {
+
+		getTrash().addTrashEntries(groupId, className, serviceContext);
+	}
+
 	public static void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
@@ -60,6 +82,13 @@ public class TrashUtil {
 
 		getTrash().deleteEntriesAttachments(
 			companyId, repositoryId, date, attachmentFileNames);
+	}
+
+	public static int getDependentStatus(
+		String className, long classPK, ServiceContext serviceContext) {
+
+		return getTrash().getDependentStatus(
+			className, classPK, serviceContext);
 	}
 
 	public static List<TrashEntry> getEntries(Hits hits)
@@ -115,6 +144,12 @@ public class TrashUtil {
 		throws PortalException, SystemException {
 
 		return getTrash().getViewContentURL(request, className, classPK);
+	}
+
+	public static boolean hasTrashEntry(
+		String className, long classPK, ServiceContext serviceContext) {
+
+		return getTrash().hasTrashEntry(className, classPK, serviceContext);
 	}
 
 	public static boolean isInTrash(String className, long classPK)

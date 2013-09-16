@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,4 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
+
+package com.liferay.portal.kernel.trash;
+
+/**
+ * @author Zsolt Berentey
+ */
+public class TrashConstants {
+
+	public static final String TRASH_DEPENDENT_STATUS_MAP =
+		"TRASH_DEPENDENT_STATUS_MAP";
+
+	public static final String TRASH_ENTRY = "TRASH_ENTRY";
+
+	public static final String TRASH_ENTRY_CLASS_PK_MAP =
+		"TRASH_ENTITY_IDS_MAP";
+
+}

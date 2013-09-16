@@ -99,7 +99,7 @@ public interface ${entity.name}Model extends
 		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "stagedModelType", "uuid"]>
 	</#if>
 
-	<#if entity.isTrashedModel()>
+	<#if entity.isTrashEnabled()>
 		, TrashedModel
 
 		<#assign overrideColumnNames = overrideColumnNames + ["status"]>
@@ -333,7 +333,7 @@ public interface ${entity.name}Model extends
 		</#if>
 	</#list>
 
-	<#if entity.isTrashedModel()>
+	<#if entity.isTrashEnabled()>
 		<#if !entity.isWorkflowEnabled()>
 			/**
 			 * Returns the status of this ${entity.humanName}.
@@ -350,6 +350,7 @@ public interface ${entity.name}Model extends
 		 * @return the trash entry created when this ${entity.humanName} was moved to the Recycle Bin
 		 * @throws SystemException if a system exception occurred
 		 */
+		@Override
 		public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 		/**
@@ -357,6 +358,7 @@ public interface ${entity.name}Model extends
 		 *
 		 * @return the trash handler for this ${entity.humanName}
 		 */
+		@Override
 		public TrashHandler getTrashHandler();
 
 		/**
@@ -364,6 +366,7 @@ public interface ${entity.name}Model extends
 		 *
 		 * @return <code>true</code> if this ${entity.humanName} is in the Recycle Bin; <code>false</code> otherwise
 		 */
+		@Override
 		public boolean isInTrash();
 
 		/**
@@ -372,6 +375,7 @@ public interface ${entity.name}Model extends
 		 * @return <code>true</code> if the parent of this ${entity.humanName} is in the Recycle Bin; <code>false</code> otherwise
 		 * @throws SystemException if a system exception occurred
 		 */
+		@Override
 		public boolean isInTrashContainer();
 	</#if>
 
@@ -429,14 +433,6 @@ public interface ${entity.name}Model extends
 		 */
 		@Override
 		public boolean isIncomplete();
-
-		/**
-		 * Returns <code>true</code> if this ${entity.humanName} is in the Recycle Bin.
-		 *
-		 * @return <code>true</code> if this ${entity.humanName} is in the Recycle Bin; <code>false</code> otherwise
-		 */
-		@Override
-		public boolean isInTrash();
 
 		/**
 		 * Returns <code>true</code> if this ${entity.humanName} is pending.

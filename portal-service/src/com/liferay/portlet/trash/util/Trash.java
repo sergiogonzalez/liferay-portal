@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -46,10 +47,25 @@ public interface Trash {
 			PortletURL containerModelURL)
 		throws PortalException, SystemException;
 
+	public void addDependentStatus(
+			long trashEntryId, ServiceContext serviceContext)
+		throws SystemException;
+
+	public void addDependentStatus(
+			long trashEntryId, String className, ServiceContext serviceContext)
+		throws SystemException;
+
+	public void addTrashEntries(
+			long groupId, String className, ServiceContext serviceContext)
+		throws SystemException;
+
 	public void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
 		throws PortalException, SystemException;
+
+	public int getDependentStatus(
+		String className, long classPK, ServiceContext serviceContext);
 
 	public List<TrashEntry> getEntries(Hits hits)
 		throws PortalException, SystemException;
@@ -75,6 +91,9 @@ public interface Trash {
 	public PortletURL getViewContentURL(
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException, SystemException;
+
+	public boolean hasTrashEntry(
+		String className, long classPK, ServiceContext serviceContext);
 
 	public boolean isInTrash(String className, long classPK)
 		throws PortalException, SystemException;
