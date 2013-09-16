@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -85,7 +84,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -1088,70 +1086,72 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
-	protected void addTrashFields(
-			Document document, String className, long classPK, Date removedDate,
-			String removedByUserName, String type)
+	protected void addTrashFields(Document document, TrashedModel trashedModel)
 		throws SystemException {
 
-		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
-			className, classPK);
+		TrashEntry trashEntry = null;
 
-		if (removedDate == null) {
-			if (trashEntry != null) {
-				removedDate = trashEntry.getCreateDate();
-			}
-			else {
-				removedDate = new Date();
+		try {
+			trashEntry = trashedModel.getTrashEntry();
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get trash entry for " + trashedModel);
 			}
 		}
 
-		document.addDate(Field.REMOVED_DATE, removedDate);
+		if (trashEntry == null) {
+			document.addDate(Field.REMOVED_DATE, new Date());
 
-		if (removedByUserName == null) {
-			if (trashEntry != null) {
-				removedByUserName = trashEntry.getUserName();
-			}
-			else {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-				if (serviceContext != null) {
-					try {
-						User user = UserLocalServiceUtil.getUser(
-							serviceContext.getUserId());
-
-						removedByUserName = user.getFullName();
-					}
-					catch (PortalException pe) {
-					}
-				}
-			}
-		}
-
-		if (Validator.isNotNull(removedByUserName)) {
-			document.addKeyword(
-				Field.REMOVED_BY_USER_NAME, removedByUserName, true);
-		}
-
-		if (type == null) {
-			if (trashEntry != null) {
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(
-						trashEntry.getClassName());
-
+			if (serviceContext != null) {
 				try {
-					TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-						trashEntry.getClassPK());
+					User user = UserLocalServiceUtil.getUser(
+						serviceContext.getUserId());
 
-					type = trashRenderer.getType();
+					document.addKeyword(
+						Field.REMOVED_BY_USER_NAME, user.getFullName(), true);
 				}
 				catch (PortalException pe) {
 				}
 			}
 		}
+		else {
+			document.addDate(Field.REMOVED_DATE, trashEntry.getCreateDate());
+			document.addKeyword(
+				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
 
-		if (Validator.isNotNull(type)) {
-			document.addKeyword(Field.TYPE, type, true);
+			if (trashedModel.isInTrash() &&
+				!trashEntry.isTrashEntry(trashedModel)) {
+
+				document.addKeyword(
+					Field.ROOT_ENTRY_CLASS_NAME, trashEntry.getClassName());
+				document.addKeyword(
+					Field.ROOT_ENTRY_CLASS_PK, trashEntry.getClassPK());
+			}
+		}
+
+		TrashHandler trashHandler = trashedModel.getTrashHandler();
+		TrashRenderer trashRenderer = null;
+
+		try {
+			if ((trashHandler != null) && (trashEntry != null)) {
+				trashRenderer = trashHandler.getTrashRenderer(
+					trashEntry.getClassPK());
+			}
+
+			if (trashRenderer != null) {
+				document.addKeyword(Field.TYPE, trashRenderer.getType(), true);
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get trash renderer for " +
+						trashEntry.getClassName());
+			}
 		}
 	}
 
@@ -1501,7 +1501,7 @@ public abstract class BaseIndexer implements Indexer {
 			TrashedModel trashedModel = (TrashedModel)baseModel;
 
 			if (trashedModel.isInTrash()) {
-				addTrashFields(document, className, classPK, null, null, null);
+				addTrashFields(document, trashedModel);
 			}
 		}
 
