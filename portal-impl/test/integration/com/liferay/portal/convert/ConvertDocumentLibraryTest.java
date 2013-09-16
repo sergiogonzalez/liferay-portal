@@ -229,10 +229,10 @@ public class ConvertDocumentLibraryTest {
 	private static final String _CONVERT_DOCUMENT_LIBRARY_CLASSNAME =
 		"com.liferay.portal.convert.ConvertDocumentLibrary";
 
-	private String _DB_STORE_CLASSNAME =
+	private static final String _DB_STORE_CLASSNAME =
 		"com.liferay.portlet.documentlibrary.store.DBStore";
 
-	private String _FILE_SYSTEM_STORE_CLASSNAME =
+	private static final String _FILE_SYSTEM_STORE_CLASSNAME =
 		"com.liferay.portlet.documentlibrary.store.FileSystemStore";
 
 	private ConvertProcess _convertProcess;
