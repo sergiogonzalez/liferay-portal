@@ -805,6 +805,132 @@ public class ArrayUtil {
 		return true;
 	}
 
+	public static boolean containsAny(boolean[] array1, boolean[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(byte[] array1, byte[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(char[] array1, char[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(double[] array1, double[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(float[] array1, float[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(int[] array1, int[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(long[] array1, long[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(Object[] array1, Object[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean containsAny(short[] array1, short[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return false;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			if (contains(array1, array2[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static String[] distinct(String[] array) {
 		return distinct(array, null);
 	}
@@ -1176,6 +1302,18 @@ public class ArrayUtil {
 		return toArray(list.toArray(new Double[list.size()]));
 	}
 
+	public static float[] remove(float[] array, float value) {
+		List<Float> list = new ArrayList<Float>();
+
+		for (int i = 0; i < array.length; i++) {
+			if (value != array[i]) {
+				list.add(new Float(array[i]));
+			}
+		}
+
+		return toArray(list.toArray(new Float[list.size()]));
+	}
+
 	public static int[] remove(int[] array, int value) {
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -1222,6 +1360,114 @@ public class ArrayUtil {
 		}
 
 		return list.toArray(new String[list.size()]);
+	}
+
+	public static boolean[] removeAll(boolean[] array1, boolean[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static byte[] removeAll(byte[] array1, byte[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static char[] removeAll(char[] array1, char[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static double[] removeAll(double[] array1, double[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static float[] removeAll(float[] array1, float[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static int[] removeAll(int[] array1, int[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static long[] removeAll(long[] array1, long[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static short[] removeAll(short[] array1, short[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
+	}
+
+	public static String[] removeAll(String[] array1, String[] array2) {
+		if (isEmpty(array1) || isEmpty(array2)) {
+			return array1;
+		}
+
+		for (int i = 0; i < array2.length; i++) {
+			array1 = remove(array1, array2[i]);
+		}
+
+		return array1;
 	}
 
 	public static String[] removeByPrefix(String[] array, String prefix) {
