@@ -53,7 +53,6 @@ import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.NoSuchEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 
@@ -812,23 +811,40 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		try {
-			trashEntryLocalService.getEntry(MBThread.class.getName(), threadId);
+		TrashEntry trashEntry = thread.getTrashEntry();
+
+		if (trashEntry.getClassName().equals(MBThread.class.getName()) &&
+			(trashEntry.getClassPK() == threadId)) {
 
 			restoreThreadFromTrash(userId, threadId);
 		}
-		catch (NoSuchEntryException nsee) {
+		else {
 
 			// Thread
 
-			updateStatus(userId, threadId, thread.getStatus());
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), MBThread.class.getName(),
+					thread.getThreadId());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
+			updateStatus(userId, threadId, status);
 
 			// Messages
 
-			TrashEntry trashEntry = thread.getTrashEntry();
-
 			restoreDependentsFromTrash(
 				thread.getGroupId(), threadId, trashEntry.getEntryId());
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
 		}
 
 		return moveThread(thread.getGroupId(), categoryId, threadId);

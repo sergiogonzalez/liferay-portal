@@ -36,7 +36,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
-import com.liferay.portlet.trash.NoSuchEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 
@@ -546,17 +545,29 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		try {
-			trashEntryLocalService.getEntry(
-				MBCategory.class.getName(), categoryId);
+		TrashEntry trashEntry = category.getTrashEntry();
+
+		if (trashEntry.getClassName().equals(MBCategory.class.getName()) &&
+			(trashEntry.getClassPK() == categoryId)) {
 
 			restoreCategoryFromTrash(userId, categoryId);
 		}
-		catch (NoSuchEntryException nsee) {
+		else {
 
 			// Category
 
-			updateStatus(userId, categoryId, category.getStatus());
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), MBCategory.class.getName(),
+					category.getCategoryId());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
+			updateStatus(userId, categoryId, status);
 
 			// Categories and threads
 
@@ -565,10 +576,14 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			List<Object> categoriesAndThreads = getCategoriesAndThreads(
 				category.getGroupId(), categoryId);
 
-			TrashEntry trashEntry = category.getTrashEntry();
-
 			restoreDependentFromTrash(
 				user, categoriesAndThreads, trashEntry.getEntryId());
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
 		}
 
 		return moveCategory(categoryId, newCategoryId, false);
