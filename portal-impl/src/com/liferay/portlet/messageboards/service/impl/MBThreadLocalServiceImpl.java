@@ -821,14 +821,31 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Thread
 
-			updateStatus(userId, threadId, thread.getStatus());
+			TrashEntry trashEntry = thread.getTrashEntry();
+
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), MBThread.class.getName(),
+					thread.getThreadId());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
+			updateStatus(userId, threadId, status);
 
 			// Messages
 
-			TrashEntry trashEntry = thread.getTrashEntry();
-
 			restoreDependentsFromTrash(
 				thread.getGroupId(), threadId, trashEntry.getEntryId());
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
 		}
 
 		return moveThread(thread.getGroupId(), categoryId, threadId);

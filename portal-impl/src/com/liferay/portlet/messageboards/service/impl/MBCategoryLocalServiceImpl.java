@@ -556,7 +556,20 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			// Category
 
-			updateStatus(userId, categoryId, category.getStatus());
+			TrashEntry trashEntry = category.getTrashEntry();
+
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), MBCategory.class.getName(),
+					category.getCategoryId());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
+			updateStatus(userId, categoryId, status);
 
 			// Categories and threads
 
@@ -565,10 +578,14 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			List<Object> categoriesAndThreads = getCategoriesAndThreads(
 				category.getGroupId(), categoryId);
 
-			TrashEntry trashEntry = category.getTrashEntry();
-
 			restoreDependentFromTrash(
 				user, categoriesAndThreads, trashEntry.getEntryId());
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
 		}
 
 		return moveCategory(categoryId, newCategoryId, false);
