@@ -566,19 +566,12 @@ public class MBUtil {
 	}
 
 	public static String getMessageFormat(PortletPreferences preferences) {
-		String messageFormat = preferences.getValue(
-			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
-
-		String editorImpl = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
-
-		if (messageFormat.equals("bbcode") &&
-			!(editorImpl.equals("bbcode") ||
-			  editorImpl.equals("ckeditor_bbcode"))) {
-
-			messageFormat = "html";
+		if (isConfigurableMessageFormat(preferences)) {
+			return preferences.getValue(
+				"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
 		}
 
-		return messageFormat;
+		return "html";
 	}
 
 	public static long getMessageId(String mailId) {
@@ -862,6 +855,24 @@ public class MBUtil {
 		return GetterUtil.getBoolean(
 			preferences.getValue("allowAnonymousPosting", null),
 			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
+	}
+
+	public static boolean isConfigurableMessageFormat(
+		PortletPreferences preferences) {
+
+		String messageFormat = preferences.getValue(
+			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
+
+		String editorImpl = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+
+		if (messageFormat.equals("bbcode") &&
+			!(editorImpl.equals("bbcode") ||
+				editorImpl.equals("ckeditor_bbcode"))) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public static boolean isViewableMessage(
