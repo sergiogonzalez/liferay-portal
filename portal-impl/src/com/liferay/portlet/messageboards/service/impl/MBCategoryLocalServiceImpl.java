@@ -36,7 +36,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
-import com.liferay.portlet.trash.NoSuchEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 
@@ -546,17 +545,16 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		try {
-			trashEntryLocalService.getEntry(
-				MBCategory.class.getName(), categoryId);
+		TrashEntry trashEntry = category.getTrashEntry();
+
+		if (trashEntry.getClassName().equals(MBCategory.class.getName()) &&
+			(trashEntry.getClassPK() == categoryId)) {
 
 			restoreCategoryFromTrash(userId, categoryId);
 		}
-		catch (NoSuchEntryException nsee) {
+		else {
 
 			// Category
-
-			TrashEntry trashEntry = category.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(
