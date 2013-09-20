@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -56,7 +58,14 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class PortalImplLocalizedFriendlyURLTest {
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
+		_availableLocales = LanguageUtil.getAvailableLocales();
+
+		CompanyTestUtil.resetCompanyLocales(
+			PortalUtil.getDefaultCompanyId(),
+			new Locale[] {
+				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.US});
+
 		_nameMap = new HashMap<Locale, String>();
 
 		_nameMap.put(LocaleUtil.CANADA_FRENCH, "Accueil");
@@ -68,6 +77,12 @@ public class PortalImplLocalizedFriendlyURLTest {
 		_friendlyURLMap.put(LocaleUtil.CANADA_FRENCH, "/accueil");
 		_friendlyURLMap.put(LocaleUtil.SPAIN, "/inicio");
 		_friendlyURLMap.put(LocaleUtil.US, "/home");
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyTestUtil.resetCompanyLocales(
+			PortalUtil.getDefaultCompanyId(), _availableLocales);
 	}
 
 	@Test
@@ -469,6 +484,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
 
+	private static Locale[] _availableLocales;
 	private static Map<Locale, String> _friendlyURLMap;
 	private static Map<Locale, String> _nameMap;
 
