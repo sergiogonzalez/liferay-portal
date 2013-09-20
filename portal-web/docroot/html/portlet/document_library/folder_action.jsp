@@ -215,7 +215,7 @@ String iconMenuId = null;
 						<liferay-ui:icon-delete url="<%= deleteURL %>" />
 					</c:if>
 
-					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && !folder.isMountPoint() %>">
 						<portlet:renderURL var="addFolderURL">
 							<portlet:param name="struts_action" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -266,7 +266,7 @@ String iconMenuId = null;
 						/>
 					</c:if>
 
-					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && !folder.isMountPoint() %>">
 						<portlet:renderURL var="addFolderURL">
 							<portlet:param name="struts_action" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -326,23 +326,25 @@ String iconMenuId = null;
 					int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay));
 					%>
 
-					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
-						<portlet:param name="struts_action" value='<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? "/document_library_display/select_add_file_entry_type" : "/document_library_display/edit_file_entry" %>' />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					</liferay-portlet:renderURL>
+					<c:if test="<%= !folder.isMountPoint() %>">
+						<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
+							<portlet:param name="struts_action" value='<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? "/document_library_display/select_add_file_entry_type" : "/document_library_display/edit_file_entry" %>' />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="backURL" value="<%= currentURL %>" />
+							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						</liferay-portlet:renderURL>
 
-					<%
-					String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri:'" + HtmlUtil.escapeURL(editFileEntryURL.toString()) + "'});";
-					%>
+						<%
+						String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri:'" + HtmlUtil.escapeURL(editFileEntryURL.toString()) + "'});";
+						%>
 
-					<liferay-ui:icon
-						image="../document_library/add_document"
-						message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
-						url="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? taglibEditURL : editFileEntryURL %>"
-					/>
+						<liferay-ui:icon
+							image="../document_library/add_document"
+							message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
+							url="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? taglibEditURL : editFileEntryURL %>"
+						/>
+					</c:if>
 				</c:if>
 
 				<c:if test="<%= hasViewPermission && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
