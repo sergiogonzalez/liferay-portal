@@ -74,7 +74,6 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -427,27 +426,68 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
-	public void moveDependentsToTrash(List<Object> dlFileEntriesAndDLFolders)
+	public void moveDependentsToTrash(
+			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
 		throws PortalException, SystemException {
 
 		for (Object object : dlFileEntriesAndDLFolders) {
 			if (object instanceof DLFileEntry) {
+
+				// File entry
+
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
+
+				if (dlFileEntry.isInTrash()) {
+					continue;
+				}
+
+				// File shortcut
+
+				dlFileShortcutLocalService.disableFileShortcuts(
+					dlFileEntry.getFileEntryId());
+
+				// File Versions
 
 				List<DLFileVersion> dlFileVersions =
 					dlFileVersionLocalService.getFileVersions(
 						dlFileEntry.getFileEntryId(),
 						WorkflowConstants.STATUS_ANY);
 
-				dlFileVersions = ListUtil.copy(dlFileVersions);
+				for (DLFileVersion dlFileVersion : dlFileVersions) {
 
-				Collections.sort(
-					dlFileVersions, new FileVersionVersionComparator());
+					// File version
 
-				// File shortcut
+					int oldStatus = dlFileVersion.getStatus();
 
-				dlFileShortcutLocalService.disableFileShortcuts(
-					dlFileEntry.getFileEntryId());
+					int status = oldStatus;
+
+					if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+						status = WorkflowConstants.STATUS_DRAFT;
+					}
+
+					dlFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+					dlFileVersionPersistence.update(dlFileVersion);
+
+					// Trash
+
+					if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+						trashVersionLocalService.addTrashVersion(
+							trashEntryId, DLFileVersion.class.getName(),
+							dlFileVersion.getFileVersionId(), status);
+					}
+
+					// Workflow
+
+					if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+						workflowInstanceLinkLocalService.
+							deleteWorkflowInstanceLink(
+								dlFileVersion.getCompanyId(),
+								dlFileVersion.getGroupId(),
+								DLFileEntryConstants.getClassName(),
+								dlFileVersion.getFileVersionId());
+					}
+				}
 
 				// Asset
 
@@ -461,30 +501,29 @@ public class DLAppHelperLocalServiceImpl
 					DLFileEntry.class);
 
 				indexer.reindex(dlFileEntry);
-
-				// Workflow
-
-				for (DLFileVersion dlFileVersion : dlFileVersions) {
-					if (!dlFileVersion.isPending()) {
-						continue;
-					}
-
-					dlFileVersion.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-					dlFileVersionPersistence.update(dlFileVersion);
-
-					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-						dlFileVersion.getCompanyId(),
-						dlFileVersion.getGroupId(),
-						DLFileEntryConstants.getClassName(),
-						dlFileVersion.getFileVersionId());
-				}
 			}
 			else if (object instanceof DLFolder) {
+
+				// Folder
+
 				DLFolder dlFolder = (DLFolder)object;
 
 				if (dlFolder.isInTrash()) {
 					continue;
+				}
+
+				int oldStatus = dlFolder.getStatus();
+
+				dlFolder.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+				dlFolderPersistence.update(dlFolder);
+
+				// Trash
+
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					trashVersionLocalService.addTrashVersion(
+						trashEntryId, DLFolder.class.getName(),
+						dlFolder.getFolderId(), oldStatus);
 				}
 
 				// Folders, file entries, and file shortcuts
@@ -498,7 +537,8 @@ public class DLAppHelperLocalServiceImpl
 							dlFolder.getGroupId(), dlFolder.getFolderId(), null,
 							false, queryDefinition);
 
-				moveDependentsToTrash(foldersAndFileEntriesAndFileShortcuts);
+				moveDependentsToTrash(
+					foldersAndFileEntriesAndFileShortcuts, trashEntryId);
 
 				// Asset
 
@@ -754,29 +794,51 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void restoreDependentsFromTrash(
-			List<Object> dlFileEntriesAndDLFolders)
+			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
 		throws PortalException, SystemException {
 
 		for (Object object : dlFileEntriesAndDLFolders) {
 			if (object instanceof DLFileEntry) {
+
+				// File entry
+
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				List<DLFileVersion> dlFileVersions =
-					dlFileVersionLocalService.getFileVersions(
-						dlFileEntry.getFileEntryId(),
-						WorkflowConstants.STATUS_ANY);
+				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
+					DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
 
-				dlFileVersions = ListUtil.copy(dlFileVersions);
-
-				Collections.sort(
-					dlFileVersions, new FileVersionVersionComparator());
-
-				DLFileVersion latestDlFileVersion = dlFileVersions.get(0);
-
-				if (latestDlFileVersion.getStatus() ==
-						WorkflowConstants.STATUS_IN_TRASH) {
-
+				if (trashEntry != null) {
 					continue;
+				}
+
+				// File versions
+
+				List<DLFileVersion> dlFileVersions =
+					dlFileEntry.getFileVersions(
+						WorkflowConstants.STATUS_IN_TRASH);
+
+				for (DLFileVersion dlFileVersion : dlFileVersions) {
+					TrashVersion trashVersion =
+						trashVersionLocalService.fetchVersion(
+							trashEntryId, DLFileVersion.class.getName(),
+							dlFileVersion.getFileVersionId());
+
+					int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+					if (trashVersion != null) {
+						oldStatus = trashVersion.getStatus();
+					}
+
+					dlFileVersion.setStatus(oldStatus);
+
+					dlFileVersionPersistence.update(dlFileVersion);
+
+					// Trash
+
+					if (trashVersion != null) {
+						trashVersionLocalService.deleteTrashVersion(
+							trashVersion);
+					}
 				}
 
 				// File shortcut
@@ -785,6 +847,9 @@ public class DLAppHelperLocalServiceImpl
 					dlFileEntry.getFileEntryId());
 
 				// Asset
+
+				DLFileVersion latestDlFileVersion =
+					dlFileEntry.getLatestFileVersion(true);
 
 				if (latestDlFileVersion.isApproved()) {
 					assetEntryLocalService.updateVisible(
@@ -800,11 +865,32 @@ public class DLAppHelperLocalServiceImpl
 				indexer.reindex(dlFileEntry);
 			}
 			else if (object instanceof DLFolder) {
+
+				// Folder
+
 				DLFolder dlFolder = (DLFolder)object;
 
-				if (dlFolder.isInTrash()) {
+				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
+					DLFolder.class.getName(), dlFolder.getFolderId());
+
+				if (trashEntry != null) {
 					continue;
 				}
+
+				TrashVersion trashVersion =
+					trashVersionLocalService.fetchVersion(
+						trashEntryId, DLFolder.class.getName(),
+						dlFolder.getFolderId());
+
+				int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+				if (trashVersion != null) {
+					oldStatus = trashVersion.getStatus();
+				}
+
+				dlFolder.setStatus(oldStatus);
+
+				dlFolderPersistence.update(dlFolder);
 
 				// Folders, file entries, and file shortcuts
 
@@ -818,7 +904,13 @@ public class DLAppHelperLocalServiceImpl
 							false, queryDefinition);
 
 				restoreDependentsFromTrash(
-					foldersAndFileEntriesAndFileShortcuts);
+					foldersAndFileEntriesAndFileShortcuts, trashEntryId);
+
+				// Trash
+
+				if (trashVersion != null) {
+					trashVersionLocalService.deleteTrashVersion(trashVersion);
+				}
 
 				// Asset
 
@@ -956,8 +1048,11 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFolderPersistence.update(dlFolder);
 
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			DLFolder.class.getName(), dlFolder.getFolderId());
+
 		dlFolderLocalService.updateStatus(
-			userId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED,
+			userId, folder.getFolderId(), trashEntry.getStatus(),
 			new HashMap<String, Serializable>(), new ServiceContext());
 
 		// File rank
@@ -967,7 +1062,7 @@ public class DLAppHelperLocalServiceImpl
 		// Folders, file entries, and file shortcuts
 
 		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
+			WorkflowConstants.STATUS_IN_TRASH);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
 			dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
@@ -975,7 +1070,7 @@ public class DLAppHelperLocalServiceImpl
 				queryDefinition);
 
 		dlAppHelperLocalService.restoreDependentsFromTrash(
-			foldersAndFileEntriesAndFileShortcuts);
+			foldersAndFileEntriesAndFileShortcuts, trashEntry.getEntryId());
 
 		// Sync
 
@@ -985,8 +1080,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Trash
 
-		trashEntryLocalService.deleteEntry(
-			DLFolderConstants.getClassName(), dlFolder.getFolderId());
+		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 
 		// Social
 
@@ -1386,14 +1480,13 @@ public class DLAppHelperLocalServiceImpl
 
 		// File entry
 
-		List<DLFileVersion> dlFileVersions =
-			dlFileVersionLocalService.getFileVersions(
-				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		dlFileVersions = ListUtil.sort(
-			dlFileVersions, new FileVersionVersionComparator());
+		TrashEntry trashEntry = dlFileEntry.getTrashEntry();
 
-		if (fileEntry.isInTrash()) {
+		if (trashEntry.isTrashEntry(
+				DLFileEntry.class, dlFileEntry.getFileEntryId())) {
+
 			restoreFileEntryFromTrash(userId, fileEntry);
 
 			fileEntry = dlAppLocalService.moveFileEntry(
@@ -1408,11 +1501,55 @@ public class DLAppHelperLocalServiceImpl
 			return fileEntry;
 		}
 
+		List<DLFileVersion> dlFileVersions =
+			dlFileVersionLocalService.getFileVersions(
+				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_IN_TRASH);
+
+		dlFileVersions = ListUtil.sort(
+			dlFileVersions, new FileVersionVersionComparator());
+
 		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
 
+		TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+			trashEntry.getEntryId(), DLFileVersion.class.getName(),
+			fileVersion.getFileVersionId());
+
+		int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+		if (trashVersion != null) {
+			oldStatus = trashVersion.getStatus();
+		}
+
 		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
+			userId, fileVersion.getFileVersionId(), oldStatus,
 			new HashMap<String, Serializable>(), serviceContext);
+
+		// File versions
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+
+			// File version
+
+			trashVersion = trashVersionLocalService.fetchVersion(
+				trashEntry.getEntryId(), DLFileVersion.class.getName(),
+				dlFileVersion.getFileVersionId());
+
+			oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				oldStatus = trashVersion.getStatus();
+			}
+
+			dlFileVersion.setStatus(oldStatus);
+
+			dlFileVersionPersistence.update(dlFileVersion);
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
+		}
 
 		if (DLAppHelperThreadLocal.isEnabled()) {
 
@@ -1473,37 +1610,6 @@ public class DLAppHelperLocalServiceImpl
 			WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
-		// File entry
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId());
-
-		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
-
-		dlFileEntry.setTitle(trashTitle);
-
-		dlFileEntryPersistence.update(dlFileEntry);
-
-		if (DLAppHelperThreadLocal.isEnabled()) {
-
-			// File shortcut
-
-			dlFileShortcutLocalService.disableFileShortcuts(
-				fileEntry.getFileEntryId());
-
-			// File rank
-
-			dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
-
-			// Sync
-
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_DELETE, DLSyncConstants.TYPE_FILE,
-				fileEntry.getFileEntryId());
-		}
-
 		// Trash
 
 		int oldDLFileVersionStatus = WorkflowConstants.STATUS_ANY;
@@ -1525,20 +1631,43 @@ public class DLAppHelperLocalServiceImpl
 			dlFileVersionPersistence.update(curDLFileVersion);
 		}
 
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 		typeSettingsProperties.put("title", dlFileEntry.getTitle());
 
-		trashEntryLocalService.addTrashEntry(
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
 			userId, dlFileEntry.getGroupId(),
 			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId(),
 			dlFileEntry.getUuid(), dlFileEntry.getClassName(),
 			oldDLFileVersionStatus, dlFileVersionStatusOVPs,
 			typeSettingsProperties);
 
+		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
+
+		dlFileEntry.setTitle(trashTitle);
+
+		dlFileEntryPersistence.update(dlFileEntry);
+
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return fileEntry;
 		}
+
+		// File shortcut
+
+		dlFileShortcutLocalService.disableFileShortcuts(
+			fileEntry.getFileEntryId());
+
+		// File rank
+
+		dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
+
+		// Sync
+
+		registerDLSyncEventCallback(
+			DLSyncConstants.EVENT_DELETE, DLSyncConstants.TYPE_FILE,
+			fileEntry.getFileEntryId());
 
 		// Social
 
@@ -1572,15 +1701,28 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
-		if (dlFolder.isInTrash()) {
+		TrashEntry trashEntry = dlFolder.getTrashEntry();
+
+		if (trashEntry.isTrashEntry(DLFolder.class, dlFolder.getFolderId())) {
 			restoreFolderFromTrash(userId, folder);
 		}
 		else {
 
 			// Folder
 
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), DLFolder.class.getName(),
+					dlFolder.getFolderId());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
 			dlFolderLocalService.updateStatus(
-				userId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED,
+				userId, folder.getFolderId(), status,
 				new HashMap<String, Serializable>(), new ServiceContext());
 
 			// File rank
@@ -1588,10 +1730,16 @@ public class DLAppHelperLocalServiceImpl
 			dlFileRankLocalService.enableFileRanksByFolderId(
 				folder.getFolderId());
 
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
+
 			// Folders, file entries, and file shortcuts
 
 			QueryDefinition queryDefinition = new QueryDefinition(
-				WorkflowConstants.STATUS_ANY);
+				WorkflowConstants.STATUS_IN_TRASH);
 
 			List<Object> foldersAndFileEntriesAndFileShortcuts =
 				dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
@@ -1599,7 +1747,7 @@ public class DLAppHelperLocalServiceImpl
 					queryDefinition);
 
 			dlAppHelperLocalService.restoreDependentsFromTrash(
-				foldersAndFileEntriesAndFileShortcuts);
+				foldersAndFileEntriesAndFileShortcuts, trashEntry.getEntryId());
 
 			// Sync
 
@@ -1633,8 +1781,16 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			DLFolderConstants.getClassName(), dlFolder.getFolderId());
+		// Trash
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", dlFolder.getName());
+
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+			userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
+			dlFolder.getFolderId(), dlFolder.getUuid(), null,
+			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
@@ -1657,24 +1813,13 @@ public class DLAppHelperLocalServiceImpl
 				queryDefinition);
 
 		dlAppHelperLocalService.moveDependentsToTrash(
-			foldersAndFileEntriesAndFileShortcuts);
+			foldersAndFileEntriesAndFileShortcuts, trashEntry.getEntryId());
 
 		// Sync
 
 		registerDLSyncEventCallback(
 			DLSyncConstants.EVENT_DELETE, DLSyncConstants.TYPE_FOLDER,
 			folder.getFolderId());
-
-		// Trash
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("title", dlFolder.getName());
-
-		trashEntryLocalService.addTrashEntry(
-			userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
-			dlFolder.getFolderId(), dlFolder.getUuid(), null,
-			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
 
 		// Social
 
