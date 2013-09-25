@@ -483,11 +483,6 @@ public interface WikiPageModel extends BaseModel<WikiPage>, ResourcedModel,
 	@Override
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
-	/**
-	 * Returns the classPK of this wiki page
-	 *
-	 * @return the classPK of this wiki page
-	 */
 	@Override
 	public long getTrashEntryClassPK();
 

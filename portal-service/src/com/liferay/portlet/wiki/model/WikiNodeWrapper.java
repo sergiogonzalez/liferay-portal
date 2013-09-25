@@ -539,11 +539,6 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		return _wikiNode.getTrashEntry();
 	}
 
-	/**
-	* Returns the classPK of this wiki node
-	*
-	* @return the classPK of this wiki node
-	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return _wikiNode.getTrashEntryClassPK();
