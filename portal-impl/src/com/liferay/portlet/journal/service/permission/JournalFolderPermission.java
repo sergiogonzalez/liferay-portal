@@ -147,12 +147,11 @@ public class JournalFolderPermission {
 			return JournalPermission.contains(
 				permissionChecker, groupId, actionId);
 		}
-		else {
-			JournalFolder folder =
-				JournalFolderLocalServiceUtil.getJournalFolder(folderId);
 
-			return contains(permissionChecker, folder, actionId);
-		}
+		JournalFolder folder = JournalFolderLocalServiceUtil.getJournalFolder(
+			folderId);
+
+		return contains(permissionChecker, folder, actionId);
 	}
 
 }
