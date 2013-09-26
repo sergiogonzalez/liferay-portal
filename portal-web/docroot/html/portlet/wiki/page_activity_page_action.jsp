@@ -27,7 +27,7 @@ double version = extraDataJSONObject.getDouble("version");
 
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
-WikiPage socialActivityPage = WikiPageLocalServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
+WikiPage socialActivityPage = WikiPageLocalServiceUtil.getPage(wikiPage.getResourcePrimKey(), wikiPage.getNodeId(), version);
 %>
 
 <liferay-ui:icon-menu>

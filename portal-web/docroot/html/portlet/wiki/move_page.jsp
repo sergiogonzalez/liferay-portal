@@ -55,7 +55,9 @@ boolean hasWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWo
 		boolean pending = false;
 
 		if (hasWorkflowDefinitionLink) {
-			WikiPage latestWikiPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), null);
+			Boolean head = null;
+
+			WikiPage latestWikiPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), head);
 
 			pending = latestWikiPage.isPending();
 		}
