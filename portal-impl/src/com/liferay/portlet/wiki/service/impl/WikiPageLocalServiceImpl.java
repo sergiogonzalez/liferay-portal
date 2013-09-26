@@ -939,6 +939,56 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage getPage(long resourcePrimKey, long nodeId)
+		throws PortalException, SystemException {
+
+		List<WikiPage> pages = wikiPagePersistence.findByR_N_H(
+			resourcePrimKey, nodeId, true, 0, 1);
+
+		if (!pages.isEmpty()) {
+			return pages.get(0);
+		}
+		else {
+			throw new NoSuchPageException();
+		}
+	}
+
+	@Override
+	public WikiPage getPage(long resourcePrimKey, long nodeId, Boolean head)
+		throws PortalException, SystemException {
+
+		List<WikiPage> pages;
+
+		if (head == null) {
+			pages = wikiPagePersistence.findByR_N(
+				resourcePrimKey, nodeId, 0, 1);
+		}
+		else {
+			pages = wikiPagePersistence.findByR_N_H(
+				resourcePrimKey, nodeId, head, 0, 1);
+		}
+
+		if (!pages.isEmpty()) {
+			return pages.get(0);
+		}
+		else {
+			throw new NoSuchPageException();
+		}
+	}
+
+	@Override
+	public WikiPage getPage(long resourcePrimKey, long nodeId, double version)
+		throws PortalException, SystemException {
+
+		if (version == 0) {
+			return getPage(resourcePrimKey, nodeId, true);
+		}
+
+		return wikiPagePersistence.findByR_N_V(
+			resourcePrimKey, nodeId, version);
+	}
+
+	@Override
 	public WikiPage getPage(long nodeId, String title)
 		throws PortalException, SystemException {
 
@@ -978,16 +1028,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage getPage(long nodeId, String title, double version)
 		throws PortalException, SystemException {
 
-		WikiPage page = null;
-
 		if (version == 0) {
-			page = getPage(nodeId, title);
-		}
-		else {
-			page = wikiPagePersistence.findByN_T_V(nodeId, title, version);
+			return getPage(nodeId, title);
 		}
 
-		return page;
+		return wikiPagePersistence.findByN_T_V(nodeId, title, version);
+
 	}
 
 	@Override
