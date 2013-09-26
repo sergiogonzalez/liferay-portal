@@ -398,6 +398,22 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPageSoap getPage(
+		long resourcePrimKey, long nodeId, java.lang.Boolean head)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(resourcePrimKey,
+					nodeId, head);
+
+			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPageSoap[] getPages(
 		long groupId, long nodeId, boolean head, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)

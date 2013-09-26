@@ -260,6 +260,13 @@ public class WikiPageServiceUtil {
 		return getService().getPage(nodeId, title, version);
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPage getPage(
+		long resourcePrimKey, long nodeId, java.lang.Boolean head)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPage(resourcePrimKey, nodeId, head);
+	}
+
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
 		long groupId, long nodeId, boolean head, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
