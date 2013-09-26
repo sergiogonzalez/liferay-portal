@@ -1033,7 +1033,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		return wikiPagePersistence.findByN_T_V(nodeId, title, version);
-
 	}
 
 	@Override
@@ -1310,54 +1309,30 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
+	 *             String, String, boolean, ServiceContext)}
+	 */
 	@Override
 	public void movePage(
 			long userId, long nodeId, String title, String newTitle,
 			boolean strict, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		validateTitle(newTitle);
-
-		// Check if the new title already exists
-
-		if (StringUtil.equalsIgnoreCase(title, newTitle)) {
-			throw new DuplicatePageException(newTitle);
-		}
-
-		if (isUsedTitle(nodeId, newTitle)) {
-			WikiPage page = getPage(nodeId, newTitle);
-
-			// Support moving back to a previously moved title
-
-			if (((page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
-				 (page.getContent().length() < 200)) ||
-				!strict) {
-
-				deletePage(nodeId, newTitle);
-			}
-			else {
-				throw new DuplicatePageException(newTitle);
-			}
-		}
-
-		WikiPage page = wikiPagePersistence.findByN_T_First(
-			nodeId, title, new PageVersionComparator());
-
-		String summary = "Renamed from " + page.getTitle() + " to " + newTitle;
-
-		updatePage(
-			userId, page, newTitle, page.getVersion(), page.getContent(),
-			summary, page.getMinorEdit(), page.getFormat(),
-			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
+		renamePage(userId, nodeId, title, newTitle, strict, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
+	 *             String, String, ServiceContext)}
+	 */
 	@Override
 	public void movePage(
 			long userId, long nodeId, String title, String newTitle,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		movePage(userId, nodeId, title, newTitle, true, serviceContext);
+		renamePage(userId, nodeId, title, newTitle, serviceContext);
 	}
 
 	@Override
@@ -1506,6 +1481,56 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		return page;
+	}
+
+	@Override
+	public void renamePage(
+			long userId, long nodeId, String title, String newTitle,
+			boolean strict, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		validateTitle(newTitle);
+
+		// Check if the new title already exists
+
+		if (title.equalsIgnoreCase(newTitle)) {
+			throw new DuplicatePageException(newTitle);
+		}
+
+		if (isUsedTitle(nodeId, newTitle)) {
+			WikiPage page = getPage(nodeId, newTitle);
+
+			// Support moving back to a previously moved title
+
+			if (((page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
+				 (page.getContent().length() < 200)) ||
+				!strict) {
+
+				deletePage(nodeId, newTitle);
+			}
+			else {
+				throw new DuplicatePageException(newTitle);
+			}
+		}
+
+		WikiPage page = wikiPagePersistence.findByN_T_First(
+			nodeId, title, new PageVersionComparator());
+
+		String summary = "Renamed from " + page.getTitle() + " to " + newTitle;
+
+		updatePage(
+			userId, page, newTitle, page.getVersion(), page.getContent(),
+			summary, page.getMinorEdit(), page.getFormat(),
+			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
+	}
+
+	@Override
+	public void renamePage(
+			long userId, long nodeId, String title, String newTitle,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		renamePage(userId, nodeId, title, newTitle, true, serviceContext);
 	}
 
 	@Override
