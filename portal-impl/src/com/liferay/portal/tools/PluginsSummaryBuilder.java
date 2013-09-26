@@ -410,6 +410,12 @@ public class PluginsSummaryBuilder {
 			}
 		}
 
+		File webInfDir = relengChangeLogFile.getParentFile();
+
+		File docrootDir = webInfDir.getParentFile();
+
+		File pluginDir = docrootDir.getParentFile();
+
 		for (int i = 0; i < relengChangeLogEntries.size(); i++) {
 			String relengChangeLogEntry = relengChangeLogEntries.get(i);
 
@@ -427,12 +433,6 @@ public class PluginsSummaryBuilder {
 
 				break;
 			}
-
-			File webInfDir = relengChangeLogFile.getParentFile();
-
-			File docrootDir = webInfDir.getParentFile();
-
-			File pluginDir = docrootDir.getParentFile();
 
 			Set<String> ticketIds = _extractTicketIds(pluginDir, range);
 
@@ -496,8 +496,7 @@ public class PluginsSummaryBuilder {
 		}
 
 		File pluginPackagePropertiesFile = new File(
-			relengChangeLogFile.getParentFile(),
-			"liferay-plugin-package.properties");
+			webInfDir, "liferay-plugin-package.properties");
 
 		String pluginPackagePropertiesContent = FileUtil.read(
 			pluginPackagePropertiesFile);
@@ -522,6 +521,13 @@ public class PluginsSummaryBuilder {
 			pluginPackagePropertiesFile, pluginPackagePropertiesContent);
 
 		FileUtil.write(relengChangeLogFile, sb.toString());
+
+		File relengChangeLogMD5File = new File(
+			webInfDir, "liferay-releng.changelog.md5");
+
+		String md5Checksum = FileUtil.getMD5Checksum(relengChangeLogFile);
+
+		FileUtil.write(relengChangeLogMD5File, md5Checksum);
 	}
 
 	private String _updateRelengPropertiesFile(

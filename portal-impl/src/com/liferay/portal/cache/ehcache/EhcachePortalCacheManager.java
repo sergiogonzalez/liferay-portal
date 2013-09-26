@@ -107,6 +107,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	public void destroy() throws Exception {
 		try {
+			_ehcachePortalCaches.clear();
+			_portalCaches.clear();
+
 			_cacheManager.shutdown();
 		}
 		finally {
@@ -123,26 +126,32 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public PortalCache<K, V> getCache(String name, boolean blocking) {
-		PortalCache<K, V> portalCache = _ehcachePortalCaches.get(name);
+		PortalCache<K, V> portalCache = _portalCaches.get(name);
 
 		if (portalCache == null) {
 			synchronized (_cacheManager) {
-				portalCache = _ehcachePortalCaches.get(name);
+				portalCache = _portalCaches.get(name);
 
 				if (portalCache == null) {
 					portalCache = addCache(name, null);
+
+					if (PropsValues.TRANSACTIONAL_CACHE_ENABLED &&
+						isTransactionalPortalCache(name)) {
+
+						portalCache = new TransactionalPortalCache<K, V>(
+							portalCache);
+					}
+
+					if (PropsValues.EHCACHE_BLOCKING_CACHE_ALLOWED &&
+						blocking) {
+
+						portalCache = new BlockingPortalCache<K, V>(
+							portalCache);
+					}
+
+					_portalCaches.put(name, portalCache);
 				}
 			}
-		}
-
-		if (PropsValues.TRANSACTIONAL_CACHE_ENABLED &&
-			isTransactionalPortalCache(name)) {
-
-			portalCache = new TransactionalPortalCache<K, V>(portalCache);
-		}
-
-		if (PropsValues.EHCACHE_BLOCKING_CACHE_ALLOWED && blocking) {
-			portalCache = new BlockingPortalCache<K, V>(portalCache);
 		}
 
 		return portalCache;
@@ -176,9 +185,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void removeCache(String name) {
-		_ehcachePortalCaches.remove(name);
-
 		_cacheManager.removeCache(name);
+		_ehcachePortalCaches.remove(name);
+		_portalCaches.remove(name);
 	}
 
 	public void setClusterAware(boolean clusterAware) {
@@ -284,6 +293,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ManagementService _managementService;
 	private MBeanServer _mBeanServer;
 	private boolean _mpiOnly;
+	private Map<String, PortalCache<K, V>> _portalCaches =
+		new HashMap<String, PortalCache<K, V>>();
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;

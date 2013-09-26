@@ -475,7 +475,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="3" />
+		<property name="build-test-ant-scripts.version" value="4" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -547,6 +547,7 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-administration-p5" />
 			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.properties" value="users.screen.name.allow.numeric=true" />
 			<param name="test.ant.script.suite" value="EndUserAdministrationP5TestSuite" />
 		</antcall>
 
@@ -2501,8 +2502,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
-
-		<antcall target="generate-tests" inheritAll="false" />
 
 		<if>
 			<contains string="${test.class}" substring="#" />

@@ -152,6 +152,13 @@
 		<ant dir="osgi/bootstrap" target="deploy" inheritAll="false" />
 	</target>
 
+	<target name="compile-test">
+		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
+		<ant dir="portal-service" target="compile-test" inheritAll="false" />
+		<ant dir="portal-web" target="compile-test" inheritAll="false" />
+		<ant dir="util-java" target="compile-test" inheritAll="false" />
+	</target>
+
 	<target name="deploy">
 		<if>
 			<or>

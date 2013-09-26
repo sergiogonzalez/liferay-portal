@@ -363,6 +363,11 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	@Override
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
+	/**
+	 * Returns the class primary key of the trash entry for this journal folder.
+	 *
+	 * @return the class primary key of the trash entry for this journal folder
+	 */
 	@Override
 	public long getTrashEntryClassPK();
 
@@ -472,7 +477,7 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	/**
 	 * Sets the container model ID of this journal folder.
 	 *
-	 * @param container model ID of this journal folder
+	 * @param containerModelId the container model ID of this journal folder
 	 */
 	@Override
 	public void setContainerModelId(long containerModelId);
@@ -496,7 +501,7 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	/**
 	 * Sets the parent container model ID of this journal folder.
 	 *
-	 * @param parent container model ID of this journal folder
+	 * @param parentContainerModelId the parent container model ID of this journal folder
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);

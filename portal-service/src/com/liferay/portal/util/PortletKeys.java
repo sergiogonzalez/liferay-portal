@@ -148,6 +148,8 @@ public class PortletKeys {
 
 	public static final String MY_WORKFLOW_TASKS = "153";
 
+	public static final String NAVIGATION = "71";
+
 	public static final String NESTED_PORTLETS = "118";
 
 	public static final String PAGE_COMMENTS = "107";

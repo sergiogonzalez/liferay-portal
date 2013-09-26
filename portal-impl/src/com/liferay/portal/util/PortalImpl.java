@@ -678,6 +678,15 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public void addUserLocaleOptionsMessage(HttpServletRequest request) {
+		boolean ignoreUserLocaleOptions = GetterUtil.getBoolean(
+			SessionClicks.get(
+				request.getSession(), "ignoreUserLocaleOptions",
+				Boolean.FALSE.toString()));
+
+		if (ignoreUserLocaleOptions) {
+			return;
+		}
+
 		boolean showUserLocaleOptionsMessage = ParamUtil.getBoolean(
 			request, "showUserLocaleOptionsMessage", true);
 
@@ -689,7 +698,7 @@ public class PortalImpl implements Portal {
 		PortalMessages.add(
 			request, PortalMessages.KEY_JSP_PATH,
 			"/html/common/themes/user_locale_options.jsp");
-		PortalMessages.add(request, PortalMessages.KEY_TIMEOUT, 0);
+		PortalMessages.add(request, PortalMessages.KEY_TIMEOUT, -1);
 	}
 
 	@Override

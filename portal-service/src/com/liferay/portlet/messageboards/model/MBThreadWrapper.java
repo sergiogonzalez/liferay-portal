@@ -756,9 +756,9 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Returns the classPK of this message boards thread
+	* Returns the class primary key of the trash entry for this message boards thread.
 	*
-	* @return the classPK of this message boards thread
+	* @return the class primary key of the trash entry for this message boards thread
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
@@ -897,7 +897,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	/**
 	* Sets the container model ID of this message boards thread.
 	*
-	* @param container model ID of this message boards thread
+	* @param containerModelId the container model ID of this message boards thread
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
@@ -927,7 +927,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	/**
 	* Sets the parent container model ID of this message boards thread.
 	*
-	* @param parent container model ID of this message boards thread
+	* @param parentContainerModelId the parent container model ID of this message boards thread
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
