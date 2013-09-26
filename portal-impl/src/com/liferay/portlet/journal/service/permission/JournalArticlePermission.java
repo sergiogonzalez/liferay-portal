@@ -115,42 +115,40 @@ public class JournalArticlePermission {
 			}
 		}
 
-		if (!actionId.equals(ActionKeys.EXPIRE)) {
-			if (article.getFolderId() !=
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (article.getFolderId() !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				try {
-					JournalFolder folder =
-						JournalFolderLocalServiceUtil.getFolder(
-							article.getFolderId());
+			try {
+				JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
+					article.getFolderId());
 
-					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-						!JournalFolderPermission.contains(
-							permissionChecker, folder, ActionKeys.ACCESS) &&
-						!JournalFolderPermission.contains(
-							permissionChecker, folder, ActionKeys.VIEW)) {
+				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
+					!JournalFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.ACCESS) &&
+					!JournalFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.VIEW)) {
 
-						return false;
-					}
-
-					if (JournalFolderPermission.contains(
-							permissionChecker, folder, actionId)) {
-
-						return true;
-					}
+					return false;
 				}
-				catch (NoSuchFolderException nsfe) {
-					if (!article.isInTrash()) {
-						throw nsfe;
-					}
+
+				if (!actionId.equals(ActionKeys.EXPIRE) ||
+					JournalFolderPermission.contains(
+						permissionChecker, folder, actionId)) {
+
+					return true;
 				}
 			}
-			else if (actionId.equals(ActionKeys.VIEW) &&
-					 PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-
-				return JournalPermission.contains(
-					permissionChecker, article.getGroupId(), actionId);
+			catch (NoSuchFolderException nsfe) {
+				if (!article.isInTrash()) {
+					throw nsfe;
+				}
 			}
+		}
+		else if (actionId.equals(ActionKeys.VIEW) &&
+				 PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+
+			return JournalPermission.contains(
+				permissionChecker, article.getGroupId(), actionId);
 		}
 
 		if (permissionChecker.hasOwnerPermission(
