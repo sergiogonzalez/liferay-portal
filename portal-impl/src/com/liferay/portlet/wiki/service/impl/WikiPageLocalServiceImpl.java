@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1876,42 +1877,45 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				}
 			}
 			else if (serviceContext.isCommandRename()) {
+				long nodeId = page.getNodeId();
+				long resourcePrimKey = page.getResourcePrimKey();
+				String title = page.getTitle();
 
 				// All versions
 
-				List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
-					nodeId, title);
+				List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
+					resourcePrimKey, nodeId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, new PageVersionComparator());
 
-				if (versionPages.size() == 0) {
-					return;
-				}
+				WikiPage oldPage = versionPages.get(1);
 
-				for (WikiPage page : versionPages) {
-					page.setTitle(newTitle);
+				long oldNodeId = oldPage.getNodeId();
+				String oldTitle = oldPage.getTitle();
 
-					wikiPagePersistence.update(page);
+				for (WikiPage versionPage : versionPages) {
+					versionPage.setTitle(title);
+
+					wikiPagePersistence.update(versionPage);
 				}
 
 				// Children
 
-				List<WikiPage> children = wikiPagePersistence.findByN_P(nodeId, title);
+				List<WikiPage> children = wikiPagePersistence.findByN_P(
+					oldNodeId, oldTitle);
 
-				for (WikiPage page : children) {
-					page.setParentTitle(newTitle);
+				for (WikiPage child : children) {
+					child.setParentTitle(title);
 
-					wikiPagePersistence.update(page);
+					wikiPagePersistence.update(child);
 				}
-
-				WikiPage page = versionPages.get(versionPages.size() - 1);
-
-				long resourcePrimKey = page.getResourcePrimKey();
 
 				// Page resource
 
 				WikiPageResource pageResource =
-					wikiPageResourcePersistence.findByPrimaryKey(resourcePrimKey);
+					wikiPageResourcePersistence.findByPrimaryKey(
+						resourcePrimKey);
 
-				pageResource.setTitle(newTitle);
+				pageResource.setTitle(title);
 
 				wikiPageResourcePersistence.update(pageResource);
 
@@ -1919,12 +1923,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 				double version = WikiPageConstants.VERSION_DEFAULT;
 				String summary = WikiPageConstants.MOVED + " to " + title;
-				String format = page.getFormat();
+				String format = oldPage.getFormat();
 				boolean head = true;
-				String parentTitle = page.getParentTitle();
-				String redirectTitle = page.getTitle();
+				String parentTitle = oldPage.getParentTitle();
 				String content =
-					StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
+					StringPool.DOUBLE_OPEN_BRACKET + title +
 						StringPool.DOUBLE_CLOSE_BRACKET;
 
 				serviceContext.setAddGroupPermissions(true);
@@ -1933,16 +1936,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				populateServiceContext(serviceContext, page);
 
 				addPage(
-					userId, nodeId, title, version, content, summary, false, format,
-					head, parentTitle, redirectTitle, serviceContext);
+					userId, oldNodeId, oldTitle, version, content, summary,
+					false, format, head, parentTitle, title, serviceContext);
 
 				// Move redirects to point to the page with the new title
 
 				List<WikiPage> redirectedPages = wikiPagePersistence.findByN_R(
-					nodeId, title);
+					oldNodeId, oldTitle);
 
 				for (WikiPage redirectedPage : redirectedPages) {
-					redirectedPage.setRedirectTitle(newTitle);
+					redirectedPage.setRedirectTitle(title);
 
 					wikiPagePersistence.update(redirectedPage);
 				}
@@ -1960,7 +1963,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					WikiPage.class);
 
 				indexer.delete(
-					new Object[] {page.getCompanyId(), page.getNodeId(), title});
+					new Object[] {page.getCompanyId(), oldNodeId, oldTitle});
 
 				indexer.reindex(page);
 			}
