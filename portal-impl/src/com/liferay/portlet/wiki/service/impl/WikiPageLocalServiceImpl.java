@@ -1519,6 +1519,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String summary = serviceContext.translate(
 			"renamed-page-from-x-to-x", page.getTitle(), newTitle);
 
+		populateServiceContext(serviceContext, page);
+
 		updatePage(
 			userId, page, newTitle, page.getVersion(), page.getContent(),
 			summary, page.getMinorEdit(), page.getFormat(),
