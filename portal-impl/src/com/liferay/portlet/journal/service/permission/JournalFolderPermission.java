@@ -103,7 +103,8 @@ public class JournalFolderPermission {
 			}
 
 			if (actionId.equals(ActionKeys.VIEW)) {
-				return true;
+				return JournalPermission.contains(
+					permissionChecker, folder.getGroupId(), actionId);
 			}
 
 			folderId = originalFolderId;
