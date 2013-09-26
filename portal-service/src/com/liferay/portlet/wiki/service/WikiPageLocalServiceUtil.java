@@ -838,6 +838,10 @@ public class WikiPageLocalServiceUtil {
 		return getService().hasDraftPage(nodeId, title);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
+	String, String, boolean, ServiceContext)}
+	*/
 	public static void movePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -847,6 +851,10 @@ public class WikiPageLocalServiceUtil {
 			.movePage(userId, nodeId, title, newTitle, strict, serviceContext);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
+	String, String, ServiceContext)}
+	*/
 	public static void movePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -883,6 +891,23 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().movePageToTrash(userId, page);
+	}
+
+	public static void renamePage(long userId, long nodeId,
+		java.lang.String title, java.lang.String newTitle, boolean strict,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.renamePage(userId, nodeId, title, newTitle, strict, serviceContext);
+	}
+
+	public static void renamePage(long userId, long nodeId,
+		java.lang.String title, java.lang.String newTitle,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().renamePage(userId, nodeId, title, newTitle, serviceContext);
 	}
 
 	public static void restorePageAttachmentFromTrash(long userId, long nodeId,

@@ -909,6 +909,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		return _wikiPageLocalService.hasDraftPage(nodeId, title);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
+	String, String, boolean, ServiceContext)}
+	*/
 	@Override
 	public void movePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle, boolean strict,
@@ -919,6 +923,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 			serviceContext);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
+	String, String, ServiceContext)}
+	*/
 	@Override
 	public void movePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle,
@@ -962,6 +970,26 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageLocalService.movePageToTrash(userId, page);
+	}
+
+	@Override
+	public void renamePage(long userId, long nodeId, java.lang.String title,
+		java.lang.String newTitle, boolean strict,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.renamePage(userId, nodeId, title, newTitle,
+			strict, serviceContext);
+	}
+
+	@Override
+	public void renamePage(long userId, long nodeId, java.lang.String title,
+		java.lang.String newTitle,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.renamePage(userId, nodeId, title, newTitle,
+			serviceContext);
 	}
 
 	@Override
