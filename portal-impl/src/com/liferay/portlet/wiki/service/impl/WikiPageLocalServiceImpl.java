@@ -1516,7 +1516,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = wikiPagePersistence.findByN_T_First(
 			nodeId, title, new PageVersionComparator());
 
-		String summary = "Renamed from " + page.getTitle() + " to " + newTitle;
+		String summary = serviceContext.translate(
+			"renamed-page-from-x-to-x", page.getTitle(), newTitle);
 
 		updatePage(
 			userId, page, newTitle, page.getVersion(), page.getContent(),
@@ -1994,7 +1995,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				// Create stub page at the old location
 
 				double version = WikiPageConstants.VERSION_DEFAULT;
-				String summary = WikiPageConstants.MOVED + " to " + title;
+				String summary = serviceContext.translate(
+					"moved-page-to-x", title);
 				String format = oldPage.getFormat();
 				boolean head = true;
 				String parentTitle = oldPage.getParentTitle();
