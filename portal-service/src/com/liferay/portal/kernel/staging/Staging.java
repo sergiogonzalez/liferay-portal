@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -36,6 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Raymond Augé
  */
+@Transactional(isolation = Isolation.PORTAL, rollbackFor = {Exception.class})
 public interface Staging {
 
 	public String buildRemoteURL(
@@ -249,6 +253,15 @@ public interface Staging {
 	public void updateLastImportSettings(
 			Element layoutElement, Layout layout,
 			PortletDataContext portletDataContext)
+		throws Exception;
+
+	public void updateLastPublishDate(
+			long sourceGroupId, boolean privateLayout, Date lastPublishDate)
+		throws Exception;
+
+	public void updateLastPublishDate(
+			String portletId, PortletPreferences portletPreferences,
+			Date lastPublishDate)
 		throws Exception;
 
 	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)

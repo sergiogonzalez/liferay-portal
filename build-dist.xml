@@ -2260,30 +2260,9 @@ plugins.includes=</echo>
 				<delete dir="${zip.executable.dir}/../patching-tool" />
 
 				<if>
-					<available file="${patching.tool.source.dir}" type="dir" />
+					<available file="${patching.tool.zip}" />
 					<then>
-						<mkdir dir="${zip.executable.dir}/../patching-tool" />
-
-						<copy todir="${zip.executable.dir}/../patching-tool">
-							<fileset
-								dir="${patching.tool.source.dir}/scripts"
-							/>
-						</copy>
-
-						<mkdir dir="${zip.executable.dir}/../patching-tool/lib" />
-
-						<copy todir="${zip.executable.dir}/../patching-tool/lib">
-							<fileset
-								dir="${patching.tool.source.dir}"
-								includes="patching-tool.jar"
-							/>
-							<fileset
-								dir="${patching.tool.source.dir}/lib"
-							/>
-						</copy>
-
-						<mkdir dir="${zip.executable.dir}/../patching-tool/logs" />
-						<mkdir dir="${zip.executable.dir}/../patching-tool/patches" />
+						<unzip dest="${zip.executable.dir}/.." src="${patching.tool.zip}" />
 
 						<if>
 							<contains string="${zip.executable.dir}" substring="glassfish" />
