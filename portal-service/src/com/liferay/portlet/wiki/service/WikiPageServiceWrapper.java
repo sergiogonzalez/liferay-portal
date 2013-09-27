@@ -136,7 +136,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
+	* @deprecated As of 6.2.0, replaced by {@link #discardDraft(long, String,
 	double)}
 	*/
 	@Override
@@ -274,6 +274,14 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getPage(
+		long resourcePrimKey, long nodeId, java.lang.Boolean head)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getPage(resourcePrimKey, nodeId, head);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
 		long groupId, long nodeId, boolean head, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -359,6 +367,10 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			tempFolderName);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
+	String, ServiceContext)}
+	*/
 	@Override
 	public void movePage(long nodeId, java.lang.String title,
 		java.lang.String newTitle,
@@ -391,6 +403,15 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageService.movePageToTrash(nodeId, title, version);
+	}
+
+	@Override
+	public void renamePage(long nodeId, java.lang.String title,
+		java.lang.String newTitle,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.renamePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	@Override

@@ -134,7 +134,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 					<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_ADD_COMMENT %>">
 
 						<%
-						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(node.getNodeId(), wikiPage.getTitle());
+						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(wikiPage.getResourcePrimKey(), node.getNodeId());
 						%>
 
 						<portlet:renderURL var="viewPageURL">
@@ -154,7 +154,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 						<%
 						double version = extraDataJSONObject.getDouble("version");
 
-						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(node.getNodeId(), wikiPage.getTitle(), version);
+						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(wikiPage.getResourcePrimKey(), node.getNodeId(), version);
 						%>
 
 						<portlet:renderURL var="viewPageURL">

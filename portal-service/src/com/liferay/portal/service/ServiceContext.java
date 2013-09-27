@@ -777,6 +777,40 @@ public class ServiceContext implements Cloneable, Serializable {
 	/**
 	 * Returns <code>true</code> if this service context contains an update
 	 * command (i.e. has command value {@link
+	 * com.liferay.portal.kernel.util.Constants#CHANGE_PARENT})
+	 *
+	 * @return <code>true</code> if this service context contains a change
+	 *         parent command; <code>false</code> otherwise
+	 */
+	public boolean isCommandChangeParent() {
+		if (Validator.equals(_command, Constants.CHANGE_PARENT)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if this service context contains an update
+	 * command (i.e. has command value {@link
+	 * com.liferay.portal.kernel.util.Constants#RENAME})
+	 *
+	 * @return <code>true</code> if this service context contains a rename
+	 *         command; <code>false</code> otherwise
+	 */
+	public boolean isCommandRename() {
+		if (Validator.equals(_command, Constants.RENAME)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if this service context contains an update
+	 * command (i.e. has command value {@link
 	 * com.liferay.portal.kernel.util.Constants#UPDATE})
 	 *
 	 * @return <code>true</code> if this service context contains an update
