@@ -5982,7 +5982,7 @@ public class JournalArticleLocalServiceImpl
 	protected List<ObjectValuePair<Long, Integer>> getArticleVersionStatuses(
 		List<JournalArticle> articles) {
 
-		List<ObjectValuePair<Long, Integer>> dlArticleVersionStatusOVPs =
+		List<ObjectValuePair<Long, Integer>> articleVersionStatusOVPs =
 			new ArrayList<ObjectValuePair<Long, Integer>>(articles.size());
 
 		for (JournalArticle article : articles) {
@@ -5992,13 +5992,13 @@ public class JournalArticleLocalServiceImpl
 				status = WorkflowConstants.STATUS_DRAFT;
 			}
 
-			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
+			ObjectValuePair<Long, Integer> articleVersionStatusOVP =
 				new ObjectValuePair<Long, Integer>(article.getId(), status);
 
-			dlArticleVersionStatusOVPs.add(dlFileVersionStatusOVP);
+			articleVersionStatusOVPs.add(articleVersionStatusOVP);
 		}
 
-		return dlArticleVersionStatusOVPs;
+		return articleVersionStatusOVPs;
 	}
 
 	protected long getClassTypeId(JournalArticle article) {
