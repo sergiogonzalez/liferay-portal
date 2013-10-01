@@ -3308,6 +3308,12 @@ public class JournalArticleLocalServiceImpl
 			journalArticlePersistence.update(article);
 		}
 
+		article = updateStatus(
+			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
+			new HashMap<String, Serializable>(), new ServiceContext());
+
+		// Trash
+
 		List<JournalArticle> articleVersions =
 			journalArticlePersistence.findByG_A(
 				article.getGroupId(), article.getArticleId());
@@ -3322,12 +3328,6 @@ public class JournalArticleLocalServiceImpl
 			articleVersionStatusOVPs = getArticleVersionStatuses(
 				articleVersions);
 		}
-
-		article = updateStatus(
-			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<String, Serializable>(), new ServiceContext());
-
-		// Trash
 
 		for (JournalArticle articleVersion : articleVersions) {
 			articleVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
