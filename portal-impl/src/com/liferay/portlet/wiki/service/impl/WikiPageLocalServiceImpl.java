@@ -2072,13 +2072,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				notifySubscribers(node, page, serviceContext, update);
 			}
 
-			// Indexer
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				WikiPage.class);
-
-			indexer.reindex(page);
-
 			// Cache
 
 			clearPageCache(page);
@@ -2117,6 +2110,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				}
 			}
 		}
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			WikiPage.class);
+
+		indexer.reindex(page);
 
 		return wikiPagePersistence.update(page);
 	}
