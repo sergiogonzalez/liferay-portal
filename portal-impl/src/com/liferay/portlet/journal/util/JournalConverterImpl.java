@@ -698,7 +698,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler((groupId > 0) ? 5 : 3);
 
 			sb.append(layoutId);
 			sb.append(StringPool.AT);
@@ -710,8 +710,10 @@ public class JournalConverterImpl implements JournalConverter {
 				sb.append("public");
 			}
 
-			sb.append(StringPool.AT);
-			sb.append(groupId);
+			if (groupId > 0) {
+				sb.append(StringPool.AT);
+				sb.append(groupId);
+			}
 
 			dynamicContentElement.addCDATA(sb.toString());
 		}

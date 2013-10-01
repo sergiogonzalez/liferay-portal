@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.http;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -21,11 +22,13 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PropsValues;
@@ -39,7 +42,6 @@ import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.security.InvalidKeyException;
 import java.security.Key;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -55,20 +57,30 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TunnelUtil {
 
-	public static Key getSharedSecretKey() throws InvalidKeyException {
+	public static Key getSharedSecretKey() throws AuthException {
 		String sharedSecret = PropsValues.TUNNELING_SERVLET_SHARED_SECRET;
 
 		if (Validator.isNull(sharedSecret)) {
-			throw new InvalidKeyException(
-				"The tunneling servlet shared secret is not set");
+			AuthException authException = new AuthException(
+				LanguageUtil.get(
+					LocaleUtil.ENGLISH,
+					"the-tunneling-servlet-shared-secret-is-not-set"));
+
+			authException.setType(AuthException.NO_SHARED_SECRET);
+
+			throw authException;
 		}
 
 		if ((sharedSecret.length() != 16) && (sharedSecret.length() != 32) &&
 			(sharedSecret.length() != 64)) {
 
-			throw new InvalidKeyException(
-				"The tunneling servlet shared secret must be 16, 32 or 64 " +
-					"characters long");
+			AuthException authException = new AuthException(
+				"the-tunneling-servlet-shared-secret-must-be-16,-32,-or-64-" +
+					"characters-long");
+
+			authException.setType(AuthException.NO_SHARED_SECRET);
+
+			throw authException;
 		}
 
 		return new SecretKeySpec(

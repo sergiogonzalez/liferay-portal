@@ -2407,6 +2407,46 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 	</target>
 
+	<target name="record-test-packages">
+		<script classpathref="project.classpath" language="beanshell">
+			import com.liferay.portal.kernel.util.StringUtil;
+
+			import org.apache.tools.ant.DirectoryScanner;
+
+			DirectoryScanner directoryScanner = new DirectoryScanner();
+
+			directoryScanner.setBasedir(project.getBaseDir());
+			directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+
+			directoryScanner.scan();
+
+			String[] fileNames = directoryScanner.getIncludedFiles();
+
+			Arrays.sort(fileNames);
+
+			Set packageNames = new TreeSet();
+
+			for (String fileName : fileNames) {
+				int x = fileName.indexOf("com/");
+				int y = fileName.lastIndexOf("/");
+
+				if (fileName.endsWith("ServiceHttpTest.java") || fileName.endsWith("ServiceJsonTest.java") || fileName.endsWith("ServiceSoapTest.java")) {
+					continue;
+				}
+
+				String packageName = fileName.substring(x, y);
+
+				packageName = StringUtil.replace(packageName, "/", ".");
+
+				packageNames.add(packageName);
+			}
+
+			project.setProperty("test.packages", StringUtil.merge(packageNames, " "));
+		</script>
+
+		<echo file="test-packages">${test.packages}</echo>
+	</target>
+
 	<target name="replace-remote-file">
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -3002,6 +3042,55 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant dir="portal-service" target="test-integration" inheritAll="false" />
 		<ant dir="portal-impl" target="test-integration" inheritAll="false" />
 		<ant dir="util-java" target="test-integration" inheritAll="false" />
+	</target>
+
+	<target name="test-package">
+		<propertyregex property="test.class" input="${test.package}." regexp="\." replace="/" global="true" />
+
+		<resourcecount property="test.portal-impl.count">
+			<fileset dir="portal-impl/test" includes="**/${test.class}**/*Test.java" />
+		</resourcecount>
+
+		<if>
+			<not>
+				<equals arg1="${test.portal-impl.count}" arg2="0" />
+			</not>
+			<then>
+				<ant dir="portal-impl" target="test-class" inheritAll="false">
+					<property name="test.class" value="${test.class}**/*Test" />
+				</ant>
+			</then>
+		</if>
+
+		<resourcecount property="test.portal-service.count">
+			<fileset dir="portal-service/test" includes="**/${test.class}**/*Test.java" />
+		</resourcecount>
+
+		<if>
+			<not>
+				<equals arg1="${test.portal-service.count}" arg2="0" />
+			</not>
+			<then>
+				<ant dir="portal-service" target="test-class" inheritAll="false">
+					<property name="test.class" value="${test.class}**/*Test" />
+				</ant>
+			</then>
+		</if>
+
+		<resourcecount property="test.util-java.count">
+			<fileset dir="util-java/test" includes="**/${test.class}**/*Test.java" />
+		</resourcecount>
+
+		<if>
+			<not>
+				<equals arg1="${test.util-java.count}" arg2="0" />
+			</not>
+			<then>
+				<ant dir="util-java" target="test-class" inheritAll="false">
+					<property name="test.class" value="${test.class}**/*Test" />
+				</ant>
+			</then>
+		</if>
 	</target>
 
 	<target name="test-unit">

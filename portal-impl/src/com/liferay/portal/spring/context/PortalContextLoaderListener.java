@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.module.framework.DummyModuleFramework;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
@@ -203,7 +204,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			ModuleFrameworkUtilAdapter.startFramework();
 		}
 		catch (Exception e) {
-			throw new RuntimeException(e);
+			_log.error(
+				"Unable to load the module framework because of a bug in the " +
+					"application server. Support for OSGi plugins is disabled.",
+				e);
+
+			ModuleFrameworkUtilAdapter.setModuleFramework(
+				new DummyModuleFramework());
 		}
 
 		SecurityManagerUtil.applySmartStrategy();
