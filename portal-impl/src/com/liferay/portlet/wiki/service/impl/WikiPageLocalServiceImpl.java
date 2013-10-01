@@ -1504,13 +1504,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
-			page.getNodeId(), page.getTitle());
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_NotS(
+			page.getNodeId(), true, oldTitle,
+			WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage redirectPage : redirectPages) {
 			redirectPage.setRedirectTitle(trashTitle);
 
 			wikiPagePersistence.update(redirectPage);
+
+			movePageToTrash(userId, redirectPage);
 		}
 
 		for (WikiPage pageVersion : pageVersions) {
@@ -1530,17 +1533,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Children
 
-		List<WikiPage> children = wikiPagePersistence.findByN_H_P(
-			page.getNodeId(), true, oldTitle);
+		List<WikiPage> children = wikiPagePersistence.findByN_H_P_NotS(
+			page.getNodeId(), true, oldTitle,
+			WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage curPage : children) {
 			curPage.setParentTitle(trashTitle);
 
 			wikiPagePersistence.update(curPage);
 
-			if (curPage.isApproved()) {
-				movePageToTrash(userId, curPage);
-			}
+			movePageToTrash(userId, curPage);
 		}
 
 		// Asset
@@ -1618,13 +1620,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String originalTitle = TrashUtil.getOriginalTitle(title);
 
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
-			page.getNodeId(), page.getTitle());
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_S(
+			page.getNodeId(), true, title, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage redirectPage : redirectPages) {
 			redirectPage.setRedirectTitle(originalTitle);
 
 			wikiPagePersistence.update(redirectPage);
+
+			restorePageFromTrash(userId, redirectPage);
 		}
 
 		List<WikiPage> pageVersions = wikiPagePersistence.findByR_N_H(
@@ -1656,17 +1660,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Children
 
-		List<WikiPage> children = wikiPagePersistence.findByN_H_P(
-			page.getNodeId(), true, title);
+		List<WikiPage> children = wikiPagePersistence.findByN_H_P_S(
+			page.getNodeId(), true, title, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage curPage : children) {
 			curPage.setParentTitle(originalTitle);
 
 			wikiPagePersistence.update(curPage);
 
-			if (curPage.isInTrash()) {
-				restorePageFromTrash(userId, curPage);
-			}
+			restorePageFromTrash(userId, curPage);
 		}
 
 		// Trash
