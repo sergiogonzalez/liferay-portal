@@ -1650,6 +1650,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		page.setTitle(originalTitle);
 
+		WikiPage parentPage = page.getParentPage();
+
+		if ((parentPage != null) && parentPage.isInTrash()) {
+			page.setParentTitle(StringPool.BLANK);
+		}
+
+		WikiPage redirectPage = page.getRedirectPage();
+
+		if ((redirectPage != null) && redirectPage.isInTrash()) {
+			page.setRedirectTitle(StringPool.BLANK);
+		}
+
 		wikiPagePersistence.update(page);
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
