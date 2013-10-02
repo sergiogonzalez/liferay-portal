@@ -470,7 +470,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 											<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' value="<%= publishButtonLabel %>" />
 
 											<%
-											String taglibCancel = randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
+												String taglibCancel = randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
 											%>
 
 											<aui:button onClick="<%= taglibCancel %>" type="cancel" />
@@ -488,15 +488,39 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 										<%
 										MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
+										%>
 
-										StringBundler sb = new StringBundler(7);
+										<liferay-util:buffer var="buffer">
 
-										sb.append("<a href=\"#");
-										sb.append(randomNamespace);
-										sb.append("message_");
-										sb.append(parentMessage.getMessageId());
+											<%
+											User parentMessageUser = UserLocalServiceUtil.fetchUser(parentMessage.getUserId());
+
+											long imageId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
+											%>
+
+											<span class="lfr-discussion-parent-message-user-info">
+												<div class="lfr-discussion-parent-message-user-avatar">
+													<img alt="<%= parentMessage.getUserName() %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, imageId) %>" width="30" />
+												</div>
+												<div class="lfr-discussion-parent-message-user-name">
+													<%= parentMessage.getUserName() %>
+												</div>
+												<div class="lfr-discussion-parent-message-creation-date">
+													<%= dateFormatDateTime.format(parentMessage.getCreateDate()) %>
+												</div>
+												<div class="lfr-discussion-parent-message-content">
+													<%= parentMessage.getBody() %>
+												</div>
+											</span>
+										</liferay-util:buffer>
+
+										<%
+										StringBundler sb = new StringBundler(5);
+
+										sb.append("<a class=\"lfr-discussion-parent-message-user-link\" data-title=\"");
+										sb.append(HtmlUtil.escape(buffer));
 										sb.append("\">");
-										sb.append(HtmlUtil.escape(parentMessage.getUserName()));
+										sb.append(parentMessage.getUserName());
 										sb.append("</a>");
 										%>
 
@@ -769,6 +793,26 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<portlet:namespace />sendMessage(form);
 			},
 			['aui-base']
+		);
+	</aui:script>
+
+	 <aui:script use="aui-tooltip-delegate">
+		var tooltip = new A.TooltipDelegate(
+			{
+				formatter: function() {
+					var tooltip = this;
+
+					tooltip.set('cssClass', 'tooltip-help tooltip-discussion');
+					tooltip.set('zIndex', 999);
+
+					var node = tooltip.get('trigger');
+
+					return node.attr('data-title');
+				},
+				opacity: 1,
+				trigger: '.lfr-discussion-parent-message-user-link',
+				visible: false,
+			}
 		);
 	</aui:script>
 </c:if>
