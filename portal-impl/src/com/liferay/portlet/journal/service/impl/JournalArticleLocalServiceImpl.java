@@ -3308,6 +3308,12 @@ public class JournalArticleLocalServiceImpl
 			journalArticlePersistence.update(article);
 		}
 
+		article = updateStatus(
+			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
+			new HashMap<String, Serializable>(), new ServiceContext());
+
+		// Trash
+
 		List<JournalArticle> articleVersions =
 			journalArticlePersistence.findByG_A(
 				article.getGroupId(), article.getArticleId());
@@ -3321,18 +3327,6 @@ public class JournalArticleLocalServiceImpl
 		if ((articleVersions != null) && !articleVersions.isEmpty()) {
 			articleVersionStatusOVPs = getArticleVersionStatuses(
 				articleVersions);
-		}
-
-		article = updateStatus(
-			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<String, Serializable>(), new ServiceContext());
-
-		// Trash
-
-		for (JournalArticle articleVersion : articleVersions) {
-			articleVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-			journalArticlePersistence.update(articleVersion);
 		}
 
 		JournalArticleResource articleResource =
@@ -3351,12 +3345,11 @@ public class JournalArticleLocalServiceImpl
 		String trashArticleId = TrashUtil.getTrashTitle(
 			trashEntry.getEntryId());
 
-		if (!articleVersions.isEmpty()) {
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setArticleId(trashArticleId);
+		for (JournalArticle articleVersion : articleVersions) {
+			articleVersion.setArticleId(trashArticleId);
+			articleVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-				journalArticlePersistence.update(articleVersion);
-			}
+			journalArticlePersistence.update(articleVersion);
 		}
 
 		articleResource.setArticleId(trashArticleId);
@@ -3527,12 +3520,10 @@ public class JournalArticleLocalServiceImpl
 			journalArticlePersistence.findByG_A(
 				article.getGroupId(), article.getArticleId());
 
-		if (!articleVersions.isEmpty()) {
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setArticleId(trashArticleId);
+		for (JournalArticle articleVersion : articleVersions) {
+			articleVersion.setArticleId(trashArticleId);
 
-				journalArticlePersistence.update(articleVersion);
-			}
+			journalArticlePersistence.update(articleVersion);
 		}
 
 		article.setArticleId(trashArticleId);
@@ -5982,7 +5973,7 @@ public class JournalArticleLocalServiceImpl
 	protected List<ObjectValuePair<Long, Integer>> getArticleVersionStatuses(
 		List<JournalArticle> articles) {
 
-		List<ObjectValuePair<Long, Integer>> dlArticleVersionStatusOVPs =
+		List<ObjectValuePair<Long, Integer>> articleVersionStatusOVPs =
 			new ArrayList<ObjectValuePair<Long, Integer>>(articles.size());
 
 		for (JournalArticle article : articles) {
@@ -5992,13 +5983,13 @@ public class JournalArticleLocalServiceImpl
 				status = WorkflowConstants.STATUS_DRAFT;
 			}
 
-			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
+			ObjectValuePair<Long, Integer> articleVersionStatusOVP =
 				new ObjectValuePair<Long, Integer>(article.getId(), status);
 
-			dlArticleVersionStatusOVPs.add(dlFileVersionStatusOVP);
+			articleVersionStatusOVPs.add(articleVersionStatusOVP);
 		}
 
-		return dlArticleVersionStatusOVPs;
+		return articleVersionStatusOVPs;
 	}
 
 	protected long getClassTypeId(JournalArticle article) {
