@@ -51,11 +51,4 @@ else if (!data.containsKey("view-folders")) {
 		<liferay-util:include page="<%= actionJsp %>" />
 	</c:if>
 
-	<c:if test="<%= showExpand %>">
-		<span class="expand-folder-container">
-			<a class="<%= "expand-" + cssClass %>" data-view-entries="<%= Boolean.FALSE.toString() %>" <%= AUIUtil.buildData(dataExpand) %> href="<%= expandURL.toString() %>">
-				<liferay-ui:icon cssClass='<%= "expand-" + cssClass + "-arrow" %>' image='<%= browseUp ? "../aui/carat-1-l" : "../aui/carat-1-r" %>' message="expand" />
-			</a>
-		</span>
-	</c:if>
 </aui:nav-item>
