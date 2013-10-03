@@ -466,6 +466,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(), folderId,
 			ActionKeys.UPDATE);
 
+		serviceContext.setUserId(getUserId());
+
 		return dlFolderLocalService.updateFolder(
 			folderId, name, description, defaultFileEntryTypeId,
 			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
