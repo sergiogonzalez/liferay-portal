@@ -950,14 +950,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 		<propertyregex
 			global="true"
-			input="${test.package}."
+			input="${test.package}"
 			property="test.class"
 			regexp="\."
 			replace="/"
 		/>
 
 		<ant target="test-class">
-			<property name="test.class" value="${test.class}**/*Test" />
+			<property name="test.class" value="${test.class}/*Test" />
 		</ant>
 	</target>
 
