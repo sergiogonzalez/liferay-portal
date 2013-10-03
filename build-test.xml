@@ -3063,14 +3063,14 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	<target name="test-package">
 		<propertyregex
 			global="true"
-			input="${test.package}."
+			input="${test.package}"
 			property="test.class"
 			regexp="\."
 			replace="/"
 		/>
 
 		<resourcecount property="test.portal-impl.count">
-			<fileset dir="portal-impl/test" includes="**/${test.class}**/*Test.java" />
+			<fileset dir="portal-impl/test" includes="**/${test.class}/*Test.java" />
 		</resourcecount>
 
 		<if>
@@ -3079,13 +3079,13 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 			</not>
 			<then>
 				<ant dir="portal-impl" target="test-class" inheritAll="false">
-					<property name="test.class" value="${test.class}**/*Test" />
+					<property name="test.class" value="${test.class}/*Test" />
 				</ant>
 			</then>
 		</if>
 
 		<resourcecount property="test.portal-service.count">
-			<fileset dir="portal-service/test" includes="**/${test.class}**/*Test.java" />
+			<fileset dir="portal-service/test" includes="**/${test.class}/*Test.java" />
 		</resourcecount>
 
 		<if>
@@ -3094,13 +3094,13 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 			</not>
 			<then>
 				<ant dir="portal-service" target="test-class" inheritAll="false">
-					<property name="test.class" value="${test.class}**/*Test" />
+					<property name="test.class" value="${test.class}/*Test" />
 				</ant>
 			</then>
 		</if>
 
 		<resourcecount property="test.util-java.count">
-			<fileset dir="util-java/test" includes="**/${test.class}**/*Test.java" />
+			<fileset dir="util-java/test" includes="**/${test.class}/*Test.java" />
 		</resourcecount>
 
 		<if>
@@ -3109,7 +3109,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 			</not>
 			<then>
 				<ant dir="util-java" target="test-class" inheritAll="false">
-					<property name="test.class" value="${test.class}**/*Test" />
+					<property name="test.class" value="${test.class}/*Test" />
 				</ant>
 			</then>
 		</if>
