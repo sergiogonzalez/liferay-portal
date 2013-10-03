@@ -18,15 +18,11 @@
 
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:actionJsp");
-boolean browseUp = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:browseUp"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-navigation-entry:cssClass"));
-Map<String, Object> dataExpand = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-navigation-entry:dataExpand");
 Map<String, Object> dataView = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-navigation-entry:dataView");
 String entryTitle = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:entryTitle");
-String expandURL = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:expandURL");
 String iconImage = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:iconImage");
 boolean selected = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:selected"));
-boolean showExpand = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:showExpand"));
 String viewURL = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:viewURL");
 
 Map<String, Object> data = new HashMap<String, Object>();
