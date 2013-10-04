@@ -581,15 +581,16 @@ public class DLFileEntryLocalServiceImpl
 					existingDLFileVersion.getFileEntryTypeId(), null,
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					existingDLFileVersion.getSize(),
-					WorkflowConstants.STATUS_DRAFT, new Date(), serviceContext);
+					WorkflowConstants.STATUS_DRAFT,
+					serviceContext.getModifiedDate(null), serviceContext);
 			}
 			else {
 				long oldDLFileVersionId = dlFileVersion.getFileVersionId();
 
 				dlFileVersion = addFileVersion(
-					user, dlFileEntry, new Date(), dlFileVersion.getExtension(),
-					dlFileVersion.getMimeType(), dlFileVersion.getTitle(),
-					dlFileVersion.getDescription(),
+					user, dlFileEntry, serviceContext.getModifiedDate(null),
+					dlFileVersion.getExtension(), dlFileVersion.getMimeType(),
+					dlFileVersion.getTitle(), dlFileVersion.getDescription(),
 					dlFileVersion.getChangeLog(),
 					dlFileVersion.getExtraSettings(),
 					dlFileVersion.getFileEntryTypeId(), null,
@@ -1291,8 +1292,8 @@ public class DLFileEntryLocalServiceImpl
 
 		if (checkedOut != hasLock) {
 			dlAppHelperLocalService.registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
-				fileEntryId);
+				DLSyncConstants.EVENT_UPDATE,
+				new LiferayFileEntry(dlFileEntry));
 		}
 
 		return hasLock;

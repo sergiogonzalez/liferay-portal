@@ -475,7 +475,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="0" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2837,6 +2837,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				<if>
 					<and>
 						<or>
+							<contains string="${hook.plugins.includes}" substring="so-hook" />
 							<contains string="${simple.server.dir}" substring="glassfish" />
 							<contains string="${simple.server.dir}" substring="jonas" />
 						</or>
@@ -3061,58 +3062,9 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="test-package">
-		<propertyregex
-			global="true"
-			input="${test.package}."
-			property="test.class"
-			regexp="\."
-			replace="/"
-		/>
-
-		<resourcecount property="test.portal-impl.count">
-			<fileset dir="portal-impl/test" includes="**/${test.class}**/*Test.java" />
-		</resourcecount>
-
-		<if>
-			<not>
-				<equals arg1="${test.portal-impl.count}" arg2="0" />
-			</not>
-			<then>
-				<ant dir="portal-impl" target="test-class" inheritAll="false">
-					<property name="test.class" value="${test.class}**/*Test" />
-				</ant>
-			</then>
-		</if>
-
-		<resourcecount property="test.portal-service.count">
-			<fileset dir="portal-service/test" includes="**/${test.class}**/*Test.java" />
-		</resourcecount>
-
-		<if>
-			<not>
-				<equals arg1="${test.portal-service.count}" arg2="0" />
-			</not>
-			<then>
-				<ant dir="portal-service" target="test-class" inheritAll="false">
-					<property name="test.class" value="${test.class}**/*Test" />
-				</ant>
-			</then>
-		</if>
-
-		<resourcecount property="test.util-java.count">
-			<fileset dir="util-java/test" includes="**/${test.class}**/*Test.java" />
-		</resourcecount>
-
-		<if>
-			<not>
-				<equals arg1="${test.util-java.count}" arg2="0" />
-			</not>
-			<then>
-				<ant dir="util-java" target="test-class" inheritAll="false">
-					<property name="test.class" value="${test.class}**/*Test" />
-				</ant>
-			</then>
-		</if>
+		<ant dir="portal-service" target="test-package" inheritAll="false" />
+		<ant dir="portal-impl" target="test-package" inheritAll="false" />
+		<ant dir="util-java" target="test-package" inheritAll="false" />
 	</target>
 
 	<target name="test-unit">

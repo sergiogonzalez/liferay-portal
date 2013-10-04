@@ -659,8 +659,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected void reindexArticles(long companyId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			new JournalArticleActionableDynamicQuery() {
 
@@ -678,17 +676,15 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 				JournalArticle article = (JournalArticle)object;
 
-				documents.addAll(getArticleVersions(article));
+				addDocuments(getArticleVersions(article));
 			}
 
 		};
 
 		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();
-
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
 	}
 
 	protected void reindexArticleVersions(JournalArticle article)
