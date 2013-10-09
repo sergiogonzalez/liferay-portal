@@ -708,7 +708,7 @@ public class AssetUtil {
 		}
 
 		return SortFactoryUtil.getSort(
-			AssetEntry.class, sortType, sortField, "asc");
+			AssetEntry.class, sortType, sortField, orderByType);
 	}
 
 	protected static Sort[] getSorts(
