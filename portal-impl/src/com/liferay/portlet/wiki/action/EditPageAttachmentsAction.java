@@ -99,7 +99,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 					portletConfig, actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
-				addTempAttachment(actionRequest);
+				addTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteAttachment(actionRequest, false);
@@ -281,7 +281,8 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		}
 	}
 
-	protected void addTempAttachment(ActionRequest actionRequest)
+	protected void addTempAttachment(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -289,6 +290,11 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String sourceFileName = uploadPortletRequest.getFileName("file");
+
+		String title = sourceFileName;
+
+		sourceFileName = sourceFileName.concat(
+			TEMP_RANDOM_SUFFIX).concat(StringUtil.randomString());
 
 		InputStream inputStream = null;
 
@@ -300,6 +306,13 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			WikiPageServiceUtil.addTempPageAttachment(
 				nodeId, sourceFileName, _TEMP_FOLDER_NAME, inputStream,
 				mimeType);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("name", sourceFileName);
+			jsonObject.put("title", title);
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
