@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.PortletAction;
@@ -78,6 +79,8 @@ import org.apache.struts.action.ActionMapping;
  * @author Raymond Augé
  */
 public class ImportLayoutsAction extends PortletAction {
+
+	public static final String TEMP_RANDOM_SUFFIX = "--tempRandomSuffix--";
 
 	@Override
 	public void processAction(
@@ -209,20 +212,31 @@ public class ImportLayoutsAction extends PortletAction {
 		checkExceededSizeLimit(uploadPortletRequest);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		String sourceFileName = uploadPortletRequest.getFileName("file");
+
+		String title = sourceFileName;
+
+		sourceFileName = sourceFileName.concat(
+			TEMP_RANDOM_SUFFIX).concat(StringUtil.randomString());
 
 		deleteTempFileEntry(groupId, folderName);
 
 		InputStream inputStream = null;
 
 		try {
-			String sourceFileName = uploadPortletRequest.getFileName("file");
-
 			inputStream = uploadPortletRequest.getFileAsStream("file");
 
 			String contentType = uploadPortletRequest.getContentType("file");
 
 			LayoutServiceUtil.addTempFileEntry(
 				groupId, sourceFileName, folderName, inputStream, contentType);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("name", sourceFileName);
+			jsonObject.put("title", title);
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		catch (Exception e) {
 			UploadException uploadException =
