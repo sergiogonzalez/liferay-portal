@@ -29,12 +29,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Repository;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -92,33 +88,6 @@ public class FolderStagedModelDataHandler
 
 		String folderPath = ExportImportPathUtil.getModelPath(folder);
 
-		Repository repository = null;
-
-		if (folder.isMountPoint() || !folder.isDefaultRepository()) {
-			repository = RepositoryLocalServiceUtil.getRepository(
-				folder.getRepositoryId());
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, folder, Folder.class, repository,
-				Repository.class, PortletDataContext.REFERENCE_TYPE_STRONG);
-
-			portletDataContext.addClassedModel(
-				folderElement, folderPath, folder);
-		}
-
-		long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
-			LiferayRepository.class.getName());
-
-		if (((repository != null) &&
-			 (repository.getClassNameId() != liferayRepositoryClassNameId)) ||
-			folder.isMountPoint()) {
-
-			// No need to export non-Liferay repository items since they would
-			// be exported as part of repository export
-
-			return;
-		}
-
 		if (folder.getParentFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -135,6 +104,21 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, Folder folder)
+		throws Exception {
+
+		Folder existingFolder = FolderUtil.fetchByUUID_R(
+			folder.getUuid(), portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> folderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Folder.class);
+
+		folderIds.put(folder.getFolderId(), existingFolder.getFolderId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, Folder folder)
 		throws Exception {
@@ -146,17 +130,6 @@ public class FolderStagedModelDataHandler
 
 		Element folderElement = portletDataContext.getImportDataElement(
 			Folder.class.getSimpleName(), "path", path);
-
-		Element referenceDataElement =
-			portletDataContext.getReferenceDataElement(
-				folderElement, Repository.class, folder.getRepositoryId());
-
-		if (referenceDataElement != null) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, referenceDataElement);
-
-			return;
-		}
 
 		if (folder.getParentFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

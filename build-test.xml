@@ -475,7 +475,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="0" />
+		<property name="build-test-ant-scripts.version" value="2" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -542,6 +542,12 @@
 			<param name="test.ant.script.command" value="end-user-administration-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.suite" value="EndUserAdministrationAcceptanceTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="end-user-administration-p4" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.suite" value="EndUserAdministrationP4TestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -624,7 +630,6 @@
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.plugin.themes" value="welcome-theme" />
 			<param name="test.ant.script.plugin.webs" value="resources-importer-web" />
-			<param name="test.ant.script.setup.wizard.enabled" value="true" />
 			<param name="test.ant.script.suite" value="EndUserUserinterfaceAcceptanceTestSuite" />
 		</antcall>
 
@@ -2416,7 +2421,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 	</target>
 
-	<target name="record-test-packages">
+	<target name="record-test-package-names">
 		<script classpathref="project.classpath" language="beanshell">
 			import com.liferay.portal.kernel.util.OSDetector;
 			import com.liferay.portal.kernel.util.StringUtil;
@@ -2457,10 +2462,10 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				packageNames.add(packageName);
 			}
 
-			project.setProperty("test.packages", StringUtil.merge(packageNames, " "));
+			project.setProperty("test.package.names", StringUtil.merge(packageNames, " "));
 		</script>
 
-		<echo file="test-packages">${test.packages}</echo>
+		<echo file="test.package.names.properties">TEST_PACKAGE_NAMES=${test.package.names}</echo>
 	</target>
 
 	<target name="replace-remote-file">

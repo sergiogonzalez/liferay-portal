@@ -46,6 +46,13 @@ public class AuthTokenWhitelistUtil {
 		return getAuthTokenWhitelist().getPortletInvocationWhitelistActions();
 	}
 
+	public static boolean isCSRFOrigintWhitelisted(
+		long companyId, String origin) {
+
+		return getAuthTokenWhitelist().isOriginCSRFWhitelisted(
+			companyId, origin);
+	}
+
 	public static boolean isPortletCSRFWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 
@@ -58,6 +65,14 @@ public class AuthTokenWhitelistUtil {
 
 		return getAuthTokenWhitelist().isPortletInvocationWhitelisted(
 			companyId, portletId, strutsAction);
+	}
+
+	public static boolean isValidSharedSecret(String sharedSecret) {
+		return getAuthTokenWhitelist().isValidSharedSecret(sharedSecret);
+	}
+
+	public static Set<String> resetOriginCSRFWhitelist() {
+		return getAuthTokenWhitelist().resetOriginCSRFWhitelist();
 	}
 
 	public static Set<String> resetPortletCSRFWhitelist() {

@@ -28,12 +28,13 @@ AUI.add(
 		var _portletIdsMap = {};
 
 		var _metaData = {
-			startPolling: true,
 			browserKey: _browserKey,
 			companyId: themeDisplay.getCompanyId(),
-			portletIdsMap: _portletIdsMap
+			portletIdsMap: _portletIdsMap,
+			startPolling: true
 		};
 
+		var _customDelay = null;
 		var _portlets = {};
 		var _requestDelay = _delays[0];
 		var _sendQueue = [];
@@ -231,8 +232,15 @@ AUI.add(
 				}
 			},
 
+			cancelCustomDelay: function() {
+				_customDelay = null;
+			},
+
 			getDelay: function() {
-				if (_delayIndex <= _maxDelay) {
+				if (_customDelay !== null) {
+					_requestDelay = _customDelay;
+				}
+				else if (_delayIndex <= _maxDelay) {
 					_requestDelay = _delays[_delayIndex];
 					_delayAccessCount++;
 
@@ -272,6 +280,15 @@ AUI.add(
 				_suspended = false;
 
 				_createRequestTimer();
+			},
+
+			setCustomDelay: function(delay) {
+				if (delay === null) {
+					_customDelay = delay;
+				}
+				else {
+					_customDelay = delay / 1000;
+				}
 			},
 
 			setDelay: function(delay) {

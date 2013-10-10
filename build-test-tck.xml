@@ -39,7 +39,7 @@
 work.dir=${basedir.unix}/tools/tck/work</echo>
 	</target>
 
-	<target name="record-test-tck-packages">
+	<target name="record-test-tck-package-names">
 		<ant antfile="build-test-tck.xml" target="prepare-tck" />
 
 		<script classpathref="project.classpath" language="beanshell">
@@ -82,10 +82,10 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 				packageNames.add(packageName);
 			}
 
-			project.setProperty("test.tck.packages", StringUtil.merge(packageNames, " "));
+			project.setProperty("test.tck.package.names", StringUtil.merge(packageNames, " "));
 		</script>
 
-		<echo file="test-tck-packages">${test.tck.packages}</echo>
+		<echo file="test.tck.package.names.properties">TEST_TCK_PACKAGE_NAMES=${test.tck.package.names}</echo>
 	</target>
 
 	<target name="run-tck-tomcat">

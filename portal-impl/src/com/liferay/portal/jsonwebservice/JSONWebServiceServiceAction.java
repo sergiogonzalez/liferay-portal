@@ -23,7 +23,12 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.WebKeys;
 
 import java.lang.reflect.InvocationTargetException;
@@ -85,6 +90,46 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 			return JSONFactoryUtil.serializeException(e);
 		}
+	}
+
+	/**
+	 * @see JSONServiceAction#getCSRFOrigin(HttpServletRequest)
+	 */
+	@Override
+	protected String getCSRFOrigin(HttpServletRequest request) {
+		String uri = request.getRequestURI();
+
+		int x = uri.indexOf("jsonws/");
+
+		if (x < 0) {
+			return ClassUtil.getClassName(this);
+		}
+
+		String path = uri.substring(x + 7);
+
+		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+		if (pathArray.length < 2) {
+			return ClassUtil.getClassName(this);
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(ClassUtil.getClassName(this));
+		sb.append(StringPool.COLON);
+		sb.append(StringPool.SLASH);
+
+		String serviceClassName = pathArray[0];
+
+		sb.append(serviceClassName);
+
+		sb.append(StringPool.SLASH);
+
+		String serviceMethodName = pathArray[1];
+
+		sb.append(serviceMethodName);
+
+		return sb.toString();
 	}
 
 	protected JSONWebServiceAction getJSONWebServiceAction(

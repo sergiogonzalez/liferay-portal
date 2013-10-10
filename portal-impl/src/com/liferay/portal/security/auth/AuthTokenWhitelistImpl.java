@@ -22,6 +22,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.Encryptor;
 
 import java.util.Collections;
 import java.util.Set;
@@ -34,10 +35,16 @@ import java.util.Set;
 public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
 	public AuthTokenWhitelistImpl() {
+		resetOriginCSRFWhitelist();
 		resetPortletCSRFWhitelist();
 		resetPortletCSRFWhitelistActions();
 		resetPortletInvocationWhitelist();
 		resetPortletInvocationWhitelistActions();
+	}
+
+	@Override
+	public Set<String> getOriginCSRFWhitelist() {
+		return _originCSRFWhitelist;
 	}
 
 	@Override
@@ -58,6 +65,19 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	@Override
 	public Set<String> getPortletInvocationWhitelistActions() {
 		return _portletInvocationWhitelistActions;
+	}
+
+	@Override
+	public boolean isOriginCSRFWhitelisted(long companyId, String origin) {
+		Set<String> whitelist = getOriginCSRFWhitelist();
+
+		for (String whitelistedOrigins : whitelist) {
+			if (origin.startsWith(whitelistedOrigins)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -107,6 +127,30 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isValidSharedSecret(String sharedSecret) {
+		if (Validator.isNull(sharedSecret)) {
+			return false;
+		}
+
+		if (Validator.isNull(PropsValues.AUTH_TOKEN_SHARED_SECRET)) {
+			return false;
+		}
+
+		return sharedSecret.equals(
+			Encryptor.digest(PropsValues.AUTH_TOKEN_SHARED_SECRET));
+	}
+
+	@Override
+	public Set<String> resetOriginCSRFWhitelist() {
+		_originCSRFWhitelist = SetUtil.fromArray(
+			PropsValues.AUTH_TOKEN_IGNORE_ORIGINS);
+		_originCSRFWhitelist = Collections.unmodifiableSet(
+			_originCSRFWhitelist);
+
+		return _originCSRFWhitelist;
 	}
 
 	@Override
@@ -175,6 +219,7 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 		return false;
 	}
 
+	private Set<String> _originCSRFWhitelist;
 	private Set<String> _portletCSRFWhitelist;
 	private Set<String> _portletCSRFWhitelistActions;
 	private Set<String> _portletInvocationWhitelist;

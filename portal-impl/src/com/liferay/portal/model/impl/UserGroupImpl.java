@@ -35,6 +35,13 @@ public class UserGroupImpl extends UserGroupBaseImpl {
 	}
 
 	@Override
+	public long getGroupId() throws PortalException, SystemException {
+		Group group = getGroup();
+
+		return group.getGroupId();
+	}
+
+	@Override
 	public int getPrivateLayoutsPageCount()
 		throws PortalException, SystemException {
 

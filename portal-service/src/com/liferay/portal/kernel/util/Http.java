@@ -135,6 +135,8 @@ public interface Http {
 
 	public String protocolize(String url, HttpServletRequest request);
 
+	public String protocolize(String url, int port, boolean secure);
+
 	public String protocolize(String url, RenderRequest renderRequest);
 
 	public String removeDomain(String url);

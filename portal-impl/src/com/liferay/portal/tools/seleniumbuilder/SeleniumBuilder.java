@@ -152,13 +152,14 @@ public class SeleniumBuilder {
 			testCaseCount += commandElements.size();
 		}
 
+		String testCaseMethodNamesString = StringUtil.merge(
+			testCaseMethodNames.toArray(
+				new String[testCaseMethodNames.size()]),
+			StringPool.SPACE);
+
 		seleniumBuilderFileUtil.writeFile(
-			"../../../test-case-method-names",
-			StringUtil.merge(
-				testCaseMethodNames.toArray(
-					new String[testCaseMethodNames.size()]),
-				StringPool.SPACE),
-			false);
+			"../../../test.case.method.names.properties",
+			"TEST_CASE_METHOD_NAMES=" + testCaseMethodNamesString, false);
 
 		System.out.println("\nThere are " + testCaseCount + " test cases.");
 	}

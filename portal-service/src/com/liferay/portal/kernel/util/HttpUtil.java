@@ -218,6 +218,10 @@ public class HttpUtil {
 		return getHttp().protocolize(url, request);
 	}
 
+	public static String protocolize(String url, int port, boolean secure) {
+		return getHttp().protocolize(url, port, secure);
+	}
+
 	public static String protocolize(String url, RenderRequest renderRequest) {
 		return getHttp().protocolize(url, renderRequest);
 	}

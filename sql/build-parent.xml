@@ -115,9 +115,20 @@
 	</target>
 
 	<target name="rebuild-mysql">
-		<exec executable="${mysql.executable}" input="${mysql.input}" output="log/${mysql.log}">
+		<exec executable="${mysql.executable}" input="${mysql.input}" output="log/${mysql.log}" resultproperty="rebuild-mysql.result">
 			<arg line="${mysql.arg.line}" />
 		</exec>
+
+		<if>
+			<not>
+				<equals arg1="${rebuild-mysql.result}" arg2="0" />
+			</not>
+			<then>
+				<loadfile property="mysql.log.content" srcFile="log/${mysql.log}" />
+
+				<fail>${mysql.log.content}</fail>
+			</then>
+		</if>
 	</target>
 
 	<target name="rebuild-oracle">
