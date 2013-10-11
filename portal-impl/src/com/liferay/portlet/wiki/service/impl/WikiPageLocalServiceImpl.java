@@ -1737,7 +1737,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage updatePage(
 			long userId, long nodeId, String title, double version,
 			String content, String summary, boolean minorEdit, String format,
-			String parentTitle, String redirectTitle,
+			String parentTitle, String redirectTitle, boolean newVersion,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -1788,10 +1788,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = oldPage;
 
-		double newVersion = oldVersion;
+		double newVersionNumber = oldVersion;
 
-		if (oldPage.isApproved()) {
-			newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
+		if (oldPage.isApproved() && newVersion) {
+			newVersionNumber = MathUtil.format(oldVersion + 0.1, 1, 1);
 
 			page = wikiPagePersistence.create(pageId);
 		}
@@ -1805,7 +1805,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setModifiedDate(serviceContext.getModifiedDate(now));
 		page.setNodeId(nodeId);
 		page.setTitle(title);
-		page.setVersion(newVersion);
+		page.setVersion(newVersionNumber);
 		page.setMinorEdit(minorEdit);
 		page.setContent(content);
 
@@ -1851,7 +1851,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (!page.isMinorEdit() ||
 			PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY) {
 
-			if (oldVersion == newVersion) {
+			if (oldVersion == newVersionNumber) {
 				SocialActivity lastSocialActivity =
 					socialActivityLocalService.fetchFirstActivity(
 						WikiPage.class.getName(), page.getResourcePrimKey(),
@@ -1885,6 +1885,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiPage.class.getName(), page.getPageId(), page, serviceContext);
 
 		return page;
+	}
+
+	@Override
+	public WikiPage updatePage(
+			long userId, long nodeId, String title, double version,
+			String content, String summary, boolean minorEdit, String format,
+			String parentTitle, String redirectTitle,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updatePage(
+			userId, nodeId, title, version, content, summary, minorEdit, format,
+			parentTitle, redirectTitle, true, serviceContext);
 	}
 
 	@Override
