@@ -1737,19 +1737,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage updatePage(
 			long userId, long nodeId, String title, double version,
 			String content, String summary, boolean minorEdit, String format,
-			String parentTitle, String redirectTitle,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		return updatePage(
-			userId, nodeId, title, version, content, summary, minorEdit,
-			format, parentTitle, redirectTitle, true, serviceContext);
-	}
-
-	@Override
-	public WikiPage updatePage(
-			long userId, long nodeId, String title, double version,
-			String content, String summary, boolean minorEdit, String format,
 			String parentTitle, String redirectTitle, boolean newVersion,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1898,6 +1885,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiPage.class.getName(), page.getPageId(), page, serviceContext);
 
 		return page;
+	}
+
+	@Override
+	public WikiPage updatePage(
+			long userId, long nodeId, String title, double version,
+			String content, String summary, boolean minorEdit, String format,
+			String parentTitle, String redirectTitle,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updatePage(
+			userId, nodeId, title, version, content, summary, minorEdit, format,
+			parentTitle, redirectTitle, true, serviceContext);
 	}
 
 	@Override
