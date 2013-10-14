@@ -104,11 +104,18 @@ if (categoryId > 0) {
 			<%
 			PortletURL frontPageURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-			String label = WikiPageConstants.FRONT_PAGE;
+			String title = WikiPageConstants.FRONT_PAGE;
+
+			if (portletName.equals(PortletKeys.WIKI_DISPLAY)) {
+				title = portletPreferences.getValue("title", WikiPageConstants.FRONT_PAGE);
+			}
+
+			String label = title;
+
 			boolean selected = (Validator.isNull(strutsAction) || (wikiPage != null) && wikiPage.getTitle().equals(label));
 
 			frontPageURL.setParameter("struts_action", "/wiki/view");
-			frontPageURL.setParameter("title", WikiPageConstants.FRONT_PAGE);
+			frontPageURL.setParameter("title", title);
 			frontPageURL.setParameter("tag", StringPool.BLANK);
 			%>
 
