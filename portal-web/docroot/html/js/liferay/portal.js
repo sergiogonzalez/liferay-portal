@@ -108,33 +108,35 @@
 	Liferay.provide(
 		ToolTip,
 		'show',
-		function(obj, text) {
+		function(trigger, text, userConfig) {
 			var instance = this;
 
 			var cached = instance._cached;
 
 			if (!cached) {
-				cached = new A.Tooltip(
-					{
-						cssClass: 'tooltip-help',
-						opacity: 1,
-						visible: false,
-						zIndex: Liferay.zIndex.TOOLTIP
-					}
-				).render();
+				var config = {
+					cssClass: 'tooltip-help',
+					opacity: 1,
+					visible: false,
+					zIndex: Liferay.zIndex.TOOLTIP
+				};
+
+				A.mix(config, userConfig, true);
+
+				cached = new A.Tooltip(config).render();
 
 				instance._cached = cached;
 			}
 
 			if (text == null) {
-				obj = A.one(obj);
+				trigger = A.one(trigger);
 
-				text = instance._getText(obj.guid());
+				text = instance._getText(trigger.guid());
 			}
 
 			cached.set(BODY_CONTENT, text);
 
-			cached.set(TRIGGER, obj).show();
+			cached.set(TRIGGER, trigger).show();
 		},
 		['aui-tooltip-delegate']
 	);

@@ -157,6 +157,26 @@
 	}
 }
 
+div.tooltip-help.tooltip-discussion {
+	left: -275px;
+	max-width: 400px;
+	width: 400px;
+
+	.lfr-discussion-parent-message-user-info {
+		.lfr-discussion-parent-message-user-avatar {
+			float: left;
+			margin-right: 15px;
+			margin-top: 3px;
+		}
+		.lfr-discussion-parent-message-user-name {
+			font-weight: bold;
+		}
+		.lfr-discussion-parent-message-content {
+			margin-top: 5px;
+		}
+	}
+}
+
 .lfr-discussion-controls:after {
 	clear: both;
 	content: "";
@@ -200,6 +220,10 @@
 	.lfr-discussion-posted-on {
 		color: #999;
 		font-size: .9em;
+
+		.lfr-discussion-parent-message-user-link {
+			cursor: pointer;
+		}
 	}
 
 	.lfr-discussion-actions li a {
