@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -44,6 +46,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -200,6 +203,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				JournalFeedTable.TABLE_SQL_ADD_INDEXES);
 		}
 
+		updatePermissions();
 		updateStructures();
 		updateTemplates();
 
@@ -231,6 +235,20 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		return new String[] {
 			"56_INSTANCE_%", "62_INSTANCE_%", "101_INSTANCE_%"
 		};
+	}
+
+	protected void updatePermissions() {
+		try {
+			List<String> portletActions =
+				ResourceActionsUtil.getPortletResourceActions(
+					PortletKeys.JOURNAL);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				PortletKeys.JOURNAL, portletActions);
+		}
+		catch (Exception e) {
+			_log.warn("Unable to upgrade journal permissions");
+		}
 	}
 
 	protected void updatePreferencesClassPKs(
