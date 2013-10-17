@@ -137,104 +137,113 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
 			</c:when>
 			<c:when test='<%= topLink.equals("home") %>'>
-				<aui:row>
-					<c:if test="<%= folder != null %>">
-						<liferay-ui:header
-							localizeTitle="<%= false %>"
-							title="<%= folder.getName() %>"
-						/>
-					</c:if>
-
-					<%
-					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-					String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(portletPreferences, renderRequest);
-
-					int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
-
-					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, true);
-
-					int imagesCount = total - foldersCount;
-
-					searchContainer.setTotal(total);
-
-					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-					searchContainer.setResults(results);
-
-					request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
-					request.setAttribute("view.jsp-searchContainer", searchContainer);
-					%>
-
-					<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= showFolderMenu ? 75 : 100 %>">
-						<div id="<portlet:namespace />imageGalleryAssetInfo">
+				<c:choose>
+					<c:when test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
+						<aui:row>
 							<c:if test="<%= folder != null %>">
-								<div class="lfr-asset-description">
-									<%= HtmlUtil.escape(folder.getDescription()) %>
-								</div>
-
-								<div class="lfr-asset-metadata">
-									<div class="lfr-asset-icon lfr-asset-date">
-										<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate())) %>
-									</div>
-
-									<div class="lfr-asset-icon lfr-asset-subfolders">
-										<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
-									</div>
-
-									<div class="lfr-asset-icon lfr-asset-items last">
-										<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
-									</div>
-								</div>
-
-								<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-									<liferay-ui:custom-attribute-list
-										className="<%= DLFolderConstants.getClassName() %>"
-										classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-										editable="<%= false %>"
-										label="<%= true %>"
-									/>
-								</liferay-ui:custom-attributes-available>
+								<liferay-ui:header
+									localizeTitle="<%= false %>"
+									title="<%= folder.getName() %>"
+								/>
 							</c:if>
 
-							<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
-						</div>
-					</aui:col>
-
-					<c:if test="<%= showFolderMenu %>">
-						<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
-							<div class="lfr-asset-summary">
-								<liferay-ui:icon
-									cssClass="lfr-asset-avatar"
-									image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty") %>'
-									message='<%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %>'
-								/>
-
-								<div class="lfr-asset-name">
-									<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %></h4>
-								</div>
-							</div>
-
 							<%
-							request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+							SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+							String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(portletPreferences, renderRequest);
+
+							int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
+
+							int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, true);
+
+							int imagesCount = total - foldersCount;
+
+							searchContainer.setTotal(total);
+
+							List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+							searchContainer.setResults(results);
+
+							request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
+							request.setAttribute("view.jsp-searchContainer", searchContainer);
 							%>
 
-							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
-						</aui:col>
-					</c:if>
-				</aui:row>
+							<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= showFolderMenu ? 75 : 100 %>">
+								<div id="<portlet:namespace />imageGalleryAssetInfo">
+									<c:if test="<%= folder != null %>">
+										<div class="lfr-asset-description">
+											<%= HtmlUtil.escape(folder.getDescription()) %>
+										</div>
 
-				<%
-				if (folder != null) {
-					IGUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+										<div class="lfr-asset-metadata">
+											<div class="lfr-asset-icon lfr-asset-date">
+												<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate())) %>
+											</div>
 
-					if (!defaultFolderView && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-						PortalUtil.setPageSubtitle(folder.getName(), request);
-						PortalUtil.setPageDescription(folder.getDescription(), request);
-					}
-				}
-				%>
+											<div class="lfr-asset-icon lfr-asset-subfolders">
+												<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+											</div>
 
+											<div class="lfr-asset-icon lfr-asset-items last">
+												<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
+											</div>
+										</div>
+
+										<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+											<liferay-ui:custom-attribute-list
+												className="<%= DLFolderConstants.getClassName() %>"
+												classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+												editable="<%= false %>"
+												label="<%= true %>"
+											/>
+										</liferay-ui:custom-attributes-available>
+									</c:if>
+
+									<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
+								</div>
+							</aui:col>
+
+							<c:if test="<%= showFolderMenu %>">
+								<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
+									<div class="lfr-asset-summary">
+										<liferay-ui:icon
+											cssClass="lfr-asset-avatar"
+											image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty") %>'
+											message='<%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %>'
+										/>
+
+										<div class="lfr-asset-name">
+											<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %></h4>
+										</div>
+									</div>
+
+									<%
+									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+									%>
+
+									<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
+								</aui:col>
+							</c:if>
+						</aui:row>
+
+						<%
+						if (folder != null) {
+							IGUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+
+							if (!defaultFolderView && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+								PortalUtil.setPageSubtitle(folder.getName(), request);
+								PortalUtil.setPageDescription(folder.getDescription(), request);
+							}
+						}
+						%>
+
+					</c:when>
+					<c:otherwise>
+						<div class="portlet-msg-error">
+							<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-document-library-folder" />
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
 

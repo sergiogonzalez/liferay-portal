@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.lucene;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseSpellCheckIndexWriter;
 import com.liferay.portal.kernel.search.DictionaryEntry;
 import com.liferay.portal.kernel.search.DictionaryReader;
@@ -169,6 +171,56 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 	}
 
 	@Override
+	protected void indexKeyword(
+			long companyId, long groupId, String languageId, String keyword,
+			float weight, String keywordFieldName, String typeFieldValue,
+			int maxNGramLength)
+		throws Exception {
+
+		IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
+			companyId);
+
+		IndexSearcher indexSearcher = null;
+
+		try {
+			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
+
+			indexSearcher = LuceneHelperUtil.getSearcher(
+				indexAccessor.getCompanyId(), true);
+
+			if (indexSearcher.maxDoc() > 0) {
+				ReaderUtil.gatherSubReaders(
+					indexReaders, indexSearcher.getIndexReader());
+			}
+
+			String localizedFieldName = DocumentImpl.getLocalizedName(
+				languageId, keywordFieldName);
+
+			boolean validWord = isValidWord(
+				localizedFieldName, keyword, indexReaders);
+
+			if (!validWord) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Not indexing because keyword " + keyword +
+							" is invalid");
+				}
+
+				return;
+			}
+
+			Document document = createDocument(
+				companyId, groupId, languageId, localizedFieldName, keyword,
+				weight, typeFieldValue, maxNGramLength);
+
+			indexAccessor.addDocument(document);
+		}
+		finally {
+			LuceneHelperUtil.cleanUp(indexSearcher);
+		}
+	}
+
+	@Override
 	protected void indexKeywords(
 			long companyId, long groupId, String languageId,
 			InputStream inputStream, String keywordFieldName,
@@ -211,6 +263,12 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 					localizedFieldName, word, indexReaders);
 
 				if (!validWord) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Not indexing because word " + word +
+								" is invalid");
+					}
+
 					continue;
 				}
 
@@ -248,5 +306,8 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 	}
 
 	private static final int _MINIMUM_WORD_LENGTH = 3;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		LuceneSpellCheckIndexWriter.class);
 
 }

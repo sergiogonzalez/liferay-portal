@@ -931,7 +931,7 @@ public class GroupServiceHttp {
 
 	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		HttpPrincipal httpPrincipal, long userId,
-		java.lang.String[] classNames, int max)
+		java.lang.String[] classNames, boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -939,7 +939,7 @@ public class GroupServiceHttp {
 					"getUserSitesGroups", _getUserSitesGroupsParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					classNames, max);
+					classNames, includeControlPanel, max);
 
 			Object returnObj = null;
 
@@ -969,7 +969,7 @@ public class GroupServiceHttp {
 
 	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		HttpPrincipal httpPrincipal, long userId,
-		java.lang.String[] classNames, boolean includeControlPanel, int max)
+		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -977,7 +977,7 @@ public class GroupServiceHttp {
 					"getUserSitesGroups", _getUserSitesGroupsParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					classNames, includeControlPanel, max);
+					classNames, max);
 
 			Object returnObj = null;
 
@@ -1483,10 +1483,10 @@ public class GroupServiceHttp {
 			
 		};
 	private static final Class<?>[] _getUserSitesGroupsParameterTypes24 = new Class[] {
-			long.class, java.lang.String[].class, int.class
+			long.class, java.lang.String[].class, boolean.class, int.class
 		};
 	private static final Class<?>[] _getUserSitesGroupsParameterTypes25 = new Class[] {
-			long.class, java.lang.String[].class, boolean.class, int.class
+			long.class, java.lang.String[].class, int.class
 		};
 	private static final Class<?>[] _getUserSitesGroupsParameterTypes26 = new Class[] {
 			java.lang.String[].class, int.class

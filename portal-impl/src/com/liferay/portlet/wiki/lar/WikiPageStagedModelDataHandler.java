@@ -21,13 +21,18 @@ import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -170,7 +175,6 @@ public class WikiPageStagedModelDataHandler
 
 			for (Element attachmentElement : attachmentElements) {
 				String path = attachmentElement.attributeValue("path");
-				String binPath = attachmentElement.attributeValue("bin-path");
 
 				FileEntry fileEntry =
 					(FileEntry)portletDataContext.getZipEntryAsObject(path);
@@ -179,19 +183,37 @@ public class WikiPageStagedModelDataHandler
 				String mimeType = null;
 
 				try {
-					inputStream = portletDataContext.getZipEntryAsInputStream(
-						binPath);
+					String binPath = attachmentElement.attributeValue(
+						"bin-path");
+
+					if (Validator.isNull(binPath) &&
+						portletDataContext.isPerformDirectBinaryImport()) {
+
+						try {
+							inputStream = FileEntryUtil.getContentStream(
+								fileEntry);
+						}
+						catch (NoSuchFileException nsfe) {
+						}
+					}
+					else {
+						inputStream =
+							portletDataContext.getZipEntryAsInputStream(
+								binPath);
+					}
+
+					if (inputStream == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to import attachment for file entry " +
+									fileEntry.getFileEntryId());
+						}
+
+						continue;
+					}
 
 					mimeType = MimeTypesUtil.getContentType(
 						inputStream, fileEntry.getTitle());
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-				}
-
-				try {
-					inputStream = portletDataContext.getZipEntryAsInputStream(
-						binPath);
 
 					WikiPageLocalServiceUtil.addPageAttachment(
 						userId, importedPage.getNodeId(),
@@ -229,5 +251,8 @@ public class WikiPageStagedModelDataHandler
 				userId, existingPage.getResourcePrimKey());
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		WikiPageStagedModelDataHandler.class);
 
 }

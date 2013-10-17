@@ -173,7 +173,7 @@ AUI.add(
 
 						instance._hiddenCheckbox.on('change', instance._updateNavigationProxy, instance);
 
-						instance._nameInput.on('input', instance._updateNavigationProxy, instance);
+						instance._nameInput.on('valuechange', instance._updateNavigationProxy, instance);
 
 						instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance);
 					},
@@ -247,7 +247,8 @@ AUI.add(
 					_updateNavigationProxy: function(event) {
 						var instance = this;
 
-						Liferay.fire('dockbaraddpage:previewPageTitle',
+						Liferay.fire(
+							'dockbaraddpage:previewPageTitle',
 							{
 								data: {
 									hidden: instance._hiddenCheckbox.get('checked'),

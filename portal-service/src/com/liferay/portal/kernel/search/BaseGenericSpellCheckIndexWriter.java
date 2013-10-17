@@ -91,6 +91,20 @@ public abstract class BaseGenericSpellCheckIndexWriter
 	}
 
 	@Override
+	protected void indexKeyword(
+			long companyId, long groupId, String languageId, String keyword,
+			float weight, String keywordFieldName, String typeFieldValue,
+			int maxNGramLength)
+		throws Exception {
+
+		Document document = createDocument(
+			companyId, groupId, languageId, keyword, weight, keywordFieldName,
+			typeFieldValue, maxNGramLength);
+
+		_indexWriter.addDocument(null, document);
+	}
+
+	@Override
 	protected void indexKeywords(
 			long companyId, long groupId, String languageId,
 			InputStream inputStream, String keywordFieldName,

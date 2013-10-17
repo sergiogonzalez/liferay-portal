@@ -546,6 +546,16 @@ public class GroupServiceWrapper implements GroupService,
 		return _groupService.getUserSitesGroups();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
+		long userId, java.lang.String[] classNames,
+		boolean includeControlPanel, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupService.getUserSitesGroups(userId, classNames,
+			includeControlPanel, max);
+	}
+
 	/**
 	* Returns the user's groups &quot;sites&quot; associated with the group
 	* entity class names, including the Control Panel group if the user is
@@ -586,16 +596,6 @@ public class GroupServiceWrapper implements GroupService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _groupService.getUserSitesGroups(userId, classNames, max);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		long userId, java.lang.String[] classNames,
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _groupService.getUserSitesGroups(userId, classNames,
-			includeControlPanel, max);
 	}
 
 	/**
