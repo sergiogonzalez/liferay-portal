@@ -244,10 +244,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					PortletKeys.JOURNAL);
 
 			ResourceActionLocalServiceUtil.checkResourceActions(
-				PortletKeys.JOURNAL, portletActions);
+				PortletKeys.JOURNAL, portletActions, true);
 		}
 		catch (Exception e) {
-			_log.warn("Unable to upgrade journal permissions");
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to upgrade journal permissions");
+			}
 		}
 	}
 
