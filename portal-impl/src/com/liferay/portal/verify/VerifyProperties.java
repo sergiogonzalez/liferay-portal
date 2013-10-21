@@ -437,6 +437,14 @@ public class VerifyProperties extends VerifyProcess {
 			"journal.error.template.xsl", "journal.error.template[xsl]"
 		},
 		new String[] {
+			"journal.template.freemarker.restricted.variables",
+			"freemarker.engine.restricted.variables"
+		},
+		new String[] {
+			"journal.template.velocity.restricted.variables",
+			"velocity.engine.restricted.variables"
+		},
+		new String[] {
 			"referer.url.domains.allowed", "redirect.url.domains.allowed"
 		},
 		new String[] {

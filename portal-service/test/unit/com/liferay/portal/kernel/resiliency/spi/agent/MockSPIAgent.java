@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,7 +44,10 @@ public class MockSPIAgent implements SPIAgent {
 	}
 
 	@Override
-	public HttpServletRequest prepareRequest(HttpServletRequest request) {
+	@SuppressWarnings("unused")
+	public HttpServletRequest prepareRequest(HttpServletRequest request)
+		throws IOException {
+
 		throw new UnsupportedOperationException();
 	}
 

@@ -64,6 +64,8 @@ import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactory;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.security.pacl.jndi.SchemeAwareContextWrapper;
 import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
+import com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl;
+import com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl.DoUpgradeDBPrivilegedExceptionAction;
 import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
@@ -139,22 +141,22 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	implements PortalSecurityManager {
 
 	public PortalSecurityManagerImpl() {
-		SecurityManager securityManager = System.getSecurityManager();
+		_originalSecurityManager = System.getSecurityManager();
 
 		initClasses();
 
 		try {
 			Policy policy = null;
 
-			if (securityManager != null) {
+			if (_originalSecurityManager != null) {
 				policy = Policy.getPolicy();
 			}
 
-			_policy = new PortalPolicy(policy);
+			_portalPolicy = new PortalPolicy(policy);
 
-			Policy.setPolicy(_policy);
+			Policy.setPolicy(_portalPolicy);
 
-			_policy.refresh();
+			_portalPolicy.refresh();
 		}
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
@@ -298,8 +300,17 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	}
 
 	@Override
+	public void destroy() {
+		synchronized (_originalSecurityManager) {
+			Policy.setPolicy(_portalPolicy.getOriginalPolicy());
+
+			System.setSecurityManager(_originalSecurityManager);
+		}
+	}
+
+	@Override
 	public Policy getPolicy() {
-		return _policy;
+		return _portalPolicy;
 	}
 
 	protected void addWebLogicHook() {
@@ -314,6 +325,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				@Override
 				public void run() {
 					if (securityManager != System.getSecurityManager()) {
+						_originalSecurityManager = System.getSecurityManager();
+
 						System.setSecurityManager(securityManager);
 					}
 				}
@@ -504,6 +517,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(
 			ServiceBeanAopProxy.class, new DoServiceBeanAopProxyPACL());
 		initPACLImpl(
+			ServiceComponentLocalServiceImpl.class,
+			new DoServiceComponentLocalServiceImplPACL());
+		initPACLImpl(
 			TemplateContextHelper.class, new DoTemplateContextHelperPACL());
 	}
 
@@ -517,7 +533,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	private static RuntimePermission _checkMemberAccessPermission =
 		new RuntimePermission("accessDeclaredMembers");
 
-	private Policy _policy;
+	private SecurityManager _originalSecurityManager;
+	private PortalPolicy _portalPolicy;
 
 	private static class DoBeanLocatorImplPACL implements BeanLocatorImpl.PACL {
 
@@ -1337,6 +1354,29 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			AdvisedSupport advisedSupport) {
 
 			return new PACLInvocationHandler(invocationHandler, advisedSupport);
+		}
+
+	}
+
+	private static class DoServiceComponentLocalServiceImplPACL
+		implements ServiceComponentLocalServiceImpl.PACL {
+
+		@Override
+		public void doUpgradeDB(
+				DoUpgradeDBPrivilegedExceptionAction
+					doUpgradeDBPrivilegedExceptionAction)
+			throws Exception {
+
+			ProtectionDomain protectionDomain = new ProtectionDomain(
+				null, null,
+				doUpgradeDBPrivilegedExceptionAction.getClassLoader(), null);
+
+			AccessControlContext accessControlContext =
+				new AccessControlContext(
+					new ProtectionDomain[] {protectionDomain});
+
+			AccessController.doPrivileged(
+				doUpgradeDBPrivilegedExceptionAction, accessControlContext);
 		}
 
 	}

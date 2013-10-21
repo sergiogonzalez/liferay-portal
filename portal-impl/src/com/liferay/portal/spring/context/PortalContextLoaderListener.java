@@ -43,10 +43,12 @@ import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
@@ -157,6 +159,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 		finally {
 			PortalContextLoaderLifecycleThreadLocal.setDestroying(false);
+
+			SecurityManagerUtil.destroy();
 		}
 	}
 
@@ -183,7 +187,19 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_portalServlerContextName = StringPool.BLANK;
 		}
 
+		if (ServerDetector.isJetty() &&
+			_portalServlerContextName.equals(StringPool.SLASH)) {
+
+			_portalServlerContextName = StringPool.BLANK;
+		}
+
 		_portalServletContextPath = servletContext.getContextPath();
+
+		if (ServerDetector.isWebSphere() &&
+			_portalServletContextPath.isEmpty()) {
+
+			_portalServlerContextName = StringPool.BLANK;
+		}
 
 		ClassPathUtil.initializeClassPaths(servletContext);
 

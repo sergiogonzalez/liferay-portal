@@ -860,6 +860,7 @@
 			<then>
 				<delete dir="${liferay.home}/data" />
 				<delete dir="${liferay.home}/deploy" />
+				<delete dir="${liferay.home}/logs" />
 			</then>
 		</if>
 
@@ -2339,6 +2340,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<then>
 						<delete dir="${liferay.home}/data" />
 						<delete dir="${liferay.home}/deploy" />
+						<delete dir="${liferay.home}/logs" />
 					</then>
 				</if>
 
@@ -2854,19 +2856,66 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<http url="http://localhost:8080/web/guest" />
 				</waitfor>
 
-				<if>
-					<and>
-						<or>
-							<contains string="${hook.plugins.includes}" substring="so-hook" />
-							<contains string="${simple.server.dir}" substring="glassfish" />
-							<contains string="${simple.server.dir}" substring="jonas" />
-						</or>
-						<isset property="plugins.deployed" />
-					</and>
-					<then>
-						<sleep seconds="60" />
-					</then>
-				</if>
+				<waitfor>
+					<available file="${liferay.home}/logs" />
+				</waitfor>
+
+				<for param="log.file">
+					<path>
+						<fileset dir="${liferay.home}/logs">
+							<include name="*.log" />
+						</fileset>
+					</path>
+					<sequential>
+						<var name="log.file" value="@{log.file}" />
+					</sequential>
+				</for>
+
+				<script classpathref="project.classpath" language="beanshell">
+					<![CDATA[
+						import com.liferay.portal.kernel.util.StringUtil;
+
+						import org.apache.commons.io.FileUtils;
+
+						Set requiredPluginNamesSet = new HashSet();
+
+						requiredPluginNamesSet.add("marketplace-portlet");
+
+						String[] pluginTypes = {"hook", "layouttpl", "portlet", "theme", "web"};
+
+						for (String pluginType : pluginTypes) {
+							String[] pluginNames = StringUtil.split(project.getProperty(pluginType + ".plugins.includes"), ',');
+
+							for (String pluginName : pluginNames) {
+								requiredPluginNamesSet.add(pluginName);
+							}
+						}
+
+						System.out.println("Ensuring the following plugins have been deployed:");
+						System.out.println(StringUtil.merge(requiredPluginNamesSet));
+
+						int i = 0;
+
+						for (String pluginName : requiredPluginNamesSet) {
+							String content = "";
+
+							while (i < 120 && !content.contains(pluginName + " is available for use")) {
+								try {
+									Thread.sleep(1000);
+
+									File file = new File(StringUtil.replace(project.getProperty("log.file"), "\\", "/"));
+
+									content = FileUtils.readFileToString(file);
+
+									i++;
+								}
+								catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					]]>
+				</script>
 
 				<if>
 					<contains string="${hook.plugins.includes}" substring="so-hook" />
@@ -2884,7 +2933,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 				<antcall target="run-selenium-test" />
 
-				<sleep seconds="3" />
+				<sleep seconds="5" />
 
 				<exec dir="${simple.server.bin.dir}" executable="${simple.server.stop.executable}" resolveexecutable="true">
 					<arg line="${simple.server.stop.executable.arg.line}" />

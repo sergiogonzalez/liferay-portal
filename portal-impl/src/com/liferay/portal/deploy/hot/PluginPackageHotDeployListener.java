@@ -150,7 +150,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		String servletContextName = servletContext.getServletContextName();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking deploy for " + servletContextName);
+			_log.debug("Invoking undeploy for " + servletContextName);
 		}
 
 		PluginPackage pluginPackage =

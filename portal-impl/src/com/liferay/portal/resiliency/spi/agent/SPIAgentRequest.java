@@ -110,11 +110,20 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 			((Portlet)request.getAttribute(
 				WebKeys.SPI_AGENT_PORTLET)).getContextName());
 
-		cookies = request.getCookies();
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies != null) {
+			cookiesBytes = new byte[cookies.length][];
+
+			for (int i = 0; i < cookies.length; i++) {
+				cookiesBytes[i] = CookieUtil.serialize(cookies[i]);
+			}
+		}
+
 		distributedRequestAttributes = extractDistributedRequestAttributes(
 			request, Direction.REQUEST);
 		headerMap = extractRequestHeaders(request);
-		parameterMap = request.getParameterMap();
+		parameterMap = new HashMap<String, String[]>(request.getParameterMap());
 		remoteAddr = request.getRemoteAddr();
 		remoteHost = request.getRemoteHost();
 		remotePort = request.getRemotePort();
@@ -231,8 +240,8 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 	public String toString() {
 		int length = 20 + parameterMap.size() * 4;
 
-		if (cookies != null) {
-			length += cookies.length * 2 - 1;
+		if (cookiesBytes != null) {
+			length += cookiesBytes.length * 2 - 1;
 		}
 
 		StringBundler sb = new StringBundler(length);
@@ -241,8 +250,10 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 		sb.append(contentType);
 		sb.append(", cookies=[");
 
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
+		if (cookiesBytes != null) {
+			for (byte[] cookieBytes : cookiesBytes) {
+				Cookie cookie = CookieUtil.deserialize(cookieBytes);
+
 				sb.append(CookieUtil.toString(cookie));
 				sb.append(", ");
 			}
@@ -283,7 +294,7 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 	}
 
 	protected String contentType;
-	protected Cookie[] cookies;
+	protected byte[][] cookiesBytes;
 	protected Map<String, Serializable> distributedRequestAttributes;
 	protected Map<String, List<String>> headerMap;
 	protected Map<String, FileItem[]> multipartParameterMap;
@@ -325,6 +336,16 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 
 		@Override
 		public Cookie[] getCookies() {
+			if (cookiesBytes == null) {
+				return null;
+			}
+
+			Cookie[] cookies = new Cookie[cookiesBytes.length];
+
+			for (int i = 0; i < cookies.length; i++) {
+				cookies[i] = CookieUtil.deserialize(cookiesBytes[i]);
+			}
+
 			return cookies;
 		}
 

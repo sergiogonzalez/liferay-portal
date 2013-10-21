@@ -137,6 +137,17 @@ public class EditGroupAction extends PortletAction {
 							actionResponse, themeDisplay,
 							PortletKeys.SITE_SETTINGS);
 
+					String controlPanelURL = HttpUtil.setParameter(
+						themeDisplay.getURLControlPanel(), "p_p_id",
+						PortletKeys.SITES_ADMIN);
+
+					controlPanelURL = HttpUtil.setParameter(
+						controlPanelURL, "controlPanelCategory",
+						themeDisplay.getControlPanelCategory());
+
+					siteAdministrationURL.setParameter(
+						"redirect", controlPanelURL);
+
 					redirect = siteAdministrationURL.toString();
 
 					hideDefaultSuccessMessage(actionRequest);

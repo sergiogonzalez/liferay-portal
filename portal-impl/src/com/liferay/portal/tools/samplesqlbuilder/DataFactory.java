@@ -2122,7 +2122,7 @@ public class DataFactory {
 		MBMessageModel mbMessageModel) {
 
 		long classNameId = mbMessageModel.getClassNameId();
-		long classPk = mbMessageModel.getClassPK();
+		long classPK = mbMessageModel.getClassPK();
 
 		int type = 0;
 		String extraData = null;
@@ -2138,7 +2138,7 @@ public class DataFactory {
 			type = MBActivityKeys.ADD_MESSAGE;
 
 			classNameId = _classNameModelsMap.get(MBMessage.class.getName());
-			classPk = mbMessageModel.getMessageId();
+			classPK = mbMessageModel.getMessageId();
 		}
 		else {
 			StringBundler sb = new StringBundler(5);
@@ -2155,7 +2155,7 @@ public class DataFactory {
 		}
 
 		return newSocialActivityModel(
-			mbMessageModel.getGroupId(), classNameId, classPk, type, extraData);
+			mbMessageModel.getGroupId(), classNameId, classPK, type, extraData);
 	}
 
 	public SubscriptionModel newSubscriptionModel(

@@ -150,7 +150,7 @@ if (layout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<aui:nav-item cssClass='<%= ((layoutSetBranches != null) ? " active" : StringPool.BLANK) + " staging-toggle" %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" label="staging" />
+					<aui:nav-item cssClass='<%= ((layoutSetBranches != null) ? " active" : StringPool.BLANK) + " staging-toggle" %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" id="stagingLink" label="staging" />
 				</c:otherwise>
 			</c:choose>
 
@@ -169,7 +169,7 @@ if (layout != null) {
 					String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, remotePathContext, secureConnection, remoteGroupId, layout.isPrivateLayout());
 					%>
 
-					<aui:nav-item cssClass="remote-live-link" href="<%= remoteURL %>" iconClass="icon-external-link-sign" label="go-to-remote-live" />
+					<aui:nav-item cssClass="remote-live-link" href="<%= remoteURL %>" iconCssClass="icon-external-link-sign" label="go-to-remote-live" />
 				</c:when>
 				<c:when test="<%= group.isStagingGroup() %>">
 					<c:if test="<%= Validator.isNotNull(liveFriendlyURL) %>">
@@ -180,6 +180,9 @@ if (layout != null) {
 					<aui:nav-item anchorCssClass="staging-link" cssClass="active live-link staging-toggle" dropdown="<%= true %>" id="liveLink" label="live" toggle="<%= true %>">
 						<aui:nav-item cssClass="row-fluid">
 							<div class="staging-details">
+								<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
+									<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
+								</div>
 
 								<%
 								request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
@@ -204,4 +207,35 @@ if (layout != null) {
 			);
 		</aui:script>
 	</c:if>
+
+	<aui:script use="aui-base">
+		var stagingLink = A.one('#<portlet:namespace />stagingLink');
+		var warningMessage = A.one('#<portlet:namespace />warningMessage');
+
+		var checkBackgroundTasks = function() {
+			Liferay.Service(
+				'/backgroundtask/get-background-tasks-count',
+				{
+					groupId: '<%= liveGroup.getGroupId() %>',
+					taskExecutorClassName: '<%= LayoutStagingBackgroundTaskExecutor.class.getName() %>',
+					completed: false
+				},
+				function(obj) {
+					var incomplete = obj > 0;
+
+					stagingLink.toggle(!incomplete);
+
+					if (warningMessage) {
+						warningMessage.toggle(incomplete);
+					}
+
+					if (incomplete) {
+						setTimeout(checkBackgroundTasks, 5000);
+					}
+				}
+			);
+		};
+
+		checkBackgroundTasks();
+	</aui:script>
 </c:if>

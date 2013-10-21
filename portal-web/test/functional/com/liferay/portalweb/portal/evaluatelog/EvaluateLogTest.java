@@ -177,29 +177,7 @@ public class EvaluateLogTest extends BaseTestCase {
 					".*The web application \\[\\] created a ThreadLocal with " +
 						"key of type.*")) {
 
-				if (line.contains(
-						"[de.schlichtherle.io.ReentrantReadWriteLock." +
-							"ReadLock]")) {
-
-					continue;
-				}
-
-				if (line.contains(
-						"[de.schlichtherle.io.ReentrantReadWriteLock." +
-							"WriteLock]")) {
-
-					continue;
-				}
-
-				if (line.contains(
-						"[de.schlichtherle.util.regex.ThreadLocalMatcher]")) {
-
-					continue;
-				}
-
-				if (line.contains(
-						"[de.schlichtherle.util.zip.DateTimeConverter$3]")) {
-
+				if (line.contains("[de.schlichtherle")) {
 					continue;
 				}
 			}

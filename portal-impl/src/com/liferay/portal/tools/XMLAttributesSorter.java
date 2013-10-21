@@ -54,11 +54,11 @@ public class XMLAttributesSorter {
 			return;
 		}
 
-		if (!fileName.endsWith(".xml")) {
+		/*if (!fileName.endsWith(".xml")) {
 			System.out.println("Specify file with .xml extension");
 
 			return;
-		}
+		}*/
 
 		String basedir = "./";
 
