@@ -140,6 +140,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.TicketLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -674,6 +675,60 @@ public class PortalImpl implements Portal {
 
 		return addPreservedParameters(
 			themeDisplay, themeDisplay.getLayout(), url, true);
+	}
+
+	public List<Layout> addUserGroupLayouts(
+			Group group, boolean privateLayout, List<Layout> layouts,
+			long parentLayoutId)
+		throws PortalException, SystemException {
+
+		layouts = ListUtil.copy(layouts);
+
+		List<UserGroup> userUserGroups =
+			UserGroupLocalServiceUtil.getUserUserGroups(group.getClassPK());
+
+		for (UserGroup userGroup : userUserGroups) {
+			Group userGroupGroup = userGroup.getGroup();
+
+			List<Layout> userGroupLayouts = LayoutLocalServiceUtil.getLayouts(
+				userGroupGroup.getGroupId(), privateLayout, parentLayoutId);
+
+			for (Layout userGroupLayout : userGroupLayouts) {
+				Layout virtualLayout = new VirtualLayout(
+					userGroupLayout, group);
+
+				layouts.add(virtualLayout);
+			}
+		}
+
+		return layouts;
+	}
+
+	public List<Layout> addUserGroupLayouts(
+			Group group, boolean privateLayout, List<Layout> layouts,
+			String type)
+		throws PortalException, SystemException {
+
+		layouts = ListUtil.copy(layouts);
+
+		List<UserGroup> userUserGroups =
+			UserGroupLocalServiceUtil.getUserUserGroups(group.getClassPK());
+
+		for (UserGroup userGroup : userUserGroups) {
+			Group userGroupGroup = userGroup.getGroup();
+
+			List<Layout> userGroupLayouts = LayoutLocalServiceUtil.getLayouts(
+				userGroupGroup.getGroupId(), privateLayout, type);
+
+			for (Layout userGroupLayout : userGroupLayouts) {
+				Layout virtualLayout = new VirtualLayout(
+					userGroupLayout, group);
+
+				layouts.add(virtualLayout);
+			}
+		}
+
+		return layouts;
 	}
 
 	@Override
@@ -7008,8 +7063,10 @@ public class PortalImpl implements Portal {
 
 		long scopeGroupId = groupId;
 
+		Group group = null;
+
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			group = GroupLocalServiceUtil.getGroup(groupId);
 
 			if (group.isLayout()) {
 				Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
@@ -7025,6 +7082,11 @@ public class PortalImpl implements Portal {
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+
+		if ((group != null) && group.isUser()) {
+			layouts = addUserGroupLayouts(
+				group, privateLayout, layouts, LayoutConstants.TYPE_PORTLET);
+		}
 
 		for (Layout layout : layouts) {
 			LayoutTypePortlet layoutTypePortlet =

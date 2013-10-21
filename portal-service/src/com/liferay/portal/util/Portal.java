@@ -205,6 +205,16 @@ public interface Portal {
 	 */
 	public String addPreservedParameters(ThemeDisplay themeDisplay, String url);
 
+	public List<Layout> addUserGroupLayouts(
+			Group group, boolean privateLayout, List<Layout> layouts,
+			long parentLayoutId)
+		throws PortalException, SystemException;
+
+	public List<Layout> addUserGroupLayouts(
+			Group group, boolean privateLayout, List<Layout> layouts,
+			String type)
+		throws PortalException, SystemException;
+
 	public void addUserLocaleOptionsMessage(HttpServletRequest request);
 
 	/**

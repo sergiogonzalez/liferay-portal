@@ -31,12 +31,11 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -146,8 +145,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 					if (parentLayoutId ==
 							LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
-						return addUserGroupLayouts(
-							group, layoutSet, layouts, parentLayoutId);
+						return PortalUtil.addUserGroupLayouts(
+							group, layoutSet.isPrivateLayout(), layouts,
+							parentLayoutId);
 					}
 					else {
 						return addChildUserGroupLayouts(group, layouts);
@@ -200,34 +200,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		}
 
 		return childLayouts;
-	}
-
-	protected List<Layout> addUserGroupLayouts(
-			Group group, LayoutSet layoutSet, List<Layout> layouts,
-			long parentLayoutId)
-		throws Exception {
-
-		layouts = ListUtil.copy(layouts);
-
-		List<UserGroup> userUserGroups =
-			UserGroupLocalServiceUtil.getUserUserGroups(group.getClassPK());
-
-		for (UserGroup userGroup : userUserGroups) {
-			Group userGroupGroup = userGroup.getGroup();
-
-			List<Layout> userGroupLayouts = LayoutLocalServiceUtil.getLayouts(
-				userGroupGroup.getGroupId(), layoutSet.isPrivateLayout(),
-				parentLayoutId);
-
-			for (Layout userGroupLayout : userGroupLayouts) {
-				Layout virtualLayout = new VirtualLayout(
-					userGroupLayout, group);
-
-				layouts.add(virtualLayout);
-			}
-		}
-
-		return layouts;
 	}
 
 	protected List<Layout> getPrototypeLinkedLayouts(

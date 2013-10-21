@@ -176,6 +176,15 @@ public class PortalUtil {
 		return getPortal().addPreservedParameters(themeDisplay, url);
 	}
 
+	public static List<Layout> addUserGroupLayouts(
+			Group group, boolean privateLayout, List<Layout> layouts,
+			long parentLayoutId)
+		throws PortalException, SystemException {
+
+		return getPortal().addUserGroupLayouts(
+			group, privateLayout, layouts, parentLayoutId);
+	}
+
 	public static void addUserLocaleOptionsMessage(HttpServletRequest request) {
 		getPortal().addUserLocaleOptionsMessage(request);
 	}
@@ -1943,6 +1952,15 @@ public class PortalUtil {
 
 		return getPortal().updateWindowState(
 			portletId, user, layout, windowState, request);
+	}
+
+	public List<Layout> addUserGroupLayouts(
+			Group group, boolean privateLayout, List<Layout> layouts,
+			String type)
+		throws PortalException, SystemException {
+
+		return getPortal().addUserGroupLayouts(
+			group, privateLayout, layouts, type);
 	}
 
 	public void removePortalPortEventListener(
