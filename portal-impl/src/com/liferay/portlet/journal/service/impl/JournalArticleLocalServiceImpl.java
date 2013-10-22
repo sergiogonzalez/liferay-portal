@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -121,7 +120,6 @@ import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -3356,33 +3354,10 @@ public class JournalArticleLocalServiceImpl
 			journalArticleResourceLocalService.getArticleResource(
 				article.getResourcePrimKey());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("title", article.getArticleId());
-
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+		trashEntryLocalService.addTrashEntry(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
 			article.getResourcePrimKey(), articleResource.getUuid(), null,
-			oldStatus, articleVersionStatusOVPs, typeSettingsProperties);
-
-		String trashArticleId = TrashUtil.getTrashTitle(
-			trashEntry.getEntryId());
-
-		if (!articleVersions.isEmpty()) {
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setArticleId(trashArticleId);
-
-				journalArticlePersistence.update(articleVersion);
-			}
-		}
-
-		articleResource.setArticleId(trashArticleId);
-
-		journalArticleResourcePersistence.update(articleResource);
-
-		article.setArticleId(trashArticleId);
-
-		article = journalArticlePersistence.update(article);
+			oldStatus, articleVersionStatusOVPs, null);
 
 		// Asset
 
@@ -3537,33 +3512,6 @@ public class JournalArticleLocalServiceImpl
 
 		// Article
 
-		String trashArticleId = TrashUtil.getOriginalTitle(
-			article.getArticleId());
-
-		List<JournalArticle> articleVersions =
-			journalArticlePersistence.findByG_A(
-				article.getGroupId(), article.getArticleId());
-
-		if (!articleVersions.isEmpty()) {
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setArticleId(trashArticleId);
-
-				journalArticlePersistence.update(articleVersion);
-			}
-		}
-
-		article.setArticleId(trashArticleId);
-
-		journalArticlePersistence.update(article);
-
-		JournalArticleResource articleResource =
-			journalArticleResourcePersistence.fetchByPrimaryKey(
-				article.getResourcePrimKey());
-
-		articleResource.setArticleId(trashArticleId);
-
-		journalArticleResourcePersistence.update(articleResource);
-
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
@@ -3604,6 +3552,10 @@ public class JournalArticleLocalServiceImpl
 			article.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		List<JournalArticle> articleVersions =
+			journalArticlePersistence.findByG_A(
+				article.getGroupId(), article.getArticleId());
 
 		if (!articleVersions.isEmpty()) {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
