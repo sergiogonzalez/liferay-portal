@@ -866,6 +866,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(
 			1,
+			parentTrashHandler.getTrashContainedModelsCount(
+				(Long)parentBaseModel.getPrimaryKeyObj()));
+		Assert.assertEquals(
+			1,
 			parentTrashHandler.getTrashContainerModelsCount(
 				(Long)parentBaseModel.getPrimaryKeyObj()));
 
