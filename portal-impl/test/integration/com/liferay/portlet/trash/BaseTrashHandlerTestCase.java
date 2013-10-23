@@ -1141,6 +1141,8 @@ public abstract class BaseTrashHandlerTestCase {
 			BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
 				baseModel, group, serviceContext);
 
+			baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
 			Assert.assertEquals(
 				initialBaseModelsCount + 1,
 				getNotInTrashBaseModelsCount(newParentBaseModel));
