@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -72,12 +73,10 @@ public class ViewAction extends PortletAction {
 				throw new NoSuchNodeException();
 			}
 
-			WikiPage page = null;
+			WikiPage page = WikiPageServiceUtil.fetchLatestPage(
+				nodeId, title, WorkflowConstants.STATUS_ANY, true);
 
-			try {
-				page = WikiPageServiceUtil.getPage(nodeId, title, version);
-			}
-			catch (NoSuchPageException nspe) {
+			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(
 					nodeId, WikiPageConstants.FRONT_PAGE);
 			}

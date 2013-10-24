@@ -263,6 +263,18 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage fetchLatestPage(
+			long nodeId, String title, int status, boolean preferApproved)
+		throws PortalException, SystemException {
+
+		WikiPagePermission.check(
+			getPermissionChecker(), nodeId, title, ActionKeys.VIEW);
+
+		return wikiPageLocalService.fetchLatestPage(
+			nodeId, title, status, preferApproved);
+	}
+
+	@Override
 	public List<WikiPage> getChildren(
 			long groupId, long nodeId, boolean head, String parentTitle)
 		throws PortalException, SystemException {
