@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -6845,10 +6846,22 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public void setGroups(long pk, long[] groupPKs) throws SystemException {
-		organizationToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newGroupPKsSet = SetUtil.fromArray(groupPKs);
+		Set<Long> oldGroupPKsSet = SetUtil.fromArray(organizationToGroupTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long groupPK : groupPKs) {
-			organizationToGroupTableMapper.addTableMapping(pk, groupPK);
+		Set<Long> removeGroupPKsSet = new HashSet<Long>(oldGroupPKsSet);
+
+		removeGroupPKsSet.removeAll(newGroupPKsSet);
+
+		for (long removeGroupPK : removeGroupPKsSet) {
+			organizationToGroupTableMapper.deleteTableMapping(pk, removeGroupPK);
+		}
+
+		newGroupPKsSet.removeAll(oldGroupPKsSet);
+
+		for (long newGroupPK : newGroupPKsSet) {
+			organizationToGroupTableMapper.addTableMapping(pk, newGroupPK);
 		}
 	}
 
@@ -7109,10 +7122,22 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public void setUsers(long pk, long[] userPKs) throws SystemException {
-		organizationToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newUserPKsSet = SetUtil.fromArray(userPKs);
+		Set<Long> oldUserPKsSet = SetUtil.fromArray(organizationToUserTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long userPK : userPKs) {
-			organizationToUserTableMapper.addTableMapping(pk, userPK);
+		Set<Long> removeUserPKsSet = new HashSet<Long>(oldUserPKsSet);
+
+		removeUserPKsSet.removeAll(newUserPKsSet);
+
+		for (long removeUserPK : removeUserPKsSet) {
+			organizationToUserTableMapper.deleteTableMapping(pk, removeUserPK);
+		}
+
+		newUserPKsSet.removeAll(oldUserPKsSet);
+
+		for (long newUserPK : newUserPKsSet) {
+			organizationToUserTableMapper.addTableMapping(pk, newUserPK);
 		}
 	}
 

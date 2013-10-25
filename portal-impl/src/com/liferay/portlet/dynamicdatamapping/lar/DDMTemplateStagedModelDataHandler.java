@@ -237,12 +237,9 @@ public class DDMTemplateStagedModelDataHandler
 
 		long classPK = template.getClassPK();
 
-		Element structureElement = portletDataContext.getReferenceDataElement(
-			template, DDMStructure.class, classPK);
-
-		if (structureElement != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, structureElement);
+		if (classPK > 0) {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, template, DDMStructure.class, classPK);
 
 			Map<Long, Long> structureIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

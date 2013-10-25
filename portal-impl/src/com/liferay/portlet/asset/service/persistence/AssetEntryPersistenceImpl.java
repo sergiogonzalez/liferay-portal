@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,7 +52,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the asset entry service.
@@ -4150,11 +4153,24 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	@Override
 	public void setAssetCategories(long pk, long[] assetCategoryPKs)
 		throws SystemException {
-		assetEntryToAssetCategoryTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newAssetCategoryPKsSet = SetUtil.fromArray(assetCategoryPKs);
+		Set<Long> oldAssetCategoryPKsSet = SetUtil.fromArray(assetEntryToAssetCategoryTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long assetCategoryPK : assetCategoryPKs) {
+		Set<Long> removeAssetCategoryPKsSet = new HashSet<Long>(oldAssetCategoryPKsSet);
+
+		removeAssetCategoryPKsSet.removeAll(newAssetCategoryPKsSet);
+
+		for (long removeAssetCategoryPK : removeAssetCategoryPKsSet) {
+			assetEntryToAssetCategoryTableMapper.deleteTableMapping(pk,
+				removeAssetCategoryPK);
+		}
+
+		newAssetCategoryPKsSet.removeAll(oldAssetCategoryPKsSet);
+
+		for (long newAssetCategoryPK : newAssetCategoryPKsSet) {
 			assetEntryToAssetCategoryTableMapper.addTableMapping(pk,
-				assetCategoryPK);
+				newAssetCategoryPK);
 		}
 	}
 
@@ -4428,10 +4444,23 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	@Override
 	public void setAssetTags(long pk, long[] assetTagPKs)
 		throws SystemException {
-		assetEntryToAssetTagTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newAssetTagPKsSet = SetUtil.fromArray(assetTagPKs);
+		Set<Long> oldAssetTagPKsSet = SetUtil.fromArray(assetEntryToAssetTagTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long assetTagPK : assetTagPKs) {
-			assetEntryToAssetTagTableMapper.addTableMapping(pk, assetTagPK);
+		Set<Long> removeAssetTagPKsSet = new HashSet<Long>(oldAssetTagPKsSet);
+
+		removeAssetTagPKsSet.removeAll(newAssetTagPKsSet);
+
+		for (long removeAssetTagPK : removeAssetTagPKsSet) {
+			assetEntryToAssetTagTableMapper.deleteTableMapping(pk,
+				removeAssetTagPK);
+		}
+
+		newAssetTagPKsSet.removeAll(oldAssetTagPKsSet);
+
+		for (long newAssetTagPK : newAssetTagPKsSet) {
+			assetEntryToAssetTagTableMapper.addTableMapping(pk, newAssetTagPK);
 		}
 	}
 

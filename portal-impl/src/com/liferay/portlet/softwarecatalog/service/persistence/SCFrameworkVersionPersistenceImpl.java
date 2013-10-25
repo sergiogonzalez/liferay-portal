@@ -51,6 +51,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -3201,11 +3202,24 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	@Override
 	public void setSCProductVersions(long pk, long[] scProductVersionPKs)
 		throws SystemException {
-		scFrameworkVersionToSCProductVersionTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newSCProductVersionPKsSet = SetUtil.fromArray(scProductVersionPKs);
+		Set<Long> oldSCProductVersionPKsSet = SetUtil.fromArray(scFrameworkVersionToSCProductVersionTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long scProductVersionPK : scProductVersionPKs) {
+		Set<Long> removeSCProductVersionPKsSet = new HashSet<Long>(oldSCProductVersionPKsSet);
+
+		removeSCProductVersionPKsSet.removeAll(newSCProductVersionPKsSet);
+
+		for (long removeSCProductVersionPK : removeSCProductVersionPKsSet) {
+			scFrameworkVersionToSCProductVersionTableMapper.deleteTableMapping(pk,
+				removeSCProductVersionPK);
+		}
+
+		newSCProductVersionPKsSet.removeAll(oldSCProductVersionPKsSet);
+
+		for (long newSCProductVersionPK : newSCProductVersionPKsSet) {
 			scFrameworkVersionToSCProductVersionTableMapper.addTableMapping(pk,
-				scProductVersionPK);
+				newSCProductVersionPK);
 		}
 	}
 

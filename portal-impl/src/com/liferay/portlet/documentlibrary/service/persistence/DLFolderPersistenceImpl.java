@@ -53,6 +53,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9593,11 +9594,24 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public void setDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs)
 		throws SystemException {
-		dlFolderToDLFileEntryTypeTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newDLFileEntryTypePKsSet = SetUtil.fromArray(dlFileEntryTypePKs);
+		Set<Long> oldDLFileEntryTypePKsSet = SetUtil.fromArray(dlFolderToDLFileEntryTypeTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long dlFileEntryTypePK : dlFileEntryTypePKs) {
+		Set<Long> removeDLFileEntryTypePKsSet = new HashSet<Long>(oldDLFileEntryTypePKsSet);
+
+		removeDLFileEntryTypePKsSet.removeAll(newDLFileEntryTypePKsSet);
+
+		for (long removeDLFileEntryTypePK : removeDLFileEntryTypePKsSet) {
+			dlFolderToDLFileEntryTypeTableMapper.deleteTableMapping(pk,
+				removeDLFileEntryTypePK);
+		}
+
+		newDLFileEntryTypePKsSet.removeAll(oldDLFileEntryTypePKsSet);
+
+		for (long newDLFileEntryTypePK : newDLFileEntryTypePKsSet) {
 			dlFolderToDLFileEntryTypeTableMapper.addTableMapping(pk,
-				dlFileEntryTypePK);
+				newDLFileEntryTypePK);
 		}
 	}
 

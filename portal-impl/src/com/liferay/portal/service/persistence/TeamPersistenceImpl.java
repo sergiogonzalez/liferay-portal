@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,7 +51,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the team service.
@@ -2009,10 +2012,22 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public void setUsers(long pk, long[] userPKs) throws SystemException {
-		teamToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newUserPKsSet = SetUtil.fromArray(userPKs);
+		Set<Long> oldUserPKsSet = SetUtil.fromArray(teamToUserTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long userPK : userPKs) {
-			teamToUserTableMapper.addTableMapping(pk, userPK);
+		Set<Long> removeUserPKsSet = new HashSet<Long>(oldUserPKsSet);
+
+		removeUserPKsSet.removeAll(newUserPKsSet);
+
+		for (long removeUserPK : removeUserPKsSet) {
+			teamToUserTableMapper.deleteTableMapping(pk, removeUserPK);
+		}
+
+		newUserPKsSet.removeAll(oldUserPKsSet);
+
+		for (long newUserPK : newUserPKsSet) {
+			teamToUserTableMapper.addTableMapping(pk, newUserPK);
 		}
 	}
 
@@ -2282,10 +2297,22 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@Override
 	public void setUserGroups(long pk, long[] userGroupPKs)
 		throws SystemException {
-		teamToUserGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newUserGroupPKsSet = SetUtil.fromArray(userGroupPKs);
+		Set<Long> oldUserGroupPKsSet = SetUtil.fromArray(teamToUserGroupTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long userGroupPK : userGroupPKs) {
-			teamToUserGroupTableMapper.addTableMapping(pk, userGroupPK);
+		Set<Long> removeUserGroupPKsSet = new HashSet<Long>(oldUserGroupPKsSet);
+
+		removeUserGroupPKsSet.removeAll(newUserGroupPKsSet);
+
+		for (long removeUserGroupPK : removeUserGroupPKsSet) {
+			teamToUserGroupTableMapper.deleteTableMapping(pk, removeUserGroupPK);
+		}
+
+		newUserGroupPKsSet.removeAll(oldUserGroupPKsSet);
+
+		for (long newUserGroupPK : newUserGroupPKsSet) {
+			teamToUserGroupTableMapper.addTableMapping(pk, newUserGroupPK);
 		}
 	}
 

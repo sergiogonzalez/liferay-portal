@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -4956,10 +4957,22 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void setGroups(long pk, long[] groupPKs) throws SystemException {
-		userGroupToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newGroupPKsSet = SetUtil.fromArray(groupPKs);
+		Set<Long> oldGroupPKsSet = SetUtil.fromArray(userGroupToGroupTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long groupPK : groupPKs) {
-			userGroupToGroupTableMapper.addTableMapping(pk, groupPK);
+		Set<Long> removeGroupPKsSet = new HashSet<Long>(oldGroupPKsSet);
+
+		removeGroupPKsSet.removeAll(newGroupPKsSet);
+
+		for (long removeGroupPK : removeGroupPKsSet) {
+			userGroupToGroupTableMapper.deleteTableMapping(pk, removeGroupPK);
+		}
+
+		newGroupPKsSet.removeAll(oldGroupPKsSet);
+
+		for (long newGroupPK : newGroupPKsSet) {
+			userGroupToGroupTableMapper.addTableMapping(pk, newGroupPK);
 		}
 	}
 
@@ -5218,10 +5231,22 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void setTeams(long pk, long[] teamPKs) throws SystemException {
-		userGroupToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newTeamPKsSet = SetUtil.fromArray(teamPKs);
+		Set<Long> oldTeamPKsSet = SetUtil.fromArray(userGroupToTeamTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long teamPK : teamPKs) {
-			userGroupToTeamTableMapper.addTableMapping(pk, teamPK);
+		Set<Long> removeTeamPKsSet = new HashSet<Long>(oldTeamPKsSet);
+
+		removeTeamPKsSet.removeAll(newTeamPKsSet);
+
+		for (long removeTeamPK : removeTeamPKsSet) {
+			userGroupToTeamTableMapper.deleteTableMapping(pk, removeTeamPK);
+		}
+
+		newTeamPKsSet.removeAll(oldTeamPKsSet);
+
+		for (long newTeamPK : newTeamPKsSet) {
+			userGroupToTeamTableMapper.addTableMapping(pk, newTeamPK);
 		}
 	}
 
@@ -5480,10 +5505,22 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void setUsers(long pk, long[] userPKs) throws SystemException {
-		userGroupToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newUserPKsSet = SetUtil.fromArray(userPKs);
+		Set<Long> oldUserPKsSet = SetUtil.fromArray(userGroupToUserTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long userPK : userPKs) {
-			userGroupToUserTableMapper.addTableMapping(pk, userPK);
+		Set<Long> removeUserPKsSet = new HashSet<Long>(oldUserPKsSet);
+
+		removeUserPKsSet.removeAll(newUserPKsSet);
+
+		for (long removeUserPK : removeUserPKsSet) {
+			userGroupToUserTableMapper.deleteTableMapping(pk, removeUserPK);
+		}
+
+		newUserPKsSet.removeAll(oldUserPKsSet);
+
+		for (long newUserPK : newUserPKsSet) {
+			userGroupToUserTableMapper.addTableMapping(pk, newUserPK);
 		}
 	}
 

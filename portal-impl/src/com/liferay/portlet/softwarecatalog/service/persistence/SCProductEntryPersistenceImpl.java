@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -3568,10 +3569,24 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	@Override
 	public void setSCLicenses(long pk, long[] scLicensePKs)
 		throws SystemException {
-		scProductEntryToSCLicenseTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newSCLicensePKsSet = SetUtil.fromArray(scLicensePKs);
+		Set<Long> oldSCLicensePKsSet = SetUtil.fromArray(scProductEntryToSCLicenseTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long scLicensePK : scLicensePKs) {
-			scProductEntryToSCLicenseTableMapper.addTableMapping(pk, scLicensePK);
+		Set<Long> removeSCLicensePKsSet = new HashSet<Long>(oldSCLicensePKsSet);
+
+		removeSCLicensePKsSet.removeAll(newSCLicensePKsSet);
+
+		for (long removeSCLicensePK : removeSCLicensePKsSet) {
+			scProductEntryToSCLicenseTableMapper.deleteTableMapping(pk,
+				removeSCLicensePK);
+		}
+
+		newSCLicensePKsSet.removeAll(oldSCLicensePKsSet);
+
+		for (long newSCLicensePK : newSCLicensePKsSet) {
+			scProductEntryToSCLicenseTableMapper.addTableMapping(pk,
+				newSCLicensePK);
 		}
 	}
 

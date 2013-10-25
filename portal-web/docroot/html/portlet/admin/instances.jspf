@@ -16,7 +16,18 @@
 
 <liferay-ui:error exception="<%= RequiredCompanyException.class %>" message="the-default-company-is-required" />
 
-<input onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/admin/edit_instance" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add" />" />
+<div class="btn-toolbar">
+	<portlet:renderURL var="addURL">
+		<portlet:param name="struts_action" value="/admin/edit_instance" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<%
+	String taglibAdd = "location.href = '" + addURL + "';";
+	%>
+
+	<aui:button onClick="<%= taglibAdd %>" value="add" />
+</div>
 
 <%
 List<String> headerNames = new ArrayList<String>();

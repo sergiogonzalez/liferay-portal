@@ -56,6 +56,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11644,11 +11645,24 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	@Override
 	public void setAssetEntries(long pk, long[] assetEntryPKs)
 		throws SystemException {
-		assetCategoryToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newAssetEntryPKsSet = SetUtil.fromArray(assetEntryPKs);
+		Set<Long> oldAssetEntryPKsSet = SetUtil.fromArray(assetCategoryToAssetEntryTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long assetEntryPK : assetEntryPKs) {
+		Set<Long> removeAssetEntryPKsSet = new HashSet<Long>(oldAssetEntryPKsSet);
+
+		removeAssetEntryPKsSet.removeAll(newAssetEntryPKsSet);
+
+		for (long removeAssetEntryPK : removeAssetEntryPKsSet) {
+			assetCategoryToAssetEntryTableMapper.deleteTableMapping(pk,
+				removeAssetEntryPK);
+		}
+
+		newAssetEntryPKsSet.removeAll(oldAssetEntryPKsSet);
+
+		for (long newAssetEntryPK : newAssetEntryPKsSet) {
 			assetCategoryToAssetEntryTableMapper.addTableMapping(pk,
-				assetEntryPK);
+				newAssetEntryPK);
 		}
 	}
 
