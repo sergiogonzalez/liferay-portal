@@ -82,14 +82,7 @@ public class JournalFolderPermission {
 
 					folder = JournalFolderLocalServiceUtil.getFolder(folderId);
 
-					if (!permissionChecker.hasOwnerPermission(
-							folder.getCompanyId(),
-							JournalFolder.class.getName(), folderId,
-							folder.getUserId(), actionId) &&
-						!permissionChecker.hasPermission(
-							folder.getGroupId(), JournalFolder.class.getName(),
-							folderId, actionId)) {
-
+					if (!_hasPermission(permissionChecker, folder, actionId)) {
 						return false;
 					}
 
@@ -105,16 +98,7 @@ public class JournalFolderPermission {
 			return true;
 		}
 
-		if (permissionChecker.hasOwnerPermission(
-				folder.getCompanyId(), JournalFolder.class.getName(),
-				folder.getFolderId(), folder.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			folder.getGroupId(), JournalFolder.class.getName(),
-			folder.getFolderId(), actionId);
+		return _hasPermission(permissionChecker, folder, actionId);
 	}
 
 	public static boolean contains(
@@ -132,6 +116,23 @@ public class JournalFolderPermission {
 
 			return contains(permissionChecker, folder, actionId);
 		}
+	}
+
+	private static boolean _hasPermission(
+		PermissionChecker permissionChecker, JournalFolder folder,
+		String actionId) {
+
+		if (permissionChecker.hasOwnerPermission(
+				folder.getCompanyId(), JournalFolder.class.getName(),
+				folder.getFolderId(), folder.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				folder.getGroupId(), JournalFolder.class.getName(),
+				folder.getFolderId(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }
