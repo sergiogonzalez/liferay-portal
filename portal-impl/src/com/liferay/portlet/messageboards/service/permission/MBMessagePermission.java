@@ -71,18 +71,18 @@ public class MBMessagePermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		if (MBBanLocalServiceUtil.hasBan(
+				message.getGroupId(), permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, message.getGroupId(), MBMessage.class.getName(),
 			message.getMessageId(), PortletKeys.MESSAGE_BOARDS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
-		}
-
-		if (MBBanLocalServiceUtil.hasBan(
-				message.getGroupId(), permissionChecker.getUserId())) {
-
-			return false;
 		}
 
 		if (actionId.equals(ActionKeys.VIEW) &&
