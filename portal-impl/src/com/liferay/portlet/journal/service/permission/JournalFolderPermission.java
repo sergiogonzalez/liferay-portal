@@ -109,32 +109,16 @@ public class JournalFolderPermission {
 			folderId = originalFolderId;
 		}
 
-		try {
-			while (folderId !=
-						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (permissionChecker.hasOwnerPermission(
+				folder.getCompanyId(), JournalFolder.class.getName(), folderId,
+				folder.getUserId(), actionId)) {
 
-				folder = JournalFolderLocalServiceUtil.getFolder(folderId);
-
-				if (permissionChecker.hasOwnerPermission(
-						folder.getCompanyId(), JournalFolder.class.getName(),
-						folderId, folder.getUserId(), actionId) ||
-					permissionChecker.hasPermission(
-						folder.getGroupId(), JournalFolder.class.getName(),
-						folderId, actionId)) {
-
-					return true;
-				}
-
-				folderId = folder.getParentFolderId();
-			}
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (!folder.isInTrash()) {
-				throw nsfe;
-			}
+			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			folder.getGroupId(), JournalFolder.class.getName(),
+			folder.getFolderId(), actionId);
 	}
 
 	public static boolean contains(

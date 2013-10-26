@@ -131,12 +131,6 @@ public class JournalArticlePermission {
 
 					return false;
 				}
-
-				if (JournalFolderPermission.contains(
-						permissionChecker, folder, actionId)) {
-
-					return true;
-				}
 			}
 			catch (NoSuchFolderException nsfe) {
 				if (!article.isInTrash()) {

@@ -108,33 +108,16 @@ public class ShoppingCategoryPermission {
 			return true;
 		}
 
-		while (categoryId !=
-					ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+		if (permissionChecker.hasOwnerPermission(
+				category.getCompanyId(), ShoppingCategory.class.getName(),
+				category.getCategoryId(), category.getUserId(), actionId)) {
 
-			category = ShoppingCategoryLocalServiceUtil.getCategory(categoryId);
-
-			categoryId = category.getParentCategoryId();
-
-			if (permissionChecker.hasOwnerPermission(
-					category.getCompanyId(), ShoppingCategory.class.getName(),
-					category.getCategoryId(), category.getUserId(), actionId)) {
-
-				return true;
-			}
-
-			if (permissionChecker.hasPermission(
-					category.getGroupId(), ShoppingCategory.class.getName(),
-					category.getCategoryId(), actionId)) {
-
-				return true;
-			}
-
-			if (actionId.equals(ActionKeys.VIEW)) {
-				break;
-			}
+			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			category.getGroupId(), ShoppingCategory.class.getName(),
+			category.getCategoryId(), actionId);
 	}
 
 }
