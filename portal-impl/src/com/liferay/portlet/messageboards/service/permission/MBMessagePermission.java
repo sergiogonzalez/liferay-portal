@@ -79,17 +79,6 @@ public class MBMessagePermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (message.isPending()) {
-			hasPermission = WorkflowPermissionUtil.hasPermission(
-				permissionChecker, message.getGroupId(),
-				message.getWorkflowClassName(), message.getMessageId(),
-				actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-
 		if (MBBanLocalServiceUtil.hasBan(
 				message.getGroupId(), permissionChecker.getUserId())) {
 
@@ -120,6 +109,17 @@ public class MBMessagePermission {
 						throw nsce;
 					}
 				}
+			}
+		}
+
+		if (message.isPending()) {
+			hasPermission = WorkflowPermissionUtil.hasPermission(
+				permissionChecker, message.getGroupId(),
+				message.getWorkflowClassName(), message.getMessageId(),
+				actionId);
+
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
 			}
 		}
 
