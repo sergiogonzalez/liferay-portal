@@ -85,6 +85,12 @@ public class MBMessagePermission {
 			return hasPermission.booleanValue();
 		}
 
+		if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+			!contains(permissionChecker, message, ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
 		if (actionId.equals(ActionKeys.VIEW) &&
 			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
