@@ -71,12 +71,12 @@ public class JournalFolderPermission {
 			return hasPermission.booleanValue();
 		}
 
-		long folderId = folder.getFolderId();
-
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-			long originalFolderId = folderId;
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			try {
+				long folderId = folder.getFolderId();
+
 				while (folderId !=
 							JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -85,10 +85,10 @@ public class JournalFolderPermission {
 					if (!permissionChecker.hasOwnerPermission(
 							folder.getCompanyId(),
 							JournalFolder.class.getName(), folderId,
-							folder.getUserId(), ActionKeys.VIEW) &&
+							folder.getUserId(), actionId) &&
 						!permissionChecker.hasPermission(
 							folder.getGroupId(), JournalFolder.class.getName(),
-							folderId, ActionKeys.VIEW)) {
+							folderId, actionId)) {
 
 						return false;
 					}
@@ -102,16 +102,12 @@ public class JournalFolderPermission {
 				}
 			}
 
-			if (actionId.equals(ActionKeys.VIEW)) {
-				return true;
-			}
-
-			folderId = originalFolderId;
+			return true;
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				folder.getCompanyId(), JournalFolder.class.getName(), folderId,
-				folder.getUserId(), actionId)) {
+				folder.getCompanyId(), JournalFolder.class.getName(),
+				folder.getFolderId(), folder.getUserId(), actionId)) {
 
 			return true;
 		}
