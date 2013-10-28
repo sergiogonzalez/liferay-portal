@@ -129,24 +129,16 @@ public class MBMessagePermission {
 			}
 		}
 
-		return _hasPermission(permissionChecker, message, actionId);
-	}
-
-	private static boolean _hasPermission(
-		PermissionChecker permissionChecker, MBMessage message,
-		String actionId) {
-
 		if (permissionChecker.hasOwnerPermission(
 				message.getCompanyId(), MBMessage.class.getName(),
-				message.getRootMessageId(), message.getUserId(), actionId) ||
-			permissionChecker.hasPermission(
-				message.getGroupId(), MBMessage.class.getName(),
-				message.getMessageId(), actionId)) {
+				message.getRootMessageId(), message.getUserId(), actionId)) {
 
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			message.getGroupId(), MBMessage.class.getName(),
+			message.getMessageId(), actionId);
 	}
 
 }
