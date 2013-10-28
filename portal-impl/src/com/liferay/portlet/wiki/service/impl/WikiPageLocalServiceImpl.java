@@ -770,8 +770,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage fetchPage(long nodeId, String title)
+		throws SystemException {
+
+		return wikiPagePersistence.fetchByN_T_H_First(
+			nodeId, title, true, null);
+	}
+
+	@Override
 	public WikiPage fetchPage(long nodeId, String title, double version)
 		throws SystemException {
+
+		if (version == 0) {
+			return fetchPage(nodeId, title);
+		}
 
 		return wikiPagePersistence.fetchByN_T_V(nodeId, title, version);
 	}
