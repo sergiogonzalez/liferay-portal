@@ -781,16 +781,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage fetchPage(long nodeId, String title, double version)
 		throws SystemException {
 
-		WikiPage page = null;
-
 		if (version == 0) {
-			page = fetchPage(nodeId, title);
-		}
-		else {
-			page = wikiPagePersistence.fetchByN_T_V(nodeId, title, version);
+			return fetchPage(nodeId, title);
 		}
 
-		return page;
+		return wikiPagePersistence.fetchByN_T_V(nodeId, title, version);
 	}
 
 	@Override
