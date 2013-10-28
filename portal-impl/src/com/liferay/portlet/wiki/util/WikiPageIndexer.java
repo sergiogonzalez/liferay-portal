@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
@@ -114,7 +115,8 @@ public class WikiPageIndexer extends BaseIndexer {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(entryClassPK);
+		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
+			entryClassPK, WorkflowConstants.STATUS_ANY, false);
 
 		return WikiPagePermission.contains(
 			permissionChecker, page, ActionKeys.VIEW);
@@ -245,6 +247,10 @@ public class WikiPageIndexer extends BaseIndexer {
 	@Override
 	protected void doReindex(Object obj) throws Exception {
 		WikiPage page = (WikiPage)obj;
+
+		if (!page.isApproved() && !page.isInTrash()) {
+			return;
+		}
 
 		if (Validator.isNotNull(page.getRedirectTitle())) {
 			return;
