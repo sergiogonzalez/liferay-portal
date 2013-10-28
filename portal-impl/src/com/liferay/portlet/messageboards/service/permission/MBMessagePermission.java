@@ -71,6 +71,12 @@ public class MBMessagePermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		if (MBBanLocalServiceUtil.hasBan(
+				message.getGroupId(), permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, message.getGroupId(), MBMessage.class.getName(),
 			message.getMessageId(), PortletKeys.MESSAGE_BOARDS, actionId);
@@ -79,19 +85,8 @@ public class MBMessagePermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (message.isPending()) {
-			hasPermission = WorkflowPermissionUtil.hasPermission(
-				permissionChecker, message.getGroupId(),
-				message.getWorkflowClassName(), message.getMessageId(),
-				actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-
-		if (MBBanLocalServiceUtil.hasBan(
-				message.getGroupId(), permissionChecker.getUserId())) {
+		if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+			!contains(permissionChecker, message, ActionKeys.UPDATE)) {
 
 			return false;
 		}
@@ -120,6 +115,17 @@ public class MBMessagePermission {
 						throw nsce;
 					}
 				}
+			}
+		}
+
+		if (message.isPending()) {
+			hasPermission = WorkflowPermissionUtil.hasPermission(
+				permissionChecker, message.getGroupId(),
+				message.getWorkflowClassName(), message.getMessageId(),
+				actionId);
+
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
 			}
 		}
 

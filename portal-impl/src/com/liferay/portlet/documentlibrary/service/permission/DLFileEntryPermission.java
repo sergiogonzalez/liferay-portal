@@ -82,20 +82,6 @@ public class DLFileEntryPermission {
 			return hasPermission.booleanValue();
 		}
 
-		DLFileVersion latestDLFileVersion = dlFileEntry.getLatestFileVersion(
-			true);
-
-		if (latestDLFileVersion.isPending()) {
-			hasPermission = WorkflowPermissionUtil.hasPermission(
-				permissionChecker, dlFileEntry.getGroupId(),
-				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
-				actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-
 		if (actionId.equals(ActionKeys.VIEW) &&
 			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
@@ -119,6 +105,20 @@ public class DLFileEntryPermission {
 						throw nsfe;
 					}
 				}
+			}
+		}
+
+		DLFileVersion latestDLFileVersion = dlFileEntry.getLatestFileVersion(
+			true);
+
+		if (latestDLFileVersion.isPending()) {
+			hasPermission = WorkflowPermissionUtil.hasPermission(
+				permissionChecker, dlFileEntry.getGroupId(),
+				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
+				actionId);
+
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
 			}
 		}
 

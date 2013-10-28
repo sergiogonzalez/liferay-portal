@@ -104,6 +104,41 @@ public class JournalArticlePermission {
 			return hasPermission.booleanValue();
 		}
 
+		if (article.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+			!contains(permissionChecker, article, ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+
+			long articleFolderId = article.getFolderId();
+
+			if (articleFolderId !=
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				try {
+					JournalFolder folder =
+						JournalFolderLocalServiceUtil.getFolder(
+							articleFolderId);
+
+					if (!JournalFolderPermission.contains(
+							permissionChecker, folder, ActionKeys.ACCESS) &&
+						!JournalFolderPermission.contains(
+							permissionChecker, folder, ActionKeys.VIEW)) {
+
+						return false;
+					}
+				}
+				catch (NoSuchFolderException nsfe) {
+					if (!article.isInTrash()) {
+						throw nsfe;
+					}
+				}
+			}
+		}
+
 		if (article.isPending()) {
 			hasPermission = WorkflowPermissionUtil.hasPermission(
 				permissionChecker, article.getGroupId(),
@@ -112,36 +147,6 @@ public class JournalArticlePermission {
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
-			}
-		}
-
-		if ((article.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			!actionId.equals(ActionKeys.EXPIRE)) {
-
-			try {
-				JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-					article.getFolderId());
-
-				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-					!JournalFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.ACCESS) &&
-					!JournalFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.VIEW)) {
-
-					return false;
-				}
-
-				if (JournalFolderPermission.contains(
-						permissionChecker, folder, actionId)) {
-
-					return true;
-				}
-			}
-			catch (NoSuchFolderException nsfe) {
-				if (!article.isInTrash()) {
-					throw nsfe;
-				}
 			}
 		}
 
