@@ -182,28 +182,34 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 
 				<%
 				}
+				else {
 				%>
 
-				<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
+					<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
 
-				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+					<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-				<%
-				for (String key : keys) {
-					if (!key.endsWith("Ids")) {
-						continue;
+					<%
+					for (String key : keys) {
+						if (!key.endsWith("Ids")) {
+							continue;
+						}
+
+						primaryKeys = data.get(key);
+					%>
+
+						<aui:input name="<%= key %>" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
+
+					<%
 					}
+					%>
 
-					primaryKeys = data.get(key);
-				%>
-
-					<aui:input name="<%= key %>" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
+					<aui:button cssClass="trash-undo-button" type="submit" value="undo" />
 
 				<%
 				}
 				%>
 
-				<aui:button cssClass="trash-undo-button" type="submit" value="undo" />
 			</aui:form>
 		</div>
 
