@@ -2149,6 +2149,10 @@
 
 		<action path="/wiki/restore_entry" forward="portlet.trash.restore_entry" />
 
+		<action path="/wiki/restore_page" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.view" path="portlet.wiki.view" />
+		</action>
+
 		<action path="/wiki/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.wiki.view_page_attachments" />
 		</action>
@@ -2304,6 +2308,10 @@
 
 		<action path="/wiki_admin/restore_entry" forward="portlet.trash.restore_entry" />
 
+		<action path="/wiki_admin/restore_page" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.view" path="portlet.wiki.view" />
+		</action>
+
 		<action path="/wiki_admin/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.wiki.view_page_attachments" />
 		</action>
@@ -2436,6 +2444,10 @@
 		</action>
 
 		<action path="/wiki_display/restore_entry" forward="portlet.trash.restore_entry" />
+
+		<action path="/wiki_display/restore_page" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.view" path="portlet.wiki.view" />
+		</action>
 
 		<action path="/wiki_display/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.wiki.view_page_attachments" />
