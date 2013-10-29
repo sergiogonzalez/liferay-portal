@@ -49,6 +49,14 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 		if (ArrayUtil.isNotEmpty(classNames)) {
 			className = classNames[0];
 		}
+
+		String[] restoreEntryIds = data.get("restoreEntryIds");
+
+		String restoreEntryId = StringPool.BLANK;
+
+		if (ArrayUtil.isNotEmpty(restoreEntryIds)) {
+			restoreEntryId = restoreEntryIds[0];
+		}
 %>
 
 		<div class="alert alert-success taglib-trash-undo">
