@@ -53,8 +53,8 @@ if (categoryId > 0) {
 
 <c:if test='<%= !strutsAction.endsWith("view_page_attachments") %>'>
 	<liferay-ui:trash-undo
-		duplicateEntryAction="/wiki/restore_page"
-		restoreEntryAction="/wiki/restore_entry"
+		duplicateEntryAction="/wiki/restore_entry"
+		restoreEntryAction="/wiki/restore_page"
 	/>
 </c:if>
 
