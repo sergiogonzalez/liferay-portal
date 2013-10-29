@@ -25,7 +25,6 @@ page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
 page import="com.liferay.portlet.social.model.SocialActivity" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityConstants" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %><%@
-page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.wiki.DuplicateNodeNameException" %><%@
 page import="com.liferay.portlet.wiki.DuplicatePageException" %><%@
 page import="com.liferay.portlet.wiki.ImportFilesException" %><%@
