@@ -52,7 +52,10 @@ if (categoryId > 0) {
 %>
 
 <c:if test='<%= !strutsAction.endsWith("view_page_attachments") %>'>
-	<liferay-ui:trash-undo />
+	<liferay-ui:trash-undo
+		duplicateEntryAction="/wiki/restore_page"
+		restoreEntryAction="/wiki/restore_entry"
+	/>
 </c:if>
 
 <c:if test="<%= portletName.equals(PortletKeys.WIKI_ADMIN) %>">
