@@ -206,25 +206,25 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 
 					<aui:button cssClass="trash-undo-button" type="submit" value="undo" />
 
+					<aui:script use="aui-base">
+						var undoLink = A.one('#<%= namespace %>undo');
+
+						if (undoLink) {
+							undoLink.on(
+								'click',
+								function(event) {
+									submitForm(document.<%= namespace %>undoForm);
+								}
+							);
+						}
+					</aui:script>
+
 				<%
 				}
 				%>
 
 			</aui:form>
 		</div>
-
-		<aui:script use="aui-base">
-			var undoLink = A.one('#<%= namespace %>undo');
-
-			if (undoLink) {
-				undoLink.on(
-					'click',
-					function(event) {
-						submitForm(document.<%= namespace %>undoForm);
-					}
-				);
-			}
-		</aui:script>
 
 <%
 	}
