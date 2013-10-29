@@ -1,5 +1,5 @@
 .taglib-trash-empty, .taglib-trash-undo {
-	.trash-empty-button, .trash-undo-button {
+	.trash-empty-button, .trash-form-inline, .trash-undo-button {
 		display: inline;
 	}
 
