@@ -41,6 +41,14 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 
 			trashedEntriesCount = primaryKeys.length;
 		}
+
+		String[] classNames = data.get("deleteEntryClassName");
+
+		String className = null;
+
+		if (ArrayUtil.isNotEmpty(classNames)) {
+			className = classNames[0];
+		}
 %>
 
 		<div class="alert alert-success taglib-trash-undo">
@@ -86,15 +94,9 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 					<c:otherwise>
 
 						<%
-						String[] classNames = data.get("deleteEntryClassName");
-
-						String className = null;
-
 						String type = "selected-item";
 
-						if (ArrayUtil.isNotEmpty(classNames)) {
-							className = classNames[0];
-
+						if (Validator.isNotNull(className)) {
 							type = ResourceActionsUtil.getModelResource(pageContext, className);
 						}
 
