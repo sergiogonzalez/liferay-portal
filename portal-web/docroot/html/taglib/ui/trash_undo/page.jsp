@@ -153,6 +153,37 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 					</c:otherwise>
 				</c:choose>
 
+				<%
+				if (Validator.isNotNull(restoreEntryId) && Validator.isNotNull(className)) {
+					TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(className, Long.valueOf(restoreEntryId));
+
+					String trashEntryId = String.valueOf(trashEntry.getEntryId());
+				%>
+
+					<c:if test="<%= Validator.isNotNull(trashEntryId) %>">
+						<portlet:actionURL var="restoreEntryURL">
+							<portlet:param name="struts_action" value="<%= restoreEntryAction %>" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+							<portlet:param name="redirect" value="<%= redirect %>" />
+							<portlet:param name="trashEntryId" value="<%= trashEntryId %>" />
+						</portlet:actionURL>
+
+						<%
+							String taglibOnClick = "Liferay.fire('" + portletResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntryId + ", uri: '" + restoreEntryURL.toString() + "'});";
+						%>
+
+						<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" onclick="<%= taglibOnClick %>"><liferay-ui:message key="undo" /></a>
+					</c:if>
+
+					<liferay-ui:restore-entry
+						duplicateEntryAction="<%= duplicateEntryAction %>"
+						restoreEntryAction="<%= restoreEntryAction %>"
+					/>
+
+				<%
+				}
+				%>
+
 				<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
 
 				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -193,8 +224,3 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 	}
 }
 %>
-
-<liferay-ui:restore-entry
-	duplicateEntryAction="<%= duplicateEntryAction %>"
-	restoreEntryAction="<%= restoreEntryAction %>"
-/>
