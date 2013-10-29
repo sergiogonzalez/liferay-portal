@@ -17,8 +17,10 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String duplicateEntryAction = (String)request.getAttribute("liferay-ui:trash-undo:duplicateEntryAction");
 String portletURL = (String)request.getAttribute("liferay-ui:trash-undo:portletURL");
 String redirect = GetterUtil.getString((String)request.getAttribute("liferay-ui:trash-undo:redirect"), currentURL);
+String restoreEntryAction = (String)request.getAttribute("liferay-ui:trash-undo:restoreEntryAction");
 
 if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA)) {
 	Map<String, String[]> data = (HashMap<String, String[]>)SessionMessages.get(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
@@ -181,3 +183,8 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 	}
 }
 %>
+
+<liferay-ui:restore-entry
+	duplicateEntryAction="<%= duplicateEntryAction %>"
+	restoreEntryAction="<%= restoreEntryAction %>"
+/>
