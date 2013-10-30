@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.model;
+package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -40,7 +40,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(PropsUtil.class)
 @RunWith(PowerMockRunner.class)
-public class DLConstantsTest extends PowerMockito {
+public class DLValidFileNameTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -55,6 +55,7 @@ public class DLConstantsTest extends PowerMockito {
 			for (int i = 0; i < 100; i++) {
 				_randomStrings.add(StringUtil.randomString(20));
 			}
+
 			_randomStrings.add("._Word Work File D_1.tmp");
 			_randomStrings.add("._Test.docx");
 		}
@@ -93,7 +94,7 @@ public class DLConstantsTest extends PowerMockito {
 	public void testNameBlacklist() throws Exception {
 		for (String blacklistName : _blacklistNames) {
 			Assert.assertFalse(
-				blacklistName, DLConstants.isValidName(blacklistName));
+				blacklistName, DLUtil.isValidName(blacklistName));
 		}
 	}
 
@@ -103,7 +104,7 @@ public class DLConstantsTest extends PowerMockito {
 
 		for (String blacklistName : _blacklistNames) {
 			testName = blacklistName + ".txt";
-			Assert.assertFalse(testName, DLConstants.isValidName(testName));
+			Assert.assertFalse(testName, DLUtil.isValidName(testName));
 		}
 	}
 
@@ -112,20 +113,18 @@ public class DLConstantsTest extends PowerMockito {
 		for (String randomString : _randomStrings) {
 			randomString += "1.";
 
-			Assert.assertFalse(
-				randomString, DLConstants.isValidName(randomString));
+			Assert.assertFalse(randomString, DLUtil.isValidName(randomString));
 		}
 	}
 
 	@Test
 	public void testRandomStrings() throws Exception {
 		for (String randomString : _randomStrings) {
-			Assert.assertTrue(
-				randomString, DLConstants.isValidName(randomString));
+			Assert.assertTrue(randomString, DLUtil.isValidName(randomString));
 		}
 
 		Assert.assertFalse(
-			StringPool.BLANK, DLConstants.isValidName(StringPool.BLANK));
+			StringPool.BLANK, DLUtil.isValidName(StringPool.BLANK));
 	}
 
 	@Test
@@ -141,7 +140,7 @@ public class DLConstantsTest extends PowerMockito {
 
 				testName = sb.toString();
 
-				Assert.assertFalse(testName, DLConstants.isValidName(testName));
+				Assert.assertFalse(testName, DLUtil.isValidName(testName));
 
 				StringBuilder sb2 = new StringBuilder();
 
@@ -152,7 +151,7 @@ public class DLConstantsTest extends PowerMockito {
 
 				testName = sb2.toString();
 
-				Assert.assertFalse(testName, DLConstants.isValidName(testName));
+				Assert.assertFalse(testName, DLUtil.isValidName(testName));
 			}
 		}
 	}
@@ -165,7 +164,7 @@ public class DLConstantsTest extends PowerMockito {
 			testName = randomString + " ";
 
 			Assert.assertFalse(
-				testName + "[space]", DLConstants.isValidName(testName));
+				testName + "[space]", DLUtil.isValidName(testName));
 		}
 	}
 
@@ -175,19 +174,19 @@ public class DLConstantsTest extends PowerMockito {
 
 		for (String blacklistName : _blacklistNames) {
 			testName = blacklistName + "1";
-			Assert.assertTrue(testName, DLConstants.isValidName(testName));
+			Assert.assertTrue(testName, DLUtil.isValidName(testName));
 
 			testName = blacklistName + " .txt";
-			Assert.assertTrue(testName, DLConstants.isValidName(testName));
+			Assert.assertTrue(testName, DLUtil.isValidName(testName));
 		}
 	}
 
 	private static final String[] BLACKLIST_CHARS = new String[] {
-		"<", ">", ":", "\"", "\\", "|", "?", "*", "\u0000", "\u0001",
-		"\u0002", "\u0003", "\u0004", "\u0005", "\u0006", "\u0007", "\u0008",
-		"\u0009", "\u000B", "\u000C", "\u000E", "\u000F", "\u0010", "\u0011",
-		"\u0012", "\u0013", "\u0014", "\u0015", "\u0016", "\u0017", "\u0018",
-		"\u0019", "\u001A", "\u001B", "\u001C", "\u001D", "\u001E", "\u001F"};
+		"<", ">", ":", "\"", "\\", "|", "?", "*", "\u0000", "\u0001", "\u0002",
+		"\u0003", "\u0004", "\u0005", "\u0006", "\u0007", "\u0008", "\u0009",
+		"\u000B", "\u000C", "\u000E", "\u000F", "\u0010", "\u0011", "\u0012",
+		"\u0013", "\u0014", "\u0015", "\u0016", "\u0017", "\u0018", "\u0019",
+		"\u001A", "\u001B", "\u001C", "\u001D", "\u001E", "\u001F"};
 
 	private static String[] _blacklistNames;
 	private static List<String> _randomStrings = new ArrayList<String>();
