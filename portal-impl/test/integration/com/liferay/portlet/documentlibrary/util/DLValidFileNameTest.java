@@ -14,43 +14,37 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Everest Liu
  */
-@PrepareForTest(PropsUtil.class)
-@RunWith(PowerMockRunner.class)
-public class DLValidFileNameTest extends PowerMockito {
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		EnvironmentExecutionTestListener.class
+	})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DLValidFileNameTest {
 
-	@Before
-	public void setUp() throws Exception {
-		mockStatic(PropsUtil.class);
-
-		Properties props = new Properties();
-
-		String blacklistNames;
-		String blacklistCharRegexp;
-
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		if (_randomStrings.size() == 0) {
 			for (int i = 0; i < 100; i++) {
 				_randomStrings.add(StringUtil.randomString(20));
@@ -59,40 +53,11 @@ public class DLValidFileNameTest extends PowerMockito {
 			_randomStrings.add("._Word Work File D_1.tmp");
 			_randomStrings.add("._Test.docx");
 		}
-
-		try {
-			ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-			InputStream is = classLoader.getResourceAsStream(
-				"portal.properties");
-
-			props.load(is);
-
-			blacklistNames = props.getProperty(PropsKeys.DL_NAME_BLACKLIST);
-			blacklistCharRegexp = props.getProperty(
-				PropsKeys.DL_CHAR_BLACKLIST_REGEXP);
-
-			when(
-				PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
-			).thenReturn(
-				blacklistNames.split(",")
-			);
-
-			when(
-				PropsUtil.get(PropsKeys.DL_CHAR_BLACKLIST_REGEXP)
-			).thenReturn(
-				blacklistCharRegexp
-			);
-
-			_blacklistNames = PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST);
-		}
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Test
 	public void testNameBlacklist() throws Exception {
-		for (String blacklistName : _blacklistNames) {
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			Assert.assertFalse(
 				blacklistName, DLUtil.isValidName(blacklistName));
 		}
@@ -102,7 +67,7 @@ public class DLValidFileNameTest extends PowerMockito {
 	public void testNameBlacklistExtension() throws Exception {
 		String testName;
 
-		for (String blacklistName : _blacklistNames) {
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			testName = blacklistName + ".txt";
 			Assert.assertFalse(testName, DLUtil.isValidName(testName));
 		}
@@ -172,7 +137,7 @@ public class DLValidFileNameTest extends PowerMockito {
 	public void testValidNames() throws Exception {
 		String testName;
 
-		for (String blacklistName : _blacklistNames) {
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			testName = blacklistName + "1";
 			Assert.assertTrue(testName, DLUtil.isValidName(testName));
 
@@ -188,7 +153,6 @@ public class DLValidFileNameTest extends PowerMockito {
 		"\u0013", "\u0014", "\u0015", "\u0016", "\u0017", "\u0018", "\u0019",
 		"\u001A", "\u001B", "\u001C", "\u001D", "\u001E", "\u001F"};
 
-	private static String[] _blacklistNames;
 	private static List<String> _randomStrings = new ArrayList<String>();
 
 }
