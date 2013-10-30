@@ -39,7 +39,7 @@ MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId
 		</portlet:actionURL>
 
 		<%
-		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + HtmlUtil.escapeJS(String.valueOf(trashEntry.getEntryId())) + ", uri: '" + HtmlUtil.escapeJS(restoreEntryURL.toString()) + "'});";
 		%>
 
 		<liferay-ui:icon
