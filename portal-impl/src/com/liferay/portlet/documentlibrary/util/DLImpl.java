@@ -1199,15 +1199,17 @@ public class DLImpl implements DL {
 		}
 
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
-			String filenamePrefix = filename;
+			String fileNameWithoutExtension = filename;
 
 			if (filename.contains(StringPool.PERIOD)) {
 				int pos = filename.lastIndexOf(StringPool.PERIOD);
 
-				filenamePrefix = filename.substring(0, pos);
+				fileNameWithoutExtension = filename.substring(0, pos);
 			}
 
-			if (StringUtil.equalsIgnoreCase(filenamePrefix, blacklistName)) {
+			if (StringUtil.equalsIgnoreCase(
+				fileNameWithoutExtension, blacklistName)) {
+
 				return false;
 			}
 		}
