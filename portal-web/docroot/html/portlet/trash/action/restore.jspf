@@ -28,7 +28,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 		</portlet:actionURL>
 
 		<%
-		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + HtmlUtil.escapeJS(String.valueOf(entry.getEntryId())) + ", uri: '" + HtmlUtil.escapeJS(restoreEntryURL.toString()) + "'});";
 		%>
 
 		<liferay-ui:icon
