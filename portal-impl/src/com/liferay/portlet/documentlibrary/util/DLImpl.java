@@ -1198,17 +1198,17 @@ public class DLImpl implements DL {
 			return false;
 		}
 
+		String fileNameWithoutExtension = filename;
+
+		if (filename.contains(StringPool.PERIOD)) {
+			int pos = filename.lastIndexOf(StringPool.PERIOD);
+
+			fileNameWithoutExtension = filename.substring(0, pos);
+		}
+
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
-			String fileNameWithoutExtension = filename;
-
-			if (filename.contains(StringPool.PERIOD)) {
-				int pos = filename.lastIndexOf(StringPool.PERIOD);
-
-				fileNameWithoutExtension = filename.substring(0, pos);
-			}
-
 			if (StringUtil.equalsIgnoreCase(
-				fileNameWithoutExtension, blacklistName)) {
+					fileNameWithoutExtension, blacklistName)) {
 
 				return false;
 			}
