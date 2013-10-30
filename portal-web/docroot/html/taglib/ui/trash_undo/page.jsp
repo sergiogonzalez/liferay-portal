@@ -184,7 +184,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 			else {
 			%>
 
-				<aui:form action="<%= portletURL %>" cssClass="trash-form-inline" name="undoForm" >
+				<aui:form action="<%= portletURL %>" cssClass="trash-form-inline" name="undoForm">
 					<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
 
 					<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

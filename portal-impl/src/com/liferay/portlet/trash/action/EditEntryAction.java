@@ -32,6 +32,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -97,8 +98,12 @@ public class EditEntryAction extends PortletAction {
 				entryOVPs = restoreOverride(actionRequest);
 			}
 
-			if (cmd.equals(Constants.RENAME) || cmd.equals(Constants.RESTORE) ||
-				cmd.equals(Constants.OVERRIDE) || cmd.equals(Constants.MOVE)) {
+			if (PortalUtil.getPortletId(
+					actionRequest).equals(PortletKeys.TRASH) &&
+				(cmd.equals(Constants.RENAME) ||
+				 cmd.equals(Constants.RESTORE) ||
+				 cmd.equals(Constants.OVERRIDE) ||
+				 cmd.equals(Constants.MOVE))) {
 
 				addRestoreData(actionRequest, entryOVPs);
 			}
