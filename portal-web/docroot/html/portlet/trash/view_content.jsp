@@ -292,7 +292,7 @@
 						label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>',
 						on: {
 							click: function(event) {
-								Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
+								Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= HtmlUtil.escapeJS(String.valueOf(entry.getEntryId())) %>, uri: '<%= HtmlUtil.escapeJS(restoreEntryURL.toString()) %>'});
 							}
 						}
 					}
