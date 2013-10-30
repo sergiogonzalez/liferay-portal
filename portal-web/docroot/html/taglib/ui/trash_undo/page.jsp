@@ -168,7 +168,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 					</portlet:actionURL>
 
 					<%
-						String taglibOnClick = "Liferay.fire('" + portletResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntryId + ", uri: '" + restoreEntryURL.toString() + "'});";
+						String taglibOnClick = "Liferay.fire('" + portletResponse.getNamespace() + "checkEntry', {trashEntryId: " + HtmlUtil.escapeJS(trashEntryId) + ", uri: '" + HtmlUtil.escapeJS(restoreEntryURL.toString()) + "'});";
 					%>
 
 					<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" onclick="<%= taglibOnClick %>"><liferay-ui:message key="undo" /></a>
