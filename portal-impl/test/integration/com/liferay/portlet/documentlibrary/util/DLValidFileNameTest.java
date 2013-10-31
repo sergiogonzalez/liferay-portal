@@ -43,116 +43,102 @@ import org.powermock.api.mockito.PowerMockito;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLValidFileNameTest {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		if (_randomStrings.size() == 0) {
-			for (int i = 0; i < 100; i++) {
-				_randomStrings.add(StringUtil.randomString(20));
-			}
+	@Test
+	public void testNameStartingWithPeriodUnderscore() throws Exception {
+		String name = "._".concat(StringUtil.randomString(20)).concat(".tmp");
 
-			_randomStrings.add("._Word Work File D_1.tmp");
-			_randomStrings.add("._Test.docx");
-		}
+		Assert.assertTrue(name, DLUtil.isValidName(name));
 	}
 
 	@Test
 	public void testNameBlacklist() throws Exception {
-		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+		for (String name : PropsValues.DL_NAME_BLACKLIST) {
 			Assert.assertFalse(
-				blacklistName, DLUtil.isValidName(blacklistName));
+				name, DLUtil.isValidName(name));
 		}
 	}
 
 	@Test
 	public void testNameBlacklistExtension() throws Exception {
-		String testName;
-
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
-			testName = blacklistName + ".txt";
-			Assert.assertFalse(testName, DLUtil.isValidName(testName));
+			String name = blacklistName.concat(".txt");
+
+			Assert.assertFalse(name, DLUtil.isValidName(name));
 		}
 	}
 
 	@Test
 	public void testPeriodAtEnd() throws Exception {
-		for (String randomString : _randomStrings) {
-			randomString += "1.";
+		String name = StringUtil.randomString(20).concat("1.");
 
-			Assert.assertFalse(randomString, DLUtil.isValidName(randomString));
-		}
+		Assert.assertFalse(name, DLUtil.isValidName(name));
 	}
 
 	@Test
-	public void testRandomStrings() throws Exception {
-		for (String randomString : _randomStrings) {
-			Assert.assertTrue(randomString, DLUtil.isValidName(randomString));
-		}
-
+	public void testEmptyName() {
 		Assert.assertFalse(
 			StringPool.BLANK, DLUtil.isValidName(StringPool.BLANK));
 	}
 
 	@Test
+	public void testNullName() {
+		Assert.assertFalse("null", DLUtil.isValidName(null));
+	}
+
+	@Test
+	public void testRandomStrings() throws Exception {
+		for (int i = 0; i < 100; i++) {
+			String name = StringUtil.randomString(20);
+
+			Assert.assertTrue(name, DLUtil.isValidName(name));
+		}
+	}
+
+	@Test
 	public void testRandomStringsWithBlacklistedChar() throws Exception {
-		String testName;
+		for (String blacklistChar : BLACKLIST_CHARS) {
+			StringBuilder sb = new StringBuilder(4);
 
-		for (String randomString : _randomStrings) {
-			for (String blacklistChar : BLACKLIST_CHARS) {
-				StringBuilder sb = new StringBuilder();
+			sb.append(StringUtil.randomString(10));
+			sb.append(blacklistChar);
+			sb.append(StringUtil.randomString(10));
 
-				sb.append(randomString);
-				sb.insert(randomString.length() / 2, blacklistChar);
+			Assert.assertFalse(
+				sb.toString(), DLUtil.isValidName(sb.toString()));
 
-				testName = sb.toString();
+			sb.append(".txt");
 
-				Assert.assertFalse(testName, DLUtil.isValidName(testName));
-
-				StringBuilder sb2 = new StringBuilder();
-
-				sb2.append(randomString);
-				sb2.append(blacklistChar);
-				sb2.append(randomString);
-				sb2.append(".txt");
-
-				testName = sb2.toString();
-
-				Assert.assertFalse(testName, DLUtil.isValidName(testName));
-			}
+			Assert.assertFalse(
+				sb.toString(), DLUtil.isValidName(sb.toString()));
 		}
 	}
 
 	@Test
 	public void testSpaceAtEnd() throws Exception {
-		String testName;
+		String name = StringUtil.randomString(20).concat(" ");
 
-		for (String randomString : _randomStrings) {
-			testName = randomString + " ";
-
-			Assert.assertFalse(
-				testName + "[space]", DLUtil.isValidName(testName));
-		}
+		Assert.assertFalse(name + "[space]", DLUtil.isValidName(name));
 	}
 
 	@Test
-	public void testValidNames() throws Exception {
-		String testName;
-
+	public void testValidNamesStartingWithBlacklist() throws Exception {
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
-			testName = blacklistName + "1";
-			Assert.assertTrue(testName, DLUtil.isValidName(testName));
+			String name = blacklistName.concat("1");
 
-			testName = blacklistName + " .txt";
-			Assert.assertTrue(testName, DLUtil.isValidName(testName));
+			Assert.assertTrue(name, DLUtil.isValidName(name));
+
+			name = blacklistName.concat(" .txt");
+
+			Assert.assertTrue(name, DLUtil.isValidName(name));
 		}
 	}
 
 	private static final String[] BLACKLIST_CHARS = new String[] {
-		"<", ">", ":", "\"", "\\", "|", "?", "*", "\u0000", "\u0001", "\u0002",
-		"\u0003", "\u0004", "\u0005", "\u0006", "\u0007", "\u0008", "\u0009",
-		"\u000B", "\u000C", "\u000E", "\u000F", "\u0010", "\u0011", "\u0012",
-		"\u0013", "\u0014", "\u0015", "\u0016", "\u0017", "\u0018", "\u0019",
-		"\u001A", "\u001B", "\u001C", "\u001D", "\u001E", "\u001F"};
-
-	private static List<String> _randomStrings = new ArrayList<String>();
+		"<", ">", ":", "\"", "\\", "|", "?", "*", "\\\\", "[", "]", "../", "//",
+		"/..", "\u0000", "\u0001", "\u0002", "\u0003", "\u0004", "\u0005",
+		"\u0006", "\u0007", "\u0008", "\u0009", "\u000B", "\u000C", "\u000E",
+		"\u000F", "\u0010", "\u0011", "\u0012", "\u0013", "\u0014", "\u0015",
+		"\u0016", "\u0017", "\u0018", "\u0019", "\u001A", "\u001B", "\u001C",
+		"\u001D", "\u001E", "\u001F"};
 
 }
