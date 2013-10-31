@@ -52,12 +52,10 @@ if (categoryId > 0) {
 %>
 
 <c:if test='<%= !strutsAction.endsWith("view_page_attachments") %>'>
-	<portlet:actionURL var="undoTrashURL">
-		<portlet:param name="struts_action" value="/wiki/edit_page" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-	</portlet:actionURL>
-
-	<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+	<liferay-ui:trash-undo
+		duplicateEntryAction="/wiki/restore_entry"
+		restoreEntryAction="/wiki/restore_page"
+	/>
 </c:if>
 
 <c:if test="<%= portletName.equals(PortletKeys.WIKI_ADMIN) %>">

@@ -30,6 +30,10 @@ public class TrashUndoTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public void setDuplicateEntryAction(String duplicateEntryAction) {
+		_duplicateEntryAction = duplicateEntryAction;
+	}
+
 	public void setPortletURL(PortletURL portletURL) {
 		_portletURL = portletURL.toString();
 	}
@@ -42,10 +46,16 @@ public class TrashUndoTag extends IncludeTag {
 		_redirect = redirect;
 	}
 
+	public void setRestoreEntryAction(String restoreEntryAction) {
+		_restoreEntryAction = restoreEntryAction;
+	}
+
 	@Override
 	protected void cleanUp() {
+		_duplicateEntryAction = null;
 		_portletURL = null;
 		_redirect = null;
+		_restoreEntryAction = null;
 	}
 
 	@Override
@@ -60,15 +70,22 @@ public class TrashUndoTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:trash-undo:duplicateEntryAction",
+			_duplicateEntryAction);
 		request.setAttribute("liferay-ui:trash-undo:portletURL", _portletURL);
 		request.setAttribute("liferay-ui:trash-undo:redirect", _redirect);
+		request.setAttribute(
+			"liferay-ui:trash-undo:restoreEntryAction", _restoreEntryAction);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private static final String _PAGE = "/html/taglib/ui/trash_undo/page.jsp";
 
+	private String _duplicateEntryAction;
 	private String _portletURL;
 	private String _redirect;
+	private String _restoreEntryAction;
 
 }

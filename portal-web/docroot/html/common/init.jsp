@@ -259,6 +259,7 @@ page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %><%@
 page import="com.liferay.portlet.sites.util.Sites" %><%@
 page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
+page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
