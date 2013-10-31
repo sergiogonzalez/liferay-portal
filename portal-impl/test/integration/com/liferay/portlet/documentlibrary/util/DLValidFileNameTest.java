@@ -14,19 +14,30 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.FileNameException;
+import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Everest Liu
@@ -38,6 +49,50 @@ import org.powermock.api.mockito.PowerMockito;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLValidFileNameTest {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		FinderCacheUtil.clearCache();
+
+		_group = GroupTestUtil.addGroup();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+	}
+
+	@Test
+	public void testAddNotValidFileEntry() throws Exception {
+		String name = StringUtil.randomString(20).concat(BLACKLIST_CHARS[0]);
+
+		try {
+			DLAppTestUtil.addFileEntry(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				true, name);
+
+			Assert.fail(name + " is not a valida name.");
+		}
+		catch (Exception e) {
+			Assert.assertTrue(e instanceof FileNameException);
+		}
+	}
+
+	@Test
+	public void testAddNotValidFolder() throws Exception {
+		String name = StringUtil.randomString(20).concat(BLACKLIST_CHARS[0]);
+
+		try {
+			DLAppTestUtil.addFolder(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				name);
+
+			Assert.fail(name + " is not a valida name.");
+		}
+		catch (Exception e) {
+			Assert.assertTrue(e instanceof FolderNameException);
+		}
+	}
 
 	@Test
 	public void testEmptyName() {
@@ -116,6 +171,45 @@ public class DLValidFileNameTest {
 	}
 
 	@Test
+	public void testUpdateNotValidFileEntry() throws Exception {
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			true, StringUtil.randomString(20));
+
+		String name = StringUtil.randomString(20).concat(BLACKLIST_CHARS[0]);
+
+		try {
+			DLAppTestUtil.updateFileEntry(
+				_group.getGroupId(), fileEntry.getFileEntryId(), name, name);
+
+			Assert.fail(name + " is not a valida name.");
+		}
+		catch (Exception e) {
+			Assert.assertTrue(e instanceof FileNameException);
+		}
+	}
+
+	@Test
+	public void testUpdateNotValidFolder() throws Exception {
+		Folder folder = DLAppTestUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(20));
+
+		String name = StringUtil.randomString(20).concat(BLACKLIST_CHARS[0]);
+
+		try {
+			DLAppServiceUtil.updateFolder(
+				folder.getFolderId(), name, StringPool.BLANK,
+				ServiceTestUtil.getServiceContext(_group.getGroupId()));
+
+			Assert.fail(name + " is not a valida name.");
+		}
+		catch (Exception e) {
+			Assert.assertTrue(e instanceof FolderNameException);
+		}
+	}
+
+	@Test
 	public void testValidNamesStartingWithBlacklist() throws Exception {
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			String name = blacklistName.concat("1");
@@ -135,5 +229,7 @@ public class DLValidFileNameTest {
 		"\u000F", "\u0010", "\u0011", "\u0012", "\u0013", "\u0014", "\u0015",
 		"\u0016", "\u0017", "\u0018", "\u0019", "\u001A", "\u001B", "\u001C",
 		"\u001D", "\u001E", "\u001F"};
+
+	private static Group _group;
 
 }
