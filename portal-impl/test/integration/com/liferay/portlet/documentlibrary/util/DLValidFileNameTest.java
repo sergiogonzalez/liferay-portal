@@ -22,11 +22,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,17 +40,15 @@ import org.powermock.api.mockito.PowerMockito;
 public class DLValidFileNameTest {
 
 	@Test
-	public void testNameStartingWithPeriodUnderscore() throws Exception {
-		String name = "._".concat(StringUtil.randomString(20)).concat(".tmp");
-
-		Assert.assertTrue(name, DLUtil.isValidName(name));
+	public void testEmptyName() {
+		Assert.assertFalse(
+			StringPool.BLANK, DLUtil.isValidName(StringPool.BLANK));
 	}
 
 	@Test
 	public void testNameBlacklist() throws Exception {
 		for (String name : PropsValues.DL_NAME_BLACKLIST) {
-			Assert.assertFalse(
-				name, DLUtil.isValidName(name));
+			Assert.assertFalse(name, DLUtil.isValidName(name));
 		}
 	}
 
@@ -68,21 +62,22 @@ public class DLValidFileNameTest {
 	}
 
 	@Test
-	public void testPeriodAtEnd() throws Exception {
-		String name = StringUtil.randomString(20).concat("1.");
+	public void testNameStartingWithPeriodUnderscore() throws Exception {
+		String name = "._".concat(StringUtil.randomString(20)).concat(".tmp");
 
-		Assert.assertFalse(name, DLUtil.isValidName(name));
-	}
-
-	@Test
-	public void testEmptyName() {
-		Assert.assertFalse(
-			StringPool.BLANK, DLUtil.isValidName(StringPool.BLANK));
+		Assert.assertTrue(name, DLUtil.isValidName(name));
 	}
 
 	@Test
 	public void testNullName() {
 		Assert.assertFalse("null", DLUtil.isValidName(null));
+	}
+
+	@Test
+	public void testPeriodAtEnd() throws Exception {
+		String name = StringUtil.randomString(20).concat("1.");
+
+		Assert.assertFalse(name, DLUtil.isValidName(name));
 	}
 
 	@Test
