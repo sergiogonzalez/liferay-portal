@@ -669,10 +669,19 @@ public class WebServerServlet extends HttpServlet {
 				queryString = "&imageThumbnail=3";
 			}
 
+			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+
+			LiferayFileVersion fileVersion = new LiferayFileVersion(
+				dlFileEntry.getFileVersion());
+
+			if (Validator.isNotNull(queryString)) {
+				ImageProcessorUtil.hasImages(fileVersion);
+				PDFProcessorUtil.hasImages(fileVersion);
+				VideoProcessorUtil.hasVideo(fileVersion);
+			}
+
 			String url = DLUtil.getPreviewURL(
-				new LiferayFileEntry(dlFileEntry),
-				new LiferayFileVersion(dlFileEntry.getFileVersion()),
-				themeDisplay, queryString);
+				fileEntry, fileVersion, themeDisplay, queryString);
 
 			response.setHeader(HttpHeaders.LOCATION, url);
 			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
