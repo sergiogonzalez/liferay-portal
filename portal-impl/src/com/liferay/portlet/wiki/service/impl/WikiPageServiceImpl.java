@@ -648,17 +648,20 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		if ((trashEntry != null) &&
 			originalTitle.equals(WikiPageConstants.FRONT_PAGE)) {
 
-			WikiPage overridePage = wikiPageLocalService.getLatestPage(
+			WikiPage overridePage = wikiPageLocalService.fetchLatestPage(
 				page.getNodeId(), originalTitle, WorkflowConstants.STATUS_ANY,
 				true);
 
-			trashEntryService.restoreEntry(
-				trashEntry.getEntryId(), overridePage.getResourcePrimKey(),
-				null);
+			if (overridePage != null) {
+				trashEntryService.restoreEntry(
+					trashEntry.getEntryId(), overridePage.getResourcePrimKey(),
+					null);
+
+				return;
+			}
 		}
-		else {
-			wikiPageLocalService.restorePageFromTrash(getUserId(), page);
-		}
+
+		wikiPageLocalService.restorePageFromTrash(getUserId(), page);
 	}
 
 	@Override
