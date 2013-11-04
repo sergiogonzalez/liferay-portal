@@ -28,8 +28,11 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -65,6 +68,7 @@ public class VerifyJournal extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		updateFolderAssets();
+		updatePermissions();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
 		verifySearch();
@@ -97,6 +101,22 @@ public class VerifyJournal extends VerifyProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for folders");
+		}
+	}
+
+	protected void updatePermissions() {
+		try {
+			List<String> portletActions =
+				ResourceActionsUtil.getPortletResourceActions(
+					PortletKeys.JOURNAL);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				PortletKeys.JOURNAL, portletActions, true);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to upgrade journal permissions");
+			}
 		}
 	}
 

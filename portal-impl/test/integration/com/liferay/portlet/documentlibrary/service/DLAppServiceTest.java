@@ -14,9 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -32,8 +34,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -41,17 +53,22 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -370,6 +387,185 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
+	public void testGetFileEntryWithoutFolderPermission() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test Folder Permissions", true);
+
+		DLAppTestUtil.addFileEntry(
+			group.getGroupId(), folder.getFolderId(), false,
+			"TestFileEntry.txt");
+
+		deleteGuestPermission(folder);
+		deletePowerUserPermission(folder);
+
+		ServiceTestUtil.setUser(user);
+
+		try {
+			DLAppServiceUtil.getFileEntry(
+				group.getGroupId(), folder.getFolderId(), "TestFileEntry.txt");
+
+			Assert.fail("User is able to get file entry");
+		}
+		catch (PrincipalException pe) {
+		}
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		DLAppServiceUtil.deleteFolder(folder.getFolderId());
+	}
+
+	@Test
+	public void testGetFileEntryWithoutRootFolderPermission() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test SubFolder", true);
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			true, "TestFileEntry.txt");
+
+		FileEntry subFileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), folder.getFolderId(), false,
+			"TestSubFolderFileEntry.txt");
+
+		ServiceTestUtil.removeResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
+			ActionKeys.VIEW);
+
+		ServiceTestUtil.setUser(user);
+
+		try {
+			DLAppServiceUtil.getFileEntry(
+				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"TestFileEntry.txt");
+
+			Assert.fail("User is able to get file entry");
+		}
+		catch (PrincipalException pe) {
+		}
+
+		try {
+			DLAppServiceUtil.getFileEntry(
+				group.getGroupId(), folder.getFolderId(),
+				"TestSubFolderFileEntry.txt");
+
+			Assert.fail("User is able to get file entry in subfolder");
+		}
+		catch (PrincipalException pe) {
+		}
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+
+		DLAppServiceUtil.deleteFileEntry(subFileEntry.getFileEntryId());
+
+		DLAppServiceUtil.deleteFolder(folder.getFolderId());
+
+		ServiceTestUtil.addResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
+			ActionKeys.VIEW);
+	}
+
+	@Test
+	public void testGetFolder() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test Folder Permissions", true);
+
+		long folderId = folder.getFolderId();
+
+		ServiceTestUtil.setUser(user);
+
+		try {
+			DLAppServiceUtil.getFolder(folderId);
+		}
+		catch (PrincipalException pe) {
+			Assert.fail("User is unable to get folder");
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			DLPermission.check(
+				permissionChecker, group.getGroupId(), ActionKeys.VIEW);
+		}
+		catch (PrincipalException pe) {
+			Assert.fail("User is unable to get root folder");
+		}
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		DLAppServiceUtil.deleteFolder(folder.getFolderId());
+	}
+
+	@Test
+	public void testGetFolderWithoutPermissions() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test Folder Permissions", true);
+
+		deleteGuestPermission(folder);
+		deletePowerUserPermission(folder);
+
+		ServiceTestUtil.setUser(user);
+
+		try {
+			DLAppServiceUtil.getFolder(folder.getFolderId());
+
+			Assert.fail("User is able to get folder");
+		}
+		catch (PrincipalException pe) {
+		}
+		catch (NoSuchRepositoryEntryException nsree) {
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		ServiceTestUtil.removeResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
+			ActionKeys.VIEW);
+
+		try {
+			DLPermission.check(
+				permissionChecker, group.getGroupId(), ActionKeys.VIEW);
+
+			Assert.fail("User is able to get root folder");
+		}
+		catch (PrincipalException pe) {
+		}
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		DLAppServiceUtil.deleteFolder(folder.getFolderId());
+
+		UserLocalServiceUtil.deleteUser(user.getUserId());
+
+		ServiceTestUtil.addResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
+			ActionKeys.VIEW);
+	}
+
+	@Test
 	public void testSearchFileInRootFolder() throws Exception {
 		searchFile(true);
 	}
@@ -407,6 +603,38 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		return DLAppTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(), rootFolder,
 			"Title.txt");
+	}
+
+	protected void deleteGuestPermission(Folder folder) throws Exception {
+		Role role = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), RoleConstants.GUEST);
+
+		deletePermission(folder, role);
+	}
+
+	protected void deletePermission(Folder folder, Role role) throws Exception {
+		if (ResourceBlockLocalServiceUtil.isSupported(
+				DLFolder.class.getName())) {
+
+			ResourceBlockLocalServiceUtil.setIndividualScopePermissions(
+				group.getCompanyId(), group.getGroupId(),
+				DLFolder.class.getName(), folder.getFolderId(),
+				role.getRoleId(), new ArrayList<String>());
+		}
+		else {
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				group.getCompanyId(), DLFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(folder.getFolderId()), role.getRoleId(),
+				new String[0]);
+		}
+	}
+
+	protected void deletePowerUserPermission(Folder folder) throws Exception {
+		Role role = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), RoleConstants.POWER_USER);
+
+		deletePermission(folder, role);
 	}
 
 	protected void search(

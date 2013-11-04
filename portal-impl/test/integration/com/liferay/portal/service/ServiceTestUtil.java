@@ -403,6 +403,20 @@ public class ServiceTestUtil {
 		return StringUtil.randomString(length);
 	}
 
+	public static void removeResourcePermission(
+			String roleName, String resourceName, int scope, String primKey,
+			String actionId)
+		throws Exception {
+
+		long companyId = TestPropsValues.getCompanyId();
+
+		Role role = RoleLocalServiceUtil.getRole(companyId, roleName);
+
+		ResourcePermissionLocalServiceUtil.removeResourcePermission(
+			companyId, resourceName, scope, primKey, role.getRoleId(),
+			actionId);
+	}
+
 	public static void setUser(User user) throws Exception {
 		if (user == null) {
 			return;

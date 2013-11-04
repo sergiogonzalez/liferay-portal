@@ -122,30 +122,40 @@ public class JournalArticlePermission {
 			}
 		}
 
-		if (actionId.equals(ActionKeys.VIEW) &&
-			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+		if (article.getFolderId() !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			long folderId = article.getFolderId();
+			try {
+				JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
+					article.getFolderId());
 
-			if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				try {
-					JournalFolder folder =
-						JournalFolderLocalServiceUtil.getFolder(folderId);
+				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
+					!JournalFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.ACCESS) &&
+					!JournalFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.VIEW)) {
 
-					if (!JournalFolderPermission.contains(
-							permissionChecker, folder, ActionKeys.ACCESS) &&
-						!JournalFolderPermission.contains(
-							permissionChecker, folder, ActionKeys.VIEW)) {
-
-						return false;
-					}
+					return false;
 				}
-				catch (NoSuchFolderException nsfe) {
-					if (!article.isInTrash()) {
-						throw nsfe;
-					}
+
+				if (!actionId.equals(ActionKeys.EXPIRE) ||
+					JournalFolderPermission.contains(
+						permissionChecker, folder, actionId)) {
+
+					return true;
 				}
 			}
+			catch (NoSuchFolderException nsfe) {
+				if (!article.isInTrash()) {
+					throw nsfe;
+				}
+			}
+		}
+		else if (actionId.equals(ActionKeys.VIEW) &&
+				 PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+
+			return JournalPermission.contains(
+				permissionChecker, article.getGroupId(), actionId);
 		}
 
 		if (permissionChecker.hasOwnerPermission(

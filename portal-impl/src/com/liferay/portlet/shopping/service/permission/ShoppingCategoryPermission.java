@@ -95,6 +95,11 @@ public class ShoppingCategoryPermission {
 				categoryId = category.getParentCategoryId();
 			}
 
+			if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+				return ShoppingPermission.contains(
+					permissionChecker, category.getGroupId(), actionId);
+			}
+
 			return true;
 		}
 
