@@ -653,6 +653,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				true);
 
 			if (overridePage != null) {
+				WikiPagePermission.check(
+					getPermissionChecker(), overridePage, ActionKeys.DELETE);
+
 				trashEntryService.restoreEntry(
 					trashEntry.getEntryId(), overridePage.getResourcePrimKey(),
 					null);
