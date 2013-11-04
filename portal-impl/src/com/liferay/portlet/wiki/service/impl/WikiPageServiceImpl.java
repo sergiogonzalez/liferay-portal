@@ -26,12 +26,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -636,6 +639,33 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		WikiPagePermission.check(
 			getPermissionChecker(), page, ActionKeys.DELETE);
+
+		String title = page.getTitle();
+
+		String originalTitle = TrashUtil.getOriginalTitle(title);
+
+		TrashEntry trashEntry = page.getTrashEntry();
+
+		if ((trashEntry != null) &&
+			originalTitle.equals(WikiPageConstants.FRONT_PAGE)) {
+
+			WikiPage overridePage = wikiPageLocalService.fetchLatestPage(
+				page.getNodeId(), originalTitle, WorkflowConstants.STATUS_ANY,
+				true);
+
+			if ((overridePage != null) &&
+				Validator.isNull(overridePage.getContent())) {
+
+				WikiPagePermission.check(
+					getPermissionChecker(), overridePage, ActionKeys.DELETE);
+
+				trashEntryService.restoreEntry(
+					trashEntry.getEntryId(), overridePage.getResourcePrimKey(),
+					null);
+
+				return;
+			}
+		}
 
 		wikiPageLocalService.restorePageFromTrash(getUserId(), page);
 	}
