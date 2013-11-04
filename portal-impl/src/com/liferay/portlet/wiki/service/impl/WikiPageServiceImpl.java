@@ -32,6 +32,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -637,7 +639,26 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		WikiPagePermission.check(
 			getPermissionChecker(), page, ActionKeys.DELETE);
 
-		wikiPageLocalService.restorePageFromTrash(getUserId(), page);
+		String title = page.getTitle();
+
+		String originalTitle = TrashUtil.getOriginalTitle(title);
+
+		TrashEntry trashEntry = page.getTrashEntry();
+
+		if ((trashEntry != null) &&
+			originalTitle.equals(WikiPageConstants.FRONT_PAGE)) {
+
+			WikiPage overridePage = wikiPageLocalService.getLatestPage(
+				page.getNodeId(), originalTitle, WorkflowConstants.STATUS_ANY,
+				true);
+
+			trashEntryService.restoreEntry(
+				trashEntry.getEntryId(), overridePage.getResourcePrimKey(),
+				null);
+		}
+		else {
+			wikiPageLocalService.restorePageFromTrash(getUserId(), page);
+		}
 	}
 
 	@Override
