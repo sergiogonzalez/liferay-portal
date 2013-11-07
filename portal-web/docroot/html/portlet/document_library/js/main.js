@@ -598,7 +598,7 @@ AUI.add(
 
 							var scopeGroupId = themeDisplay.getScopeGroupId();
 
-							trashEnabled = (scopeGroupId === repositoryId);
+							trashEnabled = ((scopeGroupId === repositoryId) || repositoryId === 0 );
 						}
 
 						instance.one('#deleteAction').toggle(!trashEnabled);
