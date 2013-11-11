@@ -62,7 +62,7 @@ if (categoryId > 0) {
 
 <c:if test="<%= portletName.equals(PortletKeys.WIKI_ADMIN) %>">
 	<liferay-ui:header
-		backURL="<%= redirect %>"
+		backURL="<%= portletURL.toString() %>"
 		localizeTitle="<%= false %>"
 		title="<%= node.getName() %>"
 	/>
