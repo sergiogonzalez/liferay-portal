@@ -74,9 +74,8 @@ public class BookmarksEntryAssetRendererFactory
 
 	@Override
 	public PortletURL getURLAdd(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException, SystemException {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
