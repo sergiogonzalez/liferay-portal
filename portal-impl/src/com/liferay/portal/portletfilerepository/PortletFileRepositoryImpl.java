@@ -15,7 +15,6 @@
 package com.liferay.portal.portletfilerepository;
 
 import com.liferay.portal.NoSuchRepositoryEntryException;
-import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -226,25 +225,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #deletePortletFolder}
+	 */
 	@Override
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
-
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
-			DLAppLocalServiceUtil.deleteFolder(folderId);
-		}
-		catch(NoSuchRepositoryEntryException nsree) {
-			if (_log.isErrorEnabled()) {
-				_log.error(nsree, nsree);
-			}
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+		deletePortletFolder(folderId);
 	}
 
 	@Override
@@ -285,7 +273,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			DLAppLocalServiceUtil.deleteFileEntry(fileEntryId);
 		}
-		catch(NoSuchRepositoryEntryException nsree) {
+		catch (NoSuchRepositoryEntryException nsree) {
 			if (_log.isErrorEnabled()) {
 				_log.error(nsree, nsree);
 			}
@@ -304,6 +292,27 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			groupId, folderId, fileName);
 
 		deletePortletFileEntry(fileEntry.getFileEntryId());
+	}
+
+	@Override
+	public void deletePortletFolder(long folderId)
+		throws PortalException, SystemException {
+
+		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+
+		try {
+			DLAppHelperThreadLocal.setEnabled(false);
+
+			DLAppLocalServiceUtil.deleteFolder(folderId);
+		}
+		catch (NoSuchRepositoryEntryException nsree) {
+			if (_log.isErrorEnabled()) {
+				_log.error(nsree, nsree);
+			}
+		}
+		finally {
+			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+		}
 	}
 
 	@Override
