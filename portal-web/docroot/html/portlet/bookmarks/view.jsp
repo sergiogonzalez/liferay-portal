@@ -102,7 +102,7 @@ if (folder != null) {
 
 				<liferay-ui:header
 					backLabel="<%= parentFolderName %>"
-					backURL="<%= backURL.toString() %>"
+					backURL="<%= rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID || rootFolderId == folderId ? StringPool.BLANK : backURL.toString() %>"
 					localizeTitle="<%= false %>"
 					title="<%= folder.getName() %>"
 				/>
