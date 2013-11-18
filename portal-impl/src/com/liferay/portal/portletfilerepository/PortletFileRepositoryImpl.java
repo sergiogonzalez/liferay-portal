@@ -14,9 +14,13 @@
 
 package com.liferay.portal.portletfilerepository;
 
+import com.liferay.portal.NoSuchRepositoryEntryException;
+import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -233,6 +237,11 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			DLAppLocalServiceUtil.deleteFolder(folderId);
 		}
+		catch(NoSuchRepositoryEntryException nsree) {
+			if (_log.isErrorEnabled()) {
+				_log.error(nsree, nsree);
+			}
+		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
 		}
@@ -275,6 +284,11 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			DLAppHelperThreadLocal.setEnabled(false);
 
 			DLAppLocalServiceUtil.deleteFileEntry(fileEntryId);
+		}
+		catch(NoSuchRepositoryEntryException nsree) {
+			if (_log.isErrorEnabled()) {
+				_log.error(nsree, nsree);
+			}
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
@@ -553,5 +567,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			return fileEntries;
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortletFileRepositoryImpl.class);
 
 }
