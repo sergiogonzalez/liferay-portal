@@ -25,10 +25,12 @@ import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +96,9 @@ public class WorkflowHandlerRegistryUtil {
 
 		if (serviceContext.getWorkflowAction() !=
 				WorkflowConstants.ACTION_PUBLISH) {
+
+			MBStatsUserLocalServiceUtil.updateStatsUser(
+				groupId, userId, serviceContext.getModifiedDate(new Date()));
 
 			return;
 		}
