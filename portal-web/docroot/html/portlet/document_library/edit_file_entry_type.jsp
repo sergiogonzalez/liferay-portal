@@ -118,7 +118,6 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 					modelVar="curDDMStructure"
 				>
 					<liferay-ui:search-container-column-text
-						name="name"
 						value="<%= curDDMStructure.getName(locale) %>"
 					/>
 
