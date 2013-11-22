@@ -790,6 +790,9 @@ public class EditFileEntryAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
+				actionResponse.sendRedirect(
+					ParamUtil.getString(actionRequest, "backURL"));
+
 				return;
 			}
 
