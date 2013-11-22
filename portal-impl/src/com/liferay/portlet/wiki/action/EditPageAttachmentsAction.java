@@ -37,7 +37,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
+import com.liferay.portlet.documentlibrary.action.UploadMultipleFileEntriesAction;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
@@ -66,7 +66,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Jorge Ferrer
  */
-public class EditPageAttachmentsAction extends EditFileEntryAction {
+public class EditPageAttachmentsAction extends UploadMultipleFileEntriesAction {
 
 	@Override
 	public void processAction(
