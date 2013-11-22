@@ -37,7 +37,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -84,7 +83,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Levente Hudák
  * @author Kenneth Chang
  */
-public class EditFileEntryAction extends PortletAction {
+public class EditFileEntryAction extends UploadMultipleFileEntriesAction {
 
 	public static final String TEMP_RANDOM_SUFFIX = "--tempRandomSuffix--";
 
