@@ -535,7 +535,7 @@ public class UploadMultipleFileEntriesAction extends PortletAction {
 		}
 	}
 
-	private static final String _TEMP_FOLDER_NAME =
+	protected static final String _TEMP_FOLDER_NAME =
 		EditFileEntryAction.class.getName();
 
 }
