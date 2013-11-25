@@ -125,6 +125,8 @@ public class UploadMultipleFileEntriesAction extends PortletAction {
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				addMultipleFileEntries(
 					portletConfig, actionRequest, actionResponse);
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 
 			WindowState windowState = actionRequest.getWindowState();
