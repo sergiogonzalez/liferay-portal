@@ -1586,6 +1586,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getWorkflowClassName(), message.getMessageId(), message,
 			serviceContext);
 
+		// Statistics
+
+		if (!message.isDiscussion()) {
+			mbStatsUserLocalService.updateStatsUser(
+				message.getGroupId(), userId, message.getModifiedDate());
+		}
+
 		return message;
 	}
 
@@ -1759,14 +1766,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			// Indexer
 
 			indexer.delete(message);
-		}
-
-		// Statistics
-
-		if (!message.isDiscussion()) {
-			mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), userId,
-				serviceContext.getModifiedDate(now));
 		}
 
 		return message;
