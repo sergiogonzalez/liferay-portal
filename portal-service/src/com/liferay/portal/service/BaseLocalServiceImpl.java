@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -62,7 +63,11 @@ public abstract class BaseLocalServiceImpl implements BaseLocalService {
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutURL = StringPool.BLANK;
+		String layoutURL = serviceContext.getLayoutFullURL();
+
+		if (Validator.isNull(layoutURL)) {
+			return StringPool.BLANK;
+		}
 
 		long plid = serviceContext.getPlid();
 
@@ -75,7 +80,7 @@ public abstract class BaseLocalServiceImpl implements BaseLocalService {
 			if (plid != LayoutConstants.DEFAULT_PLID) {
 				Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-				layoutURL = getLayoutURL(layout, serviceContext);
+				return getLayoutURL(layout, serviceContext);
 			}
 		}
 
