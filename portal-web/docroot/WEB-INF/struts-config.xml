@@ -557,8 +557,8 @@
 
 		<action path="/document_library/select_restricted_file_entry_type" forward="portlet.document_library.select_restricted_file_entry_type" />
 
-		<action path="/document_library/upload_multiple_file_entries" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.upload_multiple_file_entries" />
+		<action path="/document_library/upload_multiple_file_entries" type="com.liferay.portlet.documentlibrary.action.UploadMultipleFileEntriesAction">
+			<forward name="portlet.document_library.upload_multiple_file_entries" path="portlet.document_library.upload_multiple_file_entries" />
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
