@@ -306,7 +306,7 @@ String iconMenuId = null;
 			<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 				<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
-						<portlet:renderURL var="editFileEntryURL">
+						<portlet:renderURL var="uploadMultipleFileEntriesURL">
 							<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -318,7 +318,7 @@ String iconMenuId = null;
 							cssClass="hide upload-multiple-documents"
 							image="../document_library/add_multiple_documents"
 							message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
-							url="<%= editFileEntryURL %>"
+							url="<%= uploadMultipleFileEntriesURL %>"
 						/>
 					</c:if>
 
