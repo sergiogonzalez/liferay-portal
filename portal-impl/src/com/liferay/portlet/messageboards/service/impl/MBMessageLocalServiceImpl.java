@@ -1579,6 +1579,31 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
+		// Statistics
+
+		/**
+		El problema es que el metodo startWorkflowInstance (unas lineas mas
+		abajo) acaba llamando a
+		{@link#WorkflowHandlerRegistryUtil.startWorkflowInstance} que en la
+		linea 95 hace un return si el workflowAction no es Publish (como es
+		el caso si es un draft) por lo que regresamos a este metido sin ejecutar
+		ninguna linea de updateStatus al hacer un update de un draft y por tanto
+		no se recalculan los userStats.
+
+		He colocado aqui la logica por:
+			a) Es necesario que se haya hecho el update del mensaje para que
+		updateStatsUser devuelva el resultado correcto
+			b) tema alfabetico de la seccion (Statistics)
+		*/
+
+		if ((serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) &&
+			!message.isDiscussion()) {
+
+			mbStatsUserLocalService.updateStatsUser(
+				message.getGroupId(), userId, message.getModifiedDate());
+		}
+
 		// Workflow
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
