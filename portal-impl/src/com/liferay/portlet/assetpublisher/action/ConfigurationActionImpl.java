@@ -217,11 +217,23 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		Serializable fieldValue = field.getValue(themeDisplay.getLocale(), 0);
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("success", true);
+
+		if (fieldValue == null) {
+			jsonObject.put("success", false);
+
+			resourceResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+			PortletResponseUtil.write(resourceResponse, jsonObject.toString());
+
+			return;
+		}
+
 		DDMStructure ddmStructure = field.getDDMStructure();
 
 		String type = ddmStructure.getFieldType(fieldName);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		Serializable displayValue = DDMUtil.getDisplayFieldValue(
 			themeDisplay, fieldValue, type);
