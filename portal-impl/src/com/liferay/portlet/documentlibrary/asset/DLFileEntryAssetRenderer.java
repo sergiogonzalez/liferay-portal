@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,6 +46,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -343,6 +345,14 @@ public class DLFileEntryAssetRenderer
 				renderRequest.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
 					_fileEntry.getFileVersion());
+			}
+
+			if (template.equals(TEMPLATE_FULL_CONTENT) &&
+				MimeTypesUtil.isWebImage(_fileEntry.getMimeType())) {
+
+				return
+					"/html/portlet/document_library/asset/file_entry_image_" +
+						template + ".jsp";
 			}
 
 			return "/html/portlet/document_library/asset/file_entry_" +
