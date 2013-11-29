@@ -363,6 +363,19 @@ public class DLFileEntryAssetRenderer
 		}
 	}
 
+	@Override
+	public void setAddToPagePreferences(
+			PortletPreferences preferences, String portletId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (MimeTypesUtil.isWebImage(_fileEntry.getMimeType())) {
+			preferences.setValue("showAssetTitle", Boolean.FALSE.toString());
+		}
+
+		super.setAddToPagePreferences(preferences, portletId, themeDisplay);
+	}
+
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 
