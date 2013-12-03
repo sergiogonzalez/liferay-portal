@@ -43,7 +43,7 @@ if (!dlFileEntries.isEmpty()) {
 
 		for (String key : extraSettingsProperties.keySet()) {
 			if (expandoBridge.hasAttribute(key)) {
-				expandoBridgeAttributeNames.add(key);
+				expandoBridgeAttributeNames.add(LanguageUtil.get(pageContext, key));
 			}
 			else {
 				keys.add(key);
@@ -82,7 +82,7 @@ if (!dlFileEntries.isEmpty()) {
 			%>
 
 				<aui:fieldset>
-					<%= LanguageUtil.format(pageContext, "convert-extra-settings-key-from-x-to", key) %>
+					<%= LanguageUtil.format(pageContext, "convert-extra-settings-key-from-x-to", key, true) %>
 
 					<br />
 
