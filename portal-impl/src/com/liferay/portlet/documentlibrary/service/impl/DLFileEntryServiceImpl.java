@@ -494,12 +494,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, obc);
 
-		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return dlFileEntryFinder.findByG_U_F_M(
-				groupId, userId, new ArrayList<Long>(), mimeTypes,
-				queryDefinition);
-		}
-
 		List<Long> folderIds = dlFolderService.getFolderIds(
 			groupId, rootFolderId);
 
