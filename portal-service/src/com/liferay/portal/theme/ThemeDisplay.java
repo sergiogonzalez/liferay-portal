@@ -420,6 +420,16 @@ public class ThemeDisplay
 		return _scopeGroup.getDescriptiveName();
 	}
 
+	public String getScopeGroupName(Locale locale)
+		throws PortalException, SystemException {
+
+		if (_scopeGroup == null) {
+			return StringPool.BLANK;
+		}
+
+		return _scopeGroup.getDescriptiveName(locale);
+	}
+
 	public Layout getScopeLayout() throws PortalException, SystemException {
 		if (_layout.hasScopeGroup()) {
 			return _layout;
