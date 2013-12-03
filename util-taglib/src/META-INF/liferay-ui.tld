@@ -2414,7 +2414,7 @@
 		<attribute>
 			<name>translateArguments</name>
 			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>unicode</name>
