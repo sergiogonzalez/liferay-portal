@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portlet.polls.model.impl.PollsChoiceImpl" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -109,6 +110,9 @@ if (choiceName > 0) {
 
 				if ((question != null) && ((i - 1) < choices.size())) {
 					choice = (PollsChoice)choices.get(i - 1);
+				}
+				else {
+					choice = new PollsChoiceImpl();
 				}
 			%>
 
