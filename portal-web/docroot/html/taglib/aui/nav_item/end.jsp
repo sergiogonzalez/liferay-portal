@@ -45,7 +45,14 @@ if (bodyContent != null) {
 					</c:if>
 
 					<span class="nav-item-label">
-						<liferay-ui:message key="<%= label %>" />
+						<c:choose>
+							<c:when test="<%= localizeLabel %>">
+								<liferay-ui:message key="<%= label %>" />
+							</c:when>
+							<c:otherwise>
+								<%= label %>
+							</c:otherwise>
+						</c:choose>
 					</span>
 
 					<c:if test="<%= dropdown %>">
