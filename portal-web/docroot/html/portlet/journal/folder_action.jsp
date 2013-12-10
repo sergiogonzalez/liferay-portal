@@ -45,7 +45,7 @@ if (folder != null) {
 }
 else {
 	modelResource= "com.liferay.portlet.journal";
-	modelResourceDescription = HtmlUtil.escape(themeDisplay.getScopeGroupName());
+	modelResourceDescription = HtmlUtil.escape(themeDisplay.getScopeGroupName(locale));
 	resourcePrimKey= String.valueOf(scopeGroupId);
 
 	hasPermissionsPermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);

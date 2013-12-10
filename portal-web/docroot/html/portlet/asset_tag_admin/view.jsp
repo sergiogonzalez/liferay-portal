@@ -26,7 +26,7 @@
 			<c:if test="<%= PropsValues.ASSET_TAG_PERMISSIONS_ENABLED && AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
 				<liferay-security:permissionsURL
 					modelResource="com.liferay.portlet.asset"
-					modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
+					modelResourceDescription="<%= themeDisplay.getScopeGroupName(locale) %>"
 					resourcePrimKey="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>"
 					var="permissionsURL"
 					windowState="<%= LiferayWindowState.POP_UP.toString() %>"

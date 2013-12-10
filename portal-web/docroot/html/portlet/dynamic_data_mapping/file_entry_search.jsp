@@ -32,7 +32,7 @@ FileEntryDisplayTerms displayTerms = (FileEntryDisplayTerms)searchContainer.getD
 
 		<aui:select label="scope" name="<%= displayTerms.SELECTED_GROUP_ID %>" showEmptyOption="<%= false %>">
 			<aui:option label="global" selected="<%= displayTerms.getSelectedGroupId() == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
-			<aui:option label="<%= themeDisplay.getScopeGroupName() %>" selected="<%= displayTerms.getSelectedGroupId() == scopeGroupId %>" value="<%= scopeGroupId %>" />
+			<aui:option label="<%= themeDisplay.getScopeGroupName(locale) %>" selected="<%= displayTerms.getSelectedGroupId() == scopeGroupId %>" value="<%= scopeGroupId %>" />
 		</aui:select>
 	</aui:fieldset>
 </liferay-ui:search-toggle>

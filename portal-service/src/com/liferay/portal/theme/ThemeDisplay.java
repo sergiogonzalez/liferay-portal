@@ -412,12 +412,11 @@ public class ThemeDisplay
 		return getSiteGroupIdOrLiveGroupId();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 renamed to {@link #getScopeGroupName(Locale)}
+	 */
 	public String getScopeGroupName() throws PortalException, SystemException {
-		if (_scopeGroup == null) {
-			return StringPool.BLANK;
-		}
-
-		return _scopeGroup.getDescriptiveName();
+		return getScopeGroupName(getLocale());
 	}
 
 	public String getScopeGroupName(Locale locale)

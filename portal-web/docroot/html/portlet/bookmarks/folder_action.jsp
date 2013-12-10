@@ -49,7 +49,7 @@ if (folder != null) {
 }
 else {
 	modelResource = "com.liferay.portlet.bookmarks";
-	modelResourceDescription = themeDisplay.getScopeGroupName();
+	modelResourceDescription = themeDisplay.getScopeGroupName(locale);
 	resourcePrimKey = String.valueOf(scopeGroupId);
 
 	showPermissionsURL = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);

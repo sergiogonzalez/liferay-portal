@@ -51,7 +51,7 @@ boolean showPermissionsButton = JournalPermission.contains(permissionChecker, sc
 		<c:if test="<%= showPermissionsButton %>">
 			<liferay-security:permissionsURL
 				modelResource="com.liferay.portlet.journal"
-				modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+				modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName(locale)) %>"
 				resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 				var="permissionsURL"
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
