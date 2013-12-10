@@ -83,7 +83,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 					<%
 					String modelResource = "com.liferay.portlet.messageboards";
-					String modelResourceDescription = themeDisplay.getScopeGroupName();
+					String modelResourceDescription = themeDisplay.getScopeGroupName(locale);
 					String resourcePrimKey = String.valueOf(scopeGroupId);
 
 					if (category != null) {

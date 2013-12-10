@@ -90,7 +90,7 @@ if (folder != null) {
 }
 else {
 	modelResource = "com.liferay.portlet.documentlibrary";
-	modelResourceDescription = themeDisplay.getScopeGroupName();
+	modelResourceDescription = themeDisplay.getScopeGroupName(locale);
 	resourcePrimKey = String.valueOf(scopeGroupId);
 
 	showPermissionsURL = DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);

@@ -77,4 +77,14 @@ ${ifType} (
 
 		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", commandScopeVariables);
 	</#if>
+
+	<#if ifType == "while">
+		if(_whileCount == 15){
+			break;
+		}
+
+		Thread.sleep(1000);
+
+		_whileCount++;
+	</#if>
 }

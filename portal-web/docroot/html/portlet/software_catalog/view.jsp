@@ -278,7 +278,7 @@ portletURL.setParameter("tabs1", tabs1);
 				<c:if test="<%= showPermissionsButton %>">
 					<liferay-security:permissionsURL
 						modelResource="com.liferay.portlet.softwarecatalog"
-						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName(locale)) %>"
 						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 						var="permissionsURL"
 					/>
@@ -554,7 +554,7 @@ portletURL.setParameter("tabs1", tabs1);
 				<c:if test="<%= showPermissionsButton %>">
 					<liferay-security:permissionsURL
 						modelResource="com.liferay.portlet.softwarecatalog"
-						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName(locale)) %>"
 						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 						var="permissionsURL"
 					/>

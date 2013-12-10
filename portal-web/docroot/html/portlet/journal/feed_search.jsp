@@ -23,7 +23,7 @@ FeedDisplayTerms displayTerms = (FeedDisplayTerms)searchContainer.getDisplayTerm
 %>
 
 <liferay-ui:search-toggle
-	autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP)) %>"
+	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_journal_feed_search"
@@ -51,7 +51,7 @@ boolean showPermissionsButton = JournalPermission.contains(permissionChecker, sc
 		<c:if test="<%= showPermissionsButton %>">
 			<liferay-security:permissionsURL
 				modelResource="com.liferay.portlet.journal"
-				modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+				modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName(locale)) %>"
 				resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 				var="permissionsURL"
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"

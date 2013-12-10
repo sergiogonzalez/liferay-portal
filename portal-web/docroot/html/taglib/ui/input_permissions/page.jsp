@@ -88,7 +88,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 			<select id="<%= uniqueNamespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= uniqueNamespace + "updatePermissionsView();" %>">
 
 				<%
-				String guestRoleLabel = LanguageUtil.format(pageContext, "x-role", guestRole.getTitle(themeDisplay.getLocale()));
+				String guestRoleLabel = LanguageUtil.format(pageContext, "x-role", guestRole.getTitle(locale));
 
 				if (PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED) {
 					guestRoleLabel = LanguageUtil.get(pageContext, "anyone") + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + guestRoleLabel + StringPool.CLOSE_PARENTHESIS;

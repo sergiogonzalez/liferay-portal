@@ -29,4 +29,18 @@ public class ConnectEmailTestCase extends BaseSeleniumTestCase {
 			TestPropsValues.EMAIL_ADDRESS_1, TestPropsValues.EMAIL_PASSWORD_1);
 	}
 
+	@Test
+	public void testFailConnectEmail() throws Exception {
+		try {
+			selenium.connectToEmailAccount(
+				"ThisIsNotCorrectEmailAddress",
+				"ThisIsNotCorrectEmailPassword");
+		}
+		catch (Throwable t) {
+			String message = t.getMessage();
+
+			assertTrue(message.contains("Invalid credentials"));
+		}
+	}
+
 }
