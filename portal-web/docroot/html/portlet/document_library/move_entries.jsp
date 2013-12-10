@@ -219,7 +219,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 						<span class="error-message">
 							<c:choose>
 								<c:when test="<%= invalidMoveFileEntry.isCheckedOut() && !invalidMoveFileEntry.hasLock() %>">
-									<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-checked-out-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
+									<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-checked-out-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}) %>
 								</c:when>
 								<c:otherwise>
 									<%= LanguageUtil.get(pageContext, "you-do-not-have-the-required-permissions") %>
@@ -346,7 +346,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 						width: 680
 					},
 					id: '<portlet:namespace />selectFolder',
-					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+					title: '<liferay-ui:message arguments="folder" key="select-x" translateArguments="<%= true %>" />',
 					uri: '<%= selectFolderURL.toString() %>'
 				},
 				function(event) {

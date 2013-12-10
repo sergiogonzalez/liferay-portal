@@ -23,7 +23,7 @@ FeedDisplayTerms displayTerms = (FeedDisplayTerms)searchContainer.getDisplayTerm
 %>
 
 <liferay-ui:search-toggle
-	autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP)) %>"
+	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_journal_feed_search"

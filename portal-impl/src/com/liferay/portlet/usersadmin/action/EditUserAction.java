@@ -45,8 +45,6 @@ import com.liferay.portal.UserSmsException;
 import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -742,7 +740,5 @@ public class EditUserAction extends PortletAction {
 
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(EditUserAction.class);
 
 }

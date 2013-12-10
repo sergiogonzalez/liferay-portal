@@ -125,7 +125,7 @@ boolean expired = true;
 												<liferay-ui:icon
 													image="print"
 													label="<%= true %>"
-													message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", articleDisplay.getTitle()}) %>'
+													message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {LanguageUtil.get(pageContext, "hide-accessible"), articleDisplay.getTitle()}) %>'
 													url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'
 												/>
 											</div>
@@ -161,7 +161,7 @@ boolean expired = true;
 												<liferay-ui:icon
 													image='<%= "../file_system/small/" + extension %>'
 													label="<%= true %>"
-													message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {"hide-accessible", articleDisplay.getTitle(), StringUtil.toUpperCase(extension)}) %>'
+													message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {LanguageUtil.get(pageContext, "hide-accessible"), articleDisplay.getTitle(), StringUtil.toUpperCase(extension)}) %>'
 													method="get"
 													url="<%= exportArticleURL.toString() %>"
 												/>
@@ -229,7 +229,7 @@ boolean expired = true;
 								%>
 
 									<div class="alert alert-block">
-										<%= LanguageUtil.format(pageContext, "x-is-expired", title) %>
+										<%= LanguageUtil.format(pageContext, "x-is-expired", HtmlUtil.escape(title)) %>
 									</div>
 
 								<%
