@@ -24,13 +24,29 @@ import org.junit.Test;
 public class SendEmailTestCase extends BaseSeleniumTestCase {
 
 	@Test
+	public void testFailSendEmail() throws Exception {
+		try {
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_1,
+				TestPropsValues.EMAIL_PASSWORD_1);
+
+			selenium.sendEmail(
+				"ThisIsNotCorrectEmailAddress", "Email Test",
+				"This is a test message.");
+		}
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), "Invalid Addresses");
+		}
+	}
+
+	@Test
 	public void testSendEmail() throws Exception {
 		selenium.connectToEmailAccount(
 			TestPropsValues.EMAIL_ADDRESS_1, TestPropsValues.EMAIL_PASSWORD_1);
 
 		selenium.sendEmail(
 			TestPropsValues.EMAIL_ADDRESS_2, "Email Test",
-			"This is a test message");
+			"This is a test message.");
 
 		selenium.deleteAllEmails();
 

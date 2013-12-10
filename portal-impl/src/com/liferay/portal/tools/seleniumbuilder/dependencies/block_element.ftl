@@ -169,6 +169,8 @@
 
 		executeScopeVariables.putAll(commandScopeVariables);
 
+		_whileCount = 0;
+
 		<#assign ifElement = element>
 
 		<#include "if_element.ftl">
