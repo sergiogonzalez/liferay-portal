@@ -106,6 +106,9 @@ The cache-enabled value specifies whether or not to cache this queries for this
 entity. Set this to false if data in the table will be updated by other
 programs. The default value is true.
 
+The dynamic-update-enabled value specifies whether or not unmodified properties
+are excluded in the SQL update statement. The default value is false.
+
 The json-enabled value specifies whether or not the entity should be annotated
 for JSON serialization. By default, if the remote-service value is true, then
 the json-enabled value is true.
@@ -128,6 +131,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	session-factory CDATA #IMPLIED
 	tx-manager CDATA #IMPLIED
 	cache-enabled CDATA #IMPLIED
+	dynamic-update-enabled CDATA #IMPLIED
 	json-enabled CDATA #IMPLIED
 	trash-enabled CDATA #IMPLIED
 	deprecated CDATA #IMPLIED

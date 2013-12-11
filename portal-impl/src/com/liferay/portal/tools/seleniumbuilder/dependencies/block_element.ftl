@@ -154,6 +154,10 @@
 		<#assign lineNumber = element.attributeValue("line-number")>
 
 		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", executeScopeVariables);
+	<#elseif name == "property">
+		<#assign lineNumber = element.attributeValue("line-number")>
+
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	<#elseif name == "var">
 		<#assign varElement = element>
 
@@ -168,6 +172,8 @@
 		executeScopeVariables = new HashMap<String, String>();
 
 		executeScopeVariables.putAll(commandScopeVariables);
+
+		_whileCount = 0;
 
 		<#assign ifElement = element>
 

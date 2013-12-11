@@ -4340,6 +4340,8 @@ public class ServiceBuilder {
 		String txManager = entityElement.attributeValue("tx-manager");
 		boolean cacheEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("cache-enabled"), true);
+		boolean dynamicUpdateEnabled = GetterUtil.getBoolean(
+			entityElement.attributeValue("dynamic-update-enabled"));
 		boolean jsonEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("json-enabled"), remoteService);
 		boolean trashEnabled = GetterUtil.getBoolean(
@@ -4722,10 +4724,10 @@ public class ServiceBuilder {
 				_packagePath, _portletName, _portletShortName, ejbName,
 				humanName, table, alias, uuid, uuidAccessor, localService,
 				remoteService, persistenceClass, finderClass, dataSource,
-				sessionFactory, txManager, cacheEnabled, jsonEnabled,
-				trashEnabled, deprecated, pkList, regularColList, blobList,
-				collectionList, columnList, order, finderList, referenceList,
-				txRequiredList));
+				sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
+				jsonEnabled, trashEnabled, deprecated, pkList, regularColList,
+				blobList, collectionList, columnList, order, finderList,
+				referenceList, txRequiredList));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)
