@@ -23,6 +23,7 @@ page import="com.liferay.portlet.documentlibrary.FileExtensionException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
 page import="com.liferay.portlet.messageboards.BannedUserException" %><%@
 page import="com.liferay.portlet.messageboards.CategoryNameException" %><%@
+page import="com.liferay.portlet.messageboards.CategoryParentException" %><%@
 page import="com.liferay.portlet.messageboards.LockedThreadException" %><%@
 page import="com.liferay.portlet.messageboards.MailingListEmailAddressException" %><%@
 page import="com.liferay.portlet.messageboards.MailingListInServerNameException" %><%@

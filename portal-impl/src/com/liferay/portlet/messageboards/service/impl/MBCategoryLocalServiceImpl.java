@@ -28,6 +28,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.messageboards.CategoryNameException;
+import com.liferay.portlet.messageboards.CategoryParentException;
 import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -799,7 +800,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	protected long getParentCategoryId(
 			MBCategory category, long parentCategoryId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		if ((parentCategoryId ==
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
@@ -808,25 +809,30 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			return parentCategoryId;
 		}
 
-		if (category.getCategoryId() == parentCategoryId) {
-			return category.getParentCategoryId();
-		}
-
-		MBCategory parentCategory = mbCategoryPersistence.fetchByPrimaryKey(
-			parentCategoryId);
-
-		if ((parentCategory == null) ||
-			(category.getGroupId() != parentCategory.getGroupId())) {
-
-			return category.getParentCategoryId();
-		}
-
 		List<Long> subcategoryIds = new ArrayList<Long>();
 
 		getSubcategoryIds(
 			subcategoryIds, category.getGroupId(), category.getCategoryId());
 
-		if (subcategoryIds.contains(parentCategoryId)) {
+		MBCategory parentCategory = mbCategoryPersistence.fetchByPrimaryKey(
+			parentCategoryId);
+
+		if ((parentCategory != null) &&
+			subcategoryIds.contains(parentCategoryId)) {
+
+			CategoryParentException cpe = new CategoryParentException(
+				category.getName(), parentCategory.getName());
+
+			throw cpe;
+		}
+
+		if (category.getCategoryId() == parentCategoryId) {
+			return category.getParentCategoryId();
+		}
+
+		if ((parentCategory == null) ||
+			(category.getGroupId() != parentCategory.getGroupId())) {
+
 			return category.getParentCategoryId();
 		}
 

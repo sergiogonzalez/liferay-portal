@@ -41,6 +41,18 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
 
+	<liferay-ui:error exception="<%= CategoryParentException.class %>">
+
+		<%
+		CategoryParentException cpe = (CategoryParentException)errorException;
+
+		String categoryName = cpe.getCategoryName();
+		String parentCategoryName = cpe.getParentCategoryName();
+		%>
+
+		<liferay-ui:message arguments="<%= new String[]{parentCategoryName, categoryName} %>" key="x-cannot-be-the-parent-category-of-x" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 
 	<aui:fieldset>
