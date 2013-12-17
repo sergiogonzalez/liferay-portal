@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.messageboards.CategoryMovingException;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 
 import javax.portlet.ActionRequest;
@@ -57,6 +58,12 @@ public class MoveCategoryAction extends PortletAction {
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof CategoryMovingException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+
+				setForward(
+					actionRequest, "portlet.message_boards.move_category");
 			}
 			else {
 				throw e;
