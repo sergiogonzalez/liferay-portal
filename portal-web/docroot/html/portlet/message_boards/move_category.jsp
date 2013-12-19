@@ -1,3 +1,4 @@
+
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -19,11 +20,24 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
+long categoryId = ParamUtil.getLong(request, "mbCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-long categoryId = MBUtil.getCategoryId(request, category);
+MBCategory category = null;
+
+if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+	category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
+
+	categoryId = MBUtil.getCategoryId(request, category);
+}
+else {
+	category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+}
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+List<Long> subcategoryIds = new UniqueList<Long>();
+
+MBCategoryLocalServiceUtil.getSubcategoryIds(subcategoryIds, category.getGroupId(), categoryId);
 %>
 
 <liferay-ui:header
@@ -41,7 +55,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
 
-	<liferay-ui:error exception="<%= CategoryMovingException.class %>" >
+	<liferay-ui:error exception="<%= CategoryMovingException.class %>">
 
 		<%
 		CategoryMovingException cme = (CategoryMovingException)errorException;
@@ -120,7 +134,7 @@ if (category != null) {
 					},
 					id: '<portlet:namespace />selectCategory',
 					title: '<liferay-ui:message arguments="category" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /></portlet:renderURL>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /><portlet:param name="subcategoryIds" value="<%= StringUtil.merge(subcategoryIds, StringPool.COMMA_AND_SPACE) %>" /><portlet:param name="chooseChildrenCategories" value="<%= StringPool.FALSE %>" /> </portlet:renderURL>'
 				},
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = event.categoryid;
