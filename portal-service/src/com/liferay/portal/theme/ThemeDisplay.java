@@ -419,11 +419,17 @@ public class ThemeDisplay
 	}
 
 	public String getScopeGroupName() throws PortalException, SystemException {
+		return getScopeGroupName(getLocale());
+	}
+
+	public String getScopeGroupName(Locale locale)
+		throws PortalException, SystemException {
+
 		if (_scopeGroup == null) {
 			return StringPool.BLANK;
 		}
 
-		return _scopeGroup.getDescriptiveName();
+		return _scopeGroup.getDescriptiveName(locale);
 	}
 
 	public Layout getScopeLayout() throws PortalException, SystemException {
