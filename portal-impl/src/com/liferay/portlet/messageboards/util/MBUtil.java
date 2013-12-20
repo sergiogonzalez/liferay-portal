@@ -145,6 +145,21 @@ public class MBUtil {
 
 			portletURL.setParameter(
 				"struts_action", "/message_boards/select_category");
+
+			long activeCategoryId = ParamUtil.getLong(
+				request, "activeCategoryId",
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+			portletURL.setParameter(
+				"activeCategoryId", String.valueOf(activeCategoryId));
+
+			boolean showChildrenCategories = ParamUtil.getBoolean(
+				request, "showChildrenCategories", true);
+
+			portletURL.setParameter(
+				"showChildrenCategories",
+				String.valueOf(showChildrenCategories));
+
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
