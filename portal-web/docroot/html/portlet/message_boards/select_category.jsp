@@ -23,6 +23,8 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 long activeCategoryId = ParamUtil.getLong(request, "activeCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
+String backURL = ParamUtil.getString(request, "backURL", StringPool.BLANK);
+
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectCategory");
 
 boolean showChildrenCategories = ParamUtil.getBoolean(request, "showChildrenCategories", true);
@@ -43,6 +45,7 @@ else {
 
 <aui:form method="post" name="selectCategoryFm">
 	<liferay-ui:header
+		backURL="<%= backURL %>"
 		title="message-boards-home"
 	/>
 
@@ -74,6 +77,7 @@ else {
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="struts_action" value="/message_boards/select_category" />
 				<portlet:param name="activeCategoryId" value="<%= String.valueOf(activeCategoryId) %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 				<portlet:param name="showChildrenCategories" value="<%= String.valueOf(showChildrenCategories) %>" />
 			</portlet:renderURL>
