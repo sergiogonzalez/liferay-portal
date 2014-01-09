@@ -575,6 +575,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<MBThread> getLockedThreads() throws SystemException {
+		return mbThreadFinder.findByLock();
+	}
+
+	@Override
 	public List<MBThread> getNoAssetThreads() throws SystemException {
 		return mbThreadFinder.findByNoAssets();
 	}

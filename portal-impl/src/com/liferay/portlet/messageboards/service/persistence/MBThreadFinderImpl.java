@@ -68,6 +68,9 @@ public class MBThreadFinderImpl
 	public static final String COUNT_BY_S_G_U_C =
 		MBThreadFinder.class.getName() + ".countByS_G_U_C";
 
+	public static final String FIND_BY_LOCK =
+		MBThreadFinder.class.getName() + ".findByLock";
+
 	public static final String FIND_BY_NO_ASSETS =
 		MBThreadFinder.class.getName() + ".findByNoAssets";
 
@@ -517,6 +520,29 @@ public class MBThreadFinderImpl
 
 		return doFindByS_G_U_C(
 			groupId, userId, categoryIds, queryDefinition, true);
+	}
+
+	@Override
+	public List<MBThread> findByLock() throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_LOCK);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("MBThread", MBThreadImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override
