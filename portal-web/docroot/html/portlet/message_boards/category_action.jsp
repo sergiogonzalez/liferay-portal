@@ -163,7 +163,7 @@ else {
 		</c:if>
 	</c:if>
 
-	<c:if test="<%= !defaultParentCategory && MBCategoryPermission.contains(permissionChecker, category, ActionKeys.DELETE) %>">
+	<c:if test="<%= !defaultParentCategory && !MBCategoryLocalServiceUtil.categoryContainsLockedThread(category) && MBCategoryPermission.contains(permissionChecker, category, ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/message_boards/edit_category" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
