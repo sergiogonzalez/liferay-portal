@@ -400,6 +400,12 @@ public class MBCategoryLocalServiceUtil {
 			.addCategoryResources(category, groupPermissions, guestPermissions);
 	}
 
+	public static boolean categoryContainsLockedThread(
+		com.liferay.portlet.messageboards.model.MBCategory category)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().categoryContainsLockedThread(category);
+	}
+
 	public static void deleteCategories(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

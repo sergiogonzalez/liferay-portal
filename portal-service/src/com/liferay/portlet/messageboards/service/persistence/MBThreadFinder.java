@@ -81,6 +81,9 @@ public interface MBThreadFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByLock()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByNoAssets()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

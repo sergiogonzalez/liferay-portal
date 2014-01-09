@@ -126,6 +126,11 @@ public class MBThreadFinderUtil {
 			queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByLock()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByLock();
+	}
+
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByNoAssets()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByNoAssets();
