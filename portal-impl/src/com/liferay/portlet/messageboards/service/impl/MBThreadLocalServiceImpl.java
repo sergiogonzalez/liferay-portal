@@ -576,7 +576,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Override
 	public List<MBThread> getLockedThreads() throws SystemException {
-		return mbThreadFinder.findByLock();
+		return mbThreadFinder.findByLocked();
 	}
 
 	@Override

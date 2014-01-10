@@ -278,7 +278,7 @@
 				(Subscription.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByLock">
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByLocked">
 		<![CDATA[
 			SELECT
 				{MBThread.*}
