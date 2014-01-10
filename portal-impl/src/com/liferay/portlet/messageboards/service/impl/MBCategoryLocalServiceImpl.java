@@ -192,28 +192,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public boolean categoryContainsLockedThread(MBCategory category)
-		throws SystemException {
-
-		List<Long> categoryIds = new ArrayList<Long>();
-
-		categoryIds.add(category.getCategoryId());
-
-		categoryIds = getSubcategoryIds(
-			categoryIds, category.getGroupId(), category.getCategoryId());
-
-		List<MBThread> lockedThreads = mbThreadLocalService.getLockedThreads();
-
-		for (MBThread lockedThread : lockedThreads) {
-			if (categoryIds.contains(lockedThread.getCategoryId())) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	@Override
 	public void deleteCategories(long groupId)
 		throws PortalException, SystemException {
 
