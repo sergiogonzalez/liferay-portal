@@ -290,6 +290,8 @@
 						key_
 					FROM
 						lock_
+					WHERE
+						(className = ?)
 				))
 		]]>
 	</sql>
