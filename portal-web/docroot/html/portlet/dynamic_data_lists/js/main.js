@@ -69,11 +69,10 @@ AUI.add(
 
 						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
+						portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
 						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
 						portletURL.setParameter('struts_action', '/dynamic_data_mapping/select_document_library');
-
 						portletURL.setPortletId('166');
-
 						portletURL.setWindowState('pop_up');
 
 						Liferay.Util.openWindow(
