@@ -56,10 +56,10 @@ else if (scopeGroup.isLayout()) {
 <liferay-ui:error exception="<%= LARTypeException.class %>">
 
 	<%
-	LARTypeException lpe = (LARTypeException)errorException;
+	LARTypeException lte = (LARTypeException)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= lpe.getMessage() %>" key="please-import-a-lar-file-of-the-correct-type-x-is-not-valid" />
+	<liferay-ui:message arguments="<%= lte.getMessage() %>" key="please-import-a-lar-file-of-the-correct-type-x-is-not-valid" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= ExportImportAction.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
