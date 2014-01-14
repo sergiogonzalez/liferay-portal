@@ -165,7 +165,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 			%>
 
 			<aui:button-row>
-				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(pageContext, "enable-in-x", HtmlUtil.escape(layoutSetBranchName)) %>' />
+				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(pageContext, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
 
 				<aui:button name="deleteLayout" onClick="<%= taglibDeleteOnClick %>" value="delete-in-all-pages-variations" />
 			</aui:button-row>

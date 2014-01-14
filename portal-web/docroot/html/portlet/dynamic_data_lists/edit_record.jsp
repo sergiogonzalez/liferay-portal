@@ -77,7 +77,7 @@ if (translating) {
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	showBackURL="<%= !translating %>"
-	title='<%= (record != null) ? LanguageUtil.format(pageContext, "edit-x", ddmStructure.getName(locale)) : LanguageUtil.format(pageContext, "new-x", ddmStructure.getName(locale)) %>'
+	title='<%= (record != null) ? LanguageUtil.format(pageContext, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.format(pageContext, "new-x", ddmStructure.getName(locale), false) %>'
 />
 
 <portlet:actionURL var="editRecordURL">
@@ -283,9 +283,9 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSetId));
 PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());
 
 if (record != null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(pageContext, "edit-x", ddmStructure.getName(locale)), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(pageContext, "edit-x", ddmStructure.getName(locale), false), currentURL);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(pageContext, "add-x", ddmStructure.getName(locale)), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(pageContext, "add-x", ddmStructure.getName(locale), false), currentURL);
 }
 %>

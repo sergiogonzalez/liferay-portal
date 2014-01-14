@@ -82,7 +82,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 	</c:if>
 
 	<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.KEYWORD_CONFLICT %>">
-		<%= LanguageUtil.format(pageContext, "please-enter-a-friendly-url-that-does-not-conflict-with-the-keyword-x", gfurle.getKeywordConflict()) %>
+		<%= LanguageUtil.format(pageContext, "please-enter-a-friendly-url-that-does-not-conflict-with-the-keyword-x", gfurle.getKeywordConflict(), false) %>
 	</c:if>
 
 	<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.POSSIBLE_DUPLICATE %>">
@@ -181,7 +181,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 		boolean directoryIndexingEnabled = PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "directoryIndexingEnabled");
 		%>
 
-		<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "directory-indexing-help", new Object[] {HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + group.getFriendlyURL()}) %>' label="directory-indexing-enabled" name="TypeSettingsProperties--directoryIndexingEnabled--" type="checkbox" value="<%= directoryIndexingEnabled %>" />
+		<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "directory-indexing-help", new Object[] {HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + group.getFriendlyURL()}, false) %>' label="directory-indexing-enabled" name="TypeSettingsProperties--directoryIndexingEnabled--" type="checkbox" value="<%= directoryIndexingEnabled %>" />
 	</c:if>
 </aui:fieldset>
 

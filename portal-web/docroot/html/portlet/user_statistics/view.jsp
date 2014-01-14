@@ -22,11 +22,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 List<String> rankingNamesList = new ArrayList<String>();
 
 if (rankByParticipation) {
-	rankingNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
+	rankingNamesList.add(LanguageUtil.get(pageContext, SocialActivityCounterConstants.NAME_PARTICIPATION));
 }
 
 if (rankByContribution) {
-	rankingNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
+	rankingNamesList.add(LanguageUtil.get(pageContext, SocialActivityCounterConstants.NAME_CONTRIBUTION));
 }
 
 String[] rankingNames = rankingNamesList.toArray(new String[rankingNamesList.size()]);
@@ -71,17 +71,17 @@ if (!rankingNamesList.isEmpty()) {
 		resultRows.add(row);
 	}
 
-	String rankingNamesMessage = LanguageUtil.format(pageContext, rankingNames[0], StringPool.BLANK);
+	String rankingNamesMessage = LanguageUtil.format(pageContext, rankingNames[0], StringPool.BLANK, false);
 
 	for (int i = 1; i < rankingNames.length; i++) {
-		rankingNamesMessage = LanguageUtil.format(pageContext, "x-and-y", new Object[] {rankingNamesMessage, rankingNames[i]});
+		rankingNamesMessage = LanguageUtil.format(pageContext, "x-and-y", new Object[] {rankingNamesMessage, rankingNames[i]}, false);
 	}
 	%>
 
 	<c:if test="<%= showHeaderText %>">
 		<div class="top-users">
 			<c:if test="<%= total > 0 %>">
-				<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext, "ranking-is-based-on-x", rankingNamesMessage) %><br />
+				<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext, "ranking-is-based-on-x", rankingNamesMessage, false) %><br />
 			</c:if>
 		</div>
 	</c:if>
