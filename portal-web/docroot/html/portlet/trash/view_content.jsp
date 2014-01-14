@@ -141,12 +141,12 @@
 								</liferay-ui:search-container-column-text>
 
 								<liferay-ui:search-container-column-text
-									name='<%= LanguageUtil.format(pageContext, "num-of-x", curTrashHandler.getTrashContainedModelName(), true) %>'
+									name='<%= LanguageUtil.format(pageContext, "num-of-x", curTrashHandler.getTrashContainedModelName()) %>'
 									value="<%= String.valueOf(curBaseModelsCount) %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									name='<%= LanguageUtil.format(pageContext, "num-of-x", curTrashHandler.getTrashContainerModelName(), true) %>'
+									name='<%= LanguageUtil.format(pageContext, "num-of-x", curTrashHandler.getTrashContainerModelName()) %>'
 									value="<%= String.valueOf(curContainerModelsCount) %>"
 								/>
 
