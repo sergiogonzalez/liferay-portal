@@ -215,7 +215,7 @@ if (Validator.isNotNull(keywords)) {
 					/>
 				</liferay-util:buffer>
 
-				<span class="trash-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="<%= rootTrashHandler.getDeleteMessage() %>" />)</span>
+				<span class="trash-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="<%= rootTrashHandler.getDeleteMessage() %>" translateArguments="<%= false %>" />)</span>
 			</c:if>
 		</liferay-ui:search-container-column-text>
 

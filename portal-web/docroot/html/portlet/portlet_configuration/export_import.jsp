@@ -71,7 +71,7 @@ else if (scopeGroup.isLayout()) {
 	%>
 
 	<c:if test="<%= le.getType() == LocaleException.TYPE_EXPORT_IMPORT %>">
-		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-available-languages-in-the-lar-file-x-do-not-match-the-site's-available-languages-x" />
+		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-available-languages-in-the-lar-file-x-do-not-match-the-site's-available-languages-x" translateArguments="<%= false %>" />
 	</c:if>
 </liferay-ui:error>
 
@@ -103,7 +103,7 @@ else if (scopeGroup.isLayout()) {
 	RecordSetDuplicateRecordSetKeyException rsdrske = (RecordSetDuplicateRecordSetKeyException)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= rsdrske.getRecordSetKey() %>" key="dynamic-data-list-record-set-with-record-set-key-x-already-exists" />
+	<liferay-ui:message arguments="<%= rsdrske.getRecordSetKey() %>" key="dynamic-data-list-record-set-with-record-set-key-x-already-exists" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>">
@@ -112,7 +112,7 @@ else if (scopeGroup.isLayout()) {
 	StructureDuplicateStructureKeyException sdske = (StructureDuplicateStructureKeyException)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= sdske.getStructureKey() %>" key="dynamic-data-mapping-structure-with-structure-key-x-already-exists" />
+	<liferay-ui:message arguments="<%= sdske.getStructureKey() %>" key="dynamic-data-mapping-structure-with-structure-key-x-already-exists" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <c:choose>

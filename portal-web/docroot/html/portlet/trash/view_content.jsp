@@ -212,7 +212,7 @@
 
 				<c:if test="<%= (containerModelsCount + baseModelsCount) == 0 %>">
 					<div class="alert alert-info">
-						<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-an-entry" />
+						<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-an-entry" translateArguments="<%= false %>" />
 					</div>
 				</c:if>
 			</liferay-ui:panel-container>
