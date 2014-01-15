@@ -45,6 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
+import org.jruby.RubyProcess;
 
 /**
  * @author Brian Wing Shun Chan
@@ -274,6 +275,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String fileName, String content, Pattern pattern)
 		throws IOException {
 
+		Properties languageKeysExclusions = getExclusionsProperties(
+			"source_formatter_language_keys_exclusions.properties");
+
+		String allowedLanguageKey = null;
+
+		if (languageKeysExclusions != null) {
+			allowedLanguageKey = languageKeysExclusions.getProperty(fileName);
+		}
+
 		String fileExtension = fileUtil.getExtension(fileName);
 
 		if (!portalSource || fileExtension.equals("vm")) {
@@ -303,6 +313,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					languageKey.endsWith(StringPool.OPEN_BRACKET) ||
 					languageKey.endsWith(StringPool.PERIOD) ||
 					languageKey.endsWith(StringPool.UNDERLINE) ||
+					languageKey.equals(allowedLanguageKey) ||
 					languageKey.startsWith(StringPool.DASH) ||
 					languageKey.startsWith(StringPool.OPEN_BRACKET) ||
 					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
