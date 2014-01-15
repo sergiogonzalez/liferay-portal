@@ -34,41 +34,33 @@ public interface Language {
 
 	public String format(Locale locale, String pattern, List<Object> arguments);
 
-	public String format(Locale locale, String pattern, Object argument);
+	public String format(Locale locale, String pattern, Object... arguments);
 
 	public String format(
 		Locale locale, String pattern, Object argument,
 		boolean translateArguments);
-
-	public String format(Locale locale, String pattern, Object[] arguments);
 
 	public String format(
 		Locale locale, String pattern, Object[] arguments,
 		boolean translateArguments);
 
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument);
+		PageContext pageContext, String pattern, LanguageWrapper... arguments);
 
 	public String format(
 		PageContext pageContext, String pattern, LanguageWrapper argument,
 		boolean translateArguments);
 
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments);
-
-	public String format(
 		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
 		boolean translateArguments);
 
 	public String format(
-		PageContext pageContext, String pattern, Object argument);
+		PageContext pageContext, String pattern, Object... arguments);
 
 	public String format(
 		PageContext pageContext, String pattern, Object argument,
 		boolean translateArguments);
-
-	public String format(
-		PageContext pageContext, String pattern, Object[] arguments);
 
 	public String format(
 		PageContext pageContext, String pattern, Object[] arguments,
@@ -76,15 +68,11 @@ public interface Language {
 
 	public String format(
 		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument);
+		Object... arguments);
 
 	public String format(
 		PortletConfig portletConfig, Locale locale, String pattern,
 		Object argument, boolean translateArguments);
-
-	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments);
 
 	public String format(
 		PortletConfig portletConfig, Locale locale, String pattern,

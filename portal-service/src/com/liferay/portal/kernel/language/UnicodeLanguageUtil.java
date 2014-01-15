@@ -28,9 +28,9 @@ import javax.servlet.jsp.PageContext;
 public class UnicodeLanguageUtil {
 
 	public static String format(
-		Locale locale, String pattern, Object argument) {
+		Locale locale, String pattern, Object... arguments) {
 
-		return getUnicodeLanguage().format(locale, pattern, argument);
+		return getUnicodeLanguage().format(locale, pattern, arguments);
 	}
 
 	public static String format(
@@ -42,12 +42,6 @@ public class UnicodeLanguageUtil {
 	}
 
 	public static String format(
-		Locale locale, String pattern, Object[] arguments) {
-
-		return getUnicodeLanguage().format(locale, pattern, arguments);
-	}
-
-	public static String format(
 		Locale locale, String pattern, Object[] arguments,
 		boolean translateArguments) {
 
@@ -56,9 +50,9 @@ public class UnicodeLanguageUtil {
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument) {
+		PageContext pageContext, String pattern, LanguageWrapper... arguments) {
 
-		return getUnicodeLanguage().format(pageContext, pattern, argument);
+		return getUnicodeLanguage().format(pageContext, pattern, arguments);
 	}
 
 	public static String format(
@@ -70,12 +64,6 @@ public class UnicodeLanguageUtil {
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
-
-		return getUnicodeLanguage().format(pageContext, pattern, arguments);
-	}
-
-	public static String format(
 		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
 		boolean translateArguments) {
 
@@ -84,9 +72,9 @@ public class UnicodeLanguageUtil {
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, Object argument) {
+		PageContext pageContext, String pattern, Object... arguments) {
 
-		return getUnicodeLanguage().format(pageContext, pattern, argument);
+		return getUnicodeLanguage().format(pageContext, pattern, arguments);
 	}
 
 	public static String format(
@@ -95,12 +83,6 @@ public class UnicodeLanguageUtil {
 
 		return getUnicodeLanguage().format(
 			pageContext, pattern, argument, translateArguments);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, Object[] arguments) {
-
-		return getUnicodeLanguage().format(pageContext, pattern, arguments);
 	}
 
 	public static String format(
@@ -113,10 +95,10 @@ public class UnicodeLanguageUtil {
 
 	public static String format(
 		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument) {
+		Object... arguments) {
 
 		return getUnicodeLanguage().format(
-			portletConfig, locale, pattern, argument);
+			portletConfig, locale, pattern, arguments);
 	}
 
 	public static String format(
@@ -125,14 +107,6 @@ public class UnicodeLanguageUtil {
 
 		return getUnicodeLanguage().format(
 			portletConfig, locale, pattern, argument, translateArguments);
-	}
-
-	public static String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments) {
-
-		return getUnicodeLanguage().format(
-			portletConfig, locale, pattern, arguments);
 	}
 
 	public static String format(
