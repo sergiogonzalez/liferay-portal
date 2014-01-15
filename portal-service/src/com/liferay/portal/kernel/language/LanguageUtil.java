@@ -42,9 +42,9 @@ public class LanguageUtil {
 	}
 
 	public static String format(
-		Locale locale, String pattern, Object argument) {
+		Locale locale, String pattern, Object... arguments) {
 
-		return getLanguage().format(locale, pattern, argument);
+		return getLanguage().format(locale, pattern, arguments);
 	}
 
 	public static String format(
@@ -56,12 +56,6 @@ public class LanguageUtil {
 	}
 
 	public static String format(
-		Locale locale, String pattern, Object[] arguments) {
-
-		return getLanguage().format(locale, pattern, arguments);
-	}
-
-	public static String format(
 		Locale locale, String pattern, Object[] arguments,
 		boolean translateArguments) {
 
@@ -70,9 +64,9 @@ public class LanguageUtil {
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument) {
+		PageContext pageContext, String pattern, LanguageWrapper... arguments) {
 
-		return getLanguage().format(pageContext, pattern, argument);
+		return getLanguage().format(pageContext, pattern, arguments);
 	}
 
 	public static String format(
@@ -84,12 +78,6 @@ public class LanguageUtil {
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
-
-		return getLanguage().format(pageContext, pattern, arguments);
-	}
-
-	public static String format(
 		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
 		boolean translateArguments) {
 
@@ -98,9 +86,9 @@ public class LanguageUtil {
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, Object argument) {
+		PageContext pageContext, String pattern, Object... arguments) {
 
-		return getLanguage().format(pageContext, pattern, argument);
+		return getLanguage().format(pageContext, pattern, arguments);
 	}
 
 	public static String format(
@@ -109,12 +97,6 @@ public class LanguageUtil {
 
 		return getLanguage().format(
 			pageContext, pattern, argument, translateArguments);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, Object[] arguments) {
-
-		return getLanguage().format(pageContext, pattern, arguments);
 	}
 
 	public static String format(
@@ -127,9 +109,9 @@ public class LanguageUtil {
 
 	public static String format(
 		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument) {
+		Object... arguments) {
 
-		return getLanguage().format(portletConfig, locale, pattern, argument);
+		return getLanguage().format(portletConfig, locale, pattern, arguments);
 	}
 
 	public static String format(
@@ -138,13 +120,6 @@ public class LanguageUtil {
 
 		return getLanguage().format(
 			portletConfig, locale, pattern, argument, translateArguments);
-	}
-
-	public static String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments) {
-
-		return getLanguage().format(portletConfig, locale, pattern, arguments);
 	}
 
 	public static String format(

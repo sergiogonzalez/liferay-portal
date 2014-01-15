@@ -33,9 +33,9 @@ import javax.servlet.jsp.PageContext;
 public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	@Override
-	public String format(Locale locale, String pattern, Object argument) {
+	public String format(Locale locale, String pattern, Object... arguments) {
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(locale, pattern, argument));
+			LanguageUtil.format(locale, pattern, arguments));
 	}
 
 	@Override
@@ -45,12 +45,6 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(locale, pattern, argument, translateArguments));
-	}
-
-	@Override
-	public String format(Locale locale, String pattern, Object[] arguments) {
-		return UnicodeFormatter.toString(
-			LanguageUtil.format(locale, pattern, arguments));
 	}
 
 	@Override
@@ -65,10 +59,10 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument) {
+		PageContext pageContext, String pattern, LanguageWrapper... arguments) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(pageContext, pattern, argument));
+			LanguageUtil.format(pageContext, pattern, arguments));
 	}
 
 	@Override
@@ -83,14 +77,6 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
-
-		return UnicodeFormatter.toString(
-			LanguageUtil.format(pageContext, pattern, arguments));
-	}
-
-	@Override
-	public String format(
 		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
 		boolean translateArguments) {
 
@@ -101,10 +87,10 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object argument) {
+		PageContext pageContext, String pattern, Object... arguments) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(pageContext, pattern, argument));
+			LanguageUtil.format(pageContext, pattern, arguments));
 	}
 
 	@Override
@@ -115,14 +101,6 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(
 				pageContext, pattern, argument, translateArguments));
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, Object[] arguments) {
-
-		return UnicodeFormatter.toString(
-			LanguageUtil.format(pageContext, pattern, arguments));
 	}
 
 	@Override
@@ -138,10 +116,10 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	@Override
 	public String format(
 		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument) {
+		Object... arguments) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(portletConfig, locale, pattern, argument));
+			LanguageUtil.format(portletConfig, locale, pattern, arguments));
 	}
 
 	@Override
@@ -152,15 +130,6 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(
 				portletConfig, locale, pattern, argument, translateArguments));
-	}
-
-	@Override
-	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments) {
-
-		return UnicodeFormatter.toString(
-			LanguageUtil.format(portletConfig, locale, pattern, arguments));
 	}
 
 	@Override
