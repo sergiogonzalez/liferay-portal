@@ -21,7 +21,13 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 
 long categoryId = MBUtil.getCategoryId(request, category);
 
+long activeCategoryId = ParamUtil.getLong(request, "activeCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+String backURL = ParamUtil.getString(request, "backURL", StringPool.BLANK);
+
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectCategory");
+
+boolean showChildrenCategories = ParamUtil.getBoolean(request, "showChildrenCategories", true);
 
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
 
@@ -39,6 +45,7 @@ else {
 
 <aui:form method="post" name="selectCategoryFm">
 	<liferay-ui:header
+		backURL="<%= backURL %>"
 		title="message-boards-home"
 	/>
 
@@ -52,7 +59,7 @@ else {
 	%>
 
 	<liferay-ui:search-container
-		headerNames="category[message-board],num-of-categories,num-of-threads,num-of-posts,"
+		headerNames="category[message-board],num-of-categories,num-of-threads,num-of-posts,null"
 		iteratorURL="<%= portletURL %>"
 		total="<%= MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 	>
@@ -69,55 +76,98 @@ else {
 
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="struts_action" value="/message_boards/select_category" />
+				<portlet:param name="activeCategoryId" value="<%= String.valueOf(activeCategoryId) %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
+				<portlet:param name="showChildrenCategories" value="<%= String.valueOf(showChildrenCategories) %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				buffer="buffer"
-				href="<%= rowURL %>"
-				name="category[message-board]"
-			>
+			<c:choose>
+				<c:when test="<%= !showChildrenCategories && activeCategoryId == curCategory.getCategoryId() %>">
+					<liferay-ui:search-container-column-text
+						buffer="buffer"
+						name="category[message-board]"
+						>
 
-				<%
-				buffer.append(curCategory.getName());
+						<%
+						buffer.append(curCategory.getName());
 
-				if (Validator.isNotNull(curCategory.getDescription())) {
-					buffer.append("<br />");
-					buffer.append(curCategory.getDescription());
-				}
-				%>
+						if (Validator.isNotNull(curCategory.getDescription())) {
+							buffer.append("<br />");
+							buffer.append(curCategory.getDescription());
+						}
+						%>
 
-			</liferay-ui:search-container-column-text>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="num-of-categories"
-				value="<%= String.valueOf(categoryDisplay.getSubcategoriesCount(curCategory)) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						name="num-of-categories"
+						value="<%= String.valueOf(categoryDisplay.getSubcategoriesCount(curCategory)) %>"
+						/>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="num-of-threads"
-				value="<%= String.valueOf(categoryDisplay.getSubcategoriesThreadsCount(curCategory)) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						name="num-of-threads"
+						value="<%= String.valueOf(categoryDisplay.getSubcategoriesThreadsCount(curCategory)) %>"
+						/>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="num-of-posts"
-				value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						name="num-of-posts"
+						value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
+						/>
 
-			<liferay-ui:search-container-column-text>
+					<liferay-ui:search-container-column-text value="<%= StringPool.BLANK %>" />
 
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						buffer="buffer"
+						href="<%= rowURL %>"
+						name="category[message-board]"
+						>
 
-				data.put("categoryId", curCategory.getCategoryId());
-				data.put("name", HtmlUtil.escapeAttribute(curCategory.getName()));
-				%>
+						<%
+						buffer.append(curCategory.getName());
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-			</liferay-ui:search-container-column-text>
+						if (Validator.isNotNull(curCategory.getDescription())) {
+							buffer.append("<br />");
+							buffer.append(curCategory.getDescription());
+						}
+						%>
+
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="num-of-categories"
+						value="<%= String.valueOf(categoryDisplay.getSubcategoriesCount(curCategory)) %>"
+						/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="num-of-threads"
+						value="<%= String.valueOf(categoryDisplay.getSubcategoriesThreadsCount(curCategory)) %>"
+						/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="num-of-posts"
+						value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
+						/>
+
+					<liferay-ui:search-container-column-text>
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("categoryId", curCategory.getCategoryId());
+						data.put("name", HtmlUtil.escapeAttribute(curCategory.getName()));
+						%>
+
+						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					</liferay-ui:search-container-column-text>
+				</c:otherwise>
+			</c:choose>
+
 		</liferay-ui:search-container-row>
 
 		<aui:button-row>

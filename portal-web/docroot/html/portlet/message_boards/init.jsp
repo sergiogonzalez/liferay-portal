@@ -22,6 +22,7 @@ page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileExtensionException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
 page import="com.liferay.portlet.messageboards.BannedUserException" %><%@
+page import="com.liferay.portlet.messageboards.CategoryMovingException" %><%@
 page import="com.liferay.portlet.messageboards.CategoryNameException" %><%@
 page import="com.liferay.portlet.messageboards.LockedThreadException" %><%@
 page import="com.liferay.portlet.messageboards.MailingListEmailAddressException" %><%@

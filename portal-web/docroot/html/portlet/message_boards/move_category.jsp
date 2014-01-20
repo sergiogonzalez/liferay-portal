@@ -1,3 +1,4 @@
+
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -19,9 +20,18 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
+long categoryId = ParamUtil.getLong(request, "mbCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-long categoryId = MBUtil.getCategoryId(request, category);
+MBCategory category = null;
+
+if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+	category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
+
+	categoryId = MBUtil.getCategoryId(request, category);
+}
+else {
+	category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+}
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 %>
@@ -40,6 +50,18 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
+
+	<liferay-ui:error exception="<%= CategoryMovingException.class %>">
+
+		<%
+		CategoryMovingException cme = (CategoryMovingException)errorException;
+
+		String categoryName = cme.getCategoryName();
+		String parentCategoryName = cme.getParentCategoryName();
+		%>
+
+		<liferay-ui:message arguments="<%= new String[]{parentCategoryName, categoryName} %>" key="x-cannot-be-the-parent-category-of-x" />
+	</liferay-ui:error>
 
 	<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 
@@ -108,7 +130,7 @@ if (category != null) {
 					},
 					id: '<portlet:namespace />selectCategory',
 					title: '<liferay-ui:message arguments="category" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /></portlet:renderURL>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /><portlet:param name="activeCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" /><portlet:param name="showChildrenCategories" value="<%= StringPool.FALSE %>" /> </portlet:renderURL>'
 				},
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = event.categoryid;
