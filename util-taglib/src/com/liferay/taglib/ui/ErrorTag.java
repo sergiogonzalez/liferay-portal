@@ -67,9 +67,14 @@ public class ErrorTag extends TagSupport {
 					Validator.isNotNull(errorMarkerValue)) {
 
 					request.setAttribute(errorMarkerKey, errorMarkerValue);
-					request.setAttribute(
-						"liferay-ui:error:exception",
-						getException(portletRequest));
+
+					Object exception = getException(portletRequest);
+
+					if (exception instanceof Exception) {
+						request.setAttribute(
+							"liferay-ui:error:exception", exception);
+					}
+
 					request.setAttribute(
 						"liferay-ui:error:focusField", _focusField);
 				}
@@ -167,7 +172,7 @@ public class ErrorTag extends TagSupport {
 		}
 	}
 
-	protected Object getException(PortletRequest portletRequest) {
+	protected Exception getException(PortletRequest portletRequest) {
 		Object value = null;
 
 		if (_exception != null) {
@@ -177,7 +182,7 @@ public class ErrorTag extends TagSupport {
 			value = SessionErrors.get(portletRequest, _key);
 		}
 
-		return value;
+		return null;
 	}
 
 	protected String getStartPage() {
