@@ -167,7 +167,7 @@ public class ErrorTag extends TagSupport {
 		}
 	}
 
-	protected Object getException(PortletRequest portletRequest) {
+	protected Exception getException(PortletRequest portletRequest) {
 		Object value = null;
 
 		if (_exception != null) {
@@ -177,7 +177,11 @@ public class ErrorTag extends TagSupport {
 			value = SessionErrors.get(portletRequest, _key);
 		}
 
-		return value;
+		if (value instanceof Exception) {
+			return (Exception)value;
+		}
+
+		return null;
 	}
 
 	protected String getStartPage() {
