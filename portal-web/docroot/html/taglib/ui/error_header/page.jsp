@@ -14,9 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+<%@ include file="/html/portlet/admin/init.jsp" %>
 
-<liferay-ui:error-header/>
-
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
-<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-unexpected-error-occurred" />
+<liferay-ui:header
+	backURL='<%= ParamUtil.getString(request, "liferay-ui:discussion:backURL") %>'
+	title="error"
+/>
