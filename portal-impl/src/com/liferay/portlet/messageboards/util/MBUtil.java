@@ -833,6 +833,28 @@ public class MBUtil {
 		return rank;
 	}
 
+	public static boolean hasLockedThread(MBCategory category)
+		throws SystemException {
+
+		List<Long> categoryIds = new ArrayList<Long>();
+
+		categoryIds.add(category.getCategoryId());
+
+		categoryIds = MBCategoryLocalServiceUtil.getSubcategoryIds(
+			categoryIds, category.getGroupId(), category.getCategoryId());
+
+		List<MBThread> lockedThreads =
+			MBThreadLocalServiceUtil.getLockedThreads();
+
+		for (MBThread lockedThread : lockedThreads) {
+			if (categoryIds.contains(lockedThread.getCategoryId())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean hasMailIdHeader(Message message) throws Exception {
 		String[] messageIds = message.getHeader("Message-ID");
 

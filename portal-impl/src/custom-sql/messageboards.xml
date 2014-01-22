@@ -278,6 +278,23 @@
 				(Subscription.userId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByLocked">
+		<![CDATA[
+			SELECT
+				{MBThread.*}
+			FROM
+				MBThread
+			WHERE
+				(threadId IN (
+					SELECT
+						key_
+					FROM
+						Lock_
+					WHERE
+						(className = ?)
+				))
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByNoAssets">
 		<![CDATA[
 			SELECT

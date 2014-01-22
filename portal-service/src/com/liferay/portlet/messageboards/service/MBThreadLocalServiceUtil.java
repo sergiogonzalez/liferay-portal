@@ -534,6 +534,11 @@ public class MBThreadLocalServiceUtil {
 		return getService().getGroupThreadsCount(groupId, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getLockedThreads()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLockedThreads();
+	}
+
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getNoAssetThreads()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getNoAssetThreads();
