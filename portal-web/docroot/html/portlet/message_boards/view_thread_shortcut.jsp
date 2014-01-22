@@ -52,19 +52,7 @@ if (threadFlag != null) {
 			</c:if>
 
 			<%
-			String layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
-
-			String messageURL = layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "message_boards/view_message/" + selMessage.getMessageId();
-
-			if (windowState.equals(WindowState.MAXIMIZED)) {
-				messageURL += "/maximized";
-			}
-
 			String rowHREF = "#" + renderResponse.getNamespace() + "message_" + message.getMessageId();
-
-			if (!themeDisplay.isFacebook()) {
-				rowHREF = messageURL + rowHREF;
-			}
 
 			boolean readThread = true;
 
