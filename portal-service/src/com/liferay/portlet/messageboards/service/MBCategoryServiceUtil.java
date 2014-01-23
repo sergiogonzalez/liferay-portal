@@ -143,6 +143,15 @@ public class MBCategoryServiceUtil {
 				   .getCategories(groupId, parentCategoryIds, status, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, long excludedCategoryId, long parentCategoryId,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getCategories(groupId, excludedCategoryId,
+			parentCategoryId, status, start, end);
+	}
+
 	public static int getCategoriesCount(long groupId, long parentCategoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCategoriesCount(groupId, parentCategoryId);
@@ -163,6 +172,14 @@ public class MBCategoryServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getCategoriesCount(groupId, parentCategoryIds, status);
+	}
+
+	public static int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getCategoriesCount(groupId, excludedCategoryId,
+			parentCategoryId, status);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBCategory getCategory(
