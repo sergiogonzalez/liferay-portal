@@ -522,6 +522,8 @@ create unique index IX_2A3B68F6 on MBBan (uuid_, groupId);
 create index IX_BC735DCF on MBCategory (companyId);
 create index IX_E15A5DB5 on MBCategory (companyId, status);
 create index IX_BB870C11 on MBCategory (groupId);
+create index IX_4CF55935 on MBCategory (groupId, categoryId, parentCategoryId);
+create index IX_8CF5931B on MBCategory (groupId, categoryId, parentCategoryId, status);
 create index IX_ED292508 on MBCategory (groupId, parentCategoryId);
 create index IX_C295DBEE on MBCategory (groupId, parentCategoryId, status);
 create index IX_DA84A9F7 on MBCategory (groupId, status);

@@ -504,4 +504,26 @@ public interface MBCategoryLocalService extends BaseLocalService,
 		long userId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, long excludedCategoryId, long parentCategoryId,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long[] excludedCategoryIds,
+		long[] parentCategoryIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

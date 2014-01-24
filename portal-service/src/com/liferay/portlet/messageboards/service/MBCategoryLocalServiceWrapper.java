@@ -679,6 +679,40 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		return _mbCategoryLocalService.updateStatus(userId, categoryId, status);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, long excludedCategoryId, long parentCategoryId,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryLocalService.getCategories(groupId,
+			excludedCategoryId, parentCategoryId, status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryLocalService.getCategories(groupId,
+			excludedCategoryIds, parentCategoryIds, status, start, end);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryLocalService.getCategoriesCount(groupId,
+			excludedCategoryId, parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long[] excludedCategoryIds,
+		long[] parentCategoryIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryLocalService.getCategoriesCount(groupId,
+			excludedCategoryIds, parentCategoryIds, status);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
