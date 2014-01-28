@@ -41,6 +41,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -749,6 +750,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Override
 	public MBThread moveThread(long groupId, long categoryId, long threadId)
 		throws PortalException, SystemException {
+
+		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
+			throw new LockedThreadException();
+		}
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
