@@ -141,6 +141,7 @@ page import="com.liferay.portal.kernel.util.ReleaseInfo" %><%@
 page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ServerDetector" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
+page import="com.liferay.portal.kernel.util.SettingsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.SortedArrayList" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringComparator" %><%@

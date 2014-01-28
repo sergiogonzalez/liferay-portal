@@ -131,7 +131,7 @@ else {
 		}
 		%>
 
-		<c:if test="<%= hasSubscriptionPermission && (MBUtil.getEmailMessageAddedEnabled(portletPreferences) || MBUtil.getEmailMessageUpdatedEnabled(portletPreferences)) %>">
+		<c:if test="<%= hasSubscriptionPermission && (MBUtil.getEmailMessageAddedEnabled(portletSiteSettings) || MBUtil.getEmailMessageUpdatedEnabled(portletSiteSettings)) %>">
 			<c:choose>
 				<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(categorySubscriptionClassPK) %>">
 					<portlet:actionURL var="unsubscribeURL">
