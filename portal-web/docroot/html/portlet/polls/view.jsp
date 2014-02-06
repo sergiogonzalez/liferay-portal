@@ -25,7 +25,7 @@
 
 	List<String> headerNames = new ArrayList<String>();
 
-	headerNames.add("question");
+	headerNames.add("title");
 	headerNames.add("num-of-votes");
 	headerNames.add("last-vote-date");
 	headerNames.add("expiration-date");
