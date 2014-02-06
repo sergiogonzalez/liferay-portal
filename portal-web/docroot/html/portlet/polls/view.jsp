@@ -106,7 +106,7 @@
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
-					<aui:button href="<%= editQuestionURL %>" value="add-question" />
+					<aui:button href="<%= editQuestionURL %>" value="add-poll" />
 				</c:if>
 
 				<c:if test="<%= showPermissionsButton %>">
