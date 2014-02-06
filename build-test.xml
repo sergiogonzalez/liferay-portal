@@ -734,6 +734,11 @@ create database lportal2 character set utf8;</echo>
 			file="${changelog.dir}/git-build-log.html"
 			todir="${basedir}"
 		/>
+
+		<copy
+			file="${changelog.dir}/git-build-log.html"
+			todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+		/>
 	</target>
 
 	<target name="generate-test-properties" depends="check-config">
@@ -2291,6 +2296,16 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<property name="test.class" value="${test.simple.class.name}" />
 				</ant>
 			</else>
+		</if>
+
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<copy
+					file="portal-web/test-results/functional/report.html"
+					todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+				/>
+			</then>
 		</if>
 	</target>
 

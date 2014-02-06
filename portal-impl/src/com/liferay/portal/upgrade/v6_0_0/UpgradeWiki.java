@@ -28,12 +28,12 @@ public class UpgradeWiki extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
-			runSQL("alter_column_type WikiPage parentTitle varchar(255) null");
+			runSQL("alter_column_type WikiPage parentTitle VARCHAR(255) null");
 			runSQL(
-				"alter_column_type WikiPage redirectTitle varchar(255) null");
+				"alter_column_type WikiPage redirectTitle VARCHAR(255) null");
 
 			runSQL(
-				"alter_column_type WikiPageResource title varchar(255) null");
+				"alter_column_type WikiPageResource title VARCHAR(255) null");
 		}
 		catch (SQLException sqle) {
 

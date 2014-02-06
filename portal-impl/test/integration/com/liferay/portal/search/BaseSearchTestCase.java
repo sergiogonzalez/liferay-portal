@@ -250,6 +250,10 @@ public abstract class BaseSearchTestCase {
 
 	protected abstract String getSearchKeywords();
 
+	protected boolean isCheckBaseModelPermission() {
+		return CHECK_BASE_MODEL_PERMISSION;
+	}
+
 	protected boolean isExpirableAllVersions() {
 		return false;
 	}
@@ -839,8 +843,14 @@ public abstract class BaseSearchTestCase {
 
 			searchContext.setUserId(user.getUserId());
 
+			int baseModelsCount =  initialBaseModelsSearchCount;
+
+			if (addBaseModelPermission && !isCheckBaseModelPermission()) {
+				baseModelsCount++;
+			}
+
 			Assert.assertEquals(
-				initialBaseModelsSearchCount,
+				baseModelsCount,
 				searchBaseModelsCount(
 					getBaseModelClass(), group.getGroupId(), searchContext));
 		}
@@ -861,6 +871,8 @@ public abstract class BaseSearchTestCase {
 	protected void updateDDMStructure(ServiceContext serviceContext)
 		throws Exception {
 	}
+
+	protected final boolean CHECK_BASE_MODEL_PERMISSION = true;
 
 	protected BaseModel<?> baseModel;
 	protected Group group;

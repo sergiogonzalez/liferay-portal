@@ -2323,8 +2323,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				q.addEntity(_FILTER_ENTITY_TABLE, DDMStructureImpl.class);
 			}
 
-			QueryPos qPos = QueryPos.getInstance(q);
-
 			return (List<DDMStructure>)QueryUtil.list(q, getDialect(), start,
 				end);
 		}
@@ -2467,8 +2465,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				session = openSession();
 
 				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (!pagination) {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -2619,8 +2615,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				Query q = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
 				count = (Long)q.uniqueResult();
 
 				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
@@ -2741,8 +2735,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			q.addScalar(COUNT_COLUMN_NAME,
 				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
 
 			Long count = (Long)q.uniqueResult();
 
@@ -8635,7 +8627,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			CacheRegistryUtil.clear(DDMStructureImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DDMStructureImpl.class.getName());
+		EntityCacheUtil.clearCache(DDMStructureImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

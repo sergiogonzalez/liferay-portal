@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
@@ -643,8 +644,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 				Query q = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
 				if (!pagination) {
 					list = (List<ResourcePermission>)QueryUtil.list(q,
 							getDialect(), start, end, false);
@@ -793,8 +792,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				session = openSession();
 
 				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
 
 				count = (Long)q.uniqueResult();
 
@@ -4021,7 +4018,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			CacheRegistryUtil.clear(ResourcePermissionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ResourcePermissionImpl.class.getName());
+		EntityCacheUtil.clearCache(ResourcePermissionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4741,10 +4738,22 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		};
 
 	private static CacheModel<ResourcePermission> _nullResourcePermissionCacheModel =
-		new CacheModel<ResourcePermission>() {
-			@Override
-			public ResourcePermission toEntityModel() {
-				return _nullResourcePermission;
-			}
-		};
+		new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ResourcePermission>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ResourcePermission toEntityModel() {
+			return _nullResourcePermission;
+		}
+	}
 }

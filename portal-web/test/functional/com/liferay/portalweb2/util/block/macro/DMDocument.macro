@@ -52,7 +52,6 @@
 	</command>
 
 	<command name="addPGViaMG">
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no media files in this folder." />
 		<execute action="PGMediagalleryFolder#assertClick" locator-key1="FOLDER_MENU_ADD_MEDIA" value1="Add Media" />
 
 		<execute action="PGMediagallerySelectmediatype#selectFrame" locator-key1="SELECT_MEDIA_TYPE_IFRAME" />
@@ -277,9 +276,6 @@
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute action="PGMediagalleryFolder#assertClick" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
-
-		<var name="key_mgDocumentDescription" value="${mgDocumentDescription}" />
-		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute action="PGMediagalleryMedia#assertTextEquals" locator-key1="MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
 		<execute action="PGMediagalleryMedia#click" locator-key1="ENTRY_EDIT_ICON" />
@@ -662,7 +658,7 @@
 				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 			</then>
 			<else>
-				<execute action="SODocuments#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_HEADER_TITLE" value1="${dmDocumentTitle}" />
 			</else>
 		</if>
 	</command>
