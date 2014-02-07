@@ -63,16 +63,6 @@ public class PortletPreferencesTestUtil {
 			portlet.getPortletId(), portlet, defaultPreferences);
 	}
 
-	public static javax.portlet.PortletPreferences fetchLayoutPreferences(
-			Layout layout, Portlet portlet)
-		throws Exception {
-
-		return PortletPreferencesLocalServiceUtil.fetchPreferences(
-			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-			portlet.getPortletId());
-	}
-
 	public static PortletPreferencesImpl convert(
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -82,6 +72,16 @@ public class PortletPreferencesTestUtil {
 			portletPreferences.getOwnerType(), portletPreferences.getPlid(),
 			portletPreferences.getPortletId(),
 			portletPreferences.getPreferences());
+	}
+
+	public static javax.portlet.PortletPreferences fetchLayoutPreferences(
+			Layout layout, Portlet portlet)
+		throws Exception {
+
+		return PortletPreferencesLocalServiceUtil.fetchPreferences(
+			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+			portlet.getPortletId());
 	}
 
 	public static String getPreferencesAsXMLString(
