@@ -14,27 +14,18 @@
 
 package com.liferay.portlet.bookmarks.notifications;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.notifications.BaseContentUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
-import javax.portlet.PortletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -42,113 +33,57 @@ import javax.portlet.WindowState;
  * @author Roberto Díaz
  */
 public class BookmarksUserNotificationHandler
-	extends BaseUserNotificationHandler {
+	extends BaseContentUserNotificationHandler<BookmarksEntry> {
 
 	public BookmarksUserNotificationHandler() {
-		setPortletId(PortletKeys.BOOKMARKS);
+		super(
+			PortletKeys.BOOKMARKS, "/bookmarks/view_entry",
+			_NOTIFICATION_TITLES);
 	}
 
 	@Override
-	protected String getBody(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
+	protected BookmarksEntry fetchClassedModel(long classPK)
+		throws PortalException, SystemException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		long classPK = jsonObject.getLong("classPK");
-
-		BookmarksEntry entry =
-			BookmarksEntryLocalServiceUtil.fetchBookmarksEntry(classPK);
-
-		if (entry == null) {
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
-				userNotificationEvent.getUserNotificationEventId());
-
-			return null;
-		}
-
-		int notificationType = jsonObject.getInt("notificationType");
-
-		String title = StringPool.BLANK;
-
-		if (notificationType == 0) {
-			title = "x-wrote-a-new-bookmark-entry";
-		}
-		else if (notificationType == 1) {
-			title = "x-updated-a-bookmark-entry";
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<div class=\"title\">");
-		sb.append(
-			serviceContext.translate(
-				title,
-				HtmlUtil.escape(
-					PortalUtil.getUserName(
-						entry.getUserId(), StringPool.BLANK))));
-		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(StringUtil.shorten(entry.getName(), 50)));
-		sb.append("</div>");
-
-		return sb.toString();
+		return BookmarksEntryLocalServiceUtil.fetchBookmarksEntry(classPK);
 	}
 
 	@Override
-	protected String getLink(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
+	protected String getTitle(BookmarksEntry entry) {
+		return entry.getName();
+	}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
+	@Override
+	protected long getUserId(BookmarksEntry entry) {
+		return entry.getUserId();
+	}
 
-		long classPK = jsonObject.getLong("classPK");
+	@Override
+	protected void initPortletURL(
+			PortletURL portletURL, boolean inPage, BookmarksEntry entry)
+		throws PortletException {
 
-		BookmarksEntry entry =
-			BookmarksEntryLocalServiceUtil.fetchBookmarksEntry(classPK);
-
-		if (entry == null) {
-			return null;
-		}
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		User user = themeDisplay.getUser();
-
-		Group group = user.getGroup();
-
-		long portletPlid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, PortletKeys.BOOKMARKS);
-
-		PortletURL portletURL = null;
-
-		if (portletPlid != 0) {
-			portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getLiferayPortletRequest(),
-				PortletKeys.BOOKMARKS, portletPlid,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("struts_action", "/bookmarks/view_entry");
+		if (inPage) {
 			portletURL.setParameter(
 				"entryId", String.valueOf(entry.getEntryId()));
 		}
 		else {
-			LiferayPortletResponse liferayPortletResponse =
-				serviceContext.getLiferayPortletResponse();
-
-			portletURL = liferayPortletResponse.createRenderURL(
-				PortletKeys.BOOKMARKS);
-
-			portletURL.setParameter("struts_action", "/bookmarks/view_entry");
 			portletURL.setParameter(
 				"entryId", String.valueOf(entry.getEntryId()));
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 		}
+	}
 
-		return portletURL.toString();
+	private static final Map<Integer, String> _NOTIFICATION_TITLES =
+			new HashMap<Integer, String>();
+
+	static {
+		_NOTIFICATION_TITLES.put(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			"x-wrote-a-new-bookmark-entry");
+		_NOTIFICATION_TITLES.put(
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+			"x-updated-a-bookmark-entry");
 	}
 
 }

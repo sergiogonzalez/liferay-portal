@@ -14,27 +14,19 @@
 
 package com.liferay.portlet.documentlibrary.notifications;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.notifications.BaseContentUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
-import javax.portlet.PortletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -42,119 +34,62 @@ import javax.portlet.WindowState;
  * @author Roberto Díaz
  */
 public class DocumentLibraryUserNotificationHandler
-	extends BaseUserNotificationHandler {
+	extends BaseContentUserNotificationHandler<FileEntry> {
 
 	public DocumentLibraryUserNotificationHandler() {
-		setPortletId(PortletKeys.DOCUMENT_LIBRARY);
+		super(
+			PortletKeys.DOCUMENT_LIBRARY, "/document_library/view_file_entry",
+			_NOTIFICATION_TITLES);
 	}
 
 	@Override
-	protected String getBody(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		long classPK = jsonObject.getLong("classPK");
-
-		FileEntry file = null;
+	protected FileEntry fetchClassedModel(long classPK)
+		throws PortalException, SystemException {
 
 		try {
-			file = DLAppLocalServiceUtil.getFileEntry(classPK);
+			return DLAppLocalServiceUtil.getFileEntry(classPK);
 		}
-		catch (Exception e) {
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
-				userNotificationEvent.getUserNotificationEventId());
-
+		catch (NoSuchFileEntryException nsfee) {
 			return null;
 		}
-
-		int notificationType = jsonObject.getInt("notificationType");
-
-		String title = StringPool.BLANK;
-
-		if (notificationType == 0) {
-			title = "x-wrote-a-new-file-entry";
-		}
-		else if (notificationType == 1) {
-			title = "x-updated-a-file-entry";
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<div class=\"title\">");
-		sb.append(
-			serviceContext.translate(
-				title,
-				HtmlUtil.escape(
-					PortalUtil.getUserName(
-						file.getUserId(), StringPool.BLANK))));
-		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(StringUtil.shorten(file.getTitle(), 50)));
-		sb.append("</div>");
-
-		return sb.toString();
 	}
 
 	@Override
-	protected String getLink(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
+	protected String getTitle(FileEntry file) {
+		return file.getTitle();
+	}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
+	@Override
+	protected long getUserId(FileEntry file) {
+		return file.getUserId();
+	}
 
-		long classPK = jsonObject.getLong("classPK");
+	@Override
+	protected void initPortletURL(
+			PortletURL portletURL, boolean inPage, FileEntry file)
+		throws PortletException {
 
-		FileEntry file = null;
-
-		try {
-			file = DLAppLocalServiceUtil.getFileEntry(classPK);
-		}
-		catch (Exception e) {
-			return null;
-		}
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		User user = themeDisplay.getUser();
-
-		Group group = user.getGroup();
-
-		long portletPlid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, PortletKeys.DOCUMENT_LIBRARY);
-
-		PortletURL portletURL = null;
-
-		if (portletPlid != 0) {
-			portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getLiferayPortletRequest(),
-				PortletKeys.DOCUMENT_LIBRARY, portletPlid,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"struts_action", "/document_library/view_file_entry");
+		if (inPage) {
 			portletURL.setParameter(
 				"fileEntryId", String.valueOf(file.getFileEntryId()));
 		}
 		else {
-			LiferayPortletResponse liferayPortletResponse =
-				serviceContext.getLiferayPortletResponse();
-
-			portletURL = liferayPortletResponse.createRenderURL(
-				PortletKeys.DOCUMENT_LIBRARY);
-
-			portletURL.setParameter(
-				"struts_action", "/document_library/view_file_entry");
 			portletURL.setParameter(
 				"fileEntryId", String.valueOf(file.getFileEntryId()));
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 		}
+	}
 
-		return portletURL.toString();
+	private static final Map<Integer, String> _NOTIFICATION_TITLES =
+			new HashMap<Integer, String>();
+
+	static {
+		_NOTIFICATION_TITLES.put(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			"x-wrote-a-new-file-entry");
+		_NOTIFICATION_TITLES.put(
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+			"x-updated-a-file-entry");
 	}
 
 }
