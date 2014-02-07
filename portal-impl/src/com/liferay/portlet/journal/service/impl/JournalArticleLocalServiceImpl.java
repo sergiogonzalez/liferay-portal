@@ -6420,6 +6420,7 @@ public class JournalArticleLocalServiceImpl
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
+		subscriptionSender.setClassPK(article.getId());
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(article.getCompanyId());
 		subscriptionSender.setContextAttributes(
@@ -6430,6 +6431,14 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("journal_article", article.getId());
+
+		int notificationType = 0; // TODO: UserNotificationDefinition
+
+		if (serviceContext.isCommandUpdate()) {
+			notificationType = 1; // TODO: UserNotificationDefinition
+		}
+
+		subscriptionSender.setNotificationType(notificationType);
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
