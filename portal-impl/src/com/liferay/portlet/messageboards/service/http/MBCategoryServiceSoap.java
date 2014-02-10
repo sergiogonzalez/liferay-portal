@@ -205,12 +205,12 @@ public class MBCategoryServiceSoap {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBCategorySoap[] getCategories(
-		long groupId, long excludedCategoryId, long parentCategoryId,
+		long excludedCategoryId, long groupId, long parentCategoryId,
 		int status, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.messageboards.model.MBCategory> returnValue =
-				MBCategoryServiceUtil.getCategories(groupId,
-					excludedCategoryId, parentCategoryId, status, start, end);
+				MBCategoryServiceUtil.getCategories(excludedCategoryId,
+					groupId, parentCategoryId, status, start, end);
 
 			return com.liferay.portlet.messageboards.model.MBCategorySoap.toSoapModels(returnValue);
 		}
@@ -256,12 +256,12 @@ public class MBCategoryServiceSoap {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBCategorySoap[] getCategories(
-		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+		long[] excludedCategoryIds, long groupId, long[] parentCategoryIds,
 		int status, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.messageboards.model.MBCategory> returnValue =
-				MBCategoryServiceUtil.getCategories(groupId,
-					excludedCategoryIds, parentCategoryIds, status, start, end);
+				MBCategoryServiceUtil.getCategories(excludedCategoryIds,
+					groupId, parentCategoryIds, status, start, end);
 
 			return com.liferay.portlet.messageboards.model.MBCategorySoap.toSoapModels(returnValue);
 		}
@@ -302,11 +302,11 @@ public class MBCategoryServiceSoap {
 		}
 	}
 
-	public static int getCategoriesCount(long groupId, long excludedCategoryId,
+	public static int getCategoriesCount(long excludedCategoryId, long groupId,
 		long parentCategoryId, int status) throws RemoteException {
 		try {
-			int returnValue = MBCategoryServiceUtil.getCategoriesCount(groupId,
-					excludedCategoryId, parentCategoryId, status);
+			int returnValue = MBCategoryServiceUtil.getCategoriesCount(excludedCategoryId,
+					groupId, parentCategoryId, status);
 
 			return returnValue;
 		}
@@ -347,12 +347,12 @@ public class MBCategoryServiceSoap {
 		}
 	}
 
-	public static int getCategoriesCount(long groupId,
-		long[] excludedCategoryIds, long[] parentCategoryIds, int status)
+	public static int getCategoriesCount(long[] excludedCategoryIds,
+		long groupId, long[] parentCategoryIds, int status)
 		throws RemoteException {
 		try {
-			int returnValue = MBCategoryServiceUtil.getCategoriesCount(groupId,
-					excludedCategoryIds, parentCategoryIds, status);
+			int returnValue = MBCategoryServiceUtil.getCategoriesCount(excludedCategoryIds,
+					groupId, parentCategoryIds, status);
 
 			return returnValue;
 		}
