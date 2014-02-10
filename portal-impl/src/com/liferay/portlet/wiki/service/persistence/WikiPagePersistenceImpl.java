@@ -19668,6 +19668,315 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _FINDER_COLUMN_N_H_R_NOTS_REDIRECTTITLE_2 = "lower(wikiPage.redirectTitle) = ? AND ";
 	private static final String _FINDER_COLUMN_N_H_R_NOTS_REDIRECTTITLE_3 = "(wikiPage.redirectTitle IS NULL OR wikiPage.redirectTitle = '') AND ";
 	private static final String _FINDER_COLUMN_N_H_R_NOTS_STATUS_2 = "wikiPage.status != ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_N_T_H_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByN_T_H_S",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName(), Integer.class.getName()
+			},
+			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
+			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
+			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
+			WikiPageModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_N_T_H_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T_H_S",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName(), Integer.class.getName()
+			});
+
+	/**
+	 * Returns the wiki page where nodeId = &#63; and title = &#63; and head = &#63; and status = &#63; or throws a {@link com.liferay.portlet.wiki.NoSuchPageException} if it could not be found.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param head the head
+	 * @param status the status
+	 * @return the matching wiki page
+	 * @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public WikiPage findByN_T_H_S(long nodeId, String title, boolean head,
+		int status) throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = fetchByN_T_H_S(nodeId, title, head, status);
+
+		if (wikiPage == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("nodeId=");
+			msg.append(nodeId);
+
+			msg.append(", title=");
+			msg.append(title);
+
+			msg.append(", head=");
+			msg.append(head);
+
+			msg.append(", status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchPageException(msg.toString());
+		}
+
+		return wikiPage;
+	}
+
+	/**
+	 * Returns the wiki page where nodeId = &#63; and title = &#63; and head = &#63; and status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param head the head
+	 * @param status the status
+	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public WikiPage fetchByN_T_H_S(long nodeId, String title, boolean head,
+		int status) throws SystemException {
+		return fetchByN_T_H_S(nodeId, title, head, status, true);
+	}
+
+	/**
+	 * Returns the wiki page where nodeId = &#63; and title = &#63; and head = &#63; and status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param head the head
+	 * @param status the status
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public WikiPage fetchByN_T_H_S(long nodeId, String title, boolean head,
+		int status, boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { nodeId, title, head, status };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_N_T_H_S,
+					finderArgs, this);
+		}
+
+		if (result instanceof WikiPage) {
+			WikiPage wikiPage = (WikiPage)result;
+
+			if ((nodeId != wikiPage.getNodeId()) ||
+					!Validator.equals(title, wikiPage.getTitle()) ||
+					(head != wikiPage.getHead()) ||
+					(status != wikiPage.getStatus())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_WIKIPAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_N_T_H_S_NODEID_2);
+
+			boolean bindTitle = false;
+
+			if (title == null) {
+				query.append(_FINDER_COLUMN_N_T_H_S_TITLE_1);
+			}
+			else if (title.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_N_T_H_S_TITLE_3);
+			}
+			else {
+				bindTitle = true;
+
+				query.append(_FINDER_COLUMN_N_T_H_S_TITLE_2);
+			}
+
+			query.append(_FINDER_COLUMN_N_T_H_S_HEAD_2);
+
+			query.append(_FINDER_COLUMN_N_T_H_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(nodeId);
+
+				if (bindTitle) {
+					qPos.add(StringUtil.toLowerCase(title));
+				}
+
+				qPos.add(head);
+
+				qPos.add(status);
+
+				List<WikiPage> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_H_S,
+						finderArgs, list);
+				}
+				else {
+					WikiPage wikiPage = list.get(0);
+
+					result = wikiPage;
+
+					cacheResult(wikiPage);
+
+					if ((wikiPage.getNodeId() != nodeId) ||
+							(wikiPage.getTitle() == null) ||
+							!wikiPage.getTitle().equals(title) ||
+							(wikiPage.getHead() != head) ||
+							(wikiPage.getStatus() != status)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_H_S,
+							finderArgs, wikiPage);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_H_S,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (WikiPage)result;
+		}
+	}
+
+	/**
+	 * Removes the wiki page where nodeId = &#63; and title = &#63; and head = &#63; and status = &#63; from the database.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param head the head
+	 * @param status the status
+	 * @return the wiki page that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public WikiPage removeByN_T_H_S(long nodeId, String title, boolean head,
+		int status) throws NoSuchPageException, SystemException {
+		WikiPage wikiPage = findByN_T_H_S(nodeId, title, head, status);
+
+		return remove(wikiPage);
+	}
+
+	/**
+	 * Returns the number of wiki pages where nodeId = &#63; and title = &#63; and head = &#63; and status = &#63;.
+	 *
+	 * @param nodeId the node ID
+	 * @param title the title
+	 * @param head the head
+	 * @param status the status
+	 * @return the number of matching wiki pages
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByN_T_H_S(long nodeId, String title, boolean head,
+		int status) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_N_T_H_S;
+
+		Object[] finderArgs = new Object[] { nodeId, title, head, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_WIKIPAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_N_T_H_S_NODEID_2);
+
+			boolean bindTitle = false;
+
+			if (title == null) {
+				query.append(_FINDER_COLUMN_N_T_H_S_TITLE_1);
+			}
+			else if (title.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_N_T_H_S_TITLE_3);
+			}
+			else {
+				bindTitle = true;
+
+				query.append(_FINDER_COLUMN_N_T_H_S_TITLE_2);
+			}
+
+			query.append(_FINDER_COLUMN_N_T_H_S_HEAD_2);
+
+			query.append(_FINDER_COLUMN_N_T_H_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(nodeId);
+
+				if (bindTitle) {
+					qPos.add(StringUtil.toLowerCase(title));
+				}
+
+				qPos.add(head);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_N_T_H_S_NODEID_2 = "wikiPage.nodeId = ? AND ";
+	private static final String _FINDER_COLUMN_N_T_H_S_TITLE_1 = "wikiPage.title IS NULL AND ";
+	private static final String _FINDER_COLUMN_N_T_H_S_TITLE_2 = "lower(wikiPage.title) = ? AND ";
+	private static final String _FINDER_COLUMN_N_T_H_S_TITLE_3 = "(wikiPage.title IS NULL OR wikiPage.title = '') AND ";
+	private static final String _FINDER_COLUMN_N_T_H_S_HEAD_2 = "wikiPage.head = ? AND ";
+	private static final String _FINDER_COLUMN_N_T_H_S_STATUS_2 = "wikiPage.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_N_H_P_S =
 		new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
@@ -20868,6 +21177,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				wikiPage.getNodeId(), wikiPage.getTitle(), wikiPage.getVersion()
 			}, wikiPage);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_H_S,
+			new Object[] {
+				wikiPage.getNodeId(), wikiPage.getTitle(), wikiPage.getHead(),
+				wikiPage.getStatus()
+			}, wikiPage);
+
 		wikiPage.resetOriginalValues();
 	}
 
@@ -20969,6 +21284,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T_V, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V, args, wikiPage);
+
+			args = new Object[] {
+					wikiPage.getNodeId(), wikiPage.getTitle(),
+					wikiPage.getHead(), wikiPage.getStatus()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T_H_S, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_H_S, args,
+				wikiPage);
 		}
 		else {
 			WikiPageModelImpl wikiPageModelImpl = (WikiPageModelImpl)wikiPage;
@@ -21008,6 +21333,19 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T_V, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V, args,
+					wikiPage);
+			}
+
+			if ((wikiPageModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_N_T_H_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						wikiPage.getNodeId(), wikiPage.getTitle(),
+						wikiPage.getHead(), wikiPage.getStatus()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T_H_S, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_H_S, args,
 					wikiPage);
 			}
 		}
@@ -21069,6 +21407,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_V, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V, args);
+		}
+
+		args = new Object[] {
+				wikiPage.getNodeId(), wikiPage.getTitle(), wikiPage.getHead(),
+				wikiPage.getStatus()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_H_S, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_H_S, args);
+
+		if ((wikiPageModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_N_T_H_S.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					wikiPageModelImpl.getOriginalNodeId(),
+					wikiPageModelImpl.getOriginalTitle(),
+					wikiPageModelImpl.getOriginalHead(),
+					wikiPageModelImpl.getOriginalStatus()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_H_S, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_H_S, args);
 		}
 	}
 

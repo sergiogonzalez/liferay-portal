@@ -1518,6 +1518,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage movePageToTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
 
+		WikiPage redirectedPage = wikiPagePersistence.fetchByN_T_H_Last(
+			page.getNodeId(), page.getRedirectTitle(), true, null);
+
+		if ((redirectedPage != null) && !redirectedPage.isInTrash()) {
+			page = redirectedPage;
+		}
+
 		// Page
 
 		int oldStatus = page.getStatus();
@@ -1673,6 +1680,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@Override
 	public void restorePageFromTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
+
+		WikiPage redirectedPage = wikiPagePersistence.fetchByN_T_H_S(
+			page.getNodeId(), page.getRedirectTitle(), true,
+			WorkflowConstants.STATUS_IN_TRASH);
+
+		if (redirectedPage != null) {
+			page = redirectedPage;
+		}
 
 		String title = page.getTitle();
 

@@ -256,6 +256,12 @@
 			<finder-column name="redirectTitle" case-sensitive="false" />
 			<finder-column name="status" comparator="!=" />
 		</finder>
+		<finder name="N_T_H_S" return-type="WikiPage" unique="true">
+			<finder-column name="nodeId" />
+			<finder-column name="title" case-sensitive="false" />
+			<finder-column name="head" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_N_H_P_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="nodeId" />

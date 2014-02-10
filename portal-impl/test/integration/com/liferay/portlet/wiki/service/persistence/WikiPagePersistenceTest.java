@@ -677,6 +677,24 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByN_T_H_S() {
+		try {
+			_persistence.countByN_T_H_S(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.randomBoolean(),
+				ServiceTestUtil.nextInt());
+
+			_persistence.countByN_T_H_S(0L, StringPool.NULL,
+				ServiceTestUtil.randomBoolean(), 0);
+
+			_persistence.countByN_T_H_S(0L, (String)null,
+				ServiceTestUtil.randomBoolean(), 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByG_N_H_P_S() {
 		try {
 			_persistence.countByG_N_H_P_S(ServiceTestUtil.nextLong(),
@@ -880,6 +898,16 @@ public class WikiPagePersistenceTest {
 				existingWikiPageModelImpl.getOriginalTitle()));
 		AssertUtils.assertEquals(existingWikiPageModelImpl.getVersion(),
 			existingWikiPageModelImpl.getOriginalVersion());
+
+		Assert.assertEquals(existingWikiPageModelImpl.getNodeId(),
+			existingWikiPageModelImpl.getOriginalNodeId());
+		Assert.assertTrue(Validator.equals(
+				existingWikiPageModelImpl.getTitle(),
+				existingWikiPageModelImpl.getOriginalTitle()));
+		Assert.assertEquals(existingWikiPageModelImpl.getHead(),
+			existingWikiPageModelImpl.getOriginalHead());
+		Assert.assertEquals(existingWikiPageModelImpl.getStatus(),
+			existingWikiPageModelImpl.getOriginalStatus());
 	}
 
 	protected WikiPage addWikiPage() throws Exception {
