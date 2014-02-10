@@ -338,11 +338,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.findByNotC_G_P(
+			return mbCategoryPersistence.findByG_NotC_P(
 				groupId, excludedCategoryId, parentCategoryId, start, end);
 		}
 
-		return mbCategoryPersistence.findByNotC_G_P_S(
+		return mbCategoryPersistence.findByG_NotC_P_S(
 			groupId, excludedCategoryId, parentCategoryId, status, start, end);
 	}
 
@@ -377,12 +377,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.findByNotC_G_P(
-				excludedCategoryIds, groupId, parentCategoryIds, start, end);
+			return mbCategoryPersistence.findByG_NotC_P(
+				groupId, excludedCategoryIds, parentCategoryIds, start, end);
 		}
 
-		return mbCategoryPersistence.findByNotC_G_P_S(
-			excludedCategoryIds, groupId, parentCategoryIds, status, start,
+		return mbCategoryPersistence.findByG_NotC_P_S(
+			groupId, excludedCategoryIds, parentCategoryIds, status, start,
 			end);
 	}
 
@@ -445,11 +445,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.countByNotC_G_P(
+			return mbCategoryPersistence.countByG_NotC_P(
 				groupId, excludedCategoryId, parentCategoryId);
 		}
 
-		return mbCategoryPersistence.countByNotC_G_P_S(
+		return mbCategoryPersistence.countByG_NotC_P_S(
 			groupId, excludedCategoryId, parentCategoryId, status);
 	}
 
@@ -480,12 +480,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.countByNotC_G_P(
-				excludedCategoryIds, groupId, parentCategoryIds);
+			return mbCategoryPersistence.countByG_NotC_P(
+				groupId, excludedCategoryIds, parentCategoryIds);
 		}
 
-		return mbCategoryPersistence.countByNotC_G_P_S(
-			excludedCategoryIds, groupId, parentCategoryIds, status);
+		return mbCategoryPersistence.countByG_NotC_P_S(
+			groupId, excludedCategoryIds, parentCategoryIds, status);
 	}
 
 	@Override
