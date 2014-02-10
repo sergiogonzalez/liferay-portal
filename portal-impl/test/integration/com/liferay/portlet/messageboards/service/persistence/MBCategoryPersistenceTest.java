@@ -344,12 +344,12 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_NotC_P() {
+	public void testCountByNotC_G_P() {
 		try {
-			_persistence.countByG_NotC_P(ServiceTestUtil.nextLong(),
+			_persistence.countByNotC_G_P(ServiceTestUtil.nextLong(),
 				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
 
-			_persistence.countByG_NotC_P(0L, 0L, 0L);
+			_persistence.countByNotC_G_P(0L, 0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -357,10 +357,11 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_NotC_PArrayable() {
+	public void testCountByNotC_G_PArrayable() {
 		try {
-			_persistence.countByG_NotC_P(ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L },
+			_persistence.countByNotC_G_P(new long[] {
+					ServiceTestUtil.nextLong(), 0L
+				}, ServiceTestUtil.nextLong(),
 				new long[] { ServiceTestUtil.nextLong(), 0L });
 		}
 		catch (Exception e) {
@@ -369,13 +370,13 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_NotC_P_S() {
+	public void testCountByNotC_G_P_S() {
 		try {
-			_persistence.countByG_NotC_P_S(ServiceTestUtil.nextLong(),
+			_persistence.countByNotC_G_P_S(ServiceTestUtil.nextLong(),
 				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
 				ServiceTestUtil.nextInt());
 
-			_persistence.countByG_NotC_P_S(0L, 0L, 0L, 0);
+			_persistence.countByNotC_G_P_S(0L, 0L, 0L, 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -383,10 +384,11 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_NotC_P_SArrayable() {
+	public void testCountByNotC_G_P_SArrayable() {
 		try {
-			_persistence.countByG_NotC_P_S(ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L },
+			_persistence.countByNotC_G_P_S(new long[] {
+					ServiceTestUtil.nextLong(), 0L
+				}, ServiceTestUtil.nextLong(),
 				new long[] { ServiceTestUtil.nextLong(), 0L },
 				ServiceTestUtil.nextInt());
 		}
