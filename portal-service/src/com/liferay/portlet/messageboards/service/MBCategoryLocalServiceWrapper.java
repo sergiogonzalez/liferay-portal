@@ -485,11 +485,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long excludedCategoryId, long parentCategoryId,
+		long excludedCategoryId, long groupId, long parentCategoryId,
 		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbCategoryLocalService.getCategories(groupId,
-			excludedCategoryId, parentCategoryId, status, start, end);
+		return _mbCategoryLocalService.getCategories(excludedCategoryId,
+			groupId, parentCategoryId, status, start, end);
 	}
 
 	@Override
@@ -510,11 +510,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+		long[] excludedCategoryIds, long groupId, long[] parentCategoryIds,
 		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbCategoryLocalService.getCategories(groupId,
-			excludedCategoryIds, parentCategoryIds, status, start, end);
+		return _mbCategoryLocalService.getCategories(excludedCategoryIds,
+			groupId, parentCategoryIds, status, start, end);
 	}
 
 	@Override
@@ -552,11 +552,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
-	public int getCategoriesCount(long groupId, long excludedCategoryId,
+	public int getCategoriesCount(long excludedCategoryId, long groupId,
 		long parentCategoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbCategoryLocalService.getCategoriesCount(groupId,
-			excludedCategoryId, parentCategoryId, status);
+		return _mbCategoryLocalService.getCategoriesCount(excludedCategoryId,
+			groupId, parentCategoryId, status);
 	}
 
 	@Override
@@ -574,11 +574,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
-	public int getCategoriesCount(long groupId, long[] excludedCategoryIds,
+	public int getCategoriesCount(long[] excludedCategoryIds, long groupId,
 		long[] parentCategoryIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbCategoryLocalService.getCategoriesCount(groupId,
-			excludedCategoryIds, parentCategoryIds, status);
+		return _mbCategoryLocalService.getCategoriesCount(excludedCategoryIds,
+			groupId, parentCategoryIds, status);
 	}
 
 	@Override
