@@ -697,11 +697,29 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 	}
 
 	<c:if test="<%= showActions %>">
+
+		<%
+		boolean hasDeletePermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE);
+		boolean hasOverrideCheckoutPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.OVERRIDE_CHECKOUT);
+		boolean hasPermissionsPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS);
+		boolean hasUpdatePermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE);
+		boolean hasViewPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW);
+
+		boolean isCheckedOut = fileEntry.isCheckedOut();
+		boolean isDLFileEntry = (fileEntry.getModel() instanceof DLFileEntry);
+		boolean isIEOnWin32 = BrowserSnifferUtil.isIeOnWin32(request);
+		boolean isLockedByMe = fileEntry.hasLock();
+		boolean isLockedByOther = (isCheckedOut && !isLockedByMe);
+		boolean isOfficeDoc = DLUtil.isOfficeExtension(fileVersion.getExtension());
+		boolean isTrashEnabled = TrashUtil.isTrashEnabled(scopeGroupId);
+		boolean isWebDAVEnabled = portletDisplay.isWebDAVEnabled();
+		%>
+
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
 		var fileEntryButtonGroup = [];
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+		<c:if test="<%= hasViewPermission %>">
 			fileEntryButtonGroup.push(
 				{
 					icon: 'icon-download',
@@ -713,29 +731,22 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 					}
 				}
 			);
-
-			<%
-			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request)) {
-			%>
-
-				fileEntryButtonGroup.push(
-					{
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>',
-						on: {
-							click: function(event) {
-								<portlet:namespace />openDocument('<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED) %>');
-							}
-						}
-					}
-				);
-
-			<%
-			}
-			%>
-
 		</c:if>
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
+		<c:if test="<%= hasViewPermission && isOfficeDoc && isWebDAVEnabled && isIEOnWin32 %>">
+			fileEntryButtonGroup.push(
+				{
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>',
+					on: {
+						click: function(event) {
+							<portlet:namespace />openDocument('<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED) %>');
+						}
+					}
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= hasUpdatePermission && !isLockedByOther %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -752,7 +763,12 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 							location.href = '<%= editURL.toString() %>';
 						}
 					}
-				},
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= hasUpdatePermission && !isLockedByOther %>">
+			fileEntryButtonGroup.push(
 				{
 
 					<portlet:renderURL var="moveURL">
@@ -770,52 +786,57 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 					}
 				}
 			);
-
-			<c:if test="<%= !fileEntry.isCheckedOut() %>">
-				fileEntryButtonGroup.push(
-					{
-
-						icon: 'icon-lock',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>',
-						on: {
-							click: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
-								submitForm(document.<portlet:namespace />fm);
-							}
-						}
-					}
-				);
-			</c:if>
-
-			<c:if test="<%= fileEntry.isCheckedOut() && fileEntry.hasLock() %>">
-				fileEntryButtonGroup.push(
-					{
-
-						icon: 'icon-undo',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout[document]") %>',
-						on: {
-							click: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
-								submitForm(document.<portlet:namespace />fm);
-							}
-						}
-					},
-					{
-
-						icon: 'icon-unlock',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>',
-						on: {
-							click: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
-								submitForm(document.<portlet:namespace />fm);
-							}
-						}
-					}
-				);
-			</c:if>
 		</c:if>
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
+		<c:if test="<%= hasUpdatePermission && !isCheckedOut %>">
+			fileEntryButtonGroup.push(
+				{
+
+					icon: 'icon-lock',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>',
+					on: {
+						click: function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
+							submitForm(document.<portlet:namespace />fm);
+						}
+					}
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= hasUpdatePermission && (isLockedByMe || hasOverrideCheckoutPermission) %>">
+			fileEntryButtonGroup.push(
+				{
+
+					icon: 'icon-undo',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout[document]") %>',
+					on: {
+						click: function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
+							submitForm(document.<portlet:namespace />fm);
+						}
+					}
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= hasUpdatePermission && isLockedByMe %>">
+			fileEntryButtonGroup.push(
+				{
+
+					icon: 'icon-unlock',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>',
+					on: {
+						click: function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
+							submitForm(document.<portlet:namespace />fm);
+						}
+					}
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= hasPermissionsPermission %>">
 			fileEntryButtonGroup.push(
 				{
 					<liferay-security:permissionsURL
@@ -842,7 +863,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (fileEntry.getModel() instanceof DLFileEntry) && TrashUtil.isTrashEnabled(scopeGroupId) %>">
+		<c:if test="<%= hasDeletePermission && !isLockedByOther && isDLFileEntry && isTrashEnabled %>">
 			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
@@ -863,7 +884,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (!(fileEntry.getModel() instanceof DLFileEntry) || !TrashUtil.isTrashEnabled(scopeGroupId)) %>">
+		<c:if test="<%= hasDeletePermission && !isLockedByOther && (!isDLFileEntry || !isTrashEnabled) %>">
 			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
