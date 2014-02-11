@@ -862,7 +862,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= hasDeletePermission && isDLFileEntry && isTrashEnabled %>">
+		<c:if test="<%= hasDeletePermission && !isLockedByOther && isDLFileEntry && isTrashEnabled %>">
 			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
@@ -883,7 +883,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= hasDeletePermission && (!isDLFileEntry || !isTrashEnabled) %>">
+		<c:if test="<%= hasDeletePermission && !isLockedByOther && (!isDLFileEntry || !isTrashEnabled) %>">
 			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
