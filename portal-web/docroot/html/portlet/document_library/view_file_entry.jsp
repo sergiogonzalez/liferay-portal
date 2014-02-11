@@ -697,19 +697,20 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 	}
 
 	<c:if test="<%= showActions %>">
-		<% 
+
+		<%
 		boolean hasDeletePermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE);
 		boolean hasOverrideCheckoutPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.OVERRIDE_CHECKOUT);
 		boolean hasPermissionsPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS);
 		boolean hasUpdatePermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE);
 		boolean hasViewPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW);
-		
+
 		boolean isCheckedOut = fileEntry.isCheckedOut();
-		boolean isDLFileEntry = (fileEntry.getModel() instanceof DLFileEntry); 
+		boolean isDLFileEntry = (fileEntry.getModel() instanceof DLFileEntry);
 		boolean isIEOnWin32 = BrowserSnifferUtil.isIeOnWin32(request);
 		boolean isLockedByMe = fileEntry.hasLock();
-		boolean isLockedByOther = (isCheckedOut && !isLockedByMe); 
-		boolean isOfficeDoc = DLUtil.isOfficeExtension(fileVersion.getExtension()); 
+		boolean isLockedByOther = (isCheckedOut && !isLockedByMe);
+		boolean isOfficeDoc = DLUtil.isOfficeExtension(fileVersion.getExtension());
 		boolean isTrashEnabled = TrashUtil.isTrashEnabled(scopeGroupId);
 		boolean isWebDAVEnabled = portletDisplay.isWebDAVEnabled();
 		%>
@@ -731,7 +732,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 				}
 			);
 		</c:if>
-		
+
 		<c:if test="<%= hasViewPermission && isOfficeDoc && isWebDAVEnabled && isIEOnWin32 %>">
 			fileEntryButtonGroup.push(
 				{
@@ -818,7 +819,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 				}
 			);
 		</c:if>
-				
+
 		<c:if test="<%= hasUpdatePermission && isLockedByMe %>">
 			fileEntryButtonGroup.push(
 				{
