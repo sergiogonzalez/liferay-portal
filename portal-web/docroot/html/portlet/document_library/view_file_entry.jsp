@@ -730,22 +730,19 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 					}
 				}
 			);
-
-			<c:if test="<%= hasViewPermission && isOfficeDoc && isWebDAVEnabled && isIEOnWin32 %>">
-
-				fileEntryButtonGroup.push(
-					{
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>',
-						on: {
-							click: function(event) {
-								<portlet:namespace />openDocument('<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED) %>');
-							}
+		</c:if>
+		
+		<c:if test="<%= hasViewPermission && isOfficeDoc && isWebDAVEnabled && isIEOnWin32 %>">
+			fileEntryButtonGroup.push(
+				{
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>',
+					on: {
+						click: function(event) {
+							<portlet:namespace />openDocument('<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED) %>');
 						}
 					}
-				);
-
-			</c:if>
-
+				}
+			);
 		</c:if>
 
 		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) %>">
@@ -765,7 +762,12 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 							location.href = '<%= editURL.toString() %>';
 						}
 					}
-				},
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) %>">
+			fileEntryButtonGroup.push(
 				{
 
 					<portlet:renderURL var="moveURL">
@@ -783,49 +785,54 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 					}
 				}
 			);
+		</c:if>
 
-			<c:if test="<%= !isCheckedOut %>">
-				fileEntryButtonGroup.push(
-					{
+		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) && !isCheckedOut %>">
+			fileEntryButtonGroup.push(
+				{
 
-						icon: 'icon-lock',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>',
-						on: {
-							click: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
-								submitForm(document.<portlet:namespace />fm);
-							}
+					icon: 'icon-lock',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>',
+					on: {
+						click: function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
+							submitForm(document.<portlet:namespace />fm);
 						}
 					}
-				);
-			</c:if>
+				}
+			);
+		</c:if>
 
-			<c:if test="<%= isCheckedOut && isLockedByMe %>">
-				fileEntryButtonGroup.push(
-					{
+		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) && isCheckedOut && isLockedByMe %>">
+			fileEntryButtonGroup.push(
+				{
 
-						icon: 'icon-undo',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout[document]") %>',
-						on: {
-							click: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
-								submitForm(document.<portlet:namespace />fm);
-							}
-						}
-					},
-					{
-
-						icon: 'icon-unlock',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>',
-						on: {
-							click: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
-								submitForm(document.<portlet:namespace />fm);
-							}
+					icon: 'icon-undo',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout[document]") %>',
+					on: {
+						click: function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
+							submitForm(document.<portlet:namespace />fm);
 						}
 					}
-				);
-			</c:if>
+				}
+			);
+		</c:if>
+				
+		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) && isCheckedOut && isLockedByMe %>">
+			fileEntryButtonGroup.push(
+				{
+
+					icon: 'icon-unlock',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>',
+					on: {
+						click: function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
+							submitForm(document.<portlet:namespace />fm);
+						}
+					}
+				}
+			);
 		</c:if>
 
 		<c:if test="<%= hasPermissionsPermission %>">
