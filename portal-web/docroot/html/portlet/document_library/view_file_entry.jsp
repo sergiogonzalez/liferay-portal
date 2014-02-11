@@ -803,7 +803,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= hasUpdatePermission && isLockedByMe %>">
+		<c:if test="<%= hasUpdatePermission && (isLockedByMe || hasOverrideCheckoutPermission) %>">
 			fileEntryButtonGroup.push(
 				{
 
