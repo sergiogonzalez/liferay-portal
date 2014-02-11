@@ -745,7 +745,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) %>">
+		<c:if test="<%= hasUpdatePermission && !isLockedByOther %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -766,7 +766,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) %>">
+		<c:if test="<%= hasUpdatePermission && !isLockedByOther %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -787,7 +787,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) && !isCheckedOut %>">
+		<c:if test="<%= hasUpdatePermission && !isLockedByOther && !isCheckedOut %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -803,7 +803,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) && isCheckedOut && isLockedByMe %>">
+		<c:if test="<%= hasUpdatePermission && !isLockedByOther && isCheckedOut && isLockedByMe %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -819,7 +819,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 				
-		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) && isCheckedOut && isLockedByMe %>">
+		<c:if test="<%= hasUpdatePermission && !isLockedByOther && isCheckedOut && isLockedByMe %>">
 			fileEntryButtonGroup.push(
 				{
 
