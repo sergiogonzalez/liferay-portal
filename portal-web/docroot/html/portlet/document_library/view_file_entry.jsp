@@ -697,11 +697,28 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 	}
 
 	<c:if test="<%= showActions %>">
+		<% 
+		boolean hasDeletePermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE);
+		boolean hasOverrideCheckoutPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.OVERRIDE_CHECKOUT);
+		boolean hasPermissionsPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS);
+		boolean hasUpdatePermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE);
+		boolean hasViewPermission = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW);
+		
+		boolean isCheckedOut = fileEntry.isCheckedOut();
+		boolean isDLFileEntry = (fileEntry.getModel() instanceof DLFileEntry); 
+		boolean isIEOnWin32 = BrowserSnifferUtil.isIeOnWin32(request);
+		boolean isLockedByMe = fileEntry.hasLock();
+		boolean isLockedByOther = (isCheckedOut && !isLockedByMe); 
+		boolean isOfficeDoc = DLUtil.isOfficeExtension(fileVersion.getExtension()); 
+		boolean isTrashEnabled = TrashUtil.isTrashEnabled(scopeGroupId);
+		boolean isWebDAVEnabled = portletDisplay.isWebDAVEnabled();
+		%>
+
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
 		var fileEntryButtonGroup = [];
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+		<c:if test="<%= hasViewPermission %>">
 			fileEntryButtonGroup.push(
 				{
 					icon: 'icon-download',
@@ -715,7 +732,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 
 			<%
-			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request)) {
+			if (hasViewPermission && isOfficeDoc && isWebDAVEnabled && isIEOnWin32) {
 			%>
 
 				fileEntryButtonGroup.push(
@@ -735,7 +752,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 		</c:if>
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
+		<c:if test="<%= hasUpdatePermission && (!isCheckedOut || isLockedByMe) %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -771,7 +788,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 				}
 			);
 
-			<c:if test="<%= !fileEntry.isCheckedOut() %>">
+			<c:if test="<%= !isCheckedOut %>">
 				fileEntryButtonGroup.push(
 					{
 
@@ -787,7 +804,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 				);
 			</c:if>
 
-			<c:if test="<%= fileEntry.isCheckedOut() && fileEntry.hasLock() %>">
+			<c:if test="<%= isCheckedOut && isLockedByMe %>">
 				fileEntryButtonGroup.push(
 					{
 
@@ -815,7 +832,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			</c:if>
 		</c:if>
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
+		<c:if test="<%= hasPermissionsPermission %>">
 			fileEntryButtonGroup.push(
 				{
 					<liferay-security:permissionsURL
@@ -842,7 +859,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (fileEntry.getModel() instanceof DLFileEntry) && TrashUtil.isTrashEnabled(scopeGroupId) %>">
+		<c:if test="<%= hasDeletePermission && isDLFileEntry && isTrashEnabled %>">
 			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
@@ -863,7 +880,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			);
 		</c:if>
 
-		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (!(fileEntry.getModel() instanceof DLFileEntry) || !TrashUtil.isTrashEnabled(scopeGroupId)) %>">
+		<c:if test="<%= hasDeletePermission && (!isDLFileEntry || !isTrashEnabled) %>">
 			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
