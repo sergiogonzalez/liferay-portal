@@ -131,11 +131,11 @@ public class MBCategoryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long excludedCategoryId, long parentCategoryId,
+		long excludedCategoryId, long groupId, long parentCategoryId,
 		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getCategories(groupId, excludedCategoryId,
+				   .getCategories(excludedCategoryId, groupId,
 			parentCategoryId, status, start, end);
 	}
 
@@ -153,11 +153,11 @@ public class MBCategoryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+		long[] excludedCategoryIds, long groupId, long[] parentCategoryIds,
 		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getCategories(groupId, excludedCategoryIds,
+				   .getCategories(excludedCategoryIds, groupId,
 			parentCategoryIds, status, start, end);
 	}
 
@@ -171,11 +171,11 @@ public class MBCategoryServiceUtil {
 		return getService().getCategoriesCount(groupId, parentCategoryId, status);
 	}
 
-	public static int getCategoriesCount(long groupId, long excludedCategoryId,
+	public static int getCategoriesCount(long excludedCategoryId, long groupId,
 		long parentCategoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getCategoriesCount(groupId, excludedCategoryId,
+				   .getCategoriesCount(excludedCategoryId, groupId,
 			parentCategoryId, status);
 	}
 
@@ -191,11 +191,11 @@ public class MBCategoryServiceUtil {
 				   .getCategoriesCount(groupId, parentCategoryIds, status);
 	}
 
-	public static int getCategoriesCount(long groupId,
-		long[] excludedCategoryIds, long[] parentCategoryIds, int status)
+	public static int getCategoriesCount(long[] excludedCategoryIds,
+		long groupId, long[] parentCategoryIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getCategoriesCount(groupId, excludedCategoryIds,
+				   .getCategoriesCount(excludedCategoryIds, groupId,
 			parentCategoryIds, status);
 	}
 

@@ -333,17 +333,17 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public List<MBCategory> getCategories(
-			long groupId, long excludedCategoryId, long parentCategoryId,
+		long excludedCategoryId, long groupId, long parentCategoryId,
 			int status, int start, int end)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbCategoryPersistence.findByNotC_G_P(
-				groupId, excludedCategoryId, parentCategoryId, start, end);
+				excludedCategoryId, groupId, parentCategoryId, start, end);
 		}
 
 		return mbCategoryPersistence.findByNotC_G_P_S(
-			groupId, excludedCategoryId, parentCategoryId, status, start, end);
+			excludedCategoryId, groupId, parentCategoryId, status, start, end);
 	}
 
 	@Override
@@ -372,7 +372,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public List<MBCategory> getCategories(
-			long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+			long[] excludedCategoryIds, long groupId, long[] parentCategoryIds,
 			int status, int start, int end)
 		throws SystemException {
 
@@ -440,17 +440,17 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public int getCategoriesCount(
-			long groupId, long excludedCategoryId, long parentCategoryId,
+			long excludedCategoryId, long groupId, long parentCategoryId,
 			int status)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbCategoryPersistence.countByNotC_G_P(
-				groupId, excludedCategoryId, parentCategoryId);
+				excludedCategoryId, groupId, parentCategoryId);
 		}
 
 		return mbCategoryPersistence.countByNotC_G_P_S(
-			groupId, excludedCategoryId, parentCategoryId, status);
+			excludedCategoryId, groupId, parentCategoryId, status);
 	}
 
 	@Override
@@ -475,7 +475,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public int getCategoriesCount(
-			long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+			long[] excludedCategoryIds, long groupId, long[] parentCategoryIds,
 			int status)
 		throws SystemException {
 
