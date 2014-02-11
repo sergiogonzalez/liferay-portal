@@ -731,9 +731,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 				}
 			);
 
-			<%
-			if (hasViewPermission && isOfficeDoc && isWebDAVEnabled && isIEOnWin32) {
-			%>
+			<c:if test="<%= hasViewPermission && isOfficeDoc && isWebDAVEnabled && isIEOnWin32 %>">
 
 				fileEntryButtonGroup.push(
 					{
@@ -746,9 +744,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 					}
 				);
 
-			<%
-			}
-			%>
+			</c:if>
 
 		</c:if>
 
