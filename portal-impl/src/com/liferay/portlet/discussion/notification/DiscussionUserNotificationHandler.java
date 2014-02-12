@@ -18,34 +18,32 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
+public class DiscussionUserNotificationHandler
+	extends BaseUserNotificationHandler {
 
-	public BlogsUserNotificationHandler() {
-		setPortletId(PortletKeys.BLOGS);
+	public DiscussionUserNotificationHandler() {
+		setPortletId(PortletKeys.DISCUSSION);
 	}
 
 	@Override
@@ -59,9 +57,9 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(classPK);
+		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(classPK);
 
-		if (entry == null) {
+		if (message == null) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
@@ -75,12 +73,12 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = "x-wrote-a-new-blog-entry";
+			title = "x-added-a-new-comment";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
-			title = "x-updated-a-blog-entry";
+			title = "x-updated-a-comment";
 		}
 
 		StringBundler sb = new StringBundler(5);
@@ -91,9 +89,10 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 				title,
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
-						entry.getUserId(), StringPool.BLANK))));
+						message.getUserId(), StringPool.BLANK))));
 		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(StringUtil.shorten(entry.getTitle(), 50)));
+		sb.append(
+			HtmlUtil.escape(StringUtil.shorten(message.getSubject(), 50)));
 		sb.append("</div>");
 
 		return sb.toString();
@@ -110,46 +109,34 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(classPK);
+		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(classPK);
 
-		if (entry == null) {
+		if (message == null) {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				message.getClassName());
 
-		User user = themeDisplay.getUser();
-
-		Group group = user.getGroup();
-
-		long portletPlid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, PortletKeys.BLOGS);
-
-		PortletURL portletURL = null;
-
-		if (portletPlid != 0) {
-			portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getLiferayPortletRequest(), PortletKeys.BLOGS,
-				portletPlid, PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("struts_action", "/blogs/view_entry");
-			portletURL.setParameter(
-				"entryId", String.valueOf(entry.getEntryId()));
-		}
-		else {
-			LiferayPortletResponse liferayPortletResponse =
-				serviceContext.getLiferayPortletResponse();
-
-			portletURL = liferayPortletResponse.createRenderURL(
-				PortletKeys.BLOGS);
-
-			portletURL.setParameter("struts_action", "/blogs/view_entry");
-			portletURL.setParameter(
-				"entryId", String.valueOf(entry.getEntryId()));
-			portletURL.setWindowState(WindowState.MAXIMIZED);
+		if (assetRendererFactory == null) {
+			return null;
 		}
 
-		return portletURL.toString();
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			message.getClassPK());
+
+		if (assetRenderer == null) {
+			return null;
+		}
+
+		PortletURL noSuchEntryRedirect = assetRenderer.getURLView(
+			serviceContext.getLiferayPortletResponse(), WindowState.MAXIMIZED);
+
+		return assetRenderer.getURLViewInContext(
+			serviceContext.getLiferayPortletRequest(),
+			serviceContext.getLiferayPortletResponse(),
+			noSuchEntryRedirect.toString());
 	}
 
 }
