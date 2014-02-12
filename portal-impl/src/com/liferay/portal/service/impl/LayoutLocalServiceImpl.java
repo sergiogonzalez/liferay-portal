@@ -1203,7 +1203,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(friendlyURL)) {
-			throw new NoSuchLayoutException();
+			throw new NoSuchLayoutException(
+				"{groupId=" + groupId + "," + " privateLayout=" +
+					privateLayout + "}");
 		}
 
 		friendlyURL = layoutLocalServiceHelper.getFriendlyURL(friendlyURL);
@@ -1232,7 +1234,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		if (layout == null) {
-			throw new NoSuchLayoutException();
+			throw new NoSuchLayoutException(
+				"{groupId=" + groupId + "," + " privateLayout=" +
+					privateLayout + ", friendlyURL=" + friendlyURL + "}");
 		}
 
 		return layout;
