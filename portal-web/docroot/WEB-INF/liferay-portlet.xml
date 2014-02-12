@@ -2178,6 +2178,13 @@
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>
+	<portlet>
+		<portlet-name>196</portlet-name>
+		<icon>/html/icons/page_comments.png</icon>
+		<struts-path>discussion</struts-path>
+		<user-notification-definitions>com/liferay/portlet/discussion/discussion-user-notification-definitions.xml</user-notification-definitions>
+		<user-notification-handler-class>com.liferay.portlet.discussion.notification.DiscussionUserNotificationHandler</user-notification-handler-class>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

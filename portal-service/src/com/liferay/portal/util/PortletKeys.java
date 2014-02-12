@@ -67,6 +67,8 @@ public class PortletKeys {
 
 	public static final String DIRECTORY = "11";
 
+	public static final String DISCUSSION = "196";
+
 	public static final String DOCKBAR = "145";
 
 	public static final String DOCUMENT_LIBRARY = "20";
