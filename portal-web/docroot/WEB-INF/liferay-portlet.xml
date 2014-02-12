@@ -2178,6 +2178,11 @@
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>
+	<portlet>
+		<portlet-name>196</portlet-name>
+		<icon>/html/icons/page_comments.png</icon>
+		<struts-path>discussion</struts-path>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
