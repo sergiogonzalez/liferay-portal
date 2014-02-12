@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.discussion.notification;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
@@ -33,6 +35,8 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
+import java.util.Locale;
+
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -44,6 +48,20 @@ public class DiscussionUserNotificationHandler
 
 	public DiscussionUserNotificationHandler() {
 		setPortletId(PortletKeys.DISCUSSION);
+	}
+
+	protected AssetRenderer getAssetRender(MBMessage message)
+		throws PortalException, SystemException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				message.getClassName());
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		return assetRendererFactory.getAssetRenderer(message.getClassPK());
 	}
 
 	@Override
@@ -73,13 +91,17 @@ public class DiscussionUserNotificationHandler
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = "x-added-a-new-comment";
+			title = "x-added-a-new-comment-to-x";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
-			title = "x-updated-a-comment";
+			title = "x-updated-a-comment-to-x";
 		}
+
+		AssetRenderer assetRenderer = getAssetRender(message);
+
+		Locale locale = serviceContext.getLocale();
 
 		StringBundler sb = new StringBundler(5);
 
@@ -89,7 +111,8 @@ public class DiscussionUserNotificationHandler
 				title,
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
-						message.getUserId(), StringPool.BLANK))));
+						message.getUserId(), StringPool.BLANK)),
+				HtmlUtil.escape(assetRenderer.getTitle(locale))));
 		sb.append("</div><div class=\"body\">");
 		sb.append(
 			HtmlUtil.escape(StringUtil.shorten(message.getSubject(), 50)));
@@ -115,16 +138,7 @@ public class DiscussionUserNotificationHandler
 			return null;
 		}
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				message.getClassName());
-
-		if (assetRendererFactory == null) {
-			return null;
-		}
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			message.getClassPK());
+		AssetRenderer assetRenderer = getAssetRender(message);
 
 		if (assetRenderer == null) {
 			return null;
