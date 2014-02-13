@@ -45,6 +45,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.InetAddress;
+
 import java.sql.SQLException;
 
 import java.util.Date;
@@ -121,6 +123,24 @@ public class PortalUtil {
 		getPortal().addPageTitle(title, request);
 	}
 
+	public static boolean addPortalInetSocketAddressEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
+
+		return getPortal().addPortalInetSocketAddressEventListener(
+			portalInetSocketAddressEventListener);
+	}
+
+	/**
+	 * Adds the portal port event listener to the portal. The listener will be
+	 * notified whenever the portal port is set.
+	 *
+	 * @param      portalPortEventListener the portal port event listener to add
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #addPortalInetSocketAddressEventListener(
+	 *             PortalInetSocketAddressEventListener)}
+	 */
+	@Deprecated
 	public static void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
@@ -1079,8 +1099,22 @@ public class PortalUtil {
 		return _portal;
 	}
 
+	public static PortalInetSocketAddressEventListener[]
+		getPortalInetSocketAddressEventListeners() {
+
+		return getPortal().getPortalInetSocketAddressEventListeners();
+	}
+
 	public static String getPortalLibDir() {
 		return getPortal().getPortalLibDir();
+	}
+
+	public static InetAddress getPortalLocalInetAddress(boolean secure) {
+		return getPortal().getPortalLocalInetAddress(secure);
+	}
+
+	public static int getPortalLocalPort(boolean secure) {
+		return getPortal().getPortalLocalPort(secure);
 	}
 
 	/**
@@ -1091,12 +1125,25 @@ public class PortalUtil {
 		return getPortal().getPortalPort();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getPortalServerPort(boolean)}
+	 */
+	@Deprecated
 	public static int getPortalPort(boolean secure) {
 		return getPortal().getPortalPort(secure);
 	}
 
 	public static Properties getPortalProperties() {
 		return getPortal().getPortalProperties();
+	}
+
+	public static InetAddress getPortalServerInetAddress(boolean secure) {
+		return getPortal().getPortalServerInetAddress(secure);
+	}
+
+	public static int getPortalServerPort(boolean secure) {
+		return getPortal().getPortalServerPort(secure);
 	}
 
 	public static String getPortalURL(HttpServletRequest request) {
@@ -1974,9 +2021,19 @@ public class PortalUtil {
 		getPortal().setPageTitle(title, request);
 	}
 
+	public static void setPortalInetSocketAddresses(
+		HttpServletRequest request) {
+
+		getPortal().setPortalInetSocketAddresses(request);
+	}
+
 	/**
 	 * Sets the port obtained on the first request to the portal.
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #setPortalInetSocketAddresses(HttpServletRequest)}
 	 */
+	@Deprecated
 	public static void setPortalPort(HttpServletRequest request) {
 		getPortal().setPortalPort(request);
 	}
@@ -2030,6 +2087,20 @@ public class PortalUtil {
 			portletId, user, layout, windowState, request);
 	}
 
+	public boolean removePortalEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
+
+		return getPortal().removePortalInetSocketAddressEventListener(
+			portalInetSocketAddressEventListener);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #removePortalInetSocketAddressEventListener(
+	 *             PortalInetSocketAddressEventListener)}
+	 */
+	@Deprecated
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
