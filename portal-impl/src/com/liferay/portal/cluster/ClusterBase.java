@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -34,6 +33,8 @@ import java.util.List;
 import org.jgroups.JChannel;
 import org.jgroups.Receiver;
 import org.jgroups.View;
+import org.jgroups.stack.Protocol;
+import org.jgroups.stack.ProtocolStack;
 
 /**
  * @author Shuyang Zhou
@@ -118,12 +119,18 @@ public abstract class ClusterBase {
 		return addresses;
 	}
 
+	protected InetAddress getBindInetAddress(JChannel jChannel) {
+		ProtocolStack protocolStack = jChannel.getProtocolStack();
+
+		Protocol protocol = protocolStack.getBottomProtocol();
+
+		return (InetAddress)protocol.getValue("bind_addr");
+	}
+
 	protected void initBindAddress() throws Exception {
 		String autodetectAddress = PropsValues.CLUSTER_LINK_AUTODETECT_ADDRESS;
 
 		if (Validator.isNull(autodetectAddress)) {
-			bindInetAddress = InetAddressUtil.getLocalInetAddress();
-
 			return;
 		}
 
@@ -146,18 +153,18 @@ public abstract class ClusterBase {
 
 		SocketUtil.BindInfo bindInfo = SocketUtil.getBindInfo(host, port);
 
-		bindInetAddress = bindInfo.getInetAddress();
+		InetAddress inetAddress = bindInfo.getInetAddress();
+
 		NetworkInterface networkInterface = bindInfo.getNetworkInterface();
 
-		System.setProperty(
-			"jgroups.bind_addr", bindInetAddress.getHostAddress());
+		System.setProperty("jgroups.bind_addr", inetAddress.getHostAddress());
 		System.setProperty(
 			"jgroups.bind_interface", networkInterface.getName());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Setting JGroups outgoing IP address to " +
-					bindInetAddress.getHostAddress() + " and interface to " +
+					inetAddress.getHostAddress() + " and interface to " +
 						networkInterface.getName());
 		}
 	}
@@ -186,8 +193,6 @@ public abstract class ClusterBase {
 			}
 		}
 	}
-
-	protected static InetAddress bindInetAddress;
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterBase.class);
 

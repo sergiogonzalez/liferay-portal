@@ -58,6 +58,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -154,12 +155,16 @@ public class LuceneHelperImplTest {
 
 		mockServer.start();
 
+		InetAddress inetAddress = mockServer.getInetAddress();
 		int port = mockServer.getPort();
 
 		_mockClusterExecutor.setNodeNumber(2);
-		_mockClusterExecutor.setPort(port);
 
-		_clusterNode.setPort(port);
+		_mockClusterExecutor.setPort(port);
+		_mockClusterExecutor.setPortalInetAddress(inetAddress);
+
+		_clusterNode.setPortalInetSocketAddress(
+			new InetSocketAddress(inetAddress, port));
 
 		JDKLoggerTestUtil.configureJDKLogger(
 			LuceneHelperImpl.class.getName(), Level.OFF);
@@ -251,6 +256,7 @@ public class LuceneHelperImplTest {
 
 		_mockClusterExecutor.setNodeNumber(2);
 		_mockClusterExecutor.setPort(mockServer.getPort());
+		_mockClusterExecutor.setPortalInetAddress(mockServer.getInetAddress());
 
 		JDKLoggerTestUtil.configureJDKLogger(
 			LuceneHelperImpl.class.getName(), Level.INFO);
@@ -325,7 +331,7 @@ public class LuceneHelperImplTest {
 
 		Assert.assertEquals(1, logRecords.size());
 
-		_assertLogger(logRecords.get(0), "invalid port", null);
+		_assertLogger(logRecords.get(0), "invalid InetSocketAddress", null);
 
 		// Debug is disabled
 
@@ -633,7 +639,12 @@ public class LuceneHelperImplTest {
 					String.valueOf(System.currentTimeMillis()),
 					_localhostInetAddress);
 
-				clusterNode.setPort(_port);
+				try {
+					clusterNode.setPortalInetSocketAddress(
+						new InetSocketAddress(_portalInetAddress, _port));
+				}
+				catch (IllegalArgumentException iae) {
+				}
 
 				clusterNodeResponse.setClusterNode(clusterNode);
 
@@ -760,6 +771,10 @@ public class LuceneHelperImplTest {
 			_port = port;
 		}
 
+		public void setPortalInetAddress(InetAddress portalInetAddress) {
+			_portalInetAddress = portalInetAddress;
+		}
+
 		public void setNodeNumber(int nodeNumber) {
 			for (int i = 0; i < nodeNumber; i++) {
 				_addresses.add(new AddressImpl(new MockAddress()));
@@ -798,7 +813,8 @@ public class LuceneHelperImplTest {
 		private MethodKey _getLastGenerationMethodKey = new MethodKey(
 			LuceneHelperUtil.class, "getLastGeneration", long.class);
 		private boolean _invokeMethodThrowException = false;
-		private int _port = 0;
+		private int _port = -1;
+		private InetAddress _portalInetAddress;
 		private boolean _throwException = false;
 
 	}
@@ -874,6 +890,10 @@ public class LuceneHelperImplTest {
 					_localhostInetAddress, 1024, null);
 
 			_serverSocket = serverSocketChannel.socket();
+		}
+
+		public InetAddress getInetAddress() {
+			return _serverSocket.getInetAddress();
 		}
 
 		public int getPort() {
