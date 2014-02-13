@@ -7,9 +7,11 @@ allprojects {
 subprojects {
 	apply from: "../../gradle/baseline.gradle"
 	apply plugin: "java"
-	apply plugin: "osgi"
 
 	ext.liferayProjectDir = "${rootDir}/../../.."
+
+	sourceCompatibility = 1.6
+	targetCompatibility = 1.6
 
 	dependencies {
 		compile files(["${liferayProjectDir}/portal-service/classes"])
@@ -36,6 +38,27 @@ subprojects {
 
 		doLast {
 			tasks.baseline.execute()
+		}
+	}
+
+	task clean << {
+	}
+
+	task deploy(dependsOn: jar) << {
+		if (project.hasProperty('deployDir') && (project.deployDir != null)) {
+			def buildLibDir = new File("${projectDir}/build/libs")
+
+			logger.info "Copying ${buildLibDir}/${project.name}.jar to " + project.deployDir + "."
+
+			copy {
+				from "${buildLibDir}/${project.name}.jar"
+				into project.deployDir
+			}
+		}
+		else {
+			logger.quiet "Skipping deploy because ${project.name}\"s \"deployDir\" property is not set."
+			logger.quiet "First, see if it\"s build.gradle file contains the property"
+			logger.quiet "\"project.ext.deployDir\". Second, make sure to execute the deploy using Ant."
 		}
 	}
 }
