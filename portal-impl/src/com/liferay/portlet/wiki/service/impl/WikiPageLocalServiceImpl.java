@@ -1563,16 +1563,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_NotS(
-			page.getNodeId(), true, oldTitle,
-			WorkflowConstants.STATUS_IN_TRASH);
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R(
+			page.getNodeId(), true, oldTitle);
 
 		for (WikiPage redirectPage : redirectPages) {
 			redirectPage.setRedirectTitle(trashTitle);
 
 			wikiPagePersistence.update(redirectPage);
 
-			movePageToTrash(userId, redirectPage);
+			if (!redirectPage.isInTrash()) {
+				movePageToTrash(userId, redirectPage);
+			}
 		}
 
 		for (WikiPage pageVersion : pageVersions) {
