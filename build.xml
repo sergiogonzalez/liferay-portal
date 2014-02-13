@@ -84,6 +84,7 @@
 		<ant dir="portal-pacl" target="clean" inheritAll="false" />
 
 		<ant dir="osgi/bootstrap" target="clean" inheritAll="false" />
+		<ant dir="osgi/modules" target="clean" inheritAll="false" />
 
 		<ant dir="portal-web" target="clean" inheritAll="false" />
 
@@ -225,6 +226,7 @@
 		<ant dir="portal-pacl" target="compile" inheritAll="false" />
 
 		<ant dir="osgi/bootstrap" target="deploy" inheritAll="false" />
+		<ant dir="osgi/modules" target="deploy" inheritAll="false" />
 	</target>
 
 	<target name="compile-test">

@@ -12,26 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.aggregate;
+package com.liferay.portal.util;
+
+import java.net.InetSocketAddress;
 
 /**
- * @author Raymond Augé
- * @author Eduardo Lundgren
+ * @author Tina Tian
  */
-public interface AggregateContext {
+public interface PortalInetSocketAddressEventListener {
 
-	public String getContent(String path);
+	public void portalLocalInetSockAddressConfigured(
+		InetSocketAddress localInetSocketAddress);
 
-	public String getFullPath(String path);
-
-	public String getResourcePath(String path);
-
-	public String popPath();
-
-	public void pushPath(String path);
-
-	public String shiftPath();
-
-	public void unshiftPath(String path);
+	public void portalServerInetSocketAddressConfigured(
+		InetSocketAddress serverInetSocketAddress);
 
 }

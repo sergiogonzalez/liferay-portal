@@ -166,6 +166,14 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
+	public boolean hasAddPermission(
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
+		throws Exception {
+
+		return false;
+	}
+
+	@Override
 	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)
 		throws Exception {
 
