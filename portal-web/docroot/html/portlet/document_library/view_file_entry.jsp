@@ -714,10 +714,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 				}
 			);
 
-			<%
-			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request)) {
-			%>
-
+			<c:if test="<%= (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request)) %>">
 				fileEntryButtonGroup.push(
 					{
 						label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>',
@@ -728,10 +725,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 						}
 					}
 				);
-
-			<%
-			}
-			%>
+			</c:if>
 
 		</c:if>
 
