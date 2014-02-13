@@ -1155,46 +1155,46 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
-		int portalPort = PortalUtil.getPortalPort(false);
+		int serverPort = PortalUtil.getPortalServerPort(false);
 
-		if (portalPort != -1) {
+		if (serverPort != -1) {
 			if (Validator.isNotNull(company.getVirtualHostname())) {
 				companyPortalURL = PortalUtil.getPortalURL(
-					company.getVirtualHostname(), portalPort, false);
+					company.getVirtualHostname(), serverPort, false);
 			}
 
 			if (Validator.isNotNull(privateLayoutSet.getVirtualHostname())) {
 				privateLayoutSetPortalURL = PortalUtil.getPortalURL(
-					privateLayoutSet.getVirtualHostname(), portalPort, false);
+					privateLayoutSet.getVirtualHostname(), serverPort, false);
 			}
 
 			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
 				publicLayoutSetPortalURL = PortalUtil.getPortalURL(
-					publicLayoutSet.getVirtualHostname(), portalPort, false);
+					publicLayoutSet.getVirtualHostname(), serverPort, false);
 			}
 		}
 
-		int securePortalPort = PortalUtil.getPortalPort(true);
+		int secureSecurePort = PortalUtil.getPortalServerPort(true);
 
 		String companySecurePortalURL = StringPool.BLANK;
 		String privateLayoutSetSecurePortalURL = StringPool.BLANK;
 		String publicLayoutSetSecurePortalURL = StringPool.BLANK;
 
-		if (securePortalPort != -1) {
+		if (secureSecurePort != -1) {
 			if (Validator.isNotNull(company.getVirtualHostname())) {
 				companySecurePortalURL = PortalUtil.getPortalURL(
-					company.getVirtualHostname(), securePortalPort, true);
+					company.getVirtualHostname(), secureSecurePort, true);
 			}
 
 			if (Validator.isNotNull(privateLayoutSet.getVirtualHostname())) {
 				privateLayoutSetSecurePortalURL = PortalUtil.getPortalURL(
-					privateLayoutSet.getVirtualHostname(), securePortalPort,
+					privateLayoutSet.getVirtualHostname(), secureSecurePort,
 					true);
 			}
 
 			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
 				publicLayoutSetSecurePortalURL = PortalUtil.getPortalURL(
-					publicLayoutSet.getVirtualHostname(), securePortalPort,
+					publicLayoutSet.getVirtualHostname(), secureSecurePort,
 					true);
 			}
 		}
@@ -1876,9 +1876,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		boolean secure = HttpUtil.isSecure(url);
 
-		int portalPort = PortalUtil.getPortalPort(secure);
+		int serverPort = PortalUtil.getPortalServerPort(secure);
 
-		if (portalPort == -1) {
+		if (serverPort == -1) {
 			return url;
 		}
 
@@ -1894,7 +1894,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		if (Validator.isNotNull(publicLayoutSetVirtualHostname)) {
 			portalUrl = PortalUtil.getPortalURL(
-				publicLayoutSetVirtualHostname, portalPort, secure);
+				publicLayoutSetVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
 				if (secure) {
@@ -1915,7 +1915,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		if (Validator.isNotNull(privateLayoutSetVirtualHostname)) {
 			portalUrl = PortalUtil.getPortalURL(
-				privateLayoutSetVirtualHostname, portalPort, secure);
+				privateLayoutSetVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
 				if (secure) {
@@ -1936,7 +1936,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		if (Validator.isNotNull(companyVirtualHostname)) {
 			portalUrl = PortalUtil.getPortalURL(
-				companyVirtualHostname, portalPort, secure);
+				companyVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
 				if (secure) {
@@ -1950,7 +1950,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 		}
 
-		portalUrl = PortalUtil.getPortalURL("localhost", portalPort, secure);
+		portalUrl = PortalUtil.getPortalURL("localhost", serverPort, secure);
 
 		if (url.startsWith(portalUrl)) {
 			return url.substring(portalUrl.length());
