@@ -62,7 +62,7 @@ public class MBCategoryLocalServiceTest {
 	@Transactional
 	public void testGetCategoriesCountExcludingCategories() throws Exception {
 		int initialCategoriesCount =
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		MBTestUtil.addCategory(_groupId);
@@ -72,12 +72,12 @@ public class MBCategoryLocalServiceTest {
 
 		Assert.assertEquals(
 			3 + initialCategoriesCount,
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID));
 
 		Assert.assertEquals(
 			1 + initialCategoriesCount,
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId,
 				new long[] {
 					excludedCategory1.getCategoryId(),
@@ -90,7 +90,7 @@ public class MBCategoryLocalServiceTest {
 	@Transactional
 	public void testGetCategoriesCountExcludingCategory() throws Exception {
 		int initialCategoriesCount =
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		MBTestUtil.addCategory(_groupId);
@@ -100,12 +100,12 @@ public class MBCategoryLocalServiceTest {
 
 		Assert.assertEquals(
 			3 + initialCategoriesCount,
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID));
 
 		Assert.assertEquals(
 			2 + initialCategoriesCount,
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, excludedCategory.getCategoryId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				WorkflowConstants.STATUS_ANY));
@@ -117,7 +117,7 @@ public class MBCategoryLocalServiceTest {
 		throws Exception {
 
 		int initialCategoriesCount =
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -134,13 +134,13 @@ public class MBCategoryLocalServiceTest {
 
 		Assert.assertEquals(
 			3 + initialCategoriesCount,
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				WorkflowConstants.STATUS_APPROVED));
 
 		Assert.assertEquals(
 			1 + initialCategoriesCount,
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId,
 				new long[] {
 					excludedCategory1.getCategoryId(),
@@ -155,7 +155,7 @@ public class MBCategoryLocalServiceTest {
 		throws Exception {
 
 		int initialCategoriesCount =
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -171,13 +171,13 @@ public class MBCategoryLocalServiceTest {
 
 		Assert.assertEquals(
 			2 + initialCategoriesCount,
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				WorkflowConstants.STATUS_APPROVED));
 
 		Assert.assertEquals(
 			1 + initialCategoriesCount,
-			MBCategoryServiceUtil.getCategoriesCount(
+			MBCategoryLocalServiceUtil.getCategoriesCount(
 				_groupId, excludedCategory.getCategoryId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				WorkflowConstants.STATUS_APPROVED));
@@ -187,7 +187,7 @@ public class MBCategoryLocalServiceTest {
 	@Transactional
 	public void testGetCategoriesExcludingCategories() throws Exception {
 		List<MBCategory> initialCategories =
-			MBCategoryServiceUtil.getCategories(_groupId);
+			MBCategoryLocalServiceUtil.getCategories(_groupId);
 
 		List<MBCategory> expectedCategories = new ArrayList<MBCategory>();
 
@@ -201,7 +201,7 @@ public class MBCategoryLocalServiceTest {
 		expectedCategories.add(excludedCategory1);
 		expectedCategories.add(excludedCategory2);
 
-		List<MBCategory> categories = MBCategoryServiceUtil.getCategories(
+		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
 			_groupId);
 
 		Assert.assertEquals(expectedCategories.size(), categories.size());
@@ -210,7 +210,7 @@ public class MBCategoryLocalServiceTest {
 		expectedCategories.remove(excludedCategory1);
 		expectedCategories.remove(excludedCategory2);
 
-		categories = MBCategoryServiceUtil.getCategories(
+		categories = MBCategoryLocalServiceUtil.getCategories(
 			_groupId,
 			new long[] {
 				excludedCategory1.getCategoryId(),
@@ -226,7 +226,7 @@ public class MBCategoryLocalServiceTest {
 	@Transactional
 	public void testGetCategoriesExcludingCategory() throws Exception {
 		List<MBCategory> initialCategories =
-			MBCategoryServiceUtil.getCategories(_groupId);
+			MBCategoryLocalServiceUtil.getCategories(_groupId);
 
 		List<MBCategory> expectedCategories = new ArrayList<MBCategory>();
 
@@ -239,7 +239,7 @@ public class MBCategoryLocalServiceTest {
 
 		expectedCategories.add(excludedCategory);
 
-		List<MBCategory> categories = MBCategoryServiceUtil.getCategories(
+		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
 			_groupId);
 
 		Assert.assertEquals(expectedCategories.size(), categories.size());
@@ -247,7 +247,7 @@ public class MBCategoryLocalServiceTest {
 
 		expectedCategories.remove(excludedCategory);
 
-		categories = MBCategoryServiceUtil.getCategories(
+		categories = MBCategoryLocalServiceUtil.getCategories(
 			_groupId, excludedCategory.getCategoryId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -262,7 +262,7 @@ public class MBCategoryLocalServiceTest {
 		throws Exception {
 
 		List<MBCategory> initialCategories =
-			MBCategoryServiceUtil.getCategories(
+			MBCategoryLocalServiceUtil.getCategories(
 				_groupId,  WorkflowConstants.STATUS_APPROVED);
 
 		List<MBCategory> expectedCategories = new ArrayList<MBCategory>();
@@ -284,7 +284,7 @@ public class MBCategoryLocalServiceTest {
 			WorkflowConstants.STATUS_DRAFT);
 
 		List<MBCategory> categories =
-			MBCategoryServiceUtil.getCategories(
+			MBCategoryLocalServiceUtil.getCategories(
 				_groupId, WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(expectedCategories.size(), categories.size());
@@ -293,7 +293,7 @@ public class MBCategoryLocalServiceTest {
 		expectedCategories.remove(excludedCategory1);
 		expectedCategories.remove(excludedCategory2);
 
-		categories = MBCategoryServiceUtil.getCategories(
+		categories = MBCategoryLocalServiceUtil.getCategories(
 			_groupId,
 			new long[] {
 				excludedCategory1.getCategoryId(),
@@ -312,7 +312,7 @@ public class MBCategoryLocalServiceTest {
 		throws Exception {
 
 		List<MBCategory> initialCategories =
-			MBCategoryServiceUtil.getCategories(
+			MBCategoryLocalServiceUtil.getCategories(
 				_groupId, WorkflowConstants.STATUS_APPROVED);
 
 		List<MBCategory> expectedCategories = new ArrayList<MBCategory>();
@@ -331,7 +331,7 @@ public class MBCategoryLocalServiceTest {
 			WorkflowConstants.STATUS_DRAFT);
 
 		List<MBCategory> categories =
-			MBCategoryServiceUtil.getCategories(
+			MBCategoryLocalServiceUtil.getCategories(
 				_groupId, WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(expectedCategories.size(), categories.size());
@@ -339,7 +339,7 @@ public class MBCategoryLocalServiceTest {
 
 		expectedCategories.remove(excludedCategory);
 
-		categories = MBCategoryServiceUtil.getCategories(
+		categories = MBCategoryLocalServiceUtil.getCategories(
 			_groupId, excludedCategory.getCategoryId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
