@@ -1203,9 +1203,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(friendlyURL)) {
-			throw new NoSuchLayoutException(
-				"{groupId=" + groupId + "," + " privateLayout=" +
-					privateLayout + "}");
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{groupId=");
+			sb.append(groupId);
+			sb.append(", privateLayout=");
+			sb.append(privateLayout);
+			sb.append("}");
+
+			throw new NoSuchLayoutException(sb.toString());
 		}
 
 		friendlyURL = layoutLocalServiceHelper.getFriendlyURL(friendlyURL);
@@ -1234,9 +1240,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		if (layout == null) {
-			throw new NoSuchLayoutException(
-				"{groupId=" + groupId + "," + " privateLayout=" +
-					privateLayout + ", friendlyURL=" + friendlyURL + "}");
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{groupId=");
+			sb.append(groupId);
+			sb.append(", privateLayout=");
+			sb.append(privateLayout);
+			sb.append(", friendlyURL=");
+			sb.append(friendlyURL);
+			sb.append("}");
+
+			throw new NoSuchLayoutException(sb.toString());
 		}
 
 		return layout;
