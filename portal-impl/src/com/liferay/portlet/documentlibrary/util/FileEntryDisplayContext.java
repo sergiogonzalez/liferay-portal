@@ -14,15 +14,18 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
@@ -49,6 +52,37 @@ public class FileEntryDisplayContext {
 		_permissionChecker = themeDisplay.getPermissionChecker();
 		_portletDisplay = themeDisplay.getPortletDisplay();
 		_scopeGroupId = themeDisplay.getScopeGroupId();
+		_companyId = themeDisplay.getCompanyId();
+		_folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
+		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+	}
+
+	public String getPublishButtonLabel() throws SystemException {
+		String publishButtonLabel = "publish";
+
+		if (_hasWorkflowDefinitionLink()) {
+			publishButtonLabel = "submit-for-publication";
+		}
+
+		if (_isSaveAsDraft()) {
+			publishButtonLabel = "save";
+		}
+
+		return publishButtonLabel;
+	}
+
+	public String getSaveButtonLabel() {
+		String saveButtonLabel = "save";
+
+		if ((_fileVersion == null) || _isDraft() || _isApproved()) {
+			saveButtonLabel = "save-as-draft";
+		}
+
+		return saveButtonLabel;
+	}
+
+	public boolean isCancelCheckoutDocumentButtonDisabled() {
+		return false;
 	}
 
 	public boolean isCancelCheckoutDocumentButtonVisible()
@@ -60,6 +94,10 @@ public class FileEntryDisplayContext {
 			return true;
 		}
 
+		return false;
+	}
+
+	public boolean isCheckinButtonDisabled() {
 		return false;
 	}
 
@@ -80,6 +118,10 @@ public class FileEntryDisplayContext {
 			return true;
 		}
 
+		return false;
+	}
+
+	public boolean isCheckoutDocumentDisabled() {
 		return false;
 	}
 
@@ -151,6 +193,28 @@ public class FileEntryDisplayContext {
 		return _hasPermissionsPermission();
 	}
 
+	public boolean isPublishButtonDisabled() {
+		if ((_isCheckedOut() && !_isLockedByMe()) || (_isPending() &&
+			 _isDLFileEntryDraftsEnabled())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isPublishButtonVisible() {
+		return true;
+	}
+
+	public boolean isSaveButtonDisabled() {
+		return _isCheckedOut() && !_isLockedByMe();
+	}
+
+	public boolean isSaveButtonVisible() {
+		return _isDLFileEntryDraftsEnabled();
+	}
+
 	private boolean _hasDeletePermission()
 		throws PortalException, SystemException {
 
@@ -206,6 +270,22 @@ public class FileEntryDisplayContext {
 		return _hasViewPermission;
 	}
 
+	private boolean _hasWorkflowDefinitionLink() throws SystemException {
+		try {
+			return DLUtil.hasWorkflowDefinitionLink(
+				_companyId, _scopeGroupId, _folderId, _fileEntryTypeId);
+		}
+		catch (Exception e) {
+			throw new SystemException(
+				"Unable to check if file entry has workflow definition link",
+				e);
+		}
+	}
+
+	private boolean _isApproved() {
+		return _fileVersion.isApproved();
+	}
+
 	private boolean _isCheckedOut() {
 		return _fileEntry.isCheckedOut();
 	}
@@ -220,6 +300,14 @@ public class FileEntryDisplayContext {
 		}
 
 		return false;
+	}
+
+	private boolean _isDLFileEntryDraftsEnabled() {
+		return PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED;
+	}
+
+	private boolean _isDraft() {
+		return _fileVersion.isDraft();
 	}
 
 	private boolean _isIEOnWin32() {
@@ -242,6 +330,20 @@ public class FileEntryDisplayContext {
 		return _officeDoc;
 	}
 
+	private boolean _isPending() {
+		return _fileVersion.isPending();
+	}
+
+	private boolean _isSaveAsDraft() {
+		if ((_isCheckedOut() || _isPending()) &&
+			!_isDLFileEntryDraftsEnabled()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isTrashEnabled() throws PortalException, SystemException {
 		if (_trashEnabled == null) {
 			_trashEnabled = TrashUtil.isTrashEnabled(_scopeGroupId);
@@ -254,8 +356,11 @@ public class FileEntryDisplayContext {
 		return _portletDisplay.isWebDAVEnabled();
 	}
 
+	private long _companyId;
 	private FileEntry _fileEntry;
+	private long _fileEntryTypeId;
 	private FileVersion _fileVersion;
+	private long _folderId;
 	private Boolean _hasDeletePermission;
 	private Boolean _hasOverrideCheckoutPermission;
 	private Boolean _hasPermissionsPermission;
