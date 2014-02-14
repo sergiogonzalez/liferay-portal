@@ -93,7 +93,7 @@ public class UnitConverterUtil {
 
 		if (decimalFormat != null) {
 			return NumberFormatUtil.format(
-			decimalFormat, megaBytes.floatValue(), 0L);
+				decimalFormat, megaBytes.floatValue(), 0L);
 		}
 
 		return String.valueOf(megaBytes.floatValue());
