@@ -132,7 +132,7 @@ public class UnitConverterUtil {
 			decimalFormat.setDecimalFormatSymbols(dfs);
 
 			return NumberFormatUtil.format(
-			decimalFormat, megaBytes.floatValue(), 0L);
+				decimalFormat, megaBytes.floatValue(), 0L);
 		}
 
 		return String.valueOf(megaBytes.floatValue());

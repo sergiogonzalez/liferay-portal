@@ -196,13 +196,11 @@ FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(re
 	</liferay-ui:error>
 
 	<%
-	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+	BigDecimal fileMaxSize = new BigDecimal(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE));
 
-	if (fileMaxSize == 0) {
-		fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+	if (fileMaxSize.longValue() == 0) {
+		fileMaxSize = new BigDecimal(PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
 	}
-
-	fileMaxSize /= 1024;
 	%>
 
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
@@ -221,9 +219,23 @@ FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(re
 
 	<aui:fieldset>
 		<aui:field-wrapper>
-			<c:if test="<%= fileMaxSize != 0 %>">
+			<c:if test="<%= !fileMaxSize.equals(0) %>">
 				<div class="alert alert-info">
-					<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-k", String.valueOf(fileMaxSize), false) %>
+					<c:choose>
+						<c:when test="<%= fileMaxSize.longValue() < 8192L %>">
+							<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-k", String.valueOf(UnitConverterUtil.convertFromBitsToKiloBits(fileMaxSize)), false) %>
+						</c:when>
+						<c:when test="<%= fileMaxSize.longValue() >= 8192L && fileMaxSize.longValue() < 8388608L %>">
+							<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-KB", String.valueOf(UnitConverterUtil.convertFromBitsToKiloBytes(fileMaxSize)), false) %>
+						</c:when>
+						<c:when test="<%= fileMaxSize.longValue() >= 8388608L && fileMaxSize.longValue() < 8589934592L %>">
+							<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-MB", String.valueOf(UnitConverterUtil.convertFromBitsToMegaBytes(fileMaxSize)), false) %>
+						</c:when>
+						<c:when test="<%= fileMaxSize.longValue() >= 8589934592L %>">
+							<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-GB", String.valueOf(UnitConverterUtil.convertFromBitsToGigaBytes(fileMaxSize)), false) %>
+						</c:when>
+					</c:choose>
+
 				</div>
 			</c:if>
 		</aui:field-wrapper>
