@@ -1354,6 +1354,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			boolean strict, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		if (hasRedirectTitle(nodeId, title)) {
+			throw new MovePageException();
+		}
+
 		validateTitle(newTitle);
 
 		// Check if the new title already exists

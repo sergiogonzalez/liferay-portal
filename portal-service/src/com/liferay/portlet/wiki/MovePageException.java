@@ -19,21 +19,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PageTitleException extends PortalException {
+public class MovePageException extends PortalException {
 
-	public PageTitleException() {
+	public MovePageException() {
 		super();
 	}
 
-	public PageTitleException(String msg) {
+	public MovePageException(String msg) {
 		super(msg);
 	}
 
-	public PageTitleException(String msg, Throwable cause) {
+	public MovePageException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public PageTitleException(Throwable cause) {
+	public MovePageException(Throwable cause) {
 		super(cause);
 	}
 
