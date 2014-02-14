@@ -25,7 +25,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletPreferences;
 
@@ -35,6 +37,11 @@ import javax.portlet.PortletPreferences;
  */
 @DoPrivileged
 public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
+
+	@Override
+	public void clearCache() {
+		_propertiesMap.clear();
+	}
 
 	@Override
 	public PortletSettings getCompanyPortletSettings(
@@ -49,9 +56,8 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 		CompanyPortletSettings companyPortletSettings =
 			new CompanyPortletSettings(companyPortletPreferences);
 
-		Properties portalProperties = PropsUtil.getProperties(portletId, false);
-
-		companyPortletSettings.setPortalProperties(portalProperties);
+		companyPortletSettings.setPortalProperties(
+			getPortalProperties(portletId));
 
 		return companyPortletSettings;
 	}
@@ -80,9 +86,8 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 		groupPortletSettings.setCompanyPortletPreferences(
 			companyPortletPreferences);
 
-		Properties portalProperties = PropsUtil.getProperties(portletId, false);
-
-		groupPortletSettings.setPortalProperties(portalProperties);
+		groupPortletSettings.setPortalProperties(
+			getPortalProperties(portletId));
 
 		return groupPortletSettings;
 	}
@@ -127,11 +132,27 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 		portletInstancePortletSettings.setGroupPortletPreferences(
 			groupPortletPreferences);
 
-		Properties portalProperties = PropsUtil.getProperties(portletId, false);
-
-		portletInstancePortletSettings.setPortalProperties(portalProperties);
+		portletInstancePortletSettings.setPortalProperties(
+			getPortalProperties(portletId));
 
 		return portletInstancePortletSettings;
 	}
+
+	protected Properties getPortalProperties(String portletId) {
+		Properties portalProperties = _propertiesMap.get(portletId);
+
+		if (portalProperties != null) {
+			return portalProperties;
+		}
+
+		portalProperties = PropsUtil.getProperties(portletId, false);
+
+		_propertiesMap.put(portletId, portalProperties);
+
+		return portalProperties;
+	}
+
+	private Map<String, Properties> _propertiesMap =
+		new ConcurrentHashMap<String, Properties>();
 
 }

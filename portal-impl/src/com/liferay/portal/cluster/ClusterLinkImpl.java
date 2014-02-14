@@ -46,14 +46,16 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			return;
 		}
 
-		for (JChannel jChannel : _transportChannels) {
+		for (JChannel jChannel : _transportJChannels) {
 			jChannel.close();
 		}
 	}
 
 	@Override
 	public InetAddress getBindInetAddress() {
-		return bindInetAddress;
+		JChannel jChannel = _transportJChannels.get(0);
+
+		return getBindInetAddress(jChannel);
 	}
 
 	@Override
@@ -136,7 +138,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 					priority);
 		}
 
-		return _transportChannels.get(channelIndex);
+		return _transportJChannels.get(channelIndex);
 	}
 
 	@Override
@@ -153,7 +155,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 		_localTransportAddresses = new ArrayList<org.jgroups.Address>(
 			_channelCount);
-		_transportChannels = new ArrayList<JChannel>(_channelCount);
+		_transportJChannels = new ArrayList<JChannel>(_channelCount);
 
 		List<String> keys = new ArrayList<String>(_channelCount);
 
@@ -175,7 +177,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 					_LIFERAY_TRANSPORT_CHANNEL + i);
 
 			_localTransportAddresses.add(jChannel.getAddress());
-			_transportChannels.add(jChannel);
+			_transportJChannels.add(jChannel);
 		}
 	}
 
@@ -187,6 +189,6 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	private int _channelCount;
 	private ClusterForwardMessageListener _clusterForwardMessageListener;
 	private List<org.jgroups.Address> _localTransportAddresses;
-	private List<JChannel> _transportChannels;
+	private List<JChannel> _transportJChannels;
 
 }

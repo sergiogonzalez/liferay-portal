@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -333,6 +335,10 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected boolean isSessionErrorException(Throwable cause) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(cause, cause);
+		}
+
 		if (cause instanceof PortalException) {
 			return true;
 		}
@@ -406,6 +412,8 @@ public class LiferayPortlet extends GenericPortlet {
 	protected boolean addProcessActionSuccessMessage;
 
 	private static final boolean _PROCESS_PORTLET_REQUEST = true;
+
+	private static Log _log = LogFactoryUtil.getLog(LiferayPortlet.class);
 
 	private Map<String, Method> _actionMethods =
 		new ConcurrentHashMap<String, Method>();

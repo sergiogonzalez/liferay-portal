@@ -265,13 +265,15 @@ public class VerifyProperties extends VerifyProcess {
 		"cluster.executor.heartbeat.interval",
 		"com.liferay.filters.doubleclick.DoubleClickFilter",
 		"com.liferay.portal.servlet.filters.doubleclick.DoubleClickFilter",
+		"com.liferay.portal.servlet.filters.validhtml.ValidHtmlFilter",
 		"commons.pool.enabled", "dl.file.entry.read.count.enabled",
 		"dynamic.data.lists.template.language.parser[ftl]",
 		"dynamic.data.lists.template.language.parser[vm]",
 		"dynamic.data.lists.template.language.parser[xsl]",
 		"dynamic.data.mapping.template.language.types",
-		"ehcache.statistics.enabled", "javax.persistence.validation.mode",
-		"jbi.workflow.url", "journal.template.language.parser[css]",
+		"ehcache.statistics.enabled", "index.filter.search.limit",
+		"javax.persistence.validation.mode", "jbi.workflow.url",
+		"journal.template.language.parser[css]",
 		"journal.template.language.parser[ftl]",
 		"journal.template.language.parser[vm]",
 		"journal.template.language.parser[xsl]",
@@ -447,6 +449,14 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"journal.template.velocity.restricted.variables",
 			"velocity.engine.restricted.variables"
+		},
+		new String[] {
+			"portal.instance.http.port",
+			"portal.instance.http.inet.socket.address"
+		},
+		new String[] {
+			"portal.instance.https.port",
+			"portal.instance.https.inet.socket.address"
 		},
 		new String[] {
 			"referer.url.domains.allowed", "redirect.url.domains.allowed"

@@ -1094,26 +1094,9 @@ public class LayoutTypePortletImpl
 			return;
 		}
 
-		String oldLayoutTemplateId = getLayoutTemplateId();
-
-		if (Validator.isNull(oldLayoutTemplateId)) {
-			oldLayoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
-		}
+		LayoutTemplate oldLayoutTemplate = getLayoutTemplate();
 
 		String themeId = getThemeId();
-
-		LayoutTemplate oldLayoutTemplate =
-			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
-				oldLayoutTemplateId, false, themeId);
-
-		if (oldLayoutTemplate == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find layout template " + oldLayoutTemplateId);
-			}
-
-			return;
-		}
 
 		LayoutTemplate newLayoutTemplate =
 			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
