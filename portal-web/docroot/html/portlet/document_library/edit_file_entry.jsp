@@ -221,21 +221,7 @@ FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(re
 		<aui:field-wrapper>
 			<c:if test="<%= !fileMaxSize.equals(0) %>">
 				<div class="alert alert-info">
-					<c:choose>
-						<c:when test="<%= fileMaxSize.longValue() < 8192L %>">
-							<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-k", String.valueOf(UnitConverterUtil.convertFromBitsToKiloBits(fileMaxSize)), false) %>
-						</c:when>
-						<c:when test="<%= fileMaxSize.longValue() >= 8192L && fileMaxSize.longValue() < 8388608L %>">
-							<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-KB", String.valueOf(UnitConverterUtil.convertFromBitsToKiloBytes(fileMaxSize)), false) %>
-						</c:when>
-						<c:when test="<%= fileMaxSize.longValue() >= 8388608L && fileMaxSize.longValue() < 8589934592L %>">
-							<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-MB", String.valueOf(UnitConverterUtil.convertFromBitsToMegaBytes(fileMaxSize)), false) %>
-						</c:when>
-						<c:when test="<%= fileMaxSize.longValue() >= 8589934592L %>">
-							<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-GB", String.valueOf(UnitConverterUtil.convertFromBitsToGigaBytes(fileMaxSize)), false) %>
-						</c:when>
-					</c:choose>
-
+					<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x", DLUtil.getConvertedMaxSize(fileMaxSize, locale), false) %>
 				</div>
 			</c:if>
 		</aui:field-wrapper>
