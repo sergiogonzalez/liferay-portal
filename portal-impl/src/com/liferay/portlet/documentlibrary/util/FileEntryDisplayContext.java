@@ -39,6 +39,13 @@ import javax.servlet.http.HttpServletRequest;
 public class FileEntryDisplayContext {
 
 	public FileEntryDisplayContext(
+			HttpServletRequest request, FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		this(request, fileEntry, fileEntry.getLatestFileVersion());
+	}
+
+	public FileEntryDisplayContext(
 		HttpServletRequest request, FileEntry fileEntry,
 		FileVersion fileVersion) {
 
@@ -88,8 +95,9 @@ public class FileEntryDisplayContext {
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException, SystemException {
 
-		if ((_hasUpdatePermission() && _isCheckedOut() && _isLockedByMe()) ||
-			(_isCheckedOut() && _hasOverrideCheckoutPermission())) {
+		if ((_hasUpdatePermission() && _isCheckedOut() && _isLockedByMe() &&
+			 _isSupportsLocking()) || (_isCheckedOut() &&
+			 _hasOverrideCheckoutPermission())) {
 
 			return true;
 		}
@@ -114,7 +122,9 @@ public class FileEntryDisplayContext {
 	public boolean isCheckoutDocumentButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_hasUpdatePermission() && !_isCheckedOut()) {
+		if (_hasUpdatePermission() && !_isCheckedOut() &&
+			_isSupportsLocking()) {
+
 			return true;
 		}
 
@@ -223,6 +233,12 @@ public class FileEntryDisplayContext {
 
 	public boolean isSaveButtonVisible() {
 		return _isDLFileEntryDraftsEnabled();
+	}
+
+	public boolean isViewButtonVisible()
+		throws PortalException, SystemException {
+
+		return _hasViewPermission();
 	}
 
 	private boolean _hasDeletePermission()
@@ -342,6 +358,10 @@ public class FileEntryDisplayContext {
 
 	private boolean _isPending() {
 		return _fileVersion.isPending();
+	}
+
+	private boolean _isSupportsLocking() {
+		return _fileEntry.isSupportsLocking();
 	}
 
 	private boolean _isTrashEnabled() throws PortalException, SystemException {
