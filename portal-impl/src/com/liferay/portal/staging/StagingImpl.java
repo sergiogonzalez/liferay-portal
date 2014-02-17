@@ -127,9 +127,12 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.layoutsadmin.lar.StagedTheme;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -681,15 +684,17 @@ public class StagingImpl implements Staging {
 		else if (e instanceof FileSizeException ||
 				 e instanceof LARFileSizeException) {
 
-			long fileMaxSize = PropsValues.DL_FILE_MAX_SIZE;
+			BigDecimal fileMaxSize = new BigDecimal(
+				PropsValues.DL_FILE_MAX_SIZE);
 
 			try {
-				fileMaxSize = PrefsPropsUtil.getLong(
-					PropsKeys.DL_FILE_MAX_SIZE);
+				fileMaxSize = new BigDecimal(
+					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE));
 
-				if (fileMaxSize == 0) {
-					fileMaxSize = PrefsPropsUtil.getLong(
-						PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+				if (fileMaxSize.longValue() == 0) {
+					fileMaxSize = new BigDecimal(
+						PrefsPropsUtil.getLong(
+							PropsKeys. UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
 				}
 			}
 			catch (Exception ex) {
@@ -698,7 +703,7 @@ public class StagingImpl implements Staging {
 			errorMessage = LanguageUtil.format(
 				locale,
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				fileMaxSize/1024, false);
+				DLUtil.getConvertedMaxSize(fileMaxSize, locale), false);
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else if (e instanceof LARTypeException) {
