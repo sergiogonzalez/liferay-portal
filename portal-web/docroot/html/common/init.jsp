@@ -289,6 +289,8 @@ page import="com.liferay.util.xml.XMLFormatter" %>
 
 <%@ page import="java.io.Serializable" %>
 
+<%@ page import="java.math.BigDecimal" %>
+
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.DecimalFormat" %><%@
 page import="java.text.Format" %><%@

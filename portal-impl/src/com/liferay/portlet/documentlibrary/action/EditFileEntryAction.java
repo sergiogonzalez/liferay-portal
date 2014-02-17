@@ -79,6 +79,8 @@ import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -849,20 +851,21 @@ public class EditFileEntryAction extends PortletAction {
 					errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 				}
 				else if (e instanceof FileSizeException) {
-					long fileMaxSize = PrefsPropsUtil.getLong(
-						PropsKeys.DL_FILE_MAX_SIZE);
+					BigDecimal fileMaxSize = new BigDecimal(
+						PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE));
 
-					if (fileMaxSize == 0) {
-						fileMaxSize = PrefsPropsUtil.getLong(
-							PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+					if (fileMaxSize.longValue() == 0) {
+						fileMaxSize = new BigDecimal(
+							PrefsPropsUtil.getLong(
+								PropsKeys.
+									UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
 					}
-
-					fileMaxSize /= 1024;
 
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-larger" +
 							"-than-x",
-						fileMaxSize);
+						DLUtil.getConvertedMaxSize(
+							fileMaxSize, themeDisplay.getLocale()));
 
 					errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 				}

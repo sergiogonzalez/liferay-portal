@@ -27,6 +27,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -107,6 +109,12 @@ public class DLUtil {
 
 	public static Set<String> getAllMediaGalleryMimeTypes() {
 		return getDL().getAllMediaGalleryMimeTypes();
+	}
+
+	public static String getConvertedMaxSize(
+		BigDecimal fileMaxSize, Locale locale) {
+
+		return getDL().getConvertedMaxSize(fileMaxSize, locale);
 	}
 
 	public static String getDDMStructureKey(DLFileEntryType dlFileEntryType) {
