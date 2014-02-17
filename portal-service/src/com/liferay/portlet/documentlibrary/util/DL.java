@@ -27,6 +27,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -92,6 +94,8 @@ public interface DL {
 		throws PortalException, SystemException;
 
 	public Set<String> getAllMediaGalleryMimeTypes();
+
+	public String getConvertedMaxSize(BigDecimal fileMaxSize, Locale locale);
 
 	public String getDDMStructureKey(DLFileEntryType dlFileEntryType);
 

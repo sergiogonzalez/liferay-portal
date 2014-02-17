@@ -77,6 +77,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.ContentUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -371,6 +372,24 @@ public class DLImpl implements DL {
 	@Override
 	public Set<String> getAllMediaGalleryMimeTypes() {
 		return _allMediaGalleryMimeTypes;
+	}
+
+	@Override
+	public String getConvertedMaxSize(BigDecimal fileMaxSize, Locale locale) {
+		<c:choose>
+		<c:when test="<%= fileMaxSize.longValue() < 8192L %>">
+		<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-k", String.valueOf(UnitConverterUtil.convertFromBitsToKiloBits(fileMaxSize)), false) %>
+		</c:when>
+		<c:when test="<%= fileMaxSize.longValue() >= 8192L && fileMaxSize.longValue() < 8388608L %>">
+		<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-KB", String.valueOf(UnitConverterUtil.convertFromBitsToKiloBytes(fileMaxSize)), false) %>
+		</c:when>
+		<c:when test="<%= fileMaxSize.longValue() >= 8388608L && fileMaxSize.longValue() < 8589934592L %>">
+		<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-MB", String.valueOf(UnitConverterUtil.convertFromBitsToMegaBytes(fileMaxSize)), false) %>
+		</c:when>
+		<c:when test="<%= fileMaxSize.longValue() >= 8589934592L %>">
+		<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-GB", String.valueOf(UnitConverterUtil.convertFromBitsToGigaBytes(fileMaxSize)), false) %>
+		</c:when>
+		</c:choose>
 	}
 
 	@Override
