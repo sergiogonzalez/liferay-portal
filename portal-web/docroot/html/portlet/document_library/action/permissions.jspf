@@ -16,7 +16,7 @@
 
 <c:choose>
 	<c:when test="<%= (fileShortcut == null) %>">
-		<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
+		<c:if test="<%= fileEntryDisplayContext.isPermissionsButtonVisible() %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= DLFileEntryConstants.getClassName() %>"
 				modelResourceDescription="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>"
