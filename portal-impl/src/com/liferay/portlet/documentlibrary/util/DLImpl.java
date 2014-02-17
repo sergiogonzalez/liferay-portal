@@ -76,6 +76,9 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.ContentUtil;
+import com.liferay.util.UnitConverterUtil;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -371,6 +374,32 @@ public class DLImpl implements DL {
 	@Override
 	public Set<String> getAllMediaGalleryMimeTypes() {
 		return _allMediaGalleryMimeTypes;
+	}
+
+	@Override
+	public String getConvertedMaxSize(BigDecimal fileMaxSize) {
+		if ((fileMaxSize.longValue() >= _1KB) &&
+			(fileMaxSize.longValue() < _1MB)) {
+
+			return String.valueOf(
+				UnitConverterUtil.convertFromBitsToKiloBytes(fileMaxSize) +
+					" KB");
+		}
+		else if ((fileMaxSize.longValue() >= _1MB) &&
+				 (fileMaxSize.longValue() < _1GB)) {
+
+			return String.valueOf(
+				UnitConverterUtil.convertFromBitsToMegaBytes(fileMaxSize) +
+					" MB");
+		}
+		else if (fileMaxSize.longValue() >= _1GB) {
+			return String.valueOf(
+				UnitConverterUtil.convertFromBitsToGigaBytes(fileMaxSize) +
+					" GB");
+		}
+
+		return String.valueOf(
+			UnitConverterUtil.convertFromBitsToKiloBits(fileMaxSize) + " Kb");
 	}
 
 	@Override
@@ -1274,6 +1303,12 @@ public class DLImpl implements DL {
 	private static final String _STRUCTURE_KEY_PREFIX = "AUTO_";
 
 	private static Log _log = LogFactoryUtil.getLog(DLImpl.class);
+
+	private static long _1GB = 8589934592L;
+
+	private static long _1KB = 8192L;
+
+	private static long _1MB = 8388608L;
 
 	private static Set<String> _allMediaGalleryMimeTypes =
 		new TreeSet<String>();

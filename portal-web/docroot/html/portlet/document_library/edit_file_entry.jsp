@@ -202,13 +202,11 @@ FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(re
 	</liferay-ui:error>
 
 	<%
-	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+	BigDecimal fileMaxSize = new BigDecimal(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE));
 
-	if (fileMaxSize == 0) {
-		fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+	if (fileMaxSize.longValue() == 0) {
+		fileMaxSize = new BigDecimal(PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
 	}
-
-	fileMaxSize /= 1024;
 	%>
 
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
@@ -227,9 +225,9 @@ FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(re
 
 	<aui:fieldset>
 		<aui:field-wrapper>
-			<c:if test="<%= fileMaxSize != 0 %>">
+			<c:if test="<%= !fileMaxSize.equals(0) %>">
 				<div class="alert alert-info">
-					<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-k", String.valueOf(fileMaxSize), false) %>
+					<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x", DLUtil.getConvertedMaxSize(fileMaxSize), false) %>
 				</div>
 			</c:if>
 		</aui:field-wrapper>
