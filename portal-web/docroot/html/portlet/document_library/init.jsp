@@ -81,8 +81,6 @@ page import="com.liferay.portlet.dynamicdatamapping.util.comparator.StructureStr
 page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearch" %>
 
-<%@ page import="java.math.BigDecimal" %>
-
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
