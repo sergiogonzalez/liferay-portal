@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -94,6 +95,112 @@ public class BookmarksFolderServiceTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksFolderServiceUtil.getFolder(folder.getFolderId());
+	}
+
+	@Test
+	public void testMoveFolder() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		long initialParentFolderId = folder.getParentFolderId();
+
+		BookmarksFolder destinationFolder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		folder = BookmarksFolderLocalServiceUtil.moveFolder(
+			folder.getFolderId(), destinationFolder.getFolderId());
+
+		Assert.assertNotEquals(
+			initialParentFolderId, folder.getParentFolderId());
+		Assert.assertEquals(
+			destinationFolder.getFolderId(), folder.getParentFolderId());
+	}
+
+	@Test
+	public void testMoveFolderFromTrash() throws Exception {
+		BookmarksFolder initialParentFolder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), initialParentFolder.getFolderId(),
+			ServiceTestUtil.randomString());
+
+		Assert.assertTrue(folder.isApproved());
+
+		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
+			initialParentFolder.getUserId(), initialParentFolder.getFolderId());
+
+		folder = BookmarksFolderLocalServiceUtil.getFolder(
+			folder.getFolderId());
+
+		Assert.assertTrue(folder.isInTrash());
+		Assert.assertFalse(folder.isInTrashExplicitly());
+
+		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		folder = BookmarksFolderLocalServiceUtil.moveFolderFromTrash(
+			parentFolder.getUserId(), folder.getFolderId(),
+			parentFolder.getFolderId());
+
+		Assert.assertTrue(folder.isApproved());
+		Assert.assertEquals(
+			parentFolder.getFolderId(), folder.getParentFolderId());
+	}
+
+	@Test
+	public void testMoveFolderFromTrashWhenIsInTrashExplicitly()
+		throws Exception {
+
+		BookmarksFolder initialParentFolder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), initialParentFolder.getFolderId(),
+			ServiceTestUtil.randomString());
+
+		Assert.assertTrue(folder.isApproved());
+
+		folder = BookmarksFolderLocalServiceUtil.moveFolderToTrash(
+			folder.getUserId(), folder.getFolderId());
+
+		Assert.assertTrue(folder.isInTrash());
+		Assert.assertTrue(folder.isInTrashExplicitly());
+
+		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		folder = BookmarksFolderLocalServiceUtil.moveFolderFromTrash(
+			parentFolder.getUserId(), folder.getFolderId(),
+			parentFolder.getFolderId());
+
+		Assert.assertTrue(folder.isApproved());
+		Assert.assertEquals(
+			parentFolder.getFolderId(), folder.getParentFolderId());
+	}
+
+	@Test
+	public void testRestoreFolderFromTrash() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		Assert.assertTrue(folder.isApproved());
+
+		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
+			folder.getUserId(), folder.getFolderId());
+
+		folder = BookmarksFolderLocalServiceUtil.getFolder(
+			folder.getFolderId());
+
+		Assert.assertTrue(folder.isInTrash());
+
+		BookmarksFolderLocalServiceUtil.restoreFolderFromTrash(
+			folder.getUserId(), folder.getFolderId());
+
+		folder = BookmarksFolderLocalServiceUtil.getFolder(
+			folder.getFolderId());
+
+		Assert.assertTrue(folder.isApproved());
 	}
 
 	@Test
