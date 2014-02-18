@@ -36,6 +36,7 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import java.util.List;
@@ -328,6 +329,148 @@ public class BookmarksFolderServiceTest {
 		Document[] documents = hits.getDocs();
 
 		Assert.assertEquals(2, documents.length);
+	}
+
+	@Test
+	public void testUpdateFolderWithChildFolderAsParentFolder()
+		throws Exception {
+
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		String initialName = folder.getName();
+		long initialParentFolderId = folder.getParentFolderId();
+
+		BookmarksFolder childfolder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), folder.getFolderId(),
+			ServiceTestUtil.randomString());
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		folder = BookmarksFolderLocalServiceUtil.updateFolder(
+			folder.getUserId(), folder.getFolderId(), childfolder.getFolderId(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
+			false, serviceContext);
+
+		Assert.assertNotEquals(initialName, folder.getName());
+		Assert.assertEquals(initialParentFolderId, folder.getParentFolderId());
+	}
+
+	@Test
+	public void testUpdateFolderWithCustomParentFolder() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		String initialName = folder.getName();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		folder = BookmarksFolderLocalServiceUtil.updateFolder(
+			folder.getUserId(), folder.getFolderId(),
+			parentFolder.getFolderId(), ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(50), false, serviceContext);
+
+		Assert.assertNotEquals(initialName, folder.getName());
+		Assert.assertEquals(
+			parentFolder.getFolderId(), folder.getParentFolderId());
+	}
+
+	@Test
+	public void testUpdateFolderWithDefaultParentFolder() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		String initialName = folder.getName();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		folder = BookmarksFolderLocalServiceUtil.updateFolder(
+			folder.getUserId(), folder.getFolderId(),
+			folder.getParentFolderId(), ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(50), false, serviceContext);
+
+		Assert.assertNotEquals(initialName, folder.getName());
+		Assert.assertEquals(
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			folder.getParentFolderId());
+	}
+
+	@Test
+	public void testUpdateFolderWithItselfAsParentFolder() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		String initialName = folder.getName();
+		long initialParentFolderId = folder.getParentFolderId();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		folder = BookmarksFolderLocalServiceUtil.updateFolder(
+			folder.getUserId(), folder.getFolderId(), folder.getFolderId(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
+			false, serviceContext);
+
+		Assert.assertNotEquals(initialName, folder.getName());
+		Assert.assertEquals(initialParentFolderId, folder.getParentFolderId());
+	}
+
+	@Test
+	public void testUpdateFolderWithParentFolderFromDifferentGroup()
+		throws Exception {
+
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		String initialName = folder.getName();
+		long initialParentFolderId = folder.getParentFolderId();
+
+		Group group = GroupTestUtil.addGroup();
+
+		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), ServiceTestUtil.randomString());
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		folder = BookmarksFolderLocalServiceUtil.updateFolder(
+			folder.getUserId(), folder.getFolderId(),
+			parentFolder.getFolderId(), ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(50), false, serviceContext);
+
+		Assert.assertNotEquals(initialName, folder.getName());
+		Assert.assertEquals(initialParentFolderId, folder.getParentFolderId());
+	}
+
+	@Test
+	public void testUpdateFolderWithWrongParentFolder() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		String initialName = folder.getName();
+		long initialParentFolderId = folder.getParentFolderId();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		long randomParentFolder = 0;
+		BookmarksFolder parentFolder = null;
+
+		do {
+			randomParentFolder = ServiceTestUtil.randomLong();
+
+			parentFolder = BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
+				randomParentFolder);
+		}
+		while (parentFolder != null);
+
+		folder = BookmarksFolderLocalServiceUtil.updateFolder(
+			folder.getUserId(), folder.getFolderId(), randomParentFolder,
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
+			false, serviceContext);
+
+		Assert.assertNotEquals(initialName, folder.getName());
+		Assert.assertEquals(initialParentFolderId, folder.getParentFolderId());
 	}
 
 	private Group _group;
