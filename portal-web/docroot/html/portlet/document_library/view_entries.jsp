@@ -389,93 +389,94 @@ for (int i = 0; i < results.size(); i++) {
 				</c:when>
 
 				<c:otherwise>
-
-					<%
-					FileVersion latestFileVersion = fileEntry.getFileVersion();
-
-					if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-						latestFileVersion = fileEntry.getLatestFileVersion();
-					}
-					%>
-
-					<liferay-util:buffer var="fileEntryTitle">
-
+					<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+	
 						<%
-						PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-						rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
-						rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+						FileVersion latestFileVersion = fileEntry.getFileVersion();
+	
+						if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+							latestFileVersion = fileEntry.getLatestFileVersion();
+						}
 						%>
-
-						<liferay-ui:app-view-entry
-							displayStyle="list"
-							locked="<%= fileEntry.isCheckedOut() %>"
-							showCheckbox="<%= true %>"
-							thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) + ".png" %>'
-							title="<%= latestFileVersion.getTitle() %>"
-							url="<%= rowURL.toString() %>"
-						/>
-					</liferay-util:buffer>
-
-					<%
-					List resultRows = searchContainer.getResultRows();
-
-					ResultRow row = null;
-
-					if (fileShortcut == null) {
-						row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
-					}
-					else {
-						row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
-					}
-
-					row.setClassName("app-view-entry-taglib entry-display-style selectable");
-
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("draggable", DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE));
-					data.put("title", fileEntry.getTitle());
-
-					row.setData(data);
-
-					for (String columnName : entryColumns) {
-						if (columnName.equals("action")) {
-							row.addJSP("/html/portlet/document_library/file_entry_action.jsp");
+	
+						<liferay-util:buffer var="fileEntryTitle">
+	
+							<%
+							PortletURL rowURL = liferayPortletResponse.createRenderURL();
+	
+							rowURL.setParameter("struts_action", "/document_library/view_file_entry");
+							rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
+							rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+							%>
+	
+							<liferay-ui:app-view-entry
+								displayStyle="list"
+								locked="<%= fileEntry.isCheckedOut() %>"
+								showCheckbox="<%= true %>"
+								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) + ".png" %>'
+								title="<%= latestFileVersion.getTitle() %>"
+								url="<%= rowURL.toString() %>"
+							/>
+						</liferay-util:buffer>
+	
+						<%
+						List resultRows = searchContainer.getResultRows();
+	
+						ResultRow row = null;
+	
+						if (fileShortcut == null) {
+							row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 						}
-
-						if (columnName.equals("create-date")) {
-							row.addDate(fileEntry.getCreateDate());
+						else {
+							row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
 						}
-
-						if (columnName.equals("downloads")) {
-							row.addText(String.valueOf(fileEntry.getReadCount()));
+	
+						row.setClassName("app-view-entry-taglib entry-display-style selectable");
+	
+						Map<String, Object> data = new HashMap<String, Object>();
+	
+						data.put("draggable", DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE));
+						data.put("title", fileEntry.getTitle());
+	
+						row.setData(data);
+	
+						for (String columnName : entryColumns) {
+							if (columnName.equals("action")) {
+								row.addJSP("/html/portlet/document_library/file_entry_action.jsp");
+							}
+	
+							if (columnName.equals("create-date")) {
+								row.addDate(fileEntry.getCreateDate());
+							}
+	
+							if (columnName.equals("downloads")) {
+								row.addText(String.valueOf(fileEntry.getReadCount()));
+							}
+	
+							if (columnName.equals("modified-date")) {
+								row.addDate(latestFileVersion.getModifiedDate());
+							}
+	
+							if (columnName.equals("name")) {
+								TextSearchEntry fileEntryTitleSearchEntry = new TextSearchEntry();
+	
+								fileEntryTitleSearchEntry.setName(fileEntryTitle);
+	
+								row.addSearchEntry(fileEntryTitleSearchEntry);
+							}
+	
+							if (columnName.equals("size")) {
+								row.addText(TextFormatter.formatStorageSize(latestFileVersion.getSize(), locale));
+							}
+	
+							if (columnName.equals("status")) {
+								row.addStatus(latestFileVersion.getStatus(), latestFileVersion.getStatusByUserId(), latestFileVersion.getStatusDate());
+							}
 						}
-
-						if (columnName.equals("modified-date")) {
-							row.addDate(latestFileVersion.getModifiedDate());
-						}
-
-						if (columnName.equals("name")) {
-							TextSearchEntry fileEntryTitleSearchEntry = new TextSearchEntry();
-
-							fileEntryTitleSearchEntry.setName(fileEntryTitle);
-
-							row.addSearchEntry(fileEntryTitleSearchEntry);
-						}
-
-						if (columnName.equals("size")) {
-							row.addText(TextFormatter.formatStorageSize(latestFileVersion.getSize(), locale));
-						}
-
-						if (columnName.equals("status")) {
-							row.addStatus(latestFileVersion.getStatus(), latestFileVersion.getStatusByUserId(), latestFileVersion.getStatusDate());
-						}
-					}
-
-					resultRows.add(row);
-					%>
-
+	
+						resultRows.add(row);
+						%>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 		</c:when>
