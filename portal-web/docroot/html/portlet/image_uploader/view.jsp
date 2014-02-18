@@ -90,7 +90,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 
 			var logoEditor = new Liferay.LogoEditor(
 				{
-					maxFileSize: '<%= maxFileSize %>',
+					maxFileSize: '<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>',
 					namespace: '<portlet:namespace />',
 					on: {
 						uploadComplete: A.bind('val', imageUploadedInput, true)
