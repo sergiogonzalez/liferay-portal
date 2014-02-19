@@ -45,6 +45,11 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
+	public int getDatabaseCount() throws Exception {
+		return 0;
+	}
+
+	@Override
 	public Document getDocument(Object obj) {
 		return null;
 	}

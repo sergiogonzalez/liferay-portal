@@ -972,6 +972,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		workflowServiceContext.setAttribute("autoPassword", autoPassword);
+		workflowServiceContext.setAttribute("passwordUnencrypted", password1);
 		workflowServiceContext.setAttribute("sendEmail", sendEmail);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -1594,11 +1595,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * the confirmation email.
 	 *
 	 * @param  user the user
-	 * @param  serviceContext the service context to be applied. Can set whether
-	 *         a password should be generated (with the
-	 *         <code>autoPassword</code> attribute) and whether the confirmation
-	 *         email should be sent (with the <code>sendEmail</code> attribute)
-	 *         for the user.
+	 * @param  serviceContext the service context to be applied. You can specify
+	 *         an unencrypted custom password for the user via attribute
+	 *         <code>passwordUnencrypted</code>. You automatically generate a
+	 *         password for the user by setting attribute
+	 *         <code>autoPassword</code> to <code>true</code>. You can send a
+	 *         confirmation email to the user by setting attribute
+	 *         <code>sendEmail</code> to <code>true</code>.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1610,7 +1613,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		boolean autoPassword = ParamUtil.getBoolean(
 			serviceContext, "autoPassword");
 
-		String password = null;
+		String password = (String)serviceContext.getAttribute(
+			"passwordUnencrypted");
 
 		if (autoPassword) {
 			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
@@ -1637,6 +1641,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				password = PwdToolkitUtil.generate(passwordPolicy);
 			}
 
+			serviceContext.setAttribute("passwordUnencrypted", password);
+
 			user.setPassword(PasswordEncryptorUtil.encrypt(password));
 			user.setPasswordUnencrypted(password);
 			user.setPasswordEncrypted(true);
@@ -1649,14 +1655,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (user.hasCompanyMx()) {
-			String mailPassword = password;
-
-			if (Validator.isNull(mailPassword)) {
-				mailPassword = user.getPasswordUnencrypted();
-			}
-
 			mailService.addUser(
-				user.getCompanyId(), user.getUserId(), mailPassword,
+				user.getCompanyId(), user.getUserId(), password,
 				user.getFirstName(), user.getMiddleName(), user.getLastName(),
 				user.getEmailAddress());
 		}
@@ -4324,6 +4324,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		workflowServiceContext.setAttribute("autoPassword", autoPassword);
+		workflowServiceContext.setAttribute("passwordUnencrypted", password1);
 		workflowServiceContext.setAttribute("sendEmail", sendEmail);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -4822,14 +4823,38 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Updates the user's workflow status.
 	 *
+	 * @param      userId the primary key of the user
+	 * @param      status the user's new workflow status
+	 * @return     the user
+	 * @throws     PortalException if a user with the primary key could not be
+	 *             found
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public User updateStatus(long userId, int status)
+		throws PortalException, SystemException {
+
+		return updateStatus(userId, status, new ServiceContext());
+	}
+
+	/**
+	 * Updates the user's workflow status.
+	 *
 	 * @param  userId the primary key of the user
 	 * @param  status the user's new workflow status
+	 * @param  serviceContext the service context to be applied. You can specify
+	 *         an unencrypted custom password (used by an LDAP listener) for the
+	 *         user via attribute <code>passwordUnencrypted</code>.
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public User updateStatus(long userId, int status)
+	public User updateStatus(
+			long userId, int status, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -4838,6 +4863,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
 
 			validateCompanyMaxUsers(user.getCompanyId());
+		}
+
+		String passwordUnencrypted = (String)serviceContext.getAttribute(
+			"passwordUnencrypted");
+
+		if (Validator.isNotNull(passwordUnencrypted)) {
+			user.setPasswordUnencrypted(passwordUnencrypted);
 		}
 
 		user.setStatus(status);
