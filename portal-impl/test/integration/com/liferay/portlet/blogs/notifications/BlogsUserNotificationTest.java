@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
@@ -89,34 +91,7 @@ public class BlogsUserNotificationTest {
 	}
 
 	@Test
-	public void testBlogUserNotificationDeactivatingAllNotificationsOnAdd()
-		throws Exception {
-
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
-
-		setActiveAllUserNotificationDeliveries(false);
-
-		BlogsEntry entry = addBlogsEntry();
-
-		List<JSONObject> entryUserNotificationEventsJsonObjects =
-			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
-
-		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification for this entry");
-		}
-
-		Assert.assertTrue(
-			"A userNotificationEvent was created",
-			(initialUserNotificationEventsCount) ==
-				_userNotificationEvents.size());
-
-		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
-	}
-
-	@Test
-	public void testBlogUserNotificationDeactivatingMailNotificationsOnAdd()
+	public void testBlogUserNotificationInactiveMailNotificationsOnAdd()
 		throws Exception {
 
 		int initialUserNotificationEventsCount =
@@ -135,7 +110,9 @@ public class BlogsUserNotificationTest {
 		}
 
 		Assert.assertTrue(
-			"A userNotificationEvent has increased in 1",
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent was/were created instead of 1",
 			(1 + initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -154,7 +131,125 @@ public class BlogsUserNotificationTest {
 	}
 
 	@Test
-	public void testBlogUserNotificationDeactivatingWebsiteNotificationsOnAdd()
+	public void testBlogUserNotificationInactiveMailNotificationsOnUpdate()
+		throws Exception {
+
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		setActiveMailUserNotificationDeliveryOnAdd(false);
+		setActiveMailUserNotificationDeliveryOnUpdate(false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		updateEntry(entry);
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("No userNotification was created for this entry");
+		}
+
+		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent was/were created instead of 2",
+			(2 + initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
+
+		int[]notificationTypes = new int[0];
+
+		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+			notificationTypes = ArrayUtil.append(
+				notificationTypes, jsonObject.getInt("notificationType"));
+		}
+
+		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
+
+		Assert.assertTrue(
+			"notificationTypes doesn't contain a notification from " +
+				_NOTIFICATION_TYPE_NAMES.get(
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY),
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
+		Assert.assertTrue(
+			"notificationTypes doesn't contain a notification from " +
+				_NOTIFICATION_TYPE_NAMES.get(
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY),
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
+	}
+
+	@Test
+	public void testBlogUserNotificationInactiveNotificationsOnAdd()
+		throws Exception {
+
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		setActiveAllUserNotificationDeliveries(false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail(
+				entryUserNotificationEventsJsonObjects.size() +
+					"userNotification was/were created for this entry");
+		}
+
+		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent was/were created",
+			(initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+	}
+
+	@Test
+	public void testBlogUserNotificationInactiveNotificationsOnUpdate()
+		throws Exception {
+
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		setActiveAllUserNotificationDeliveries(false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		updateEntry(entry);
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail(
+				entryUserNotificationEventsJsonObjects.size() +
+					"userNotification was/were created for this entry");
+		}
+
+		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent was/were created",
+			(initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
+	}
+
+	@Test
+	public void testBlogUserNotificationInactiveWebsiteNotificationsOnAdd()
 		throws Exception {
 
 		int initialUserNotificationEventsCount =
@@ -169,11 +264,49 @@ public class BlogsUserNotificationTest {
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
 
 		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification was created for this entry");
+			Assert.fail(
+				entryUserNotificationEventsJsonObjects.size() +
+					"userNotification was/were created for this entry");
 		}
 
 		Assert.assertTrue(
-			"A userNotificationEvent has increased in 1",
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent was/were created",
+			(initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
+	}
+
+	@Test
+	public void testBlogUserNotificationInactiveWebsiteNotificationsOnUpdate()
+		throws Exception {
+
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		setActiveWebsiteUserNotificationDeliveryOnAdd(false);
+		setActiveWebsiteUserNotificationDeliveryOnUpdate(false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		updateEntry(entry);
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail(
+				entryUserNotificationEventsJsonObjects.size() +
+					"userNotification was/were created for this entry");
+		}
+
+		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent was/were created",
 			(initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -196,7 +329,9 @@ public class BlogsUserNotificationTest {
 		}
 
 		Assert.assertTrue(
-			"A userNotificationEvent has increased in 1",
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent was/were created instead of 1",
 			(1 + initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -212,6 +347,57 @@ public class BlogsUserNotificationTest {
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 				jsonObject.getInt("notificationType"));
 		}
+	}
+
+	@Test
+	public void testBlogUserNotificationOnUpdate() throws Exception {
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		BlogsEntry entry = addBlogsEntry();
+
+		updateEntry(entry);
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("No userNotification was created for this entry");
+		}
+
+		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent was/were created instead of 2",
+			(2 + initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
+
+		int[]notificationTypes = new int[0];
+
+		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+			notificationTypes = ArrayUtil.append(
+				notificationTypes, jsonObject.getInt("notificationType"));
+		}
+
+		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
+
+		Assert.assertTrue(
+			"notificationTypes doesn't contain a notification from " +
+				_NOTIFICATION_TYPE_NAMES.get(
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY),
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
+		Assert.assertTrue(
+			"notificationTypes doesn't contain a notification from " +
+				_NOTIFICATION_TYPE_NAMES.get(
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY),
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
 	}
 
 	protected BlogsEntry addBlogsEntry() throws Exception {
@@ -298,27 +484,10 @@ public class BlogsUserNotificationTest {
 
 		setActiveUserNotificationDeliveryType(
 			active, UserNotificationDeliveryConstants.TYPE_EMAIL,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
 	}
 
-	protected void setActiveWebsiteUserNotificationDeliveryOnAdd(boolean active)
-		throws Exception {
-
-		setActiveUserNotificationDeliveryType(
-			active, UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
-	}
-
-	protected void setActiveWebsiteUserNotificationDeliveryOnUpdate(
-			boolean active)
-		throws Exception {
-
-		setActiveUserNotificationDeliveryType(
-			active, UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
-	}
-
-	private void setActiveUserNotificationDeliveryType(
+	protected void setActiveUserNotificationDeliveryType(
 			boolean active, int deliverType, int notificationType)
 		throws Exception {
 
@@ -351,6 +520,38 @@ public class BlogsUserNotificationTest {
 					_NOTIFICATION_DELIVERY_TYPE_NAMES.get(deliverType) +
 					" exists");
 		}
+	}
+
+	protected void setActiveWebsiteUserNotificationDeliveryOnAdd(boolean active)
+		throws Exception {
+
+		setActiveUserNotificationDeliveryType(
+			active, UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
+	}
+
+	protected void setActiveWebsiteUserNotificationDeliveryOnUpdate(
+			boolean active)
+		throws Exception {
+
+		setActiveUserNotificationDeliveryType(
+			active, UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
+	}
+
+	private void updateEntry(BlogsEntry entry) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+		serviceContext.setScopeGroupId(_group.getGroupId());
+
+		BlogsEntryLocalServiceUtil.updateEntry(
+			entry.getUserId(), entry.getEntryId(),
+			ServiceTestUtil.randomString(), entry.getDescription(),
+			entry.getContent(), 1, 1, 2012, 12, 00, true, true, new String[0],
+			entry.getSmallImage(), entry.getSmallImageURL(), StringPool.BLANK,
+			null, serviceContext);
 	}
 
 	private final static Map<Integer, String>
