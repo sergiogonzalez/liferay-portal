@@ -2936,6 +2936,10 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
+		<finder name="U_P" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="portletId" />
+		</finder>
 		<finder name="U_P_C_N_D" return-type="UserNotificationDelivery" unique="true">
 			<finder-column name="userId" />
 			<finder-column name="portletId" />

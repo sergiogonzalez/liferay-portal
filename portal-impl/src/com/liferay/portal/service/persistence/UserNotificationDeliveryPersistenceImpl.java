@@ -576,6 +576,584 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "userNotificationDelivery.userId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P = new FinderPath(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			UserNotificationDeliveryModelImpl.FINDER_CACHE_ENABLED,
+			UserNotificationDeliveryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_P",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P = new FinderPath(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			UserNotificationDeliveryModelImpl.FINDER_CACHE_ENABLED,
+			UserNotificationDeliveryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_P",
+			new String[] { Long.class.getName(), String.class.getName() },
+			UserNotificationDeliveryModelImpl.USERID_COLUMN_BITMASK |
+			UserNotificationDeliveryModelImpl.PORTLETID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_U_P = new FinderPath(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			UserNotificationDeliveryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_P",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the user notification deliveries where userId = &#63; and portletId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @return the matching user notification deliveries
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserNotificationDelivery> findByU_P(long userId,
+		String portletId) throws SystemException {
+		return findByU_P(userId, portletId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the user notification deliveries where userId = &#63; and portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of user notification deliveries
+	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
+	 * @return the range of matching user notification deliveries
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserNotificationDelivery> findByU_P(long userId,
+		String portletId, int start, int end) throws SystemException {
+		return findByU_P(userId, portletId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification deliveries where userId = &#63; and portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of user notification deliveries
+	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user notification deliveries
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserNotificationDelivery> findByU_P(long userId,
+		String portletId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P;
+			finderArgs = new Object[] { userId, portletId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P;
+			finderArgs = new Object[] {
+					userId, portletId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<UserNotificationDelivery> list = (List<UserNotificationDelivery>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (UserNotificationDelivery userNotificationDelivery : list) {
+				if ((userId != userNotificationDelivery.getUserId()) ||
+						!Validator.equals(portletId,
+							userNotificationDelivery.getPortletId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE);
+
+			query.append(_FINDER_COLUMN_U_P_USERID_2);
+
+			boolean bindPortletId = false;
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_U_P_PORTLETID_1);
+			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_U_P_PORTLETID_3);
+			}
+			else {
+				bindPortletId = true;
+
+				query.append(_FINDER_COLUMN_U_P_PORTLETID_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(UserNotificationDeliveryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (bindPortletId) {
+					qPos.add(portletId);
+				}
+
+				if (!pagination) {
+					list = (List<UserNotificationDelivery>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<UserNotificationDelivery>(list);
+				}
+				else {
+					list = (List<UserNotificationDelivery>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification delivery
+	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserNotificationDelivery findByU_P_First(long userId,
+		String portletId, OrderByComparator orderByComparator)
+		throws NoSuchUserNotificationDeliveryException, SystemException {
+		UserNotificationDelivery userNotificationDelivery = fetchByU_P_First(userId,
+				portletId, orderByComparator);
+
+		if (userNotificationDelivery != null) {
+			return userNotificationDelivery;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserNotificationDeliveryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserNotificationDelivery fetchByU_P_First(long userId,
+		String portletId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<UserNotificationDelivery> list = findByU_P(userId, portletId, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification delivery
+	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserNotificationDelivery findByU_P_Last(long userId,
+		String portletId, OrderByComparator orderByComparator)
+		throws NoSuchUserNotificationDeliveryException, SystemException {
+		UserNotificationDelivery userNotificationDelivery = fetchByU_P_Last(userId,
+				portletId, orderByComparator);
+
+		if (userNotificationDelivery != null) {
+			return userNotificationDelivery;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserNotificationDeliveryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserNotificationDelivery fetchByU_P_Last(long userId,
+		String portletId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByU_P(userId, portletId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<UserNotificationDelivery> list = findByU_P(userId, portletId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the user notification deliveries before and after the current user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	 *
+	 * @param userNotificationDeliveryId the primary key of the current user notification delivery
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user notification delivery
+	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserNotificationDelivery[] findByU_P_PrevAndNext(
+		long userNotificationDeliveryId, long userId, String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserNotificationDeliveryException, SystemException {
+		UserNotificationDelivery userNotificationDelivery = findByPrimaryKey(userNotificationDeliveryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			UserNotificationDelivery[] array = new UserNotificationDeliveryImpl[3];
+
+			array[0] = getByU_P_PrevAndNext(session, userNotificationDelivery,
+					userId, portletId, orderByComparator, true);
+
+			array[1] = userNotificationDelivery;
+
+			array[2] = getByU_P_PrevAndNext(session, userNotificationDelivery,
+					userId, portletId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected UserNotificationDelivery getByU_P_PrevAndNext(Session session,
+		UserNotificationDelivery userNotificationDelivery, long userId,
+		String portletId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE);
+
+		query.append(_FINDER_COLUMN_U_P_USERID_2);
+
+		boolean bindPortletId = false;
+
+		if (portletId == null) {
+			query.append(_FINDER_COLUMN_U_P_PORTLETID_1);
+		}
+		else if (portletId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_U_P_PORTLETID_3);
+		}
+		else {
+			bindPortletId = true;
+
+			query.append(_FINDER_COLUMN_U_P_PORTLETID_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(UserNotificationDeliveryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		if (bindPortletId) {
+			qPos.add(portletId);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(userNotificationDelivery);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<UserNotificationDelivery> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the user notification deliveries where userId = &#63; and portletId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByU_P(long userId, String portletId)
+		throws SystemException {
+		for (UserNotificationDelivery userNotificationDelivery : findByU_P(
+				userId, portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(userNotificationDelivery);
+		}
+	}
+
+	/**
+	 * Returns the number of user notification deliveries where userId = &#63; and portletId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param portletId the portlet ID
+	 * @return the number of matching user notification deliveries
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByU_P(long userId, String portletId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_P;
+
+		Object[] finderArgs = new Object[] { userId, portletId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE);
+
+			query.append(_FINDER_COLUMN_U_P_USERID_2);
+
+			boolean bindPortletId = false;
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_U_P_PORTLETID_1);
+			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_U_P_PORTLETID_3);
+			}
+			else {
+				bindPortletId = true;
+
+				query.append(_FINDER_COLUMN_U_P_PORTLETID_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (bindPortletId) {
+					qPos.add(portletId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_U_P_USERID_2 = "userNotificationDelivery.userId = ? AND ";
+	private static final String _FINDER_COLUMN_U_P_PORTLETID_1 = "userNotificationDelivery.portletId IS NULL";
+	private static final String _FINDER_COLUMN_U_P_PORTLETID_2 = "userNotificationDelivery.portletId = ?";
+	private static final String _FINDER_COLUMN_U_P_PORTLETID_3 = "(userNotificationDelivery.portletId IS NULL OR userNotificationDelivery.portletId = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_U_P_C_N_D = new FinderPath(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationDeliveryModelImpl.FINDER_CACHE_ENABLED,
 			UserNotificationDeliveryImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1253,6 +1831,27 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+			}
+
+			if ((userNotificationDeliveryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						userNotificationDeliveryModelImpl.getOriginalUserId(),
+						userNotificationDeliveryModelImpl.getOriginalPortletId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P,
+					args);
+
+				args = new Object[] {
+						userNotificationDeliveryModelImpl.getUserId(),
+						userNotificationDeliveryModelImpl.getPortletId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P,
 					args);
 			}
 		}

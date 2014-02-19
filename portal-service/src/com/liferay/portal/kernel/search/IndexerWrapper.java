@@ -53,6 +53,11 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
+	public int getDatabaseCount() throws Exception {
+		return _indexer.getDatabaseCount();
+	}
+
+	@Override
 	public Document getDocument(Object obj) throws SearchException {
 		return _indexer.getDocument(obj);
 	}
