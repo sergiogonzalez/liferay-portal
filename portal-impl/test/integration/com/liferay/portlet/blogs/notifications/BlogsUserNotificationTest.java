@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
@@ -37,6 +38,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.BaseMailTestCase;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
@@ -48,6 +50,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -64,10 +68,12 @@ import org.junit.runner.RunWith;
 })
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsUserNotificationTest {
+public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_group = GroupTestUtil.addGroup();
 
 		_user = TestPropsValues.getUser();
@@ -76,10 +82,15 @@ public class BlogsUserNotificationTest {
 			_user.getUserId(), _group.getGroupId());
 
 		setActiveAllUserNotificationDeliveries(true);
+
+		_logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		super.tearDown();
+
 		GroupLocalServiceUtil.deleteGroup(_group);
 
 		deleteUserNotificationEvents();
@@ -100,6 +111,10 @@ public class BlogsUserNotificationTest {
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
 
 		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals(
+			_logRecords.size() + " email/s had been sent", 0,
+			_logRecords.size());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
@@ -148,6 +163,10 @@ public class BlogsUserNotificationTest {
 		BlogsEntry entry = addBlogsEntry();
 
 		updateEntry(entry);
+
+		Assert.assertEquals(
+			_logRecords.size() + " email/s had been sent", 0,
+			_logRecords.size());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
@@ -203,6 +222,10 @@ public class BlogsUserNotificationTest {
 
 		BlogsEntry entry = addBlogsEntry();
 
+		Assert.assertEquals(
+			_logRecords.size() + " email/s had been sent", 0,
+			_logRecords.size());
+
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
 
@@ -233,6 +256,10 @@ public class BlogsUserNotificationTest {
 		BlogsEntry entry = addBlogsEntry();
 
 		updateEntry(entry);
+
+		Assert.assertEquals(
+			_logRecords.size() + " email/s had been sent", 0,
+			_logRecords.size());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
@@ -266,6 +293,14 @@ public class BlogsUserNotificationTest {
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
 
 		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals(
+			_logRecords.size() + " email/s had been sent", 1,
+			_logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
@@ -305,6 +340,18 @@ public class BlogsUserNotificationTest {
 
 		updateEntry(entry);
 
+		Assert.assertEquals(
+			_logRecords.size() + " email/s had been sent", 2,
+			_logRecords.size());
+
+		LogRecord logRecord0 = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord0.getMessage());
+
+		LogRecord logRecord1 = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord1.getMessage());
+
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
 
@@ -331,6 +378,14 @@ public class BlogsUserNotificationTest {
 				getUserNotificationEventsCount(_user.getUserId());
 
 		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals(
+			_logRecords.size() + " email/s had been sent", 1,
+			_logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
@@ -369,6 +424,18 @@ public class BlogsUserNotificationTest {
 		BlogsEntry entry = addBlogsEntry();
 
 		updateEntry(entry);
+
+		Assert.assertEquals(
+			_logRecords.size() + " email/s had been sent", 2,
+			_logRecords.size());
+
+		LogRecord logRecord0 = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord0.getMessage());
+
+		LogRecord logRecord1 = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord1.getMessage());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
@@ -610,6 +677,7 @@ public class BlogsUserNotificationTest {
 	}
 
 	private Group _group;
+	private List<LogRecord> _logRecords;
 	private User _user;
 	private List<UserNotificationDelivery> _userNotificationDeliveries =
 		new ArrayList<UserNotificationDelivery>();
