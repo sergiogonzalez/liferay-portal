@@ -678,6 +678,7 @@ create index IX_7F187E63 on UserGroups_Teams (userGroupId);
 create unique index IX_41A32E0D on UserIdMapper (type_, externalUserId);
 create unique index IX_D1C44A6E on UserIdMapper (userId, type_);
 
+create index IX_469C8555 on UserNotificationDelivery (portletId);
 create unique index IX_8B6E3ACE on UserNotificationDelivery (userId, portletId, classNameId, notificationType, deliveryType);
 
 create index IX_3DBB361A on UserNotificationEvent (userId, archived);

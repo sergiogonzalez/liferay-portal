@@ -176,6 +176,155 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the user notification deliveries where userId = &#63; and portletId = &#63;.
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @return the matching user notification deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByU_P(
+		long userId, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the user notification deliveries where userId = &#63; and portletId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of user notification deliveries
+	* @param end the upper bound of the range of user notification deliveries (not inclusive)
+	* @return the range of matching user notification deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByU_P(
+		long userId, java.lang.String portletId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the user notification deliveries where userId = &#63; and portletId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of user notification deliveries
+	* @param end the upper bound of the range of user notification deliveries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user notification deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByU_P(
+		long userId, java.lang.String portletId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user notification delivery
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserNotificationDelivery findByU_P_First(
+		long userId, java.lang.String portletId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserNotificationDelivery fetchByU_P_First(
+		long userId, java.lang.String portletId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user notification delivery
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserNotificationDelivery findByU_P_Last(
+		long userId, java.lang.String portletId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserNotificationDelivery fetchByU_P_Last(
+		long userId, java.lang.String portletId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the user notification deliveries before and after the current user notification delivery in the ordered set where userId = &#63; and portletId = &#63;.
+	*
+	* @param userNotificationDeliveryId the primary key of the current user notification delivery
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user notification delivery
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserNotificationDelivery[] findByU_P_PrevAndNext(
+		long userNotificationDeliveryId, long userId,
+		java.lang.String portletId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the user notification deliveries where userId = &#63; and portletId = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByU_P(long userId, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of user notification deliveries where userId = &#63; and portletId = &#63;.
+	*
+	* @param userId the user ID
+	* @param portletId the portlet ID
+	* @return the number of matching user notification deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByU_P(long userId, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
 	*
 	* @param userId the user ID

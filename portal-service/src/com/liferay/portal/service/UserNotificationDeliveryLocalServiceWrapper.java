@@ -328,6 +328,14 @@ public class UserNotificationDeliveryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> getUserNotificationDeliveries(
+		long userId, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.getUserNotificationDeliveries(userId,
+			portletId);
+	}
+
+	@Override
 	public com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
 		long userNotificationDeliveryId, boolean deliver)
 		throws com.liferay.portal.kernel.exception.SystemException {

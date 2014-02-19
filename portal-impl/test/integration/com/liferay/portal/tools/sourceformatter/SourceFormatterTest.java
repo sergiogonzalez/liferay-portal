@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -26,7 +27,14 @@ public class SourceFormatterTest {
 		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
 			false, true, false, false);
 
-		sourceFormatter.format();
+		try {
+			sourceFormatter.format();
+		}
+		catch (SourceMismatchException sme) {
+			Assert.assertEquals(
+				sme.getFileName(), sme.getFormattedSource(),
+				sme.getOriginalSource());
+		}
 	}
 
 }
