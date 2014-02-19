@@ -16,6 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -25,7 +27,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,6 +44,20 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		GroupLocalServiceUtil.deleteGroup(group);
+	}
 
 	@Test
 	public void testSubscriptionBaseModelWhenInContainerModel()
@@ -222,5 +240,7 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 	protected abstract long updateEntry(long baseModelId) throws Exception;
 
 	protected static final long DEFAULT_PARENT_CONTAINER_MODEL_ID = 0;
+
+	protected Group group;
 
 }
