@@ -167,6 +167,20 @@ public class UserNotificationDeliveryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_P() {
+		try {
+			_persistence.countByU_P(ServiceTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByU_P(0L, StringPool.NULL);
+
+			_persistence.countByU_P(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByU_P_C_N_D() {
 		try {
 			_persistence.countByU_P_C_N_D(ServiceTestUtil.nextLong(),

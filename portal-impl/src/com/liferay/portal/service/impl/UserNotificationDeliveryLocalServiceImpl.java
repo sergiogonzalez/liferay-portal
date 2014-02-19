@@ -21,6 +21,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.service.base.UserNotificationDeliveryLocalServiceBaseImpl;
 
+import java.util.List;
+
 /**
  * @author Jonathan Lee
  */
@@ -82,6 +84,14 @@ public class UserNotificationDeliveryLocalServiceImpl
 
 		return userNotificationDeliveryPersistence.fetchByU_P_C_N_D(
 			userId, portletId, classNameId, notificationType, deliveryType);
+	}
+
+	@Override
+	public List<UserNotificationDelivery> getUserNotificationDeliveries(
+			long userId, String portletId)
+		throws SystemException {
+
+		return userNotificationDeliveryPersistence.findByU_P(userId, portletId);
 	}
 
 	@Override
