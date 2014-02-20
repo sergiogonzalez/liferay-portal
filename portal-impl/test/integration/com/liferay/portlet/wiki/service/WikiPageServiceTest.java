@@ -44,6 +44,7 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.util.ExpandoTestUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
+import com.liferay.portlet.wiki.MovePageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.util.WikiTestUtil;
@@ -138,6 +139,26 @@ public class WikiPageServiceTest {
 	@Test
 	public void testMovePage() throws Exception {
 		testMovePage(false);
+	}
+
+	@Test(expected = MovePageException.class)
+	public void testMovePageMovedPage() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			ServiceTestUtil.randomString(), true);
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		String oldTitle = page.getTitle();
+
+		WikiPageLocalServiceUtil.movePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), oldTitle,
+			ServiceTestUtil.randomString(), true, serviceContext);
+
+		WikiPageLocalServiceUtil.movePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), oldTitle,
+			ServiceTestUtil.randomString(), true, serviceContext);
 	}
 
 	@Test(expected = DuplicatePageException.class)

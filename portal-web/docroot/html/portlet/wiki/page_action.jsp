@@ -69,18 +69,20 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 			url="<%= copyPageURL.toString() %>"
 		/>
 
-		<portlet:renderURL var="movePageURL">
-			<portlet:param name="struts_action" value="/wiki/move_page" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-			<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
-		</portlet:renderURL>
+		<c:if test="<%= !WikiPageLocalServiceUtil.hasRedirectTitle(wikiPage.getNodeId(), wikiPage.getTitle()) %>">
+			<portlet:renderURL var="movePageURL">
+				<portlet:param name="struts_action" value="/wiki/move_page" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+				<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
+			</portlet:renderURL>
 
-		<liferay-ui:icon
-			image="forward"
-			message="move"
-			url="<%= movePageURL.toString() %>"
-		/>
+			<liferay-ui:icon
+				image="forward"
+				message="move"
+				url="<%= movePageURL.toString() %>"
+			/>
+		</c:if>
 	</c:if>
 
 	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) && (WikiUtil.getEmailPageAddedEnabled(portletPreferences) || WikiUtil.getEmailPageUpdatedEnabled(portletPreferences)) %>">

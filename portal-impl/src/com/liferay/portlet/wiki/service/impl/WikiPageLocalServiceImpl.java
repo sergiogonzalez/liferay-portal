@@ -69,6 +69,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
+import com.liferay.portlet.wiki.MovePageException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.PageTitleException;
@@ -1335,10 +1336,27 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public boolean hasRedirectTitle(long nodeId, String title)
+		throws PortalException, SystemException {
+
+		WikiPage wikiPage = getPage(nodeId, title);
+
+		if (Validator.isNotNull(wikiPage.getRedirectTitle())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void movePage(
 			long userId, long nodeId, String title, String newTitle,
 			boolean strict, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		if (hasRedirectTitle(nodeId, title)) {
+			throw new MovePageException();
+		}
 
 		validateTitle(newTitle);
 
