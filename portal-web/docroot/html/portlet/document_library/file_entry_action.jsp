@@ -110,6 +110,8 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 if (fileShortcut != null) {
 	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 }
+
+DLActionsDisplayContext fileEntryDisplayContext = new DLActionsDisplayContext(request, fileEntry);
 %>
 
 <liferay-util:buffer var="iconMenu">
