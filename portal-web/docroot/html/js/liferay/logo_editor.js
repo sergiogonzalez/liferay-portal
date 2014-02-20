@@ -99,7 +99,7 @@ AUI.add(
 						if (exception) {
 							if (exception == 'FileSizeException') {
 								message = Lang.sub(
-									Liferay.Language.get('upload-images-no-larger-than-x-k'),
+									Liferay.Language.get('upload-images-no-larger-than-x'),
 									[instance.get('maxFileSize')]
 								);
 							}
