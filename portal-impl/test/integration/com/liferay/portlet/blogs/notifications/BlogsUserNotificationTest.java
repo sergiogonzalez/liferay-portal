@@ -47,6 +47,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -121,7 +122,9 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		}
 
 		Assert.assertTrue(
-			"More than 1 userNotificationEvent exist",
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent exist instead of 1",
 			(1 + initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -129,6 +132,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
 			Assert.assertEquals(
+				"This notification is not a " +
+					_NOTIFICATION_TYPE_NAMES.get(
+						UserNotificationDefinition.
+							NOTIFICATION_TYPE_ADD_ENTRY) +
+					" notification type",
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 				jsonObject.getInt("notificationType"));
 		}
@@ -164,6 +172,9 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		}
 
 		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent exist instead of 2",
 			(2 + initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -179,11 +190,17 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
 
 		Assert.assertTrue(
+			"notificationTypes doesn't contain a notification for " +
+				_NOTIFICATION_TYPE_NAMES.get(
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY),
 			ArrayUtil.contains(
 				notificationTypes,
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
 
 		Assert.assertTrue(
+			"notificationTypes doesn't contain a notification for " +
+				_NOTIFICATION_TYPE_NAMES.get(
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY),
 			ArrayUtil.contains(
 				notificationTypes,
 				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
@@ -207,10 +224,15 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
 
 		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification exists for this entry");
+			Assert.fail(
+				entryUserNotificationEventsJsonObjects.size() +
+					" userNotification exist for this entry");
 		}
 
 		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent exist",
 			(initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 	}
@@ -235,10 +257,15 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
 
 		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification exists for this entry");
+			Assert.fail(
+				entryUserNotificationEventsJsonObjects.size() +
+					" userNotification exist for this entry");
 		}
 
 		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent exist",
 			(initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -270,10 +297,15 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
 
 		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification exists for this entry");
+			Assert.fail(
+				entryUserNotificationEventsJsonObjects.size() +
+					" userNotification exist for this entry");
 		}
 
 		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent exist",
 			(initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -316,10 +348,15 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
 
 		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification exists for this entry");
+			Assert.fail(
+				entryUserNotificationEventsJsonObjects.size() +
+					" userNotification exist for this entry");
 		}
 
 		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent exist",
 			(initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -349,7 +386,9 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		}
 
 		Assert.assertTrue(
-			"More than 1 userNotificationEvent exist",
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent exist instead of 1",
 			(1 + initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -357,6 +396,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
 			Assert.assertEquals(
+				"This notification is not a " +
+					_NOTIFICATION_TYPE_NAMES.get(
+						UserNotificationDefinition.
+							NOTIFICATION_TYPE_ADD_ENTRY) +
+					" notification type",
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 				jsonObject.getInt("notificationType"));
 		}
@@ -392,6 +436,9 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		}
 
 		Assert.assertTrue(
+			(_userNotificationEvents.size() -
+				initialUserNotificationEventsCount) +
+				" userNotificationEvent exist instead of 2",
 			(2 + initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
@@ -407,11 +454,17 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
 
 		Assert.assertTrue(
+			"notificationTypes doesn't contain a notification for " +
+				_NOTIFICATION_TYPE_NAMES.get(
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY),
 			ArrayUtil.contains(
 				notificationTypes,
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
 
 		Assert.assertTrue(
+			"notificationTypes doesn't contain a notification for " +
+				_NOTIFICATION_TYPE_NAMES.get(
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY),
 			ArrayUtil.contains(
 				notificationTypes,
 				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
@@ -574,7 +627,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			}
 		}
 
-		Assert.fail("UserNotification doesn't exist");
+		Assert.fail(
+			"No user notification for " +
+				_NOTIFICATION_DELIVERY_TYPE_NAMES.get(deliverType) + " and " +
+				_NOTIFICATION_TYPE_NAMES.get(notificationType) +
+				" exists");
 	}
 
 	private void updateEntry(BlogsEntry entry) throws Exception {
@@ -590,6 +647,24 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			entry.getContent(), 1, 1, 2012, 12, 00, true, true, new String[0],
 			entry.getSmallImage(), entry.getSmallImageURL(), StringPool.BLANK,
 			null, serviceContext);
+	}
+
+	private final static Map<Integer, String>
+		_NOTIFICATION_DELIVERY_TYPE_NAMES = new HashMap<Integer, String>();
+	private final static Map<Integer, String> _NOTIFICATION_TYPE_NAMES =
+		new HashMap<Integer, String>();
+
+	static {
+		_NOTIFICATION_DELIVERY_TYPE_NAMES.put(
+			UserNotificationDeliveryConstants.TYPE_EMAIL, "Type Email");
+		_NOTIFICATION_DELIVERY_TYPE_NAMES.put(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, "Type Website");
+
+		_NOTIFICATION_TYPE_NAMES.put(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, "Type Add");
+		_NOTIFICATION_TYPE_NAMES.put(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			"Type Update");
 	}
 
 	private Group _group;
