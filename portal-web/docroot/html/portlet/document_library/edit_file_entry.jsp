@@ -207,8 +207,6 @@ FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(re
 	if (fileMaxSize == 0) {
 		fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 	}
-
-	fileMaxSize /= 1024;
 	%>
 
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
