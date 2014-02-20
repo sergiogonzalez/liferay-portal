@@ -697,7 +697,7 @@ public class MBUtil {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String[] priorities = LocalizationUtil.getSettingsValues(
+		String[] priorities = LocalizationUtil.getPortletSettingsValues(
 			settings, "priorities", languageId);
 
 		String[] priorityPair = _findThreadPriority(
@@ -707,7 +707,7 @@ public class MBUtil {
 			String defaultLanguageId = LocaleUtil.toLanguageId(
 				LocaleUtil.getSiteDefault());
 
-			priorities = LocalizationUtil.getSettingsValues(
+			priorities = LocalizationUtil.getPortletSettingsValues(
 				settings, "priorities", defaultLanguageId);
 
 			priorityPair = _findThreadPriority(value, themeDisplay, priorities);
@@ -750,7 +750,7 @@ public class MBUtil {
 
 		String rank = StringPool.BLANK;
 
-		String[] ranks = LocalizationUtil.getSettingsValues(
+		String[] ranks = LocalizationUtil.getPortletSettingsValues(
 			settings, "ranks", languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
@@ -782,7 +782,7 @@ public class MBUtil {
 
 		long companyId = group.getCompanyId();
 
-		String[] ranks = LocalizationUtil.getSettingsValues(
+		String[] ranks = LocalizationUtil.getPortletSettingsValues(
 			settings, "ranks", languageId);
 
 		for (int i = 0; i < ranks.length; i++) {

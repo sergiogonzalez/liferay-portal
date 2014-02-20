@@ -159,7 +159,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					/>
 				</c:if>
 
-				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE) && (MBUtil.getEmailMessageAddedEnabled(portletSiteSettings) || MBUtil.getEmailMessageUpdatedEnabled(portletSiteSettings)) %>">
+				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE) && (MBUtil.getEmailMessageAddedEnabled(groupPortletSettings) || MBUtil.getEmailMessageUpdatedEnabled(groupPortletSettings)) %>">
 					<c:choose>
 						<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(category.getCategoryId()) %>">
 							<portlet:actionURL var="unsubscribeURL">

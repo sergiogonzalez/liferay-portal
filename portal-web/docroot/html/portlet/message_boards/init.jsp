@@ -79,20 +79,22 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-String[] priorities = LocalizationUtil.getSettingsValues(portletSiteSettings, "priorities", currentLanguageId);
+PortletSettings groupPortletSettings = portletDisplay.getGroupPortletSettings();
 
-boolean allowAnonymousPosting = MBUtil.isAllowAnonymousPosting(portletSiteSettings);
-boolean subscribeByDefault = GetterUtil.getBoolean(portletSiteSettings.getValue("subscribeByDefault", null), PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
-String messageFormat = MBUtil.getMessageFormat(portletSiteSettings);
-boolean enableFlags = GetterUtil.getBoolean(portletSiteSettings.getValue("enableFlags", null), true);
-boolean enableRatings = GetterUtil.getBoolean(portletSiteSettings.getValue("enableRatings", null), true);
-boolean threadAsQuestionByDefault = GetterUtil.getBoolean(portletSiteSettings.getValue("threadAsQuestionByDefault", null));
-String recentPostsDateOffset = portletSiteSettings.getValue("recentPostsDateOffset", "7");
+String[] priorities = LocalizationUtil.getPortletSettingsValues(groupPortletSettings, "priorities", currentLanguageId);
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletSiteSettings.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(portletSiteSettings.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = portletSiteSettings.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = portletSiteSettings.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean allowAnonymousPosting = MBUtil.isAllowAnonymousPosting(groupPortletSettings);
+boolean subscribeByDefault = GetterUtil.getBoolean(groupPortletSettings.getValue("subscribeByDefault", null), PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
+String messageFormat = MBUtil.getMessageFormat(groupPortletSettings);
+boolean enableFlags = GetterUtil.getBoolean(groupPortletSettings.getValue("enableFlags", null), true);
+boolean enableRatings = GetterUtil.getBoolean(groupPortletSettings.getValue("enableRatings", null), true);
+boolean threadAsQuestionByDefault = GetterUtil.getBoolean(groupPortletSettings.getValue("threadAsQuestionByDefault", null));
+String recentPostsDateOffset = groupPortletSettings.getValue("recentPostsDateOffset", "7");
+
+boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(groupPortletSettings.getValue("enableRss", null), true);
+int rssDelta = GetterUtil.getInteger(groupPortletSettings.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String rssDisplayStyle = groupPortletSettings.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+String rssFeedType = groupPortletSettings.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 
 ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 
