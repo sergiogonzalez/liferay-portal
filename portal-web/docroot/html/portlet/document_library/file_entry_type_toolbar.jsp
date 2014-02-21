@@ -26,6 +26,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 	<aui:nav>
 		<portlet:renderURL var="viewFileEntryTypesURL">
 			<portlet:param name="struts_action" value="<%= strutsAction %>" />
+			<portlet:param name="includeBasicFileEntryType" value="true" />
 		</portlet:renderURL>
 
 		<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DOCUMENT_TYPE) %>">
