@@ -16,8 +16,13 @@ package com.liferay.portal.servlet.filters.dynamiccss;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
@@ -64,8 +69,22 @@ public class RTLCSSUtil {
 		}
 	}
 
+	public static boolean isExcludedPath(String filePath) {
+		for (Pattern pattern : _patterns) {
+			Matcher matcher = pattern.matcher(filePath);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(RTLCSSUtil.class);
 
 	private static String _jsScript;
+	private static Pattern[] _patterns = PatternFactory.compile(
+		PropsValues.RTL_CSS_EXCLUDED_PATHS_REGEXP);
 
 }
