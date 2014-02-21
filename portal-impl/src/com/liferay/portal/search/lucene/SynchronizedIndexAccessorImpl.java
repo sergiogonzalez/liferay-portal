@@ -25,6 +25,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 
 /**
@@ -39,6 +40,18 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 
 		_readLock = readWriteLock.readLock();
 		_writeLock = readWriteLock.writeLock();
+	}
+
+	@Override
+	public IndexSearcher acquireIndexSearcher() throws IOException {
+		_readLock.lock();
+
+		try {
+			return _indexAccessor.acquireIndexSearcher();
+		}
+		finally {
+			_readLock.unlock();
+		}
 	}
 
 	@Override
@@ -139,6 +152,20 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 		finally {
 			_writeLock.unlock();
+		}
+	}
+
+	@Override
+	public void releaseIndexSearcher(IndexSearcher indexSearcher)
+		throws IOException {
+
+		_readLock.lock();
+
+		try {
+			_indexAccessor.releaseIndexSearcher(indexSearcher);
+		}
+		finally {
+			_readLock.unlock();
 		}
 	}
 
