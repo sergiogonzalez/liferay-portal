@@ -25,6 +25,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
@@ -52,6 +53,9 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			user.getUserId(), group.getGroupId());
+
+		userNotificationDeliveries = getUserNotificationDeliveries(
+			user.getUserId(), PortletKeys.BLOGS);
 	}
 
 	@Override

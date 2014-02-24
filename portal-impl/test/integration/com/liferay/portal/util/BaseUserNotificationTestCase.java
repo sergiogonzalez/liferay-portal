@@ -56,9 +56,6 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 		user = TestPropsValues.getUser();
 
 		group = GroupTestUtil.addGroup();
-
-		userNotificationDeliveries = getUserNotificationDeliveries(
-			user.getUserId());
 	}
 
 	@After
@@ -325,7 +322,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	}
 
 	protected List<UserNotificationDelivery> getUserNotificationDeliveries(
-			long userId)
+			long userId, String portletId)
 		throws Exception {
 
 		List<UserNotificationDelivery> userNotificationDeliveries =
@@ -334,25 +331,25 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
+					userId, portletId, 0,
 					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
+					userId, portletId, 0,
 					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
+					userId, portletId, 0,
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
+					userId, portletId, 0,
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
 
