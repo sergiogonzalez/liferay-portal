@@ -22,6 +22,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 <liferay-util:include page="/html/portlet/document_library/file_entry_type_toolbar.jsp">
 	<liferay-util:param name="strutsAction" value="/document_library/select_restricted_file_entry_type" />
+	<liferay-util:param name="includeBasicFileEntryType" value="true" />
 </liferay-util:include>
 
 <liferay-portlet:renderURL varImpl="portletURL">
