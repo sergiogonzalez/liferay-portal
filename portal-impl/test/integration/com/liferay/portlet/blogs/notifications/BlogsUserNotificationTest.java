@@ -65,7 +65,6 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
 
 		return BlogsTestUtil.addEntry(
 			user.getUserId(), ServiceTestUtil.randomString(), true,
@@ -76,11 +75,11 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
 		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		serviceContext.setCommand(Constants.UPDATE);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
 
 		return BlogsEntryLocalServiceUtil.updateEntry(
 			blogsEntry.getUserId(), blogsEntry.getEntryId(),

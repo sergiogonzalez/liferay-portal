@@ -69,11 +69,11 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel addBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
 
 		return WikiPageLocalServiceUtil.addPage(
 			TestPropsValues.getUserId(), _node.getNodeId(),
@@ -87,11 +87,11 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
 		WikiPage page = (WikiPage)baseModel;
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		serviceContext.setCommand(Constants.UPDATE);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
 
 		return WikiPageLocalServiceUtil.updatePage(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
