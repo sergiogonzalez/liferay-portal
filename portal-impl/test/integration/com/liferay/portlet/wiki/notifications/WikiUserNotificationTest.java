@@ -26,6 +26,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
+
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -83,7 +84,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	@Override
-	protected void updateBaseModel(BaseModel baseModel) throws Exception {
+	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
 		WikiPage page = (WikiPage)baseModel;
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
@@ -92,7 +93,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		WikiPageLocalServiceUtil.updatePage(
+		return WikiPageLocalServiceUtil.updatePage(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
 			page.getVersion(), ServiceTestUtil.randomString(50),
 			ServiceTestUtil.randomString(), false,
