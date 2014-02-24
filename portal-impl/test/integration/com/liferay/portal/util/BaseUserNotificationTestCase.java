@@ -19,21 +19,16 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +44,7 @@ import org.junit.Test;
  * @author Roberto Díaz
  * @author Sergio González
  */
-public class BaseUserNotificationTestCase extends BaseMailTestCase {
+public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 	@Before
 	@Override
@@ -62,9 +57,6 @@ public class BaseUserNotificationTestCase extends BaseMailTestCase {
 		user = TestPropsValues.getUser();
 
 		group = GroupTestUtil.addGroup();
-
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
 
 		userNotificationDeliveries = getUserNotificationDeliveries(
 			user.getUserId());
@@ -313,18 +305,7 @@ public class BaseUserNotificationTestCase extends BaseMailTestCase {
 		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
 	}
 
-	protected BlogsEntry addBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		return BlogsTestUtil.addEntry(
-			user.getUserId(), ServiceTestUtil.randomString(), true,
-			serviceContext);
-	}
+	protected abstract BaseModel addBaseModel() throws Exception;
 
 	protected void deleteUserNotificationDeliveries() throws Exception {
 		UserNotificationDeliveryLocalServiceUtil.
@@ -410,21 +391,8 @@ public class BaseUserNotificationTestCase extends BaseMailTestCase {
 		return userNotificationEventJSONObjects;
 	}
 
-	protected void updateBaseModel(BlogsEntry blogsEntry) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		BlogsEntryLocalServiceUtil.updateEntry(
-			blogsEntry.getUserId(), blogsEntry.getEntryId(),
-			ServiceTestUtil.randomString(), blogsEntry.getDescription(),
-			blogsEntry.getContent(), 1, 1, 2012, 12, 00, true, true,
-			new String[0], blogsEntry.getSmallImage(),
-			blogsEntry.getSmallImageURL(), StringPool.BLANK, null,
-			serviceContext);
-	}
+	protected abstract void updateBaseModel(BaseModel baseModel)
+		throws Exception;
 
 	protected void updateUserNotificationDelivery(
 			int notificationType, int deliveryType, boolean deliver)
