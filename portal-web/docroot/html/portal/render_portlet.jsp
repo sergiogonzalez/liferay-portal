@@ -411,7 +411,7 @@ urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
 
 urlConfiguration.setEscapeXml(false);
 
-if (Validator.isNotNull(portlet.getConfigurationActionClass())) {
+if (Validator.isNotNull(portlet.hasPortletInstanceSettings())) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_configuration");
 }
 else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
@@ -425,6 +425,7 @@ urlConfiguration.setParameter("redirect", currentURL);
 urlConfiguration.setParameter("returnToFullPageURL", currentURL);
 urlConfiguration.setParameter("portletResource", portletDisplay.getId());
 urlConfiguration.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimaryKey(plid, portlet.getPortletId()));
+urlConfiguration.setParameter("portletSettingsScope", "portletInstance");
 
 portletDisplay.setURLConfiguration(urlConfiguration.toString() + "&" + PortalUtil.getPortletNamespace(PortletKeys.PORTLET_CONFIGURATION));
 

@@ -1196,6 +1196,15 @@ public interface Portlet extends PortletModel, PersistedModel {
 		javax.portlet.PortletMode portletMode);
 
 	/**
+	* Returns <code>true</code> if the portlet supports configuration for the
+	* portlet instance.
+	*
+	* @return <code>true</code> if the portlet supports configuration for the
+	* portlet instance
+	*/
+	public boolean hasPortletInstanceSettings();
+
+	/**
 	* Returns <code>true</code> if the portlet has a role with the specified
 	* name.
 	*
@@ -2306,4 +2315,5 @@ public interface Portlet extends PortletModel, PersistedModel {
 	portlet
 	*/
 	public void setXmlRpcMethodClass(java.lang.String xmlRpcMethodClass);
+
 }

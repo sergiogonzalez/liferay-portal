@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.util.xml.XMLFormatter;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
+import javax.portlet.ValidatorException;
 
 /**
  * @author Raymond Augé
@@ -121,6 +123,13 @@ public abstract class BasePortletSettings implements PortletSettings {
 		}
 
 		return this;
+	}
+
+	public void store() throws IOException, ValidatorException {
+		PortletPreferences writeablePortletPreferences =
+			getWriteablePortletPreferences();
+
+		writeablePortletPreferences.store();
 	}
 
 	protected BasePortletSettings() {

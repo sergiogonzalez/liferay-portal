@@ -53,7 +53,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			String resourceID, String cacheability, long plid, long refererPlid,
 			String portletName, Boolean anchor, Boolean encrypt,
 			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
-			Map<String, String[]> parameterMap,
+			String portletSettingsScope, Map<String, String[]> parameterMap,
 			Set<String> removedParameterNames, PageContext pageContext)
 		throws Exception {
 
@@ -135,8 +135,9 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			liferayPortletURL.setDoAsUserId(doAsUserId);
 		}
 
-		if ((portletConfiguration != null) &&
-			portletConfiguration.booleanValue()) {
+		if (((portletConfiguration != null) &&
+			portletConfiguration.booleanValue()) ||
+			Validator.isNotNull(portletSettingsScope)) {
 
 			String returnToFullPageURL = ParamUtil.getString(
 				request, "returnToFullPageURL");
@@ -150,6 +151,11 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 				"returnToFullPageURL", returnToFullPageURL);
 			liferayPortletURL.setParameter("portletResource", portletResource);
 			liferayPortletURL.setParameter("previewWidth", previewWidth);
+
+			if (Validator.isNotNull(portletSettingsScope)) {
+				liferayPortletURL.setParameter(
+					"portletSettingsScope", portletSettingsScope);
+			}
 		}
 
 		if (parameterMap != null) {
@@ -183,8 +189,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 				_secure, _copyCurrentRenderParameters, _escapeXml, _name,
 				_resourceID, _cacheability, _plid, _refererPlid, _portletName,
 				_anchor, _encrypt, _doAsGroupId, _doAsUserId,
-				_portletConfiguration, getParams(), getRemovedParameterNames(),
-				pageContext);
+				_portletConfiguration, _portletSettingsScope, getParams(),
+				getRemovedParameterNames(), pageContext);
 
 			return EVAL_PAGE;
 		}
@@ -206,6 +212,10 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 
 	public String getLifecycle() {
 		return PortletRequest.ACTION_PHASE;
+	}
+
+	public String getPortletSettingsScope() {
+		return _portletSettingsScope;
 	}
 
 	public void setAnchor(boolean anchor) {
@@ -261,6 +271,10 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 
 	public void setPortletName(String portletName) {
 		_portletName = portletName;
+	}
+
+	public void setPortletSettingsScope(String portletSettingsScope) {
+		_portletSettingsScope = portletSettingsScope;
 	}
 
 	public void setRefererPlid(long refererPlid) {
@@ -333,6 +347,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 	private Boolean _portletConfiguration;
 	private String _portletMode;
 	private String _portletName;
+	private String _portletSettingsScope;
 	private long _refererPlid = LayoutConstants.DEFAULT_PLID;
 	private String _resourceID;
 	private Boolean _secure;

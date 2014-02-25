@@ -32,6 +32,8 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletConfigFactoryUtil;
+import com.liferay.portlet.PortletSettings;
+import com.liferay.portlet.PortletSettingsFactoryUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -96,6 +98,8 @@ public class DefaultConfigurationAction
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
+		String portletSettingsScope = ParamUtil.getString(
+			actionRequest, "portletSettingsScope");
 
 		Layout layout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
@@ -103,33 +107,86 @@ public class DefaultConfigurationAction
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			layout, portletResource, ActionKeys.CONFIGURATION);
 
-		PortletPreferences portletPreferences = actionRequest.getPreferences();
+		PortletPreferences portletPreferences = null;
+		PortletSettings portletSettings = null;
 
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			String name = entry.getKey();
-			String value = entry.getValue();
+		if (Validator.isNull(portletSettingsScope)) {
+			portletPreferences = actionRequest.getPreferences();
 
-			portletPreferences.setValue(name, value);
-		}
+			for (Map.Entry<String, String> entry : properties.entrySet()) {
+				String name = entry.getKey();
+				String value = entry.getValue();
 
-		Map<String, String[]> portletPreferencesMap =
-			(Map<String, String[]>)actionRequest.getAttribute(
-				WebKeys.PORTLET_PREFERENCES_MAP);
+				portletPreferences.setValue(name, value);
+			}
 
-		if (portletPreferencesMap != null) {
-			for (Map.Entry<String, String[]> entry :
+			Map<String, String[]> portletPreferencesMap =
+				(Map<String, String[]>)actionRequest.getAttribute(
+					WebKeys.PORTLET_PREFERENCES_MAP);
+
+			if (portletPreferencesMap != null) {
+				for (Map.Entry<String, String[]> entry :
 					portletPreferencesMap.entrySet()) {
 
-				String name = entry.getKey();
-				String[] values = entry.getValue();
+					String name = entry.getKey();
+					String[] values = entry.getValue();
 
-				portletPreferences.setValues(name, values);
+					portletPreferences.setValues(name, values);
+				}
+			}
+		}
+		else {
+			if (portletSettingsScope.equals("company")) {
+				portletSettings =
+					PortletSettingsFactoryUtil.getCompanyPortletSettings(
+						themeDisplay.getCompanyId(), portletResource);
+			}
+			else if (portletSettingsScope.equals("group")) {
+				portletSettings =
+					PortletSettingsFactoryUtil.getGroupPortletSettings(
+						themeDisplay.getSiteGroupId(), portletResource);
+			}
+			else if (portletSettingsScope.equals("instance")) {
+				portletSettings =
+					PortletSettingsFactoryUtil.
+						getPortletInstancePortletSettings(
+							themeDisplay.getLayout(), portletResource);
+			}
+
+			if (portletSettings != null) {
+				for (Map.Entry<String, String> entry : properties.entrySet()) {
+					String name = entry.getKey();
+					String value = entry.getValue();
+
+					portletSettings.setValue(name, value);
+				}
+
+				Map<String, String[]> portletPreferencesMap =
+					(Map<String, String[]>)actionRequest.getAttribute(
+						WebKeys.PORTLET_PREFERENCES_MAP);
+
+				if (portletPreferencesMap != null) {
+					for (Map.Entry<String, String[]> entry :
+						portletPreferencesMap.entrySet()) {
+
+						String name = entry.getKey();
+						String[] values = entry.getValue();
+
+						portletSettings.setValues(name, values);
+					}
+				}
 			}
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			try {
-				portletPreferences.store();
+				if (portletPreferences != null) {
+					portletPreferences.store();
+				}
+
+				if (portletSettings != null) {
+					portletSettings.store();
+				}
 			}
 			catch (ValidatorException ve) {
 				SessionErrors.add(
@@ -165,6 +222,18 @@ public class DefaultConfigurationAction
 		throws Exception {
 
 		PortletConfig selPortletConfig = getSelPortletConfig(renderRequest);
+
+		String portletSettingsScope = ParamUtil.getString(
+			renderRequest, "portletSettingsScope");
+
+		if (Validator.isNotNull(portletSettingsScope)) {
+			String scopedConfigTemplate = selPortletConfig.getInitParameter(
+				portletSettingsScope + "-settings-template");
+
+			if (Validator.isNotNull(scopedConfigTemplate)) {
+				return scopedConfigTemplate;
+			}
+		}
 
 		String configTemplate = selPortletConfig.getInitParameter(
 			"config-template");
