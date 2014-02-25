@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.notifications;
+package com.liferay.portlet.wiki.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Constants;
@@ -26,9 +26,14 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.BlogsTestUtil;
+
+import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.model.WikiPageConstants;
+import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -44,18 +49,22 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
+public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
+		_node = WikiTestUtil.addNode(
+			user.getUserId(), group.getGroupId(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
+
+		WikiNodeLocalServiceUtil.subscribeNode(
+			user.getUserId(), _node.getNodeId());
 
 		userNotificationDeliveries = getUserNotificationDeliveries(
-			user.getUserId(), PortletKeys.BLOGS);
+			user.getUserId(), PortletKeys.WIKI);
 	}
 
 	@Override
@@ -66,14 +75,17 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
 
-		return BlogsTestUtil.addEntry(
-			user.getUserId(), ServiceTestUtil.randomString(), true,
-			serviceContext);
+		return WikiPageLocalServiceUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			ServiceTestUtil.randomString(), WikiPageConstants.VERSION_DEFAULT,
+			ServiceTestUtil.randomString(50), ServiceTestUtil.randomString(),
+			false, WikiPageConstants.DEFAULT_FORMAT, true, StringPool.BLANK,
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
 	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
-		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
+		WikiPage page = (WikiPage)baseModel;
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
@@ -81,13 +93,14 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		serviceContext.setCommand(Constants.UPDATE);
 		serviceContext.setLayoutFullURL("http://localhost");
 
-		return BlogsEntryLocalServiceUtil.updateEntry(
-			blogsEntry.getUserId(), blogsEntry.getEntryId(),
-			ServiceTestUtil.randomString(), blogsEntry.getDescription(),
-			blogsEntry.getContent(), 1, 1, 2012, 12, 00, true, true,
-			new String[0], blogsEntry.getSmallImage(),
-			blogsEntry.getSmallImageURL(), StringPool.BLANK, null,
-			serviceContext);
+		return WikiPageLocalServiceUtil.updatePage(
+			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
+			page.getVersion(), ServiceTestUtil.randomString(50),
+			ServiceTestUtil.randomString(), false,
+			WikiPageConstants.DEFAULT_FORMAT, StringPool.BLANK,
+			StringPool.BLANK, serviceContext);
 	}
+
+	private WikiNode _node;
 
 }
