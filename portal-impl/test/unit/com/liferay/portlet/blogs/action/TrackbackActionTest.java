@@ -63,6 +63,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -101,80 +102,78 @@ public class TrackbackActionTest {
 	public static void addNewTrackback(
 		long messageId, String url, String entryUrl) {
 
-		_trackback = Arrays.<Object>asList(messageId, url, entryUrl).toString();
+		List<Object> list = Arrays.<Object>asList(messageId, url, entryUrl);
+
+		_trackback = list.toString();
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		_prepareMocks();
+		doSetup();
 	}
 
 	@Test
 	public void testDisabledComments() throws Exception {
+		doReturn(
+			"false"
+		).when(
+			_portletPreferences
+		).getValue(
+			"enableComments", null
+		);
 
-		doReturn("false").when(
-			_mockPortletPreferences).getValue("enableComments", null);
+		addTrackback();
 
-		_addTrackback();
-
-		_assertError("Comments have been disabled for this blog entry.");
+		assertError("Comments have been disabled for this blog entry.");
 	}
 
 	@Test
 	public void testMismatchedIpAddress() throws Exception {
+		initUrl("BOGUS-IP");
 
-		_initUrl("BOGUS-IP");
+		addTrackback();
 
-		_addTrackback();
-
-		_assertError(
+		assertError(
 			"Remote IP 127.0.0.1 does not match trackback URL's IP BOGUS-IP.");
 	}
 
 	@Test
 	public void testMissingURL() throws Exception {
+		addTrackback();
 
-		_addTrackback();
-
-		_assertError("Trackback requires a valid permanent URL.");
+		assertError("Trackback requires a valid permanent URL.");
 	}
 
 	@Test
 	public void testNoSuchEntryException() throws Exception {
+		doThrowWhenGetEntry(NoSuchEntryException.class);
 
-		_doThrowWhenGetEntry(NoSuchEntryException.class);
-
-		_initValidUrl();
+		initValidUrl();
 
 		try {
-			_addTrackback();
+			addTrackback();
+
 			Assert.fail();
 		}
 		catch (NoSuchEntryException nsee) {
-
-			// Test pass. The expected outcome is the exception being thrown,
-			// instead of the error response XML being produced.
-
 		}
 	}
 
 	@Test
 	public void testPrincipalException() throws Exception {
+		doThrowWhenGetEntry(PrincipalException.class);
 
-		_doThrowWhenGetEntry(PrincipalException.class);
+		initValidUrl();
 
-		_initValidUrl();
+		addTrackback();
 
-		_addTrackback();
-
-		_assertError(
+		assertError(
 			"Blog entry must have guest view permissions to enable trackbacks."
 		);
 	}
 
 	@Test
 	public void testSuccess() throws Exception {
-
 		long userId = 42;
 		String blogName = "This is a blog";
 		long groupId = 16;
@@ -189,41 +188,91 @@ public class TrackbackActionTest {
 		_mockOriginalServletRequest.setParameter(
 			"excerpt", "This is an excerpt");
 
-		doReturn(userId).when(
-			_mockUserLocalService).getDefaultUserId(anyLong());
+		doReturn(
+			userId
+		).when(
+			_userLocalService
+		).getDefaultUserId(
+			anyLong()
+		);
 
-		doReturn(groupId).when(_mockBlogsEntry).getGroupId();
-		doReturn(classPK).when(_mockBlogsEntry).getEntryId();
-		doReturn("__UrlTitle__").when(_mockBlogsEntry).getUrlTitle();
+		doReturn(
+			groupId
+		).when(
+			_blogsEntry
+		).getGroupId();
 
-		doReturn(threadId).when(_mockMBThread).getThreadId();
-		doReturn(parentMessageId).when(_mockMBThread).getRootMessageId();
+		doReturn(
+			classPK
+		).when(
+			_blogsEntry
+		).getEntryId();
 
-		doReturn(99999L).when(_mockMBMessage).getMessageId();
+		doReturn(
+			"__UrlTitle__"
+		).when(
+			_blogsEntry
+		).getUrlTitle();
 
-		doReturn("Read more").when(
-			_mockLanguage).get((Locale)any(), eq("read-more"));
+		doReturn(
+			threadId
+		).when(
+			_mbThread
+		).getThreadId();
 
-		doReturn("__LayoutFullURL__").when(
-			_mockPortal).getLayoutFullURL(_mockThemeDisplay);
+		doReturn(
+			parentMessageId
+		).when(
+			_mbThread
+		).getRootMessageId();
 
-		_initValidUrl();
+		doReturn(
+			99999L
+		).when(
+			_mbMessage
+		).getMessageId();
 
-		_addTrackback();
+		doReturn(
+			"Read more"
+		).when(
+			_language
+		).get(
+			(Locale)any(), eq("read-more")
+		);
 
-		_assertSuccess();
+		doReturn(
+			"__LayoutFullURL__"
+		).when(
+			_portal
+		).getLayoutFullURL(
+			_themeDisplay
+		);
 
-		// verify APIs were indeed called
+		initValidUrl();
 
-		verify(_mockMBMessageLocalService).getDiscussionMessageDisplay(
+		addTrackback();
+
+		assertSuccess();
+
+		// Verify
+
+		verify(
+			_mbMessageLocalService
+		).getDiscussionMessageDisplay(
 			userId, groupId, className, classPK,
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_APPROVED
+		);
 
-		verify(_mockMBMessageLocalService).addDiscussionMessage(
+		verify(
+			_mbMessageLocalService
+		).addDiscussionMessage(
 			eq(userId), eq(blogName), eq(groupId), eq(className), eq(classPK),
 			eq(threadId), eq(parentMessageId), eq(title),
 			eq("[...] This is an excerpt [...] [url=__url__]Read more[/url]"),
-			(ServiceContext)any());
+			(ServiceContext)any()
+		);
+
+		// Assert
 
 		assertEquals(
 			"[99999, __url__, __LayoutFullURL__/-/blogs/__UrlTitle__]",
@@ -232,46 +281,171 @@ public class TrackbackActionTest {
 
 	@Test
 	public void testTrackbacksNotEnabled() throws Exception {
+		doReturn(
+			false
+		).when(
+			_blogsEntry
+		).isAllowTrackbacks();
 
-		doReturn(false).when(_mockBlogsEntry).isAllowTrackbacks();
+		initValidUrl();
 
-		_initValidUrl();
+		addTrackback();
 
-		_addTrackback();
-
-		_assertError("Trackbacks are not enabled on this blog entry.");
+		assertError("Trackbacks are not enabled on this blog entry.");
 	}
 
-	private void _addTrackback() throws Exception {
+	protected void addTrackback() throws Exception {
+		TrackbackAction trackbackAction = new TrackbackAction();
 
-		new TrackbackAction().addTrackback(
-			_mockActionRequest, _mockActionResponse);
+		trackbackAction.addTrackback(_actionRequest, _actionResponse);
 	}
 
-	private void _assertError(String msg) throws Exception {
-
-		_assertResponseContent(
+	protected void assertError(String msg) throws Exception {
+		assertResponseContent(
 			"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-			"<response><error>1</error><message>" +
-			msg +
-			"</message></response>"
+				"<response><error>1</error><message>" +
+				msg +
+				"</message></response>"
 		);
 	}
 
-	private void _assertResponseContent(String expected) throws Exception {
-
-		assertEquals(expected, _mockResponse.getContentAsString());
+	protected void assertResponseContent(String expected) throws Exception {
+		assertEquals(expected, _mockHttpServletResponse.getContentAsString());
 	}
 
-	private void _assertSuccess() throws Exception {
-
-		_assertResponseContent(
+	protected void assertSuccess() throws Exception {
+		assertResponseContent(
 			"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-			"<response><error>0</error></response>"
+				"<response><error>0</error></response>"
 		);
 	}
 
-	private void _doThrowWhenGetEntry(Class<? extends Throwable> toBeThrown)
+	protected void doSetup() throws Exception {
+		MockitoAnnotations.initMocks(this);
+
+		doReturn(
+			_mockOriginalServletRequest
+		).when(
+			_portal
+		).getOriginalServletRequest((HttpServletRequest)any());
+
+		doReturn(
+			_mockHttpServletRequest
+		).when(
+			_portal
+		).getHttpServletRequest((PortletRequest)any());
+
+		doReturn(
+			_mockHttpServletResponse
+		).when(
+			_portal
+		).getHttpServletResponse((PortletResponse)any());
+
+		doReturn(
+			_themeDisplay
+		).when(
+			_actionRequest
+		).getAttribute(WebKeys.THEME_DISPLAY);
+
+		doReturn(
+			_portletPreferences
+		).when(
+			_actionRequest
+		).getPreferences();
+
+		doReturn(
+			_blogsEntry
+		).when(
+			_actionRequest
+		).getAttribute(WebKeys.BLOGS_ENTRY);
+
+		doReturn(
+			Collections.enumeration(Collections.emptySet())
+		).when(
+			_actionRequest
+		).getParameterNames();
+
+		doReturn(
+			_mbMessageDisplay
+		).when(
+			_mbMessageLocalService
+		).getDiscussionMessageDisplay(
+			anyLong(), anyLong(), eq(BlogsEntry.class.getName()), anyLong(),
+			eq(WorkflowConstants.STATUS_APPROVED));
+
+		doReturn(
+			_mbMessage
+		).when(
+			_mbMessageLocalService
+		).addDiscussionMessage(
+			anyLong(), anyString(), anyLong(), anyString(), anyLong(),
+			anyLong(), anyLong(), anyString(), anyString(),
+			(ServiceContext)any());
+
+		doReturn(
+			_mbThread
+		).when(
+			_mbMessageDisplay
+		).getThread();
+
+		doReturn(
+			true
+		).when(
+			_blogsEntry
+		).isAllowTrackbacks();
+
+		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
+
+		stub(
+			method(UserLocalServiceUtil.class, "getService")
+		).toReturn(
+			_userLocalService
+		);
+
+		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
+
+		stub(
+			method(MBMessageLocalServiceUtil.class, "getService")
+		).toReturn(
+			_mbMessageLocalService
+		);
+
+		mockStatic(BlogsEntryServiceUtil.class, new CallsRealMethods());
+
+		stub(
+			method(BlogsEntryServiceUtil.class, "getService")
+		).toReturn(
+			_blogsEntryService
+		);
+
+		mockStatic(LinkbackConsumerUtil.class, new CallsRealMethods());
+
+		replace(
+			method(LinkbackConsumerUtil.class, "addNewTrackback")
+		).with(
+			getClass().getMethod(
+				"addNewTrackback", Long.TYPE,String.class, String.class)
+		);
+
+		new PortalUtil().setPortal(_portal);
+
+		PropsUtil.setProps(_props);
+
+		new HttpUtil().setHttp(_http);
+
+		_themeDisplay.setCompany(_company);
+		_themeDisplay.setUser(_user);
+
+		new LanguageUtil().setLanguage(_language);
+
+		new PortletPreferencesFactoryUtil().setPortletPreferencesFactory(
+			_portletPreferencesFactory);
+
+		new ExpandoBridgeFactoryUtil().setExpandoBridgeFactory(
+			_expandoBridgeFactory);
+	}
+
+	protected void doThrowWhenGetEntry(Class<? extends Throwable> toBeThrown)
 		throws Exception {
 
 		long entryId = 42;
@@ -279,163 +453,92 @@ public class TrackbackActionTest {
 		_mockHttpServletRequest.setParameter(
 			"entryId", String.valueOf(entryId));
 
-		doThrow(toBeThrown).when(_mockBlogsEntryService).getEntry(entryId);
+		doThrow(
+			toBeThrown
+		).when(
+			_blogsEntryService
+		).getEntry(entryId);
 	}
 
-	private void _initUrl(String remoteIp) {
-
+	protected void initUrl(String remoteIp) {
 		String url = "__url__";
 
-		doReturn(remoteIp).when(_mockHttp).getIpAddress(url);
+		doReturn(
+			remoteIp
+		).when(
+			_http
+		).getIpAddress(url);
 
 		_mockOriginalServletRequest.addParameter("url", url);
 	}
 
-	private void _initValidUrl() {
-
-		_initUrl(_mockHttpServletRequest.getRemoteAddr());
+	protected void initValidUrl() {
+		initUrl(_mockHttpServletRequest.getRemoteAddr());
 	}
 
-	private void _prepareMocks() throws Exception {
-
-		MockitoAnnotations.initMocks(this);
-
-		doReturn(_mockOriginalServletRequest).when(
-			_mockPortal).getOriginalServletRequest((HttpServletRequest)any());
-
-		doReturn(_mockHttpServletRequest).when(
-			_mockPortal).getHttpServletRequest((PortletRequest)any());
-
-		doReturn(_mockResponse).when(
-			_mockPortal).getHttpServletResponse((PortletResponse)any());
-
-		doReturn(_mockThemeDisplay).when(
-			_mockActionRequest).getAttribute(WebKeys.THEME_DISPLAY);
-
-		doReturn(_mockPortletPreferences).when(
-			_mockActionRequest).getPreferences();
-
-		doReturn(_mockBlogsEntry).when(
-			_mockActionRequest).getAttribute(WebKeys.BLOGS_ENTRY);
-
-		doReturn(Collections.enumeration(Collections.emptySet())).when(
-			_mockActionRequest).getParameterNames();
-
-		doReturn(_mockMBMessageDisplay).when(
-			_mockMBMessageLocalService).getDiscussionMessageDisplay(
-				anyLong(), anyLong(), eq(BlogsEntry.class.getName()), anyLong(),
-				eq(WorkflowConstants.STATUS_APPROVED));
-
-		doReturn(_mockMBMessage).when(
-			_mockMBMessageLocalService).addDiscussionMessage(
-				anyLong(), anyString(), anyLong(), anyString(), anyLong(),
-				anyLong(), anyLong(), anyString(), anyString(),
-				(ServiceContext)any());
-
-		doReturn(_mockMBThread).when(_mockMBMessageDisplay).getThread();
-
-		doReturn(true).when(_mockBlogsEntry).isAllowTrackbacks();
-
-		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
-		stub(method(UserLocalServiceUtil.class, "getService")).toReturn(
-			_mockUserLocalService);
-
-		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
-		stub(method(MBMessageLocalServiceUtil.class, "getService")).toReturn(
-			_mockMBMessageLocalService);
-
-		mockStatic(BlogsEntryServiceUtil.class, new CallsRealMethods());
-		stub(method(BlogsEntryServiceUtil.class, "getService")).toReturn(
-			_mockBlogsEntryService);
-
-		mockStatic(LinkbackConsumerUtil.class, new CallsRealMethods());
-		replace(method(LinkbackConsumerUtil.class, "addNewTrackback")).with(
-			this.getClass().getMethod(
-				"addNewTrackback", Long.TYPE, String.class, String.class));
-
-		new PortalUtil().setPortal(_mockPortal);
-
-		PropsUtil.setProps(_mockProps);
-
-		new HttpUtil().setHttp(_mockHttp);
-
-		_mockThemeDisplay.setCompany(_mockCompany);
-		_mockThemeDisplay.setUser(_mockUser);
-
-		new LanguageUtil().setLanguage(_mockLanguage);
-
-		new PortletPreferencesFactoryUtil().setPortletPreferencesFactory(
-			_mockPortletPreferencesFactory);
-
-		new ExpandoBridgeFactoryUtil().setExpandoBridgeFactory(
-			_mockExpandoBridgeFactory);
-	}
+	@Mock
+	protected UserLocalService _userLocalService;
 
 	private static String _trackback;
 
 	@Mock
-	private ActionRequest _mockActionRequest;
+	private ActionRequest _actionRequest;
 
 	@Mock
-	private ActionResponse _mockActionResponse;
+	private ActionResponse _actionResponse;
 
 	@Mock
-	private BlogsEntry _mockBlogsEntry;
+	private BlogsEntry _blogsEntry;
 
 	@Mock
-	private BlogsEntryService _mockBlogsEntryService;
+	private BlogsEntryService _blogsEntryService;
 
 	@Mock
-	private Company _mockCompany;
+	private Company _company;
 
 	@Mock
-	private ExpandoBridgeFactory _mockExpandoBridgeFactory;
+	private ExpandoBridgeFactory _expandoBridgeFactory;
 
 	@Mock
-	private Http _mockHttp;
+	private Http _http;
 
 	@Mock
-	private Language _mockLanguage;
+	private Language _language;
+
+	@Mock
+	private MBMessage _mbMessage;
+
+	@Mock
+	private MBMessageDisplay _mbMessageDisplay;
+
+	@Mock
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Mock
+	private MBThread _mbThread;
 
 	private MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
-
-	@Mock
-	private MBMessage _mockMBMessage;
-
-	@Mock
-	private MBMessageDisplay _mockMBMessageDisplay;
-
-	@Mock
-	private MBMessageLocalService _mockMBMessageLocalService;
-
-	@Mock
-	private MBThread _mockMBThread;
-
+	private MockHttpServletResponse _mockHttpServletResponse =
+		new MockHttpServletResponse();
 	private MockHttpServletRequest _mockOriginalServletRequest =
 		new MockHttpServletRequest();
 
 	@Mock
-	private Portal _mockPortal;
+	private Portal _portal;
 
 	@Mock
-	private PortletPreferences _mockPortletPreferences;
+	private PortletPreferences _portletPreferences;
 
 	@Mock
-	private PortletPreferencesFactory _mockPortletPreferencesFactory;
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 	@Mock
-	private Props _mockProps;
+	private Props _props;
 
-	private MockHttpServletResponse _mockResponse =
-		new MockHttpServletResponse();
-
-	private ThemeDisplay _mockThemeDisplay = new ThemeDisplay();
+	private ThemeDisplay _themeDisplay = new ThemeDisplay();
 
 	@Mock
-	private User _mockUser;
-
-	@Mock
-	private UserLocalService _mockUserLocalService;
+	private User _user;
 
 }
