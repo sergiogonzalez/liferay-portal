@@ -318,7 +318,7 @@ public class TrackbackActionTest {
 		doReturn(_mockBlogsEntry).when(
 			_mockActionRequest).getAttribute(WebKeys.BLOGS_ENTRY);
 
-		doReturn(Collections.emptyEnumeration()).when(
+		doReturn(Collections.enumeration(Collections.emptySet())).when(
 			_mockActionRequest).getParameterNames();
 
 		doReturn(_mockMBMessageDisplay).when(
