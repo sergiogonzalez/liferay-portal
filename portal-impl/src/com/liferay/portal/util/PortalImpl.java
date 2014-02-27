@@ -3497,9 +3497,9 @@ public class PortalImpl implements Portal {
 			Locale originalLocale)
 		throws Exception {
 
-		String contextPath = getPathContext();
+		String contextPath = StringUtil.toLowerCase(getPathContext());
 
-		String requestURI = request.getRequestURI();
+		String requestURI = StringUtil.toLowerCase(request.getRequestURI());
 
 		if (Validator.isNotNull(contextPath) &&
 			requestURI.contains(contextPath)) {
@@ -3510,7 +3510,7 @@ public class PortalImpl implements Portal {
 		requestURI = StringUtil.replace(
 			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
-		String path = request.getPathInfo();
+		String path = StringUtil.toLowerCase(request.getPathInfo());
 
 		int x = path.indexOf(CharPool.SLASH, 1);
 
