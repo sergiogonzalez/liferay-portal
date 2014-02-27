@@ -17,49 +17,19 @@
 <%@ include file="/html/portlet/blogs/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", BlogsUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", BlogsUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
-
-boolean emailEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailEntryAddedEnabled--", BlogsUtil.getEmailEntryAddedEnabled(portletPreferences));
-boolean emailEntryUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailEntryUpdatedEnabled--", BlogsUtil.getEmailEntryUpdatedEnabled(portletPreferences));
-
-String emailParam = StringPool.BLANK;
-String defaultEmailSubject = StringPool.BLANK;
-String defaultEmailBody = StringPool.BLANK;
-
-if (tabs2.equals("entry-added-email")) {
-	emailParam = "emailEntryAdded";
-	defaultEmailSubject = ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
-	defaultEmailBody = ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_BODY);
-}
-else if (tabs2.equals("entry-updated-email")) {
-	emailParam = "emailEntryUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
-	defaultEmailBody = ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
-}
+String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
-
-String emailSubjectParam = emailParam + "Subject_" + currentLanguageId;
-String emailBodyParam = emailParam + "Body_" + currentLanguageId;
-
-String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
-
-String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
@@ -117,300 +87,76 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 			</aui:fieldset>
 		</liferay-ui:section>
 
+		<%
+		Map<String, String> emailDefinitionTerms = BlogsUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+		%>
+
 		<liferay-ui:section>
-			<aui:fieldset>
-				<aui:input label="enabled" name="preferences--emailEntryAddedEnabled--" type="checkbox" value="<%= emailEntryAddedEnabled %>" />
+			<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
 
-				<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
+				<%
+				Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-					<%
-					Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+				for (int i = 0; i < locales.length; i++) {
+					String style = StringPool.BLANK;
 
-					for (int i = 0; i < locales.length; i++) {
-						String style = StringPool.BLANK;
+					if (Validator.isNotNull(portletPreferences.getValue("emailEntryAddedSubject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
+						Validator.isNotNull(portletPreferences.getValue("emailEntryAddedBody_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
 
-						if (Validator.isNotNull(portletPreferences.getValue(emailParam + "Subject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
-							Validator.isNotNull(portletPreferences.getValue(emailParam + "Body_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
-
-							style = "font-weight: bold;";
-						}
-					%>
-
-						<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
-
-					<%
+						style = "font-weight: bold;";
 					}
-					%>
+				%>
 
-				</aui:select>
+					<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
+				<%
+				}
+				%>
 
-				<aui:field-wrapper label="body">
-					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
+			</aui:select>
 
-					<aui:input name='<%= "preferences--" + emailBodyParam + "--" %>' type="hidden" />
-				</aui:field-wrapper>
-			</aui:fieldset>
-
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
-
-				<dl>
-					<dt>
-						[$BLOGS_ENTRY_CONTENT$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-blog-entry-content" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_DESCRIPTION$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-blog-entry-description" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-updated-the-blog-entry" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_TITLE$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-blog-entry-title" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-blog-entry" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-blog-entry" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_URL$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-blog-entry-url" />
-					</dd>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$FROM_ADDRESS$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromAddress) %>
-					</dd>
-					<dt>
-						[$FROM_NAME$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromName) %>
-					</dd>
-					<dt>
-						[$PORTAL_URL$]
-					</dt>
-					<dd>
-						<%= company.getVirtualHostname() %>
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$TO_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-address-of-the-email-recipient" />
-					</dd>
-					<dt>
-						[$TO_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-name-of-the-email-recipient" />
-					</dd>
-				</dl>
-			</aui:fieldset>
+			<liferay-ui:email-notifications-settings
+				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailEntryAddedBody_" + currentLanguageId, ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_BODY)) %>'
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailEntryAddedEnabled--", BlogsUtil.getEmailEntryAddedEnabled(portletPreferences)) %>'
+				emailParam="emailEntryAdded"
+				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailEntryAddedSubject_" + currentLanguageId, ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT)) %>'
+				languageId="<%= currentLanguageId %>"
+			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<aui:fieldset>
-				<aui:input label="enabled" name="preferences--emailEntryUpdatedEnabled--" type="checkbox" value="<%= emailEntryUpdatedEnabled %>" />
+			<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
 
-				<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
+				<%
+				Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-					<%
-					Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+				for (int i = 0; i < locales.length; i++) {
+					String style = StringPool.BLANK;
 
-					for (int i = 0; i < locales.length; i++) {
-						String style = StringPool.BLANK;
+					if (Validator.isNotNull(portletPreferences.getValue("Subject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
+						Validator.isNotNull(portletPreferences.getValue("Body_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
 
-						if (Validator.isNotNull(portletPreferences.getValue(emailParam + "Subject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
-							Validator.isNotNull(portletPreferences.getValue(emailParam + "Body_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
-
-							style = "font-weight: bold;";
-						}
-					%>
-
-						<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
-
-					<%
+						style = "font-weight: bold;";
 					}
-					%>
+				%>
 
-				</aui:select>
+					<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
+				<%
+				}
+				%>
 
-				<aui:field-wrapper label="body">
-					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
+			</aui:select>
 
-					<aui:input name='<%= "preferences--" + emailBodyParam + "--" %>' type="hidden" />
-				</aui:field-wrapper>
-			</aui:fieldset>
-
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
-
-				<dl>
-					<dt>
-						[$BLOGS_ENTRY_CONTENT$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-blog-entry-content" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_DESCRIPTION$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-blog-entry-description" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-updated-the-blog-entry" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_TITLE$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-blog-entry-title" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-blog-entry" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-blog-entry" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_URL$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-blog-entry-url" />
-					</dd>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$FROM_ADDRESS$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromAddress) %>
-					</dd>
-					<dt>
-						[$FROM_NAME$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromName) %>
-					</dd>
-					<dt>
-						[$PORTAL_URL$]
-					</dt>
-					<dd>
-						<%= company.getVirtualHostname() %>
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$TO_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-address-of-the-email-recipient" />
-					</dd>
-					<dt>
-						[$TO_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-name-of-the-email-recipient" />
-					</dd>
-				</dl>
-			</aui:fieldset>
+			<liferay-ui:email-notifications-settings
+				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailEntryUpdatedBody_" + currentLanguageId, ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_BODY)) %>'
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailEntryUpdatedEnabled--", BlogsUtil.getEmailEntryUpdatedEnabled(portletPreferences)) %>'
+				emailParam="emailEntryUpdated"
+				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailEntryUpdatedSubject_" + currentLanguageId, ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT)) %>'
+				languageId="<%= currentLanguageId %>"
+			/>
 		</liferay-ui:section>
 
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
@@ -431,10 +177,6 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(emailBody) %>";
-	}
-
 	function <portlet:namespace />updateLanguage() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '';
 
@@ -445,14 +187,26 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 		window,
 		'<portlet:namespace />saveConfiguration',
 		function() {
-			<c:if test='<%= tabs2.startsWith("entry-") %>'>
-				document.<portlet:namespace />fm.<portlet:namespace /><%= emailBodyParam %>.value = window.<portlet:namespace />editor.getHTML();
-			</c:if>
+			<portlet:namespace />saveEmails();
 
 			submitForm(document.<portlet:namespace />fm);
 		},
 		['liferay-util-list-fields']
 	);
+
+	function <portlet:namespace />saveEmails() {
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailEntryAddedBody_<%= currentLanguageId %>--'].value = window['<portlet:namespace />emailEntryAdded'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailEntryUpdatedBody_<%= currentLanguageId %>--'].value = window['<portlet:namespace />emailEntryUpdated'].getHTML();
+		}
+		catch (e) {
+		}
+	}
 </aui:script>
 
 <%!
