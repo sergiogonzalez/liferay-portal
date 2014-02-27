@@ -243,11 +243,6 @@ public class PortletDisplay implements Serializable {
 		return _rootPortletId;
 	}
 
-	public Settings getServiceCompanySettings() throws SystemException {
-		return SettingsFactoryUtil.getServiceCompanySettings(
-			_themeDisplay.getCompanyId(), _id);
-	}
-
 	public Settings getServiceGroupSettings()
 		throws PortalException, SystemException {
 
