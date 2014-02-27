@@ -224,9 +224,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 
-		Settings settings =
-			SettingsFactoryUtil.getServiceGroupSettings(
-				groupId, PortletKeys.MESSAGE_BOARDS);
+		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
+			groupId, PortletKeys.MESSAGE_BOARDS);
 
 		if (settings != null) {
 			if (!MBUtil.isAllowAnonymousPosting(settings)) {
@@ -2014,9 +2013,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		Settings settings =
-			SettingsFactoryUtil.getServiceGroupSettings(
-				message.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
+			message.getGroupId(), PortletKeys.MESSAGE_BOARDS);
 
 		if (serviceContext.isCommandAdd() &&
 			MBUtil.getEmailMessageAddedEnabled(settings)) {

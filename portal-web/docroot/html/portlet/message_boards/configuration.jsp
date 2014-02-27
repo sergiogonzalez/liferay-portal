@@ -47,13 +47,9 @@ String emailSubjectParam = emailParam + "Subject";
 String emailBodyParam = emailParam + "Body";
 String emailSignatureParam = emailParam + "Signature";
 
-String emailSubject = SettingsParamUtil.getString(
-		serviceGroupSettings, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = SettingsParamUtil.getString(
-		serviceGroupSettings, request, emailBodyParam, defaultEmailBody);
-String emailSignature = SettingsParamUtil.getString(
-		serviceGroupSettings, request, emailSignatureParam,
-		defaultEmailSignature);
+String emailSubject = SettingsParamUtil.getString(serviceGroupSettings, request, emailSubjectParam, defaultEmailSubject);
+String emailBody = SettingsParamUtil.getString(serviceGroupSettings, request, emailBodyParam, defaultEmailBody);
+String emailSignature = SettingsParamUtil.getString(serviceGroupSettings, request, emailSignatureParam, defaultEmailSignature);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL">
@@ -398,9 +394,7 @@ String emailSignature = SettingsParamUtil.getString(
 					</tr>
 
 					<%
-					priorities = LocalizationUtil.getSettingsValues(
-							serviceGroupSettings, "priorities",
-							defaultLanguageId);
+					priorities = LocalizationUtil.getSettingsValues(serviceGroupSettings, "priorities", defaultLanguageId);
 
 					for (int i = 0; i < 10; i++) {
 						String name = StringPool.BLANK;
@@ -484,9 +478,7 @@ String emailSignature = SettingsParamUtil.getString(
 							continue;
 						}
 
-						String[] tempPriorities = LocalizationUtil.getSettingsValues(
-								serviceGroupSettings, "priorities",
-								LocaleUtil.toLanguageId(locales[i]));
+						String[] tempPriorities = LocalizationUtil.getSettingsValues(serviceGroupSettings, "priorities", LocaleUtil.toLanguageId(locales[i]));
 
 						for (int j = 0; j < 10; j++) {
 							String name = StringPool.BLANK;

@@ -81,8 +81,7 @@ Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId(
 
 Settings serviceGroupSettings = portletDisplay.getServiceGroupSettings();
 
-String[] priorities = LocalizationUtil.getSettingsValues(
-		serviceGroupSettings, "priorities", currentLanguageId);
+String[] priorities = LocalizationUtil.getSettingsValues(serviceGroupSettings, "priorities", currentLanguageId);
 
 boolean allowAnonymousPosting = MBUtil.isAllowAnonymousPosting(serviceGroupSettings);
 boolean subscribeByDefault = GetterUtil.getBoolean(serviceGroupSettings.getValue("subscribeByDefault", null), PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
