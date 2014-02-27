@@ -59,7 +59,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletSettings;
+import com.liferay.portlet.Settings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBBan;
@@ -347,20 +347,20 @@ public class MBUtil {
 		return classPKs;
 	}
 
-	public static String getEmailFromAddress(PortletSettings portletSettings) {
-		return portletSettings.getValue(
+	public static String getEmailFromAddress(Settings settings) {
+		return settings.getValue(
 			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
 			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
 	}
 
-	public static String getEmailFromName(PortletSettings portletSettings) {
-		return portletSettings.getValue(
+	public static String getEmailFromName(Settings settings) {
+		return settings.getValue(
 			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME,
 			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME);
 	}
 
-	public static boolean getEmailHtmlFormat(PortletSettings portletSettings) {
-		String emailHtmlFormat = portletSettings.getValue(
+	public static boolean getEmailHtmlFormat(Settings settings) {
+		String emailHtmlFormat = settings.getValue(
 			"emailHtmlFormat", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailHtmlFormat)) {
@@ -372,9 +372,9 @@ public class MBUtil {
 	}
 
 	public static String getEmailMessageAddedBody(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
-		String emailMessageAddedBody = portletSettings.getValue(
+		String emailMessageAddedBody = settings.getValue(
 			"emailMessageAddedBody", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageAddedBody)) {
@@ -387,9 +387,9 @@ public class MBUtil {
 	}
 
 	public static boolean getEmailMessageAddedEnabled(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
-		String emailMessageAddedEnabled = portletSettings.getValue(
+		String emailMessageAddedEnabled = settings.getValue(
 			"emailMessageAddedEnabled", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageAddedEnabled)) {
@@ -401,9 +401,9 @@ public class MBUtil {
 	}
 
 	public static String getEmailMessageAddedSignature(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
-		String emailMessageAddedSignature = portletSettings.getValue(
+		String emailMessageAddedSignature = settings.getValue(
 			"emailMessageAddedSignature", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageAddedSignature)) {
@@ -416,9 +416,9 @@ public class MBUtil {
 	}
 
 	public static String getEmailMessageAddedSubject(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
-		String emailMessageAddedSubject = portletSettings.getValue(
+		String emailMessageAddedSubject = settings.getValue(
 			"emailMessageAddedSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageAddedSubject)) {
@@ -431,9 +431,9 @@ public class MBUtil {
 	}
 
 	public static String getEmailMessageUpdatedBody(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
-		String emailMessageUpdatedBody = portletSettings.getValue(
+		String emailMessageUpdatedBody = settings.getValue(
 			"emailMessageUpdatedBody", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageUpdatedBody)) {
@@ -446,9 +446,9 @@ public class MBUtil {
 	}
 
 	public static boolean getEmailMessageUpdatedEnabled(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
-		String emailMessageUpdatedEnabled = portletSettings.getValue(
+		String emailMessageUpdatedEnabled = settings.getValue(
 			"emailMessageUpdatedEnabled", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageUpdatedEnabled)) {
@@ -460,9 +460,9 @@ public class MBUtil {
 	}
 
 	public static String getEmailMessageUpdatedSignature(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
-		String emailMessageUpdatedSignature = portletSettings.getValue(
+		String emailMessageUpdatedSignature = settings.getValue(
 			"emailMessageUpdatedSignature", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageUpdatedSignature)) {
@@ -475,9 +475,9 @@ public class MBUtil {
 	}
 
 	public static String getEmailMessageUpdatedSubject(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
-		String emailMessageUpdatedSubject = portletSettings.getValue(
+		String emailMessageUpdatedSubject = settings.getValue(
 			"emailMessageUpdatedSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageUpdatedSubject)) {
@@ -561,8 +561,8 @@ public class MBUtil {
 		return entries;
 	}
 
-	public static String getMessageFormat(PortletSettings portletSettings) {
-		String messageFormat = portletSettings.getValue(
+	public static String getMessageFormat(Settings settings) {
+		String messageFormat = settings.getValue(
 			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
 
 		if (isValidMessageFormat(messageFormat)) {
@@ -693,12 +693,12 @@ public class MBUtil {
 	}
 
 	public static String[] getThreadPriority(
-			PortletSettings portletSettings, String languageId, double value,
+			Settings settings, String languageId, double value,
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String[] priorities = LocalizationUtil.getPortletSettingsValues(
-			portletSettings, "priorities", languageId);
+		String[] priorities = LocalizationUtil.getSettingsValues(
+			settings, "priorities", languageId);
 
 		String[] priorityPair = _findThreadPriority(
 			value, themeDisplay, priorities);
@@ -707,8 +707,8 @@ public class MBUtil {
 			String defaultLanguageId = LocaleUtil.toLanguageId(
 				LocaleUtil.getSiteDefault());
 
-			priorities = LocalizationUtil.getPortletSettingsValues(
-				portletSettings, "priorities", defaultLanguageId);
+			priorities = LocalizationUtil.getSettingsValues(
+				settings, "priorities", defaultLanguageId);
 
 			priorityPair = _findThreadPriority(value, themeDisplay, priorities);
 		}
@@ -745,13 +745,13 @@ public class MBUtil {
 	}
 
 	public static String getUserRank(
-			PortletSettings portletSettings, String languageId, int posts)
+			Settings settings, String languageId, int posts)
 		throws Exception {
 
 		String rank = StringPool.BLANK;
 
-		String[] ranks = LocalizationUtil.getPortletSettingsValues(
-			portletSettings, "ranks", languageId);
+		String[] ranks = LocalizationUtil.getSettingsValues(
+			settings, "ranks", languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
 			String[] kvp = StringUtil.split(ranks[i], CharPool.EQUAL);
@@ -771,7 +771,7 @@ public class MBUtil {
 	}
 
 	public static String[] getUserRank(
-			PortletSettings portletSettings, String languageId,
+			Settings settings, String languageId,
 			MBStatsUser statsUser)
 		throws Exception {
 
@@ -783,8 +783,8 @@ public class MBUtil {
 
 		long companyId = group.getCompanyId();
 
-		String[] ranks = LocalizationUtil.getPortletSettingsValues(
-			portletSettings, "ranks", languageId);
+		String[] ranks = LocalizationUtil.getSettingsValues(
+			settings, "ranks", languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
 			String[] kvp = StringUtil.split(ranks[i], CharPool.EQUAL);
@@ -848,10 +848,10 @@ public class MBUtil {
 	}
 
 	public static boolean isAllowAnonymousPosting(
-		PortletSettings portletSettings) {
+		Settings settings) {
 
 		return GetterUtil.getBoolean(
-			portletSettings.getValue("allowAnonymousPosting", null),
+			settings.getValue("allowAnonymousPosting", null),
 			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
 	}
 
