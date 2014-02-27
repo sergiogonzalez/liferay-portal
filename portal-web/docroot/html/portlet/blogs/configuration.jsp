@@ -93,54 +93,26 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 			</aui:fieldset>
 
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
-
+			<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
 				<dl>
-					<dt>
-						[$BLOGS_ENTRY_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-blog-entry" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-blog-entry" />
-					</dd>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-blog" />
-					</dd>
+
+					<%
+					Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+
+					for (Map.Entry<String, String> entry : emailFromDefinitionTerms.entrySet()) {
+					%>
+
+						<dt>
+							<%= entry.getKey() %>
+						</dt>
+						<dd>
+							<%= entry.getValue() %>
+						</dd>
+
+					<%
+					}
+					%>
+
 				</dl>
 			</aui:fieldset>
 		</liferay-ui:section>
