@@ -62,8 +62,7 @@ public abstract class BaseSettingsTestCase {
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
-		portletPreferences.setValue(
-			_SETTINGS_NAME, _SETTINGS_VALUE);
+		portletPreferences.setValue(_SETTINGS_NAME, _SETTINGS_VALUE);
 
 		return portletPreferences;
 	}

@@ -23,14 +23,12 @@ import org.junit.Test;
 /**
  * @author Jorge Ferrer
  */
-public class PortletInstanceSettingsTest
-	extends ServiceGroupSettingsTest {
+public class PortletInstanceSettingsTest extends ServiceGroupSettingsTest {
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		_settings = new PortletInstanceSettings(
-			getPortletPreferences());
+		_settings = new PortletInstanceSettings(getPortletPreferences());
 	}
 
 	@Test

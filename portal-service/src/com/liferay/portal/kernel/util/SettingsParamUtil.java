@@ -27,16 +27,14 @@ import javax.servlet.http.HttpServletRequest;
 public class SettingsParamUtil {
 
 	public static boolean getBoolean(
-		Settings settings, HttpServletRequest request,
-		String param) {
+		Settings settings, HttpServletRequest request, String param) {
 
-		return getBoolean(
-			settings, request, param, GetterUtil.DEFAULT_BOOLEAN);
+		return getBoolean(settings, request, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
-		Settings settings, HttpServletRequest request,
-		String param, boolean defaultValue) {
+		Settings settings, HttpServletRequest request, String param,
+		boolean defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
@@ -47,16 +45,15 @@ public class SettingsParamUtil {
 	}
 
 	public static boolean getBoolean(
-		Settings settings, PortletRequest portletRequest,
-		String param) {
+		Settings settings, PortletRequest portletRequest, String param) {
 
 		return getBoolean(
 			settings, portletRequest, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
-		Settings settings, PortletRequest portletRequest,
-		String param, boolean defaultValue) {
+		Settings settings, PortletRequest portletRequest, String param,
+		boolean defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
@@ -67,16 +64,14 @@ public class SettingsParamUtil {
 	}
 
 	public static double getDouble(
-		Settings settings, HttpServletRequest request,
-		String param) {
+		Settings settings, HttpServletRequest request, String param) {
 
-		return getDouble(
-			settings, request, param, GetterUtil.DEFAULT_DOUBLE);
+		return getDouble(settings, request, param, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	public static double getDouble(
-		Settings settings, HttpServletRequest request,
-		String param, double defaultValue) {
+		Settings settings, HttpServletRequest request, String param,
+		double defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
@@ -87,16 +82,15 @@ public class SettingsParamUtil {
 	}
 
 	public static double getDouble(
-		Settings settings, PortletRequest portletRequest,
-		String param) {
+		Settings settings, PortletRequest portletRequest, String param) {
 
 		return getDouble(
 			settings, portletRequest, param, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	public static double getDouble(
-		Settings settings, PortletRequest portletRequest,
-		String param, double defaultValue) {
+		Settings settings, PortletRequest portletRequest, String param,
+		double defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
@@ -107,16 +101,14 @@ public class SettingsParamUtil {
 	}
 
 	public static int getInteger(
-		Settings settings, HttpServletRequest request,
-		String param) {
+		Settings settings, HttpServletRequest request, String param) {
 
-		return getInteger(
-			settings, request, param, GetterUtil.DEFAULT_INTEGER);
+		return getInteger(settings, request, param, GetterUtil.DEFAULT_INTEGER);
 	}
 
 	public static int getInteger(
-		Settings settings, HttpServletRequest request,
-		String param, int defaultValue) {
+		Settings settings, HttpServletRequest request, String param,
+		int defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
@@ -127,16 +119,15 @@ public class SettingsParamUtil {
 	}
 
 	public static int getInteger(
-		Settings settings, PortletRequest portletRequest,
-		String param) {
+		Settings settings, PortletRequest portletRequest, String param) {
 
 		return getInteger(
 			settings, portletRequest, param, GetterUtil.DEFAULT_INTEGER);
 	}
 
 	public static int getInteger(
-		Settings settings, PortletRequest portletRequest,
-		String param, int defaultValue) {
+		Settings settings, PortletRequest portletRequest, String param,
+		int defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
@@ -147,56 +138,49 @@ public class SettingsParamUtil {
 	}
 
 	public static long getLong(
-		Settings settings, HttpServletRequest request,
-		String param) {
+		Settings settings, HttpServletRequest request, String param) {
 
-		return getLong(
-			settings, request, param, GetterUtil.DEFAULT_LONG);
+		return getLong(settings, request, param, GetterUtil.DEFAULT_LONG);
 	}
 
 	public static long getLong(
-		Settings settings, HttpServletRequest request,
-		String param, long defaultValue) {
+		Settings settings, HttpServletRequest request, String param,
+		long defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
-		long getterUtilValue = GetterUtil.getLong(
-			settingsValue, defaultValue);
+		long getterUtilValue = GetterUtil.getLong(settingsValue, defaultValue);
 
 		return ParamUtil.get(request, param, getterUtilValue);
 	}
 
 	public static long getLong(
-		Settings settings, PortletRequest portletRequest,
-		String param) {
+		Settings settings, PortletRequest portletRequest, String param) {
 
 		return getLong(
 			settings, portletRequest, param, GetterUtil.DEFAULT_LONG);
 	}
 
 	public static long getLong(
-		Settings settings, PortletRequest portletRequest,
-		String param, long defaultValue) {
+		Settings settings, PortletRequest portletRequest, String param,
+		long defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
-		long getterUtilValue = GetterUtil.getLong(
-			settingsValue, defaultValue);
+		long getterUtilValue = GetterUtil.getLong(settingsValue, defaultValue);
 
 		return ParamUtil.get(portletRequest, param, getterUtilValue);
 	}
 
 	public static String getString(
-		Settings settings, HttpServletRequest request,
-		String param) {
+		Settings settings, HttpServletRequest request, String param) {
 
-		return getString(
-			settings, request, param, GetterUtil.DEFAULT_STRING);
+		return getString(settings, request, param, GetterUtil.DEFAULT_STRING);
 	}
 
 	public static String getString(
-		Settings settings, HttpServletRequest request,
-		String param, String defaultValue) {
+		Settings settings, HttpServletRequest request, String param,
+		String defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 
@@ -207,16 +191,15 @@ public class SettingsParamUtil {
 	}
 
 	public static String getString(
-		Settings settings, PortletRequest portletRequest,
-		String param) {
+		Settings settings, PortletRequest portletRequest, String param) {
 
 		return getString(
 			settings, portletRequest, param, GetterUtil.DEFAULT_STRING);
 	}
 
 	public static String getString(
-		Settings settings, PortletRequest portletRequest,
-		String param, String defaultValue) {
+		Settings settings, PortletRequest portletRequest, String param,
+		String defaultValue) {
 
 		String settingsValue = settings.getValue(param, null);
 

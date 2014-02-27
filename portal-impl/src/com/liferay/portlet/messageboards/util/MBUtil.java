@@ -371,9 +371,7 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageAddedBody(
-		Settings settings) {
-
+	public static String getEmailMessageAddedBody(Settings settings) {
 		String emailMessageAddedBody = settings.getValue(
 			"emailMessageAddedBody", StringPool.BLANK);
 
@@ -386,9 +384,7 @@ public class MBUtil {
 		}
 	}
 
-	public static boolean getEmailMessageAddedEnabled(
-		Settings settings) {
-
+	public static boolean getEmailMessageAddedEnabled(Settings settings) {
 		String emailMessageAddedEnabled = settings.getValue(
 			"emailMessageAddedEnabled", StringPool.BLANK);
 
@@ -400,9 +396,7 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageAddedSignature(
-		Settings settings) {
-
+	public static String getEmailMessageAddedSignature(Settings settings) {
 		String emailMessageAddedSignature = settings.getValue(
 			"emailMessageAddedSignature", StringPool.BLANK);
 
@@ -415,9 +409,7 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageAddedSubject(
-		Settings settings) {
-
+	public static String getEmailMessageAddedSubject(Settings settings) {
 		String emailMessageAddedSubject = settings.getValue(
 			"emailMessageAddedSubject", StringPool.BLANK);
 
@@ -430,9 +422,7 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageUpdatedBody(
-		Settings settings) {
-
+	public static String getEmailMessageUpdatedBody(Settings settings) {
 		String emailMessageUpdatedBody = settings.getValue(
 			"emailMessageUpdatedBody", StringPool.BLANK);
 
@@ -445,9 +435,7 @@ public class MBUtil {
 		}
 	}
 
-	public static boolean getEmailMessageUpdatedEnabled(
-		Settings settings) {
-
+	public static boolean getEmailMessageUpdatedEnabled(Settings settings) {
 		String emailMessageUpdatedEnabled = settings.getValue(
 			"emailMessageUpdatedEnabled", StringPool.BLANK);
 
@@ -459,9 +447,7 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageUpdatedSignature(
-		Settings settings) {
-
+	public static String getEmailMessageUpdatedSignature(Settings settings) {
 		String emailMessageUpdatedSignature = settings.getValue(
 			"emailMessageUpdatedSignature", StringPool.BLANK);
 
@@ -474,9 +460,7 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageUpdatedSubject(
-		Settings settings) {
-
+	public static String getEmailMessageUpdatedSubject(Settings settings) {
 		String emailMessageUpdatedSubject = settings.getValue(
 			"emailMessageUpdatedSubject", StringPool.BLANK);
 
@@ -771,8 +755,7 @@ public class MBUtil {
 	}
 
 	public static String[] getUserRank(
-			Settings settings, String languageId,
-			MBStatsUser statsUser)
+			Settings settings, String languageId, MBStatsUser statsUser)
 		throws Exception {
 
 		String[] rank = {StringPool.BLANK, StringPool.BLANK};
@@ -847,9 +830,7 @@ public class MBUtil {
 		return false;
 	}
 
-	public static boolean isAllowAnonymousPosting(
-		Settings settings) {
-
+	public static boolean isAllowAnonymousPosting(Settings settings) {
 		return GetterUtil.getBoolean(
 			settings.getValue("allowAnonymousPosting", null),
 			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
