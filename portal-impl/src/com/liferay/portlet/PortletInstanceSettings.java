@@ -14,33 +14,31 @@
 
 package com.liferay.portlet;
 
-import java.util.Properties;
-
 import javax.portlet.PortletPreferences;
 
 /**
  * @author Jorge Ferrer
  */
-public class CompanyPortletSettings extends BasePortletSettings {
+public class PortletInstanceSettings extends ServiceGroupSettings {
 
-	public CompanyPortletSettings(
-		PortletPreferences companyPortletPreferences) {
+	public PortletInstanceSettings(
+		PortletPreferences portletInstancePortletPreferences) {
 
-		this.companyPortletPreferences = companyPortletPreferences;
+		this.portletInstancePortletPreferences =
+			portletInstancePortletPreferences;
 	}
 
-	public PortletSettings setPortalProperties(Properties portalProperties) {
-		this.portalProperties = portalProperties;
+	public Settings setGroupPortletPreferences(
+		PortletPreferences groupPortletPreferences) {
+
+		this.groupPortletPreferences = groupPortletPreferences;
 
 		return this;
 	}
 
-	protected CompanyPortletSettings() {
-	}
-
 	@Override
 	protected PortletPreferences getWriteablePortletPreferences() {
-		return companyPortletPreferences;
+		return portletInstancePortletPreferences;
 	}
 
 }

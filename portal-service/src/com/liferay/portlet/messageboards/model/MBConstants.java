@@ -12,33 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import javax.portlet.PortletPreferences;
+package com.liferay.portlet.messageboards.model;
 
 /**
  * @author Jorge Ferrer
  */
-public class GroupPortletSettings extends CompanyPortletSettings {
+public class MBConstants {
 
-	public GroupPortletSettings(PortletPreferences groupPortletPreferences) {
-		this.groupPortletPreferences = groupPortletPreferences;
-	}
-
-	public PortletSettings setCompanyPortletPreferences(
-		PortletPreferences companyPortletPreferences) {
-
-		this.companyPortletPreferences = companyPortletPreferences;
-
-		return this;
-	}
-
-	protected GroupPortletSettings() {
-	}
-
-	@Override
-	protected PortletPreferences getWriteablePortletPreferences() {
-		return groupPortletPreferences;
-	}
+	public static final String SERVICE_ID = "com.liferay.service";
 
 }
