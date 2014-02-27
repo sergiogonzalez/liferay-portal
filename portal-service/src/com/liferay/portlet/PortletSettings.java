@@ -14,6 +14,9 @@
 
 package com.liferay.portlet;
 
+import javax.portlet.ValidatorException;
+import java.io.IOException;
+
 /**
  * @author Raymond Augé
  * @author Jorge Ferrer
@@ -27,5 +30,7 @@ public interface PortletSettings {
 	public PortletSettings setValue(String key, String value);
 
 	public PortletSettings setValues(String key, String[] values);
+
+	public void store() throws IOException, ValidatorException;
 
 }

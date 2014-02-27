@@ -193,8 +193,8 @@
 		<display-name>Message Boards</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/message_boards/configuration.jsp</value>
+			<name>group-settings-template</name>
+			<value>/html/portlet/message_boards/settings/group.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>

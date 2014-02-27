@@ -2265,6 +2265,20 @@ public class PortletImpl extends PortletBaseImpl {
 		}
 	}
 
+	public boolean hasPortletInstanceSettings() {
+		if (_configurationActionClass == null) {
+			return false;
+		}
+
+		Map<String, String> initParams = getInitParams();
+
+		if (initParams.containsKey("portletInstance-settings-template")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the portlet has a role with the specified
 	 * name.

@@ -56,9 +56,9 @@ String emailSignature = PortletSettingsParamUtil.getString(groupPortletSettings,
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
+<liferay-portlet:actionURL portletSettingsScope="group" var="configurationActionURL" />
 
-<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL">
+<liferay-portlet:renderURL portletSettingsScope="group" var="configurationRenderURL">
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
 </liferay-portlet:renderURL>
 
