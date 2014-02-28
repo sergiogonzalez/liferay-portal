@@ -15,10 +15,7 @@
 package com.liferay.portlet.bookmarks.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -26,12 +23,10 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -51,27 +46,15 @@ public class BookmarksUserNotificationTest
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return BookmarksEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			_folder.getFolderId(), ServiceTestUtil.randomString(),
-			"http://localhost",	StringPool.BLANK, serviceContext);
+		return BookmarksTestUtil.addEntry(
+			_folder.getFolderId(), true,
+			ServiceTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	@Override
 	protected void addContainerModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		_folder = BookmarksFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+		_folder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), ServiceTestUtil.randomString());
 	}
 
 	@Override
@@ -82,26 +65,14 @@ public class BookmarksUserNotificationTest
 	@Override
 	protected void subscribeToContainer() throws Exception {
 		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			_folder.getFolderId());
+			user.getUserId(), group.getGroupId(), _folder.getFolderId());
 	}
 
 	@Override
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		BookmarksEntry entry = (BookmarksEntry)baseModel;
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return BookmarksEntryLocalServiceUtil.updateEntry(
-			TestPropsValues.getUserId(), entry.getEntryId(), entry.getGroupId(),
-			entry.getFolderId(), ServiceTestUtil.randomString(), entry.getUrl(),
-			entry.getDescription(), serviceContext);
+		return BookmarksTestUtil.updateEntry((BookmarksEntry)baseModel);
 	}
 
 	private BookmarksFolder _folder;
