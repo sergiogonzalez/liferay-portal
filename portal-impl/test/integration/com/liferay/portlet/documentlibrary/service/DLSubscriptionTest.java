@@ -17,10 +17,6 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -28,6 +24,8 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -60,30 +58,18 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), group.getGroupId(), containerModelId,
+			ServiceTestUtil.randomString());
 
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		String name = ServiceTestUtil.randomString();
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId,
-			name, ContentTypes.APPLICATION_OCTET_STREAM, name, StringPool.BLANK,
-			StringPool.BLANK, _CONTENT.getBytes(), serviceContext);
-
-		return fileEntry.getFileEntryId();
+	return fileEntry.getFileEntryId();
 	}
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		Folder folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString());
 
 		return folder.getFolderId();
 	}
@@ -95,13 +81,5 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 		DLAppLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
-
-	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
-		return 0;
-	}
-
-	private static final String _CONTENT =
-		"Content: Enterprise. Open Source. For Life.";
 
 }

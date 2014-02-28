@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.notifications.wiki;
+package com.liferay.portlet.documentlibrary.notifications;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -24,10 +26,9 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.util.WikiTestUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -42,40 +43,51 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
+public class DocumentLibraryUserNotificationTest
+	extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		return WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), group.getGroupId(), _folder.getFolderId(),
+			ServiceTestUtil.randomString());
+
+		return (BaseModel<?>)fileEntry.getModel();
 	}
 
 	@Override
 	protected void addContainerModel() throws Exception {
-		_node = WikiTestUtil.addNode(
-			user.getUserId(), group.getGroupId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
+		_folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString());
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.WIKI;
+		return PortletKeys.DOCUMENT_LIBRARY;
 	}
 
 	@Override
 	protected void subscribeToContainer() throws Exception {
-		WikiNodeLocalServiceUtil.subscribeNode(
-			user.getUserId(), _node.getNodeId());
+		DLAppLocalServiceUtil.subscribeFolder(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			_folder.getFolderId());
 	}
 
 	@Override
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		return WikiTestUtil.updatePage((WikiPage)baseModel);
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+			(Long)baseModel.getPrimaryKeyObj());
+
+		fileEntry = DLAppTestUtil.updateFileEntry(
+			group.getGroupId(), fileEntry.getFileEntryId(),
+			ServiceTestUtil.randomString(), fileEntry.getTitle(), false);
+
+		return (BaseModel<?>)fileEntry.getModel();
 	}
 
-	private WikiNode _node;
+	private Folder _folder;
 
 }
