@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.service;
+package com.liferay.portlet.bookmarks.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionTestCase;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.util.BaseUserNotificationTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
  * @author Roberto Díaz
+ * @author Sergio González
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -39,48 +41,40 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BookmarksSubscriptionTest extends BaseSubscriptionTestCase {
+public class BookmarksUserNotificationTest
+	extends BaseUserNotificationTestCase {
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
-		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			containerModelId, true,
+	protected BaseModel<?> addBaseModel() throws Exception {
+		return BookmarksTestUtil.addEntry(
+			_folder.getFolderId(), true,
 			ServiceTestUtil.getServiceContext(group.getGroupId()));
-
-		return entry.getEntryId();
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			containerModelId, ServiceTestUtil.randomString(),
-			ServiceTestUtil.getServiceContext(group.getGroupId()));
-
-		return folder.getFolderId();
+	protected void addContainerModel() throws Exception {
+		_folder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), ServiceTestUtil.randomString());
 	}
 
 	@Override
-	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		BookmarksEntryLocalServiceUtil.subscribeEntry(
-			TestPropsValues.getUserId(), baseModelId);
+	protected String getPortletId() {
+		return PortletKeys.BOOKMARKS;
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void subscribeToContainer() throws Exception {
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
+			user.getUserId(), group.getGroupId(), _folder.getFolderId());
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+		return BookmarksTestUtil.updateEntry((BookmarksEntry)baseModel);
 	}
 
-	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			baseModelId);
-
-		entry = BookmarksTestUtil.updateEntry(entry);
-
-		return entry.getEntryId();
-	}
+	private BookmarksFolder _folder;
 
 }
