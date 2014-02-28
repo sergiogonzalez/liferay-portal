@@ -82,9 +82,4 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
-	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
-		return 0;
-	}
-
 }
