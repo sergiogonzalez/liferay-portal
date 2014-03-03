@@ -67,6 +67,18 @@ import java.util.Map;
  */
 public class JournalTestUtil {
 
+	public static JournalArticle addArticle(long groupId) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addArticle(
+			groupId, ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), serviceContext);
+	}
+
 	public static JournalArticle addArticle(
 			long groupId, long folderId, long classNameId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -704,6 +716,20 @@ public class JournalTestUtil {
 		}
 
 		return map;
+	}
+
+	public static JournalArticle updateArticle(JournalArticle article)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			article.getGroupId());
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return updateArticle(
+			article, ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), serviceContext);
 	}
 
 	public static JournalArticle updateArticle(

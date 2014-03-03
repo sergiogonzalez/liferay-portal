@@ -15,11 +15,7 @@
 package com.liferay.portlet.journal.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -28,7 +24,6 @@ import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
@@ -49,15 +44,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return JournalTestUtil.addArticle(
-			group.getGroupId(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), serviceContext);
+		return JournalTestUtil.addArticle(group.getGroupId());
 	}
 
 	@Override
@@ -76,17 +63,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		JournalArticle article = (JournalArticle)baseModel;
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return JournalTestUtil.updateArticle(
-			article, ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), serviceContext);
+		return JournalTestUtil.updateArticle((JournalArticle)baseModel);
 	}
 
 }
