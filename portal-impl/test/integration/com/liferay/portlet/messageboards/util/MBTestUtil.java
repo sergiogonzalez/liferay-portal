@@ -262,7 +262,8 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage updateDiscussionMessage(
-			long userId, long groupId, String className, long classPK)
+			long userId, long groupId, long messageId, String className,
+			long classPK)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
@@ -272,8 +273,9 @@ public class MBTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return MBMessageLocalServiceUtil.updateDiscussionMessage(
-			userId, groupId, className, classPK, ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(50), serviceContext);
+			userId, messageId, className, classPK,
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
+			serviceContext);
 	}
 
 	protected static MBMessage addMessage(

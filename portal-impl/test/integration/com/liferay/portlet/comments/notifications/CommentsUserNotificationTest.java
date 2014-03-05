@@ -76,7 +76,8 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 
 		return MBTestUtil.updateDiscussionMessage(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			BlogsEntry.class.getName(), _entry.getEntryId());
+			(Long)baseModel.getPrimaryKeyObj(), BlogsEntry.class.getName(),
+			_entry.getEntryId());
 	}
 
 	private BlogsEntry _entry;
