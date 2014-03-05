@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/bookmarks/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", BookmarksUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", BookmarksUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 
@@ -41,13 +39,10 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-ui:tabs
@@ -165,12 +160,8 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 		function() {
 			<portlet:namespace />saveEmails();
 
-			<c:choose>
-				<c:when test='<%= tabs2.equals("display-settings") %>'>
-					document.<portlet:namespace />fm.<portlet:namespace />folderColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentFolderColumns);
-					document.<portlet:namespace />fm.<portlet:namespace />entryColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentEntryColumns);
-				</c:when>
-			</c:choose>
+			document.<portlet:namespace />fm.<portlet:namespace />folderColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentFolderColumns);
+			document.<portlet:namespace />fm.<portlet:namespace />entryColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentEntryColumns);
 
 			submitForm(document.<portlet:namespace />fm);
 		},
