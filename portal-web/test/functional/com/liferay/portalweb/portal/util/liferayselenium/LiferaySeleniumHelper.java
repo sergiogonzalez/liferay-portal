@@ -40,6 +40,8 @@ import java.io.File;
 import java.io.InputStreamReader;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
@@ -134,6 +136,20 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void assertConsoleTextNotPresent(String text)
+		throws Exception {
+
+		if (isConsoleTextPresent(text)) {
+			throw new Exception("\"" + text + "\" is present in console");
+		}
+	}
+
+	public static void assertConsoleTextPresent(String text) throws Exception {
+		if (!isConsoleTextPresent(text)) {
+			throw new Exception("\"" + text + "\" is not present in console");
+		}
+	}
+
 	public static void assertElementNotPresent(
 			LiferaySelenium liferaySelenium, String locator)
 		throws Exception {
@@ -172,14 +188,14 @@ public class LiferaySeleniumHelper {
 		String currentDate = DateUtil.getCurrentDate(
 			"yyyy-MM-dd", LocaleUtil.getDefault());
 
-		String log4jXMLFile =
+		String fileName =
 			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".xml";
 
-		if (!FileUtil.exists(log4jXMLFile)) {
+		if (!FileUtil.exists(fileName)) {
 			return;
 		}
 
-		String content = FileUtil.read(log4jXMLFile);
+		String content = FileUtil.read(fileName);
 
 		if (content.equals("")) {
 			return;
@@ -206,7 +222,7 @@ public class LiferaySeleniumHelper {
 					continue;
 				}
 
-				FileUtil.write(log4jXMLFile, "");
+				FileUtil.write(fileName, "");
 
 				Element throwableElement = eventElement.element("throwable");
 
@@ -453,6 +469,22 @@ public class LiferaySeleniumHelper {
 		String confirmation = liferaySelenium.getConfirmation();
 
 		return pattern.equals(confirmation);
+	}
+
+	public static boolean isConsoleTextPresent(String text) throws Exception {
+		String currentDate = DateUtil.getCurrentDate(
+			"yyyy-MM-dd", LocaleUtil.getDefault());
+
+		String fileName =
+			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".log";
+
+		String content = FileUtil.read(fileName);
+
+		Pattern pattern = Pattern.compile(text);
+
+		Matcher matcher = pattern.matcher(content);
+
+		return matcher.find();
 	}
 
 	public static boolean isElementNotPresent(
@@ -774,6 +806,35 @@ public class LiferaySeleniumHelper {
 		sikuliType(
 			liferaySelenium, image,
 			liferaySelenium.getOutputDir() + slash + value);
+	}
+
+	public static void typeAceEditor(
+		LiferaySelenium liferaySelenium, String locator, String value) {
+
+		int x = 0;
+		int y = value.indexOf("${line.separator}");
+
+		String line = value.substring(x, y);
+
+		liferaySelenium.typeKeys(locator, line.trim(), true);
+
+		liferaySelenium.keyPress(locator, "\\13");
+
+		while (y != -1) {
+			x = value.indexOf("}", x) + 1;
+			y = value.indexOf("${line.separator}", x);
+
+			if (y != -1) {
+				line = value.substring(x, y);
+			}
+			else {
+				line = value.substring(x, value.length());
+			}
+
+			liferaySelenium.typeKeys(locator, line.trim(), true);
+
+			liferaySelenium.keyPress(locator, "\\13");
+		}
 	}
 
 	public static void typeFrame(
