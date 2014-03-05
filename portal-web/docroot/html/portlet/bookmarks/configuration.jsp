@@ -184,7 +184,3 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 		}
 	}
 </aui:script>
-
-<%!
-public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.bookmarks.configuration.jsp";
-%>
