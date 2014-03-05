@@ -270,60 +270,26 @@ catch (NoSuchFolderException nsfe) {
 				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 			</aui:fieldset>
 
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
-
+			<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
 				<dl>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-document" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-document" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-document" />
-					</dd>
-					<dt>
-						[$DOCUMENT_STATUS_BY_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-updated-the-document" />
-					</dd>
-					<dt>
-						[$DOCUMENT_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-document" />
-					</dd>
-					<dt>
-						[$DOCUMENT_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-document" />
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-document" />
-					</dd>
+
+					<%
+					Map<String, String> emailDefinitionTerms = DLUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+
+					for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
+					%>
+
+						<dt>
+							<%= entry.getKey() %>
+						</dt>
+						<dd>
+							<%= entry.getValue() %>
+						</dd>
+
+					<%
+					}
+					%>
+
 				</dl>
 			</aui:fieldset>
 		</liferay-ui:section>

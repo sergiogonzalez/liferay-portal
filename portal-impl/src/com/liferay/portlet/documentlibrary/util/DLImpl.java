@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -92,6 +93,7 @@ import java.util.TreeSet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -584,6 +586,52 @@ public class DLImpl implements DL {
 
 		return PortalUtil.getEmailFromAddress(
 			preferences, companyId, PropsValues.DL_EMAIL_FROM_ADDRESS);
+	}
+
+	@Override
+	public Map<String, String> getEmailFromDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, String> definitionTerms = new HashMap<String, String>();
+
+		definitionTerms.put(
+			"[$COMPANY_ID$]",
+			LanguageUtil.get(themeDisplay.getLocale(),
+				"the-company-id-associated-with-the-document"));
+		definitionTerms.put(
+			"[$COMPANY_MX$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-mx-associated-with-the-document"));
+		definitionTerms.put(
+			"[$COMPANY_NAME$]",
+			LanguageUtil.get(themeDisplay.getLocale(),
+				"the-company-name-associated-with-the-document"));
+		definitionTerms.put(
+			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-user-who-updated-the-document"));
+		definitionTerms.put(
+			"[$DOCUMENT_USER_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-email-address-of-the-user-who-added-the-document"));
+		definitionTerms.put(
+			"[$DOCUMENT_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-user-who-added-the-document"));
+		definitionTerms.put(
+			"[$PORTLET_NAME$]", PortalUtil.getPortletTitle(request));
+		definitionTerms.put(
+			"[$SITE_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-site-name-associated-with-the-document"));
+
+		return definitionTerms;
 	}
 
 	@Override
