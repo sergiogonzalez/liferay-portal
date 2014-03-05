@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -30,6 +31,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Sergio Sanchez
@@ -89,6 +93,37 @@ public class UpgradeSocial extends UpgradeProcess {
 		updateJournalActivities();
 		updateSOSocialActivities();
 		updateWikiPageActivities();
+	}
+
+	protected Timestamp getUniqueModifiedDate(
+		Set<String> keys, long groupId, long userId, Timestamp modifiedDate,
+		long classNameId, long resourcePrimKey, double type) {
+
+		while (true) {
+			StringBundler sb = new StringBundler(11);
+
+			sb.append(groupId);
+			sb.append(StringPool.DASH);
+			sb.append(userId);
+			sb.append(StringPool.DASH);
+			sb.append(modifiedDate);
+			sb.append(StringPool.DASH);
+			sb.append(classNameId);
+			sb.append(StringPool.DASH);
+			sb.append(resourcePrimKey);
+			sb.append(StringPool.DASH);
+			sb.append(type);
+
+			String key = sb.toString();
+
+			modifiedDate = new Timestamp(modifiedDate.getTime() + 1);
+
+			if (keys.contains(key)) {
+				continue;
+			}
+
+			return modifiedDate;
+		}
 	}
 
 	protected void updateJournalActivities() throws Exception {
@@ -159,6 +194,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
+			Set<String> keys = new HashSet<String>();
+
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
@@ -180,6 +217,10 @@ public class UpgradeSocial extends UpgradeProcess {
 				if (version > 1.0) {
 					type = WikiActivityKeys.UPDATE_PAGE;
 				}
+
+				modifiedDate = getUniqueModifiedDate(
+					keys, groupId, userId, modifiedDate, classNameId,
+					resourcePrimKey, type);
 
 				JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();

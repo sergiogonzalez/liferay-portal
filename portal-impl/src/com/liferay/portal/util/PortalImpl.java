@@ -1804,6 +1804,41 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public long[] getCurrentAndAncestorSiteGroupIds(long groupId)
+		throws PortalException, SystemException {
+
+		List<Group> groups = new ArrayList<Group>();
+
+		Group scopeGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (scopeGroup.isLayout()) {
+			scopeGroup = scopeGroup.getParentGroup();
+		}
+
+		if (!scopeGroup.isLayoutPrototype()) {
+			groups.add(scopeGroup);
+		}
+
+		groups.addAll(scopeGroup.getAncestors());
+
+		if (!scopeGroup.isCompany()) {
+			groups.add(
+				GroupLocalServiceUtil.getCompanyGroup(
+					scopeGroup.getCompanyId()));
+		}
+
+		long[] groupIds = new long[groups.size()];
+
+		for (int i = 0; i < groups.size(); i++) {
+			Group group = groups.get(i);
+
+			groupIds[i] = group.getGroupId();
+		}
+
+		return groupIds;
+	}
+
+	@Override
 	public String getCurrentCompleteURL(HttpServletRequest request) {
 		String currentCompleteURL = (String)request.getAttribute(
 			WebKeys.CURRENT_COMPLETE_URL);
@@ -4987,6 +5022,11 @@ public class PortalImpl implements Portal {
 		return siteAdministrationURL;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getCurrentAndAncestorSiteGroupIds(long)}
+	 */
+	@Deprecated
 	@Override
 	public long[] getSiteAndCompanyGroupIds(long groupId)
 		throws PortalException, SystemException {
@@ -5013,6 +5053,11 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getCurrentAndAncestorSiteGroupIds(long)}
+	 */
+	@Deprecated
 	@Override
 	public long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
