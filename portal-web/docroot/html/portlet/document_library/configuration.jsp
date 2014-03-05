@@ -49,6 +49,7 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="languageId" type="hidden" value="<%= currentLanguageId %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
@@ -270,7 +271,7 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 		%>
 
 		<liferay-ui:section>
-			<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
+			<aui:select label="language" name="emailFileEntryAddedlanguageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this.value);" %>'>
 
 				<%
 				Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
@@ -304,7 +305,7 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
+			<aui:select label="language" name="emailFileEntryUpdatedlanguageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this.value);" %>'>
 
 				<%
 				Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
@@ -344,8 +345,9 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />updateLanguage() {
+	function <portlet:namespace />updateLanguage(languageId) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '';
+		document.<portlet:namespace />fm.<portlet:namespace />languageId.value = languageId;
 
 		submitForm(document.<portlet:namespace />fm);
 	}
