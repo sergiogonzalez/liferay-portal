@@ -39,6 +39,7 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
@@ -206,6 +207,10 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			}
 
 			return MBPermission.contains(permissionChecker, classPK, actionId);
+		}
+		else if (className.equals(MBMessage.class.getName())) {
+			return MBMessagePermission.contains(
+				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(MBThread.class.getName())) {
 			MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(classPK);
