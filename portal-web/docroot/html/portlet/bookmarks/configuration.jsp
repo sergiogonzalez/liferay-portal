@@ -76,36 +76,31 @@ catch (NoSuchFolderException nsfe) {
 
 	<liferay-ui:tabs
 		names="display-settings,email-from,entry-added-email,entry-updated-email"
-		param="tabs2"
-		url="<%= configurationRenderURL %>"
-	/>
+		refresh="<%= false %>"
+	>
+		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+		<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
 
-	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-	<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
+		<liferay-ui:section>
+			<%@ include file="/html/portlet/bookmarks/display_settings.jspf" %>
+		</liferay-ui:section>
 
-	<c:choose>
-		<c:when test='<%= tabs2.equals("email-from") %>'>
+		<liferay-ui:section>
 			<aui:fieldset>
 				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
 
 				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 			</aui:fieldset>
-		</c:when>
-		<c:when test='<%= tabs2.startsWith("entry-") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<aui:fieldset>
-				<c:choose>
-					<c:when test='<%= tabs2.equals("entry-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailEntryAddedEnabled--" type="checkbox" value="<%= emailEntryAddedEnabled %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("entry-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailEntryUpdatedEnabled--" type="checkbox" value="<%= emailEntryUpdatedEnabled %>" />
-					</c:when>
-				</c:choose>
+				<aui:input label="enabled" name="preferences--emailEntryAddedEnabled--" type="checkbox" value="<%= emailEntryAddedEnabled %>" />
 
 				<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
 
@@ -201,11 +196,108 @@ catch (NoSuchFolderException nsfe) {
 					</dd>
 				</dl>
 			</aui:fieldset>
-		</c:when>
-		<c:when test='<%= tabs2.equals("display-settings") %>'>
-			<%@ include file="/html/portlet/bookmarks/display_settings.jspf" %>
-		</c:when>
-	</c:choose>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<aui:fieldset>
+				<aui:input label="enabled" name="preferences--emailEntryUpdatedEnabled--" type="checkbox" value="<%= emailEntryUpdatedEnabled %>" />
+
+				<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
+
+					<%
+					Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+
+					for (int i = 0; i < locales.length; i++) {
+						String style = StringPool.BLANK;
+
+						if (Validator.isNotNull(portletPreferences.getValue(emailParam + "Subject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
+							Validator.isNotNull(portletPreferences.getValue(emailParam + "Body_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
+
+							style = "font-weight: bold;";
+						}
+					%>
+
+						<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
+
+				<aui:field-wrapper label="body">
+					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
+
+					<aui:input name='<%= "preferences--" + emailBodyParam + "--" %>' type="hidden" />
+				</aui:field-wrapper>
+			</aui:fieldset>
+
+			<aui:fieldset cssClass="definition-of-terms">
+				<legend>
+					<liferay-ui:message key="definition-of-terms" />
+				</legend>
+
+				<dl>
+					<dt>
+						[$BOOKMARKS_ENTRY_USER_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-user-who-added-the-bookmark-entry" />
+					</dd>
+					<dt>
+						[$BOOKMARKS_ENTRY_STATUS_BY_USER_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-user-who-updated-the-bookmark-entry" />
+					</dd>
+					<dt>
+						[$BOOKMARKS_ENTRY_URL$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-bookmark-entry-url" />
+					</dd>
+					<dt>
+						[$FROM_ADDRESS$]
+					</dt>
+					<dd>
+						<%= HtmlUtil.escape(emailFromAddress) %>
+					</dd>
+					<dt>
+						[$FROM_NAME$]
+					</dt>
+					<dd>
+						<%= HtmlUtil.escape(emailFromName) %>
+					</dd>
+					<dt>
+						[$PORTAL_URL$]
+					</dt>
+					<dd>
+						<%= company.getVirtualHostname() %>
+					</dd>
+					<dt>
+						[$PORTLET_NAME$]
+					</dt>
+					<dd>
+						<%= PortalUtil.getPortletTitle(renderResponse) %>
+					</dd>
+					<dt>
+						[$TO_ADDRESS$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-address-of-the-email-recipient" />
+					</dd>
+					<dt>
+						[$TO_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-name-of-the-email-recipient" />
+					</dd>
+				</dl>
+			</aui:fieldset>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
 
 	<aui:button-row>
 		<aui:button type="submit" />
