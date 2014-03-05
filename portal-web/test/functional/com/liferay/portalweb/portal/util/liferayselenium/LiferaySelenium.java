@@ -31,6 +31,10 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertConfirmation(String pattern) throws Exception;
 
+	public void assertConsoleTextNotPresent(String text) throws Exception;
+
+	public void assertConsoleTextPresent(String text) throws Exception;
+
 	public void assertElementNotPresent(String locator) throws Exception;
 
 	public void assertElementPresent(String locator) throws Exception;
@@ -219,7 +223,11 @@ public interface LiferaySelenium extends Selenium {
 
 	public void stopLogger();
 
+	public void typeAceEditor(String locator, String value);
+
 	public void typeFrame(String locator, String value);
+
+	public void typeKeys(String locator, String value, boolean typeAceEditor);
 
 	public void uploadCommonFile(String locator, String value);
 

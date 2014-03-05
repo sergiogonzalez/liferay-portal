@@ -28,4 +28,10 @@
 			gradleTask="jar"
 		/>
 	</target>
+
+	<target name="test">
+		<gradle-execute
+			gradleTask="test"
+		/>
+	</target>
 </project>

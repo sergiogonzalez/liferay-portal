@@ -499,9 +499,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	}
 
 	protected List<String> getURLs(String content) {
-		Pattern pattern = Pattern.compile("href=|\\{|\\[");
-
-		Matcher matcher = pattern.matcher(StringPool.BLANK);
+		Matcher matcher = _pattern.matcher(StringPool.BLANK);
 
 		String[] lines = StringUtil.split(content, StringPool.NEW_LINE);
 
@@ -620,6 +618,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	private FileEntry _fileEntry;
 	private Group _liveGroup;
 	private Layout _livePublicLayout;
+	private Pattern _pattern = Pattern.compile("href=|\\{|\\[");
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private StagedModel _referrerStagedModel;

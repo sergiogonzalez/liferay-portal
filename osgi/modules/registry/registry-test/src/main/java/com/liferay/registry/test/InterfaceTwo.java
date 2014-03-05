@@ -12,28 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.struts;
-
-import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.struts.StrutsPortletAction;
-
-import java.util.Map;
-
-import org.apache.struts.action.Action;
+package com.liferay.registry.test;
 
 /**
  * @author Raymond Augé
  */
-public interface StrutsActionRegistry {
-
-	public Action getAction(String path);
-
-	public Map<String, Action> getActions();
-
-	public void register(String path, StrutsAction strutsAction);
-
-	public void register(String path, StrutsPortletAction strutsPortletAction);
-
-	public void unregister(String path);
-
+public interface InterfaceTwo {
 }
