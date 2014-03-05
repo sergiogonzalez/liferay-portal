@@ -47,6 +47,7 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 
@@ -213,8 +214,14 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(WikiPage.class.getName())) {
+			WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
+
+			if (page == null) {
+				return null;
+			}
+
 			return WikiPagePermission.contains(
-				permissionChecker, classPK, actionId);
+				permissionChecker, page.getResourcePrimKey(), actionId);
 		}
 
 		return null;
