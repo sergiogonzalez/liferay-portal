@@ -188,6 +188,25 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return BookmarksEntryPermission.contains(
 				permissionChecker, classPK, actionId);
 		}
+		else if (className.equals(BookmarksFolder.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				BookmarksFolder folder =
+					BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
+						classPK);
+
+				if (folder == null) {
+					return null;
+				}
+
+				return BookmarksFolderPermission.contains(
+					permissionChecker, folder, actionId);
+			}
+
+			return BookmarksPermission.contains(
+				permissionChecker, classPK, actionId);
+		}
 		else if (className.equals(DLFileEntry.class.getName())) {
 			DLFileVersion fileVersion =
 				DLFileVersionLocalServiceUtil.fetchDLFileVersion(classPK);
@@ -198,6 +217,22 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 			return DLFileEntryPermission.contains(
 				permissionChecker, classPK, actionId);
+		}
+		else if (className.equals(DLFolder.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				DLFolder folder = DLFolderLocalServiceUtil.fetchFolder(classPK);
+
+				if (folder == null) {
+					return null;
+				}
+
+				return DLFolderPermission.contains(
+					permissionChecker, folder, actionId);
+			}
+
+			return DLPermission.contains(permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
 			JournalArticle article =
@@ -210,6 +245,25 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return JournalArticlePermission.contains(
 				permissionChecker, article.getResourcePrimKey(), actionId);
 		}
+		else if (className.equals(JournalFolder.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				JournalFolder folder =
+					JournalFolderLocalServiceUtil.fetchFolder(classPK);
+
+				if (folder == null) {
+					return null;
+				}
+
+				return JournalFolderPermission.contains(
+					permissionChecker, folder, actionId);
+			}
+
+			return JournalPermission.contains(
+				permissionChecker, classPK, actionId);
+		}
+
 		else if (className.equals(MBCategory.class.getName())) {
 			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
 
