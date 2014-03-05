@@ -2085,8 +2085,8 @@ public class DLAppHelperLocalServiceImpl
 			dlFileEntryTypeLocalService.getDLFileEntryType(
 				dlFileEntry.getFileEntryTypeId());
 
-		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
 		subscriptionSender.setClassName(DLFileEntryConstants.getClassName());
+		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
 		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
@@ -2144,9 +2144,6 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryType.class.getName(),
 				dlFileEntryType.getFileEntryTypeId());
 		}
-
-		subscriptionSender.addPersistedSubscribers(
-			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		subscriptionSender.flushNotificationsAsync();
 	}
