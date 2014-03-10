@@ -16,14 +16,17 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Subscription;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
@@ -50,6 +53,7 @@ import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 /**
  * @author Mate Thurzo
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
@@ -63,9 +67,18 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException, SystemException {
 
-		check(permissionChecker, className, classPK, null, 0);
+		Subscription subscription =
+			SubscriptionLocalServiceUtil.getSubscription(
+				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+				className, classPK);
+
+		check(permissionChecker, subscription, StringPool.BLANK, 0);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #check(PermissionChecker,
+	 *             Subscription, String , long )}
+	 */
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
@@ -73,10 +86,23 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			long inferredClassPK)
 		throws PortalException, SystemException {
 
-		if (!contains(
-				permissionChecker, subscriptionClassName, subscriptionClassPK,
-				inferredClassName, inferredClassPK)) {
+		Subscription subscription =
+			SubscriptionLocalServiceUtil.getSubscription(
+				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+				subscriptionClassName, subscriptionClassPK);
 
+		check(
+			permissionChecker, subscription, inferredClassName,
+			inferredClassPK);
+	}
+
+	@Override
+	public void check(
+			PermissionChecker permissionChecker, Subscription subscription,
+			String className, long classPK)
+		throws PortalException, SystemException {
+
+		if (!contains(permissionChecker, subscription, className, classPK)) {
 			throw new PrincipalException();
 		}
 	}
@@ -91,24 +117,49 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException, SystemException {
 
-		return contains(permissionChecker, className, classPK, null, 0);
+		Subscription subscription =
+			SubscriptionLocalServiceUtil.getSubscription(
+				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+				className, classPK);
+
+		return contains(permissionChecker, subscription, className, classPK);
 	}
 
-	@Override
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #contains(PermissionChecker,
+	 *             Subscription, String, long)} )}
+	 */
+	@Deprecated
 	public boolean contains(
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
 			long inferredClassPK)
 		throws PortalException, SystemException {
 
-		if (subscriptionClassName == null) {
+		Subscription subscription =
+			SubscriptionLocalServiceUtil.getSubscription(
+				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+				subscriptionClassName, subscriptionClassPK);
+
+		return contains(
+			permissionChecker, subscription, inferredClassName,
+			inferredClassPK);
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, Subscription subscription,
+			String className, long classPK)
+		throws PortalException, SystemException {
+		String subscriptionClassName = subscription.getClassName();
+
+		if (Validator.isNull(subscriptionClassName)) {
 			return false;
 		}
 
-		if (Validator.isNotNull(inferredClassName)) {
+		if (Validator.isNotNull(className)) {
 			Boolean hasPermission = hasPermission(
-				permissionChecker, inferredClassName, inferredClassPK,
-				ActionKeys.VIEW);
+				permissionChecker, className, classPK, ActionKeys.VIEW);
 
 			if ((hasPermission == null) || !hasPermission) {
 				return false;
@@ -116,8 +167,8 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 		}
 
 		Boolean hasPermission = hasPermission(
-			permissionChecker, subscriptionClassName, subscriptionClassPK,
-			ActionKeys.SUBSCRIBE);
+			permissionChecker, subscriptionClassName,
+			subscription.getClassPK(), ActionKeys.SUBSCRIBE);
 
 		if (hasPermission != null) {
 			return hasPermission;
