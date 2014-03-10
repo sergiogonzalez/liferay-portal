@@ -1486,9 +1486,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());
 
-		subscriptionSender.addPersistedSubscribers(
-			BlogsEntry.class.getName(), entry.getEntryId());
-
 		subscriptionSender.flushNotificationsAsync();
 	}
 
