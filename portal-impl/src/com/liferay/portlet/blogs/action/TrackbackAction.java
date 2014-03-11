@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -26,10 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
@@ -39,17 +34,13 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.trackback.TrackbackCommentsHelper;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,6 +52,10 @@ import org.apache.struts.action.ActionMapping;
  * @author Alexander Chow
  */
 public class TrackbackAction extends PortletAction {
+
+	public TrackbackAction() {
+		_comments = new TrackbackCommentsHelper();
+	}
 
 	@Override
 	public void processAction(
@@ -169,39 +164,13 @@ public class TrackbackAction extends PortletAction {
 				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
 
 		long messageId =
-			addTrackbackComment(
+			_comments.addTrackbackComment(
 				userId, groupId, className, classPK, blogName, title, body,
 				actionRequest);
 
 		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
 
 		sendSuccess(actionRequest, actionResponse);
-	}
-
-	protected long addTrackbackComment(
-		long userId, long groupId, String className, long classPK,
-		String blogName, String title, String body,
-		PortletRequest portletRequest)
-	throws PortalException, SystemException {
-
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				userId, groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread = messageDisplay.getThread();
-
-		long threadId = thread.getThreadId();
-		long parentMessageId = thread.getRootMessageId();
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBMessage.class.getName(), portletRequest);
-
-		MBMessage message = MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, blogName, groupId, className, classPK, threadId,
-			parentMessageId, title, body, serviceContext);
-
-		return message.getMessageId();
 	}
 
 	@Override
@@ -273,5 +242,7 @@ public class TrackbackAction extends PortletAction {
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 	private static Log _log = LogFactoryUtil.getLog(TrackbackAction.class);
+
+	private final TrackbackCommentsHelper _comments;
 
 }
