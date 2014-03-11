@@ -124,18 +124,6 @@ public class SubscriptionSender implements Serializable {
 				currentThread.setContextClassLoader(_classLoader);
 			}
 
-			String inferredClassName = null;
-			long inferredClassPK = 0;
-
-			if (_persistestedSubscribersOVPs.size() > 1) {
-				ObjectValuePair<String, Long> objectValuePair =
-					_persistestedSubscribersOVPs.get(
-						_persistestedSubscribersOVPs.size() - 1);
-
-				inferredClassName = objectValuePair.getKey();
-				inferredClassPK = objectValuePair.getValue();
-			}
-
 			for (ObjectValuePair<String, Long> ovp :
 					_persistestedSubscribersOVPs) {
 
@@ -148,8 +136,7 @@ public class SubscriptionSender implements Serializable {
 
 				for (Subscription subscription : subscriptions) {
 					try {
-						notifySubscriber(
-							subscription, inferredClassName, inferredClassPK);
+						notifySubscriber(subscription);
 					}
 					catch (PortalException pe) {
 						_log.error(
@@ -425,44 +412,30 @@ public class SubscriptionSender implements Serializable {
 			subscription.getSubscriptionId());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #hasPermission(Subscription,
+	 *             User)}
+	 */
+	@Deprecated
 	protected boolean hasPermission(
 			Subscription subscription, String inferredClassName,
 			long inferredClassPK, User user)
+		throws Exception {
+
+		return hasPermission(subscription, user);
+	}
+
+	protected boolean hasPermission(Subscription subscription, User user)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
 		return SubscriptionPermissionUtil.contains(
-			permissionChecker, subscription.getClassName(),
-			subscription.getClassPK(), inferredClassName, inferredClassPK);
+			permissionChecker, subscription, _className, _classPK);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #hasPermission(Subscription,
-	 *             String, long, User)}
-	 */
-	@Deprecated
-	protected boolean hasPermission(Subscription subscription, User user)
-		throws Exception {
-
-		return hasPermission(subscription, null, 0, user);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #notifySubscriber(Subscription, String, long)}
-	 */
-	@Deprecated
 	protected void notifySubscriber(Subscription subscription)
-		throws Exception {
-
-		notifySubscriber(subscription, null, 0);
-	}
-
-	protected void notifySubscriber(
-			Subscription subscription, String inferredClassName,
-			long inferredClassPK)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.fetchUserById(
@@ -508,9 +481,7 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		try {
-			if (!hasPermission(
-					subscription, inferredClassName, inferredClassPK, user)) {
-
+			if (!hasPermission(subscription, user)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Skip unauthorized user " + user.getUserId());
 				}
@@ -538,8 +509,8 @@ public class SubscriptionSender implements Serializable {
 			try {
 				if (UserNotificationManagerUtil.isDeliver(
 						user.getUserId(), portletId, _notificationClassNameId,
-						_notificationType,
-						UserNotificationDeliveryConstants.TYPE_EMAIL)) {
+					_notificationType,
+					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
 					InternetAddress to = new InternetAddress(
 						user.getEmailAddress(), user.getFullName());
@@ -554,8 +525,8 @@ public class SubscriptionSender implements Serializable {
 			try {
 				if (UserNotificationManagerUtil.isDeliver(
 						user.getUserId(), portletId, _notificationClassNameId,
-						_notificationType,
-						UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+					_notificationType,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
 					JSONObject notificationEventJSONObject =
 						JSONFactoryUtil.createJSONObject();
@@ -584,6 +555,19 @@ public class SubscriptionSender implements Serializable {
 				_log.error(e, e);
 			}
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #notifySubscriber(Subscription)}
+	 */
+	@Deprecated
+	protected void notifySubscriber(
+			Subscription subscription, String inferredClassName,
+			long inferredClassPK)
+		throws Exception {
+
+		notifySubscriber(subscription);
 	}
 
 	protected void processMailMessage(MailMessage mailMessage, Locale locale)

@@ -16,6 +16,7 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Subscription;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
@@ -23,6 +24,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  *
  * @author Mate Thurzo
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 public interface SubscriptionPermission {
 
@@ -36,26 +38,38 @@ public interface SubscriptionPermission {
 		throws PortalException, SystemException;
 
 	/**
-	 * Checks if the user has permission to subscribe to the subscription entity
-	 * and receive notifications about the inferred entity.
-	 *
-	 * @param  permissionChecker the permission checker
-	 * @param  subscriptionClassName the class name of the subscribed entity
-	 * @param  subscriptionClassPK the primary key of the subscribed entity
-	 * @param  inferredClassName the class name of the inferred entity
-	 *         (optionally <code>null</code> if the the subscribed entity is the
-	 *         inferred entity).
-	 * @param  inferredClassPK the primary key of the inferred entity.
-	 * @throws PortalException if the user did not have permission to view the
-	 *         inferred entity or receive notifications about the subscribed
-	 *         entity, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 * @see    #contains(PermissionChecker, String, long, String, long)
+	 * @deprecated As of 7.0.0, replaced by {@link #check(PermissionChecker,
+	 *             Subscription, String, long)} )}
 	 */
 	public void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
 			long inferredClassPK)
+		throws PortalException, SystemException;
+
+	/**
+	 * Checks if the user has permission to subscribe to the subscription entity
+	 * and view the entity.
+	 *
+	 * <p>
+	 * The entity is the subject of the notification.
+	 * </p>
+	 *
+	 * @param  permissionChecker the permission checker
+	 * @param  subscription the current subscription entity
+	 * @param  className the class name of the subject entity of the
+	 *         notification
+	 * @param  classPK the primary key of the subject entity of the
+	 *         notification
+	 * @throws PortalException if the user did not have permission to view the
+	 *         entity or receive notifications about the subscribed
+	 *         entity, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 * @see    #contains(PermissionChecker, String, long, String, long)
+	 */
+	void check(
+			PermissionChecker permissionChecker, Subscription subscription,
+			String className, long classPK)
 		throws PortalException, SystemException;
 
 	/**
@@ -68,34 +82,37 @@ public interface SubscriptionPermission {
 		throws PortalException, SystemException;
 
 	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #contains(PermissionChecker,
+	 *             Subscription, String, long)} )}
+	 */
+	@Deprecated
+	public boolean contains(
+			PermissionChecker permissionChecker, String subscriptionClassName,
+			long subscriptionClassPK, String inferredClassName,
+			long inferredClassPK)
+		throws PortalException, SystemException;
+
+	/**
 	 * Returns <code>true</code> if the user has permission to subscribe to the
-	 * subscribed entity and receive notifications about the inferred entity.
+	 * subscribed entity and receive notifications about the entity.
 	 *
 	 * <p>
-	 * If the subscribed entity is a container and if an inferred entity
-	 * (presumably within the container) is specified, a view permission check
-	 * is performed on the inferred entity. The inferred entity is the subject
-	 * of the notification. A failed view check on the inferred entity
-	 * short-circuits further permission checks and prevents notifications from
-	 * being sent. Checking the view permission on the inferred entity is useful
-	 * for enforcing permissions for private subtrees within larger container
-	 * entities to which the user is subscribed.
+	 * If the subscribed entity is a container and if an entity (presumably
+	 * within the container) is specified, a view permission check is performed
+	 * on the entity. The entity is the subject of the notification. A failed
+	 * view check on the entity short-circuits further permission checks and
+	 * prevents notifications from being sent. Checking the view permission on
+	 * the entity is useful for enforcing permissions for private subtrees
+	 * within larger container entities to which the user is subscribed.
 	 * </p>
 	 *
-	 * <p>
-	 * If the subscribed entity and the inferred entity are the same, then no
-	 * inferred entity needs to be specified. Without any inferred entity
-	 * specified only the subscription check on the subscribed entity is
-	 * performed.
-	 * </p>
 	 *
 	 * @param  permissionChecker the permission checker
-	 * @param  subscriptionClassName the class name of the subscribed entity
-	 * @param  subscriptionClassPK the primary key of the subscribed entity
-	 * @param  inferredClassName the class name of the inferred entity if the
-	 *         subscribed entity is a container entity
-	 * @param  inferredClassPK the primary key of the inferred entity if the
-	 *         subscribed entity is a container entity
+	 * @param  subscription the primary key of the subscribed entity
+	 * @param  className the class name of the subject entity of the
+	 *         notification
+	 * @param  classPK the primary key of the subject entity of the
+	 *         notification
 	 * @return <code>true</code> if the user has permission to subscribe to the
 	 *         subscribed entity and receive notifications about the inferred
 	 *         entity; <code>false</code> otherwise
@@ -105,9 +122,8 @@ public interface SubscriptionPermission {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean contains(
-			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
+			PermissionChecker permissionChecker, Subscription subscription,
+			String className, long classPK)
 		throws PortalException, SystemException;
 
 }

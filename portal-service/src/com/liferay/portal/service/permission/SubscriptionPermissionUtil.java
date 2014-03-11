@@ -17,6 +17,7 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.model.Subscription;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
@@ -27,6 +28,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  *
  * @author Mate Thurzo
  * @author Raymond Augé
+ * @author Roberto Díaz
  * @see    SubscriptionPermission
  */
 public class SubscriptionPermissionUtil {
@@ -48,6 +50,11 @@ public class SubscriptionPermissionUtil {
 	 * @see SubscriptionPermission#check(PermissionChecker, String, long,
 	 *      String, long)
 	 */
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #check(PermissionChecker,
+	 *             Subscription, String, long)}
+	 */
+	@Deprecated
 	public static void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
@@ -57,6 +64,15 @@ public class SubscriptionPermissionUtil {
 		getSubscriptionPermission().check(
 			permissionChecker, subscriptionClassName, subscriptionClassPK,
 			inferredClassName, inferredClassPK);
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, Subscription subscription,
+			String className, long classPK)
+		throws PortalException, SystemException {
+
+		getSubscriptionPermission().check(
+			permissionChecker, subscription, className, classPK);
 	}
 
 	/**
@@ -76,6 +92,11 @@ public class SubscriptionPermissionUtil {
 	 * @see SubscriptionPermission#contains(PermissionChecker, String, long,
 	 *      String, long)
 	 */
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #contains(PermissionChecker,
+	 *             Subscription, String, long)}
+	 */
+	@Deprecated
 	public static boolean contains(
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
@@ -85,6 +106,15 @@ public class SubscriptionPermissionUtil {
 		return getSubscriptionPermission().contains(
 			permissionChecker, subscriptionClassName, subscriptionClassPK,
 			inferredClassName, inferredClassPK);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, Subscription subscription,
+			String className, long classPK)
+		throws PortalException, SystemException {
+
+		return getSubscriptionPermission().contains(
+			permissionChecker, subscription, className, classPK);
 	}
 
 	public static SubscriptionPermission getSubscriptionPermission() {
