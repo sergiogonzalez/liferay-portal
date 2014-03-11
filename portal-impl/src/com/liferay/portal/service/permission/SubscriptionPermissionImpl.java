@@ -16,6 +16,7 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -29,15 +30,34 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
+import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
+import com.liferay.portlet.bookmarks.service.permission.BookmarksPermission;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
+import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
+import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
@@ -47,6 +67,7 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 
@@ -207,6 +228,13 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 		}
 
 		if (className.equals(BlogsEntry.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				return BlogsEntryPermission.contains(
+					permissionChecker, classPK, actionId);
+			}
+
 			return BlogsPermission.contains(
 				permissionChecker, classPK, actionId);
 		}
@@ -214,12 +242,96 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return BookmarksEntryPermission.contains(
 				permissionChecker, classPK, actionId);
 		}
+		else if (className.equals(BookmarksFolder.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				BookmarksFolder folder =
+					BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
+						classPK);
+
+				if (folder == null) {
+					return null;
+				}
+
+				return BookmarksFolderPermission.contains(
+					permissionChecker, folder, actionId);
+			}
+
+			return BookmarksPermission.contains(
+				permissionChecker, classPK, actionId);
+		}
 		else if (className.equals(DLFileEntry.class.getName())) {
+			DLFileVersion fileVersion =
+				DLFileVersionLocalServiceUtil.fetchDLFileVersion(classPK);
+
+			if (fileVersion != null) {
+				classPK = fileVersion.getFileEntryId();
+			}
+
 			return DLFileEntryPermission.contains(
 				permissionChecker, classPK, actionId);
 		}
+		else if (className.equals(DLFileEntryType.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				return DLFileEntryTypePermission.contains(
+					permissionChecker, classPK, actionId);
+			}
+
+			return true;
+		}
+		else if (className.equals(Folder.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				try {
+					Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
+
+					if (folder.getModelClassName().equals(
+							DLFolder.class.getName())) {
+
+						return DLFolderPermission.contains(
+							permissionChecker, folder, actionId);
+					}
+
+					return true;
+				}
+				catch (Exception e) {
+					return false;
+				}
+			}
+
+			return DLPermission.contains(permissionChecker, classPK, actionId);
+		}
 		else if (className.equals(JournalArticle.class.getName())) {
+			JournalArticle article =
+				JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
+
+			if (article == null) {
+				return false;
+			}
+
 			return JournalArticlePermission.contains(
+				permissionChecker, article.getResourcePrimKey(), actionId);
+		}
+		else if (className.equals(JournalFolder.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				JournalFolder folder =
+					JournalFolderLocalServiceUtil.fetchFolder(classPK);
+
+				if (folder == null) {
+					return null;
+				}
+
+				return JournalFolderPermission.contains(
+					permissionChecker, folder, actionId);
+			}
+
+			return JournalPermission.contains(
 				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(MBCategory.class.getName())) {
@@ -231,6 +343,10 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			}
 
 			return MBPermission.contains(permissionChecker, classPK, actionId);
+		}
+		else if (className.equals(MBMessage.class.getName())) {
+			return MBMessagePermission.contains(
+				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(MBThread.class.getName())) {
 			MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(classPK);
@@ -247,8 +363,14 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(WikiPage.class.getName())) {
+			WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
+
+			if (page == null) {
+				return null;
+			}
+
 			return WikiPagePermission.contains(
-				permissionChecker, classPK, actionId);
+				permissionChecker, page.getResourcePrimKey(), actionId);
 		}
 
 		return null;
