@@ -34,7 +34,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.trackback.TrackbackCommentsHelper;
+import com.liferay.portlet.blogs.trackback.TrackbackComments;
+import com.liferay.portlet.blogs.trackback.TrackbackCommentsImpl;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
 import javax.portlet.ActionRequest;
@@ -54,7 +55,7 @@ import org.apache.struts.action.ActionMapping;
 public class TrackbackAction extends PortletAction {
 
 	public TrackbackAction() {
-		_comments = new TrackbackCommentsHelper();
+		_comments = new TrackbackCommentsImpl();
 	}
 
 	@Override
@@ -77,6 +78,10 @@ public class TrackbackAction extends PortletAction {
 		}
 
 		setForward(actionRequest, ActionConstants.COMMON_NULL);
+	}
+
+	protected TrackbackAction(TrackbackComments comments) {
+		_comments = comments;
 	}
 
 	protected void addTrackback(
@@ -243,6 +248,6 @@ public class TrackbackAction extends PortletAction {
 
 	private static Log _log = LogFactoryUtil.getLog(TrackbackAction.class);
 
-	private final TrackbackCommentsHelper _comments;
+	private final TrackbackComments _comments;
 
 }
