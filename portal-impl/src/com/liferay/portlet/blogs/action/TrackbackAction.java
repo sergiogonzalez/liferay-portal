@@ -137,7 +137,7 @@ public class TrackbackAction extends PortletAction {
 		long messageId =
 			_comments.addTrackbackComment(
 				userId, groupId, className, classPK, blogName, title, body,
-				actionRequest);
+				new TrackbackServiceContextFunction(actionRequest));
 
 		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
 	}

@@ -28,17 +28,16 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.support.membermodification.MemberMatcher.method;
 import static org.powermock.api.support.membermodification.MemberModifier.stub;
 
+import com.google.common.base.Function;
+
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-
-import javax.portlet.PortletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +47,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.answers.CallsRealMethods;
 
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -57,7 +55,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest( {
-	MBMessageLocalServiceUtil.class, ServiceContextFactory.class
+	MBMessageLocalServiceUtil.class
 })
 public class TrackbackCommentsImplTest {
 
@@ -108,7 +106,7 @@ public class TrackbackCommentsImplTest {
 
 		long result = _comments.addTrackbackComment(
 			userId, groupId, className, classPK, "__blogName__", "__title__",
-			"__body__", _portletRequest
+			"__body__", _serviceContextFunction
 		);
 
 		// Verify
@@ -128,11 +126,6 @@ public class TrackbackCommentsImplTest {
 			eq(userId), eq("__blogName__"), eq(groupId), eq(className),
 			eq(classPK), eq(threadId), eq(parentMessageId), eq("__title__"),
 			eq("__body__"), same(_mockServiceContext)
-		);
-
-		PowerMockito.verifyStatic();
-		ServiceContextFactory.getInstance(
-			MBMessage.class.getName(), _portletRequest
 		);
 	}
 
@@ -174,14 +167,9 @@ public class TrackbackCommentsImplTest {
 
 	protected void setUpServiceContext() {
 
-		mockStatic(ServiceContextFactory.class, new CallsRealMethods());
-
-		stub(
-			method(
-				ServiceContextFactory.class, "getInstance", String.class,
-				PortletRequest.class
-			)
-		).toReturn(
+		when(
+			_serviceContextFunction.apply(MBMessage.class.getName())
+		).thenReturn(
 			_mockServiceContext
 		);
 	}
@@ -203,6 +191,6 @@ public class TrackbackCommentsImplTest {
 	private ServiceContext _mockServiceContext = new ServiceContext();
 
 	@Mock
-	private PortletRequest _portletRequest;
+	private Function<String, ServiceContext> _serviceContextFunction;
 
 }

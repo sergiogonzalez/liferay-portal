@@ -28,6 +28,8 @@ import static org.powermock.api.support.membermodification.MemberMatcher.method;
 import static org.powermock.api.support.membermodification.MemberModifier.replace;
 import static org.powermock.api.support.membermodification.MemberModifier.stub;
 
+import com.google.common.base.Function;
+
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -212,7 +215,8 @@ public class TrackbackActionTest {
 		when(
 			_trackbackComments.addTrackbackComment(
 				anyLong(), anyLong(), anyString(), anyLong(), anyString(),
-				anyString(), anyString(), (PortletRequest)any()
+				anyString(), anyString(),
+				(Function<String, ServiceContext>)any()
 			)
 		).thenReturn(
 			99999L
@@ -234,7 +238,7 @@ public class TrackbackActionTest {
 			eq(userId), eq(groupId), eq(className), eq(classPK), eq(blogName),
 			eq(title),
 			eq("[...] This is an excerpt [...] [url=__url__]Read more[/url]"),
-			(PortletRequest)any()
+			(Function<String, ServiceContext>)any()
 		);
 
 		assertEquals(
