@@ -29,16 +29,17 @@ import com.liferay.portlet.wiki.DuplicateNodeNameException;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NodeNameException;
 import com.liferay.portlet.wiki.RequiredNodeException;
+import com.liferay.portlet.wiki.WikiSettings;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
 import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
+import com.liferay.portlet.wiki.util.WikiUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -178,6 +179,19 @@ public class EditNodeAction extends PortletAction {
 		return node.getName();
 	}
 
+	protected String[] replaceNode(
+		String[] nodes, String oldName, String newName) {
+
+		for (int i = 0; i < nodes.length; i++) {
+			if (nodes[i].equals(oldName)) {
+				nodes[i] = newName;
+				break;
+			}
+		}
+
+		return nodes;
+	}
+
 	protected void subscribeNode(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 
@@ -224,22 +238,25 @@ public class EditNodeAction extends PortletAction {
 			ActionRequest actionRequest, String oldName, String newName)
 		throws Exception {
 
-		PortletPreferences portletPreferences = actionRequest.getPreferences();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String hiddenNodes = portletPreferences.getValue(
-			"hiddenNodes", StringPool.BLANK);
-		String visibleNodes = portletPreferences.getValue(
-			"visibleNodes", StringPool.BLANK);
+		WikiSettings wikiSettings = WikiUtil.getWikiSettings(
+			themeDisplay.getScopeGroupId());
 
-		String regex = oldName + ",?";
+		String[] hiddenNodes = wikiSettings.getHiddenNodes();
 
-		portletPreferences.setValue(
-			"hiddenNodes", hiddenNodes.replaceFirst(regex, newName));
-		portletPreferences.setValue(
-			"visibleNodes",
-			visibleNodes.replaceFirst(regex, newName));
+		hiddenNodes = replaceNode(hiddenNodes, oldName, newName);
 
-		portletPreferences.store();
+		wikiSettings.setHiddenNodes(hiddenNodes);
+
+		String[] visibleNodes = wikiSettings.getVisibleNodes();
+
+		visibleNodes = replaceNode(visibleNodes, oldName, newName);
+
+		wikiSettings.setVisibleNodes(visibleNodes);
+
+		wikiSettings.store();
 	}
 
 }
