@@ -23,6 +23,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.support.membermodification.MemberMatcher.method;
@@ -35,34 +36,22 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactory;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryService;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.blogs.trackback.TrackbackComments;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
-import com.liferay.portlet.expando.util.ExpandoBridgeFactory;
-import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -94,8 +83,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest( {
-	UserLocalServiceUtil.class, MBMessageLocalServiceUtil.class,
-	BlogsEntryServiceUtil.class, LinkbackConsumerUtil.class
+	UserLocalServiceUtil.class, BlogsEntryServiceUtil.class,
+	LinkbackConsumerUtil.class
 })
 public class TrackbackActionTest {
 
@@ -179,9 +168,9 @@ public class TrackbackActionTest {
 		long groupId = 16;
 		String className = BlogsEntry.class.getName();
 		long classPK = 142857;
-		long threadId = 7;
-		long parentMessageId = 37;
 		String title = "This is a title";
+
+		// Prepare
 
 		_mockOriginalServletRequest.setParameter("blog_name", blogName);
 		_mockOriginalServletRequest.setParameter("title", title);
@@ -215,24 +204,6 @@ public class TrackbackActionTest {
 		).getUrlTitle();
 
 		doReturn(
-			threadId
-		).when(
-			_mbThread
-		).getThreadId();
-
-		doReturn(
-			parentMessageId
-		).when(
-			_mbThread
-		).getRootMessageId();
-
-		doReturn(
-			99999L
-		).when(
-			_mbMessage
-		).getMessageId();
-
-		doReturn(
 			"Read more"
 		).when(
 			_language
@@ -248,31 +219,33 @@ public class TrackbackActionTest {
 			_themeDisplay
 		);
 
+		when(
+			_trackbackComments.addTrackbackComment(
+				anyLong(), anyLong(), anyString(), anyLong(), anyString(),
+				anyString(), anyString(), (PortletRequest)any()
+			)
+		).thenReturn(
+			99999L
+		);
+
 		initValidUrl();
+
+		// Execute
 
 		addTrackback();
 
-		assertSuccess();
-
 		// Verify
 
-		verify(
-			_mbMessageLocalService
-		).getDiscussionMessageDisplay(
-			userId, groupId, className, classPK,
-			WorkflowConstants.STATUS_APPROVED
-		);
+		assertSuccess();
 
 		verify(
-			_mbMessageLocalService
-		).addDiscussionMessage(
-			eq(userId), eq(blogName), eq(groupId), eq(className), eq(classPK),
-			eq(threadId), eq(parentMessageId), eq(title),
+			_trackbackComments
+		).addTrackbackComment(
+			eq(userId), eq(groupId), eq(className), eq(classPK), eq(blogName),
+			eq(title),
 			eq("[...] This is an excerpt [...] [url=__url__]Read more[/url]"),
-			(ServiceContext)any()
+			(PortletRequest)any()
 		);
-
-		// Assert
 
 		assertEquals(
 			"[99999, __url__, __LayoutFullURL__/-/blogs/__UrlTitle__]",
@@ -295,7 +268,8 @@ public class TrackbackActionTest {
 	}
 
 	protected void addTrackback() throws Exception {
-		TrackbackAction trackbackAction = new TrackbackAction();
+		TrackbackAction trackbackAction = new TrackbackAction(
+			_trackbackComments);
 
 		trackbackAction.addTrackback(_actionRequest, _actionResponse);
 	}
@@ -360,35 +334,6 @@ public class TrackbackActionTest {
 		).getAttribute(WebKeys.BLOGS_ENTRY);
 
 		doReturn(
-			Collections.enumeration(Collections.emptySet())
-		).when(
-			_actionRequest
-		).getParameterNames();
-
-		doReturn(
-			_mbMessageDisplay
-		).when(
-			_mbMessageLocalService
-		).getDiscussionMessageDisplay(
-			anyLong(), anyLong(), eq(BlogsEntry.class.getName()), anyLong(),
-			eq(WorkflowConstants.STATUS_APPROVED));
-
-		doReturn(
-			_mbMessage
-		).when(
-			_mbMessageLocalService
-		).addDiscussionMessage(
-			anyLong(), anyString(), anyLong(), anyString(), anyLong(),
-			anyLong(), anyLong(), anyString(), anyString(),
-			(ServiceContext)any());
-
-		doReturn(
-			_mbThread
-		).when(
-			_mbMessageDisplay
-		).getThread();
-
-		doReturn(
 			true
 		).when(
 			_blogsEntry
@@ -400,14 +345,6 @@ public class TrackbackActionTest {
 			method(UserLocalServiceUtil.class, "getService")
 		).toReturn(
 			_userLocalService
-		);
-
-		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(MBMessageLocalServiceUtil.class, "getService")
-		).toReturn(
-			_mbMessageLocalService
 		);
 
 		mockStatic(BlogsEntryServiceUtil.class, new CallsRealMethods());
@@ -434,15 +371,8 @@ public class TrackbackActionTest {
 		new HttpUtil().setHttp(_http);
 
 		_themeDisplay.setCompany(_company);
-		_themeDisplay.setUser(_user);
 
 		new LanguageUtil().setLanguage(_language);
-
-		new PortletPreferencesFactoryUtil().setPortletPreferencesFactory(
-			_portletPreferencesFactory);
-
-		new ExpandoBridgeFactoryUtil().setExpandoBridgeFactory(
-			_expandoBridgeFactory);
 	}
 
 	protected void doThrowWhenGetEntry(Class<? extends Throwable> toBeThrown)
@@ -476,9 +406,6 @@ public class TrackbackActionTest {
 		initUrl(_mockHttpServletRequest.getRemoteAddr());
 	}
 
-	@Mock
-	protected UserLocalService _userLocalService;
-
 	private static String _trackback;
 
 	@Mock
@@ -497,25 +424,10 @@ public class TrackbackActionTest {
 	private Company _company;
 
 	@Mock
-	private ExpandoBridgeFactory _expandoBridgeFactory;
-
-	@Mock
 	private Http _http;
 
 	@Mock
 	private Language _language;
-
-	@Mock
-	private MBMessage _mbMessage;
-
-	@Mock
-	private MBMessageDisplay _mbMessageDisplay;
-
-	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
-
-	@Mock
-	private MBThread _mbThread;
 
 	private MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
@@ -531,14 +443,14 @@ public class TrackbackActionTest {
 	private PortletPreferences _portletPreferences;
 
 	@Mock
-	private PortletPreferencesFactory _portletPreferencesFactory;
-
-	@Mock
 	private Props _props;
 
 	private ThemeDisplay _themeDisplay = new ThemeDisplay();
 
 	@Mock
-	private User _user;
+	private TrackbackComments _trackbackComments;
+
+	@Mock
+	private UserLocalService _userLocalService;
 
 }

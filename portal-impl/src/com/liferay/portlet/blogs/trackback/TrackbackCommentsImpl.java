@@ -30,8 +30,9 @@ import javax.portlet.PortletRequest;
  * @author Alexander Chow
  * @author André de Oliveira
  */
-public class TrackbackCommentsHelper {
+public class TrackbackCommentsImpl implements TrackbackComments {
 
+	@Override
 	public long addTrackbackComment(
 		long userId, long groupId, String className, long classPK,
 		String blogName, String title, String body,
