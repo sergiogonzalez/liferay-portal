@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.google.common.base.Function;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -25,6 +29,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
@@ -119,6 +124,17 @@ public class TrackbackAction extends PortletAction {
 
 		BlogsEntry entry = validate(actionRequest, request, url);
 
+		addTrackbackComment(
+			themeDisplay, entry, excerpt, url, blogName, title,
+			new TrackbackServiceContextFunction(actionRequest));
+	}
+
+	protected void addTrackbackComment(
+		ThemeDisplay themeDisplay, BlogsEntry entry, String excerpt, String url,
+		String blogName, String title,
+		Function<String, ServiceContext> serviceContextFunction)
+	throws PortalException, SystemException {
+
 		long userId = UserLocalServiceUtil.getDefaultUserId(
 			themeDisplay.getCompanyId());
 		long groupId = entry.getGroupId();
@@ -137,7 +153,7 @@ public class TrackbackAction extends PortletAction {
 		long messageId =
 			_comments.addTrackbackComment(
 				userId, groupId, className, classPK, blogName, title, body,
-				new TrackbackServiceContextFunction(actionRequest));
+				serviceContextFunction);
 
 		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
 	}
