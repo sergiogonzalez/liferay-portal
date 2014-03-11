@@ -117,42 +117,7 @@ public class TrackbackAction extends PortletAction {
 		String url = ParamUtil.getString(originalRequest, "url");
 		String blogName = ParamUtil.getString(originalRequest, "blog_name");
 
-		if (!isCommentsEnabled(actionRequest)) {
-			throw new TrackbackValidationException(
-				"Comments have been disabled for this blog entry.");
-		}
-
-		if (Validator.isNull(url)) {
-			throw new TrackbackValidationException(
-				"Trackback requires a valid permanent URL.");
-		}
-
-		String remoteIp = request.getRemoteAddr();
-
-		String trackbackIp = HttpUtil.getIpAddress(url);
-
-		if (!remoteIp.equals(trackbackIp)) {
-			throw new TrackbackValidationException(
-				"Remote IP " + remoteIp +
-					" does not match trackback URL's IP " + trackbackIp + ".");
-		}
-
-		try {
-			ActionUtil.getEntry(actionRequest);
-		}
-		catch (PrincipalException pe) {
-			throw new TrackbackValidationException(
-				"Blog entry must have guest view permissions to enable " +
-					"trackbacks.");
-		}
-
-		BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
-			WebKeys.BLOGS_ENTRY);
-
-		if (!entry.isAllowTrackbacks()) {
-			throw new TrackbackValidationException(
-				"Trackbacks are not enabled on this blog entry.");
-		}
+		BlogsEntry entry = validate(actionRequest, request, url);
 
 		long userId = UserLocalServiceUtil.getDefaultUserId(
 			themeDisplay.getCompanyId());
@@ -241,6 +206,50 @@ public class TrackbackAction extends PortletAction {
 		throws Exception {
 
 		sendResponse(actionRequest, actionResponse, null, true);
+	}
+
+	protected BlogsEntry validate(
+		ActionRequest actionRequest, HttpServletRequest request, String url)
+	throws Exception {
+
+		if (!isCommentsEnabled(actionRequest)) {
+			throw new TrackbackValidationException(
+				"Comments have been disabled for this blog entry.");
+		}
+
+		if (Validator.isNull(url)) {
+			throw new TrackbackValidationException(
+				"Trackback requires a valid permanent URL.");
+		}
+
+		String remoteIp = request.getRemoteAddr();
+
+		String trackbackIp = HttpUtil.getIpAddress(url);
+
+		if (!remoteIp.equals(trackbackIp)) {
+			throw new TrackbackValidationException(
+				"Remote IP " + remoteIp +
+					" does not match trackback URL's IP " + trackbackIp + ".");
+		}
+
+		try {
+			ActionUtil.getEntry(actionRequest);
+		}
+		catch (PrincipalException pe) {
+			throw new TrackbackValidationException(
+				"Blog entry must have guest view permissions to enable " +
+					"trackbacks.");
+		}
+
+		BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
+			WebKeys.BLOGS_ENTRY);
+
+		if (!entry.isAllowTrackbacks()) {
+			throw new TrackbackValidationException(
+				"Trackbacks are not enabled on this blog entry.");
+		}
+
+		return entry;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
