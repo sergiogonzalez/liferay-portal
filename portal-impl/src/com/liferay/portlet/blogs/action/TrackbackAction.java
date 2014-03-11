@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -47,6 +49,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -157,6 +160,30 @@ public class TrackbackAction extends PortletAction {
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
 
+		String body =
+			"[...] " + excerpt + " [...] [url=" + url + "]" +
+				themeDisplay.translate("read-more") + "[/url]";
+
+		String entryURL =
+			PortalUtil.getLayoutFullURL(themeDisplay) +
+				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
+
+		long messageId =
+			addTrackbackComment(
+				userId, groupId, className, classPK, blogName, title, body,
+				actionRequest);
+
+		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
+
+		sendSuccess(actionRequest, actionResponse);
+	}
+
+	protected long addTrackbackComment(
+		long userId, long groupId, String className, long classPK,
+		String blogName, String title, String body,
+		PortletRequest portletRequest)
+	throws PortalException, SystemException {
+
 		MBMessageDisplay messageDisplay =
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
 				userId, groupId, className, classPK,
@@ -166,25 +193,15 @@ public class TrackbackAction extends PortletAction {
 
 		long threadId = thread.getThreadId();
 		long parentMessageId = thread.getRootMessageId();
-		String body =
-			"[...] " + excerpt + " [...] [url=" + url + "]" +
-				themeDisplay.translate("read-more") + "[/url]";
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBMessage.class.getName(), actionRequest);
+			MBMessage.class.getName(), portletRequest);
 
 		MBMessage message = MBMessageLocalServiceUtil.addDiscussionMessage(
 			userId, blogName, groupId, className, classPK, threadId,
 			parentMessageId, title, body, serviceContext);
 
-		String entryURL =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
-
-		LinkbackConsumerUtil.addNewTrackback(
-			message.getMessageId(), url, entryURL);
-
-		sendSuccess(actionRequest, actionResponse);
+		return message.getMessageId();
 	}
 
 	@Override
