@@ -12,23 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trackback;
+package com.liferay.portlet.blogs.action;
 
 import com.google.common.base.Function;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author André de Oliveira
  */
-public interface TrackbackComments {
+public class TrackbackServiceContextFunction
+	implements Function<String, ServiceContext> {
 
-	public abstract long addTrackbackComment(
-		long userId, long groupId, String className, long classPK,
-		String blogName, String title, String body,
-		Function<String, ServiceContext> serviceContextFunction)
-	throws PortalException, SystemException;
+	public TrackbackServiceContextFunction(PortletRequest portletRequest) {
+		_portletRequest = portletRequest;
+	}
+
+	@Override
+	public ServiceContext apply(String className) {
+
+		try {
+			return ServiceContextFactory.getInstance(
+				className, _portletRequest);
+		}
+		catch (PortalException e) {
+			throw new RuntimeException(e);
+		}
+		catch (SystemException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private final PortletRequest _portletRequest;
 
 }

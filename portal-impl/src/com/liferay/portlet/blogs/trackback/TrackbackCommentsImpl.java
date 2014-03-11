@@ -14,17 +14,16 @@
 
 package com.liferay.portlet.blogs.trackback;
 
+import com.google.common.base.Function;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Alexander Chow
@@ -36,7 +35,7 @@ public class TrackbackCommentsImpl implements TrackbackComments {
 	public long addTrackbackComment(
 		long userId, long groupId, String className, long classPK,
 		String blogName, String title, String body,
-		PortletRequest portletRequest)
+		Function<String, ServiceContext> serviceContextFunction)
 	throws PortalException, SystemException {
 
 		MBMessageDisplay messageDisplay =
@@ -49,8 +48,8 @@ public class TrackbackCommentsImpl implements TrackbackComments {
 		long threadId = thread.getThreadId();
 		long parentMessageId = thread.getRootMessageId();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBMessage.class.getName(), portletRequest);
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
 
 		MBMessage message = MBMessageLocalServiceUtil.addDiscussionMessage(
 			userId, blogName, groupId, className, classPK, threadId,
