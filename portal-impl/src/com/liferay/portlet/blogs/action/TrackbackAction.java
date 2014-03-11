@@ -36,6 +36,7 @@ import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.trackback.TrackbackComments;
 import com.liferay.portlet.blogs.trackback.TrackbackCommentsImpl;
+import com.liferay.portlet.blogs.trackback.TrackbackValidationException;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
 import javax.portlet.ActionRequest;
@@ -88,92 +89,85 @@ public class TrackbackAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		HttpServletRequest originalRequest =
-			PortalUtil.getOriginalServletRequest(request);
-
-		String title = ParamUtil.getString(originalRequest, "title");
-		String excerpt = ParamUtil.getString(originalRequest, "excerpt");
-		String url = ParamUtil.getString(originalRequest, "url");
-		String blogName = ParamUtil.getString(originalRequest, "blog_name");
-
-		if (!isCommentsEnabled(actionRequest)) {
-			sendError(
-				actionRequest, actionResponse,
-				"Comments have been disabled for this blog entry.");
-
-			return;
-		}
-
-		if (Validator.isNull(url)) {
-			sendError(
-				actionRequest, actionResponse,
-				"Trackback requires a valid permanent URL.");
-
-			return;
-		}
-
-		String remoteIp = request.getRemoteAddr();
-
-		String trackbackIp = HttpUtil.getIpAddress(url);
-
-		if (!remoteIp.equals(trackbackIp)) {
-			sendError(
-				actionRequest, actionResponse,
-				"Remote IP " + remoteIp +
-					" does not match trackback URL's IP " + trackbackIp + ".");
-
-			return;
-		}
-
 		try {
-			ActionUtil.getEntry(actionRequest);
-		}
-		catch (PrincipalException pe) {
-			sendError(
-				actionRequest, actionResponse,
-				"Blog entry must have guest view permissions to enable " +
-					"trackbacks.");
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			return;
-		}
-
-		BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
-			WebKeys.BLOGS_ENTRY);
-
-		if (!entry.isAllowTrackbacks()) {
-			sendError(
-				actionRequest, actionResponse,
-				"Trackbacks are not enabled on this blog entry.");
-
-			return;
-		}
-
-		long userId = UserLocalServiceUtil.getDefaultUserId(
-			themeDisplay.getCompanyId());
-		long groupId = entry.getGroupId();
-		String className = BlogsEntry.class.getName();
-		long classPK = entry.getEntryId();
-
-		String body =
-			"[...] " + excerpt + " [...] [url=" + url + "]" +
-				themeDisplay.translate("read-more") + "[/url]";
-
-		String entryURL =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
-
-		long messageId =
-			_comments.addTrackbackComment(
-				userId, groupId, className, classPK, blogName, title, body,
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);
 
-		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
+			HttpServletRequest originalRequest =
+				PortalUtil.getOriginalServletRequest(request);
+
+			String title = ParamUtil.getString(originalRequest, "title");
+			String excerpt = ParamUtil.getString(originalRequest, "excerpt");
+			String url = ParamUtil.getString(originalRequest, "url");
+			String blogName = ParamUtil.getString(originalRequest, "blog_name");
+
+			if (!isCommentsEnabled(actionRequest)) {
+				throw new TrackbackValidationException(
+					"Comments have been disabled for this blog entry.");
+			}
+
+			if (Validator.isNull(url)) {
+				throw new TrackbackValidationException(
+					"Trackback requires a valid permanent URL.");
+			}
+
+			String remoteIp = request.getRemoteAddr();
+
+			String trackbackIp = HttpUtil.getIpAddress(url);
+
+			if (!remoteIp.equals(trackbackIp)) {
+				throw new TrackbackValidationException(
+					"Remote IP " + remoteIp +
+						" does not match trackback URL's IP " + trackbackIp +
+						".");
+			}
+
+			try {
+				ActionUtil.getEntry(actionRequest);
+			}
+			catch (PrincipalException pe) {
+				throw new TrackbackValidationException(
+					"Blog entry must have guest view permissions to enable " +
+						"trackbacks.");
+			}
+
+			BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
+				WebKeys.BLOGS_ENTRY);
+
+			if (!entry.isAllowTrackbacks()) {
+				throw new TrackbackValidationException(
+					"Trackbacks are not enabled on this blog entry.");
+			}
+
+			long userId = UserLocalServiceUtil.getDefaultUserId(
+				themeDisplay.getCompanyId());
+			long groupId = entry.getGroupId();
+			String className = BlogsEntry.class.getName();
+			long classPK = entry.getEntryId();
+
+			String body =
+				"[...] " + excerpt + " [...] [url=" + url + "]" +
+					themeDisplay.translate("read-more") + "[/url]";
+
+			String entryURL =
+				PortalUtil.getLayoutFullURL(themeDisplay) +
+					Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
+					entry.getUrlTitle();
+
+			long messageId =
+				_comments.addTrackbackComment(
+					userId, groupId, className, classPK, blogName, title, body,
+					actionRequest);
+
+			LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
+		}
+		catch (TrackbackValidationException tve) {
+			sendError(actionRequest, actionResponse, tve.getMessage());
+			return;
+		}
 
 		sendSuccess(actionRequest, actionResponse);
 	}
