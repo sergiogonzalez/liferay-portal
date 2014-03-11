@@ -38,6 +38,16 @@ public interface SubscriptionPermission {
 		throws PortalException, SystemException;
 
 	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #check(PermissionChecker,
+	 *             Subscription, String, long)} )}
+	 */
+	public void check(
+			PermissionChecker permissionChecker, String subscriptionClassName,
+			long subscriptionClassPK, String inferredClassName,
+			long inferredClassPK)
+		throws PortalException, SystemException;
+
+	/**
 	 * Checks if the user has permission to subscribe to the subscription entity
 	 * and receive notifications about the inferred entity.
 	 *
@@ -54,16 +64,6 @@ public interface SubscriptionPermission {
 	 * @throws SystemException if a system exception occurred
 	 * @see    #contains(PermissionChecker, String, long, String, long)
 	 */
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #check(PermissionChecker,
-	 *             Subscription, String, long)} )}
-	 */
-	public void check(
-			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
-		throws PortalException, SystemException;
-
 	void check(
 			PermissionChecker permissionChecker, Subscription subscription,
 			String className, long classPK)
@@ -76,6 +76,17 @@ public interface SubscriptionPermission {
 	@Deprecated
 	public boolean contains(
 			PermissionChecker permissionChecker, String className, long classPK)
+		throws PortalException, SystemException;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #contains(PermissionChecker,
+	 *             Subscription, String, long)} )}
+	 */
+	@Deprecated
+	public boolean contains(
+			PermissionChecker permissionChecker, String subscriptionClassName,
+			long subscriptionClassPK, String inferredClassName,
+			long inferredClassPK)
 		throws PortalException, SystemException;
 
 	/**
@@ -115,17 +126,6 @@ public interface SubscriptionPermission {
 	 *         subscribed entity, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #contains(PermissionChecker,
-	 *             Subscription, String, long)} )}
-	 */
-	@Deprecated
-	public boolean contains(
-			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
-		throws PortalException, SystemException;
-
 	public boolean contains(
 			PermissionChecker permissionChecker, Subscription subscription,
 			String className, long classPK)
