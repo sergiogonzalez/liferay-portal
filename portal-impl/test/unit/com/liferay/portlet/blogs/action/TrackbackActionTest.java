@@ -20,8 +20,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -103,12 +101,10 @@ public class TrackbackActionTest {
 
 	@Test
 	public void testDisabledComments() throws Exception {
-		doReturn(
+		when(
+			_portletPreferences.getValue("enableComments", null)
+		).thenReturn(
 			"false"
-		).when(
-			_portletPreferences
-		).getValue(
-			"enableComments", null
 		);
 
 		addTrackback();
@@ -177,46 +173,40 @@ public class TrackbackActionTest {
 		_mockOriginalServletRequest.setParameter(
 			"excerpt", "This is an excerpt");
 
-		doReturn(
+		when(
+			_userLocalService.getDefaultUserId(anyLong())
+		).thenReturn(
 			userId
-		).when(
-			_userLocalService
-		).getDefaultUserId(
-			anyLong()
 		);
 
-		doReturn(
+		when(
+			_blogsEntry.getGroupId()
+		).thenReturn(
 			groupId
-		).when(
-			_blogsEntry
-		).getGroupId();
-
-		doReturn(
-			classPK
-		).when(
-			_blogsEntry
-		).getEntryId();
-
-		doReturn(
-			"__UrlTitle__"
-		).when(
-			_blogsEntry
-		).getUrlTitle();
-
-		doReturn(
-			"Read more"
-		).when(
-			_language
-		).get(
-			(Locale)any(), eq("read-more")
 		);
 
-		doReturn(
+		when(
+			_blogsEntry.getEntryId()
+		).thenReturn(
+			classPK
+		);
+
+		when(
+			_blogsEntry.getUrlTitle()
+		).thenReturn(
+			"__UrlTitle__"
+		);
+
+		when(
+			_language.get((Locale)any(), eq("read-more"))
+		).thenReturn(
+			"Read more"
+		);
+
+		when(
+			_portal.getLayoutFullURL(_themeDisplay)
+		).thenReturn(
 			"__LayoutFullURL__"
-		).when(
-			_portal
-		).getLayoutFullURL(
-			_themeDisplay
 		);
 
 		when(
@@ -254,11 +244,11 @@ public class TrackbackActionTest {
 
 	@Test
 	public void testTrackbacksNotEnabled() throws Exception {
-		doReturn(
+		when(
+			_blogsEntry.isAllowTrackbacks()
+		).thenReturn(
 			false
-		).when(
-			_blogsEntry
-		).isAllowTrackbacks();
+		);
 
 		initValidUrl();
 
@@ -297,47 +287,47 @@ public class TrackbackActionTest {
 	protected void doSetup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		doReturn(
+		when(
+			_portal.getOriginalServletRequest((HttpServletRequest)any())
+		).thenReturn(
 			_mockOriginalServletRequest
-		).when(
-			_portal
-		).getOriginalServletRequest((HttpServletRequest)any());
+		);
 
-		doReturn(
+		when(
+			_portal.getHttpServletRequest((PortletRequest)any())
+		).thenReturn(
 			_mockHttpServletRequest
-		).when(
-			_portal
-		).getHttpServletRequest((PortletRequest)any());
+		);
 
-		doReturn(
+		when(
+			_portal.getHttpServletResponse((PortletResponse)any())
+		).thenReturn(
 			_mockHttpServletResponse
-		).when(
-			_portal
-		).getHttpServletResponse((PortletResponse)any());
+		);
 
-		doReturn(
+		when(
+			_actionRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
 			_themeDisplay
-		).when(
-			_actionRequest
-		).getAttribute(WebKeys.THEME_DISPLAY);
+		);
 
-		doReturn(
+		when(
+			_actionRequest.getPreferences()
+		).thenReturn(
 			_portletPreferences
-		).when(
-			_actionRequest
-		).getPreferences();
+		);
 
-		doReturn(
+		when(
+			_actionRequest.getAttribute(WebKeys.BLOGS_ENTRY)
+		).thenReturn(
 			_blogsEntry
-		).when(
-			_actionRequest
-		).getAttribute(WebKeys.BLOGS_ENTRY);
+		);
 
-		doReturn(
+		when(
+			_blogsEntry.isAllowTrackbacks()
+		).thenReturn(
 			true
-		).when(
-			_blogsEntry
-		).isAllowTrackbacks();
+		);
 
 		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
 
@@ -383,21 +373,21 @@ public class TrackbackActionTest {
 		_mockHttpServletRequest.setParameter(
 			"entryId", String.valueOf(entryId));
 
-		doThrow(
+		when(
+			_blogsEntryService.getEntry(entryId)
+		).thenThrow(
 			toBeThrown
-		).when(
-			_blogsEntryService
-		).getEntry(entryId);
+		);
 	}
 
 	protected void initUrl(String remoteIp) {
 		String url = "__url__";
 
-		doReturn(
+		when(
+			_http.getIpAddress(url)
+		).thenReturn(
 			remoteIp
-		).when(
-			_http
-		).getIpAddress(url);
+		);
 
 		_mockOriginalServletRequest.addParameter("url", url);
 	}
