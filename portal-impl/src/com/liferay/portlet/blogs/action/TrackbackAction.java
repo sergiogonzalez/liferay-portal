@@ -14,10 +14,6 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.google.common.base.Function;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -29,20 +25,16 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.trackback.TrackbackComments;
-import com.liferay.portlet.blogs.trackback.TrackbackCommentsImpl;
 import com.liferay.portlet.blogs.trackback.TrackbackValidationException;
-import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
+import com.liferay.portlet.blogs.trackback.Trackbacks;
+import com.liferay.portlet.blogs.trackback.TrackbacksImpl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,7 +53,7 @@ import org.apache.struts.action.ActionMapping;
 public class TrackbackAction extends PortletAction {
 
 	public TrackbackAction() {
-		_comments = new TrackbackCommentsImpl();
+		_trackbacks = new TrackbacksImpl();
 	}
 
 	@Override
@@ -86,8 +78,8 @@ public class TrackbackAction extends PortletAction {
 		setForward(actionRequest, ActionConstants.COMMON_NULL);
 	}
 
-	protected TrackbackAction(TrackbackComments comments) {
-		_comments = comments;
+	protected TrackbackAction(Trackbacks trackbacks) {
+		_trackbacks = trackbacks;
 	}
 
 	protected void addTrackback(
@@ -124,38 +116,10 @@ public class TrackbackAction extends PortletAction {
 
 		BlogsEntry entry = validate(actionRequest, request, url);
 
-		addTrackbackComment(
-			themeDisplay, entry, excerpt, url, blogName, title,
-			new TrackbackServiceContextFunction(actionRequest));
-	}
-
-	protected void addTrackbackComment(
-		ThemeDisplay themeDisplay, BlogsEntry entry, String excerpt, String url,
-		String blogName, String title,
-		Function<String, ServiceContext> serviceContextFunction)
-	throws PortalException, SystemException {
-
-		long userId = UserLocalServiceUtil.getDefaultUserId(
-			themeDisplay.getCompanyId());
-		long groupId = entry.getGroupId();
-		String className = BlogsEntry.class.getName();
-		long classPK = entry.getEntryId();
-
-		String body =
-			"[...] " + excerpt + " [...] [url=" + url + "]" +
-				themeDisplay.translate("read-more") + "[/url]";
-
-		String entryURL =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
-				entry.getUrlTitle();
-
-		long messageId =
-			_comments.addTrackbackComment(
-				userId, groupId, className, classPK, blogName, title, body,
-				serviceContextFunction);
-
-		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
+		_trackbacks.addTrackback(
+			entry, themeDisplay, excerpt, url, blogName, title,
+			new TrackbackServiceContextFunction(actionRequest)
+		);
 	}
 
 	@Override
@@ -272,6 +236,6 @@ public class TrackbackAction extends PortletAction {
 
 	private static Log _log = LogFactoryUtil.getLog(TrackbackAction.class);
 
-	private final TrackbackComments _comments;
+	private final Trackbacks _trackbacks;
 
 }
