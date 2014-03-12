@@ -17,45 +17,31 @@ package com.liferay.portlet.blogs.action;
 import static org.junit.Assert.assertEquals;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.same;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.support.membermodification.MemberMatcher.method;
-import static org.powermock.api.support.membermodification.MemberModifier.replace;
 import static org.powermock.api.support.membermodification.MemberModifier.stub;
 
 import com.google.common.base.Function;
 
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryService;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
-import com.liferay.portlet.blogs.trackback.TrackbackComments;
-import com.liferay.portlet.blogs.trackback.TrackbacksImpl;
-import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import com.liferay.portlet.blogs.trackback.Trackbacks;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -85,22 +71,18 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest( {
-	UserLocalServiceUtil.class, BlogsEntryServiceUtil.class,
-	LinkbackConsumerUtil.class
+	ActionUtil.class
 })
 public class TrackbackActionTest {
 
-	public static void addNewTrackback(
-		long messageId, String url, String entryUrl) {
-
-		List<Object> list = Arrays.<Object>asList(messageId, url, entryUrl);
-
-		_trackback = list.toString();
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		doSetup();
+		MockitoAnnotations.initMocks(this);
+
+		setUpActionRequest();
+		setUpActionUtil();
+		setUpBlogsEntry();
+		setUpPortal();
 	}
 
 	@Test
@@ -135,7 +117,7 @@ public class TrackbackActionTest {
 
 	@Test
 	public void testNoSuchEntryException() throws Exception {
-		doThrowWhenGetEntry(NoSuchEntryException.class);
+		whenGetEntryThenThrow(new NoSuchEntryException());
 
 		initValidUrl();
 
@@ -150,7 +132,7 @@ public class TrackbackActionTest {
 
 	@Test
 	public void testPrincipalException() throws Exception {
-		doThrowWhenGetEntry(PrincipalException.class);
+		whenGetEntryThenThrow(new PrincipalException());
 
 		initValidUrl();
 
@@ -163,65 +145,12 @@ public class TrackbackActionTest {
 
 	@Test
 	public void testSuccess() throws Exception {
-		long userId = 42;
-		String blogName = "This is a blog";
-		long groupId = 16;
-		String className = BlogsEntry.class.getName();
-		long classPK = 142857;
-		String title = "This is a title";
 
 		// Prepare
 
-		_mockOriginalServletRequest.setParameter("blog_name", blogName);
-		_mockOriginalServletRequest.setParameter("title", title);
-		_mockOriginalServletRequest.setParameter(
-			"excerpt", "This is an excerpt");
-
-		when(
-			_userLocalService.getDefaultUserId(anyLong())
-		).thenReturn(
-			userId
-		);
-
-		when(
-			_blogsEntry.getGroupId()
-		).thenReturn(
-			groupId
-		);
-
-		when(
-			_blogsEntry.getEntryId()
-		).thenReturn(
-			classPK
-		);
-
-		when(
-			_blogsEntry.getUrlTitle()
-		).thenReturn(
-			"__UrlTitle__"
-		);
-
-		when(
-			_language.get((Locale)any(), eq("read-more"))
-		).thenReturn(
-			"Read more"
-		);
-
-		when(
-			_portal.getLayoutFullURL(_themeDisplay)
-		).thenReturn(
-			"__LayoutFullURL__"
-		);
-
-		when(
-			_trackbackComments.addTrackbackComment(
-				anyLong(), anyLong(), anyString(), anyLong(), anyString(),
-				anyString(), anyString(),
-				(Function<String, ServiceContext>)any()
-			)
-		).thenReturn(
-			99999L
-		);
+		_mockOriginalServletRequest.setParameter("blog_name", "__blogName__");
+		_mockOriginalServletRequest.setParameter("title", "__title__");
+		_mockOriginalServletRequest.setParameter("excerpt", "__excerpt__");
 
 		initValidUrl();
 
@@ -234,17 +163,12 @@ public class TrackbackActionTest {
 		assertSuccess();
 
 		verify(
-			_trackbackComments
-		).addTrackbackComment(
-			eq(userId), eq(groupId), eq(className), eq(classPK), eq(blogName),
-			eq(title),
-			eq("[...] This is an excerpt [...] [url=__url__]Read more[/url]"),
+			_trackbacks
+		).addTrackback(
+			same(_blogsEntry), same(_themeDisplay), eq("__excerpt__"),
+			eq("__url__"), eq("__blogName__"), eq("__title__"),
 			(Function<String, ServiceContext>)any()
 		);
-
-		assertEquals(
-			"[99999, __url__, __LayoutFullURL__/-/blogs/__UrlTitle__]",
-			_trackback);
 	}
 
 	@Test
@@ -263,8 +187,7 @@ public class TrackbackActionTest {
 	}
 
 	protected void addTrackback() throws Exception {
-		TrackbackAction trackbackAction = new TrackbackAction(
-			new TrackbacksImpl(_trackbackComments));
+		TrackbackAction trackbackAction = new TrackbackAction(_trackbacks);
 
 		trackbackAction.addTrackback(_actionRequest, _actionResponse);
 	}
@@ -289,26 +212,23 @@ public class TrackbackActionTest {
 		);
 	}
 
-	protected void doSetup() throws Exception {
-		MockitoAnnotations.initMocks(this);
+	protected void initUrl(String remoteIp) {
+		String url = "__url__";
 
 		when(
-			_portal.getOriginalServletRequest((HttpServletRequest)any())
+			_http.getIpAddress(url)
 		).thenReturn(
-			_mockOriginalServletRequest
+			remoteIp
 		);
 
-		when(
-			_portal.getHttpServletRequest((PortletRequest)any())
-		).thenReturn(
-			_mockHttpServletRequest
-		);
+		_mockOriginalServletRequest.addParameter("url", url);
+	}
 
-		when(
-			_portal.getHttpServletResponse((PortletResponse)any())
-		).thenReturn(
-			_mockHttpServletResponse
-		);
+	protected void initValidUrl() {
+		initUrl(_mockHttpServletRequest.getRemoteAddr());
+	}
+
+	protected void setUpActionRequest() {
 
 		when(
 			_actionRequest.getAttribute(WebKeys.THEME_DISPLAY)
@@ -327,81 +247,60 @@ public class TrackbackActionTest {
 		).thenReturn(
 			_blogsEntry
 		);
+	}
+
+	protected void setUpActionUtil() {
+
+		mockStatic(ActionUtil.class, new CallsRealMethods());
+	}
+
+	protected void setUpBlogsEntry() {
 
 		when(
 			_blogsEntry.isAllowTrackbacks()
 		).thenReturn(
 			true
 		);
-
-		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(UserLocalServiceUtil.class, "getService")
-		).toReturn(
-			_userLocalService
-		);
-
-		mockStatic(BlogsEntryServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(BlogsEntryServiceUtil.class, "getService")
-		).toReturn(
-			_blogsEntryService
-		);
-
-		mockStatic(LinkbackConsumerUtil.class, new CallsRealMethods());
-
-		replace(
-			method(LinkbackConsumerUtil.class, "addNewTrackback")
-		).with(
-			getClass().getMethod(
-				"addNewTrackback", Long.TYPE,String.class, String.class)
-		);
-
-		new PortalUtil().setPortal(_portal);
-
-		PropsUtil.setProps(_props);
-
-		new HttpUtil().setHttp(_http);
-
-		_themeDisplay.setCompany(_company);
-
-		new LanguageUtil().setLanguage(_language);
 	}
 
-	protected void doThrowWhenGetEntry(Class<? extends Throwable> toBeThrown)
-		throws Exception {
+	protected void setUpPortal() {
 
-		long entryId = 42;
-
-		_mockHttpServletRequest.setParameter(
-			"entryId", String.valueOf(entryId));
+		Portal portal = mock(Portal.class);
 
 		when(
-			_blogsEntryService.getEntry(entryId)
-		).thenThrow(
+			portal.getOriginalServletRequest((HttpServletRequest)any())
+		).thenReturn(
+			_mockOriginalServletRequest
+		);
+
+		when(
+			portal.getHttpServletRequest((PortletRequest)any())
+		).thenReturn(
+			_mockHttpServletRequest
+		);
+
+		when(
+			portal.getHttpServletResponse((PortletResponse)any())
+		).thenReturn(
+			_mockHttpServletResponse
+		);
+
+		new PortalUtil().setPortal(portal);
+
+		PropsUtil.setProps(mock(Props.class));
+
+		new HttpUtil().setHttp(_http);
+	}
+
+	protected void whenGetEntryThenThrow(Throwable toBeThrown)
+		throws Exception {
+
+		stub(
+			method(ActionUtil.class, "getEntry", PortletRequest.class)
+		).toThrow(
 			toBeThrown
 		);
 	}
-
-	protected void initUrl(String remoteIp) {
-		String url = "__url__";
-
-		when(
-			_http.getIpAddress(url)
-		).thenReturn(
-			remoteIp
-		);
-
-		_mockOriginalServletRequest.addParameter("url", url);
-	}
-
-	protected void initValidUrl() {
-		initUrl(_mockHttpServletRequest.getRemoteAddr());
-	}
-
-	private static String _trackback;
 
 	@Mock
 	private ActionRequest _actionRequest;
@@ -413,16 +312,7 @@ public class TrackbackActionTest {
 	private BlogsEntry _blogsEntry;
 
 	@Mock
-	private BlogsEntryService _blogsEntryService;
-
-	@Mock
-	private Company _company;
-
-	@Mock
 	private Http _http;
-
-	@Mock
-	private Language _language;
 
 	private MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
@@ -432,20 +322,11 @@ public class TrackbackActionTest {
 		new MockHttpServletRequest();
 
 	@Mock
-	private Portal _portal;
-
-	@Mock
 	private PortletPreferences _portletPreferences;
-
-	@Mock
-	private Props _props;
 
 	private ThemeDisplay _themeDisplay = new ThemeDisplay();
 
 	@Mock
-	private TrackbackComments _trackbackComments;
-
-	@Mock
-	private UserLocalService _userLocalService;
+	private Trackbacks _trackbacks;
 
 }
