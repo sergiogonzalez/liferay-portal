@@ -214,9 +214,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId, BlogsEntry.class.getName(),
-			entry.getEntryId(), entry, serviceContext);
+		startWorkflowInstance(user, entry, serviceContext);
 
 		return entry;
 	}
@@ -1115,10 +1113,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), entry.getGroupId(), userId,
-			BlogsEntry.class.getName(), entry.getEntryId(), entry,
-			serviceContext);
+		startWorkflowInstance(user, entry, serviceContext);
 
 		return entry;
 	}
@@ -1228,7 +1223,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				// Subscriptions
 
-				notifySubscribers(entry, serviceContext);
+				notifySubscribers(
+					entry,
+					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+					serviceContext);
 
 				// Ping
 
@@ -1408,7 +1406,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			BlogsEntry entry, ServiceContext serviceContext)
+			BlogsEntry entry, String entryURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();
@@ -1443,7 +1441,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		String entryTitle = entry.getTitle();
-		String entryURL = getEntryURL(entry, serviceContext);
 
 		String fromName = BlogsUtil.getEmailFromName(
 			preferences, entry.getCompanyId());
@@ -1718,6 +1715,22 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		else {
 			imageLocalService.deleteImage(smallImageId);
 		}
+	}
+
+	protected void startWorkflowInstance(
+			User user, BlogsEntry entry, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL, getEntryURL(entry, serviceContext));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			user.getCompanyId(), entry.getGroupId(), user.getUserId(),
+			BlogsEntry.class.getName(), entry.getEntryId(), entry,
+			serviceContext, workflowContext);
 	}
 
 	protected void validate(
