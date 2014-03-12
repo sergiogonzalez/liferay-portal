@@ -50,6 +50,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryService;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.blogs.trackback.TrackbackComments;
+import com.liferay.portlet.blogs.trackback.TrackbacksImpl;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
 import java.util.Arrays;
@@ -263,7 +264,7 @@ public class TrackbackActionTest {
 
 	protected void addTrackback() throws Exception {
 		TrackbackAction trackbackAction = new TrackbackAction(
-			_trackbackComments);
+			new TrackbacksImpl(_trackbackComments));
 
 		trackbackAction.addTrackback(_actionRequest, _actionResponse);
 	}
