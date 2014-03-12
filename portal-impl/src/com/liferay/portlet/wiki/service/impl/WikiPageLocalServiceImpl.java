@@ -91,9 +91,11 @@ import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -2055,6 +2057,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@Override
 	public WikiPage updateStatus(
 			long userId, WikiPage page, int status,
+			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -2208,6 +2211,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		indexer.reindex(page);
 
 		return wikiPagePersistence.update(page);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
+	 *             int, Map, ServiceContext)} )}
+	 */
+	@Deprecated
+	@Override
+	public WikiPage updateStatus(
+			long userId, WikiPage page, int status,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateStatus(
+			userId, page, status, (Map)Collections.emptyMap(), serviceContext);
 	}
 
 	@Override
