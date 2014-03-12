@@ -298,7 +298,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			blogsEntryLocalService.updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED,
+				new HashMap<String, Serializable>(), serviceContext);
 		}
 	}
 
@@ -892,7 +893,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		entry = updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
-			new ServiceContext());
+			new HashMap<String, Serializable>(), new ServiceContext());
 
 		// Social
 
@@ -958,7 +959,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class.getName(), entryId);
 
 		BlogsEntry entry = updateStatus(
-			userId, entryId, trashEntry.getStatus(), new ServiceContext());
+			userId, entryId, trashEntry.getStatus(),
+			new HashMap<String, Serializable>(), new ServiceContext());
 
 		// Social
 
