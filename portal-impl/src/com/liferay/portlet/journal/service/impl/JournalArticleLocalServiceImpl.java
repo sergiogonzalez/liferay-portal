@@ -6610,10 +6610,19 @@ public class JournalArticleLocalServiceImpl
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			PortalUtil.getControlPanelFullURL(
-				serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null));
+		if (serviceContext.getRequest() != null) {
+			Map<String, String[]> params = new HashMap<String, String[]>();
+
+			params.put(
+				"doAsGroupId",
+				new String[] {String.valueOf(article.getGroupId())});
+
+			workflowContext.put(
+				WorkflowConstants.CONTEXT_URL,
+				PortalUtil.getControlPanelFullURL(
+					serviceContext.getScopeGroupId(), PortletKeys.JOURNAL,
+					params));
+		}
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			article.getCompanyId(), article.getGroupId(), userId,
