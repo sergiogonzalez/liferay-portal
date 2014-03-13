@@ -2062,7 +2062,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Page
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(page.getNodeId());
 
 		Date now = new Date();
 
@@ -2154,7 +2153,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				 PropsValues.WIKI_PAGE_MINOR_EDIT_SEND_EMAIL)) {
 
 				notifySubscribers(
-					node, page,
+					page,
 					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 					serviceContext);
 			}
@@ -2413,8 +2412,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			WikiNode node, WikiPage page, String pageURL,
-			ServiceContext serviceContext)
+			WikiPage page, String pageURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();
@@ -2433,6 +2431,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			preferences = ServiceContextUtil.getPortletPreferences(
 				serviceContext);
 		}
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(page.getNodeId());
 
 		if (preferences == null) {
 			preferences = portletPreferencesLocalService.getPreferences(
