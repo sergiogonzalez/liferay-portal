@@ -31,9 +31,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 
 import java.io.File;
 import java.io.Serializable;
@@ -84,28 +82,6 @@ public class DLAppUtil {
 			previousFileVersion.getVersion());
 
 		return (currentVersion - previousVersion) >= 1;
-	}
-
-	public static void startWorkflowInstance(
-			long userId, DLFileVersion dlFileVersion,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			getEntryURL(
-				dlFileVersion.getGroupId(), dlFileVersion.getFileEntryId(),
-				serviceContext));
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
-			DLFileEntryConstants.getClassName(),
-			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
-			workflowContext);
 	}
 
 	public static void startWorkflowInstance(
