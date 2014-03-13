@@ -301,7 +301,7 @@ public class DefaultConfigurationAction
 		return selPortletConfig;
 	}
 
-	protected void removeDefaultValuePreference(
+	protected void removeDefaultValue(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences, String paramName,
 			String defaultValue)
