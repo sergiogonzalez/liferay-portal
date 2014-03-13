@@ -106,6 +106,14 @@ public class LocalizationUtil {
 			xml, requestedLanguageId, useDefault);
 	}
 
+	public static String getLocalization(
+		String xml, String requestedLanguageId, boolean useDefault,
+		String defaultValue) {
+
+		return getLocalization().getLocalization(
+			xml, requestedLanguageId, useDefault, defaultValue);
+	}
+
 	public static Map<Locale, String> getLocalizationMap(
 		HttpServletRequest request, String parameter) {
 
