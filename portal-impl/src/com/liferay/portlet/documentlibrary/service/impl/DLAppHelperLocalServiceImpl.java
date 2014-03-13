@@ -1407,15 +1407,29 @@ public class DLAppHelperLocalServiceImpl
 			FileVersion destinationFileVersion, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		updateFileEntry(
+			userId, fileEntry, sourceFileVersion, destinationFileVersion,
+			serviceContext, true);
+	}
+
+	@Override
+	public void updateFileEntry(
+			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
+			FileVersion destinationFileVersion, ServiceContext serviceContext,
+			boolean updateAsset)
+		throws PortalException, SystemException {
+
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
 		}
 
-		updateAsset(
-			userId, fileEntry, destinationFileVersion,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+		if (updateAsset) {
+			updateAsset(
+				userId, fileEntry, destinationFileVersion,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds());
+		}
 
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
 
