@@ -85,8 +85,8 @@ public class DLAppUtil {
 	}
 
 	public static void startWorkflowInstance(
-			long userId, ServiceContext serviceContext,
-			DLFileVersion dlFileVersion, String syncEventType)
+			long userId, DLFileVersion dlFileVersion, String syncEventType,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> workflowContext =

@@ -404,8 +404,8 @@ public class DLFileEntryLocalServiceImpl
 				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
 
 			DLAppUtil.startWorkflowInstance(
-				userId, serviceContext, latestDLFileVersion,
-				DLSyncConstants.EVENT_UPDATE);
+				userId, latestDLFileVersion, DLSyncConstants.EVENT_UPDATE,
+				serviceContext);
 		}
 
 		unlockFileEntry(fileEntryId);
@@ -2319,7 +2319,7 @@ public class DLFileEntryLocalServiceImpl
 				}
 
 				DLAppUtil.startWorkflowInstance(
-					userId, serviceContext, dlFileVersion, syncEvent);
+					userId, dlFileVersion, syncEvent, serviceContext);
 			}
 		}
 		catch (PortalException pe) {
