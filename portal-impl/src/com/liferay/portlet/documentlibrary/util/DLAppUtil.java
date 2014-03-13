@@ -52,6 +52,41 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DLAppUtil {
 
+	public static String getEntryURL(
+			long groupId, long fileEntryId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		if (request == null) {
+			return StringPool.BLANK;
+		}
+
+		long plid = serviceContext.getPlid();
+
+		long controlPanelPlid = PortalUtil.getControlPanelPlid(
+			serviceContext.getCompanyId());
+
+		if (plid == controlPanelPlid) {
+			plid = PortalUtil.getPlidFromPortletId(
+				groupId, PortletKeys.DOCUMENT_LIBRARY);
+		}
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			plid = controlPanelPlid;
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			request, PortletKeys.DOCUMENT_LIBRARY, plid,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"struts_action", "/document_library/view_file_entry");
+		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
+
+		return portletURL.toString();
+	}
+
 	public static String getExtension(String title, String sourceFileName) {
 		String extension = FileUtil.getExtension(sourceFileName);
 
@@ -87,42 +122,7 @@ public class DLAppUtil {
 		return (currentVersion - previousVersion) >= 1;
 	}
 
-	protected String getEntryURL(
-			long groupId, long fileEntryId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return StringPool.BLANK;
-		}
-
-		long plid = serviceContext.getPlid();
-
-		long controlPanelPlid = PortalUtil.getControlPanelPlid(
-			serviceContext.getCompanyId());
-
-		if (plid == controlPanelPlid) {
-			plid = PortalUtil.getPlidFromPortletId(
-				groupId, PortletKeys.DOCUMENT_LIBRARY);
-		}
-
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = controlPanelPlid;
-		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.DOCUMENT_LIBRARY, plid,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
-		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
-
-		return portletURL.toString();
-	}
-
-	protected void startWorkflowInstance(
+	public static void startWorkflowInstance(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -145,7 +145,7 @@ public class DLAppUtil {
 			serviceContext, workflowContext);
 	}
 
-	protected void startWorkflowInstance(
+	public static void startWorkflowInstance(
 			long userId, ServiceContext serviceContext,
 			DLFileVersion dlFileVersion, String syncEventType)
 		throws PortalException, SystemException {
