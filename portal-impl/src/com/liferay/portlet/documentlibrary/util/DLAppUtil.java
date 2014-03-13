@@ -86,7 +86,50 @@ public class DLAppUtil {
 		return (currentVersion - previousVersion) >= 1;
 	}
 
-	protected String getEntryURL(
+	public static void startWorkflowInstance(
+			long userId, DLFileVersion dlFileVersion,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL,
+			getEntryURL(
+				dlFileVersion.getGroupId(), dlFileVersion.getFileEntryId(),
+				serviceContext));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
+			DLFileEntryConstants.getClassName(),
+			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
+			workflowContext);
+	}
+
+	public static void startWorkflowInstance(
+			long userId, ServiceContext serviceContext,
+			DLFileVersion dlFileVersion, String syncEventType)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put("event", syncEventType);
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL,
+			getEntryURL(
+				dlFileVersion.getGroupId(), dlFileVersion.getFileEntryId(),
+				serviceContext));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
+			DLFileEntry.class.getName(), dlFileVersion.getFileVersionId(),
+			dlFileVersion, serviceContext, workflowContext);
+	}
+
+	protected static String getEntryURL(
 			long groupId, long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -119,49 +162,6 @@ public class DLAppUtil {
 		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 		return portletURL.toString();
-	}
-
-	protected void startWorkflowInstance(
-			long userId, DLFileVersion dlFileVersion,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			getEntryURL(
-				dlFileVersion.getGroupId(), dlFileVersion.getFileEntryId(),
-				serviceContext));
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
-			DLFileEntryConstants.getClassName(),
-			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
-			workflowContext);
-	}
-
-	protected void startWorkflowInstance(
-			long userId, ServiceContext serviceContext,
-			DLFileVersion dlFileVersion, String syncEventType)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put("event", syncEventType);
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			getEntryURL(
-				dlFileVersion.getGroupId(), dlFileVersion.getFileEntryId(),
-				serviceContext));
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
-			DLFileEntry.class.getName(), dlFileVersion.getFileVersionId(),
-			dlFileVersion, serviceContext, workflowContext);
 	}
 
 }
