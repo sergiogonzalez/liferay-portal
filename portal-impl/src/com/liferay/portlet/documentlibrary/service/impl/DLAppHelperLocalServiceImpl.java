@@ -176,13 +176,12 @@ public class DLAppHelperLocalServiceImpl
 	@Override
 	public void cancelCheckOut(
 			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
-			FileVersion destinationFileVersion, FileVersion draftFileVersion,
-			ServiceContext serviceContext)
+			FileVersion destinationFileVersion, FileVersion draftFileVersion)
 		throws PortalException, SystemException {
 
 		updateFileEntry(
 			userId, fileEntry, sourceFileVersion, destinationFileVersion,
-			serviceContext);
+			new ServiceContext(), false);
 
 		if (draftFileVersion == null) {
 			return;
@@ -195,6 +194,23 @@ public class DLAppHelperLocalServiceImpl
 		if (draftAssetEntry != null) {
 			assetEntryLocalService.deleteEntry(draftAssetEntry);
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #cancelCheckOut(long,
+	 *             FileEntry, FileVersion, FileVersion, FileVersion)}
+	 */
+	@Deprecated
+	@Override
+	public void cancelCheckOut(
+			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
+			FileVersion destinationFileVersion, FileVersion draftFileVersion,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		cancelCheckOut(
+			userId, fileEntry, sourceFileVersion, destinationFileVersion,
+			draftFileVersion);
 	}
 
 	@Override
