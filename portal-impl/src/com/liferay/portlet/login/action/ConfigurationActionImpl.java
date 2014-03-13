@@ -40,25 +40,17 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		throws Exception {
 
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName",
-			PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME));
-		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromAddress",
 			PrefsPropsUtil.getString(
 				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS));
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromName",
+			PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME));
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPasswordSentBody_" + defaultLanguageId,
-			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPasswordSentSubject_" + defaultLanguageId,
-			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordResetBody_" + defaultLanguageId,
@@ -67,6 +59,14 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			portletRequest, portletPreferences,
 			"emailPasswordResetSubject_" + defaultLanguageId,
 			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPasswordSentBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPasswordSentSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
 	}
 
 	@Override
