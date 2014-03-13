@@ -80,7 +80,7 @@ public class DefaultConfigurationAction
 		return ParamUtil.getString(portletRequest, name);
 	}
 
-	public void postProcessPreferences(
+	public void postProcessPortletPreferences(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -144,7 +144,7 @@ public class DefaultConfigurationAction
 				}
 			}
 
-			postProcessPreferences(
+			postProcessPortletPreferences(
 				themeDisplay.getCompanyId(), actionRequest, portletPreferences);
 		}
 		else {

@@ -34,7 +34,7 @@ import javax.portlet.PortletRequest;
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override
-	public void postProcessPreferences(
+	public void postProcessPortletPreferences(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
 		throws Exception {
