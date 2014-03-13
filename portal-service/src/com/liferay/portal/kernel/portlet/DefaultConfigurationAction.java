@@ -303,16 +303,16 @@ public class DefaultConfigurationAction
 
 	protected void removeDefaultValue(
 			PortletRequest portletRequest,
-			PortletPreferences portletPreferences, String paramName,
+			PortletPreferences portletPreferences, String key,
 			String defaultValue)
 		throws Exception {
 
-		String value = getParameter(portletRequest, paramName);
+		String value = getParameter(portletRequest, key);
 
 		if (defaultValue.equals(value) ||
 			StringUtil.equalsIgnoreBreakLine(defaultValue, value)) {
 
-			portletPreferences.reset(paramName);
+			portletPreferences.reset(key);
 		}
 	}
 
