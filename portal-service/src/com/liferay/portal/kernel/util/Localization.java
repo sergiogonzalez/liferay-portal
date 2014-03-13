@@ -127,7 +127,6 @@ public interface Localization {
 	 * @param  requestedLanguageId the ID of the language
 	 * @param  useDefault whether to use the default language if no localization
 	 *         exists for the requested language
-	 * @param  defaultValue value returned when the localization doesn't exist
 	 * @return the localized string. If <code>useDefault</code> is
 	 *         <code>false</code> and no localization exists for the requested
 	 *         language, an empty string will be returned.
@@ -226,7 +225,6 @@ public interface Localization {
 	 * @param  preferences the preferences container
 	 * @param  portletRequest the portlet request
 	 * @param  parameter the prefix of the parameters containing the localized
-	 * @param  defaultValue value returned when the localization doesn't exist
 	 *         strings. Each localization will be loaded from a parameter with
 	 *         this prefix, followed by an underscore, and the language ID.
 	 * @return the locales and localized strings
