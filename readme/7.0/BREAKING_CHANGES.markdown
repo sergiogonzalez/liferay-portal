@@ -20,16 +20,19 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `69f89fd`.*
+*This document has been reviewed through commit `cfd3f6a`.*
 
 ## Breaking Changes
 
 Each change must have a brief descriptive title and contain the following
 information:
 
+* **[Title]** Provide a brief descriptive title. Use past tense and follow
+the capitalization rules from 
+<http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
 * **Date:** Specify the date you submitted the change. Format the date as
 *YYYY-MMM* (e.g. 2014-Mar) or *YYYY-MMM-DD* (e.g., 2014-Feb-25).
-* **Jira Ticket:** Reference the related Jira ticket (e.g., LPS-123456)
+* **JIRA Ticket:** Reference the related JIRA ticket (e.g., LPS-123456)
 (Optional).
 * **What changed?** Identify the affected component and the type of change that
 was made.
@@ -45,8 +48,8 @@ horizontal rule):
 
 ```
 ### [Title]
-* Date:
-* Jira Ticket:
+- **Date:**
+- **JIRA Ticket:**
 
 #### What changed?
 
@@ -58,11 +61,61 @@ horizontal rule):
 
 ---------------------------------------
 ```
+
+**Important:** Titles, links, and tables should only exceed 80 columns *if
+necessary*; all other text **must NOT exceed 80 columns**.
+
 ---------------------------------------
 
-### Removal of Methods `get` and `format`, which use the PortletConfig
-* Date: 7th March 2014
-* Jira Ticket: LPS-44342
+### Merged Configured Email Signature Field into the Body of Email Messages from Message Boards and Wiki
+- **Date**: 2014-Feb-28
+- **JIRA Ticket**: LPS-44599
+
+#### What changed?
+The configuration for email signatures of notifications from Message Boards and
+Wiki has been removed. An automatic update process is available that appends
+existing signatures into respective email message bodies for Message Boards and
+Wiki notifications. The upgrade process only applies to configured signatures in
+the database. In case you declared signatures in portal properties (e.g.,
+`portal-ext.properties`), you must make the manual changes explained below.
+
+#### Who is affected?
+Users and system administrators who have configured email signatures for Message
+Boards or Wiki notifications are affected. System administrators who have
+configured portal properties (e.g., `portal-ext.properties`) must make the
+manual changes described below.
+
+#### How should I update my code?
+You should modify your `portal-ext.properties` file to remove the properties
+`message.boards.email.message.added.signature`,
+`message.boards.email.message.updated.signature`,
+`wiki.email.page.added.signature`, and `wiki.email.page.updated.signature`.
+Then, you should append the contents of the signatures to the bodies you had
+previously configured in your `portal-ext.properties` file.
+
+**Example**
+
+Replace:
+```
+wiki.email.page.updated.body=A wiki page was updated.
+wiki.email.page.updated.signature=For any doubts email the system administrator
+```
+
+With:
+```
+wiki.email.page.updated.body=A wiki page was updated.\n--\nFor any doubts email the system administrator
+```
+
+#### Why was this change made?
+This change helps simplify the user interface. The signatures can still be set
+inside the message body. There was no real benefit in keeping the signature and
+body fields separate.
+
+---------------------------------------
+
+### Removed `get` and `format` Methods That Used `PortletConfig` Parameters
+- **Date:** 2014-Mar-07
+- **JIRA Ticket:** LPS-44342
 
 #### What changed?
 All the methods `get()` and `format()` which had the PortletConfig as a

@@ -53,7 +53,9 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.MBTestUtil;
+import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.ratings.util.RatingsTestUtil;
 
 import java.io.Serializable;
 
@@ -116,9 +118,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		StagedModelAssets stagedModelAssets = updateAssetEntry(
 			stagedModel, stagingGroup);
 
-		// Comments
+		// Ratings
 
-		addComments(stagedModel);
+		addRatings(stagedModel);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, stagedModel);
@@ -146,17 +148,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			liveGroup);
 	}
 
-	protected void addComments(StagedModel stagedModel) throws Exception {
-		if (!isCommentableStagedModel()) {
-			return;
-		}
-
-		MBTestUtil.addDiscussionMessage(
-			TestPropsValues.getUser(), stagingGroup.getGroupId(),
-			ExportImportClassedModelUtil.getClassName(stagedModel),
-			ExportImportClassedModelUtil.getClassPK(stagedModel));
-	}
-
 	protected List<StagedModel> addDependentStagedModel(
 		Map<String, List<StagedModel>> dependentStagedModelsMap, Class<?> clazz,
 		StagedModel dependentStagedModel) {
@@ -181,6 +172,12 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		throws Exception {
 
 		return new HashMap<String, List<StagedModel>>();
+	}
+
+	protected void addRatings(StagedModel stagedModel) throws Exception {
+		RatingsTestUtil.addEntry(
+			ExportImportClassedModelUtil.getClassName(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}
 
 	protected abstract StagedModel addStagedModel(
@@ -540,6 +537,46 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		validateComments(stagedModel, importedStagedModel, group);
 
 		validateImport(dependentStagedModelsMap, group);
+
+		validateRatings(stagedModel, importedStagedModel);
+	}
+
+	protected void validateRatings(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		List<RatingsEntry> ratingsEntries =
+			RatingsEntryLocalServiceUtil.getEntries(
+				ExportImportClassedModelUtil.getClassName(stagedModel),
+				ExportImportClassedModelUtil.getClassPK(stagedModel),
+				WorkflowConstants.STATUS_ANY);
+
+		List<RatingsEntry> importedRatingsEntries =
+			RatingsEntryLocalServiceUtil.getEntries(
+				ExportImportClassedModelUtil.getClassName(importedStagedModel),
+				ExportImportClassedModelUtil.getClassPK(importedStagedModel),
+				WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			ratingsEntries.size(), importedRatingsEntries.size());
+
+		for (RatingsEntry ratingsEntry : ratingsEntries) {
+			Iterator<RatingsEntry> iterator = importedRatingsEntries.iterator();
+
+			while (iterator.hasNext()) {
+				RatingsEntry importedRatingsEntry = iterator.next();
+
+				if (ratingsEntry.getScore() ==
+						importedRatingsEntry.getScore()) {
+
+					iterator.remove();
+
+					break;
+				}
+			}
+		}
+
+		Assert.assertTrue(importedRatingsEntries.isEmpty());
 	}
 
 	protected Group liveGroup;

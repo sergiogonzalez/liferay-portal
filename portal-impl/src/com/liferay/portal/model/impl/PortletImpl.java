@@ -633,13 +633,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public ConfigurationAction getConfigurationActionInstance() {
-		if (Validator.isNull(getConfigurationActionClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<ConfigurationAction> configurationActionInstances =
+			portletBag.getConfigurationActionInstances();
+
+		if (configurationActionInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getConfigurationActionInstance();
+		return configurationActionInstances.get(0);
 	}
 
 	/**
@@ -904,13 +907,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public FriendlyURLMapper getFriendlyURLMapperInstance() {
-		if (Validator.isNull(getFriendlyURLMapperClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<FriendlyURLMapper> friendlyURLMapperInstances =
+			portletBag.getFriendlyURLMapperInstances();
+
+		if (friendlyURLMapperInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getFriendlyURLMapperInstance();
+		return friendlyURLMapperInstances.get(0);
 	}
 
 	/**
@@ -1113,13 +1119,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public OpenSearch getOpenSearchInstance() {
-		if (Validator.isNull(getOpenSearchClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<OpenSearch> openSearchInstances =
+			portletBag.getOpenSearchInstances();
+
+		if (openSearchInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getOpenSearchInstance();
+		return openSearchInstances.get(0);
 	}
 
 	/**
@@ -1205,13 +1214,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public PollerProcessor getPollerProcessorInstance() {
-		if (Validator.isNull(getPollerProcessorClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<PollerProcessor> pollerProcessorInstances =
+			portletBag.getPollerProcessorInstances();
+
+		if (pollerProcessorInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPollerProcessorInstance();
+		return pollerProcessorInstances.get(0);
 	}
 
 	/**
@@ -1289,13 +1301,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public PortletDataHandler getPortletDataHandlerInstance() {
-		if (Validator.isNull(getPortletDataHandlerClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<PortletDataHandler> portletDataHandlerInstances =
+			portletBag.getPortletDataHandlerInstances();
+
+		if (portletDataHandlerInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPortletDataHandlerInstance();
+		return portletDataHandlerInstances.get(0);
 	}
 
 	/**
@@ -1335,13 +1350,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public PortletLayoutListener getPortletLayoutListenerInstance() {
-		if (Validator.isNull(getPortletLayoutListenerClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<PortletLayoutListener> portletLayoutListenerInstances =
+			portletBag.getPortletLayoutListenerInstances();
+
+		if (portletLayoutListenerInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPortletLayoutListenerInstance();
+		return portletLayoutListenerInstances.get(0);
 	}
 
 	/**
@@ -1859,13 +1877,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public TemplateHandler getTemplateHandlerInstance() {
-		if (Validator.isNull(getTemplateHandlerClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<TemplateHandler> templateHandlerInstances =
+			portletBag.getTemplateHandlerInstances();
+
+		if (templateHandlerInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getTemplateHandlerInstance();
+		return templateHandlerInstances.get(0);
 	}
 
 	/**
@@ -1944,13 +1965,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public URLEncoder getURLEncoderInstance() {
-		if (Validator.isNull(getURLEncoderClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<URLEncoder> urlEncoderInstances =
+			portletBag.getURLEncoderInstances();
+
+		if (urlEncoderInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getURLEncoderInstance();
+		return urlEncoderInstances.get(0);
 	}
 
 	/**
@@ -2271,8 +2295,8 @@ public class PortletImpl extends PortletBaseImpl {
 			return false;
 		}
 
-		for (int i = 0; i < _rolesArray.length; i++) {
-			if (StringUtil.equalsIgnoreCase(_rolesArray[i], roleName)) {
+		for (String curRoleName : _rolesArray) {
+			if (StringUtil.equalsIgnoreCase(curRoleName, roleName)) {
 				return true;
 			}
 		}

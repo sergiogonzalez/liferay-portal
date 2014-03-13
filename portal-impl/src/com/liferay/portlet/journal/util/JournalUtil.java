@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -101,6 +100,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -882,7 +882,8 @@ public class JournalUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$ARTICLE_ID$]",
@@ -1404,7 +1405,7 @@ public class JournalUtil {
 			structures.add(structure);
 		}
 
-		return new UnmodifiableList<JournalStructure>(structures);
+		return Collections.unmodifiableList(structures);
 	}
 
 	public static List<JournalTemplate> toJournalTemplates(
@@ -1418,7 +1419,7 @@ public class JournalUtil {
 			templates.add(template);
 		}
 
-		return new UnmodifiableList<JournalTemplate>(templates);
+		return Collections.unmodifiableList(templates);
 	}
 
 	public static String transform(

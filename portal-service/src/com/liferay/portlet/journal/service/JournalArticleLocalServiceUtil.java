@@ -3276,6 +3276,18 @@ public class JournalArticleLocalServiceUtil {
 		return getService().updateContent(groupId, articleId, version, content);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle updateStatus(
+		long userId, com.liferay.portlet.journal.model.JournalArticle article,
+		int status,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStatus(userId, article, status, workflowContext,
+			serviceContext);
+	}
+
 	/**
 	* Updates the workflow status of the web content article.
 	*

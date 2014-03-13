@@ -22,7 +22,7 @@
 String adminEmailFromName = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
 String adminEmailFromAddress = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
-PortletPreferences preferences = PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="email_notifications" />
@@ -49,13 +49,13 @@ PortletPreferences preferences = PrefsPropsUtil.getPreferences(company.getCompan
 
 			<liferay-ui:error key="emailUserAddedSubject" message="please-enter-a-valid-subject" />
 
-			<aui:input cssClass="lfr-input-text-container" label="subject" name="settings--adminEmailUserAddedSubject--" type="text" value='<%= preferences.getValue("adminEmailUserAddedSubject", PropsValues.ADMIN_EMAIL_USER_ADDED_SUBJECT) %>' />
+			<aui:input cssClass="lfr-input-text-container" label="subject" name="settings--adminEmailUserAddedSubject--" type="text" value='<%= companyPortletPreferences.getValue("adminEmailUserAddedSubject", PropsValues.ADMIN_EMAIL_USER_ADDED_SUBJECT) %>' />
 
 			<liferay-ui:error key="emailUserAddedBody" message="please-enter-a-valid-body" />
 
 			<liferay-ui:email-notifications-settings
 				bodyLabel="body-with-password"
-				emailBody='<%= ContentUtil.get(preferences.getValue("adminEmailUserAddedBody", PropsValues.ADMIN_EMAIL_USER_ADDED_BODY)) %>'
+				emailBody='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailUserAddedBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_USER_ADDED_BODY)) %>'
 				emailParam="adminEmailUserAdded"
 				fieldPrefix="settings"
 				helpMessage="account-created-notification-body-with-password-help"
@@ -67,7 +67,7 @@ PortletPreferences preferences = PrefsPropsUtil.getPreferences(company.getCompan
 
 			<liferay-ui:email-notifications-settings
 				bodyLabel="body-without-password"
-				emailBody='<%= ContentUtil.get(preferences.getValue("adminEmailUserAddedNoPasswordBody", PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY)) %>'
+				emailBody='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailUserAddedNoPasswordBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY)) %>'
 				emailParam="adminEmailUserAddedNoPassword"
 				fieldPrefix="settings"
 				helpMessage="account-created-notification-body-without-password-help"
@@ -86,9 +86,9 @@ PortletPreferences preferences = PrefsPropsUtil.getPreferences(company.getCompan
 		<liferay-ui:error key="emailVerificationBody" message="please-enter-a-valid-body" />
 
 		<liferay-ui:email-notifications-settings
-			emailBody='<%= ContentUtil.get(preferences.getValue("adminEmailVerificationBody", PropsValues.ADMIN_EMAIL_VERIFICATION_BODY)) %>'
+			emailBody='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailVerificationBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_VERIFICATION_BODY)) %>'
 			emailParam="adminEmailVerification"
-			emailSubject='<%= ContentUtil.get(preferences.getValue("adminEmailVerificationSubject", PropsValues.ADMIN_EMAIL_VERIFICATION_SUBJECT)) %>'
+			emailSubject='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailVerificationSubject", ContentUtil.get(PropsValues.ADMIN_EMAIL_VERIFICATION_SUBJECT)) %>'
 			fieldPrefix="settings"
 			showEmailEnabled="<%= false %>"
 		/>
@@ -103,9 +103,9 @@ PortletPreferences preferences = PrefsPropsUtil.getPreferences(company.getCompan
 			<liferay-ui:error key="emailPasswordSentBody" message="please-enter-a-valid-body" />
 
 		<liferay-ui:email-notifications-settings
-			emailBody='<%= ContentUtil.get(preferences.getValue("adminEmailPasswordSentBody", PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
+			emailBody='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailPasswordSentBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
 			emailParam="adminEmailPasswordSent"
-			emailSubject='<%= ContentUtil.get(preferences.getValue("adminEmailPasswordSentSubject", PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT)) %>'
+			emailSubject='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailPasswordSentSubject", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT)) %>'
 			fieldPrefix="settings"
 			showEmailEnabled="<%= false %>"
 		/>
@@ -120,9 +120,9 @@ PortletPreferences preferences = PrefsPropsUtil.getPreferences(company.getCompan
 			<liferay-ui:error key="emailPasswordResetBody" message="please-enter-a-valid-body" />
 
 		<liferay-ui:email-notifications-settings
-			emailBody='<%= ContentUtil.get(preferences.getValue("adminEmailPasswordResetBody", PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'
+			emailBody='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailPasswordResetBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'
 			emailParam="adminEmailPasswordReset"
-			emailSubject='<%= ContentUtil.get(preferences.getValue("adminEmailPasswordResetSubject", PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT)) %>'
+			emailSubject='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailPasswordResetSubject", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT)) %>'
 			fieldPrefix="settings"
 			showEmailEnabled="<%= false %>"
 		/>
@@ -148,7 +148,7 @@ PortletPreferences preferences = PrefsPropsUtil.getPreferences(company.getCompan
 		}
 
 		try {
-			document.<portlet:namespace />fm['<portlet:namespace />settings--adminEmailPasswordSentBody--'].value = window['<portlet:namespace />emailPasswordSent'].getHTML();
+			document.<portlet:namespace />fm['<portlet:namespace />settings--adminEmailPasswordSentBody--'].value = window['<portlet:namespace />adminEmailPasswordSent'].getHTML();
 		}
 		catch (e) {
 		}
@@ -160,7 +160,7 @@ PortletPreferences preferences = PrefsPropsUtil.getPreferences(company.getCompan
 		}
 
 		try {
-			document.<portlet:namespace />fm['<portlet:namespace />settings--adminEmailVerificationBody--'].value = window['<portlet:namespace />emailVerification'].getHTML();
+			document.<portlet:namespace />fm['<portlet:namespace />settings--adminEmailVerificationBody--'].value = window['<portlet:namespace />adminEmailVerification'].getHTML();
 		}
 		catch (e) {
 		}
