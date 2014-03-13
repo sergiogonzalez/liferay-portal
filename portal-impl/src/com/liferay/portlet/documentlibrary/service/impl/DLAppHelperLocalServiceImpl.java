@@ -131,8 +131,9 @@ public class DLAppHelperLocalServiceImpl
 		try {
 			if (fileVersion instanceof LiferayFileVersion) {
 				DLAppUtil.startWorkflowInstance(
-					userId, (DLFileVersion)fileVersion.getModel(),
-					serviceContext);
+					userId, serviceContext,
+					(DLFileVersion)fileVersion.getModel(),
+					DLSyncConstants.EVENT_ADD);
 			}
 		}
 		finally {
