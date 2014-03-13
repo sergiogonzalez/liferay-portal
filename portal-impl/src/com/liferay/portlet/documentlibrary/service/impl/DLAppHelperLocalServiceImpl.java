@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
@@ -2194,28 +2193,6 @@ public class DLAppHelperLocalServiceImpl
 
 			}
 		);
-	}
-
-	protected void startWorkflowInstance(
-			long userId, DLFileVersion dlFileVersion,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			getEntryURL(
-				dlFileVersion.getGroupId(), dlFileVersion.getFileEntryId(),
-				serviceContext));
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
-			DLFileEntryConstants.getClassName(),
-			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
-			workflowContext);
 	}
 
 }
