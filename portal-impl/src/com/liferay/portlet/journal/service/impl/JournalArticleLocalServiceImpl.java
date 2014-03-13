@@ -5178,46 +5178,10 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
-	@Override
-	public JournalArticle updateStatus(
-			long userId, JournalArticle article, int status,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		return updateStatus(
-			userId, article, status,
-			(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
-			workflowContext, serviceContext);
-	}
-
-	/**
-	 * Updates the workflow status of the web content article.
-	 *
-	 * @param  userId the primary key of the user updating the web content
-	 *         article's status
-	 * @param  article the web content article
-	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link WorkflowConstants} for constants starting
-	 *         with the "STATUS_" prefix.
-	 * @param  articleURL the web content article's accessible URL
-	 * @param  workflowContext the web content article's configured workflow
-	 *         context
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date, status date, and portlet preferences. With
-	 *         respect to social activities, by setting the service context's
-	 *         command to {@link
-	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	 *         is considered a web content update activity; otherwise it is
-	 *         considered a web content add activity.
-	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateStatus(
-			long userId, JournalArticle article, int status, String articleURL,
+			long userId, JournalArticle article, int status,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -5396,6 +5360,9 @@ public class JournalArticleLocalServiceImpl
 
 			// Email
 
+			String articleURL = (String)workflowContext.get(
+				WorkflowConstants.CONTEXT_URL);
+
 			if ((oldStatus == WorkflowConstants.STATUS_PENDING) &&
 				((status == WorkflowConstants.STATUS_APPROVED) ||
 				 (status == WorkflowConstants.STATUS_DENIED))) {
@@ -5432,6 +5399,47 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return article;
+	}
+
+	/**
+	 * Updates the workflow status of the web content article.
+	 *
+	 * @param  userId the primary key of the user updating the web content
+	 *         article's status
+	 * @param  article the web content article
+	 * @param  status the web content article's workflow status. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @param  articleURL the web content article's accessible URL
+	 * @param  workflowContext the web content article's configured workflow
+	 *         context
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, status date, and portlet preferences. With
+	 *         respect to social activities, by setting the service context's
+	 *         command to {@link
+	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	 *         is considered a web content update activity; otherwise it is
+	 *         considered a web content add activity.
+	 * @return the updated web content article
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	 *             int, Map, ServiceContext)} )}
+	 */
+	@Deprecated
+	@Override
+	public JournalArticle updateStatus(
+			long userId, JournalArticle article, int status, String articleURL,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		workflowContext.put(articleURL, WorkflowConstants.CONTEXT_URL);
+
+		return updateStatus(
+			userId, article, status, workflowContext, serviceContext);
 	}
 
 	/**
