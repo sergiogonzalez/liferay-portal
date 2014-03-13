@@ -80,6 +80,23 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.cancelCheckOut(userId, fileEntry, sourceFileVersion,
+			destinationFileVersion, draftFileVersion);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #cancelCheckOut(long,
+	FileEntry, FileVersion, FileVersion, FileVersion)}
+	*/
+	@Deprecated
+	public static void cancelCheckOut(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -363,6 +380,19 @@ public class DLAppHelperLocalServiceUtil {
 		getService()
 			.updateFileEntry(userId, fileEntry, sourceFileVersion,
 			destinationFileVersion, serviceContext);
+	}
+
+	public static void updateFileEntry(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		boolean updateAsset)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateFileEntry(userId, fileEntry, sourceFileVersion,
+			destinationFileVersion, serviceContext, updateAsset);
 	}
 
 	public static void updateFolder(long userId,

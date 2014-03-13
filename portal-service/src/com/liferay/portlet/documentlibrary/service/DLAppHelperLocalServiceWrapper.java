@@ -78,6 +78,23 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppHelperLocalService.cancelCheckOut(userId, fileEntry,
+			sourceFileVersion, destinationFileVersion, draftFileVersion);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #cancelCheckOut(long,
+	FileEntry, FileVersion, FileVersion, FileVersion)}
+	*/
+	@Deprecated
+	@Override
+	public void cancelCheckOut(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -387,6 +404,20 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppHelperLocalService.updateFileEntry(userId, fileEntry,
 			sourceFileVersion, destinationFileVersion, serviceContext);
+	}
+
+	@Override
+	public void updateFileEntry(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		boolean updateAsset)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppHelperLocalService.updateFileEntry(userId, fileEntry,
+			sourceFileVersion, destinationFileVersion, serviceContext,
+			updateAsset);
 	}
 
 	@Override
