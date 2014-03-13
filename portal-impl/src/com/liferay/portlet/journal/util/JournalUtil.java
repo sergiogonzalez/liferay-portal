@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -101,6 +100,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -882,7 +882,8 @@ public class JournalUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$ARTICLE_ID$]",
@@ -1067,6 +1068,30 @@ public class JournalUtil {
 		return ArrayUtil.toLongArray(classPKs);
 	}
 
+	public static String getSubscriptionClassName(long ddmStructureId) {
+		if (ddmStructureId > 0) {
+			return DDMStructure.class.getName();
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(DDMStructure.class.getName());
+		sb.append(CharPool.POUND);
+		sb.append(JournalArticle.class.getName());
+
+		return sb.toString();
+	}
+
+	public static long getSubscriptionClassPK(
+		long groupId, long ddmStructureId) {
+
+		if (ddmStructureId > 0) {
+			return ddmStructureId;
+		}
+
+		return groupId;
+	}
+
 	public static String getTemplateScript(
 		DDMTemplate ddmTemplate, Map<String, String> tokens, String languageId,
 		boolean transform) {
@@ -1208,6 +1233,15 @@ public class JournalUtil {
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId, JournalFolder.class.getName(),
 			ArrayUtil.toLongArray(ancestorFolderIds));
+	}
+
+	public static boolean isSubscribedToStructure(
+		long companyId, long groupId, long userId, long ddmStructureId)
+			throws PortalException, SystemException {
+
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			companyId, userId, getSubscriptionClassName(ddmStructureId),
+			getSubscriptionClassPK(groupId, ddmStructureId));
 	}
 
 	public static String mergeArticleContent(
@@ -1404,7 +1438,7 @@ public class JournalUtil {
 			structures.add(structure);
 		}
 
-		return new UnmodifiableList<JournalStructure>(structures);
+		return Collections.unmodifiableList(structures);
 	}
 
 	public static List<JournalTemplate> toJournalTemplates(
@@ -1418,7 +1452,7 @@ public class JournalUtil {
 			templates.add(template);
 		}
 
-		return new UnmodifiableList<JournalTemplate>(templates);
+		return Collections.unmodifiableList(templates);
 	}
 
 	public static String transform(

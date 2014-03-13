@@ -46,7 +46,7 @@ public class ManifestSummaryTest
 	extends JournalArticleStagedModelDataHandlerTest {
 
 	@Override
-	protected void addComments(StagedModel stagedModel) throws Exception {
+	protected void addRatings(StagedModel stagedModel) throws Exception {
 		return;
 	}
 

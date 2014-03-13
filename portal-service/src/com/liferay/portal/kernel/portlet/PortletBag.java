@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
@@ -48,6 +50,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface PortletBag extends Cloneable {
 
 	public Object clone();
@@ -58,29 +61,29 @@ public interface PortletBag extends Cloneable {
 
 	public List<AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances();
 
-	public ConfigurationAction getConfigurationActionInstance();
+	public List<ConfigurationAction> getConfigurationActionInstances();
 
 	public ControlPanelEntry getControlPanelEntryInstance();
 
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances();
 
-	public FriendlyURLMapper getFriendlyURLMapperInstance();
+	public List<FriendlyURLMapper> getFriendlyURLMapperInstances();
 
 	public List<Indexer> getIndexerInstances();
 
-	public OpenSearch getOpenSearchInstance();
+	public List<OpenSearch> getOpenSearchInstances();
 
 	public PermissionPropagator getPermissionPropagatorInstance();
 
-	public PollerProcessor getPollerProcessorInstance();
+	public List<PollerProcessor> getPollerProcessorInstances();
 
 	public MessageListener getPopMessageListenerInstance();
 
-	public PortletDataHandler getPortletDataHandlerInstance();
+	public List<PortletDataHandler> getPortletDataHandlerInstances();
 
 	public Portlet getPortletInstance();
 
-	public PortletLayoutListener getPortletLayoutListenerInstance();
+	public List<PortletLayoutListener> getPortletLayoutListenerInstances();
 
 	public String getPortletName();
 
@@ -99,11 +102,11 @@ public interface PortletBag extends Cloneable {
 
 	public List<StagedModelDataHandler<?>> getStagedModelDataHandlerInstances();
 
-	public TemplateHandler getTemplateHandlerInstance();
+	public List<TemplateHandler> getTemplateHandlerInstances();
 
 	public List<TrashHandler> getTrashHandlerInstances();
 
-	public URLEncoder getURLEncoderInstance();
+	public List<URLEncoder> getURLEncoderInstances();
 
 	public List<UserNotificationHandler>
 		getUserNotificationHandlerInstances();
