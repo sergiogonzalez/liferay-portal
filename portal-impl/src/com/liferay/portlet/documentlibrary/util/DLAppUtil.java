@@ -31,10 +31,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -123,13 +122,24 @@ public class DLAppUtil {
 	}
 
 	public static void startWorkflowInstance(
-			FileEntry fileEntry, ServiceContext serviceContext)
+			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
-		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+		String event = DLSyncConstants.EVENT_UPDATE;
+
+		if (fileEntry.getVersion().equals(
+				DLFileEntryConstants.VERSION_DEFAULT)) {
+
+			event = DLSyncConstants.EVENT_ADD;
+		}
+
+		workflowContext.put("event", event);
+
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL,
 			getEntryURL(
@@ -143,27 +153,6 @@ public class DLAppUtil {
 			fileEntry.getUserId(), DLFileEntryConstants.getClassName(),
 			fileVersion.getFileVersionId(), fileVersion.getModel(),
 			serviceContext, workflowContext);
-	}
-
-	public static void startWorkflowInstance(
-			long userId, ServiceContext serviceContext,
-			DLFileVersion dlFileVersion, String syncEventType)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put("event", syncEventType);
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			getEntryURL(
-				dlFileVersion.getGroupId(), dlFileVersion.getFileEntryId(),
-				serviceContext));
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
-			DLFileEntry.class.getName(), dlFileVersion.getFileVersionId(),
-			dlFileVersion, serviceContext, workflowContext);
 	}
 
 }

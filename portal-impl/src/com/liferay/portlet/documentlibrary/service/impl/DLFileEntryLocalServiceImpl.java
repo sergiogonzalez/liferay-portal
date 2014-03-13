@@ -404,8 +404,7 @@ public class DLFileEntryLocalServiceImpl
 				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
 
 			DLAppUtil.startWorkflowInstance(
-				userId, serviceContext, latestDLFileVersion,
-				DLSyncConstants.EVENT_UPDATE);
+				dlFileEntry.getFileEntryId(), serviceContext);
 		}
 
 		unlockFileEntry(fileEntryId);
@@ -2310,16 +2309,8 @@ public class DLFileEntryLocalServiceImpl
 					 (serviceContext.getWorkflowAction() ==
 						WorkflowConstants.ACTION_PUBLISH)) {
 
-				String syncEvent = DLSyncConstants.EVENT_UPDATE;
-
-				if (dlFileVersion.getVersion().equals(
-						DLFileEntryConstants.VERSION_DEFAULT)) {
-
-					syncEvent = DLSyncConstants.EVENT_ADD;
-				}
-
 				DLAppUtil.startWorkflowInstance(
-					userId, serviceContext, dlFileVersion, syncEvent);
+					dlFileEntry.getFileEntryId(), serviceContext);
 			}
 		}
 		catch (PortalException pe) {

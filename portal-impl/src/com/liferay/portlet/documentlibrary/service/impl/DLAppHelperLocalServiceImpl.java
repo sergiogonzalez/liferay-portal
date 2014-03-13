@@ -122,7 +122,8 @@ public class DLAppHelperLocalServiceImpl
 
 		try {
 			if (fileVersion instanceof LiferayFileVersion) {
-				DLAppUtil.startWorkflowInstance(fileEntry, serviceContext);
+				DLAppUtil.startWorkflowInstance(
+					fileEntry.getFileEntryId(), serviceContext);
 			}
 		}
 		finally {
