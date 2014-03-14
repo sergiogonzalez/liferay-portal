@@ -1303,7 +1303,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updateStatus(
-			userId, entryId, status, (Map)Collections.emptyMap(),
+			userId, entryId, status, new HashMap<String, Serializable>(),
 			serviceContext);
 	}
 
