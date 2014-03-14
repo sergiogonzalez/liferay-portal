@@ -218,7 +218,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(user, page, serviceContext);
+		startWorkflowInstance(userId, page, serviceContext);
 
 		return page;
 	}
@@ -2021,7 +2021,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(user, page, serviceContext);
+		startWorkflowInstance(userId, page, serviceContext);
 
 		return page;
 	}
@@ -2609,7 +2609,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void startWorkflowInstance(
-			User user, WikiPage page, ServiceContext serviceContext)
+			long userId, WikiPage page, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> workflowContext =
@@ -2619,7 +2619,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), page.getGroupId(), user.getUserId(),
+			page.getCompanyId(), page.getGroupId(), userId,
 			WikiPage.class.getName(), page.getPageId(), page, serviceContext,
 			workflowContext);
 	}
