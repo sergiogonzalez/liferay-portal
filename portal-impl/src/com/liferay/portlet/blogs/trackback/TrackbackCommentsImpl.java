@@ -32,10 +32,10 @@ public class TrackbackCommentsImpl implements TrackbackComments {
 
 	@Override
 	public long addTrackbackComment(
-		long userId, long groupId, String className, long classPK,
-		String blogName, String title, String body,
-		Function<String, ServiceContext> serviceContextFunction)
-	throws PortalException, SystemException {
+			long userId, long groupId, String className, long classPK,
+			String blogName, String title, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException, SystemException {
 
 		MBMessageDisplay messageDisplay =
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(

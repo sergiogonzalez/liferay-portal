@@ -26,10 +26,10 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
  */
 public interface Trackbacks {
 
-	public abstract void addTrackback(
-		BlogsEntry entry, ThemeDisplay themeDisplay, String excerpt, String url,
-		String blogName, String title,
-		Function<String, ServiceContext> serviceContextFunction)
-	throws PortalException, SystemException;
+	public void addTrackback(
+			BlogsEntry entry, ThemeDisplay themeDisplay, String excerpt,
+			String url, String blogName, String title,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException, SystemException;
 
 }

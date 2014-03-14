@@ -37,10 +37,10 @@ public class TrackbacksImpl implements Trackbacks {
 
 	@Override
 	public void addTrackback(
-		BlogsEntry entry, ThemeDisplay themeDisplay, String excerpt, String url,
-		String blogName, String title,
-		Function<String, ServiceContext> serviceContextFunction)
-	throws PortalException, SystemException {
+			BlogsEntry entry, ThemeDisplay themeDisplay, String excerpt,
+			String url, String blogName, String title,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException, SystemException {
 
 		long userId = UserLocalServiceUtil.getDefaultUserId(
 			themeDisplay.getCompanyId());
@@ -57,10 +57,9 @@ public class TrackbacksImpl implements Trackbacks {
 				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
 				entry.getUrlTitle();
 
-		long messageId =
-			_comments.addTrackbackComment(
-				userId, groupId, className, classPK, blogName, title, body,
-				serviceContextFunction);
+		long messageId = _comments.addTrackbackComment(
+			userId, groupId, className, classPK, blogName, title, body,
+			serviceContextFunction);
 
 		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
 	}
@@ -69,6 +68,6 @@ public class TrackbacksImpl implements Trackbacks {
 		_comments = comments;
 	}
 
-	private final TrackbackComments _comments;
+	private TrackbackComments _comments;
 
 }
