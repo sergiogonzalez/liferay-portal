@@ -2257,7 +2257,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected String getDiffsURL(
-			WikiNode node, WikiPage page, WikiPage previousVersionPage,
+			WikiPage page, WikiPage previousVersionPage,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -2291,7 +2291,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			request, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", strutsAction);
-		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+		portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
 		portletURL.setParameter("title", page.getTitle());
 		portletURL.setParameter(
 			"sourceVersion", String.valueOf(previousVersionPage.getVersion()));
@@ -2432,11 +2432,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				serviceContext);
 		}
 
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(page.getNodeId());
-
 		if (preferences == null) {
 			preferences = portletPreferencesLocalService.getPreferences(
-				node.getCompanyId(), node.getGroupId(),
+				page.getCompanyId(), page.getGroupId(),
 				PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				PortletKeys.PREFS_PLID_SHARED, PortletKeys.WIKI_ADMIN, null);
 		}
@@ -2510,9 +2508,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setClassName(page.getModelClassName());
 		subscriptionSender.setClassPK(page.getPageId());
 		subscriptionSender.setCompanyId(page.getCompanyId());
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(page.getNodeId());
+
 		subscriptionSender.setContextAttributes(
 			"[$DIFFS_URL$]",
-			getDiffsURL(node, page, previousVersionPage, serviceContext),
+			getDiffsURL(page, previousVersionPage, serviceContext),
 			"[$NODE_NAME$]", node.getName(), "[$PAGE_DATE_UPDATE$]",
 			page.getModifiedDate(), "[$PAGE_ID$]", page.getPageId(),
 			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]", pageTitle,
@@ -2541,13 +2542,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		subscriptionSender.setPortletId(PortletKeys.WIKI);
 		subscriptionSender.setReplyToAddress(fromAddress);
-		subscriptionSender.setScopeGroupId(node.getGroupId());
+		subscriptionSender.setScopeGroupId(page.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(page.getUserId());
 
 		subscriptionSender.addPersistedSubscribers(
-			WikiNode.class.getName(), node.getNodeId());
+			WikiNode.class.getName(), page.getNodeId());
 
 		subscriptionSender.addPersistedSubscribers(
 			WikiPage.class.getName(), page.getResourcePrimKey());
