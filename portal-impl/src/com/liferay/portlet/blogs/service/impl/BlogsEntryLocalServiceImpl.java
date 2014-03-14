@@ -296,7 +296,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, Collections.EMPTY_MAP,
+				serviceContext);
 		}
 	}
 
@@ -886,7 +887,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		entry = updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
-			new ServiceContext());
+			Collections.EMPTY_MAP, new ServiceContext());
 
 		// Social
 
@@ -951,7 +952,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class.getName(), entryId);
 
 		BlogsEntry entry = updateStatus(
-			userId, entryId, trashEntry.getStatus(), new ServiceContext());
+			userId, entryId, trashEntry.getStatus(), Collections.EMPTY_MAP,
+			new ServiceContext());
 
 		// Social
 
