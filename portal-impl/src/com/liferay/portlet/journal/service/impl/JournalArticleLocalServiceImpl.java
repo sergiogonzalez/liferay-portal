@@ -469,7 +469,7 @@ public class JournalArticleLocalServiceImpl
 		// Workflow
 
 		if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			startWorkflowInstance(user, article, serviceContext);
+			startWorkflowInstance(userId, article, serviceContext);
 		}
 		else {
 			updateStatus(
@@ -4877,7 +4877,7 @@ public class JournalArticleLocalServiceImpl
 			sendEmail(
 				article, articleURL, preferences, "requested", serviceContext);
 
-			startWorkflowInstance(user, article, serviceContext);
+			startWorkflowInstance(userId, article, serviceContext);
 		}
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
@@ -6610,7 +6610,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void startWorkflowInstance(
-			User user, JournalArticle article, ServiceContext serviceContext)
+			long userId, JournalArticle article, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> workflowContext =
@@ -6622,7 +6622,7 @@ public class JournalArticleLocalServiceImpl
 				serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), article.getGroupId(), user.getUserId(),
+			article.getCompanyId(), article.getGroupId(), userId,
 			JournalArticle.class.getName(), article.getId(), article,
 			serviceContext);
 	}
