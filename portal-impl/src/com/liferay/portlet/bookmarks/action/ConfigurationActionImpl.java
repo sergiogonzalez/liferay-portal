@@ -17,18 +17,61 @@ package com.liferay.portlet.bookmarks.action;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Sergio González
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
+
+	@Override
+	public void postProcessPortletPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromAddress",
+			PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS));
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromName",
+			PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME));
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailEntryAddedBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailEntryAddedSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailEntryUpdatedBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailEntryUpdatedSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT));
+	}
 
 	@Override
 	public void processAction(
