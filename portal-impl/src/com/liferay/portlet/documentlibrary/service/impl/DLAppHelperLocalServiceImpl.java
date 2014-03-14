@@ -32,25 +32,21 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -67,7 +63,6 @@ import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
@@ -87,10 +82,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides the local service helper for the document library application.
@@ -130,7 +121,7 @@ public class DLAppHelperLocalServiceImpl
 
 		try {
 			if (fileVersion instanceof LiferayFileVersion) {
-				DLAppUtil.startWorkflowInstance(
+				DLUtil.startWorkflowInstance(
 					userId, (DLFileVersion)fileVersion.getModel(),
 					DLSyncConstants.EVENT_ADD, serviceContext);
 			}
@@ -1936,41 +1927,6 @@ public class DLAppHelperLocalServiceImpl
 		return dlFileVersionStatusOVPs;
 	}
 
-	protected String getEntryURL(
-			long groupId, long fileEntryId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return StringPool.BLANK;
-		}
-
-		long plid = serviceContext.getPlid();
-
-		long controlPanelPlid = PortalUtil.getControlPanelPlid(
-			serviceContext.getCompanyId());
-
-		if (plid == controlPanelPlid) {
-			plid = PortalUtil.getPlidFromPortletId(
-				groupId, PortletKeys.DOCUMENT_LIBRARY);
-		}
-
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = controlPanelPlid;
-		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.DOCUMENT_LIBRARY, plid,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
-		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
-
-		return portletURL.toString();
-	}
-
 	protected long getFileEntryTypeId(FileEntry fileEntry) {
 		if (fileEntry instanceof LiferayFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
@@ -1998,9 +1954,7 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!fileVersion.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!fileVersion.isApproved() || Validator.isNull(entryURL)) {
 			return;
 		}
 
