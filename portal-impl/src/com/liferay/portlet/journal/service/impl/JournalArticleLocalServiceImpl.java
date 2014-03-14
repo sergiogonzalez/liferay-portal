@@ -5376,11 +5376,6 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		if (Validator.isNull(articleURL)) {
-			articleURL = (String)workflowContext.get(
-				WorkflowConstants.CONTEXT_URL);
-		}
-
 		if ((article.getClassNameId() ==
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
 			(oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
@@ -5420,7 +5415,10 @@ public class JournalArticleLocalServiceImpl
 
 			// Subscriptions
 
-			notifySubscribers(article, articleURL, serviceContext);
+			notifySubscribers(
+				article,
+				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+				serviceContext);
 		}
 
 		return article;
