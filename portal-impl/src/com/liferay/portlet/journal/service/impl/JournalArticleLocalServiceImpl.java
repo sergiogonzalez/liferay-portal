@@ -6618,7 +6618,7 @@ public class JournalArticleLocalServiceImpl
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			article.getCompanyId(), article.getGroupId(), userId,
 			JournalArticle.class.getName(), article.getId(), article,
-			serviceContext);
+			serviceContext, workflowContext);
 	}
 
 	protected void updateDDMStructureXSD(
