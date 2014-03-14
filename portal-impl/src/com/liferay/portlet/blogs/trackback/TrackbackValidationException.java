@@ -14,13 +14,27 @@
 
 package com.liferay.portlet.blogs.trackback;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author André de Oliveira
  */
-public class TrackbackValidationException extends RuntimeException {
+public class TrackbackValidationException extends PortalException {
 
-	public TrackbackValidationException(String message) {
-		super(message);
+	public TrackbackValidationException() {
+		super();
+	}
+
+	public TrackbackValidationException(String msg) {
+		super(msg);
+	}
+
+	public TrackbackValidationException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public TrackbackValidationException(Throwable cause) {
+		super(cause);
 	}
 
 }
