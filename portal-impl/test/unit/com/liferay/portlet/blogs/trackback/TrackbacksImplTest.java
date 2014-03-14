@@ -29,8 +29,7 @@ import static org.powermock.api.support.membermodification.MemberMatcher.method;
 import static org.powermock.api.support.membermodification.MemberModifier.replace;
 import static org.powermock.api.support.membermodification.MemberModifier.stub;
 
-import com.google.common.base.Function;
-
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
