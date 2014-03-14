@@ -2049,7 +2049,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		return updateStatus(
-			userId, page, status, (Map)Collections.emptyMap(), serviceContext);
+			userId, page, status, new HashMap<String, Serializable>(),
+			serviceContext);
 	}
 
 	@Override
@@ -2219,7 +2220,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updateStatus(
-			userId, page, status, (Map)Collections.emptyMap(), serviceContext);
+			userId, page, status, new HashMap<String, Serializable>(),
+			serviceContext);
 	}
 
 	@Override
