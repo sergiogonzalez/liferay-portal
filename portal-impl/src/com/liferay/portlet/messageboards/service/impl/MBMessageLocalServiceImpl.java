@@ -1972,9 +1972,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage message, String messageURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!message.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!message.isApproved() || Validator.isNull(messageURL)) {
 			return;
 		}
 
