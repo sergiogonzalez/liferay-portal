@@ -29,9 +29,6 @@ String helpMessage = (String)request.getAttribute("liferay-ui:email-notification
 String languageId = (String)request.getAttribute("liferay-ui:email-notification-settings:languageId");
 boolean showEmailEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:email-notification-settings:showEmailEnabled"));
 boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-ui:email-notification-settings:showSubject"));
-
-boolean isSubjectLocalized = Validator.isNotNull(emailSubject) && Validator.isXml(emailSubject);
-boolean isBodyLocalized = Validator.isNotNull(emailBody) && Validator.isXml(emailBody);
 %>
 
 <aui:fieldset>
@@ -41,7 +38,7 @@ boolean isBodyLocalized = Validator.isNotNull(emailBody) && Validator.isXml(emai
 
 	<c:if test="<%= showSubject %>">
 		<c:choose>
-			<c:when test="<%= isSubjectLocalized %>">
+			<c:when test="<%= Validator.isNotNull(emailSubject) && Validator.isXml(emailSubject) %>">
 				<aui:field-wrapper label="subject">
 					<liferay-ui:input-localized
 						fieldPrefix="<%= fieldPrefix %>"
@@ -59,7 +56,7 @@ boolean isBodyLocalized = Validator.isNotNull(emailBody) && Validator.isXml(emai
 
 	<aui:field-wrapper helpMessage="<%= helpMessage %>" label="<%= bodyLabel %>">
 		<c:choose>
-			<c:when test="<%= isBodyLocalized %>">
+			<c:when test="<%= Validator.isNotNull(emailBody) && Validator.isXml(emailBody) %>">
 				<liferay-ui:input-localized
 					fieldPrefix="<%= fieldPrefix %>"
 					fieldPrefixSeparator="<%= fieldPrefixSeparator %>"
@@ -72,6 +69,12 @@ boolean isBodyLocalized = Validator.isNotNull(emailBody) && Validator.isXml(emai
 				<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" initMethod='<%= "init" + emailParam + "BodyEditor" %>' name="<%= emailParam %>" />
 
 				<aui:input name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Body" + (Validator.isNotNull(languageId) ? ("_" + languageId) : StringPool.BLANK) + fieldPrefixSeparator %>' type="hidden" />
+
+				<aui:script>
+					function <portlet:namespace />init<%= emailParam %>BodyEditor() {
+						return "<%= UnicodeFormatter.toString(emailBody) %>";
+					}
+				</aui:script>
 			</c:otherwise>
 		</c:choose>
 	</aui:field-wrapper>
@@ -98,14 +101,6 @@ boolean isBodyLocalized = Validator.isNotNull(emailBody) && Validator.isXml(emai
 
 		</dl>
 	</aui:fieldset>
-</c:if>
-
-<c:if test="<%= !isBodyLocalized %>">
-	<aui:script>
-		function <portlet:namespace />init<%= emailParam %>BodyEditor() {
-			return "<%= UnicodeFormatter.toString(emailBody) %>";
-		}
-	</aui:script>
 </c:if>
 
 <%!
