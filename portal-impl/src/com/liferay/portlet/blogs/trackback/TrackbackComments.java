@@ -24,10 +24,10 @@ import com.liferay.portal.service.ServiceContext;
  */
 public interface TrackbackComments {
 
-	public abstract long addTrackbackComment(
-		long userId, long groupId, String className, long classPK,
-		String blogName, String title, String body,
-		Function<String, ServiceContext> serviceContextFunction)
-	throws PortalException, SystemException;
+	public long addTrackbackComment(
+			long userId, long groupId, String className, long classPK,
+			String blogName, String title, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException, SystemException;
 
 }

@@ -63,7 +63,6 @@ public class TrackbackCommentsImplTest {
 		MockitoAnnotations.initMocks(this);
 
 		setUpMessageBoards();
-
 		setUpServiceContext();
 	}
 
@@ -105,8 +104,7 @@ public class TrackbackCommentsImplTest {
 
 		long result = _comments.addTrackbackComment(
 			userId, groupId, className, classPK, "__blogName__", "__title__",
-			"__body__", _serviceContextFunction
-		);
+			"__body__", _serviceContextFunction);
 
 		// Verify
 
@@ -129,7 +127,6 @@ public class TrackbackCommentsImplTest {
 	}
 
 	protected void setUpMessageBoards() throws Exception {
-
 		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
 
 		stub(
@@ -165,7 +162,6 @@ public class TrackbackCommentsImplTest {
 	}
 
 	protected void setUpServiceContext() {
-
 		when(
 			_serviceContextFunction.apply(MBMessage.class.getName())
 		).thenReturn(
@@ -173,7 +169,7 @@ public class TrackbackCommentsImplTest {
 		);
 	}
 
-	private final TrackbackCommentsImpl _comments = new TrackbackCommentsImpl();
+	private TrackbackCommentsImpl _comments = new TrackbackCommentsImpl();
 
 	@Mock
 	private MBMessage _mbMessage;

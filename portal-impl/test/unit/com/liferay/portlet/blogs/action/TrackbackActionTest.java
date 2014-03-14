@@ -228,7 +228,6 @@ public class TrackbackActionTest {
 	}
 
 	protected void setUpActionRequest() {
-
 		when(
 			_actionRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
@@ -249,12 +248,10 @@ public class TrackbackActionTest {
 	}
 
 	protected void setUpActionUtil() {
-
 		mockStatic(ActionUtil.class, new CallsRealMethods());
 	}
 
 	protected void setUpBlogsEntry() {
-
 		when(
 			_blogsEntry.isAllowTrackbacks()
 		).thenReturn(
@@ -263,7 +260,6 @@ public class TrackbackActionTest {
 	}
 
 	protected void setUpPortal() {
-
 		Portal portal = mock(Portal.class);
 
 		when(

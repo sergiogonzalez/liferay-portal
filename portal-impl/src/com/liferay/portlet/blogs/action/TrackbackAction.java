@@ -91,6 +91,7 @@ public class TrackbackAction extends PortletAction {
 		}
 		catch (TrackbackValidationException tve) {
 			sendError(actionRequest, actionResponse, tve.getMessage());
+
 			return;
 		}
 
@@ -118,8 +119,7 @@ public class TrackbackAction extends PortletAction {
 
 		_trackbacks.addTrackback(
 			entry, themeDisplay, excerpt, url, blogName, title,
-			new TrackbackServiceContextFunction(actionRequest)
-		);
+			new TrackbackServiceContextFunction(actionRequest));
 	}
 
 	@Override
@@ -189,8 +189,8 @@ public class TrackbackAction extends PortletAction {
 	}
 
 	protected BlogsEntry validate(
-		ActionRequest actionRequest, HttpServletRequest request, String url)
-	throws Exception {
+			ActionRequest actionRequest, HttpServletRequest request, String url)
+		throws Exception {
 
 		if (!isCommentsEnabled(actionRequest)) {
 			throw new TrackbackValidationException(
@@ -236,6 +236,6 @@ public class TrackbackAction extends PortletAction {
 
 	private static Log _log = LogFactoryUtil.getLog(TrackbackAction.class);
 
-	private final Trackbacks _trackbacks;
+	private Trackbacks _trackbacks;
 
 }
