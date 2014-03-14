@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
@@ -68,6 +67,7 @@ import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
@@ -130,19 +130,9 @@ public class DLAppHelperLocalServiceImpl
 
 		try {
 			if (fileVersion instanceof LiferayFileVersion) {
-				DLFileVersion dlFileVersion =
-					(DLFileVersion)fileVersion.getModel();
-
-				Map<String, Serializable> workflowContext =
-					new HashMap<String, Serializable>();
-
-				workflowContext.put("event", DLSyncConstants.EVENT_ADD);
-
-				WorkflowHandlerRegistryUtil.startWorkflowInstance(
-					dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
-					userId, DLFileEntryConstants.getClassName(),
-					dlFileVersion.getFileVersionId(), dlFileVersion,
-					serviceContext, workflowContext);
+				DLAppUtil.startWorkflowInstance(
+					userId, (DLFileVersion)fileVersion.getModel(),
+					DLSyncConstants.EVENT_ADD, serviceContext);
 			}
 		}
 		finally {
@@ -1540,7 +1530,10 @@ public class DLAppHelperLocalServiceImpl
 
 				// Subscriptions
 
-				notifySubscribers(latestFileVersion, serviceContext);
+				notifySubscribers(
+					latestFileVersion,
+					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+					serviceContext);
 			}
 		}
 		else {
@@ -1944,7 +1937,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected String getEntryURL(
-			FileVersion fileVersion, ServiceContext serviceContext)
+			long groupId, long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		HttpServletRequest request = serviceContext.getRequest();
@@ -1960,7 +1953,7 @@ public class DLAppHelperLocalServiceImpl
 
 		if (plid == controlPanelPlid) {
 			plid = PortalUtil.getPlidFromPortletId(
-				fileVersion.getGroupId(), PortletKeys.DOCUMENT_LIBRARY);
+				groupId, PortletKeys.DOCUMENT_LIBRARY);
 		}
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
@@ -1973,8 +1966,7 @@ public class DLAppHelperLocalServiceImpl
 
 		portletURL.setParameter(
 			"struts_action", "/document_library/view_file_entry");
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 		return portletURL.toString();
 	}
@@ -2002,7 +1994,8 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			FileVersion fileVersion, ServiceContext serviceContext)
+			FileVersion fileVersion, String entryURL,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();
@@ -2037,7 +2030,6 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		String entryTitle = fileVersion.getTitle();
-		String entryURL = getEntryURL(fileVersion, serviceContext);
 
 		String fromName = DLUtil.getEmailFromName(
 			preferences, fileVersion.getCompanyId());
