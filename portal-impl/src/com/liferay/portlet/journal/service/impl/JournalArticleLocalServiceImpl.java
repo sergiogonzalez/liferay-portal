@@ -5415,10 +5415,11 @@ public class JournalArticleLocalServiceImpl
 
 			// Subscriptions
 
-			notifySubscribers(
-				article,
-				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
-				serviceContext);
+			articleURL = buildNotificationArticleURL
+				((String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+				article);
+
+			notifySubscribers(article, articleURL, serviceContext);
 		}
 
 		return article;
@@ -5545,6 +5546,19 @@ public class JournalArticleLocalServiceImpl
 		sb.append(PortalUtil.getPortletNamespace(PortletKeys.JOURNAL));
 		sb.append("articleId=");
 		sb.append(articleId);
+
+		return sb.toString();
+	}
+
+	protected String buildNotificationArticleURL(
+		String url, JournalArticle article) {
+
+		StringBuilder sb = new StringBuilder(4);
+
+		sb.append(url);
+		sb.append(StringPool.AMPERSAND);
+		sb.append("doAsGroupId=");
+		sb.append(article.getGroupId());
 
 		return sb.toString();
 	}
