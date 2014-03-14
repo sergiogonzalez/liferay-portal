@@ -377,7 +377,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(user, message, serviceContext);
+		startWorkflowInstance(userId, message, serviceContext);
 
 		return message;
 	}
@@ -1464,7 +1464,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Message
 
-		User user = userPersistence.findByPrimaryKey(userId);
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
 		int oldStatus = message.getStatus();
@@ -1501,6 +1500,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 				// Thread
+
+				User user = userPersistence.findByPrimaryKey(userId);
 
 				updateThreadStatus(
 					thread, message, user, oldStatus, modifiedDate);
@@ -1597,7 +1598,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(user, message, serviceContext);
+		startWorkflowInstance(userId, message, serviceContext);
 
 		return message;
 	}
@@ -2203,7 +2204,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void startWorkflowInstance(
-			User user, MBMessage message, ServiceContext serviceContext)
+			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> workflowContext =
@@ -2214,7 +2215,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			getMessageURL(message, serviceContext));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), message.getGroupId(), user.getUserId(),
+			message.getCompanyId(), message.getGroupId(), userId,
 			message.getWorkflowClassName(), message.getMessageId(), message,
 			serviceContext, workflowContext);
 	}

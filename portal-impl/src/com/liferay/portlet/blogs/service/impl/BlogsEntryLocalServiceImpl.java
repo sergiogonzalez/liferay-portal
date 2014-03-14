@@ -217,7 +217,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(user, entry, serviceContext);
+		startWorkflowInstance(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -1124,7 +1124,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(user, entry, serviceContext);
+		startWorkflowInstance(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -1714,7 +1714,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void startWorkflowInstance(
-			User user, BlogsEntry entry, ServiceContext serviceContext)
+			long userId, BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> workflowContext =
@@ -1724,7 +1724,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			WorkflowConstants.CONTEXT_URL, getEntryURL(entry, serviceContext));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), entry.getGroupId(), user.getUserId(),
+			entry.getCompanyId(), entry.getGroupId(), userId,
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext, workflowContext);
 	}
