@@ -85,7 +85,7 @@ public class DLAppUtil {
 	}
 
 	public static void startWorkflowInstance(
-			long userId, DLFileVersion dlFileVersion, String syncEventType,
+			long userId, FileVersion fileVersion, String syncEventType,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -95,9 +95,9 @@ public class DLAppUtil {
 		workflowContext.put("event", syncEventType);
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL,
-			getEntryURL(
-				dlFileVersion.getGroupId(), dlFileVersion.getFileEntryId(),
-				serviceContext));
+			getEntryURL(fileVersion, serviceContext));
+
+		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
@@ -106,7 +106,7 @@ public class DLAppUtil {
 	}
 
 	protected static String getEntryURL(
-			long groupId, long fileEntryId, ServiceContext serviceContext)
+			FileVersion fileVersion, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		HttpServletRequest request = serviceContext.getRequest();
@@ -122,7 +122,7 @@ public class DLAppUtil {
 
 		if (plid == controlPanelPlid) {
 			plid = PortalUtil.getPlidFromPortletId(
-				groupId, PortletKeys.DOCUMENT_LIBRARY);
+				fileVersion.getGroupId(), PortletKeys.DOCUMENT_LIBRARY);
 		}
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
@@ -135,7 +135,8 @@ public class DLAppUtil {
 
 		portletURL.setParameter(
 			"struts_action", "/document_library/view_file_entry");
-		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
 
 		return portletURL.toString();
 	}
