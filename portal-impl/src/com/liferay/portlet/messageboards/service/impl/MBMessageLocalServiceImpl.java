@@ -1802,8 +1802,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updateStatus(
-			userId, messageId, status, new HashMap<String, Serializable>(),
-			serviceContext);
+			userId, messageId, status, Collections.EMPTY_MAP, serviceContext);
 	}
 
 	@Override

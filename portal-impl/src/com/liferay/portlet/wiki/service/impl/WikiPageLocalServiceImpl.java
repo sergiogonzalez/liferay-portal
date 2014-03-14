@@ -95,6 +95,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -2048,8 +2049,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		return updateStatus(
-			userId, page, status, new HashMap<String, Serializable>(),
-			serviceContext);
+			userId, page, status, Collections.EMPTY_MAP, serviceContext);
 	}
 
 	@Override
@@ -2219,8 +2219,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updateStatus(
-			userId, page, status, new HashMap<String, Serializable>(),
-			serviceContext);
+			userId, page, status, Collections.EMPTY_MAP, serviceContext);
 	}
 
 	@Override

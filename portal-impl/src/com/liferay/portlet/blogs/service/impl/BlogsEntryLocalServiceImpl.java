@@ -74,6 +74,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1306,8 +1307,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updateStatus(
-			userId, entryId, status, new HashMap<String, Serializable>(),
-			serviceContext);
+			userId, entryId, status, Collections.EMPTY_MAP, serviceContext);
 	}
 
 	protected String getEntryURL(
