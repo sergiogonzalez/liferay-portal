@@ -2415,9 +2415,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiPage page, String pageURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!page.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!page.isApproved() || Validator.isNull(pageURL)) {
 			return;
 		}
 

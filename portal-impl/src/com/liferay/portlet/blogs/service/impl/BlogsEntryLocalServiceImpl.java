@@ -1405,9 +1405,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry entry, String entryURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!entry.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!entry.isApproved() || Validator.isNull(entryURL)) {
 			return;
 		}
 
