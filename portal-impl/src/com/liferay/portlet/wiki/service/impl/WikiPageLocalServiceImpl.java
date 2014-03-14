@@ -2209,7 +2209,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
-	 *             int, Map, ServiceContext)} )}
+	 *             int, Map, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
