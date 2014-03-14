@@ -227,7 +227,7 @@ public class WikiPageStagedModelDataHandler
 					}
 
 					mimeType = MimeTypesUtil.getContentType(
-						inputStream, fileEntry.getTitle());
+						fileEntry.getTitle());
 
 					WikiPageLocalServiceUtil.addPageAttachment(
 						userId, importedPage.getNodeId(),
