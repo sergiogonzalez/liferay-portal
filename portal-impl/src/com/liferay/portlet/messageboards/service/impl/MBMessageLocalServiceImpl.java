@@ -1792,7 +1792,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	 *             int, Map, ServiceContext)} )}
+	 *             int, Map, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
