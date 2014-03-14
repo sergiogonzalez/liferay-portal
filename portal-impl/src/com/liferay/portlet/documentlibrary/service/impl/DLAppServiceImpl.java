@@ -465,13 +465,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileVersion draftFileVersion = repository.cancelCheckOut(fileEntryId);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
 		dlAppHelperLocalService.cancelCheckOut(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
-			draftFileVersion, serviceContext);
+			draftFileVersion);
 	}
 
 	/**
