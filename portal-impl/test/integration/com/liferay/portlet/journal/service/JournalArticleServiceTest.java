@@ -571,7 +571,7 @@ public class JournalArticleServiceTest {
 		}
 
 		return JournalTestUtil.updateArticle(
-			article, "Version 2", ServiceTestUtil.randomString(),
+			article, "Version 2", ServiceTestUtil.randomString(), false, true,
 			serviceContext);
 	}
 

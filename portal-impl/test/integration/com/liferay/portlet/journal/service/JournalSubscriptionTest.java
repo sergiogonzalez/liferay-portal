@@ -58,8 +58,8 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(), containerModelId);
+		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
+			group.getGroupId(), containerModelId, true);
 
 		return article.getResourcePrimKey();
 	}
@@ -87,8 +87,8 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 			JournalArticleLocalServiceUtil.getLatestArticle(
 				baseModelId, WorkflowConstants.STATUS_APPROVED, true);
 
-		article = JournalTestUtil.updateArticle(
-			article, ServiceTestUtil.randomString());
+		article = JournalTestUtil.updateArticleWithWorkflow(
+			article, ServiceTestUtil.randomString(), true);
 
 		return article.getResourcePrimKey();
 	}

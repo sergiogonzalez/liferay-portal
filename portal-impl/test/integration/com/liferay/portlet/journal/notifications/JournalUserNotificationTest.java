@@ -45,8 +45,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		return JournalTestUtil.addArticle(
-			group.getGroupId(), _folder.getFolderId());
+		return JournalTestUtil.addArticleWithWorkflow(
+			group.getGroupId(), _folder.getFolderId(), true);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		return JournalTestUtil.updateArticle(
-			(JournalArticle)baseModel, ServiceTestUtil.randomString());
+		return JournalTestUtil.updateArticleWithWorkflow(
+			(JournalArticle)baseModel, ServiceTestUtil.randomString(), true);
 	}
 
 	private JournalFolder _folder;

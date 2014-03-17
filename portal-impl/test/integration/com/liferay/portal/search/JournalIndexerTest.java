@@ -154,8 +154,8 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		JournalTestUtil.updateArticle(
-			article1, article1.getTitle(), "Architectural Approach",
-			serviceContext);
+			article1, article1.getTitle(), "Architectural Approach", false,
+			true, serviceContext);
 
 		JournalArticle article2 = JournalTestUtil.addArticleWithWorkflow(
 			_group.getGroupId(), folder.getFolderId(), "title",
@@ -166,7 +166,7 @@ public class JournalIndexerTest {
 			searchCount(_group.getGroupId(), searchContext));
 
 		JournalTestUtil.updateArticle(
-			article2, article2.getTitle(), "Architectural Tablet",
+			article2, article2.getTitle(), "Architectural Tablet", false, true,
 			serviceContext);
 
 		JournalArticleLocalServiceUtil.deleteArticles(_group.getGroupId());
@@ -219,7 +219,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
+			article, article.getTitle(), content, false, true, serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 2,
@@ -230,7 +230,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
+			article, article.getTitle(), content, false, true, serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 3,
@@ -542,7 +542,8 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), "Apple tablet", serviceContext);
+			article, article.getTitle(), "Apple tablet", false, true,
+			serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount1,
@@ -614,7 +615,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
+			article, article.getTitle(), content, false, true, serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 2,
@@ -794,7 +795,8 @@ public class JournalIndexerTest {
 		}
 
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), "Apple tablet", serviceContext);
+			article, article.getTitle(), "Apple tablet", false, true,
+			serviceContext);
 
 		if (approve) {
 			Assert.assertEquals(
