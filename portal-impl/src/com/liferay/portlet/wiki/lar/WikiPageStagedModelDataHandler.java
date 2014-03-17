@@ -197,7 +197,6 @@ public class WikiPageStagedModelDataHandler
 					(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
 				InputStream inputStream = null;
-				String mimeType = null;
 
 				try {
 					String binPath = attachmentElement.attributeValue(
@@ -234,7 +233,7 @@ public class WikiPageStagedModelDataHandler
 					try {
 						file = FileUtil.createTempFile(inputStream);
 
-						mimeType = MimeTypesUtil.getContentType(
+						String mimeType = MimeTypesUtil.getContentType(
 							file, fileEntry.getTitle());
 
 						WikiPageLocalServiceUtil.addPageAttachment(
