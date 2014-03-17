@@ -40,10 +40,17 @@ import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -137,12 +144,24 @@ public abstract class DLAppTestUtil {
 			groupId);
 
 		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
 
-		return addFileEntry(
+		FileEntry fileEntry = addFileEntry(
 			TestPropsValues.getUserId(), repositoryId, folderId, sourceFileName,
 			ContentTypes.TEXT_PLAIN, sourceFileName, null,
 			WorkflowConstants.ACTION_PUBLISH, serviceContext);
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		DLAppHelperLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileEntry,
+			fileEntry.getLatestFileVersion(), WorkflowConstants.STATUS_PENDING,
+			WorkflowConstants.STATUS_APPROVED, workflowContext, serviceContext);
+
+		return fileEntry;
 	}
 
 	public static FileEntry addFileEntry(
@@ -472,9 +491,22 @@ public abstract class DLAppTestUtil {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		return DLAppServiceUtil.updateFileEntry(
+		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, bytes, serviceContext);
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		DLAppHelperLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileEntry,
+			fileEntry.getLatestFileVersion(), WorkflowConstants.STATUS_PENDING,
+			WorkflowConstants.STATUS_APPROVED, workflowContext, serviceContext);
+
+		return fileEntry;
 	}
 
 	public static void updateFolderFileEntryType(
