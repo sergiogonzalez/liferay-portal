@@ -469,10 +469,7 @@ public class JournalArticleLocalServiceImpl
 		// Workflow
 
 		if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				user.getCompanyId(), groupId, userId,
-				JournalArticle.class.getName(), article.getId(), article,
-				serviceContext);
+			startWorkflowInstance(userId, article, serviceContext);
 		}
 		else {
 			updateStatus(
@@ -4880,10 +4877,7 @@ public class JournalArticleLocalServiceImpl
 			sendEmail(
 				article, articleURL, preferences, "requested", serviceContext);
 
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				user.getCompanyId(), groupId, userId,
-				JournalArticle.class.getName(), article.getId(), article,
-				serviceContext);
+			startWorkflowInstance(userId, article, serviceContext);
 		}
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
@@ -5421,7 +5415,10 @@ public class JournalArticleLocalServiceImpl
 
 			// Subscriptions
 
-			notifySubscribers(article, serviceContext);
+			notifySubscribers(
+				article,
+				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+				serviceContext);
 		}
 
 		return article;
@@ -6361,22 +6358,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			JournalArticle article, ServiceContext serviceContext)
+			JournalArticle article, String articleURL,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!article.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!article.isApproved() || Validator.isNull(articleURL)) {
 			return;
 		}
 
 		String articleTitle = article.getTitle(serviceContext.getLanguageId());
-		String articleURL = PortalUtil.getControlPanelFullURL(
-			serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null);
-
-		if (Validator.isNull(articleURL)) {
-			return;
-		}
 
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
@@ -6611,6 +6601,29 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected void startWorkflowInstance(
+			long userId, JournalArticle article, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		Map<String, String[]> params = new HashMap<String, String[]>();
+
+		params.put(
+			"doAsGroupId", new String[] {String.valueOf(article.getGroupId())});
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL,
+			PortalUtil.getControlPanelFullURL(
+				serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, params));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			article.getCompanyId(), article.getGroupId(), userId,
+			JournalArticle.class.getName(), article.getId(), article,
+			serviceContext, workflowContext);
 	}
 
 	protected void updateDDMStructureXSD(

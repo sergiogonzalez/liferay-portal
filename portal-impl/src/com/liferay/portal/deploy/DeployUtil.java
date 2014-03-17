@@ -14,6 +14,8 @@
 
 package com.liferay.portal.deploy;
 
+import com.liferay.portal.ant.CopyTask;
+import com.liferay.portal.ant.DeleteTask;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,8 +33,6 @@ import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ant.CopyTask;
-import com.liferay.util.ant.DeleteTask;
 
 import java.io.File;
 import java.io.FileOutputStream;

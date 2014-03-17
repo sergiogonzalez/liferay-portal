@@ -395,11 +395,11 @@ public class BlogsEntryLocalServiceUtil {
 		getService().deleteEntries(groupId);
 	}
 
-	public static void deleteEntry(
+	public static com.liferay.portlet.blogs.model.BlogsEntry deleteEntry(
 		com.liferay.portlet.blogs.model.BlogsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteEntry(entry);
+		return getService().deleteEntry(entry);
 	}
 
 	public static void deleteEntry(long entryId)
@@ -782,10 +782,11 @@ public class BlogsEntryLocalServiceUtil {
 	counter could not be updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void restoreEntryFromTrash(long userId, long entryId)
+	public static com.liferay.portlet.blogs.model.BlogsEntry restoreEntryFromTrash(
+		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().restoreEntryFromTrash(userId, entryId);
+		return getService().restoreEntryFromTrash(userId, entryId);
 	}
 
 	public static void subscribe(long userId, long groupId)
@@ -840,6 +841,22 @@ public class BlogsEntryLocalServiceUtil {
 			.updateEntryResources(entry, groupPermissions, guestPermissions);
 	}
 
+	public static com.liferay.portlet.blogs.model.BlogsEntry updateStatus(
+		long userId, long entryId, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStatus(userId, entryId, status, workflowContext,
+			serviceContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	int, Map, ServiceContext)} )}
+	*/
+	@Deprecated
 	public static com.liferay.portlet.blogs.model.BlogsEntry updateStatus(
 		long userId, long entryId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)

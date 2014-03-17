@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -72,6 +74,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -103,6 +106,7 @@ import net.htmlparser.jericho.StartTag;
  */
 public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry addEntry(
 			long userId, String title, String description, String content,
@@ -212,9 +216,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId, BlogsEntry.class.getName(),
-			entry.getEntryId(), entry, serviceContext);
+		startWorkflowInstance(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -296,7 +298,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED,
+				new HashMap<String, Serializable>(), serviceContext);
 		}
 	}
 
@@ -305,12 +308,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		for (BlogsEntry entry : blogsEntryPersistence.findByGroupId(groupId)) {
-			deleteEntry(entry);
+			blogsEntryLocalService.deleteEntry(entry);
 		}
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public void deleteEntry(BlogsEntry entry)
+	public BlogsEntry deleteEntry(BlogsEntry entry)
 		throws PortalException, SystemException {
 
 		// Entry
@@ -374,6 +378,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			entry.getCompanyId(), entry.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId());
+
+		return entry;
 	}
 
 	@Override
@@ -382,7 +388,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		deleteEntry(entry);
+		blogsEntryLocalService.deleteEntry(entry);
 	}
 
 	/**
@@ -854,7 +860,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		List<BlogsEntry> entries = blogsEntryPersistence.findByGroupId(groupId);
 
 		for (BlogsEntry entry : entries) {
-			moveEntryToTrash(userId, entry);
+			blogsEntryLocalService.moveEntryToTrash(userId, entry);
 		}
 	}
 
@@ -870,6 +876,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 *         be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
 		throws PortalException, SystemException {
@@ -886,7 +893,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		entry = updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
-			new ServiceContext());
+			new HashMap<String, Serializable>(), new ServiceContext());
 
 		// Social
 
@@ -927,7 +934,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		return moveEntryToTrash(userId, entry);
+		return blogsEntryLocalService.moveEntryToTrash(userId, entry);
 	}
 
 	/**
@@ -941,8 +948,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 *         counter could not be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void restoreEntryFromTrash(long userId, long entryId)
+	public BlogsEntry restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 
 		// Entry
@@ -951,7 +959,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class.getName(), entryId);
 
 		BlogsEntry entry = updateStatus(
-			userId, entryId, trashEntry.getStatus(), new ServiceContext());
+			userId, entryId, trashEntry.getStatus(),
+			new HashMap<String, Serializable>(), new ServiceContext());
 
 		// Social
 
@@ -963,6 +972,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, trashEntry.getGroupId(), BlogsEntry.class.getName(),
 			entryId, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		return entry;
 	}
 
 	@Override
@@ -1009,6 +1020,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry updateEntry(
 			long userId, long entryId, String title, String description,
@@ -1113,10 +1125,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), entry.getGroupId(), userId,
-			BlogsEntry.class.getName(), entry.getEntryId(), entry,
-			serviceContext);
+		startWorkflowInstance(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -1133,9 +1142,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry updateStatus(
 			long userId, long entryId, int status,
+			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -1166,9 +1177,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		blogsStatsUserLocalService.updateStatsUser(
 			entry.getGroupId(), entry.getUserId(), entry.getDisplayDate());
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BlogsEntry.class);
 
 		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 			BlogsEntry.class.getName(), entryId);
@@ -1217,15 +1225,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					BlogsEntry.class.getName(), entryId);
 			}
 
-			// Indexer
-
-			indexer.reindex(entry);
-
 			if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
 
 				// Subscriptions
 
-				notifySubscribers(entry, serviceContext);
+				notifySubscribers(
+					entry,
+					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+					serviceContext);
 
 				// Ping
 
@@ -1280,18 +1287,25 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				trashEntryLocalService.deleteEntry(
 					BlogsEntry.class.getName(), entryId);
 			}
-
-			// Indexer
-
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-				indexer.reindex(entry);
-			}
-			else {
-				indexer.delete(entry);
-			}
 		}
 
 		return entry;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	 *             int, Map, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public BlogsEntry updateStatus(
+			long userId, long entryId, int status,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateStatus(
+			userId, entryId, status, new HashMap<String, Serializable>(),
+			serviceContext);
 	}
 
 	protected String getEntryURL(
@@ -1389,12 +1403,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			BlogsEntry entry, ServiceContext serviceContext)
+			BlogsEntry entry, String entryURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!entry.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!entry.isApproved() || Validator.isNull(entryURL)) {
 			return;
 		}
 
@@ -1424,7 +1436,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		String entryTitle = entry.getTitle();
-		String entryURL = getEntryURL(entry, serviceContext);
 
 		String fromName = BlogsUtil.getEmailFromName(
 			preferences, entry.getCompanyId());
@@ -1699,6 +1710,22 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		else {
 			imageLocalService.deleteImage(smallImageId);
 		}
+	}
+
+	protected void startWorkflowInstance(
+			long userId, BlogsEntry entry, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL, getEntryURL(entry, serviceContext));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			entry.getCompanyId(), entry.getGroupId(), userId,
+			BlogsEntry.class.getName(), entry.getEntryId(), entry,
+			serviceContext, workflowContext);
 	}
 
 	protected void validate(

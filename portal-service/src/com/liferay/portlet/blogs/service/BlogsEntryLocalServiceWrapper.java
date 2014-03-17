@@ -422,10 +422,11 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
-	public void deleteEntry(com.liferay.portlet.blogs.model.BlogsEntry entry)
+	public com.liferay.portlet.blogs.model.BlogsEntry deleteEntry(
+		com.liferay.portlet.blogs.model.BlogsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_blogsEntryLocalService.deleteEntry(entry);
+		return _blogsEntryLocalService.deleteEntry(entry);
 	}
 
 	@Override
@@ -830,10 +831,11 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public void restoreEntryFromTrash(long userId, long entryId)
+	public com.liferay.portlet.blogs.model.BlogsEntry restoreEntryFromTrash(
+		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_blogsEntryLocalService.restoreEntryFromTrash(userId, entryId);
+		return _blogsEntryLocalService.restoreEntryFromTrash(userId, entryId);
 	}
 
 	@Override
@@ -891,6 +893,22 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			guestPermissions);
 	}
 
+	@Override
+	public com.liferay.portlet.blogs.model.BlogsEntry updateStatus(
+		long userId, long entryId, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.updateStatus(userId, entryId, status,
+			workflowContext, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	int, Map, ServiceContext)} )}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.blogs.model.BlogsEntry updateStatus(
 		long userId, long entryId, int status,

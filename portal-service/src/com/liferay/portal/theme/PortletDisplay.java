@@ -14,6 +14,7 @@
 
 package com.liferay.portal.theme;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -215,7 +216,9 @@ public class PortletDisplay implements Serializable {
 		return _namespace;
 	}
 
-	public Settings getPortletInstanceSettings() throws SystemException {
+	public Settings getPortletInstanceSettings()
+		throws PortalException, SystemException {
+
 		String portletId = _id;
 
 		if (Validator.isNotNull(_portletResource)) {
