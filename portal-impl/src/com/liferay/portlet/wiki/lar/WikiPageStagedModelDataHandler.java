@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -37,6 +38,8 @@ import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -226,13 +229,26 @@ public class WikiPageStagedModelDataHandler
 						continue;
 					}
 
-					mimeType = MimeTypesUtil.getContentType(
-						inputStream, fileEntry.getTitle());
+					File file = null;
 
-					WikiPageLocalServiceUtil.addPageAttachment(
-						userId, importedPage.getNodeId(),
-						importedPage.getTitle(), fileEntry.getTitle(),
-						inputStream, mimeType);
+					try {
+						file = FileUtil.createTempFile(inputStream);
+
+						mimeType = MimeTypesUtil.getContentType(
+							file, fileEntry.getTitle());
+
+						WikiPageLocalServiceUtil.addPageAttachment(
+							userId, importedPage.getNodeId(),
+							importedPage.getTitle(), fileEntry.getTitle(), file,
+							mimeType);
+					}
+					catch (IOException ioe) {
+						throw new SystemException(
+							"Unable to write temporary file", ioe);
+					}
+					finally {
+						FileUtil.delete(file);
+					}
 				}
 				finally {
 					StreamUtil.cleanUp(inputStream);
