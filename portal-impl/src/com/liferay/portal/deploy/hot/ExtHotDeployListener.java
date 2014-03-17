@@ -14,6 +14,7 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.portal.ant.CopyTask;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.ant.CopyTask;
 
 import java.io.File;
 import java.io.FileOutputStream;

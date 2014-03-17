@@ -44,6 +44,18 @@ AUI.add(
 
 					editor: {},
 
+					fieldPrefix: {
+						validator: Lang.isString
+					},
+
+					fieldPrefixSeparator: {
+						validator: Lang.isString
+					},
+
+					id: {
+						validator: Lang.isString
+					},
+
 					name: {
 						validator: Lang.isString
 					},
@@ -108,7 +120,7 @@ AUI.add(
 				prototype: {
 					BOUNDING_TEMPLATE: '<span />',
 
-					INPUT_HIDDEN_TEMPLATE: '<input id="{namespace}{value}" name="{name}{value}" type="hidden" value="" />',
+					INPUT_HIDDEN_TEMPLATE: '<input id="{namespace}{id}_{value}" name="{namespace}{fieldNamePrefix}{name}_{value}{fieldNameSuffix}" type="hidden" value="" />',
 
 					ITEM_TEMPLATE: '<td class="palette-item {selectedClassName}" data-column={column} data-index={index} data-row={row} data-value="{value}">' +
 						'<a href="" class="palette-item-inner" onclick="return false;">' +
@@ -136,6 +148,19 @@ AUI.add(
 						];
 
 						instance._eventHandles = eventHandles;
+
+						instance.get('boundingBox').plug(
+							A.Plugin.NodeFocusManager,
+							{
+								descendants: '.palette-item a',
+								keys: {
+									next: 'down:39,40',
+									previous: 'down:37,38'
+								}
+							}
+						);
+
+						instance._inputPlaceholderDescription = inputPlaceholder.get('parentNode').one('#' + inputPlaceholder.attr('id') + '_desc');
 					},
 
 					destructor: function() {
@@ -186,6 +211,8 @@ AUI.add(
 						if (editor) {
 							editor.setHTML(inputPlaceholder.val());
 						}
+
+						instance._inputPlaceholderDescription.text(instance._flags.one('[data-languageId="' + languageId + '"]').attr('alt'));
 					},
 
 					updateInputLanguage: function(value) {
@@ -269,16 +296,30 @@ AUI.add(
 						var instance = this;
 
 						var boundingBox = instance.get('boundingBox');
+						var fieldPrefix = instance.get('fieldPrefix');
+						var fieldPrefixSeparator = instance.get('fieldPrefixSeparator');
+						var id = instance.get('id');
 						var name = instance.get('name');
 						var namespace = instance.get('namespace');
 
-						var inputLanguage = boundingBox.one('#' + namespace + languageId);
+						var fieldNamePrefix = STR_BLANK;
+						var fieldNameSuffix = STR_BLANK;
+
+						if (fieldPrefix) {
+							fieldNamePrefix = fieldPrefix + fieldPrefixSeparator;
+							fieldNameSuffix = fieldPrefixSeparator;
+						}
+
+						var inputLanguage = boundingBox.one('#' + namespace + id + '_' + languageId);
 
 						if (!inputLanguage) {
 							inputLanguage = A.Node.create(
 								A.Lang.sub(
 									instance.INPUT_HIDDEN_TEMPLATE,
 									{
+										fieldNamePrefix: fieldNamePrefix,
+										fieldNameSuffix: fieldNameSuffix,
+										id: id,
 										name: name,
 										namespace: namespace,
 										value: languageId

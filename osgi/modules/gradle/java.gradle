@@ -15,7 +15,7 @@ dependencies {
 
 	bnd fileTree(
 		dir:"${liferayProjectDir}/lib/portal",
-		includes: ["**/bnd.jar"]
+		includes: ["**/bnd.jar","portal-ant-shared.jar"]
 	)
 }
 
@@ -79,13 +79,13 @@ task baseline << {
 	)
 
 	ant.taskdef(
-		classname: "com.liferay.util.ant.bnd.BaselineJarTask",
+		classname: "com.liferay.portal.ant.bnd.BaselineJarTask",
 		classpath: configurations.bnd.asPath,
 		name: "bnd"
 	)
 
 	ant.taskdef(
-		classname: "com.liferay.util.ant.ManifestHelperTask",
+		classname: "com.liferay.portal.ant.ManifestHelperTask",
 		classpath: configurations.bnd.asPath,
 		name: "manifestHelper"
 	)

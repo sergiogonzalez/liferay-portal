@@ -14,10 +14,10 @@
 
 package com.liferay.portal.deploy.sandbox;
 
+import com.liferay.portal.ant.CopyTask;
 import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.ant.CopyTask;
 
 import java.io.File;
 

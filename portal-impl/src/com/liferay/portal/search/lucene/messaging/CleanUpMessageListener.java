@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.lucene.messaging;
 
+import com.liferay.portal.ant.DeleteTask;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.util.ant.DeleteTask;
 
 /**
  * @author Brian Wing Shun Chan

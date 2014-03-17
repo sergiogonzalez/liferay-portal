@@ -16,7 +16,6 @@ package com.liferay.portlet;
 
 import com.liferay.portal.dao.shard.ShardPollerProcessorWrapper;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
-import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
+import com.liferay.portal.kernel.portlet.ResourceBundleTracker;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -60,9 +59,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
-import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -77,24 +74,19 @@ import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.xmlrpc.XmlRpcServlet;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
-import com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestInterpreterImpl;
-import com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 import com.liferay.util.portlet.PortletProps;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -152,52 +144,21 @@ public class PortletBagFactory {
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
 			newSocialActivityInterpreterInstances(portlet);
 
-		SocialRequestInterpreter socialRequestInterpreterInstance = null;
-
-		if (Validator.isNotNull(portlet.getSocialRequestInterpreterClass())) {
-			socialRequestInterpreterInstance =
-				(SocialRequestInterpreter)newInstance(
-					SocialRequestInterpreter.class,
-					portlet.getSocialRequestInterpreterClass());
-
-			socialRequestInterpreterInstance = new SocialRequestInterpreterImpl(
-				portlet.getPortletId(), socialRequestInterpreterInstance);
-
-			SocialRequestInterpreterLocalServiceUtil.addRequestInterpreter(
-				socialRequestInterpreterInstance);
-		}
+		List<SocialRequestInterpreter> socialRequestInterpreterInstances =
+			newSocialRequestInterpreterInstances(portlet);
 
 		List<UserNotificationHandler> userNotificationHandlerInstances =
 			newUserNotificationHandlerInstances(portlet);
 
 		initUserNotificationDefinition(portlet);
 
-		WebDAVStorage webDAVStorageInstance = null;
+		List<WebDAVStorage> webDAVStorageInstances = newWebDAVStorageInstances(
+			portlet);
 
-		if (Validator.isNotNull(portlet.getWebDAVStorageClass())) {
-			webDAVStorageInstance = (WebDAVStorage)newInstance(
-				WebDAVStorage.class, portlet.getWebDAVStorageClass());
+		List<Method> xmlRpcMethodInstances = newXmlRpcMethodInstances(portlet);
 
-			webDAVStorageInstance.setToken(portlet.getWebDAVStorageToken());
-
-			WebDAVUtil.addStorage(webDAVStorageInstance);
-		}
-
-		Method xmlRpcMethodInstance = null;
-
-		if (Validator.isNotNull(portlet.getXmlRpcMethodClass())) {
-			xmlRpcMethodInstance = (Method)newInstance(
-				Method.class, portlet.getXmlRpcMethodClass());
-
-			XmlRpcServlet.registerMethod(xmlRpcMethodInstance);
-		}
-
-		ControlPanelEntry controlPanelEntryInstance = null;
-
-		if (Validator.isNotNull(portlet.getControlPanelEntryClass())) {
-			controlPanelEntryInstance = (ControlPanelEntry)newInstance(
-				ControlPanelEntry.class, portlet.getControlPanelEntryClass());
-		}
+		List<ControlPanelEntry> controlPanelEntryInstances =
+			newControlPanelEntryInstances(portlet);
 
 		List<AssetRendererFactory> assetRendererFactoryInstances =
 			newAssetRendererFactoryInstances(portlet);
@@ -206,96 +167,33 @@ public class PortletBagFactory {
 			newAtomCollectionAdapterInstances(portlet);
 
 		List<CustomAttributesDisplay> customAttributesDisplayInstances =
-			new ArrayList<CustomAttributesDisplay>();
+			newCustomAttributesDisplayInstances(portlet);
 
-		for (String customAttributesDisplayClass :
-				portlet.getCustomAttributesDisplayClasses()) {
+		List<DDMDisplay> ddmDisplayInstances = newDDMDisplayInstances(portlet);
 
-			CustomAttributesDisplay customAttributesDisplayInstance =
-				(CustomAttributesDisplay)newInstance(
-					CustomAttributesDisplay.class,
-					customAttributesDisplayClass);
+		List<PermissionPropagator> permissionPropagatorInstances =
+			newPermissionPropagators(portlet);
 
-			customAttributesDisplayInstance.setClassNameId(
-				PortalUtil.getClassNameId(
-					customAttributesDisplayInstance.getClassName()));
-			customAttributesDisplayInstance.setPortletId(
-				portlet.getPortletId());
-
-			customAttributesDisplayInstances.add(
-				customAttributesDisplayInstance);
-		}
-
-		DDMDisplay ddmDisplayInstance = newDDMDisplay(portlet);
-
-		if (ddmDisplayInstance != null) {
-			DDMDisplayRegistryUtil.register(ddmDisplayInstance);
-		}
-
-		PermissionPropagator permissionPropagatorInstance =
-			newPermissionPropagator(portlet);
-
-		List<TrashHandler> trashHandlerInstances =
-			new ArrayList<TrashHandler>();
-
-		for (String trashHandlerClass : portlet.getTrashHandlerClasses()) {
-			TrashHandler trashHandlerInstance = (TrashHandler)newInstance(
-				TrashHandler.class, trashHandlerClass);
-
-			trashHandlerInstances.add(trashHandlerInstance);
-
-			TrashHandlerRegistryUtil.register(trashHandlerInstance);
-		}
+		List<TrashHandler> trashHandlerInstances = newTrashHandlerInstances(
+			portlet);
 
 		List<WorkflowHandler> workflowHandlerInstances =
-			new ArrayList<WorkflowHandler>();
+			newWorkflowHandlerInstances(portlet);
 
-		for (String workflowHandlerClass :
-				portlet.getWorkflowHandlerClasses()) {
+		List<PreferencesValidator> preferencesValidatorInstances =
+			newPreferencesValidatorInstances(portlet);
 
-			WorkflowHandler workflowHandlerInstance =
-				(WorkflowHandler)newInstance(
-					WorkflowHandler.class, workflowHandlerClass);
-
-			workflowHandlerInstances.add(workflowHandlerInstance);
-
-			WorkflowHandlerRegistryUtil.register(workflowHandlerInstance);
-		}
-
-		PreferencesValidator preferencesValidatorInstance = null;
-
-		if (Validator.isNotNull(portlet.getPreferencesValidator())) {
-			preferencesValidatorInstance = (PreferencesValidator)newInstance(
-				PreferencesValidator.class, portlet.getPreferencesValidator());
-
-			try {
-				if (PropsValues.PREFERENCE_VALIDATE_ON_STARTUP) {
-					preferencesValidatorInstance.validate(
-						PortletPreferencesFactoryUtil.fromDefaultXML(
-							portlet.getDefaultPreferences()));
-				}
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Portlet with the name " + portlet.getPortletId() +
-							" does not have valid default preferences");
-				}
-			}
-		}
-
-		Map<String, ResourceBundle> resourceBundles = null;
+		ResourceBundleTracker resourceBundleTracker = new ResourceBundleTracker(
+			portlet.getPortletId());
 
 		String resourceBundle = portlet.getResourceBundle();
 
 		if (Validator.isNotNull(resourceBundle) &&
 			!resourceBundle.equals(StrutsResourceBundle.class.getName())) {
 
-			resourceBundles = new HashMap<String, ResourceBundle>();
-
-			initResourceBundle(resourceBundles, portlet, null);
+			initResourceBundle(resourceBundleTracker, portlet, null);
 			initResourceBundle(
-				resourceBundles, portlet, LocaleUtil.getDefault());
+				resourceBundleTracker, portlet, LocaleUtil.getDefault());
 
 			Set<String> supportedLanguageIds = portlet.getSupportedLocales();
 
@@ -306,25 +204,25 @@ public class PortletBagFactory {
 			for (String supportedLanguageId : supportedLanguageIds) {
 				Locale locale = LocaleUtil.fromLanguageId(supportedLanguageId);
 
-				initResourceBundle(resourceBundles, portlet, locale);
+				initResourceBundle(resourceBundleTracker, portlet, locale);
 			}
 		}
 
 		PortletBag portletBag = new PortletBagImpl(
 			portlet.getPortletId(), _servletContext, portletInstance,
-			configurationActionInstances, indexerInstances, openSearchInstances,
-			friendlyURLMapperInstances, urlEncoderInstances,
-			portletDataHandlerInstances, stagedModelDataHandlerInstances,
-			templateHandlerInstances, portletLayoutListenerInstances,
-			pollerProcessorInstances, popMessageListenerInstances,
-			socialActivityInterpreterInstances,
-			socialRequestInterpreterInstance, userNotificationHandlerInstances,
-			webDAVStorageInstance, xmlRpcMethodInstance,
-			controlPanelEntryInstance, assetRendererFactoryInstances,
+			resourceBundleTracker, configurationActionInstances,
+			indexerInstances, openSearchInstances, friendlyURLMapperInstances,
+			urlEncoderInstances, portletDataHandlerInstances,
+			stagedModelDataHandlerInstances, templateHandlerInstances,
+			portletLayoutListenerInstances, pollerProcessorInstances,
+			popMessageListenerInstances, socialActivityInterpreterInstances,
+			socialRequestInterpreterInstances, userNotificationHandlerInstances,
+			webDAVStorageInstances, xmlRpcMethodInstances,
+			controlPanelEntryInstances, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
-			permissionPropagatorInstance, trashHandlerInstances,
-			workflowHandlerInstances, preferencesValidatorInstance,
-			resourceBundles);
+			ddmDisplayInstances, permissionPropagatorInstances,
+			trashHandlerInstances, workflowHandlerInstances,
+			preferencesValidatorInstances);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -485,7 +383,7 @@ public class PortletBagFactory {
 	}
 
 	protected void initResourceBundle(
-		Map<String, ResourceBundle> resourceBundles, Portlet portlet,
+		ResourceBundleTracker resourceBundleTracker, Portlet portlet,
 		Locale locale) {
 
 		try {
@@ -496,7 +394,9 @@ public class PortletBagFactory {
 				ResourceBundle parentResourceBundle = null;
 
 				if (locale != null) {
-					parentResourceBundle = resourceBundles.get(null);
+					parentResourceBundle =
+						resourceBundleTracker.getResouceBundle(
+							StringPool.BLANK);
 				}
 
 				ResourceBundle resourceBundle = new LiferayResourceBundle(
@@ -508,7 +408,7 @@ public class PortletBagFactory {
 					languageId = LocaleUtil.toLanguageId(locale);
 				}
 
-				resourceBundles.put(languageId, resourceBundle);
+				resourceBundleTracker.register(languageId, resourceBundle);
 			}
 		}
 		catch (Exception e) {
@@ -628,29 +528,12 @@ public class PortletBagFactory {
 		}
 	}
 
-	protected AssetRendererFactory newAssetRendererFactoryInstance(
-			Portlet portlet, String assetRendererFactoryClass)
-		throws Exception {
-
-		AssetRendererFactory assetRendererFactoryInstance =
-			(AssetRendererFactory)newInstance(
-				AssetRendererFactory.class, assetRendererFactoryClass);
-
-		assetRendererFactoryInstance.setClassName(
-			assetRendererFactoryInstance.getClassName());
-		assetRendererFactoryInstance.setPortletId(portlet.getPortletId());
-
-		AssetRendererFactoryRegistryUtil.register(assetRendererFactoryInstance);
-
-		return assetRendererFactoryInstance;
-	}
-
 	protected List<AssetRendererFactory> newAssetRendererFactoryInstances(
 			Portlet portlet)
 		throws Exception {
 
-		List<AssetRendererFactory> assetRendererFactoryInstances =
-			new ArrayList<AssetRendererFactory>();
+		ServiceTrackerList<AssetRendererFactory> assetRendererFactoryInstances =
+			getServiceTrackerList(AssetRendererFactory.class, portlet);
 
 		for (String assetRendererFactoryClass :
 				portlet.getAssetRendererFactoryClasses()) {
@@ -674,8 +557,13 @@ public class PortletBagFactory {
 
 			if (assetRendererEnabledValue) {
 				AssetRendererFactory assetRendererFactoryInstance =
-					newAssetRendererFactoryInstance(
-						portlet, assetRendererFactoryClass);
+					(AssetRendererFactory)newInstance(
+						AssetRendererFactory.class, assetRendererFactoryClass);
+
+				assetRendererFactoryInstance.setClassName(
+					assetRendererFactoryInstance.getClassName());
+				assetRendererFactoryInstance.setPortletId(
+					portlet.getPortletId());
 
 				assetRendererFactoryInstances.add(assetRendererFactoryInstance);
 			}
@@ -688,8 +576,10 @@ public class PortletBagFactory {
 			Portlet portlet)
 		throws Exception {
 
-		List<AtomCollectionAdapter<?>> atomCollectionAdapterInstances =
-			new ArrayList<AtomCollectionAdapter<?>>();
+		ServiceTrackerList<AtomCollectionAdapter<?>>
+			atomCollectionAdapterInstances = getServiceTrackerList(
+				(Class<AtomCollectionAdapter<?>>)(Class<?>)
+					AtomCollectionAdapter.class, portlet);
 
 		for (String atomCollectionAdapterClass :
 				portlet.getAtomCollectionAdapterClasses()) {
@@ -697,9 +587,6 @@ public class PortletBagFactory {
 			AtomCollectionAdapter<?> atomCollectionAdapterInstance =
 				(AtomCollectionAdapter<?>)newInstance(
 					AtomCollectionAdapter.class, atomCollectionAdapterClass);
-
-			AtomCollectionAdapterRegistryUtil.register(
-				atomCollectionAdapterInstance);
 
 			atomCollectionAdapterInstances.add(atomCollectionAdapterInstance);
 		}
@@ -725,13 +612,68 @@ public class PortletBagFactory {
 		return configurationActionInstances;
 	}
 
-	protected DDMDisplay newDDMDisplay(Portlet portlet) throws Exception {
-		if (Validator.isNull(portlet.getDDMDisplayClass())) {
-			return null;
+	protected List<ControlPanelEntry> newControlPanelEntryInstances(
+			Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<ControlPanelEntry> controlPanelEntryInstances =
+			getServiceTrackerList(ControlPanelEntry.class, portlet);
+
+		if (Validator.isNotNull(portlet.getControlPanelEntryClass())) {
+			ControlPanelEntry controlPanelEntryInstance =
+				(ControlPanelEntry)newInstance(
+					ControlPanelEntry.class,
+					portlet.getControlPanelEntryClass());
+
+			controlPanelEntryInstances.add(controlPanelEntryInstance);
 		}
 
-		return (DDMDisplay)newInstance(
-			DDMDisplay.class, portlet.getDDMDisplayClass());
+		return controlPanelEntryInstances;
+	}
+
+	protected List<CustomAttributesDisplay> newCustomAttributesDisplayInstances(
+			Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<CustomAttributesDisplay>
+			customAttributesDisplayInstances = getServiceTrackerList(
+				CustomAttributesDisplay.class, portlet);
+
+		for (String customAttributesDisplayClass :
+				portlet.getCustomAttributesDisplayClasses()) {
+
+			CustomAttributesDisplay customAttributesDisplayInstance =
+				(CustomAttributesDisplay)newInstance(
+					CustomAttributesDisplay.class,
+					customAttributesDisplayClass);
+
+			customAttributesDisplayInstance.setClassNameId(
+				PortalUtil.getClassNameId(
+					customAttributesDisplayInstance.getClassName()));
+			customAttributesDisplayInstance.setPortletId(
+				portlet.getPortletId());
+
+			customAttributesDisplayInstances.add(
+				customAttributesDisplayInstance);
+		}
+
+		return customAttributesDisplayInstances;
+	}
+
+	protected List<DDMDisplay> newDDMDisplayInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<DDMDisplay> ddmDisplayInstances =
+			getServiceTrackerList(DDMDisplay.class, portlet);
+
+		if (Validator.isNotNull(portlet.getDDMDisplayClass())) {
+			DDMDisplay ddmDisplayInstance = (DDMDisplay)newInstance(
+				DDMDisplay.class, portlet.getDDMDisplayClass());
+
+			ddmDisplayInstances.add(ddmDisplayInstance);
+		}
+
+		return ddmDisplayInstances;
 	}
 
 	protected List<FriendlyURLMapper> newFriendlyURLMappers(Portlet portlet)
@@ -878,15 +820,23 @@ public class PortletBagFactory {
 		return openSearchInstances;
 	}
 
-	protected PermissionPropagator newPermissionPropagator(Portlet portlet)
+	protected List<PermissionPropagator> newPermissionPropagators(
+			Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getPermissionPropagatorClass())) {
-			return null;
+		ServiceTrackerList<PermissionPropagator> permissionPropagatorInstances =
+			getServiceTrackerList(PermissionPropagator.class, portlet);
+
+		if (Validator.isNotNull(portlet.getPermissionPropagatorClass())) {
+			PermissionPropagator permissionPropagatorInstance =
+				(PermissionPropagator)newInstance(
+					PermissionPropagator.class,
+					portlet.getPermissionPropagatorClass());
+
+			permissionPropagatorInstances.add(permissionPropagatorInstance);
 		}
 
-		return (PermissionPropagator)newInstance(
-			PermissionPropagator.class, portlet.getPermissionPropagatorClass());
+		return permissionPropagatorInstances;
 	}
 
 	protected List<PollerProcessor> newPollerProcessors(Portlet portlet)
@@ -969,6 +919,41 @@ public class PortletBagFactory {
 		return portletLayoutListenerInstances;
 	}
 
+	protected List<PreferencesValidator> newPreferencesValidatorInstances(
+			Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<PreferencesValidator>
+			preferencesValidatorInstances = getServiceTrackerList(
+				PreferencesValidator.class, portlet);
+
+		if (Validator.isNotNull(portlet.getPreferencesValidator())) {
+			PreferencesValidator preferencesValidatorInstance =
+				(PreferencesValidator)newInstance(
+					PreferencesValidator.class,
+					portlet.getPreferencesValidator());
+
+			try {
+				if (PropsValues.PREFERENCE_VALIDATE_ON_STARTUP) {
+					preferencesValidatorInstance.validate(
+						PortletPreferencesFactoryUtil.fromDefaultXML(
+							portlet.getDefaultPreferences()));
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Portlet with the name " + portlet.getPortletId() +
+							" does not have valid default preferences");
+				}
+			}
+
+			preferencesValidatorInstances.add(preferencesValidatorInstance);
+		}
+
+		return preferencesValidatorInstances;
+	}
+
 	protected List<SocialActivityInterpreter>
 			newSocialActivityInterpreterInstances(Portlet portlet)
 		throws Exception {
@@ -994,6 +979,30 @@ public class PortletBagFactory {
 		}
 
 		return socialActivityInterpreterInstances;
+	}
+
+	protected List<SocialRequestInterpreter>
+			newSocialRequestInterpreterInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<SocialRequestInterpreter>
+			socialRequestInterpreterInstances = getServiceTrackerList(
+				SocialRequestInterpreter.class, portlet);
+
+		if (Validator.isNotNull(portlet.getSocialRequestInterpreterClass())) {
+			SocialRequestInterpreter socialRequestInterpreterInstance =
+				(SocialRequestInterpreter)newInstance(
+					SocialRequestInterpreter.class,
+					portlet.getSocialRequestInterpreterClass());
+
+			socialRequestInterpreterInstance = new SocialRequestInterpreterImpl(
+				portlet.getPortletId(), socialRequestInterpreterInstance);
+
+			socialRequestInterpreterInstances.add(
+				socialRequestInterpreterInstance);
+		}
+
+		return socialRequestInterpreterInstances;
 	}
 
 	protected List<StagedModelDataHandler<?>> newStagedModelDataHandler(
@@ -1038,6 +1047,22 @@ public class PortletBagFactory {
 		return templateHandlerInstances;
 	}
 
+	protected List<TrashHandler> newTrashHandlerInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<TrashHandler> trashHandlerInstances =
+			getServiceTrackerList(TrashHandler.class, portlet);
+
+		for (String trashHandlerClass : portlet.getTrashHandlerClasses()) {
+			TrashHandler trashHandlerInstance = (TrashHandler)newInstance(
+				TrashHandler.class, trashHandlerClass);
+
+			trashHandlerInstances.add(trashHandlerInstance);
+		}
+
+		return trashHandlerInstances;
+	}
+
 	protected List<URLEncoder> newURLEncoders(Portlet portlet)
 		throws Exception {
 
@@ -1054,42 +1079,83 @@ public class PortletBagFactory {
 		return urlEncoderInstances;
 	}
 
-	protected UserNotificationHandler newUserNotificationHandlerInstance(
-			String userNotificationHandlerClass)
-		throws Exception {
-
-		UserNotificationHandler userNotificationHandlerInstance =
-			(UserNotificationHandler)newInstance(
-				UserNotificationHandler.class, userNotificationHandlerClass);
-
-		userNotificationHandlerInstance = new UserNotificationHandlerImpl(
-			userNotificationHandlerInstance);
-
-		UserNotificationManagerUtil.addUserNotificationHandler(
-			userNotificationHandlerInstance);
-
-		return userNotificationHandlerInstance;
-	}
-
 	protected List<UserNotificationHandler> newUserNotificationHandlerInstances(
 			Portlet portlet)
 		throws Exception {
 
-		List<UserNotificationHandler> userNotificationHandlerInstances =
-			new ArrayList<UserNotificationHandler>();
+		ServiceTrackerList<UserNotificationHandler>
+			userNotificationHandlerInstances = getServiceTrackerList(
+				UserNotificationHandler.class, portlet);
 
 		for (String userNotificationHandlerClass :
 				portlet.getUserNotificationHandlerClasses()) {
 
 			UserNotificationHandler userNotificationHandlerInstance =
-				newUserNotificationHandlerInstance(
+				(UserNotificationHandler)newInstance(
+					UserNotificationHandler.class,
 					userNotificationHandlerClass);
+
+			userNotificationHandlerInstance = new UserNotificationHandlerImpl(
+				userNotificationHandlerInstance);
 
 			userNotificationHandlerInstances.add(
 				userNotificationHandlerInstance);
 		}
 
 		return userNotificationHandlerInstances;
+	}
+
+	protected List<WebDAVStorage> newWebDAVStorageInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<WebDAVStorage> webDAVStorageInstances =
+			getServiceTrackerList(WebDAVStorage.class, portlet);
+
+		if (Validator.isNotNull(portlet.getWebDAVStorageClass())) {
+			WebDAVStorage webDAVStorageInstance = (WebDAVStorage)newInstance(
+				WebDAVStorage.class, portlet.getWebDAVStorageClass());
+
+			webDAVStorageInstance.setToken(portlet.getWebDAVStorageToken());
+
+			webDAVStorageInstances.add(webDAVStorageInstance);
+		}
+
+		return webDAVStorageInstances;
+	}
+
+	protected List<WorkflowHandler> newWorkflowHandlerInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<WorkflowHandler> workflowHandlerInstances =
+			getServiceTrackerList(WorkflowHandler.class, portlet);
+
+		for (String workflowHandlerClass :
+				portlet.getWorkflowHandlerClasses()) {
+
+			WorkflowHandler workflowHandlerInstance =
+				(WorkflowHandler)newInstance(
+					WorkflowHandler.class, workflowHandlerClass);
+
+			workflowHandlerInstances.add(workflowHandlerInstance);
+		}
+
+		return workflowHandlerInstances;
+	}
+
+	protected List<Method> newXmlRpcMethodInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<Method> xmlRpcMethodInstances =
+			getServiceTrackerList(Method.class, portlet);
+
+		if (Validator.isNotNull(portlet.getXmlRpcMethodClass())) {
+			Method xmlRpcMethodInstance = (Method)newInstance(
+				Method.class, portlet.getXmlRpcMethodClass());
+
+			xmlRpcMethodInstances.add(xmlRpcMethodInstance);
+		}
+
+		return xmlRpcMethodInstances;
 	}
 
 	protected void validate() {
