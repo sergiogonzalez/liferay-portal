@@ -497,6 +497,7 @@
 				<classpath mode="compile">lib/portal/poi-ooxml.jar</classpath>
 				<classpath mode="compile">lib/portal/poi-scratchpad.jar</classpath>
 				<classpath mode="compile">lib/portal/poi.jar</classpath>
+				<classpath mode="compile">lib/portal/portal-ant-shared.jar</classpath>
 				<classpath mode="compile">lib/portal/portal-client.jar</classpath>
 				<classpath mode="compile">lib/portal/portal-settings-impl-shared.jar</classpath>
 				<classpath mode="compile">lib/portal/portals-bridges.jar</classpath>

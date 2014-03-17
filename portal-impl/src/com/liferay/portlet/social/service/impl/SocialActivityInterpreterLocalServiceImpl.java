@@ -352,60 +352,58 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			SocialActivityInterpreter socialActivityInterpreter =
-				registry.getService(serviceReference);
+			SocialActivityInterpreter activityInterpreter = registry.getService(
+				serviceReference);
 
 			String portletId = (String)serviceReference.getProperty(
 				"javax.portlet.name");
 
-			if (!(socialActivityInterpreter instanceof
+			if (!(activityInterpreter instanceof
 					SocialRequestInterpreterImpl)) {
 
-				socialActivityInterpreter = new SocialActivityInterpreterImpl(
-					portletId, socialActivityInterpreter);
+				activityInterpreter = new SocialActivityInterpreterImpl(
+					portletId, activityInterpreter);
 			}
 
 			List<SocialActivityInterpreter> activityInterpreters =
-				_activityInterpreters.get(
-					socialActivityInterpreter.getSelector());
+				_activityInterpreters.get(activityInterpreter.getSelector());
 
 			if (activityInterpreters == null) {
 				activityInterpreters =
 					new ArrayList<SocialActivityInterpreter>();
 			}
 
-			activityInterpreters.add(socialActivityInterpreter);
+			activityInterpreters.add(activityInterpreter);
 
 			_activityInterpreters.put(
-				socialActivityInterpreter.getSelector(), activityInterpreters);
+				activityInterpreter.getSelector(), activityInterpreters);
 
-			return socialActivityInterpreter;
+			return activityInterpreter;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<SocialActivityInterpreter> serviceReference,
-			SocialActivityInterpreter socialActivityInterpreter) {
+			SocialActivityInterpreter activityInterpreter) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<SocialActivityInterpreter> serviceReference,
-			SocialActivityInterpreter socialActivityInterpreter) {
+			SocialActivityInterpreter activityInterpreter) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
 
 			List<SocialActivityInterpreter> activityInterpreters =
-				_activityInterpreters.get(
-					socialActivityInterpreter.getSelector());
+				_activityInterpreters.get(activityInterpreter.getSelector());
 
 			if (activityInterpreters == null) {
 				return;
 			}
 
-			activityInterpreters.remove(socialActivityInterpreter);
+			activityInterpreters.remove(activityInterpreter);
 		}
 
 	}

@@ -26,6 +26,10 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 
@@ -56,7 +60,6 @@ public class BlogsTestUtil {
 			group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addEntry(userId, title, approved, serviceContext);
 	}
@@ -137,9 +140,16 @@ public class BlogsTestUtil {
 				smallImageInputStream, serviceContext);
 
 			if (approved) {
+				Map<String, Serializable> workflowContext =
+					new HashMap<String, Serializable>();
+
+				workflowContext.put(
+					WorkflowConstants.CONTEXT_URL, "http://localhost");
+
 				entry = BlogsEntryLocalServiceUtil.updateStatus(
 					userId, entry.getEntryId(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+					WorkflowConstants.STATUS_APPROVED, workflowContext,
+					serviceContext);
 			}
 
 			return entry;
@@ -174,6 +184,29 @@ public class BlogsTestUtil {
 			blogsEntry.isAllowTrackbacks(), blogEntryOther.isAllowTrackbacks());
 		Assert.assertEquals(
 			blogsEntry.isSmallImage(), blogEntryOther.isSmallImage());
+	}
+
+	public static BlogsEntry updateEntry(BlogsEntry entry) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setScopeGroupId(entry.getGroupId());
+
+		entry = BlogsEntryLocalServiceUtil.updateEntry(
+			entry.getUserId(), entry.getEntryId(),
+			ServiceTestUtil.randomString(), entry.getDescription(),
+			entry.getContent(), 1, 1, 2012, 12, 00, true, true, new String[0],
+			entry.getSmallImage(), entry.getSmallImageURL(), StringPool.BLANK,
+			null, serviceContext);
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		return BlogsEntryLocalServiceUtil.updateStatus(
+			entry.getUserId(), entry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, workflowContext, serviceContext);
 	}
 
 }

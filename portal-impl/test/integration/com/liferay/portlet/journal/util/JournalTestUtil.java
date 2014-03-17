@@ -53,6 +53,8 @@ import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.util.RSSUtil;
 
+import java.io.Serializable;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -74,7 +76,6 @@ public class JournalTestUtil {
 			groupId);
 
 		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addArticle(
 			groupId, folderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
@@ -146,7 +147,7 @@ public class JournalTestUtil {
 
 		String content = createLocalizedContent(contentMap, defaultLocale);
 
-		return JournalArticleLocalServiceUtil.addArticle(
+		JournalArticle article = JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
 			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
 			titleMap, descriptionMap, content, "general", null, null, null, 1,
@@ -154,6 +155,16 @@ public class JournalTestUtil {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 			null, serviceContext);
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		return JournalArticleLocalServiceUtil.updateStatus(
+			serviceContext.getUserId(), article,
+			WorkflowConstants.STATUS_APPROVED, null, workflowContext,
+			serviceContext);
 	}
 
 	public static JournalArticle addArticle(
@@ -776,9 +787,8 @@ public class JournalTestUtil {
 		}
 
 		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
 
-		return JournalArticleLocalServiceUtil.updateArticle(
+		article = JournalArticleLocalServiceUtil.updateArticle(
 			article.getUserId(), article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
 			article.getDescriptionMap(),
@@ -790,6 +800,16 @@ public class JournalTestUtil {
 			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, article.getIndexable(),
 			article.isSmallImage(), article.getSmallImageURL(), null, null,
 			null, serviceContext);
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		return JournalArticleLocalServiceUtil.updateStatus(
+			serviceContext.getUserId(), article,
+			WorkflowConstants.STATUS_APPROVED, null, workflowContext,
+			serviceContext);
 	}
 
 	private static String _getFeedFriendlyURL(long groupId, long plid)

@@ -29,6 +29,10 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.io.File;
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Julio Camarero
@@ -63,7 +67,6 @@ public class WikiTestUtil {
 			groupId);
 
 		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addPage(
 			userId, nodeId, title, "content", approved, serviceContext);
@@ -89,9 +92,15 @@ public class WikiTestUtil {
 				serviceContext);
 
 			if (approved) {
+				Map<String, Serializable> workflowContext =
+					new HashMap<String, Serializable>();
+
+				workflowContext.put(
+					WorkflowConstants.CONTEXT_URL, "http://localhost");
+
 				page = WikiPageLocalServiceUtil.updateStatus(
-					userId, page.getResourcePrimKey(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+					userId, page, WorkflowConstants.STATUS_APPROVED,
+					workflowContext, serviceContext);
 			}
 
 			return page;
@@ -206,10 +215,19 @@ public class WikiTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return WikiPageLocalServiceUtil.updatePage(
+		page = WikiPageLocalServiceUtil.updatePage(
 			userId, page.getNodeId(), page.getTitle(), page.getVersion(),
 			content, page.getSummary(), false, page.getFormat(),
 			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		return WikiPageLocalServiceUtil.updateStatus(
+			userId, page, WorkflowConstants.STATUS_APPROVED, workflowContext,
+			serviceContext);
 	}
 
 }
