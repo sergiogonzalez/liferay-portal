@@ -16,9 +16,9 @@ package com.liferay.portlet.login.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
@@ -42,11 +42,13 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromAddress",
 			PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS));
+				companyId,
+				LoginUtil.getEmailFromName(portletPreferences, companyId)));
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromName",
 			PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME));
+				companyId,
+				LoginUtil.getEmailFromName(portletPreferences, companyId)));
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
