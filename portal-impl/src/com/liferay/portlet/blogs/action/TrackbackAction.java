@@ -24,24 +24,17 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.blogs.trackback.TrackbackValidationException;
+import com.liferay.portlet.blogs.trackback.Trackbacks;
+import com.liferay.portlet.blogs.trackback.TrackbacksImpl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,6 +51,10 @@ import org.apache.struts.action.ActionMapping;
  * @author Alexander Chow
  */
 public class TrackbackAction extends PortletAction {
+
+	public TrackbackAction() {
+		_trackbacks = new TrackbacksImpl();
+	}
 
 	@Override
 	public void processAction(
@@ -81,8 +78,27 @@ public class TrackbackAction extends PortletAction {
 		setForward(actionRequest, ActionConstants.COMMON_NULL);
 	}
 
+	protected TrackbackAction(Trackbacks trackbacks) {
+		_trackbacks = trackbacks;
+	}
+
 	protected void addTrackback(
 			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		try {
+			addTrackbackComment(actionRequest);
+		}
+		catch (TrackbackValidationException tve) {
+			sendError(actionRequest, actionResponse, tve.getMessage());
+
+			return;
+		}
+
+		sendSuccess(actionRequest, actionResponse);
+	}
+
+	protected void addTrackbackComment(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -99,92 +115,11 @@ public class TrackbackAction extends PortletAction {
 		String url = ParamUtil.getString(originalRequest, "url");
 		String blogName = ParamUtil.getString(originalRequest, "blog_name");
 
-		if (!isCommentsEnabled(actionRequest)) {
-			sendError(
-				actionRequest, actionResponse,
-				"Comments have been disabled for this blog entry.");
+		BlogsEntry entry = validate(actionRequest, request, url);
 
-			return;
-		}
-
-		if (Validator.isNull(url)) {
-			sendError(
-				actionRequest, actionResponse,
-				"Trackback requires a valid permanent URL.");
-
-			return;
-		}
-
-		String remoteIp = request.getRemoteAddr();
-
-		String trackbackIp = HttpUtil.getIpAddress(url);
-
-		if (!remoteIp.equals(trackbackIp)) {
-			sendError(
-				actionRequest, actionResponse,
-				"Remote IP " + remoteIp +
-					" does not match trackback URL's IP " + trackbackIp + ".");
-
-			return;
-		}
-
-		try {
-			ActionUtil.getEntry(actionRequest);
-		}
-		catch (PrincipalException pe) {
-			sendError(
-				actionRequest, actionResponse,
-				"Blog entry must have guest view permissions to enable " +
-					"trackbacks.");
-
-			return;
-		}
-
-		BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
-			WebKeys.BLOGS_ENTRY);
-
-		if (!entry.isAllowTrackbacks()) {
-			sendError(
-				actionRequest, actionResponse,
-				"Trackbacks are not enabled on this blog entry.");
-
-			return;
-		}
-
-		long userId = UserLocalServiceUtil.getDefaultUserId(
-			themeDisplay.getCompanyId());
-		long groupId = entry.getGroupId();
-		String className = BlogsEntry.class.getName();
-		long classPK = entry.getEntryId();
-
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				userId, groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread = messageDisplay.getThread();
-
-		long threadId = thread.getThreadId();
-		long parentMessageId = thread.getRootMessageId();
-		String body =
-			"[...] " + excerpt + " [...] [url=" + url + "]" +
-				themeDisplay.translate("read-more") + "[/url]";
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBMessage.class.getName(), actionRequest);
-
-		MBMessage message = MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, blogName, groupId, className, classPK, threadId,
-			parentMessageId, title, body, serviceContext);
-
-		String entryURL =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
-
-		LinkbackConsumerUtil.addNewTrackback(
-			message.getMessageId(), url, entryURL);
-
-		sendSuccess(actionRequest, actionResponse);
+		_trackbacks.addTrackback(
+			entry, themeDisplay, excerpt, url, blogName, title,
+			new TrackbackServiceContextFunction(actionRequest));
 	}
 
 	@Override
@@ -253,8 +188,54 @@ public class TrackbackAction extends PortletAction {
 		sendResponse(actionRequest, actionResponse, null, true);
 	}
 
+	protected BlogsEntry validate(
+			ActionRequest actionRequest, HttpServletRequest request, String url)
+		throws Exception {
+
+		if (!isCommentsEnabled(actionRequest)) {
+			throw new TrackbackValidationException(
+				"Comments have been disabled for this blog entry.");
+		}
+
+		if (Validator.isNull(url)) {
+			throw new TrackbackValidationException(
+				"Trackback requires a valid permanent URL.");
+		}
+
+		String remoteIp = request.getRemoteAddr();
+
+		String trackbackIp = HttpUtil.getIpAddress(url);
+
+		if (!remoteIp.equals(trackbackIp)) {
+			throw new TrackbackValidationException(
+				"Remote IP " + remoteIp +
+					" does not match trackback URL's IP " + trackbackIp + ".");
+		}
+
+		try {
+			ActionUtil.getEntry(actionRequest);
+		}
+		catch (PrincipalException pe) {
+			throw new TrackbackValidationException(
+				"Blog entry must have guest view permissions to enable " +
+					"trackbacks.");
+		}
+
+		BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
+			WebKeys.BLOGS_ENTRY);
+
+		if (!entry.isAllowTrackbacks()) {
+			throw new TrackbackValidationException(
+				"Trackbacks are not enabled on this blog entry.");
+		}
+
+		return entry;
+	}
+
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 	private static Log _log = LogFactoryUtil.getLog(TrackbackAction.class);
+
+	private Trackbacks _trackbacks;
 
 }
