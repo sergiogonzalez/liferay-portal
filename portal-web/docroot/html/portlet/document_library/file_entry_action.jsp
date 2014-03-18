@@ -111,6 +111,14 @@ if (fileShortcut != null) {
 	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 }
 
+long fileEntryTypeId = -1;
+
+if ((fileEntry != null) && fileEntry.getModel() instanceof DLFileEntry) {
+	DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+	fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+}
+
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, fileEntry);
 %>
 
