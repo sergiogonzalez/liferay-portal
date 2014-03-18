@@ -273,12 +273,6 @@ public class JournalTestUtil {
 			LocaleUtil.getSiteDefault(), false, false, serviceContext);
 	}
 
-	public static JournalArticle addArticleWithWorkflow(boolean approved)
-		throws Exception {
-
-		return addArticleWithWorkflow("title", "content", approved);
-	}
-
 	public static JournalArticle addArticleWithWorkflow(
 			long groupId, boolean approved)
 		throws Exception {
@@ -286,6 +280,23 @@ public class JournalTestUtil {
 		return addArticle(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title",
 			"content", LocaleUtil.getSiteDefault(), true, approved);
+	}
+
+	public static JournalArticle addArticleWithWorkflow(
+			long groupId, long folderId, boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addArticle(
+			groupId, folderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), LocaleUtil.getSiteDefault(), true,
+			approved, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
@@ -314,16 +325,6 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
-			long groupId, String title, boolean approved)
-		throws Exception {
-
-		return addArticle(
-			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
-			"description", "content", LocaleUtil.getSiteDefault(), true,
-			approved);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
 			long parentFolderId, String title, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -333,41 +334,6 @@ public class JournalTestUtil {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, "description",
 			"content", LocaleUtil.getSiteDefault(), true, approved,
 			serviceContext);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
-			long groupId, String title, String content, boolean approved)
-		throws Exception {
-
-		return addArticle(
-			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
-			title, content, LocaleUtil.getSiteDefault(), true, approved);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
-			String title, boolean approved)
-		throws Exception {
-
-		return addArticleWithWorkflow(title, "content", approved);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
-			String title, boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		return addArticleWithWorkflow(
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title, approved,
-			serviceContext);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
-			String title, String content, boolean approved)
-		throws Exception {
-
-		return addArticle(
-			TestPropsValues.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title, title,
-			content, LocaleUtil.getSiteDefault(), true, approved);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -727,7 +693,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return updateArticle(
-			article, title, article.getContent(),
+			article, title, article.getContent(), false, false,
 			ServiceTestUtil.getServiceContext());
 	}
 
@@ -736,13 +702,27 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return updateArticle(
-			article, title, content, ServiceTestUtil.getServiceContext());
+			article, title, content, false, false,
+			ServiceTestUtil.getServiceContext());
 	}
 
 	public static JournalArticle updateArticle(
 			JournalArticle article, String title, String content,
+			boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
+
+		if (workflowEnabled) {
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			if (approved) {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_PUBLISH);
+			}
+		}
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 
@@ -783,13 +763,24 @@ public class JournalTestUtil {
 			article.getArticleId(), article.getVersion(), titleMap,
 			article.getDescriptionMap(),
 			createLocalizedContent(
-				content, PortalUtil.getSiteDefaultLocale(article.getGroupId())),
+				content,
+				PortalUtil.getSiteDefaultLocale(
+					article.getGroupId())),
 			article.getType(), article.getStructureId(),
 			article.getTemplateId(), article.getLayoutUuid(), displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, article.getIndexable(),
 			article.isSmallImage(), article.getSmallImageURL(), null, null,
 			null, serviceContext);
+	}
+
+	public static JournalArticle updateArticleWithWorkflow(
+			JournalArticle article, String title, boolean approved)
+		throws Exception {
+
+		return updateArticle(
+			article, title, article.getContent(), false, approved,
+			ServiceTestUtil.getServiceContext());
 	}
 
 	private static String _getFeedFriendlyURL(long groupId, long plid)

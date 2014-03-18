@@ -40,10 +40,17 @@ import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -62,7 +69,7 @@ public abstract class DLAppTestUtil {
 			groupId);
 
 		return addDLFileEntryType(
-			userId, groupId, name, description, new long[] {ddmStructureId},
+			userId, groupId, name, description, new long[]{ddmStructureId},
 			serviceContext);
 	}
 
@@ -133,16 +140,38 @@ public abstract class DLAppTestUtil {
 			String sourceFileName)
 		throws Exception {
 
+		return addFileEntry(
+			groupId, repositoryId, folderId, sourceFileName, false, true);
+	}
+
+	public static FileEntry addFileEntry(
+			long groupId, long repositoryId, long folderId,
+			String sourceFileName, boolean workflowEnabled, boolean approved)
+		throws Exception {
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
 
-		return addFileEntry(
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		if (workflowEnabled && !approved) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
+		FileEntry fileEntry = addFileEntry(
 			TestPropsValues.getUserId(), repositoryId, folderId, sourceFileName,
 			ContentTypes.TEXT_PLAIN, sourceFileName, null,
-			WorkflowConstants.ACTION_PUBLISH, serviceContext);
+			serviceContext.getWorkflowAction(), serviceContext);
+
+		if (workflowEnabled && approved) {
+			updateStatus(fileEntry, serviceContext);
+		}
+
+		return fileEntry;
 	}
 
 	public static FileEntry addFileEntry(
@@ -280,6 +309,15 @@ public abstract class DLAppTestUtil {
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			folderId, sourceFileName, ContentTypes.TEXT_PLAIN, title, null,
 			workflowAction, serviceContext);
+	}
+
+	public static FileEntry addFileEntryWithWorkflow(
+			long groupId, long repositoryId, long folderId,
+			String sourceFileName, boolean approved)
+		throws Exception {
+
+		return addFileEntry(
+			groupId, repositoryId, folderId, sourceFileName, true, approved);
 	}
 
 	public static Folder addFolder(
@@ -432,12 +470,12 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		return updateFileEntry(
-			groupId, fileEntryId, sourceFileName, title, false);
+			groupId, fileEntryId, sourceFileName, title, false, false, false);
 	}
 
 	public static FileEntry updateFileEntry(
 			long groupId, long fileEntryId, String sourceFileName, String title,
-			boolean majorVersion)
+			boolean majorVersion, boolean workflowEnabled, boolean approved)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
@@ -448,12 +486,13 @@ public abstract class DLAppTestUtil {
 
 		return updateFileEntry(
 			groupId, fileEntryId, sourceFileName, ContentTypes.TEXT_PLAIN,
-			title, majorVersion, serviceContext);
+			title, majorVersion, workflowEnabled, approved, serviceContext);
 	}
 
 	public static FileEntry updateFileEntry(
 			long groupId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, boolean majorVersion,
+			boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -468,13 +507,44 @@ public abstract class DLAppTestUtil {
 			bytes = newContent.getBytes();
 		}
 
+		serviceContext = (ServiceContext)serviceContext.clone();
+
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		return DLAppServiceUtil.updateFileEntry(
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		if (workflowEnabled && !approved) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
+		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, bytes, serviceContext);
+
+		if (workflowEnabled && approved) {
+			updateStatus(fileEntry, serviceContext);
+		}
+
+		return fileEntry;
+	}
+
+	public static FileEntry updateFileEntryWithWorkflow(
+			long groupId, long fileEntryId, String sourceFileName, String title,
+			boolean majorVersion, boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return updateFileEntry(
+			groupId, fileEntryId, sourceFileName, ContentTypes.TEXT_PLAIN,
+			title, majorVersion, true, approved, serviceContext);
 	}
 
 	public static void updateFolderFileEntryType(
@@ -502,6 +572,22 @@ public abstract class DLAppTestUtil {
 		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
 			dlFolder, ListUtil.toList(fileEntryTypeIds), defaultFileEntryTypeId,
 			serviceContext);
+	}
+
+	protected static void updateStatus(
+			FileEntry fileEntry, ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		DLAppHelperLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileEntry,
+			fileEntry.getLatestFileVersion(), WorkflowConstants.STATUS_PENDING,
+			WorkflowConstants.STATUS_APPROVED, workflowContext, serviceContext);
 	}
 
 	private static final String _CONTENT =
