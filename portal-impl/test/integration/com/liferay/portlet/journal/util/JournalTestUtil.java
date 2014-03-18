@@ -273,12 +273,6 @@ public class JournalTestUtil {
 			LocaleUtil.getSiteDefault(), false, false, serviceContext);
 	}
 
-	public static JournalArticle addArticleWithWorkflow(boolean approved)
-		throws Exception {
-
-		return addArticleWithWorkflow("title", "content", approved);
-	}
-
 	public static JournalArticle addArticleWithWorkflow(
 			long groupId, boolean approved)
 		throws Exception {
@@ -331,16 +325,6 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
-			long groupId, String title, boolean approved)
-		throws Exception {
-
-		return addArticle(
-			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
-			"description", "content", LocaleUtil.getSiteDefault(), true,
-			approved);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
 			long parentFolderId, String title, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -350,41 +334,6 @@ public class JournalTestUtil {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, "description",
 			"content", LocaleUtil.getSiteDefault(), true, approved,
 			serviceContext);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
-			long groupId, String title, String content, boolean approved)
-		throws Exception {
-
-		return addArticle(
-			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
-			title, content, LocaleUtil.getSiteDefault(), true, approved);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
-			String title, boolean approved)
-		throws Exception {
-
-		return addArticleWithWorkflow(title, "content", approved);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
-			String title, boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		return addArticleWithWorkflow(
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title, approved,
-			serviceContext);
-	}
-
-	public static JournalArticle addArticleWithWorkflow(
-			String title, String content, boolean approved)
-		throws Exception {
-
-		return addArticle(
-			TestPropsValues.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title, title,
-			content, LocaleUtil.getSiteDefault(), true, approved);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
