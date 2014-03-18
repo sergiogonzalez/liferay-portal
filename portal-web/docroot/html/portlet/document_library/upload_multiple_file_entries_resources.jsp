@@ -256,7 +256,15 @@ long assetClassPK = 0;
 
 	<span id="<portlet:namespace />selectedFileNameContainer"></span>
 
-	<aui:button type="submit" />
+	<%
+	String publishButtonLabel = "save";
+
+	if (DLUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, folderId, fileEntryTypeId)) {
+		publishButtonLabel = "submit-for-publication";
+	}
+	%>
+
+	<aui:button type="submit" value="<%= publishButtonLabel %>" />
 </aui:form>
 
 <aui:script>
