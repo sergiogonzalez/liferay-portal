@@ -6343,6 +6343,10 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
+		articleURL = buildArticleURL(
+			articleURL, article.getGroupId(), article.getFolderId(),
+			article.getArticleId());
+
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
 
