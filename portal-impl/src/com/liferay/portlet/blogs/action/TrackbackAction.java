@@ -115,7 +115,21 @@ public class TrackbackAction extends PortletAction {
 		String url = ParamUtil.getString(originalRequest, "url");
 		String blogName = ParamUtil.getString(originalRequest, "blog_name");
 
-		BlogsEntry entry = validate(actionRequest, request, url);
+		validate(actionRequest, request.getRemoteAddr(), url);
+
+		try {
+			ActionUtil.getEntry(actionRequest);
+		}
+		catch (PrincipalException pe) {
+			throw new TrackbackValidationException(
+				"Blog entry must have guest view permissions to enable " +
+					"trackbacks.");
+		}
+
+		BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
+			WebKeys.BLOGS_ENTRY);
+
+		validate(entry);
 
 		_trackback.addTrackback(
 			entry, themeDisplay, excerpt, url, blogName, title,
@@ -188,8 +202,8 @@ public class TrackbackAction extends PortletAction {
 		sendResponse(actionRequest, actionResponse, null, true);
 	}
 
-	protected BlogsEntry validate(
-			ActionRequest actionRequest, HttpServletRequest request, String url)
+	protected void validate(
+			ActionRequest actionRequest, String remoteIp, String url)
 		throws Exception {
 
 		if (!isCommentsEnabled(actionRequest)) {
@@ -202,8 +216,6 @@ public class TrackbackAction extends PortletAction {
 				"Trackback requires a valid permanent URL.");
 		}
 
-		String remoteIp = request.getRemoteAddr();
-
 		String trackbackIp = HttpUtil.getIpAddress(url);
 
 		if (!remoteIp.equals(trackbackIp)) {
@@ -211,25 +223,15 @@ public class TrackbackAction extends PortletAction {
 				"Remote IP " + remoteIp +
 					" does not match trackback URL's IP " + trackbackIp + ".");
 		}
+	}
 
-		try {
-			ActionUtil.getEntry(actionRequest);
-		}
-		catch (PrincipalException pe) {
-			throw new TrackbackValidationException(
-				"Blog entry must have guest view permissions to enable " +
-					"trackbacks.");
-		}
-
-		BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
-			WebKeys.BLOGS_ENTRY);
+	protected void validate(BlogsEntry entry)
+		throws TrackbackValidationException {
 
 		if (!entry.isAllowTrackbacks()) {
 			throw new TrackbackValidationException(
 				"Trackbacks are not enabled on this blog entry.");
 		}
-
-		return entry;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
