@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.trackback;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -48,9 +49,17 @@ public class TrackbackImpl implements Trackback {
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
 
-		String body =
-			"[...] " + excerpt + " [...] [url=" + url + "]" +
-				themeDisplay.translate("read-more") + "[/url]";
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("[...] ");
+		sb.append(excerpt);
+		sb.append(" [...] [url=");
+		sb.append(url);
+		sb.append("]");
+		sb.append(themeDisplay.translate("read-more"));
+		sb.append("[/url]");
+
+		String body = sb.toString();
 
 		String entryURL =
 			PortalUtil.getLayoutFullURL(themeDisplay) +
