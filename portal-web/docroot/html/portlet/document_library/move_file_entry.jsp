@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portal.GroupChangeException" %>
+
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -97,6 +99,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
+	<liferay-ui:error exception="<%= GroupChangeException.class %>" message="the-folder-you-selected-and-the-entry-are-from-different-sites.-please-select-a-different-folder-from-the-same-site-as-the-entry" />
 	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
 	<aui:model-context bean="<%= fileEntry %>" model="<%= DLFileEntry.class %>" />

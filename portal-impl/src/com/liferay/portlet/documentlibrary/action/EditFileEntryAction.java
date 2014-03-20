@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.DuplicateLockException;
+import com.liferay.portal.GroupChangeException;
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -44,7 +45,9 @@ import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.ActionConstants;
@@ -778,7 +781,8 @@ public class EditFileEntryAction extends PortletAction {
 		throws Exception {
 
 		if (e instanceof AssetCategoryException ||
-			e instanceof AssetTagException) {
+			e instanceof AssetTagException ||
+			e instanceof GroupChangeException) {
 
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
@@ -927,6 +931,23 @@ public class EditFileEntryAction extends PortletAction {
 			DLFileEntry.class.getName(), actionRequest);
 
 		for (long moveFileEntryId : fileEntryIds) {
+			FileEntry moveFileEntry = DLAppLocalServiceUtil.getFileEntry(
+				moveFileEntryId);
+
+			Folder newFolder = DLAppLocalServiceUtil.getFolder(newFolderId);
+
+			if (moveFileEntry.getGroupId() != newFolder.getGroupId()) {
+				Group moveFileEntryGroup = GroupLocalServiceUtil.getGroup(
+					moveFileEntry.getGroupId());
+
+				Group newFolderGroup = GroupLocalServiceUtil.getGroup(
+					newFolder.getGroupId());
+
+				if (moveFileEntryGroup.isSite() && newFolderGroup.isSite()) {
+					throw new GroupChangeException();
+				}
+			}
+
 			if (moveFromTrash) {
 				DLAppServiceUtil.moveFileEntryFromTrash(
 					moveFileEntryId, newFolderId, serviceContext);
