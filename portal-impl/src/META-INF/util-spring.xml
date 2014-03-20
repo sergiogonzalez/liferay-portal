@@ -123,6 +123,16 @@
 			<bean class="com.liferay.portal.deploy.hot.HotDeployImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.diff.DiffHtmlUtil" class="com.liferay.portal.kernel.diff.DiffHtmlUtil">
+		<property name="diffHtml">
+			<bean class="com.liferay.portal.diff.DiffHtmlImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.diff.DiffUtil" class="com.liferay.portal.kernel.diff.DiffUtil">
+		<property name="diff">
+			<bean class="com.liferay.portal.diff.DiffImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.facebook.FacebookConnectUtil" class="com.liferay.portal.kernel.facebook.FacebookConnectUtil">
 		<property name="facebookConnect">
 			<bean class="com.liferay.portal.facebook.FacebookConnectImpl" />
@@ -379,16 +389,6 @@
 	<bean id="com.liferay.portal.kernel.util.DateFormatFactoryUtil" class="com.liferay.portal.kernel.util.DateFormatFactoryUtil">
 		<property name="dateFormatFactory">
 			<bean class="com.liferay.portal.util.DateFormatFactoryImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.util.DiffHtmlUtil" class="com.liferay.portal.kernel.util.DiffHtmlUtil">
-		<property name="diffHtml">
-			<bean class="com.liferay.portal.util.DiffHtmlImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.util.DiffUtil" class="com.liferay.portal.kernel.util.DiffUtil">
-		<property name="diff">
-			<bean class="com.liferay.portal.util.DiffImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.util.DigesterUtil" class="com.liferay.portal.kernel.util.DigesterUtil">

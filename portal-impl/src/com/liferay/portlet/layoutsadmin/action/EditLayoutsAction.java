@@ -443,6 +443,28 @@ public class EditLayoutsAction extends PortletAction {
 				throw new PrincipalException();
 			}
 		}
+		else if (cmd.equals(Constants.PUBLISH_TO_LIVE) ||
+				 cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+
+			boolean hasUpdateLayoutPermission = false;
+
+			if (layout != null) {
+				hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.UPDATE);
+			}
+
+			if (group.isCompany() || group.isSite()) {
+				boolean publishToLive = GroupPermissionUtil.contains(
+					permissionChecker, group, ActionKeys.PUBLISH_STAGING);
+
+				if (!hasUpdateLayoutPermission && !publishToLive) {
+					throw new PrincipalException();
+				}
+			}
+			else {
+				checkPermission(permissionChecker, group, layout, selPlid);
+			}
+		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			if (group.isCompany()) {
 				if (!permissionChecker.isCompanyAdmin()) {
@@ -467,28 +489,6 @@ public class EditLayoutsAction extends PortletAction {
 				UserPermissionUtil.check(
 					permissionChecker, groupUserId, organizationIds,
 					ActionKeys.UPDATE);
-			}
-			else {
-				checkPermission(permissionChecker, group, layout, selPlid);
-			}
-		}
-		else if (cmd.equals("publish_to_live") ||
-				 cmd.equals("publish_to_remote")) {
-
-			boolean hasUpdateLayoutPermission = false;
-
-			if (layout != null) {
-				hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.UPDATE);
-			}
-
-			if (group.isCompany() || group.isSite()) {
-				boolean publishToLive = GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.PUBLISH_STAGING);
-
-				if (!hasUpdateLayoutPermission && !publishToLive) {
-					throw new PrincipalException();
-				}
 			}
 			else {
 				checkPermission(permissionChecker, group, layout, selPlid);

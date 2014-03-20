@@ -58,7 +58,7 @@ public class LangBuilder {
 
 		System.setProperty("line.separator", StringPool.NEW_LINE);
 
-		InitUtil.initWithSpring();
+		InitUtil.initWithSpringAndModuleFramework();
 
 		String langDir = arguments.get("lang.dir");
 		String langFile = arguments.get("lang.file");
@@ -73,6 +73,8 @@ public class LangBuilder {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		InitUtil.stopModuleFramework();
 	}
 
 	public LangBuilder(

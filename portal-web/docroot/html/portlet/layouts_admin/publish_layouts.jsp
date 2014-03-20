@@ -20,10 +20,12 @@
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
 if (Validator.isNull(cmd)) {
-	cmd = ParamUtil.getString(request, "originalCmd", "publish_to_live");
+	cmd = ParamUtil.getString(request, "originalCmd", Constants.PUBLISH_TO_LIVE);
 }
 
 String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
+
+String publishConfigurationButtons = ParamUtil.getString(request, "publishConfigurationButtons", "custom");
 
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
@@ -69,7 +71,7 @@ if (liveGroup.isStaged()) {
 		localPublishing = false;
 	}
 }
-else if (cmd.equals("publish_to_remote")) {
+else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 	localPublishing = false;
 }
 
@@ -91,7 +93,7 @@ String publishActionKey = "copy";
 if (liveGroup.isStaged()) {
 	publishActionKey = "publish";
 }
-else if (cmd.equals("publish_to_remote")) {
+else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 	publishActionKey = "publish";
 }
 
@@ -136,7 +138,7 @@ UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 PortletURL portletURL = renderResponse.createActionURL();
 
 if (group.isStaged() && group.isStagedRemotely()) {
-	cmd = "publish_to_remote";
+	cmd = Constants.PUBLISH_TO_REMOTE;
 }
 
 portletURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
@@ -148,7 +150,15 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 PortletURL renderURL = renderResponse.createRenderURL();
 
 renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
-renderURL.setParameter("tabs2", "current-and-previous");
+
+if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+	renderURL.setParameter("tabs2", "new-publication-process");
+	renderURL.setParameter("publishConfigurationButtons", "saved");
+}
+else {
+	renderURL.setParameter("tabs2", "current-and-previous");
+}
+
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(stagingGroupId));
 renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
@@ -180,6 +190,8 @@ else {
 }
 %>
 
+<liferay-ui:trash-undo />
+
 <liferay-ui:tabs
 	names="<%= tabs2Names %>"
 	param="tabs2"
@@ -187,172 +199,230 @@ else {
 >
 	<c:if test='<%= !cmd.equals("view_processes") %>'>
 		<liferay-ui:section>
-			<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>' >
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
-				<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
-				<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-				<aui:input name="redirect" type="hidden" value="<%= renderURL.toString() %>" />
-				<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-				<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
-				<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
-				<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
+			<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
+				<aui:nav-bar>
+					<aui:nav id="publishConfigurationButtons">
+						<aui:nav-item
+							data-value="custom"
+							iconCssClass="icon-puzzle"
+							label="custom"
+						/>
 
-				<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
+						<aui:nav-item
+							data-value="saved"
+							iconCssClass="icon-archive"
+							label="publish-templates"
+						/>
+					</aui:nav>
+				</aui:nav-bar>
+			</div>
 
-				<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
+			<div <%= publishConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
+				<portlet:actionURL var="updatePublishConfigurationURL">
+					<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
+					<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+					<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+				</portlet:actionURL>
 
-					<%
-					LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
-					%>
+				<aui:form action='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? portletURL.toString() : updatePublishConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" : StringPool.BLANK %>' >
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+					<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
+					<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
+					<aui:input name="redirect" type="hidden" value="<%= renderURL.toString() %>" />
+					<aui:input name="groupId" type="hidden" value="<%= stagingGroupId %>" />
+					<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
+					<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
+					<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
 
-					<liferay-ui:message key="the-pages-could-not-be-published-because-one-or-more-required-page-templates-could-not-be-found-on-the-remote-system.-please-import-the-following-templates-manually" />
+					<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
 
-					<ul>
-
-						<%
-						List<Tuple> missingLayoutPrototypes = lpe.getMissingLayoutPrototypes();
-
-						for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
-							String layoutPrototypeClassName = (String)missingLayoutPrototype.getObject(0);
-							String layoutPrototypeUuid = (String)missingLayoutPrototype.getObject(1);
-							String layoutPrototypeName = (String)missingLayoutPrototype.getObject(2);
-						%>
-
-						<li>
-							<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= HtmlUtil.escape(layoutPrototypeUuid) %>)
-						</li>
-
-						<%
-						}
-						%>
-
-					</ul>
-				</liferay-ui:error>
-
-				<%@ include file="/html/portlet/layouts_admin/error_auth_exception.jspf" %>
-
-				<%@ include file="/html/portlet/layouts_admin/error_remote_export_exception.jspf" %>
-
-				<%@ include file="/html/portlet/layouts_admin/error_remote_options_exception.jspf" %>
-
-				<liferay-ui:error exception="<%= SystemException.class %>">
-
-					<%
-					SystemException se = (SystemException)errorException;
-					%>
-
-					<liferay-ui:message key="<%= se.getMessage() %>" />
-				</liferay-ui:error>
-
-				<div id="<portlet:namespace />publishOptions">
-					<div class="export-dialog-tree">
+					<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
 
 						<%
-						String scheduleCMD = StringPool.BLANK;
-						String unscheduleCMD = StringPool.BLANK;
-
-						if (cmd.equals("copy_from_live")) {
-							scheduleCMD = "schedule_copy_from_live";
-							unscheduleCMD = "unschedule_copy_from_live";
-						}
-						else if (cmd.equals("publish_to_live")) {
-							scheduleCMD = "schedule_publish_to_live";
-							unscheduleCMD = "unschedule_publish_to_live";
-						}
-						else if (cmd.equals("publish_to_remote")) {
-							scheduleCMD = "schedule_publish_to_remote";
-							unscheduleCMD = "unschedule_publish_to_remote";
-						}
-
-						String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
-
-						int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, taskExecutorClassName, false);
-
-						incompleteBackgroundTaskCount += BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, taskExecutorClassName, false);
+						LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
 						%>
 
-						<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-							<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
-								<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
-							</liferay-util:include>
+						<liferay-ui:message key="the-pages-could-not-be-published-because-one-or-more-required-page-templates-could-not-be-found-on-the-remote-system.-please-import-the-following-templates-manually" />
+
+						<ul>
+
+							<%
+							List<Tuple> missingLayoutPrototypes = lpe.getMissingLayoutPrototypes();
+
+							for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
+								String layoutPrototypeClassName = (String)missingLayoutPrototype.getObject(0);
+								String layoutPrototypeUuid = (String)missingLayoutPrototype.getObject(1);
+								String layoutPrototypeName = (String)missingLayoutPrototype.getObject(2);
+							%>
+
+							<li>
+								<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= HtmlUtil.escape(layoutPrototypeUuid) %>)
+							</li>
+
+							<%
+							}
+							%>
+
+						</ul>
+					</liferay-ui:error>
+
+					<%@ include file="/html/portlet/layouts_admin/error_auth_exception.jspf" %>
+
+					<%@ include file="/html/portlet/layouts_admin/error_remote_export_exception.jspf" %>
+
+					<%@ include file="/html/portlet/layouts_admin/error_remote_options_exception.jspf" %>
+
+					<liferay-ui:error exception="<%= SystemException.class %>">
+
+						<%
+						SystemException se = (SystemException)errorException;
+						%>
+
+						<liferay-ui:message key="<%= se.getMessage() %>" />
+					</liferay-ui:error>
+
+					<c:if test="<%= !cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE) %>">
+						<aui:fieldset cssClass="options-group" label='<%= cmd.equals(Constants.ADD) ? "new-publish-template" : "edit-template" %>'>
+							<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
+								<aui:validator name="required" />
+							</aui:input>
+
+							<aui:input label="description" name="description" />
+						</aui:fieldset>
+					</c:if>
+
+					<div id="<portlet:namespace />publishOptions">
+						<div class="export-dialog-tree">
+
+							<%
+							String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
+
+							int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, taskExecutorClassName, false);
+
+							incompleteBackgroundTaskCount += BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, taskExecutorClassName, false);
+							%>
+
+							<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+								<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+									<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+								</liferay-util:include>
+							</div>
+
+							<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
+
+								<%
+								String scheduleCMD = StringPool.BLANK;
+								String unscheduleCMD = StringPool.BLANK;
+
+								if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
+									scheduleCMD = "schedule_publish_to_live";
+									unscheduleCMD = "unschedule_publish_to_live";
+								}
+								else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+									scheduleCMD = "schedule_publish_to_remote";
+									unscheduleCMD = "unschedule_publish_to_remote";
+								}
+								else if (cmd.equals("copy_from_live")) {
+									scheduleCMD = "schedule_copy_from_live";
+									unscheduleCMD = "unschedule_copy_from_live";
+								}
+								%>
+
+								<aui:fieldset cssClass="options-group" label="date">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
+								</aui:fieldset>
+							</c:if>
+
+							<c:if test="<%= !group.isCompany() %>">
+								<aui:fieldset cssClass="options-group" label="pages">
+									<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
+										<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
+										<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+										<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+										<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+										<liferay-util:param name="treeId" value="<%= treeId %>" />
+										<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+									</liferay-util:include>
+								</aui:fieldset>
+							</c:if>
+
+							<%
+							List<Layout> exportLayouts = new ArrayList<Layout>();
+
+							if (selLayout != null) {
+								exportLayouts.add(selLayout);
+							}
+							else if (!selectedLayouts.isEmpty()) {
+								exportLayouts = selectedLayouts;
+							}
+							else {
+								exportLayouts = LayoutLocalServiceUtil.getLayouts(group.getGroupId(), privateLayout);
+							}
+
+							List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(exportLayouts);
+							%>
+
+							<c:if test="<%= !portletDataHandlerPortlets.isEmpty() %>">
+								<aui:fieldset cssClass="options-group" label="application-configuration">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
+								</aui:fieldset>
+							</c:if>
+
+							<%
+							List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
+							%>
+
+							<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
+								<aui:fieldset cssClass="options-group" label="content">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_data.jspf" %>
+								</aui:fieldset>
+							</c:if>
+
+							<aui:fieldset cssClass="options-group" label="permissions">
+								<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
+							</aui:fieldset>
+
+							<c:if test="<%= !localPublishing %>">
+								<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_remote_options.jspf" %>
+								</aui:fieldset>
+							</c:if>
 						</div>
 
-						<aui:fieldset cssClass="options-group" label="date">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
-						</aui:fieldset>
+						<aui:button-row>
+							<c:choose>
+								<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
+									<aui:button type="submit" value="save" />
 
-						<c:if test="<%= !group.isCompany() %>">
-							<aui:fieldset cssClass="options-group" label="pages">
-								<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
-									<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
-									<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-									<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-									<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-									<liferay-util:param name="treeId" value="<%= treeId %>" />
-									<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-								</liferay-util:include>
-							</aui:fieldset>
-						</c:if>
+									<aui:button href="<%= renderURL.toString() %>" type="reset" value="cancel" />
+								</c:when>
+								<c:otherwise>
+									<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
 
-						<%
-						List<Layout> exportLayouts = new ArrayList<Layout>();
-
-						if (selLayout != null) {
-							exportLayouts.add(selLayout);
-						}
-						else if (!selectedLayouts.isEmpty()) {
-							exportLayouts = selectedLayouts;
-						}
-						else {
-							exportLayouts = LayoutLocalServiceUtil.getLayouts(group.getGroupId(), privateLayout);
-						}
-
-						List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(exportLayouts);
-						%>
-
-						<c:if test="<%= !portletDataHandlerPortlets.isEmpty() %>">
-							<aui:fieldset cssClass="options-group" label="application-configuration">
-								<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
-							</aui:fieldset>
-						</c:if>
-
-						<%
-						List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
-						%>
-
-						<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
-							<aui:fieldset cssClass="options-group" label="content">
-								<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_data.jspf" %>
-							</aui:fieldset>
-						</c:if>
-
-						<aui:fieldset cssClass="options-group" label="permissions">
-							<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
-						</aui:fieldset>
-
-						<c:if test="<%= !localPublishing %>">
-							<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
-								<%@ include file="/html/portlet/layouts_admin/publish_layouts_remote_options.jspf" %>
-							</aui:fieldset>
-						</c:if>
+									<aui:button id="publishButton" name="publishButton" type="submit" value="<%= publishActionKey %>" />
+								</c:otherwise>
+							</c:choose>
+						</aui:button-row>
 					</div>
+				</aui:form>
+			</div>
 
-					<aui:button-row>
-						<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
-
-						<aui:button id="publishButton" name="publishButton" type="submit" value="<%= publishActionKey %>" />
-					</aui:button-row>
-				</div>
-			</aui:form>
+			<div <%= publishConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
+				<liferay-util:include page="/html/portlet/layouts_admin/publish_layouts_configurations.jsp">
+					<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+					<liferay-util:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				</liferay-util:include>
+			</div>
 		</liferay-ui:section>
 	</c:if>
 
 	<liferay-ui:section>
 		<div class="process-list" id="<portlet:namespace />publishProcesses">
 			<liferay-util:include page="/html/portlet/layouts_admin/publish_layouts_processes.jsp">
+				<liferay-util:param name="closeRedirect" value="<%= closeRedirect %>" />
 				<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-				<liferay-util:param name="closeRedirect" value="<%= closeRedirect %>" />
 				<liferay-util:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 			</liferay-util:include>
 		</div>
@@ -468,4 +538,28 @@ else {
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>Checkbox'
 		}
 	);
+
+	var clickHandler = function(event) {
+		var dataValue = event.target.ancestor('li').attr('data-value');
+
+		processDataValue(dataValue);
+	};
+
+	var processDataValue = function(dataValue) {
+		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
+		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');
+
+		if (dataValue === 'custom') {
+			savedConfigurations.hide();
+
+			customConfiguration.show();
+		}
+		else if (dataValue === 'saved') {
+			customConfiguration.hide();
+
+			savedConfigurations.show();
+		}
+	};
+
+	A.one('#<portlet:namespace />publishConfigurationButtons').delegate('click', clickHandler, 'li a');
 </aui:script>

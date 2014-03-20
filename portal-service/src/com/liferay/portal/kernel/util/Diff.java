@@ -14,31 +14,10 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.io.Reader;
-
-import java.util.List;
-
 /**
- * @author Bruno Farache
- * @see    com.liferay.portal.kernel.util.DiffUtil
+ * @author     Bruno Farache
+ * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.kernel.diff.Diff}
  */
-public interface Diff {
-
-	public static final String CLOSE_DEL = "</del>";
-
-	public static final String CLOSE_INS = "</ins>";
-
-	public static final String CONTEXT_LINE = "#context#line#";
-
-	public static final String OPEN_DEL = "<del>";
-
-	public static final String OPEN_INS = "<ins>";
-
-	public List<DiffResult>[] diff(Reader source, Reader target);
-
-	public List<DiffResult>[] diff(
-		Reader source, Reader target, String addedMarkerStart,
-		String addedMarkerEnd, String deletedMarkerStart,
-		String deletedMarkerEnd, int margin);
-
+@Deprecated
+public interface Diff extends com.liferay.portal.kernel.diff.Diff {
 }
