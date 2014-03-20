@@ -61,14 +61,14 @@ public class TrackbackImpl implements Trackback {
 
 		String body = sb.toString();
 
+		long messageId = _comments.addTrackbackComment(
+			userId, groupId, className, classPK, blogName, title, body,
+			serviceContextFunction);
+
 		String entryURL =
 			PortalUtil.getLayoutFullURL(themeDisplay) +
 				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
 				entry.getUrlTitle();
-
-		long messageId = _comments.addTrackbackComment(
-			userId, groupId, className, classPK, blogName, title, body,
-			serviceContextFunction);
 
 		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
 	}
