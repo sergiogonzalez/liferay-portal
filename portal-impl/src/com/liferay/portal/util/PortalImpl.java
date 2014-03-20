@@ -1662,6 +1662,18 @@ public class PortalImpl implements Portal {
 		params.put(
 			"p_p_state", new String[] {WindowState.MAXIMIZED.toString()});
 		params.put("p_p_mode", new String[] {PortletMode.VIEW.toString()});
+		params.put("doAsGroupId", new String[] {String.valueOf(scopeGroupId)});
+
+		long plid = PortalUtil.getControlPanelPlid(company.getCompanyId());
+
+		params.put("refererPlid", new String[] {String.valueOf(plid)});
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			company.getCompanyId(), ppid);
+
+		String controlPanelCategory = portlet.getControlPanelEntryCategory();
+
+		params.put("controlPanelCategory", new String[] {controlPanelCategory});
 
 		sb.append(HttpUtil.parameterMapToString(params, true));
 
@@ -4692,6 +4704,10 @@ public class PortalImpl implements Portal {
 	@Override
 	public PreferencesValidator getPreferencesValidator(Portlet portlet) {
 		PortletBag portletBag = PortletBagPool.get(portlet.getRootPortletId());
+
+		if (portletBag == null) {
+			return null;
+		}
 
 		List<PreferencesValidator> preferencesValidatorInstances =
 			portletBag.getPreferencesValidatorInstances();

@@ -24,8 +24,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectSite";
 
 List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<AssetRendererFactory>();
-
-String currentLanguageId = LanguageUtil.getLanguageId(request);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -336,7 +334,6 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 			%>
 
 			document.<portlet:namespace />fm.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMetadataFields);
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailAssetEntryAddedBody_<%= currentLanguageId %>--'].value = window['<portlet:namespace />emailAssetEntryAdded'].getHTML();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

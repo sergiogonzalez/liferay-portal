@@ -5,7 +5,6 @@
 		<if>
 			<equals arg1="${enableAcrossSite}" arg2="true" />
 			<then>
-				if
 				<execute action="CPPortalsettingsContentsharing#check" locator-key1="CONTENT_SHARING_CHECKBOX" />
 				<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 				<execute action="CPPortalsettingsContentsharing#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -55,6 +54,29 @@
 		</if>
 	</command>
 
+	<command name="disableLDAPCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#uncheck" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#assertNotChecked" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+	</command>
+
+	<command name="disableRecycleBinCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_RECYCLE_BIN" value1="Recycle Bin" />
+
+		<execute action="CPPortalsettingsRecyclebin#click" locator-key1="ENABLE_REYCLE_BIN_CHECKBOX" />
+
+		<execute action="CPPortalsettingsRecyclebin#confirm" locator-key1="CONFIRM" value1="Disabling the Recycle Bin will prevent the restoring of content that has been moved to the Recycle Bin." />
+
+		<execute action="CPPortalsettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_USERS" value1="Users" />
 
@@ -101,6 +123,27 @@
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
+	</command>
+
+	<command name="enableLDAPCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#check" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#assertChecked" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+	</command>
+
+	<command name="enableRecycleBinCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_RECYCLE_BIN" value1="Recycle Bin" />
+
+		<execute action="CPPortalsettingsRecyclebin#check" locator-key1="ENABLE_REYCLE_BIN_CHECKBOX" />
+
+		<execute action="CPPortalsettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="enterReservedEmailAddressCP">

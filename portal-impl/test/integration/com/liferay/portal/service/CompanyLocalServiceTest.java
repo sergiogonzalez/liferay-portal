@@ -233,6 +233,23 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateDisplay() throws Exception {
+		Company company = addCompany();
+
+		User user = UserLocalServiceUtil.getDefaultUser(company.getCompanyId());
+
+		UserLocalServiceUtil.updateUser(user);
+
+		CompanyLocalServiceUtil.updateDisplay(
+			company.getCompanyId(), "hu", "CET");
+
+		user = UserLocalServiceUtil.getDefaultUser(company.getCompanyId());
+
+		Assert.assertEquals("hu", user.getLanguageId());
+		Assert.assertEquals("CET", user.getTimeZoneId());
+	}
+
+	@Test
 	public void testUpdateInvalidAccountNames() throws Exception {
 		Company company = addCompany();
 

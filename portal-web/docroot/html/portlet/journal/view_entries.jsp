@@ -36,6 +36,8 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
+long ddmStructureId = 0;
+
 String ddmStructureName = LanguageUtil.get(pageContext, "basic-web-content");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
@@ -83,16 +85,14 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 	<aui:input name="<%= displayTerms.STRUCTURE_ID %>" type="hidden" value="<%= displayTerms.getStructureId() %>" />
 
 	<%
-	if (!displayTerms.getStructureId().equals("0")) {
-		DDMStructure ddmStructure = null;
+	try {
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
 
-		try {
-			ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
+		ddmStructureId = ddmStructure.getStructureId();
 
-			ddmStructureName = ddmStructure.getName(locale);
-		}
-		catch (NoSuchStructureException nsse) {
-		}
+		ddmStructureName = ddmStructure.getName(locale);
+	}
+	catch (NoSuchStructureException nsse) {
 	}
 	%>
 
@@ -212,12 +212,17 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 		boolean subscribed = false;
 		boolean unsubscribable = true;
 
-		subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
+		if (Validator.isNull(displayTerms.getStructureId())) {
+			subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
 
-		if (subscribed) {
-			if (!JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
-				unsubscribable = false;
+			if (subscribed) {
+				if (!JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
+					unsubscribable = false;
+				}
 			}
+		}
+		else {
+			subscribed = JournalUtil.isSubscribedToStructure(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), ddmStructureId);
 		}
 		%>
 
@@ -226,10 +231,18 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 				<c:choose>
 					<c:when test="<%= unsubscribable %>">
 						<portlet:actionURL var="unsubscribeURL">
-							<portlet:param name="struts_action" value="/journal/edit_folder" />
+							<portlet:param name="struts_action" value='<%= Validator.isNull(displayTerms.getStructureId()) ? "/journal/edit_folder" : "/journal/edit_article" %>' />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+
+							<c:choose>
+								<c:when test="<%= Validator.isNull(displayTerms.getStructureId()) %>">
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								</c:when>
+								<c:otherwise>
+									<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />
+								</c:otherwise>
+							</c:choose>
 						</portlet:actionURL>
 
 						<liferay-ui:icon
@@ -249,10 +262,18 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="/journal/edit_folder" />
+					<portlet:param name="struts_action" value='<%= Validator.isNull(displayTerms.getStructureId()) ? "/journal/edit_folder" : "/journal/edit_article" %>' />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+
+					<c:choose>
+						<c:when test="<%= Validator.isNull(displayTerms.getStructureId()) %>">
+							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						</c:when>
+						<c:otherwise>
+							<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />
+						</c:otherwise>
+					</c:choose>
 				</portlet:actionURL>
 
 				<liferay-ui:icon
