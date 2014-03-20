@@ -87,7 +87,39 @@ public class TrackbackAction extends PortletAction {
 		throws Exception {
 
 		try {
-			addTrackbackComment(actionRequest);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			HttpServletRequest originalRequest =
+				PortalUtil.getOriginalServletRequest(request);
+
+			String title = ParamUtil.getString(originalRequest, "title");
+			String excerpt = ParamUtil.getString(originalRequest, "excerpt");
+			String url = ParamUtil.getString(originalRequest, "url");
+			String blogName = ParamUtil.getString(originalRequest, "blog_name");
+
+			validate(actionRequest, request.getRemoteAddr(), url);
+
+			try {
+				ActionUtil.getEntry(actionRequest);
+			}
+			catch (PrincipalException pe) {
+				throw new TrackbackValidationException(
+					"Blog entry must have guest view permissions to enable " +
+						"trackbacks.");
+			}
+
+			BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
+				WebKeys.BLOGS_ENTRY);
+
+			validate(entry);
+
+			_trackback.addTrackback(
+				entry, themeDisplay, excerpt, url, blogName, title,
+				new TrackbackServiceContextFunction(actionRequest));
 		}
 		catch (TrackbackValidationException tve) {
 			sendError(actionRequest, actionResponse, tve.getMessage());
@@ -96,44 +128,6 @@ public class TrackbackAction extends PortletAction {
 		}
 
 		sendSuccess(actionRequest, actionResponse);
-	}
-
-	protected void addTrackbackComment(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		HttpServletRequest originalRequest =
-			PortalUtil.getOriginalServletRequest(request);
-
-		String title = ParamUtil.getString(originalRequest, "title");
-		String excerpt = ParamUtil.getString(originalRequest, "excerpt");
-		String url = ParamUtil.getString(originalRequest, "url");
-		String blogName = ParamUtil.getString(originalRequest, "blog_name");
-
-		validate(actionRequest, request.getRemoteAddr(), url);
-
-		try {
-			ActionUtil.getEntry(actionRequest);
-		}
-		catch (PrincipalException pe) {
-			throw new TrackbackValidationException(
-				"Blog entry must have guest view permissions to enable " +
-					"trackbacks.");
-		}
-
-		BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
-			WebKeys.BLOGS_ENTRY);
-
-		validate(entry);
-
-		_trackback.addTrackback(
-			entry, themeDisplay, excerpt, url, blogName, title,
-			new TrackbackServiceContextFunction(actionRequest));
 	}
 
 	@Override
