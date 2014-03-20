@@ -32,9 +32,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.trackback.Trackback;
+import com.liferay.portlet.blogs.trackback.TrackbackImpl;
 import com.liferay.portlet.blogs.trackback.TrackbackValidationException;
-import com.liferay.portlet.blogs.trackback.Trackbacks;
-import com.liferay.portlet.blogs.trackback.TrackbacksImpl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -53,7 +53,7 @@ import org.apache.struts.action.ActionMapping;
 public class TrackbackAction extends PortletAction {
 
 	public TrackbackAction() {
-		_trackbacks = new TrackbacksImpl();
+		_trackback = new TrackbackImpl();
 	}
 
 	@Override
@@ -78,8 +78,8 @@ public class TrackbackAction extends PortletAction {
 		setForward(actionRequest, ActionConstants.COMMON_NULL);
 	}
 
-	protected TrackbackAction(Trackbacks trackbacks) {
-		_trackbacks = trackbacks;
+	protected TrackbackAction(Trackback trackback) {
+		_trackback = trackback;
 	}
 
 	protected void addTrackback(
@@ -117,7 +117,7 @@ public class TrackbackAction extends PortletAction {
 
 		BlogsEntry entry = validate(actionRequest, request, url);
 
-		_trackbacks.addTrackback(
+		_trackback.addTrackback(
 			entry, themeDisplay, excerpt, url, blogName, title,
 			new TrackbackServiceContextFunction(actionRequest));
 	}
@@ -236,6 +236,6 @@ public class TrackbackAction extends PortletAction {
 
 	private static Log _log = LogFactoryUtil.getLog(TrackbackAction.class);
 
-	private Trackbacks _trackbacks;
+	private Trackback _trackback;
 
 }

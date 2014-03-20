@@ -29,9 +29,9 @@ import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
  * @author Alexander Chow
  * @author André de Oliveira
  */
-public class TrackbacksImpl implements Trackbacks {
+public class TrackbackImpl implements Trackback {
 
-	public TrackbacksImpl() {
+	public TrackbackImpl() {
 		_comments = new TrackbackCommentsImpl();
 	}
 
@@ -64,7 +64,7 @@ public class TrackbacksImpl implements Trackbacks {
 		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
 	}
 
-	protected TrackbacksImpl(TrackbackComments comments) {
+	protected TrackbackImpl(TrackbackComments comments) {
 		_comments = comments;
 	}
 

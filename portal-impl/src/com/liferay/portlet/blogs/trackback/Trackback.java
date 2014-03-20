@@ -24,7 +24,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 /**
  * @author André de Oliveira
  */
-public interface Trackbacks {
+public interface Trackback {
 
 	public void addTrackback(
 			BlogsEntry entry, ThemeDisplay themeDisplay, String excerpt,

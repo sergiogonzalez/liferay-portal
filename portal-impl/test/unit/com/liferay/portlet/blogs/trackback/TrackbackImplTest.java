@@ -61,7 +61,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest( {
 	UserLocalServiceUtil.class, LinkbackConsumerUtil.class
 })
-public class TrackbacksImplTest {
+public class TrackbackImplTest {
 
 	public static void addNewTrackback(
 		long messageId, String url, String entryUrl) {
@@ -140,7 +140,7 @@ public class TrackbacksImplTest {
 
 		// Execute
 
-		TrackbacksImpl _trackbacks = new TrackbacksImpl(_trackbackComments);
+		TrackbackImpl _trackbacks = new TrackbackImpl(_trackbackComments);
 
 		_trackbacks.addTrackback(
 			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",

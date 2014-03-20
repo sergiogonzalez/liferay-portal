@@ -40,7 +40,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.trackback.Trackbacks;
+import com.liferay.portlet.blogs.trackback.Trackback;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -162,7 +162,7 @@ public class TrackbackActionTest {
 		assertSuccess();
 
 		verify(
-			_trackbacks
+			_trackback
 		).addTrackback(
 			same(_blogsEntry), same(_themeDisplay), eq("__excerpt__"),
 			eq("__url__"), eq("__blogName__"), eq("__title__"),
@@ -186,7 +186,7 @@ public class TrackbackActionTest {
 	}
 
 	protected void addTrackback() throws Exception {
-		TrackbackAction trackbackAction = new TrackbackAction(_trackbacks);
+		TrackbackAction trackbackAction = new TrackbackAction(_trackback);
 
 		trackbackAction.addTrackback(_actionRequest, _actionResponse);
 	}
@@ -322,6 +322,6 @@ public class TrackbackActionTest {
 	private ThemeDisplay _themeDisplay = new ThemeDisplay();
 
 	@Mock
-	private Trackbacks _trackbacks;
+	private Trackback _trackback;
 
 }
