@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.util.diff;
+package com.liferay.portal.diff;
 
+import com.liferay.portal.kernel.diff.DiffResult;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,22 +35,9 @@ import org.incava.util.diff.Difference;
  * detects changes within lines, such as, removal or addition of characters.
  * Take a look at <code>DiffTest</code> to see the expected inputs and outputs.
  *
- * @author     Bruno Farache
- * @deprecated As of 6.2.0, moved to {@link
- *             com.liferay.portal.kernel.util.DiffUtil}
+ * @author Bruno Farache
  */
-@Deprecated
-public class DiffUtil {
-
-	public static final String CLOSE_DEL = "</del>";
-
-	public static final String CLOSE_INS = "</ins>";
-
-	public static final String CONTEXT_LINE = "#context#line#";
-
-	public static final String OPEN_DEL = "<del>";
-
-	public static final String OPEN_INS = "<ins>";
+public class DiffImpl implements com.liferay.portal.kernel.diff.Diff {
 
 	/**
 	 * This is a diff method with default values.
@@ -60,7 +48,8 @@ public class DiffUtil {
 	 *         first element contains DiffResults related to changes in source
 	 *         and the second element to changes in target
 	 */
-	public static List<DiffResult>[] diff(Reader source, Reader target) {
+	@Override
+	public List<DiffResult>[] diff(Reader source, Reader target) {
 		int margin = 2;
 
 		return diff(
@@ -88,7 +77,8 @@ public class DiffUtil {
 	 *         first element contains DiffResults related to changes in source
 	 *         and the second element to changes in target
 	 */
-	public static List<DiffResult>[] diff(
+	@Override
+	public List<DiffResult>[] diff(
 		Reader source, Reader target, String addedMarkerStart,
 		String addedMarkerEnd, String deletedMarkerStart,
 		String deletedMarkerEnd, int margin) {
@@ -269,7 +259,9 @@ public class DiffUtil {
 
 		for (; i <= difference.getDeletedEnd(); i++) {
 			for (; j <= difference.getAddedEnd(); j++) {
-				if (_lineDiff(
+				if (!_isMaxLineLengthExceeded(
+						sourceStringList.get(i), targetStringList.get(j)) &&
+					_lineDiff(
 						sourceResults, targetResults, sourceStringList,
 						targetStringList, addedMarkerStart, addedMarkerEnd,
 						deletedMarkerStart, deletedMarkerEnd, i, j, false)) {
@@ -278,22 +270,48 @@ public class DiffUtil {
 
 					break;
 				}
-				else {
-					_highlightLines(
-						targetStringList, addedMarkerStart, addedMarkerEnd, j,
-						j);
 
-					DiffResult targetResult = new DiffResult(
-						j, targetStringList.subList(j, j + 1));
+				_highlightLines(
+					targetStringList, addedMarkerStart, addedMarkerEnd, j, j);
 
-					targetResults.add(targetResult);
+				DiffResult targetResult = new DiffResult(
+					j, targetStringList.subList(j, j + 1));
 
-					sourceResults.add(new DiffResult(j, CONTEXT_LINE));
-				}
+				targetResults.add(targetResult);
+
+				sourceResults.add(new DiffResult(j, CONTEXT_LINE));
 			}
 
 			if (aligned) {
 				break;
+			}
+
+			_highlightLines(
+				sourceStringList, deletedMarkerStart, deletedMarkerEnd, i, i);
+
+			DiffResult sourceResult = new DiffResult(
+				i, sourceStringList.subList(i, i + 1));
+
+			sourceResults.add(sourceResult);
+
+			targetResults.add(new DiffResult(i, CONTEXT_LINE));
+		}
+
+		i = i + 1;
+		j = j + 1;
+
+		// Lines are aligned, check for differences of the following lines.
+
+		for (; i <= difference.getDeletedEnd() && j <= difference.getAddedEnd();
+				i++, j++) {
+
+			if (!_isMaxLineLengthExceeded(
+					sourceStringList.get(i), targetStringList.get(j))) {
+
+				_lineDiff(
+					sourceResults, targetResults, sourceStringList,
+					targetStringList, addedMarkerStart, addedMarkerEnd,
+					deletedMarkerStart, deletedMarkerEnd, i, j, true);
 			}
 			else {
 				_highlightLines(
@@ -306,21 +324,17 @@ public class DiffUtil {
 				sourceResults.add(sourceResult);
 
 				targetResults.add(new DiffResult(i, CONTEXT_LINE));
+
+				_highlightLines(
+					targetStringList, addedMarkerStart, addedMarkerEnd, j, j);
+
+				DiffResult targetResult = new DiffResult(
+					j, targetStringList.subList(j, j + 1));
+
+				targetResults.add(targetResult);
+
+				sourceResults.add(new DiffResult(j, CONTEXT_LINE));
 			}
-		}
-
-		i = i + 1;
-		j = j + 1;
-
-		// Lines are aligned, check for differences of the following lines.
-
-		for (; i <= difference.getDeletedEnd() && j <= difference.getAddedEnd();
-				i++, j++) {
-
-			_lineDiff(
-				sourceResults, targetResults, sourceStringList,
-				targetStringList, addedMarkerStart, addedMarkerEnd,
-				deletedMarkerStart, deletedMarkerEnd, i, j, true);
 		}
 
 		// After the for loop above, some lines might remained unchecked. They
@@ -402,6 +416,18 @@ public class DiffUtil {
 		for (int i = startPos; i <= endPos; i++) {
 			stringList.set(i, markerStart + stringList.get(i) + markerEnd);
 		}
+	}
+
+	private static boolean _isMaxLineLengthExceeded(
+		String sourceString, String targetString) {
+
+		if ((sourceString.length() > _DIFF_MAX_LINE_LENGTH) ||
+			(targetString.length() > _DIFF_MAX_LINE_LENGTH)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _lineDiff(
@@ -554,5 +580,7 @@ public class DiffUtil {
 
 		return sb.toString();
 	}
+
+	private static final int _DIFF_MAX_LINE_LENGTH = 5000;
 
 }
