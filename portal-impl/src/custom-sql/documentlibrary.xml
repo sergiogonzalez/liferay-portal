@@ -197,6 +197,20 @@
 				) TEMP_TABLE
 				INNER JOIN
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+				WHERE
+					(DLFileEntry.repositoryId NOT IN
+						(
+						SELECT
+							DLFolder.repositoryId
+						FROM
+							DLFolder
+						INNER JOIN
+							Repository
+						ON
+							Repository.dlFolderId = DLFolder.folderId
+						WHERE
+							DLFolder.hidden_ = [$TRUE$]
+					))
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_U_F">
@@ -220,6 +234,20 @@
 				) TEMP_TABLE
 				INNER JOIN
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+				WHERE
+					(DLFileEntry.repositoryId NOT IN
+						(
+						SELECT
+							DLFolder.repositoryId
+						FROM
+							DLFolder
+						INNER JOIN
+							Repository
+						ON
+							Repository.dlFolderId = DLFolder.folderId
+						WHERE
+							DLFolder.hidden_ = [$TRUE$]
+					))
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.countByC_G_N_D_S">
