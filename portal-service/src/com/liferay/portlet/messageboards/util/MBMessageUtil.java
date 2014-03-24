@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.util;
 
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Roberto Díaz
@@ -24,13 +23,13 @@ import com.liferay.portal.theme.ThemeDisplay;
 public class MBMessageUtil {
 
 	public static String formatCommentToBBCode(
-		String comment, ThemeDisplay themeDisplay) {
+		String comment, String pathThemeImages) {
 
 		String msgBody = BBCodeTranslatorUtil.getHTML(comment);
 
 		return StringUtil.replace(
 			msgBody, "@theme_images_path@/emoticons",
-			themeDisplay.getPathThemeImages() + "/emoticons");
+			pathThemeImages + "/emoticons");
 	}
 
 }
