@@ -23,6 +23,10 @@ import com.liferay.portlet.messageboards.model.MBMessage;
  */
 public class MBMessageUtil {
 
+	public static final String EMOTICONS = "/emoticons";
+
+	public static final String THEME_IMAGES_PATH = "@theme_images_path@";
+
 	public static String formatMessage(
 		MBMessage message, int messageBodyLength, String pathThemeImages) {
 
@@ -52,8 +56,8 @@ public class MBMessageUtil {
 		msgBody = BBCodeTranslatorUtil.getHTML(msgBody);
 
 		return StringUtil.replace(
-			msgBody, "@theme_images_path@/emoticons",
-			pathThemeImages + "/emoticons");
+			msgBody, THEME_IMAGES_PATH + EMOTICONS,
+			pathThemeImages + EMOTICONS);
 	}
 
 }
