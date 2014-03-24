@@ -103,17 +103,7 @@ public class TrackbackAction extends PortletAction {
 
 			validate(actionRequest, request.getRemoteAddr(), url);
 
-			try {
-				ActionUtil.getEntry(actionRequest);
-			}
-			catch (PrincipalException pe) {
-				throw new TrackbackValidationException(
-					"Blog entry must have guest view permissions to enable " +
-						"trackbacks.");
-			}
-
-			BlogsEntry entry = (BlogsEntry)actionRequest.getAttribute(
-				WebKeys.BLOGS_ENTRY);
+			BlogsEntry entry = getBlogsEntry(actionRequest);
 
 			validate(entry);
 
@@ -128,6 +118,21 @@ public class TrackbackAction extends PortletAction {
 		}
 
 		sendSuccess(actionRequest, actionResponse);
+	}
+
+	protected BlogsEntry getBlogsEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		try {
+			ActionUtil.getEntry(actionRequest);
+		}
+		catch (PrincipalException pe) {
+			throw new TrackbackValidationException(
+				"Blog entry must have guest view permissions to enable " +
+					"trackbacks.");
+		}
+
+		return (BlogsEntry)actionRequest.getAttribute(WebKeys.BLOGS_ENTRY);
 	}
 
 	@Override
