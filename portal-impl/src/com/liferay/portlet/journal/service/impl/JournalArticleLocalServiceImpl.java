@@ -777,7 +777,15 @@ public class JournalArticleLocalServiceImpl
 			if (journalArticlePersistence.countByG_A(
 					groupId, newArticleId) > 0) {
 
-				throw new DuplicateArticleIdException();
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("{groupId=");
+				sb.append(groupId);
+				sb.append(", articleId=");
+				sb.append(newArticleId);
+				sb.append("}");
+
+				throw new DuplicateArticleIdException(sb.toString());
 			}
 		}
 
@@ -4744,8 +4752,6 @@ public class JournalArticleLocalServiceImpl
 			article.setResourcePrimKey(latestArticle.getResourcePrimKey());
 			article.setGroupId(latestArticle.getGroupId());
 			article.setCompanyId(latestArticle.getCompanyId());
-			article.setUserId(user.getUserId());
-			article.setUserName(user.getFullName());
 			article.setCreateDate(serviceContext.getModifiedDate(now));
 			article.setClassNameId(latestArticle.getClassNameId());
 			article.setClassPK(latestArticle.getClassPK());
@@ -4773,6 +4779,8 @@ public class JournalArticleLocalServiceImpl
 			user, groupId, articleId, article.getVersion(), addNewVersion,
 			content, ddmStructureKey, images);
 
+		article.setUserId(user.getUserId());
+		article.setUserName(user.getFullName());
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
@@ -6731,7 +6739,8 @@ public class JournalArticleLocalServiceImpl
 				ddmTemplateKey, true);
 
 			if (ddmTemplate.getClassPK() != ddmStructure.getStructureId()) {
-				throw new NoSuchTemplateException();
+				throw new NoSuchTemplateException(
+					"{templateKey=" + ddmTemplateKey + "}");
 			}
 		}
 		else if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
@@ -6801,7 +6810,17 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, version);
 
 		if (article != null) {
-			throw new DuplicateArticleIdException();
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{groupId=");
+			sb.append(groupId);
+			sb.append(", articleId=");
+			sb.append(articleId);
+			sb.append(", version=");
+			sb.append(version);
+			sb.append("}");
+
+			throw new DuplicateArticleIdException(sb.toString());
 		}
 
 		validate(
