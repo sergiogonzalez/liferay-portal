@@ -49,6 +49,24 @@ public class TrackbackImpl implements Trackback {
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
 
+		String body = _buildBody(themeDisplay, excerpt, url);
+
+		long messageId = _comments.addTrackbackComment(
+			userId, groupId, className, classPK, blogName, title, body,
+			serviceContextFunction);
+
+		String entryURL = _buildEntryURL(entry, themeDisplay);
+
+		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
+	}
+
+	protected TrackbackImpl(TrackbackComments comments) {
+		_comments = comments;
+	}
+
+	private String _buildBody(
+			ThemeDisplay themeDisplay, String excerpt, String url) {
+
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("[...] ");
@@ -59,22 +77,20 @@ public class TrackbackImpl implements Trackback {
 		sb.append(themeDisplay.translate("read-more"));
 		sb.append("[/url]");
 
-		String body = sb.toString();
-
-		long messageId = _comments.addTrackbackComment(
-			userId, groupId, className, classPK, blogName, title, body,
-			serviceContextFunction);
-
-		String entryURL =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
-				entry.getUrlTitle();
-
-		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
+		return sb.toString();
 	}
 
-	protected TrackbackImpl(TrackbackComments comments) {
-		_comments = comments;
+	private String _buildEntryURL(BlogsEntry entry, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(PortalUtil.getLayoutFullURL(themeDisplay));
+		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
+		sb.append("blogs/");
+		sb.append(entry.getUrlTitle());
+
+		return sb.toString();
 	}
 
 	private TrackbackComments _comments;
