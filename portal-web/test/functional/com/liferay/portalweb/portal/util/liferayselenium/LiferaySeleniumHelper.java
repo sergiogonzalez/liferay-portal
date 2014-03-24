@@ -662,7 +662,9 @@ public class LiferaySeleniumHelper {
 			Validator.equals(
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.2") ||
 			Validator.equals(
-				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.3")) {
+				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.3") ||
+			Validator.equals(
+				TestPropsValues.LIFERAY_PORTAL_BRANCH, "ee-6.2.10")) {
 
 			if (line.contains(
 					"com.liferay.portal.kernel.search.SearchException: " +
