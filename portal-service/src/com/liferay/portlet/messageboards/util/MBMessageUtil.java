@@ -16,16 +16,40 @@ package com.liferay.portlet.messageboards.util;
 
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 /**
  * @author Roberto Díaz
  */
 public class MBMessageUtil {
 
-	public static String formatCommentToBBCode(
-		String comment, String pathThemeImages) {
+	public static String formatMessage(
+		MBMessage message, int messageBodyLength, String pathThemeImages) {
 
-		String msgBody = BBCodeTranslatorUtil.getHTML(comment);
+		String msgBody = message.getBody();
+
+		if (messageBodyLength > 0) {
+			msgBody = StringUtil.shorten(msgBody, messageBodyLength);
+		}
+
+		if (message.isFormatBBCode()) {
+			return formatMessageBodyToBBCode(
+				message.getBody(), pathThemeImages);
+		}
+
+		return msgBody;
+	}
+
+	public static String formatMessage(
+		MBMessage message, String pathThemeImages) {
+
+		return formatMessage(message, 0, pathThemeImages);
+	}
+
+	public static String formatMessageBodyToBBCode(
+		String msgBody, String pathThemeImages) {
+
+		msgBody = BBCodeTranslatorUtil.getHTML(msgBody);
 
 		return StringUtil.replace(
 			msgBody, "@theme_images_path@/emoticons",
