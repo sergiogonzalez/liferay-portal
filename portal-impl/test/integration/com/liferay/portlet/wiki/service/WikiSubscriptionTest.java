@@ -23,6 +23,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -54,6 +55,12 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testSubscriptionClassType() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testSubscriptionContainerModelWhenInRootContainerModel() {
 	}
 
@@ -61,6 +68,18 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	@Test
 	public void testSubscriptionContainerModelWhenInSubcontainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionDefaultClassType() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionLocalizedContent() {
 	}
 
 	@Ignore
@@ -116,6 +135,16 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 
 		WikiNodeLocalServiceUtil.subscribeNode(
 			TestPropsValues.getUserId(), containerModelId);
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.WIKI;
+	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailPageAddedBody";
 	}
 
 	@Override

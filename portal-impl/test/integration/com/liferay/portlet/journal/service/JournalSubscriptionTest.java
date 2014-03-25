@@ -22,8 +22,14 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
@@ -65,6 +71,30 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected long addBaseModelWithClassType(long containerId, long classTypeId)
+		throws Exception {
+
+		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
+			group.getGroupId(), containerId,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			"<title>Test Article</title>", _ddmStructure.getStructureKey(),
+			_ddmTemplate.getTemplateKey());
+
+		return article.getResourcePrimKey();
+	}
+
+	@Override
+	protected long addClassType() throws Exception {
+		_ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), JournalArticle.class.getName());
+
+		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), _ddmStructure.getStructureId());
+
+		return _ddmStructure.getStructureId();
+	}
+
+	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
 		JournalFolder folder = JournalTestUtil.addFolder(
 			group.getGroupId(), containerModelId,
@@ -74,11 +104,27 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected void addSubscriptionClassType(long classTypeId) throws Exception {
+		JournalArticleLocalServiceUtil.subscribeStructure(
+			group.getGroupId(), TestPropsValues.getUserId(), classTypeId);
+	}
+
+	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		JournalFolderLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.JOURNAL;
+	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailArticleAddedBody";
 	}
 
 	@Override
@@ -92,5 +138,8 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 
 		return article.getResourcePrimKey();
 	}
+
+	protected DDMStructure _ddmStructure;
+	protected DDMTemplate _ddmTemplate;
 
 }
