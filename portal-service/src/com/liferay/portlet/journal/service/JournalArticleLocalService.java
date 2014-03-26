@@ -462,36 +462,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Subscribe the user to changes in elements that belongs to specified
-	* structure.
-	*
-	* @param groupId the primary key of the folder's group
-	* @param userId the primary key of the user to be subscribed
-	* @param structureId the primary key of the structure to subscribe to
-	* @throws PortalException if the user, group os structure could not be
-	found, or if subscribing was not permissible
-	* @throws SystemException if a system exception occurred
-	*/
-	public void subscribeStructure(long groupId, long userId, long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Unsubscribe the user from changes in elements that belongs to specified
-	* structure.
-	*
-	* @param groupId the primary key of the folder's group
-	* @param userId the primary key of the user to be subscribed
-	* @param structureId the primary key of the structure to subscribe to
-	* @throws PortalException if the user, group os structure could not be
-	found, or if subscribing was not permissible
-	* @throws SystemException if a system exception occurred
-	*/
-	public void unsubscribeStructure(long groupId, long userId, long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Adds the model resources with the permissions to the web content article.
 	*
 	* @param article the web content article to add resources to
@@ -1817,6 +1787,11 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public int getNotInTrashArticlesCount(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle getPreviousApprovedArticle(
+		com.liferay.portlet.journal.model.JournalArticle article)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the web content articles matching the group and DDM structure
 	* key.
@@ -2724,6 +2699,16 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
 		long groupId, long userId, long creatorUserId, int status, int start,
 		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void subscribeStructure(long groupId, long userId,
+		long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void unsubscribeStructure(long groupId, long userId,
+		long ddmStructureId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

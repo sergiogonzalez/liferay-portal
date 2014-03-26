@@ -384,36 +384,6 @@ public interface JournalArticleService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Subscribe the user to changes in elements that belongs to specified
-	* structure.
-	*
-	* @param groupId the primary key of the folder's group
-	* @param userId the primary key of the user to be subscribed
-	* @param structureId the primary key of the structure to subscribe to
-	* @throws PortalException if the user, group os structure could not be
-	found, or if subscribing was not permissible
-	* @throws SystemException if a system exception occurred
-	*/
-	public void subscribeStructure(long groupId, long userId, long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Unsubscribe the user from changes in elements that belongs to specified
-	* structure.
-	*
-	* @param groupId the primary key of the folder's group
-	* @param userId the primary key of the user to be subscribed
-	* @param structureId the primary key of the structure to subscribe to
-	* @throws PortalException if the user, group os structure could not be
-	found, or if subscribing was not permissible
-	* @throws SystemException if a system exception occurred
-	*/
-	public void unsubscribeStructure(long groupId, long userId, long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the web content article with the ID.
 	*
 	* @param id the primary key of the web content article
@@ -1504,6 +1474,16 @@ public interface JournalArticleService extends BaseService {
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void subscribeStructure(long groupId, long userId,
+		long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void unsubscribeStructure(long groupId, long userId,
+		long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Updates the web content article matching the version, replacing its

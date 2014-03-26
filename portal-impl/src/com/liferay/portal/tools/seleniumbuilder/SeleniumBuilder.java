@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.util.List;
 import java.util.Map;
@@ -35,14 +35,9 @@ import java.util.TreeSet;
 public class SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
-		try {
-			InitUtil.initWithSpringAndModuleFramework();
+		ToolDependencies.wireBasic();
 
-			new SeleniumBuilder(args);
-		}
-		finally {
-			InitUtil.stopModuleFramework();
-		}
+		new SeleniumBuilder(args);
 	}
 
 	/**
@@ -55,16 +50,20 @@ public class SeleniumBuilder {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String baseDirName = arguments.get("selenium.base.dir");
+		String projectDirName = arguments.get("project.dir");
 
-		_seleniumBuilderContext = new SeleniumBuilderContext(baseDirName);
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(baseDirName);
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(
+			baseDirName, projectDirName);
+
+		_seleniumBuilderContext = new SeleniumBuilderContext(
+			_seleniumBuilderFileUtil);
 
 		Set<String> types = SetUtil.fromArray(
 			StringUtil.split(arguments.get("selenium.types")));
 
 		if (types.contains("action")) {
 			ActionConverter actionConverter = new ActionConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> actionNames = _seleniumBuilderContext.getActionNames();
 
@@ -77,7 +76,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("function")) {
 			FunctionConverter functionConverter = new FunctionConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> functionNames =
 				_seleniumBuilderContext.getFunctionNames();
@@ -91,7 +90,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("macro")) {
 			MacroConverter macroConverter = new MacroConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> macroNames = _seleniumBuilderContext.getMacroNames();
 
@@ -104,7 +103,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("path")) {
 			PathConverter pathConverter = new PathConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> pathNames = _seleniumBuilderContext.getPathNames();
 
@@ -115,15 +114,56 @@ public class SeleniumBuilder {
 
 		if (types.contains("testcase")) {
 			TestCaseConverter testCaseConverter = new TestCaseConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> testCaseNames =
 				_seleniumBuilderContext.getTestCaseNames();
 
 			for (String testCaseName : testCaseNames) {
 				_seleniumBuilderContext.validateTestCaseElements(testCaseName);
+			}
 
-				testCaseConverter.convert(testCaseName);
+			String testClass = arguments.get("test.class");
+
+			if (!testClass.equals("${test.class}")) {
+				String testCaseCommandName = null;
+				String testCaseName = null;
+
+				if (testClass.contains("#")) {
+					String[] testClassParts = StringUtil.split(testClass, "#");
+
+					testCaseCommandName = testClassParts[1];
+					testCaseName = testClassParts[0];
+				}
+				else {
+					testCaseName = testClass;
+				}
+
+				if ((testCaseCommandName != null) &&
+					testCaseCommandName.startsWith("test")) {
+
+					testCaseCommandName = StringUtil.replaceFirst(
+						testCaseCommandName, "test", "");
+				}
+
+				if (testCaseName.endsWith("TestCase")) {
+					testCaseName = StringUtil.replaceLast(
+						testCaseName, "TestCase", "");
+				}
+
+				Element rootElement =
+					_seleniumBuilderContext.getTestCaseRootElement(
+						testCaseName);
+
+				String extendsTestCaseName = rootElement.attributeValue(
+					"extends");
+
+				if (extendsTestCaseName != null) {
+					testCaseConverter.convert(
+						extendsTestCaseName, testCaseCommandName);
+				}
+
+				testCaseConverter.convert(testCaseName, testCaseCommandName);
 			}
 		}
 

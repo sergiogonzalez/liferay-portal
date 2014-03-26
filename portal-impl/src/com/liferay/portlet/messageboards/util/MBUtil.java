@@ -56,6 +56,7 @@ import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.settings.ParameterMapSettings;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -575,6 +576,19 @@ public class MBUtil {
 		return new MBSettings(settings);
 	}
 
+	public static MBSettings getMBSettings(
+			long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, MBConstants.SERVICE_NAME);
+
+		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new MBSettings(parameterMapSettings);
+	}
+
 	public static long getMessageId(String mailId) {
 		int x = mailId.indexOf(CharPool.LESS_THAN) + 1;
 		int y = mailId.indexOf(CharPool.AT);
@@ -675,6 +689,22 @@ public class MBUtil {
 		sb.append(mx);
 
 		return sb.toString();
+	}
+
+	public static String getSubjectForEmail(Message message) throws Exception {
+		long parentMessageId = getParentMessageId(message);
+
+		MBMessage parentMessage = MBMessageLocalServiceUtil.getMBMessage(
+			parentMessageId);
+
+		String subject = parentMessage.getSubject();
+
+		if (subject.startsWith("RE:")) {
+			return subject;
+		}
+		else {
+			return "RE: " + parentMessage.getSubject();
+		}
 	}
 
 	public static String getSubjectWithoutMessageId(Message message)

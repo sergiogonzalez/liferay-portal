@@ -139,6 +139,10 @@ public class EhcacheConfigurationUtil {
 			return;
 		}
 
+		if (!PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED) {
+			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
+		}
+
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerFactoryConfigurations =
 				cacheConfiguration.getCacheEventListenerConfigurations();
@@ -198,7 +202,7 @@ public class EhcacheConfigurationUtil {
 
 		boolean clearCachePeerProviderConfigurations = false;
 
-		if ((usingDefault && enableClusterLinkReplication) ||
+		if ((enableClusterLinkReplication) ||
 			(usingDefault && !PropsValues.CLUSTER_LINK_ENABLED)) {
 
 			clearCachePeerProviderConfigurations = true;

@@ -21,11 +21,16 @@ import java.util.Map;
  */
 public class TestCaseConverter extends BaseConverter {
 
-	public TestCaseConverter(SeleniumBuilderContext seleniumBuilderContext) {
-		super(seleniumBuilderContext);
+	public TestCaseConverter(
+		SeleniumBuilderContext seleniumBuilderContext,
+		SeleniumBuilderFileUtil seleniumBuilderFileUtil) {
+
+		super(seleniumBuilderContext, seleniumBuilderFileUtil);
 	}
 
-	public void convert(String testCaseName) throws Exception {
+	public void convert(String testCaseName, String testCaseCommandName)
+		throws Exception {
+
 		Map<String, Object> context = getContext();
 
 		context.put("blockLevelStack", new FreeMarkerStack());
@@ -34,6 +39,7 @@ public class TestCaseConverter extends BaseConverter {
 		context.put("ifTypeStack", new FreeMarkerStack());
 		context.put("logicalOperatorElementStack", new FreeMarkerStack());
 		context.put("macroNameStack", new FreeMarkerStack());
+		context.put("testCaseCommandName", testCaseCommandName);
 		context.put("testCaseNameStack", new FreeMarkerStack());
 		context.put("testCaseName", testCaseName);
 		context.put("variableContextStack", new FreeMarkerStack());

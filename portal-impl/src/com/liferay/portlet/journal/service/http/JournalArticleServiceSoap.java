@@ -366,54 +366,6 @@ public class JournalArticleServiceSoap {
 	}
 
 	/**
-	* Subscribe the user to changes in elements that belongs to specified
-	* structure.
-	*
-	* @param groupId the primary key of the folder's group
-	* @param userId the primary key of the user to be subscribed
-	* @param structureId the primary key of the structure to subscribe to
-	* @throws PortalException if the user, group os structure could not be
-	found, or if subscribing was not permissible
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void subscribeStructure(long groupId, long userId,
-		long structureId) throws RemoteException {
-		try {
-			JournalArticleServiceUtil.subscribeStructure(groupId, userId,
-				structureId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* Unsubscribe the user from changes in elements that belongs to specified
-	* structure.
-	*
-	* @param groupId the primary key of the folder's group
-	* @param userId the primary key of the user to be subscribed
-	* @param structureId the primary key of the structure to subscribe to
-	* @throws PortalException if the user, group os structure could not be
-	found, or if subscribing was not permissible
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void unsubscribeStructure(long groupId, long userId,
-		long structureId) throws RemoteException {
-		try {
-			JournalArticleServiceUtil.unsubscribeStructure(groupId, userId,
-				structureId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	* Returns the web content article with the ID.
 	*
 	* @param id the primary key of the web content article
@@ -1862,6 +1814,32 @@ public class JournalArticleServiceSoap {
 					displayDateLT, status, reviewDate, andOperator);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void subscribeStructure(long groupId, long userId,
+		long ddmStructureId) throws RemoteException {
+		try {
+			JournalArticleServiceUtil.subscribeStructure(groupId, userId,
+				ddmStructureId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsubscribeStructure(long groupId, long userId,
+		long ddmStructureId) throws RemoteException {
+		try {
+			JournalArticleServiceUtil.unsubscribeStructure(groupId, userId,
+				ddmStructureId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
