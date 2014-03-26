@@ -777,7 +777,15 @@ public class JournalArticleLocalServiceImpl
 			if (journalArticlePersistence.countByG_A(
 					groupId, newArticleId) > 0) {
 
-				throw new DuplicateArticleIdException();
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("{groupId=");
+				sb.append(groupId);
+				sb.append(", articleId=");
+				sb.append(newArticleId);
+				sb.append("}");
+
+				throw new DuplicateArticleIdException(sb.toString());
 			}
 		}
 
@@ -4744,8 +4752,6 @@ public class JournalArticleLocalServiceImpl
 			article.setResourcePrimKey(latestArticle.getResourcePrimKey());
 			article.setGroupId(latestArticle.getGroupId());
 			article.setCompanyId(latestArticle.getCompanyId());
-			article.setUserId(user.getUserId());
-			article.setUserName(user.getFullName());
 			article.setCreateDate(serviceContext.getModifiedDate(now));
 			article.setClassNameId(latestArticle.getClassNameId());
 			article.setClassPK(latestArticle.getClassPK());
@@ -4773,6 +4779,8 @@ public class JournalArticleLocalServiceImpl
 			user, groupId, articleId, article.getVersion(), addNewVersion,
 			content, ddmStructureKey, images);
 
+		article.setUserId(user.getUserId());
+		article.setUserName(user.getFullName());
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
@@ -6373,21 +6381,24 @@ public class JournalArticleLocalServiceImpl
 		String fromAddress = JournalUtil.getEmailFromAddress(
 			preferences, article.getCompanyId());
 
-		String subject = null;
-		String body = null;
+		Map<Locale, String> localizedSubjectMap = null;
+		Map<Locale, String> localizedBodyMap = null;
 
 		if (article.getVersion() == 1.0) {
-			subject = JournalUtil.getEmailArticleAddedSubject(preferences);
-			body = JournalUtil.getEmailArticleAddedBody(preferences);
+			localizedSubjectMap = JournalUtil.getEmailArticleAddedSubjectMap(
+				preferences);
+			localizedBodyMap = JournalUtil.getEmailArticleAddedBodyMap(
+				preferences);
 		}
 		else {
-			subject = JournalUtil.getEmailArticleUpdatedSubject(preferences);
-			body = JournalUtil.getEmailArticleUpdatedBody(preferences);
+			localizedSubjectMap = JournalUtil.getEmailArticleUpdatedSubjectMap(
+				preferences);
+			localizedBodyMap = JournalUtil.getEmailArticleUpdatedBodyMap(
+				preferences);
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setBody(body);
 		subscriptionSender.setClassName(article.getModelClassName());
 		subscriptionSender.setClassPK(article.getId());
 		subscriptionSender.setCompanyId(article.getCompanyId());
@@ -6400,6 +6411,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setEntryURL(articleURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("journal_article", article.getId());
 
 		int notificationType =
@@ -6416,7 +6429,6 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 
 		JournalFolder folder = article.getFolder();
@@ -6538,33 +6550,40 @@ public class JournalArticleLocalServiceImpl
 			toAddress = tempToAddress;
 		}
 
-		String subject = null;
-		String body = null;
+		Map<Locale, String> localizedSubjectMap = null;
+		Map<Locale, String> localizedBodyMap = null;
 
 		if (emailType.equals("denied")) {
-			subject = JournalUtil.getEmailArticleApprovalDeniedSubject(
+			localizedSubjectMap =
+				JournalUtil.getEmailArticleApprovalDeniedSubjectMap(
+					preferences);
+			localizedBodyMap = JournalUtil.getEmailArticleApprovalDeniedBodyMap(
 				preferences);
-			body = JournalUtil.getEmailArticleApprovalDeniedBody(preferences);
 		}
 		else if (emailType.equals("granted")) {
-			subject = JournalUtil.getEmailArticleApprovalGrantedSubject(
-				preferences);
-			body = JournalUtil.getEmailArticleApprovalGrantedBody(preferences);
+			localizedSubjectMap =
+				JournalUtil.getEmailArticleApprovalGrantedSubjectMap(
+					preferences);
+			localizedBodyMap =
+				JournalUtil.getEmailArticleApprovalGrantedBodyMap(preferences);
 		}
 		else if (emailType.equals("requested")) {
-			subject = JournalUtil.getEmailArticleApprovalRequestedSubject(
-				preferences);
-			body = JournalUtil.getEmailArticleApprovalRequestedBody(
-				preferences);
+			localizedSubjectMap =
+				JournalUtil.getEmailArticleApprovalRequestedSubjectMap(
+					preferences);
+			localizedBodyMap =
+				JournalUtil.getEmailArticleApprovalRequestedBodyMap(
+					preferences);
 		}
 		else if (emailType.equals("review")) {
-			subject = JournalUtil.getEmailArticleReviewSubject(preferences);
-			body = JournalUtil.getEmailArticleReviewBody(preferences);
+			localizedSubjectMap = JournalUtil.getEmailArticleReviewSubjectMap(
+				preferences);
+			localizedBodyMap = JournalUtil.getEmailArticleReviewBodyMap(
+				preferences);
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(company.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
@@ -6574,11 +6593,12 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("journal_article", article.getId());
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
@@ -6731,7 +6751,8 @@ public class JournalArticleLocalServiceImpl
 				ddmTemplateKey, true);
 
 			if (ddmTemplate.getClassPK() != ddmStructure.getStructureId()) {
-				throw new NoSuchTemplateException();
+				throw new NoSuchTemplateException(
+					"{templateKey=" + ddmTemplateKey + "}");
 			}
 		}
 		else if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
@@ -6801,7 +6822,17 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, version);
 
 		if (article != null) {
-			throw new DuplicateArticleIdException();
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{groupId=");
+			sb.append(groupId);
+			sb.append(", articleId=");
+			sb.append(articleId);
+			sb.append(", version=");
+			sb.append(version);
+			sb.append("}");
+
+			throw new DuplicateArticleIdException(sb.toString());
 		}
 
 		validate(

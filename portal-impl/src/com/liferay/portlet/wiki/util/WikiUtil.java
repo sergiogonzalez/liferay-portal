@@ -15,7 +15,10 @@
 package com.liferay.portlet.wiki.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
+import com.liferay.portal.kernel.diff.DiffVersion;
+import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.settings.ParameterMapSettings;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -86,6 +90,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -183,6 +190,59 @@ public class WikiUtil {
 		sb.append("&fileName=");
 
 		return sb.toString();
+	}
+
+	public static DiffVersionsInfo getDiffVersionsInfo(
+			long nodeId, String title, double sourceVersion,
+			double targetVersion, PageContext pageContext)
+		throws SystemException {
+
+		List<WikiPage> intermediatePages = new ArrayList<WikiPage>();
+
+		double previousVersion = 0;
+		double nextVersion = 0;
+
+		List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
+			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new PageVersionComparator());
+
+		for (WikiPage page : pages) {
+			if ((page.getVersion() < sourceVersion) &&
+				(page.getVersion() > previousVersion)) {
+
+				previousVersion = page.getVersion();
+			}
+
+			if ((page.getVersion() > targetVersion) &&
+				((page.getVersion() < nextVersion) || (nextVersion == 0))) {
+
+				nextVersion = page.getVersion();
+			}
+
+			if ((page.getVersion() > sourceVersion) &&
+				(page.getVersion() <= targetVersion)) {
+
+				intermediatePages.add(page);
+			}
+		}
+
+		List<DiffVersion> diffVersions = new ArrayList<DiffVersion>();
+
+		for (WikiPage page : intermediatePages) {
+			String extraInfo = StringPool.BLANK;
+
+			if (page.isMinorEdit()) {
+				extraInfo = LanguageUtil.get(pageContext, "minor-edit");
+			}
+
+			DiffVersion diffVersion = new DiffVersion(
+				page.getUserId(), page.getVersion(), page.getSummary(),
+				extraInfo);
+
+			diffVersions.add(diffVersion);
+		}
+
+		return new DiffVersionsInfo(diffVersions, nextVersion, previousVersion);
 	}
 
 	public static String getEditPage(String format) {
@@ -535,6 +595,19 @@ public class WikiUtil {
 			groupId, WikiConstants.SERVICE_NAME);
 
 		return new WikiSettings(settings);
+	}
+
+	public static WikiSettings getWikiSettings(
+			long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, WikiConstants.SERVICE_NAME);
+
+		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new WikiSettings(parameterMapSettings);
 	}
 
 	public static List<WikiNode> orderNodes(

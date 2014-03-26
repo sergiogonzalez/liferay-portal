@@ -51,18 +51,18 @@ public class MailEngineTest {
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
-		List<SmtpMessage> messages = MailServiceTestUtil.getMessages(
+		List<SmtpMessage> smtMessages = MailServiceTestUtil.getMessages(
 			"Body", "My name is Inigo Montoya.");
 
-		Assert.assertEquals(1, messages.size());
+		Assert.assertEquals(1, smtMessages.size());
 
-		messages = MailServiceTestUtil.getMessages("Subject", "Hello");
+		smtMessages = MailServiceTestUtil.getMessages("Subject", "Hello");
 
-		Assert.assertEquals(1, messages.size());
+		Assert.assertEquals(1, smtMessages.size());
 
-		messages = MailServiceTestUtil.getMessages("To", "to@test.com");
+		smtMessages = MailServiceTestUtil.getMessages("To", "to@test.com");
 
-		Assert.assertEquals(1, messages.size());
+		Assert.assertEquals(1, smtMessages.size());
 	}
 
 }
