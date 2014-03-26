@@ -48,21 +48,25 @@
 				width: 300px;
 			}
 
+			.nav .staging-toggle {
+				padding: 2px 0;
+			}
+
 			.navbar-inner {
 				width: auto;
 
 				.container {
+					.site-navigation-btn.open {
+						background-color: #F5AF45;
+					}
+
 					.btn-navbar {
 						background: transparent;
 						border-width: 0;
 						font-size: 24px;
 
-						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open, &.nav-navigation-btn:focus {
+						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
 							background-color: #5BBAE8;
-						}
-
-						&.nav-navigation-btn.active {
-							background-color: #F5AF45;
 						}
 					}
 
@@ -157,6 +161,7 @@
 									color: #FFF;
 									font-size: 16px;
 									line-height: 20px;
+									margin-bottom: 5px;
 									padding: 12px;
 
 									&:focus, &:hover {
@@ -170,6 +175,10 @@
 							}
 						}
 					}
+
+					.dockbar-user-notifications .user-notifications-count {
+						margin: 0;
+					}
 				}
 			}
 		}
@@ -179,8 +188,26 @@
 			width: 100%;
 		}
 
+		.portlet-staging-bar .staging-toggle .variations-options {
+			.page-variations {
+				right: 0;
+
+				a {
+					padding: 3px 6px;
+				}
+			}
+
+			.staging-variation-selector {
+				margin-right: 0;
+			}
+		}
+
 		.signed-out #_145_navAddControlsNavbarBtn {
 			display: none;
+		}
+
+		.staging-toggle .variations-options a {
+			padding: 0;
 		}
 	}
 }

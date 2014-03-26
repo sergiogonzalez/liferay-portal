@@ -422,42 +422,6 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Subscribe the user to changes in elements that belongs to specified
-	* structure.
-	*
-	* @param groupId the primary key of the folder's group
-	* @param userId the primary key of the user to be subscribed
-	* @param structureId the primary key of the structure to subscribe to
-	* @throws PortalException if the user, group os structure could not be
-	found, or if subscribing was not permissible
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void subscribeStructure(long groupId, long userId,
-		long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().subscribeStructure(groupId, userId, structureId);
-	}
-
-	/**
-	* Unsubscribe the user from changes in elements that belongs to specified
-	* structure.
-	*
-	* @param groupId the primary key of the folder's group
-	* @param userId the primary key of the user to be subscribed
-	* @param structureId the primary key of the structure to subscribe to
-	* @throws PortalException if the user, group os structure could not be
-	found, or if subscribing was not permissible
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void unsubscribeStructure(long groupId, long userId,
-		long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().unsubscribeStructure(groupId, userId, structureId);
-	}
-
-	/**
 	* Returns the web content article with the ID.
 	*
 	* @param id the primary key of the web content article
@@ -1644,6 +1608,20 @@ public class JournalArticleServiceUtil {
 			articleId, version, title, description, content, type,
 			ddmStructureKeys, ddmTemplateKeys, displayDateGT, displayDateLT,
 			status, reviewDate, andOperator);
+	}
+
+	public static void subscribeStructure(long groupId, long userId,
+		long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeStructure(groupId, userId, ddmStructureId);
+	}
+
+	public static void unsubscribeStructure(long groupId, long userId,
+		long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeStructure(groupId, userId, ddmStructureId);
 	}
 
 	/**

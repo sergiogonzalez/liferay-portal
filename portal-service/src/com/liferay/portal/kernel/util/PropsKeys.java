@@ -821,6 +821,8 @@ public interface PropsKeys {
 
 	public static final String EHCACHE_BLOCKING_CACHE_ALLOWED = "ehcache.blocking.cache.allowed";
 
+	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED = "ehcache.bootstrap.cache.loader.enabled";
+
 	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_FACTORY = "ehcache.bootstrap.cache.loader.factory";
 
 	public static final String EHCACHE_CACHE_EVENT_LISTENER_FACTORY = "ehcache.cache.event.listener.factory";
@@ -2153,6 +2155,8 @@ public interface PropsKeys {
 
 	public static final String SEARCH_CONTAINER_SHOW_PAGINATION_TOP = "search.container.show.pagination.top";
 
+	public static final String SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA = "search.container.show.pagination.top.delta";
+
 	public static final String SEARCH_FACET_CONFIGURATION = "search.facet.configuration";
 
 	public static final String SERVICE_BUILDER_SERVICE_READ_ONLY_PREFIXES = "service.builder.service.read.only.prefixes";
@@ -2241,6 +2245,10 @@ public interface PropsKeys {
 
 	public static final String SHOPPING_CATEGORY_SHOW_SPECIAL_ITEMS = "shopping.category.show.special.items";
 
+	public static final String SHOPPING_CREDIT_CARD_TYPES = "shopping.credit.card.types";
+
+	public static final String SHOPPING_CURRENCY_ID = "shopping.currency.id";
+
 	public static final String SHOPPING_EMAIL_FROM_ADDRESS = "shopping.email.from.address";
 
 	public static final String SHOPPING_EMAIL_FROM_NAME = "shopping.email.from.name";
@@ -2265,9 +2273,19 @@ public interface PropsKeys {
 
 	public static final String SHOPPING_IMAGE_SMALL_MAX_SIZE = "shopping.image.small.max.size";
 
+	public static final String SHOPPING_INSURANCE = "shopping.insurance";
+
+	public static final String SHOPPING_INSURANCE_FORMULA = "shopping.insurance.formula";
+
 	public static final String SHOPPING_ITEM_SHOW_AVAILABILITY = "shopping.item.show.availability";
 
 	public static final String SHOPPING_ORDER_COMMENTS_ENABLED = "shopping.order.comments.enabled";
+
+	public static final String SHOPPING_SHIPPING = "shopping.shipping";
+
+	public static final String SHOPPING_SHIPPING_FORMULA = "shopping.shipping.formula";
+
+	public static final String SHOPPING_TAX_STATE = "shopping.tax.state";
 
 	public static final String SHUTDOWN_PROGRAMMATICALLY_EXIT = "shutdown.programmatically.exit";
 
