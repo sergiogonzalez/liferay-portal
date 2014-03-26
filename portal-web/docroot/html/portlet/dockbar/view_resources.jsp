@@ -59,7 +59,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 					long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
 					for (long classNameId : availableClassNameIds) {
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
 
 						if (!assetRendererFactory.isSelectable()) {
 							availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
@@ -153,7 +153,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 										</div>
 
 										<div class="add-content-description">
-											<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(locale), 120)) %>
+											<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), 120)) %>
 										</div>
 									</div>
 								</c:when>
