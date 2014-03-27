@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
@@ -153,6 +154,13 @@ public class DLUtil {
 		return getDL().getDLFolderControlPanelLink(portletRequest, folderId);
 	}
 
+	public static DLSettings getDLSettings(
+			long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		return getDL().getDLSettings(groupId, request);
+	}
+
 	public static Map<String, String> getEmailDefinitionTerms(
 		RenderRequest request, String emailFromAddress, String emailFromName) {
 
@@ -160,68 +168,11 @@ public class DLUtil {
 			request, emailFromAddress, emailFromName);
 	}
 
-	public static Map<Locale, String> getEmailFileEntryAddedBodyMap(
-		PortletPreferences preferences) {
-
-		return getDL().getEmailFileEntryAddedBodyMap(preferences);
-	}
-
-	public static boolean getEmailFileEntryAddedEnabled(
-		PortletPreferences preferences) {
-
-		return getDL().getEmailFileEntryAddedEnabled(preferences);
-	}
-
-	public static Map<Locale, String> getEmailFileEntryAddedSubjectMap(
-		PortletPreferences preferences) {
-
-		return getDL().getEmailFileEntryAddedSubjectMap(preferences);
-	}
-
-	public static boolean getEmailFileEntryAnyEventEnabled(
-		PortletPreferences preferences) {
-
-		return DLUtil.getEmailFileEntryAddedEnabled(preferences) ||
-			DLUtil.getEmailFileEntryUpdatedEnabled(preferences);
-	}
-
-	public static Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
-		PortletPreferences preferences) {
-
-		return getDL().getEmailFileEntryUpdatedBodyMap(preferences);
-	}
-
-	public static boolean getEmailFileEntryUpdatedEnabled(
-		PortletPreferences preferences) {
-
-		return getDL().getEmailFileEntryUpdatedEnabled(preferences);
-	}
-
-	public static Map<Locale, String> getEmailFileEntryUpdatedSubjectMap(
-		PortletPreferences preferences) {
-
-		return getDL().getEmailFileEntryUpdatedSubjectMap(preferences);
-	}
-
-	public static String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return getDL().getEmailFromAddress(preferences, companyId);
-	}
-
 	public static Map<String, String> getEmailFromDefinitionTerms(
 		RenderRequest request, String emailFromAddress, String emailFromName) {
 
 		return getDL().getEmailFromDefinitionTerms(
 			request, emailFromAddress, emailFromName);
-	}
-
-	public static String getEmailFromName(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return getDL().getEmailFromName(preferences, companyId);
 	}
 
 	public static List<Object> getEntries(Hits hits) {
@@ -261,13 +212,6 @@ public class DLUtil {
 		throws Exception {
 
 		return getDL().getImagePreviewURL(fileEntry, themeDisplay);
-	}
-
-	public static String[] getMediaGalleryMimeTypes(
-		PortletPreferences portletPreferences, PortletRequest portletRequest) {
-
-		return getDL().getMediaGalleryMimeTypes(
-			portletPreferences, portletRequest);
 	}
 
 	public static String getPreviewURL(
