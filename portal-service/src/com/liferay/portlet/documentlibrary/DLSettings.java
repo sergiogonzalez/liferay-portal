@@ -51,6 +51,11 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValue("emailFileEntryAddedSubject");
 	}
 
+	public boolean getEmailFileEntryAnyEventEnabled() {
+		return getEmailFileEntryAddedEnabled() ||
+			getEmailFileEntryUpdatedEnabled();
+	}
+
 	public Map<Locale, String> getEmailFileEntryUpdatedBodyMap() {
 		return typedSettings.getLocalizedValue("emailFileEntryUpdatedBody");
 	}
