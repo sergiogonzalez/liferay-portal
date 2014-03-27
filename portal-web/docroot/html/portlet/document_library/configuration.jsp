@@ -41,9 +41,15 @@ catch (NoSuchFolderException nsfe) {
 }
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
+	<liferay-portlet:param name="serviceName" value="<%= DLConstants.SERVICE_NAME %>" />
+	<liferay-portlet:param name="settingsScope" value="group" />
+</liferay-portlet:actionURL>
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
+	<liferay-portlet:param name="serviceName" value="<%= DLConstants.SERVICE_NAME %>" />
+	<liferay-portlet:param name="settingsScope" value="group" />
+</liferay-portlet:renderURL>
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
