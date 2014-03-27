@@ -64,6 +64,7 @@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPerm
 page import="com.liferay.portlet.documentlibrary.service.permission.DLPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.util.DLConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
