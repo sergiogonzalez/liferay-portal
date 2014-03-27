@@ -290,6 +290,12 @@ public class AssetPublisherUtil {
 		return getAssetPublisher().getScopeId(group, scopeGroupId);
 	}
 
+	public static long getSubscriptionClassPK(long plid, String portletId)
+		throws PortalException, SystemException {
+
+		return getAssetPublisher().getSubscriptionClassPK(plid, portletId);
+	}
+
 	public static boolean isScopeIdSelectable(
 			PermissionChecker permissionChecker, String scopeId,
 			long companyGroupId, Layout layout)
@@ -329,7 +335,7 @@ public class AssetPublisherUtil {
 		String name, AssetEntryQueryProcessor assetQueryProcessor) {
 
 		getAssetPublisher().registerAssetQueryProcessor(
-				name, assetQueryProcessor);
+			name, assetQueryProcessor);
 	}
 
 	public static void removeAndStoreSelection(

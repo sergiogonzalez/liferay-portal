@@ -29,6 +29,7 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 import com.liferay.portlet.wiki.util.WikiUtil;
 
@@ -36,6 +37,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -102,7 +104,9 @@ public class WikiPageAssetRenderer
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String content = _page.getContent();
 
 		try {
@@ -188,6 +192,35 @@ public class WikiPageAssetRenderer
 		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 		portletURL.setWindowState(windowState);
+
+		return portletURL;
+	}
+
+	@Override
+	public PortletURL getURLViewDiffs(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest), PortletKeys.WIKI,
+			PortletRequest.RENDER_PHASE);
+
+		WikiPage previousVersionPage =
+			WikiPageLocalServiceUtil.getPreviousVersionPage(_page);
+
+		if (previousVersionPage.getVersion() == _page.getVersion()) {
+			return null;
+		}
+
+		portletURL.setParameter("struts_action", "/wiki/compare_versions");
+		portletURL.setParameter("groupId", String.valueOf(_page.getGroupId()));
+		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
+		portletURL.setParameter("title", _page.getTitle());
+		portletURL.setParameter(
+			"sourceVersion", String.valueOf(previousVersionPage.getVersion()));
+		portletURL.setParameter(
+			"targetVersion", String.valueOf(_page.getVersion()));
 
 		return portletURL;
 	}

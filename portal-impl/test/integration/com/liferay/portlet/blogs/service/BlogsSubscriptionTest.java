@@ -20,6 +20,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
@@ -56,6 +57,12 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testSubscriptionClassType() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testSubscriptionContainerModelWhenInContainerModel() {
 	}
 
@@ -69,6 +76,12 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	@Test
 	public void testSubscriptionContainerModelWhenInSubcontainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionDefaultClassType() {
 	}
 
 	@Ignore
@@ -97,6 +110,16 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId());
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.BLOGS;
+	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailEntryAddedBody";
 	}
 
 }

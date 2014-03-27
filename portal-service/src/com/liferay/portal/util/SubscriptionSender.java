@@ -74,6 +74,7 @@ import javax.mail.internet.InternetAddress;
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
  * @author Raymond Augé
+ * @author Sergio González
  */
 public class SubscriptionSender implements Serializable {
 
@@ -123,18 +124,6 @@ public class SubscriptionSender implements Serializable {
 				currentThread.setContextClassLoader(_classLoader);
 			}
 
-			String inferredClassName = null;
-			long inferredClassPK = 0;
-
-			if (_persistestedSubscribersOVPs.size() > 1) {
-				ObjectValuePair<String, Long> objectValuePair =
-					_persistestedSubscribersOVPs.get(
-						_persistestedSubscribersOVPs.size() - 1);
-
-				inferredClassName = objectValuePair.getKey();
-				inferredClassPK = objectValuePair.getValue();
-			}
-
 			for (ObjectValuePair<String, Long> ovp :
 					_persistestedSubscribersOVPs) {
 
@@ -147,8 +136,7 @@ public class SubscriptionSender implements Serializable {
 
 				for (Subscription subscription : subscriptions) {
 					try {
-						notifyPersistedSubscriber(
-							subscription, inferredClassName, inferredClassPK);
+						notifyPersistedSubscriber(subscription);
 					}
 					catch (Exception e) {
 						_log.error(
@@ -425,8 +413,8 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected boolean hasPermission(
-			Subscription subscription, String inferredClassName,
-			long inferredClassPK, User user)
+			Subscription subscription, String className, long classPK,
+			User user)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -434,23 +422,23 @@ public class SubscriptionSender implements Serializable {
 
 		return SubscriptionPermissionUtil.contains(
 			permissionChecker, subscription.getClassName(),
-			subscription.getClassPK(), inferredClassName, inferredClassPK);
+			subscription.getClassPK(), className, classPK);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #hasPermission(Subscription,
-	 *             String, long, User)}
-	 */
-	@Deprecated
 	protected boolean hasPermission(Subscription subscription, User user)
 		throws Exception {
 
-		return hasPermission(subscription, null, 0, user);
+		return hasPermission(subscription, _className, _classPK, user);
+	}
+
+	protected void notifyPersistedSubscriber(Subscription subscription)
+		throws Exception {
+
+		notifyPersistedSubscriber(subscription, _className, _classPK);
 	}
 
 	protected void notifyPersistedSubscriber(
-			Subscription subscription, String inferredClassName,
-			long inferredClassPK)
+			Subscription subscription, String className, long classPK)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.fetchUserById(
@@ -496,9 +484,7 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		try {
-			if (!hasPermission(
-					subscription, inferredClassName, inferredClassPK, user)) {
-
+			if (!hasPermission(subscription, className, classPK, user)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Skip unauthorized user " + user.getUserId());
 				}
@@ -542,13 +528,27 @@ public class SubscriptionSender implements Serializable {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #notifyPersistedSubscriber(Subscription, String, long)}
+	 *             #notifyPersistedSubscriber(Subscription)}
 	 */
 	@Deprecated
 	protected void notifySubscriber(Subscription subscription)
 		throws Exception {
 
 		notifyPersistedSubscriber(subscription, null, 0);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #notifyPersistedSubscriber(Subscription)}
+	 */
+	@Deprecated
+	protected void notifySubscriber(
+			Subscription subscription, String inferredClassName,
+			long inferredClassPK)
+		throws Exception {
+
+		notifyPersistedSubscriber(
+			subscription, inferredClassName, inferredClassPK);
 	}
 
 	protected void processMailMessage(MailMessage mailMessage, Locale locale)

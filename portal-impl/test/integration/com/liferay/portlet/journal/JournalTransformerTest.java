@@ -85,7 +85,8 @@ public class JournalTransformerTest {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM, xsl);
 
-		String xml = DDMStructureTestUtil.getSampleStructuredContent();
+		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+			"Joe Bloggs");
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
 			xml, ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
@@ -97,6 +98,8 @@ public class JournalTransformerTest {
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
+
+		document = SAXReaderUtil.read(xml);
 
 		Element element = (Element)document.selectSingleNode(
 			"//dynamic-content");

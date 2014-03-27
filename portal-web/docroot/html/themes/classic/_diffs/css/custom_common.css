@@ -265,6 +265,7 @@
 
 	.dockbar {
 		&.navbar .navbar-inner {
+			border-bottom-width: 0;
 			min-height: 40px;
 		}
 
@@ -283,7 +284,7 @@
 						position: relative;
 						top: 2px;
 						width: 28px;
-				    }
+					}
 				}
 
 				.nav-collapse {
@@ -343,7 +344,7 @@
 
 							&.active, &.open {
 								> .dropdown-toggle {
-									background-color: #3EA9DB;
+									background-color: #2FA4F5;
 									color: #FFF;
 
 									@extend %dockbar-caret;
@@ -356,8 +357,8 @@
 
 								> li > a {
 									color: #FFF;
-									font-size: 0.9em;
 									font-weight: 300;
+									line-height: 31px;
 
 									@include respond-to(phone, tablet) {
 										font-size: 16px;
@@ -365,6 +366,7 @@
 
 									&:focus, &:hover {
 										background: #2FA4F5;
+										color: #FFF;
 
 										@include filter-gradient(#2FA4F5, #2FA4F5, vertical);
 									}
@@ -975,12 +977,6 @@
 
 		.icon-caret-down {
 			@include border-radius(50%);
-		}
-
-		.nav {
-			> li.open > a {
-				@include box-shadow(inset 0 3px 8px rgba(0, 0, 0, 0.125));
-			}
 		}
 	}
 

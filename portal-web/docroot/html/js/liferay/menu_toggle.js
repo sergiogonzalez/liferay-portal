@@ -23,7 +23,7 @@ AUI.add(
 					},
 
 					trigger: {
-						validator: Lang.isString
+						setter: A.one
 					}
 				},
 
@@ -35,15 +35,18 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						var triggerId = instance.get('trigger');
+						var trigger = instance.get('trigger');
+
+						var triggerId = trigger.guid();
 
 						instance._handleId = triggerId + 'Handle';
 
-						instance._triggerNode = A.one(triggerId);
+						instance._triggerNode = trigger;
 
 						instance._content = A.all(instance.get('content'));
 
 						A.Event.defineOutside('touchend');
+						A.Event.defineOutside('touchstart');
 
 						instance._bindUI();
 					},
@@ -66,8 +69,8 @@ AUI.add(
 					_getEventOutside: function(event) {
 						var eventOutside = event._event.type;
 
-						if (eventOutside == 'MSPointerUp') {
-							eventOutside = 'mouseup';
+						if (eventOutside.toLowerCase().indexOf('pointerdown') !== -1) {
+							eventOutside = 'mousedown';
 						}
 
 						eventOutside = eventOutside + 'outside';
@@ -86,7 +89,11 @@ AUI.add(
 					},
 
 					_isTouchEvent: function(event) {
-						return (event._event.type === 'touchend' && Liferay.Util.isTablet());
+						var eventType = event._event.type;
+
+						var touchEvent = ((eventType === 'touchend') || (eventType === 'touchstart'));
+
+						return (touchEvent && Liferay.Util.isTablet());
 					},
 
 					_toggleContent: function(force) {

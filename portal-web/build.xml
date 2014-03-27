@@ -430,6 +430,10 @@
 	</target>
 
 	<target name="build-css">
+		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
+
+		<mkdir dir="${sass.tmp.dir}" />
+
 		<java
 			classname="com.liferay.portal.tools.SassToCssBuilder"
 			classpathref="project.classpath"
@@ -438,6 +442,7 @@
 			newenvironment="true"
 		>
 			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
 			<jvmarg value="-Dliferay.lib.portal.dir=${basedir}/../lib/portal" />
 			<arg value="sass.dir.0=/html/css" />
 			<arg value="sass.dir.1=/html/portlet" />
@@ -445,6 +450,8 @@
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.portal.common.dir=${basedir}/docroot/html/css/common" />
 		</java>
+
+		<delete dir="${sass.tmp.dir}" />
 	</target>
 
 	<target name="build-dtd">
@@ -882,14 +889,21 @@
 	</target>
 
 	<target name="build-selenium-new">
-		<delete dir="${basedir.unix}/test/functional-generated" />
+		<if>
+			<not>
+				<equals arg1="${delete.function.generated}" arg2="false" />
+			</not>
+			<then>
+				<delete dir="${basedir.unix}/test/functional-generated" />
+			</then>
+		</if>
 
 		<if>
 			<not>
 				<isset property="selenium.types" />
 			</not>
 			<then>
-				<property name="selenium.types" value="action,function,macro,path,testcase,testsuite" />
+				<property name="selenium.types" value="action,function,macro,path,testcase" />
 			</then>
 		</if>
 
@@ -902,44 +916,60 @@
 			newenvironment="true"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="project.dir=${project.dir}" />
 			<arg value="selenium.base.dir=test/functional" />
 			<arg value="selenium.types=${selenium.types}" />
+			<arg value="test.class=${test.class}" />
 		</java>
 	</target>
 
 	<target name="build-selenium-new-action">
 		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="action" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-new-block">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="action,function,macro,path" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-function">
 		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="function" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-macro">
 		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="macro" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-path">
 		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="path" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-test-case">
-		<antcall target="build-selenium-new">
-			<param name="selenium.types" value="testcase" />
-		</antcall>
-	</target>
+		<if>
+			<not>
+				<isset property="test.class" />
+			</not>
+			<then>
+				<fail>Please set "test.class".</fail>
+			</then>
+		</if>
 
-	<target name="build-selenium-new-test-suite">
 		<antcall target="build-selenium-new">
-			<param name="selenium.types" value="testsuite" />
+			<param name="delete.function.generated" value="false" />
+			<param name="selenium.types" value="testcase" />
 		</antcall>
 	</target>
 
@@ -1165,14 +1195,18 @@
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
 
+		<antcall target="clean-css" />
+
+		<antcall target="clean-themes" />
+	</target>
+
+	<target name="clean-css">
 		<delete includeemptydirs="true">
 			<fileset dir="docroot/html/css" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/themes" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
 		</delete>
-
-		<antcall target="clean-themes" />
 	</target>
 
 	<target name="clean-themes">

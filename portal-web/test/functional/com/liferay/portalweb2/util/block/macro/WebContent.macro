@@ -226,7 +226,7 @@
 
 	<command name="addPGViaAP">
 		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_WEB_CONTENT" value1="Web Content Article" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
@@ -388,13 +388,6 @@
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="TITLE_FIELD" value1="${webContentTranslationTitle}" />
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="CONTENT_FIELD" value1="${webContentTranslationContent}" />
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
-
-		<execute action="PGWebcontentdisplayEditwebcontentTranslation#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
-		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="TITLE_FIELD" value1="${webContentTranslationTitle}" />
-		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="CONTENT_FIELD" value1="${webContentTranslationContent}" />
-		<execute action="PGWebcontentdisplayEditwebcontentTranslation#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
@@ -417,7 +410,7 @@
 
 	<command name="addWithWorkflowPGViaAP">
 		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_WEB_CONTENT" value1="Web Content Article" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
@@ -939,11 +932,9 @@
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
 		<execute action="PGWebcontentdisplay#assertClick" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
 
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrameTop" />
 	</command>
 </definition>
