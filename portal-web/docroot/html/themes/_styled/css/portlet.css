@@ -94,9 +94,9 @@ body.portlet {
 }
 
 .portlet-nested-portlets .portlet-boundary {
+	left: 0 !important;
 	position: relative !important;
 	top: 0 !important;
-	left: 0 !important;
 }
 
 %portlet-action-bar {
@@ -185,13 +185,6 @@ body.portlet {
 		.lfr-icon-action-configuration a {
 			background-image: url(../images/common/configuration_white.png);
 		}
-	}
-
-	.lfr-url-error {
-		display: inline-block;
-		white-space: normal;
-
-		@include word-break(break-all);
 	}
 }
 
@@ -628,6 +621,26 @@ body.portlet {
 }
 
 /* ---------- Miscellaneous component styles ---------- */
+
+/* ---------- Journal/Dynamic data list display portlet ---------- */
+
+.portlet-journal .journal-article-container, .portlet-dynamic-data-list-display {
+	.lfr-ddm-container .field-wrapper {
+		&[data-repeatable="true"], .field-wrapper {
+			border: 1px solid #D0D0D0;
+			border-left-width: 10px;
+			padding: 7px 10px 10px;
+
+			&[data-repeatable="true"]:nth-of-type(even) {
+				background-color: #F5F5F5;
+			}
+
+			&, .field-wrapper {
+				margin: 15px 0 0;
+			}
+		}
+	}
+}
 
 /* ---------- Add content dialog ---------- */
 

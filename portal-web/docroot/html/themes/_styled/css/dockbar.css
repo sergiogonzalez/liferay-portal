@@ -73,50 +73,16 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.staging-controls {
-			.staging-bar {
-				li.dropdown .dropdown-menu {
-					left: auto;
-					margin-left: 10px;
-					width: auto;
-				}
-			}
-		}
-
 		&.navbar-static-top {
 			position: relative;
 
 			.collapse {
 				position: static;
-
-				.nav-account-controls {
-					position: static;
-				}
 			}
 		}
 
 		.btn-link {
 			color: #FFF;
-		}
-
-		.diamond {
-			border: $diamondSize solid transparent;
-			border-bottom-color: #1485EB;
-			height: 0;
-			position: relative;
-			top: -$diamondSize;
-			width: 0;
-
-			&:after {
-				border: $diamondSize solid transparent;
-				border-top-color: #1485EB;
-				content: '';
-				height: 0;
-				left: -$diamondSize;
-				position: absolute;
-				top: $diamondSize;
-				width: 0;
-			}
 		}
 
 		.impersonating-user {
@@ -128,10 +94,6 @@ $editLayoutPanelWidth: 460px;
 				border-width: 0;
 				margin-bottom: 6px;
 			}
-		}
-
-		.info-button {
-			top: 9px;
 		}
 
 		.navbar-inner {
@@ -185,6 +147,10 @@ $editLayoutPanelWidth: 460px;
 							@include respond-to(phone, tablet) {
 								float: left;
 								position: static;
+
+								&.info-link-container {
+									float: right;
+								}
 							}
 
 							&.dropdown .dropdown-menu {
@@ -227,6 +193,14 @@ $editLayoutPanelWidth: 460px;
 										right: 10px;
 									}
 								}
+							}
+
+							&.info-items {
+								background-color: transparent;
+								left: 0;
+								position: absolute;
+								top: 100%;
+								width: 100%;
 							}
 
 							@include respond-to(phone, tablet) {
@@ -283,12 +257,12 @@ $editLayoutPanelWidth: 460px;
 						&.nav-account-controls {
 							float: right;
 							padding: 0 5px;
+							position: static;
 
 							@include respond-to(phone, tablet) {
 								float: left;
 								min-width: 0;
 								padding: 0;
-								position: static;
 
 								.dropdown-menu .nav-item-label {
 									display: inline;
@@ -441,20 +415,65 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.nav.staging-nav-items {
-			margin: 0;
-			position: static;
+		.nav {
+			&.staging-nav-items {
+				margin: 0;
+				position: static;
 
-			li.dropdown.active > .dropdown-toggle {
-				background-color: transparent;
-				display: block;
+				li.dropdown.active > .dropdown-toggle {
+					background-color: transparent;
+					display: block;
 
-				&:hover {
-					color: #0077B3;
+					&:hover {
+						color: #0077B3;
+					}
+				}
+
+				.staging-link {
+					position: static;
 				}
 			}
 
-			.staging-link {
+			> li.staging-toggle {
+				&.active a, > a {
+					color: #555;
+				}
+
+				> a {
+					padding: 4px 10px;
+				}
+			}
+		}
+
+		.page-customization-bar-container {
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 100%;
+		}
+
+		.staging-controls .staging-bar li.dropdown {
+			&.live-link.open .dropdown-menu {
+				&:after {
+					left: 73px;
+				}
+
+				&:before {
+					left: 72px;
+				}
+			}
+
+			.dropdown-menu {
+				left: 0;
+				margin-left: 10px;
+				width: 100%;
+			}
+		}
+
+		.staging-bar {
+			margin: 6px 0 0;
+
+			&, li.staging-toggle {
 				position: static;
 			}
 		}
@@ -468,6 +487,38 @@ $editLayoutPanelWidth: 460px;
 			vertical-align: middle;
 			width: 20px;
 		}
+
+		.diamond {
+			display: none;
+		}
+
+		.info-button {
+			margin-right: 5px;
+			right: auto;
+			top: auto;
+
+			a {
+				color: #555;
+				display: block;
+				font-size: 20px;
+				padding: 10px 15px;
+				position: relative;
+
+				&:focus, &:hover {
+					background-color: #FFF;
+					color: #0077B3;
+					text-decoration: none;
+				}
+			}
+		}
+
+		.info-link-container {
+			width: auto;
+
+			&.open .info-button a {
+				background-color: #FFF;
+			}
+		}
 	}
 
 	.dockbar-split {
@@ -476,11 +527,55 @@ $editLayoutPanelWidth: 460px;
 			position: absolute;
 
 			@include respond-to(phone, tablet) {
+				height: auto;
 				position: relative;
 			}
 
-			@include respond-to(phone, tablet) {
-				height: auto;
+			.diamond {
+				border: $diamondSize solid transparent;
+				border-bottom-color: #1485EB;
+				display: block;
+				height: 0;
+				position: relative;
+				top: -$diamondSize;
+				width: 0;
+
+				&:after {
+					border: $diamondSize solid transparent;
+					border-top-color: #1485EB;
+					content: '';
+					height: 0;
+					left: -$diamondSize;
+					position: absolute;
+					top: $diamondSize;
+					width: 0;
+				}
+			}
+
+			.info-button {
+				right: 12px;
+				top: 10px;
+
+				a {
+					color: #FFF;
+					display: inline;
+					font-size: 14px;
+					padding: 2px 10px;
+					position: absolute;
+
+					&:focus, &:hover {
+						background-color: transparent;
+					}
+				}
+			}
+
+			.info-link-container {
+				position: relative;
+				width: 0;
+
+				&.open .info-button a {
+					background-color: transparent;
+				}
 			}
 
 			.staging-controls {
@@ -511,13 +606,14 @@ $editLayoutPanelWidth: 460px;
 				display: none;
 			}
 
-			.info-button {
-				top: $diamondSize;
-			}
-
 			.info-items {
 				left: auto;
 				position: static;
+			}
+
+			.nav > li.staging-toggle > a {
+				color: #FFF;
+				padding: 6px 10px;
 			}
 
 			.navbar-inner {
@@ -690,12 +786,24 @@ $editLayoutPanelWidth: 460px;
 								color: #FFF;
 							}
 
+							&.info-items {
+								left: auto;
+								top: auto;
+							}
+
 							&.open > a {
 								color: #333;
 							}
 						}
 					}
 				}
+			}
+
+			.page-customization-bar-container {
+				position: absolute;
+				right: 100%;
+				top: 0;
+				width: 320px;
 			}
 
 			.staging-nav-items {
@@ -706,11 +814,6 @@ $editLayoutPanelWidth: 460px;
 					padding: 10px 15px;
 				}
 			}
-		}
-
-		.info-link-container {
-			position: relative;
-			width: 0;
 		}
 
 		.info-items {
@@ -738,10 +841,6 @@ $editLayoutPanelWidth: 460px;
 
 				@include text-shadow(none);
 			}
-		}
-
-		.staging-bar {
-			margin: 10px 0;
 		}
 
 		&.controls-hidden .dockbar .navbar-inner .nav-add-controls li.toggle-controls > .toggle-controls-link {
@@ -839,7 +938,7 @@ $editLayoutPanelWidth: 460px;
 
 	.staging-controls {
 		padding-left: 5px;
-		padding-right: 50px;
+		padding-right: 25px;
 
 		select {
 			width: 100%;
@@ -1028,7 +1127,6 @@ $editLayoutPanelWidth: 460px;
 
 	.info-button {
 		cursor: pointer;
-		display: inline-block;
 		position: relative;
 		right: $diamondSize;
 		z-index: 1;
@@ -1098,7 +1196,7 @@ $editLayoutPanelWidth: 460px;
 
 		.page-customization-bar-text {
 			display: table-cell;
-			height: 51px;
+			padding: 12px 0;
 			vertical-align: middle;
 			width: 75%;
 		}
@@ -1119,30 +1217,123 @@ $editLayoutPanelWidth: 460px;
 		width: 320px;
 	}
 
-	@media (min-width: 1400px) {
-		.page-customization-bar-container {
-			width: 815px;
-		}
+	/* -------- Extras -------- */
 
-		.staging-ready .page-customization-bar-container {
-			width: 680px;
+	.dockbar .navbar-inner .container .nav-collapse > .nav > li.info-items {
+		@include background-image(none);
+	}
+
+	/* -------- Media queries -------- */
+
+	@media (min-width: 1400px) {
+		.dockbar-split {
+			.dockbar .page-customization-bar-container {
+				width: 963px;
+			}
+
+			&.staging-ready .page-customization-bar-container {
+				width: 722px;
+			}
 		}
 	}
 
 	@media (min-width: 1152px) and (max-width: 1399px) {
-		.page-customization-bar-container {
-			width: 715px;
-		}
+		.dockbar-split {
+			.dockbar .page-customization-bar-container {
+				width: 715px;
+			}
 
-		.staging-ready .page-customization-bar-container {
-			width: 475px;
+			&.staging-ready .page-customization-bar-container {
+				width: 475px;
+			}
 		}
 	}
 
-	.page-customization-bar-container {
-		@include respond-to(phone, tablet) {
-			position: static;
-			width: 100%;
+	@media (min-width: 980px) and (max-width: 1151px) {
+		.dockbar-split {
+			.dockbar .page-customization-bar-container {
+				width: 542px;
+			}
+
+			&.staging-ready .page-customization-bar-container {
+				width: 302px;
+			}
+		}
+	}
+
+	@include respond-to(phone, tablet) {
+		.dockbar, .dockbar-split .dockbar {
+			.info-link-container {
+				padding: 0;
+				width: auto;
+
+				.diamond {
+					display: none;
+				}
+
+				.info-button {
+					right: auto;
+					top: auto;
+				}
+
+				.info-link {
+					color: #333;
+					display: block;
+					margin: 5px 0 0 5px;
+					padding: 12px 18px;
+					position: relative;
+
+					&:focus, &:hover {
+						background-color: #555;
+						text-decoration: none;
+					}
+				}
+			}
+		}
+
+		.dockbar-split .dockbar {
+			.info-link-container.open .info-button a {
+				background-color: #FFF;
+			}
+
+			.navbar-inner .container .nav-collapse > .nav > li.info-items {
+				left: 0;
+				top: 100%;
+			}
+
+			.page-customization-bar-container {
+				position: static;
+				width: 100%;
+			}
+		}
+
+		.portlet-staging-bar .layout-revision-actions {
+			a.taglib-icon {
+				padding: 9px 15px;
+			}
+
+			[class^="icon-"] {
+				margin-left: 0;
+			}
+		}
+
+		.dockbar .staging-controls {
+			padding: 0;
+
+			.staging-bar li.dropdown .dropdown-menu {
+				background-color: #FFF;
+
+				@include box-sizing(border-box);
+
+				margin:0;
+				padding: 10px;
+			}
+		}
+	}
+
+	@include respond-to(phone) {
+		.portlet-staging-bar .layout-revision-actions a.taglib-icon {
+			margin-left: -5px;
 		}
 	}
 

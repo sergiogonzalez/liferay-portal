@@ -174,6 +174,8 @@ public abstract class DLAppTestUtil {
 			groupId);
 
 		serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addFileEntry(
 			userId, groupId, folderId, sourceFileName, mimeType, title, bytes,

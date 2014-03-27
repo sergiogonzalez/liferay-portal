@@ -174,9 +174,9 @@
 	</library>
 	<library>
 		<file-name>lib/development/dumbster.jar</file-name>
-		<version>1.6</version>
+		<version>02856255a6cc7fae9648ea7d9f65cb8f30401c22</version>
 		<project-name>Dumbster</project-name>
-		<project-url>http://sourceforge.net/projects/dumbster</project-url>
+		<project-url>https://github.com/rjo1970/dumbster</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
@@ -761,10 +761,22 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/development/sikuli-api.jar</file-name>
+		<version>1.0.2</version>
+		<project-name>Sikuli API</project-name>
+		<project-url>http://www.sikuli.org</project-url>
+		<licenses>
+			<license>
+				<license-name>MIT License</license-name>
+				<license-url>http://sikuli.org/license.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/development/sikuli-script.jar</file-name>
 		<version>1.0.1</version>
-		<project-name>Sikuli</project-name>
-		<project-url>http://www.sikuli.org/</project-url>
+		<project-name>Sikuli Script</project-name>
+		<project-url>http://www.sikuli.org</project-url>
 		<licenses>
 			<license>
 				<license-name>MIT License</license-name>
@@ -4018,7 +4030,7 @@
 		<file-name>osgi/lib/plugin/bnd-repository.jar</file-name>
 		<version>2.1.0</version>
 		<project-name>Bndtools</project-name>
-		<project-url>http://bndtools.org/</project-url>
+		<project-url>http://bndtools.org</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>

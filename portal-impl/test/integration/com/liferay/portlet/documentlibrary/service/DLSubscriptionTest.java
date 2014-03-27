@@ -23,9 +23,16 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,6 +72,29 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected long addBaseModelWithClassType(
+			long containerModelId, long classTypeId)
+		throws Exception {
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), containerModelId,
+			ServiceTestUtil.randomString(), classTypeId);
+
+		return fileEntry.getFileEntryId();
+	}
+
+	@Override
+	protected long addClassType() throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			DLFileEntry.class.getName());
+
+		DLFileEntryType fileEntryType = DLAppTestUtil.addDLFileEntryType(
+			group.getGroupId(), ddmStructure.getStructureId());
+
+		return fileEntryType.getFileEntryTypeId();
+	}
+
+	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
 			group.getGroupId(), containerModelId,
@@ -74,11 +104,38 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected void addSubscriptionClassType(long classTypeId) throws Exception {
+		DLAppServiceUtil.subscribeFileEntryType(
+			group.getGroupId(), classTypeId);
+	}
+
+	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		DLAppLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected Long getDefaultClassTypeId() throws Exception {
+		DLFileEntryType basicEntryType =
+			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+		Assert.assertNotNull(basicEntryType);
+
+		return basicEntryType.getPrimaryKey();
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.DOCUMENT_LIBRARY;
+	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailFileEntryAddedBody";
 	}
 
 }

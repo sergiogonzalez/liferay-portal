@@ -89,6 +89,10 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public boolean hasApprovedVersion()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated()
 	public boolean isTemplateDriven();
 
 	public void setSmallImageType(java.lang.String smallImageType);

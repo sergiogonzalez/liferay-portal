@@ -16,8 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.model.Group;
@@ -35,7 +35,10 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -50,8 +53,13 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Vilmos Papp
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		TransactionalExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class PortalImplActualURLTest {
 
 	@Test
@@ -143,21 +151,15 @@ public class PortalImplActualURLTest {
 
 		titleMap.put(LocaleUtil.US, "Test Journal Article");
 
-		StringBundler sb = new StringBundler(6);
+		Map<Locale, String> contentMap = new HashMap<Locale, String>();
 
-		sb.append("<?xml version=\"1.0\"?><root available-locales=");
-		sb.append("\"en_US\" default-locale=\"en_US\">");
-		sb.append("<static-content language-id=\"en_US\"><![CDATA[<p>");
-		sb.append("This test content is in English.");
-		sb.append("</p>]]>");
-		sb.append("</static-content></root>");
+		contentMap.put(LocaleUtil.US, "This test content is in English.");
 
-		JournalArticleLocalServiceUtil.addArticle(
-			TestPropsValues.getUserId(), group.getGroupId(), 0, 0, 0,
-			StringPool.BLANK, true, 1, titleMap, new HashMap<Locale, String>(),
-			sb.toString(), "general", null, null, layout.getUuid(), 1, 1, 1965,
-			0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, false, false, null,
-			null, null, StringPool.BLANK, serviceContext);
+		JournalTestUtil.addArticle(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, titleMap, titleMap,
+			contentMap, layout.getUuid(), LocaleUtil.US, null, false, false,
+			serviceContext);
 
 		String actualURL = PortalUtil.getActualURL(
 			group.getGroupId(), false, Portal.PATH_MAIN,
