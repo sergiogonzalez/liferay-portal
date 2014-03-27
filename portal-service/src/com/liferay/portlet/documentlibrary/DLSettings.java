@@ -34,6 +34,10 @@ public class DLSettings extends BaseServiceSettings {
 		super(settings, _fallbackKeys);
 	}
 
+	public long getDefaultFolderId() {
+		return typedSettings.getLongValue(
+			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
 
 	public Map<Locale, String> getEmailFileEntryAddedBodyMap() {
 		return typedSettings.getLocalizedValue("emailFileEntryAddedBody");
@@ -72,10 +76,6 @@ public class DLSettings extends BaseServiceSettings {
 			"mimeTypes", _defaultMediaGalleryMimeTypes);
 	}
 
-	public long getDefaultFolderId() {
-		return typedSettings.getLongValue(
-			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-	}
 
 	private static FallbackKeys _fallbackKeys = new FallbackKeys();
 	private static String[] _defaultMediaGalleryMimeTypes;
@@ -100,17 +100,16 @@ public class DLSettings extends BaseServiceSettings {
 			"emailFileEntryUpdatedSubject",
 			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT);
 		_fallbackKeys.add(
-			"emailFromAddress",
-			PropsKeys.DL_EMAIL_FROM_ADDRESS,
+			"emailFromAddress", PropsKeys.DL_EMAIL_FROM_ADDRESS,
 			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 		_fallbackKeys.add(
-			"emailFromName",
-			PropsKeys.DL_EMAIL_FROM_NAME,
+			"emailFromName", PropsKeys.DL_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
 		Set<String> allMimeTypes = DLUtil.getAllMediaGalleryMimeTypes();
 
-		_defaultMediaGalleryMimeTypes =
-			allMimeTypes.toArray(new String[allMimeTypes.size()]);
+		_defaultMediaGalleryMimeTypes = allMimeTypes.toArray(
+			new String[allMimeTypes.size()]);
 	}
+
 }

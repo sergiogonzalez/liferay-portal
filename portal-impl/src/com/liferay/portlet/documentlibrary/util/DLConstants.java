@@ -18,6 +18,8 @@ package com.liferay.portlet.documentlibrary.util;
  * @author Adolfo Pérez Álvarez
  */
 public class DLConstants {
+
 	public static final String SERVICE_NAME =
 		"com.liferay.portlet.documentlibrary";
+
 }
