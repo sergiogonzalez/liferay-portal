@@ -105,6 +105,10 @@ public class DLUtil {
 		return getDL().getAbsolutePath(portletRequest, folderId);
 	}
 
+	public static String getAllEntryColumns(boolean showActions) {
+		return getDL().getAllEntryColumns(showActions);
+	}
+
 	public static Set<String> getAllMediaGalleryMimeTypes() {
 		return getDL().getAllMediaGalleryMimeTypes();
 	}
@@ -115,10 +119,6 @@ public class DLUtil {
 
 	public static String getDDMStructureKey(String fileEntryTypeUuid) {
 		return getDL().getDDMStructureKey(fileEntryTypeUuid);
-	}
-
-	public static String getAllEntryColumns(boolean showActions) {
-		return getDL().getAllEntryColumns(showActions);
 	}
 
 	public static String getDefaultEntryColumns(boolean showActions) {

@@ -28,7 +28,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
@@ -59,8 +58,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			portletRequest, portletPreferences, "emailFromAddress",
 			emailFromAddress);
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName",
-			emailFromName);
+			portletRequest, portletPreferences, "emailFromName", emailFromName);
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());

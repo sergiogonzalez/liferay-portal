@@ -46,7 +46,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -87,7 +86,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -2012,8 +2010,7 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		DLSettings settings = DLUtil.getDLSettings(
-			fileVersion.getGroupId());
+		DLSettings settings = DLUtil.getDLSettings(fileVersion.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
 			settings.getEmailFileEntryAddedEnabled()) {

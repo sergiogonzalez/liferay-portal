@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
-import com.liferay.portal.settings.LocalizedValue;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -43,16 +43,16 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getValue("displayViews");
 	}
 
-	public LocalizedValue getEmailFileEntryAddedBody() {
-		return typedSettings.getLocalizedValue("emailFileEntryAddedBody");
+	public LocalizedValuesMap getEmailFileEntryAddedBody() {
+		return typedSettings.getLocalizedValuesMap("emailFileEntryAddedBody");
 	}
 
 	public boolean getEmailFileEntryAddedEnabled() {
 		return typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
 	}
 
-	public LocalizedValue getEmailFileEntryAddedSubject() {
-		return typedSettings.getLocalizedValue("emailFileEntryAddedSubject");
+	public LocalizedValuesMap getEmailFileEntryAddedSubject() {
+		return typedSettings.getLocalizedValuesMap("emailFileEntryAddedSubject");
 	}
 
 	public boolean getEmailFileEntryAnyEventEnabled() {
@@ -60,16 +60,16 @@ public class DLSettings extends BaseServiceSettings {
 			getEmailFileEntryUpdatedEnabled();
 	}
 
-	public LocalizedValue getEmailFileEntryUpdatedBody() {
-		return typedSettings.getLocalizedValue("emailFileEntryUpdatedBody");
+	public LocalizedValuesMap getEmailFileEntryUpdatedBody() {
+		return typedSettings.getLocalizedValuesMap("emailFileEntryUpdatedBody");
 	}
 
 	public boolean getEmailFileEntryUpdatedEnabled() {
 		return typedSettings.getBooleanValue("emailFileEntryUpdatedEnabled");
 	}
 
-	public LocalizedValue getEmailFileEntryUpdatedSubject() {
-		return typedSettings.getLocalizedValue("emailFileEntryUpdatedSubject");
+	public LocalizedValuesMap getEmailFileEntryUpdatedSubject() {
+		return typedSettings.getLocalizedValuesMap("emailFileEntryUpdatedSubject");
 	}
 
 	public String getEmailFromAddress() {
@@ -124,6 +124,10 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getBooleanValue("showFolderMenu");
 	}
 
+	public boolean getShowFoldersSearch() {
+		return typedSettings.getBooleanValue("showFoldersSearch", true);
+	}
+
 	public boolean getShowHeader() {
 		return typedSettings.getBooleanValue("showHeader", true);
 	}
@@ -136,13 +140,8 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getBooleanValue("showTabs");
 	}
 
-	public boolean getShowFoldersSearch() {
-		return typedSettings.getBooleanValue("showFoldersSearch", true);
-	}
-
-
-	private static FallbackKeys _fallbackKeys = new FallbackKeys();
 	private static String[] _defaultMediaGalleryMimeTypes;
+	private static FallbackKeys _fallbackKeys = new FallbackKeys();
 
 	static {
 		_fallbackKeys.add("displayViews", PropsKeys.DL_DISPLAY_VIEWS);
