@@ -117,6 +117,14 @@ public class DLUtil {
 		return getDL().getDDMStructureKey(fileEntryTypeUuid);
 	}
 
+	public static String getAllEntryColumns(boolean showActions) {
+		return getDL().getAllEntryColumns(showActions);
+	}
+
+	public static String getDefaultEntryColumns(boolean showActions) {
+		return getDL().getDefaultEntryColumns(showActions);
+	}
+
 	public static String getDeprecatedDDMStructureKey(
 		DLFileEntryType dlFileEntryType) {
 
@@ -150,6 +158,12 @@ public class DLUtil {
 		throws PortalException, SystemException {
 
 		return getDL().getDLFolderControlPanelLink(portletRequest, folderId);
+	}
+
+	public static DLSettings getDLSettings(long groupId)
+		throws PortalException, SystemException {
+
+		return getDL().getDLSettings(groupId);
 	}
 
 	public static DLSettings getDLSettings(
