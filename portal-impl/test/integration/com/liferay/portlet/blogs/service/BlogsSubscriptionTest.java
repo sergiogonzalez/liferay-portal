@@ -98,8 +98,7 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
 		return entry.getEntryId();
 	}

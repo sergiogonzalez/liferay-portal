@@ -16,6 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.mail.model.FileAttachment;
 import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -431,6 +433,23 @@ public class SubscriptionSender implements Serializable {
 		return hasPermission(subscription, _className, _classPK, user);
 	}
 
+	protected boolean isUserNotificationDeliver(
+			long userId, Map<Long, Boolean> map, int deliveryType)
+		throws PortalException, SystemException {
+
+		Boolean deliver = map.get(userId);
+
+		if (deliver == null) {
+			deliver = UserNotificationManagerUtil.isDeliver(
+				userId, portletId, _notificationClassNameId, _notificationType,
+				deliveryType);
+
+			map.put(userId, deliver);
+		}
+
+		return deliver;
+	}
+
 	protected void notifyPersistedSubscriber(Subscription subscription)
 		throws Exception {
 
@@ -498,20 +517,30 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
-		if (bulk) {
-			InternetAddress bulkAddress = new InternetAddress(
-				user.getEmailAddress(), user.getFullName());
+		if (isUserNotificationDeliver(
+				user.getUserId(), _emailUserNotificationDeliverMap,
+				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
-			if (_bulkAddresses == null) {
-				_bulkAddresses = new ArrayList<InternetAddress>();
+			if (bulk) {
+				InternetAddress bulkAddress = new InternetAddress(
+					user.getEmailAddress(), user.getFullName());
+
+				if (_bulkAddresses == null) {
+					_bulkAddresses = new ArrayList<InternetAddress>();
+				}
+
+				_bulkAddresses.add(bulkAddress);
 			}
-
-			_bulkAddresses.add(bulkAddress);
-
-			sendNotification(user);
+			else {
+				sendEmailNotification(user);
+			}
 		}
-		else {
-			sendNotification(user);
+
+		if (isUserNotificationDeliver(
+				user.getUserId(), _websiteUserNotificationDeliverMap,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
+			sendWebsiteNotification(user);
 		}
 	}
 
@@ -729,9 +758,8 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendEmailNotification(User user) throws Exception {
-		if (UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
-				_notificationType,
+		if (isUserNotificationDeliver(
+				user.getUserId(), _emailUserNotificationDeliverMap,
 				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
 			InternetAddress to = new InternetAddress(
@@ -747,9 +775,8 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendWebsiteNotification(User user) throws Exception {
-		if (UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
-				_notificationType,
+		if (isUserNotificationDeliver(
+				user.getUserId(), _websiteUserNotificationDeliverMap,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
 			JSONObject notificationEventJSONObject =
@@ -831,6 +858,8 @@ public class SubscriptionSender implements Serializable {
 	private Map<String, EscapableObject<String>> _context =
 		new HashMap<String, EscapableObject<String>>();
 	private String _contextUserPrefix;
+	private Map<Long, Boolean> _emailUserNotificationDeliverMap =
+		new HashMap<Long, Boolean>();
 	private String _entryTitle;
 	private String _entryURL;
 	private boolean _initialized;
@@ -843,5 +872,7 @@ public class SubscriptionSender implements Serializable {
 	private List<ObjectValuePair<String, String>> _runtimeSubscribersOVPs =
 		new ArrayList<ObjectValuePair<String, String>>();
 	private Set<String> _sentEmailAddresses = new HashSet<String>();
+	private Map<Long, Boolean> _websiteUserNotificationDeliverMap =
+		new HashMap<Long, Boolean>();
 
 }
