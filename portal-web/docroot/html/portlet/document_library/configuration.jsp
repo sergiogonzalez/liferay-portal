@@ -274,21 +274,21 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= dlSettings.getEmailFileEntryAddedBody().getLocalizationXml() %>'
+				emailBody="<%= dlSettings.getEmailFileEntryAddedBody().getLocalizationXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= dlSettings.getEmailFileEntryAddedEnabled() %>'
+				emailEnabled="<%= dlSettings.getEmailFileEntryAddedEnabled() %>"
 				emailParam="emailFileEntryAdded"
-				emailSubject='<%= dlSettings.getEmailFileEntryAddedSubject().getLocalizationXml() %>'
+				emailSubject="<%= dlSettings.getEmailFileEntryAddedSubject().getLocalizationXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= dlSettings.getEmailFileEntryUpdatedBody().getLocalizationXml() %>'
+				emailBody="<%= dlSettings.getEmailFileEntryUpdatedBody().getLocalizationXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= dlSettings.getEmailFileEntryUpdatedEnabled() %>'
+				emailEnabled="<%= dlSettings.getEmailFileEntryUpdatedEnabled() %>"
 				emailParam="emailFileEntryUpdated"
-				emailSubject='<%= dlSettings.getEmailFileEntryUpdatedSubject().getLocalizationXml() %>'
+				emailSubject="<%= dlSettings.getEmailFileEntryUpdatedSubject().getLocalizationXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

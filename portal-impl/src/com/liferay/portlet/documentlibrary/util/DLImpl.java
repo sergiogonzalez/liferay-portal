@@ -379,6 +379,12 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public String getAllEntryColumns(boolean showActions) {
+		return getDefaultEntryColumns(showActions) +
+			",modified-date,create-date";
+	}
+
+	@Override
 	public Set<String> getAllMediaGalleryMimeTypes() {
 		return _allMediaGalleryMimeTypes;
 	}
@@ -407,12 +413,6 @@ public class DLImpl implements DL {
 		}
 
 		return defaultEntryColumns;
-	}
-
-	@Override
-	public String getAllEntryColumns(boolean showActions) {
-		return getDefaultEntryColumns(showActions) +
-			",modified-date,create-date";
 	}
 
 	@Override
