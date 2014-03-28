@@ -89,11 +89,13 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-int entriesPerPage = PrefsParamUtil.getInteger(portletPreferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
+DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId, request);
 
-String[] displayViews = StringUtil.split(PrefsParamUtil.getString(portletPreferences, request, "displayViews", StringUtil.merge(PropsValues.DL_DISPLAY_VIEWS)));
+int entriesPerPage = dlSettings.getEntriesPerPage();
 
-long rootFolderId = PrefsParamUtil.getLong(portletPreferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+String[] displayViews = StringUtil.split(dlSettings.getDisplayViews());
+
+long rootFolderId = dlSettings.getRootFolderId();
 
 String rootFolderName = StringPool.BLANK;
 
@@ -113,7 +115,7 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = PrefsParamUtil.getBoolean(portletPreferences, request, "showFoldersSearch", true);
+boolean showFoldersSearch = dlSettings.getShowFoldersSearch();
 
 String portletId = portletDisplay.getId();
 
@@ -122,13 +124,13 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletName = portletResource;
 }
 
-boolean showActions = PrefsParamUtil.getBoolean(portletPreferences, request, "showActions");
-boolean showAssetMetadata = ParamUtil.getBoolean(request, "showAssetMetadata");
+boolean showActions = dlSettings.getShowActions();
+boolean showAssetMetadata = dlSettings.getShowAssetMetadata();
 boolean showAddFolderButton = false;
-boolean showFolderMenu = PrefsParamUtil.getBoolean(portletPreferences, request, "showFolderMenu");
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-boolean showMinimalActionButtons = ParamUtil.getBoolean(request, "showMinimalActionButtons");
-boolean showTabs = PrefsParamUtil.getBoolean(portletPreferences, request, "showTabs");
+boolean showFolderMenu = dlSettings.getShowFolderMenu();
+boolean showHeader = dlSettings.getShowHeader();
+boolean showMinimalActionButtons = dlSettings.getShowMinimalActionButtons();
+boolean showTabs = dlSettings.getShowTabs();
 
 if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showActions = true;
@@ -142,21 +144,11 @@ else if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.eq
 	showAssetMetadata = true;
 }
 
-boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
+boolean enableRelatedAssets = dlSettings.getEnableRelatedAssets();
 
-String defaultEntryColumns = "name,size,status";
+String allEntryColumns = DLUtil.getAllEntryColumns(showActions);
 
-if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-	defaultEntryColumns += ",downloads";
-}
-
-if (showActions) {
-	defaultEntryColumns += ",action";
-}
-
-String allEntryColumns = defaultEntryColumns + ",modified-date,create-date";
-
-String[] entryColumns = StringUtil.split(PrefsParamUtil.getString(portletPreferences, request, "entryColumns", defaultEntryColumns));
+String[] entryColumns = StringUtil.split(dlSettings.getEntryColumns());
 
 if (!showActions) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
@@ -165,12 +157,10 @@ else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(
 	entryColumns = ArrayUtil.append(entryColumns, "action");
 }
 
-boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null), true);
-boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
+boolean enableRatings = dlSettings.getEnableRatings();
+boolean enableCommentRatings = dlSettings.getEnableCommentRatings();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId, request);
 %>
 
 <%@ include file="/html/portlet/document_library/init-ext.jsp" %>
