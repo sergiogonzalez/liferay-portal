@@ -433,6 +433,23 @@ public class SubscriptionSender implements Serializable {
 		return hasPermission(subscription, _className, _classPK, user);
 	}
 
+	protected boolean isUserNotificationDeliver(
+			long userId, Map<Long, Boolean> map, int deliveryType)
+		throws PortalException, SystemException {
+
+		Boolean deliver = map.get(userId);
+
+		if (deliver == null) {
+			deliver = UserNotificationManagerUtil.isDeliver(
+				userId, portletId, _notificationClassNameId, _notificationType,
+				deliveryType);
+
+			map.put(userId, deliver);
+		}
+
+		return deliver;
+	}
+
 	protected void notifyPersistedSubscriber(Subscription subscription)
 		throws Exception {
 
@@ -500,7 +517,10 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
-		if (_isEmailUserNotificationDeliver(user)) {
+		if (isUserNotificationDeliver(
+				user.getUserId(), _emailUserNotificationDeliverMap,
+				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
+
 			if (bulk) {
 				InternetAddress bulkAddress = new InternetAddress(
 					user.getEmailAddress(), user.getFullName());
@@ -516,7 +536,10 @@ public class SubscriptionSender implements Serializable {
 			}
 		}
 
-		if (_isWebsiteUserNotificationDeliver(user)) {
+		if (isUserNotificationDeliver(
+				user.getUserId(), _websiteUserNotificationDeliverMap,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
 			sendWebsiteNotification(user);
 		}
 	}
@@ -735,7 +758,10 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendEmailNotification(User user) throws Exception {
-		if (_isEmailUserNotificationDeliver(user)) {
+		if (isUserNotificationDeliver(
+				user.getUserId(), _emailUserNotificationDeliverMap,
+				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
+
 			InternetAddress to = new InternetAddress(
 				user.getEmailAddress(), user.getFullName());
 
@@ -749,7 +775,10 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendWebsiteNotification(User user) throws Exception {
-		if (_isWebsiteUserNotificationDeliver(user)) {
+		if (isUserNotificationDeliver(
+				user.getUserId(), _websiteUserNotificationDeliverMap,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
 			JSONObject notificationEventJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
@@ -793,40 +822,6 @@ public class SubscriptionSender implements Serializable {
 	protected SMTPAccount smtpAccount;
 	protected String subject;
 	protected long userId;
-
-	private boolean _isEmailUserNotificationDeliver(User user)
-		throws PortalException, SystemException {
-
-		Boolean deliver = _emailUserNotificationDeliverMap.get(user.getUserId());
-
-		if (deliver == null) {
-			deliver = UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
-				_notificationType,
-				UserNotificationDeliveryConstants.TYPE_EMAIL);
-
-			_emailUserNotificationDeliverMap.put(user.getUserId(), deliver);
-		}
-
-		return deliver;
-	}
-
-	private boolean _isWebsiteUserNotificationDeliver(User user)
-		throws PortalException, SystemException {
-
-		Boolean deliver = _websiteUserNotificationDeliverMap.get(user.getUserId());
-
-		if (deliver == null) {
-			deliver = UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
-				_notificationType,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE);
-
-			_websiteUserNotificationDeliverMap.put(user.getUserId(), deliver);
-		}
-
-		return deliver;
-	}
 
 	private void readObject(ObjectInputStream objectInputStream)
 		throws ClassNotFoundException, IOException {
