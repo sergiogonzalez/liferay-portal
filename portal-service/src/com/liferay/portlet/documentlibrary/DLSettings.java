@@ -14,15 +14,15 @@
 
 package com.liferay.portlet.documentlibrary;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
+import com.liferay.portal.settings.LocalizedValue;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
-import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -39,7 +39,11 @@ public class DLSettings extends BaseServiceSettings {
 			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
-	public Map<Locale, String> getEmailFileEntryAddedBodyMap() {
+	public String getDisplayViews() {
+		return typedSettings.getValue("displayViews");
+	}
+
+	public LocalizedValue getEmailFileEntryAddedBody() {
 		return typedSettings.getLocalizedValue("emailFileEntryAddedBody");
 	}
 
@@ -47,7 +51,7 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
 	}
 
-	public Map<Locale, String> getEmailFileEntryAddedSubjectMap() {
+	public LocalizedValue getEmailFileEntryAddedSubject() {
 		return typedSettings.getLocalizedValue("emailFileEntryAddedSubject");
 	}
 
@@ -56,7 +60,7 @@ public class DLSettings extends BaseServiceSettings {
 			getEmailFileEntryUpdatedEnabled();
 	}
 
-	public Map<Locale, String> getEmailFileEntryUpdatedBodyMap() {
+	public LocalizedValue getEmailFileEntryUpdatedBody() {
 		return typedSettings.getLocalizedValue("emailFileEntryUpdatedBody");
 	}
 
@@ -64,7 +68,7 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getBooleanValue("emailFileEntryUpdatedEnabled");
 	}
 
-	public Map<Locale, String> getEmailFileEntryUpdatedSubjectMap() {
+	public LocalizedValue getEmailFileEntryUpdatedSubject() {
 		return typedSettings.getLocalizedValue("emailFileEntryUpdatedSubject");
 	}
 
@@ -76,9 +80,64 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getValue("emailFromName");
 	}
 
+	public boolean getEnableCommentRatings() {
+		return typedSettings.getBooleanValue("enableCommentRatings", true);
+	}
+
+	public boolean getEnableRatings() {
+		return typedSettings.getBooleanValue("enableRatings", true);
+	}
+
+	public boolean getEnableRelatedAssets() {
+		return typedSettings.getBooleanValue("enableRelatedAssets", true);
+	}
+
+	public int getEntriesPerPage() {
+		return typedSettings.getIntegerValue(
+			"entriesPerPage", SearchContainer.DEFAULT_DELTA);
+	}
+
+	public String getEntryColumns() {
+		return typedSettings.getValue(
+			"entryColumns", DLUtil.getDefaultEntryColumns(getShowActions()));
+	}
+
 	public String[] getMediaGalleryMimeTypes() {
 		return typedSettings.getValues(
 			"mimeTypes", _defaultMediaGalleryMimeTypes);
+	}
+
+	public long getRootFolderId() {
+		return typedSettings.getLongValue(
+			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
+	public boolean getShowActions() {
+		return typedSettings.getBooleanValue("showActions");
+	}
+
+	public boolean getShowAssetMetadata() {
+		return typedSettings.getBooleanValue("showAssetMetadata");
+	}
+
+	public boolean getShowFolderMenu() {
+		return typedSettings.getBooleanValue("showFolderMenu");
+	}
+
+	public boolean getShowHeader() {
+		return typedSettings.getBooleanValue("showHeader", true);
+	}
+
+	public boolean getShowMinimalActionButtons() {
+		return typedSettings.getBooleanValue("showMinimalActionButtons");
+	}
+
+	public boolean getShowTabs() {
+		return typedSettings.getBooleanValue("showTabs");
+	}
+
+	public boolean getShowFoldersSearch() {
+		return typedSettings.getBooleanValue("showFoldersSearch", true);
 	}
 
 
@@ -86,6 +145,7 @@ public class DLSettings extends BaseServiceSettings {
 	private static String[] _defaultMediaGalleryMimeTypes;
 
 	static {
+		_fallbackKeys.add("displayViews", PropsKeys.DL_DISPLAY_VIEWS);
 		_fallbackKeys.add(
 			"emailFileEntryAddedBody",
 			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY);

@@ -395,6 +395,27 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public String getDefaultEntryColumns(boolean showActions) {
+		String defaultEntryColumns = "name,size,status";
+
+		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
+			defaultEntryColumns += ",downloads";
+		}
+
+		if (showActions) {
+			defaultEntryColumns += ",action";
+		}
+
+		return defaultEntryColumns;
+	}
+
+	@Override
+	public String getAllEntryColumns(boolean showActions) {
+		return getDefaultEntryColumns(showActions) +
+			",modified-date,create-date";
+	}
+
+	@Override
 	public String getDeprecatedDDMStructureKey(
 		DLFileEntryType dlFileEntryType) {
 
@@ -463,6 +484,15 @@ public class DLImpl implements DL {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
+	}
+
+	public DLSettings getDLSettings(long groupId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, DLConstants.SERVICE_NAME);
+
+		return new DLSettings(settings);
 	}
 
 	@Override

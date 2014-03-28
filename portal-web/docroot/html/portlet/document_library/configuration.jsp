@@ -274,21 +274,21 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedBody", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_BODY)) %>'
+				emailBody='<%= dlSettings.getEmailFileEntryAddedBody().getLocalizationXml() %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailFileEntryAddedEnabled--", dlSettings.getEmailFileEntryAddedEnabled()) %>'
+				emailEnabled='<%= dlSettings.getEmailFileEntryAddedEnabled() %>'
 				emailParam="emailFileEntryAdded"
-				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedSubject", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT)) %>'
+				emailSubject='<%= dlSettings.getEmailFileEntryAddedSubject().getLocalizationXml() %>'
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedBody", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_BODY)) %>'
+				emailBody='<%= dlSettings.getEmailFileEntryUpdatedBody().getLocalizationXml() %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailFileEntryUpdatedEnabled--", dlSettings.getEmailFileEntryUpdatedEnabled()) %>'
+				emailEnabled='<%= dlSettings.getEmailFileEntryUpdatedEnabled() %>'
 				emailParam="emailFileEntryUpdated"
-				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedSubject", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT)) %>'
+				emailSubject='<%= dlSettings.getEmailFileEntryUpdatedSubject().getLocalizationXml() %>'
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
