@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +44,12 @@ public class JournalArticleTag extends IncludeTag {
 		_languageId = languageId;
 	}
 
+	public void setPortletRequestModel(
+		PortletRequestModel portletRequestModel) {
+
+		_portletRequestModel = portletRequestModel;
+	}
+
 	public void setShowAvailableLocales(boolean showAvailableLocales) {
 		_showAvailableLocales = showAvailableLocales;
 	}
@@ -55,10 +62,6 @@ public class JournalArticleTag extends IncludeTag {
 		_templateId = templateId;
 	}
 
-	public void setXmlRequest(String xmlRequest) {
-		_xmlRequest = xmlRequest;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_articleId = null;
@@ -66,10 +69,10 @@ public class JournalArticleTag extends IncludeTag {
 		_articleResourcePrimKey = 0;
 		_groupId = 0;
 		_languageId = null;
+		_portletRequestModel = null;
 		_showAvailableLocales = false;
 		_showTitle = false;
 		_templateId = null;
-		_xmlRequest = null;
 	}
 
 	@Override
@@ -92,14 +95,15 @@ public class JournalArticleTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:journal-article:languageId", _languageId);
 		request.setAttribute(
+			"liferay-ui:journal-article:portletRequestModel",
+			_portletRequestModel);
+		request.setAttribute(
 			"liferay-ui:journal-article:showAvailableLocales",
 			String.valueOf(_showAvailableLocales));
 		request.setAttribute(
 			"liferay-ui:journal-article:showTitle", String.valueOf(_showTitle));
 		request.setAttribute(
 			"liferay-ui:journal-article:templateId", _templateId);
-		request.setAttribute(
-			"liferay-ui:journal-article:xmlRequest", _xmlRequest);
 	}
 
 	private static final String _PAGE =
@@ -110,9 +114,9 @@ public class JournalArticleTag extends IncludeTag {
 	private long _articleResourcePrimKey;
 	private long _groupId;
 	private String _languageId;
+	private PortletRequestModel _portletRequestModel;
 	private boolean _showAvailableLocales;
 	private boolean _showTitle;
 	private String _templateId;
-	private String _xmlRequest;
 
 }

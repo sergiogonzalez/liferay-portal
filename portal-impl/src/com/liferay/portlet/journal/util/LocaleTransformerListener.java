@@ -34,7 +34,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 
 	@Override
 	public String onScript(
-		String script, String xml, String languageId,
+		String script, Document document, String languageId,
 		Map<String, String> tokens) {
 
 		if (_log.isDebugEnabled()) {
@@ -45,14 +45,46 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 	}
 
 	@Override
-	public String onXml(
-		String xml, String languageId, Map<String, String> tokens) {
+	public Document onXml(
+		Document document, String languageId, Map<String, String> tokens) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("onXml");
 		}
 
-		return filterByLanguage(xml, languageId);
+		filterByLanguage(document, languageId);
+
+		return document;
+	}
+
+	protected void filterByLanguage(Document document, String languageId) {
+		Element rootElement = document.getRootElement();
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		String[] availableLocales = StringUtil.split(
+			rootElement.attributeValue("available-locales", defaultLanguageId));
+
+		String defaultLocale = rootElement.attributeValue(
+			"default-locale", defaultLanguageId);
+
+		boolean supportedLocale = false;
+
+		for (String availableLocale : availableLocales) {
+			if (StringUtil.equalsIgnoreCase(availableLocale, languageId)) {
+				supportedLocale = true;
+
+				break;
+			}
+		}
+
+		if (!supportedLocale) {
+			filterByLanguage(rootElement, defaultLocale, defaultLanguageId);
+		}
+		else {
+			filterByLanguage(rootElement, languageId, defaultLanguageId);
+		}
 	}
 
 	protected void filterByLanguage(
@@ -100,40 +132,13 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 
 	protected String filterByLanguage(String xml, String languageId) {
 		if (xml == null) {
-			return xml;
+			return null;
 		}
 
 		try {
 			Document document = SAXReaderUtil.read(xml);
 
-			Element rootElement = document.getRootElement();
-
-			String defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getSiteDefault());
-
-			String[] availableLocales = StringUtil.split(
-				rootElement.attributeValue(
-					"available-locales", defaultLanguageId));
-
-			String defaultLocale = rootElement.attributeValue(
-				"default-locale", defaultLanguageId);
-
-			boolean supportedLocale = false;
-
-			for (String availableLocale : availableLocales) {
-				if (StringUtil.equalsIgnoreCase(availableLocale, languageId)) {
-					supportedLocale = true;
-
-					break;
-				}
-			}
-
-			if (!supportedLocale) {
-				filterByLanguage(rootElement, defaultLocale, defaultLanguageId);
-			}
-			else {
-				filterByLanguage(rootElement, languageId, defaultLanguageId);
-			}
+			filterByLanguage(document, languageId);
 
 			xml = DDMXMLUtil.formatXML(document);
 		}

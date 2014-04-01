@@ -41,9 +41,11 @@ import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
-import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1006,7 +1008,27 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		PortalCache<Serializable, Serializable> portalCache =
 			EntityCacheUtil.getPortalCache(UserImpl.class);
 
-		portalCache.registerCacheListener(new DefaultUserCacheListener());
+		PortalCacheMapSynchronizeUtil.synchronize(
+			portalCache, _defaultUsers,
+			new Synchronizer<Serializable, Serializable>() {
+
+				@Override
+				public void onSynchronize(
+					Map<? extends Serializable, ? extends Serializable> map,
+					Serializable key, Serializable value) {
+
+					if (!(value instanceof UserCacheModel)) {
+						return;
+					}
+
+					UserCacheModel userCacheModel = (UserCacheModel)value;
+
+					if (userCacheModel.defaultUser) {
+						_defaultUsers.remove(userCacheModel.companyId);
+					}
+				}
+
+			});
 	}
 
 	/**
@@ -3286,7 +3308,64 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
-		return userFinder.countByKeywords(companyId, keywords, status, params);
+		if (!PropsValues.USERS_INDEXER_ENABLED ||
+			!PropsValues.USERS_SEARCH_WITH_INDEX) {
+
+			return userFinder.countByKeywords(
+				companyId, keywords, status, params);
+		}
+
+		try {
+			String firstName = null;
+			String middleName = null;
+			String lastName = null;
+			String fullName = null;
+			String screenName = null;
+			String emailAddress = null;
+			String street = null;
+			String city = null;
+			String zip = null;
+			String region = null;
+			String country = null;
+			boolean andOperator = false;
+
+			if (Validator.isNotNull(keywords)) {
+				firstName = keywords;
+				middleName = keywords;
+				lastName = keywords;
+				fullName = keywords;
+				screenName = keywords;
+				emailAddress = keywords;
+				street = keywords;
+				city = keywords;
+				zip = keywords;
+				region = keywords;
+				country = keywords;
+			}
+			else {
+				andOperator = true;
+			}
+
+			if (params != null) {
+				params.put("keywords", keywords);
+			}
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				User.class);
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, firstName, middleName, lastName, fullName,
+				screenName, emailAddress, street, city, zip, region, country,
+				status, params, andOperator, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+			Hits hits = indexer.search(searchContext);
+
+			return hits.getLength();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**
@@ -3318,9 +3397,36 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			LinkedHashMap<String, Object> params, boolean andSearch)
 		throws SystemException {
 
-		return userFinder.countByC_FN_MN_LN_SN_EA_S(
-			companyId, firstName, middleName, lastName, screenName,
-			emailAddress, status, params, andSearch);
+		if (!PropsValues.USERS_INDEXER_ENABLED ||
+			!PropsValues.USERS_SEARCH_WITH_INDEX) {
+
+			return userFinder.countByC_FN_MN_LN_SN_EA_S(
+				companyId, firstName, middleName, lastName, screenName,
+				emailAddress, status, params, andSearch);
+		}
+
+		try {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				User.class);
+
+			FullNameGenerator fullNameGenerator =
+				FullNameGeneratorFactory.getInstance();
+
+			String fullName = fullNameGenerator.getFullName(
+				firstName, middleName, lastName);
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, firstName, middleName, lastName, fullName,
+				screenName, emailAddress, null, null, null, null, null, status,
+				params, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Hits hits = indexer.search(searchContext);
+
+			return hits.getLength();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	@Override
@@ -6462,69 +6568,5 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(UserLocalServiceImpl.class);
 
 	private Map<Long, User> _defaultUsers = new ConcurrentHashMap<Long, User>();
-
-	private class DefaultUserCacheListener
-		implements CacheListener<Serializable, Serializable> {
-
-		@Override
-		public void notifyEntryEvicted(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyEntryExpired(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyEntryPut(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyEntryRemoved(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyEntryUpdated(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyRemoveAll(
-			PortalCache<Serializable, Serializable> portalCache) {
-
-			_defaultUsers.clear();
-		}
-
-		private void _clearDefaultUserCache(Serializable serializable) {
-			if (!(serializable instanceof UserCacheModel)) {
-				return;
-			}
-
-			UserCacheModel userCacheModel = (UserCacheModel)serializable;
-
-			if (userCacheModel.defaultUser) {
-				_defaultUsers.remove(userCacheModel.companyId);
-			}
-		}
-
-	}
 
 }

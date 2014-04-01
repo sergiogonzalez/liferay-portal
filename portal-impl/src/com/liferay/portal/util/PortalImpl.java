@@ -1665,6 +1665,10 @@ public class PortalImpl implements Portal {
 		params.put(
 			"p_p_state", new String[] {WindowState.MAXIMIZED.toString()});
 		params.put("p_p_mode", new String[] {PortletMode.VIEW.toString()});
+		params.put("doAsGroupId", new String[] {String.valueOf(scopeGroupId)});
+		params.put(
+			"controlPanelCategory",
+			new String[] {PortletCategoryKeys.CURRENT_SITE});
 
 		sb.append(HttpUtil.parameterMapToString(params, true));
 
@@ -3078,14 +3082,12 @@ public class PortalImpl implements Portal {
 		throws PortalException, SystemException {
 
 		String layoutURL = getLayoutURL(layout, themeDisplay, doAsUser);
-		String portalURL = getPortalURL(layout, themeDisplay);
 
-		if (StringUtil.startsWith(layoutURL, portalURL)) {
-			return layoutURL;
+		if (!HttpUtil.hasProtocol(layoutURL)) {
+			layoutURL = getPortalURL(layout, themeDisplay) + (layoutURL);
 		}
-		else {
-			return portalURL + layoutURL;
-		}
+
+		return layoutURL;
 	}
 
 	@Override
@@ -3162,6 +3164,23 @@ public class PortalImpl implements Portal {
 		throws PortalException, SystemException {
 
 		return getLayoutFullURL(themeDisplay.getLayout(), themeDisplay);
+	}
+
+	@Override
+	public String getLayoutRelativeURL(Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getLayoutRelativeURL(layout, themeDisplay, true);
+	}
+
+	@Override
+	public String getLayoutRelativeURL(
+			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
+		throws PortalException, SystemException {
+
+		String layoutFullURL = getLayoutFullURL(layout, themeDisplay, doAsUser);
+
+		return HttpUtil.removeDomain(layoutFullURL);
 	}
 
 	@Override

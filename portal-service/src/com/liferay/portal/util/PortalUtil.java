@@ -1183,6 +1183,20 @@ public class PortalUtil {
 		return getPortal().getLayoutFullURL(themeDisplay);
 	}
 
+	public static String getLayoutRelativeURL(
+			Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getPortal().getLayoutRelativeURL(layout, themeDisplay);
+	}
+
+	public static String getLayoutRelativeURL(
+			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
+		throws PortalException, SystemException {
+
+		return getPortal().getLayoutRelativeURL(layout, themeDisplay, doAsUser);
+	}
+
 	public static String getLayoutSetFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
@@ -2221,6 +2235,14 @@ public class PortalUtil {
 		return getPortal().isValidResourceId(resourceId);
 	}
 
+	public static boolean removePortalEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
+
+		return getPortal().removePortalInetSocketAddressEventListener(
+			portalInetSocketAddressEventListener);
+	}
+
 	public static void resetCDNHosts() {
 		getPortal().resetCDNHosts();
 	}
@@ -2400,14 +2422,6 @@ public class PortalUtil {
 
 		return getPortal().updateWindowState(
 			portletId, user, layout, windowState, request);
-	}
-
-	public boolean removePortalEventListener(
-		PortalInetSocketAddressEventListener
-			portalInetSocketAddressEventListener) {
-
-		return getPortal().removePortalInetSocketAddressEventListener(
-			portalInetSocketAddressEventListener);
 	}
 
 	/**
