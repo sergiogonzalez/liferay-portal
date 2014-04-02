@@ -1128,6 +1128,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext);
 
+		entry = blogsEntryLocalService.getEntry(entryId);
+
 		return entry;
 	}
 
