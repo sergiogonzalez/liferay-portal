@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.templateparser;
 
+import com.liferay.portal.kernel.xml.Document;
+
 import java.util.Map;
 
 /**
@@ -26,10 +28,10 @@ public interface TransformerListener {
 		String output, String languageId, Map<String, String> tokens);
 
 	public String onScript(
-		String script, String xml, String languageId,
+		String script, Document document, String languageId,
 		Map<String, String> tokens);
 
-	public String onXml(
-		String xml, String languageId, Map<String, String> tokens);
+	public Document onXml(
+		Document document, String languageId, Map<String, String> tokens);
 
 }

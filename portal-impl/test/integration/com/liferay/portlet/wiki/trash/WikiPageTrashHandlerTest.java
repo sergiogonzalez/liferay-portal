@@ -70,7 +70,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashGrandParentBaseModelAndRestoreParentModel()
+	public void testTrashGrandparentBaseModelAndRestoreParentModel()
 		throws Exception {
 	}
 

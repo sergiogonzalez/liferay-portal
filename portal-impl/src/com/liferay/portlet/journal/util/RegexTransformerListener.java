@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
+import com.liferay.portal.kernel.xml.Document;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class RegexTransformerListener extends BaseTransformerListener {
 
 	@Override
 	public String onScript(
-		String script, String xml, String languageId,
+		String script, Document document, String languageId,
 		Map<String, String> tokens) {
 
 		if (_log.isDebugEnabled()) {

@@ -78,9 +78,9 @@ if (browseBy.equals("structure")) {
 }
 else {
 	if ((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId > 0)) {
-		JournalFolder grandParentFolder = JournalFolderServiceUtil.getFolder(parentFolderId);
+		JournalFolder grandparentFolder = JournalFolderServiceUtil.getFolder(parentFolderId);
 
-		parentTitle = grandParentFolder.getName();
+		parentTitle = grandparentFolder.getName();
 	}
 	else if (((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == 0)) || ((folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == 0) && expandFolder)) {
 		parentTitle = LanguageUtil.get(pageContext, "home");

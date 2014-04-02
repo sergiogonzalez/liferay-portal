@@ -80,6 +80,13 @@ public class ExportImportConfigurationTrashHandlerTest
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashGrandparentBaseModelAndRestoreParentModel()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashIsRestorableBaseModel() throws Exception {
 	}
 

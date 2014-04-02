@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -35,7 +36,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -78,13 +78,10 @@ public class ExportArticleAction extends PortletAction {
 				"extensions", null);
 
 			String languageId = LanguageUtil.getLanguageId(actionRequest);
-
+			PortletRequestModel portletRequestModel = new PortletRequestModel(
+				actionRequest, actionResponse);
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			String xmlRequest = PortletRequestUtil.toXML(
-				actionRequest, actionResponse);
-
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(
@@ -92,7 +89,8 @@ public class ExportArticleAction extends PortletAction {
 
 			getFile(
 				groupId, articleId, targetExtension, allowedExtensions,
-				languageId, themeDisplay, xmlRequest, request, response);
+				languageId, portletRequestModel, themeDisplay, request,
+				response);
 
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
@@ -104,15 +102,15 @@ public class ExportArticleAction extends PortletAction {
 	protected void getFile(
 			long groupId, String articleId, String targetExtension,
 			String[] allowedExtensions, String languageId,
-			ThemeDisplay themeDisplay, String xmlRequest,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay,
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		try {
 			JournalArticleDisplay articleDisplay =
 				JournalContentUtil.getDisplay(
-					groupId, articleId, null, "export", languageId,
-					themeDisplay, 1, xmlRequest);
+					groupId, articleId, null, "export", languageId, 1,
+					portletRequestModel, themeDisplay);
 
 			int pages = articleDisplay.getNumberOfPages();
 
@@ -135,7 +133,7 @@ public class ExportArticleAction extends PortletAction {
 
 			for (int i = 2; i <= pages; i++) {
 				articleDisplay = JournalContentUtil.getDisplay(
-					groupId, articleId, "export", languageId, themeDisplay, i);
+					groupId, articleId, "export", languageId, i, themeDisplay);
 
 				sb.append(articleDisplay.getContent());
 			}

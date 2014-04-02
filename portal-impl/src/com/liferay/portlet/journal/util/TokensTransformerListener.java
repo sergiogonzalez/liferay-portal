@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class TokensTransformerListener extends BaseTransformerListener {
 
 	@Override
 	public String onScript(
-		String script, String xml, String languageId,
+		String script, Document document, String languageId,
 		Map<String, String> tokens) {
 
 		if (_log.isDebugEnabled()) {
@@ -69,7 +70,7 @@ public class TokensTransformerListener extends BaseTransformerListener {
 	protected String replace(String s, Map<String, String> tokens) {
 		Set<Map.Entry<String, String>> tokensSet = tokens.entrySet();
 
-		if (tokensSet.size() == 0) {
+		if (tokensSet.isEmpty()) {
 			return s;
 		}
 

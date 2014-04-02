@@ -1161,22 +1161,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				checkTestAnnotations(javaTerm, fileName);
 			}
 
-			while (true) {
-				String javaTermContent = javaTerm.getContent();
+			String javaTermContent = javaTerm.getContent();
 
-				javaTerm.sortAnnotations();
+			String newJavaTermContent = sortAnnotations(
+				javaTermContent, StringPool.TAB);
 
-				String newJavaTermContent = javaTerm.getContent();
-
-				if (javaTermContent.equals(newJavaTermContent)) {
-					break;
-				}
-
+			if (!javaTermContent.equals(newJavaTermContent)) {
 				content = content.replace(javaTermContent, newJavaTermContent);
 			}
 		}
 
-		return content;
+		return sortAnnotations(content, StringPool.BLANK);
 	}
 
 	protected String formatJava(String fileName, String content)
@@ -2692,6 +2687,58 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
+	protected String sortAnnotations(String content, String indent)
+		throws IOException {
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(content));
+
+		String line = null;
+
+		String annotation = StringPool.BLANK;
+		String previousAnnotation = StringPool.BLANK;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.equals(indent + StringPool.CLOSE_CURLY_BRACE)) {
+				return content;
+			}
+
+			if (StringUtil.count(line, StringPool.TAB) == indent.length()) {
+				if (Validator.isNotNull(previousAnnotation) &&
+					(previousAnnotation.compareTo(annotation) > 0)) {
+
+					content = StringUtil.replaceFirst(
+						content, previousAnnotation, annotation);
+					content = StringUtil.replaceLast(
+						content, annotation, previousAnnotation);
+
+					return sortAnnotations(content, indent);
+				}
+
+				if (line.startsWith(indent + StringPool.AT)) {
+					if (Validator.isNotNull(annotation)) {
+						previousAnnotation = annotation;
+					}
+
+					annotation = line + "\n";
+				}
+				else {
+					annotation = StringPool.BLANK;
+					previousAnnotation = StringPool.BLANK;
+				}
+			}
+			else {
+				if (Validator.isNull(annotation)) {
+					return content;
+				}
+
+				annotation += line + "\n";
+			}
+		}
+
+		return content;
+	}
+
 	protected String sortExceptions(String line) {
 		if (!line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
 			!line.endsWith(StringPool.SEMICOLON)) {
@@ -2726,9 +2773,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (Validator.isNotNull(previousException) &&
 				(previousException.compareToIgnoreCase(exception) > 0)) {
 
-				return StringUtil.replace(
+				line = StringUtil.replace(
 					line, previousException + ", " + exception,
 					exception + ", " + previousException);
+
+				return sortExceptions(line);
 			}
 
 			previousException = exception;
