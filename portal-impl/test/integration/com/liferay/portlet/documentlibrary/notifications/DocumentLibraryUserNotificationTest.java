@@ -18,14 +18,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -49,8 +47,7 @@ public class DocumentLibraryUserNotificationTest
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), group.getGroupId(), _folder.getFolderId(),
-			ServiceTestUtil.randomString());
+			group.getGroupId(), group.getGroupId(), _folder.getFolderId());
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}
@@ -58,8 +55,7 @@ public class DocumentLibraryUserNotificationTest
 	@Override
 	protected void addContainerModel() throws Exception {
 		_folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override
@@ -70,8 +66,7 @@ public class DocumentLibraryUserNotificationTest
 	@Override
 	protected void subscribeToContainer() throws Exception {
 		DLAppLocalServiceUtil.subscribeFolder(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			_folder.getFolderId());
+			user.getUserId(), group.getGroupId(), _folder.getFolderId());
 	}
 
 	@Override
@@ -79,9 +74,7 @@ public class DocumentLibraryUserNotificationTest
 		throws Exception {
 
 		FileEntry fileEntry = DLAppTestUtil.updateFileEntry(
-			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			false);
+			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(), false);
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -135,7 +136,6 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -1603,8 +1603,8 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		JournalArticleDisplay articleDisplay = getArticleDisplay(
-			article, ddmTemplateKey, viewMode, languageId, 1, null,
-			themeDisplay);
+			article, ddmTemplateKey, viewMode, languageId, 1,
+			(PortletRequestModel)null, themeDisplay);
 
 		if (articleDisplay == null) {
 			return StringPool.BLANK;
@@ -1730,35 +1730,11 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, viewMode, null, languageId, themeDisplay);
 	}
 
-	/**
-	 * Returns a web content article display for the specified page of the
-	 * latest version of the web content article, optionally based on the DDM
-	 * template if the article is template driven. If the article is template
-	 * driven, web content transformation tokens are added from the theme
-	 * display (if not <code>null</code>) or the XML request otherwise.
-	 *
-	 * @param  article the web content article
-	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
-	 * @param  viewMode the mode in which the web content is being viewed
-	 * @param  languageId the primary key of the language translation to get
-	 * @param  page the web content's page number. Page numbers start at
-	 *         <code>1</code>.
-	 * @param  xmlRequest the request that serializes the web content into a
-	 *         hierarchical hash map (optionally <code>null</code>)
-	 * @param  themeDisplay the theme display
-	 * @return the web content article display
-	 * @throws PortalException if a matching DDM template could not be found or
-	 *         if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
 			JournalArticle article, String ddmTemplateKey, String viewMode,
-			String languageId, int page, String xmlRequest,
-			ThemeDisplay themeDisplay)
+			String languageId, int page,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		String content = null;
@@ -1773,14 +1749,10 @@ public class JournalArticleLocalServiceImpl
 
 		boolean cacheable = true;
 
-		if (Validator.isNull(xmlRequest)) {
-			xmlRequest = "<request />";
-		}
-
 		Map<String, String> tokens = JournalUtil.getTokens(
-			article.getGroupId(), themeDisplay, xmlRequest);
+			article.getGroupId(), portletRequestModel, themeDisplay);
 
-		if ((themeDisplay == null) && xmlRequest.equals("<request />")) {
+		if ((themeDisplay == null) && (portletRequestModel == null)) {
 			tokens.put("company_id", String.valueOf(article.getCompanyId()));
 
 			Group companyGroup = groupLocalService.getCompanyGroup(
@@ -1809,68 +1781,67 @@ public class JournalArticleLocalServiceImpl
 		tokens.put("structure_id", article.getStructureId());
 		tokens.put("template_id", ddmTemplateKey);
 
-		String xml = article.getContent();
+		Document document = article.getDocument();
 
-		try {
-			Document document = SAXReaderUtil.read(xml);
+		Element rootElement = document.getRootElement();
 
-			Element rootElement = document.getRootElement();
+		List<Element> pages = rootElement.elements("page");
 
-			Document requestDocument = SAXReaderUtil.read(xmlRequest);
+		if (!pages.isEmpty()) {
+			pageFlow = true;
 
-			List<Element> pages = rootElement.elements("page");
+			String targetPage = null;
 
-			if (!pages.isEmpty()) {
-				pageFlow = true;
+			Map<String, String[]> parameters =
+				portletRequestModel.getParameters();
 
-				String targetPage = requestDocument.valueOf(
-					"/request/parameters/parameter[name='targetPage']/value");
+			if (parameters != null) {
+				String[] values = parameters.get("targetPage");
 
-				Element pageElement = null;
-
-				if (Validator.isNotNull(targetPage)) {
-					targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
-
-					XPath xPathSelector = SAXReaderUtil.createXPath(
-						"/root/page[@id = " + targetPage + "]");
-
-					pageElement = (Element)xPathSelector.selectSingleNode(
-						document);
-				}
-
-				if (pageElement != null) {
-					document = SAXReaderUtil.createDocument(pageElement);
-
-					rootElement = document.getRootElement();
-
-					numberOfPages = pages.size();
-				}
-				else {
-					if (page > pages.size()) {
-						page = 1;
-					}
-
-					pageElement = pages.get(page - 1);
-
-					document = SAXReaderUtil.createDocument(pageElement);
-
-					rootElement = document.getRootElement();
-
-					numberOfPages = pages.size();
-					paginate = true;
+				if ((values != null) && (values.length > 0)) {
+					targetPage = values[0];
 				}
 			}
 
-			rootElement.add(requestDocument.getRootElement().createCopy());
+			Element pageElement = null;
 
-			JournalUtil.addAllReservedEls(
-				rootElement, tokens, article, languageId, themeDisplay);
+			if (Validator.isNotNull(targetPage)) {
+				targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
 
-			xml = DDMXMLUtil.formatXML(document);
+				XPath xPathSelector = SAXReaderUtil.createXPath(
+					"/root/page[@id = " + targetPage + "]");
+
+				pageElement = (Element)xPathSelector.selectSingleNode(document);
+			}
+
+			if (pageElement != null) {
+				document = SAXReaderUtil.createDocument(pageElement);
+
+				rootElement = document.getRootElement();
+
+				numberOfPages = pages.size();
+			}
+			else {
+				if (page > pages.size()) {
+					page = 1;
+				}
+
+				pageElement = pages.get(page - 1);
+
+				document = SAXReaderUtil.createDocument(pageElement);
+
+				rootElement = document.getRootElement();
+
+				numberOfPages = pages.size();
+				paginate = true;
+			}
 		}
-		catch (DocumentException de) {
-			throw new SystemException(de);
+		else {
+			rootElement = rootElement.createCopy();
 		}
+
+		JournalUtil.addAllReservedEls(
+			rootElement, tokens, article, languageId, themeDisplay);
 
 		try {
 			if (_log.isDebugEnabled()) {
@@ -1919,8 +1890,8 @@ public class JournalArticleLocalServiceImpl
 			cacheable = ddmTemplate.isCacheable();
 
 			content = JournalUtil.transform(
-				themeDisplay, tokens, viewMode, languageId, xml, script,
-				langType);
+				themeDisplay, tokens, viewMode, languageId, document,
+				portletRequestModel, script, langType);
 
 			if (!pageFlow) {
 				String[] pieces = StringUtil.split(
@@ -1953,38 +1924,11 @@ public class JournalArticleLocalServiceImpl
 			numberOfPages, page, paginate, cacheable);
 	}
 
-	/**
-	 * Returns a web content article display for the first page of the specified
-	 * version of the web content article, optionally based on the DDM template
-	 * if the article is template driven. If the article is template driven, web
-	 * content transformation tokens are added from the theme display (if not
-	 * <code>null</code>) or the XML request otherwise.
-	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  version the web content article's version
-	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
-	 * @param  viewMode the mode in which the web content is being viewed
-	 * @param  languageId the primary key of the language translation to get
-	 * @param  page the web content's page number
-	 * @param  xmlRequest the request that serializes the web content into a
-	 *         hierarchical hash map
-	 * @param  themeDisplay the theme display
-	 * @return the web content article display, or <code>null</code> if the
-	 *         article has expired or if article's display date/time is after
-	 *         the current date/time
-	 * @throws PortalException if a matching web content article or DDM template
-	 *         could not be found, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, double version,
 			String ddmTemplateKey, String viewMode, String languageId, int page,
-			String xmlRequest, ThemeDisplay themeDisplay)
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
@@ -2007,8 +1951,8 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return getArticleDisplay(
-			article, ddmTemplateKey, viewMode, languageId, page, xmlRequest,
-			themeDisplay);
+			article, ddmTemplateKey, viewMode, languageId, page,
+			portletRequestModel, themeDisplay);
 	}
 
 	/**
@@ -2044,81 +1988,33 @@ public class JournalArticleLocalServiceImpl
 
 		return getArticleDisplay(
 			groupId, articleId, version, ddmTemplateKey, viewMode, languageId,
-			1, null, themeDisplay);
+			1, (PortletRequestModel)null, themeDisplay);
 	}
 
-	/**
-	 * Returns a web content article display for the first page of the latest
-	 * version of the web content article matching the group and article ID. If
-	 * the article is template driven, web content transformation tokens are
-	 * added from the theme display (if not <code>null</code>) or the XML
-	 * request otherwise.
-	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  viewMode the mode in which the web content is being viewed
-	 * @param  languageId the primary key of the language translation to get
-	 * @param  page the web content's page number
-	 * @param  xmlRequest the request that serializes the web content into a
-	 *         hierarchical hash map
-	 * @param  themeDisplay the theme display
-	 * @return the web content article display, or <code>null</code> if the
-	 *         article has expired or if article's display date/time is after
-	 *         the current date/time
-	 * @throws PortalException if a matching web content article or DDM template
-	 *         could not be found, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, String viewMode, String languageId,
-			int page, String xmlRequest, ThemeDisplay themeDisplay)
+			int page, PortletRequestModel portletRequestModel,
+			ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return getArticleDisplay(
-			groupId, articleId, null, viewMode, languageId, page, xmlRequest,
-			themeDisplay);
+			groupId, articleId, null, viewMode, languageId, page,
+			portletRequestModel, themeDisplay);
 	}
 
-	/**
-	 * Returns a web content article display for the specified page of the
-	 * latest version of the web content article matching the group and article
-	 * ID, optionally based on the DDM template if the article is template
-	 * driven. If the article is template driven, web content transformation
-	 * tokens are added from the theme display (if not <code>null</code>) or the
-	 * XML request otherwise.
-	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
-	 * @param  viewMode the mode in which the web content is being viewed
-	 * @param  languageId the primary key of the language translation to get
-	 * @param  page the web content's page number
-	 * @param  xmlRequest the request that serializes the web content into a
-	 *         hierarchical hash map
-	 * @param  themeDisplay the theme display
-	 * @return the web content article display, or <code>null</code> if the
-	 *         article has expired or if article's display date/time is after
-	 *         the current date/time
-	 * @throws PortalException if a matching web content article or DDM template
-	 *         could not be found, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, String ddmTemplateKey,
-			String viewMode, String languageId, int page, String xmlRequest,
-			ThemeDisplay themeDisplay)
+			String viewMode, String languageId, int page,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getDisplayArticle(groupId, articleId);
 
 		return getArticleDisplay(
 			groupId, articleId, article.getVersion(), ddmTemplateKey, viewMode,
-			languageId, page, xmlRequest, themeDisplay);
+			languageId, page, portletRequestModel, themeDisplay);
 	}
 
 	/**
@@ -2750,7 +2646,7 @@ public class JournalArticleLocalServiceImpl
 					orderByComparator);
 			}
 
-			if ((articles == null) || (articles.size() == 0)) {
+			if (ListUtil.isEmpty(articles)) {
 				articles = journalArticlePersistence.findByResourcePrimKey(
 					resourcePrimKey, 0, 1, orderByComparator);
 			}
@@ -3562,9 +3458,14 @@ public class JournalArticleLocalServiceImpl
 
 		String content = article.getContent();
 
-		content = JournalUtil.removeArticleLocale(content, languageId);
+		Document document = article.getDocument();
 
-		article.setContent(content);
+		if (document != null) {
+			content = JournalUtil.removeArticleLocale(
+				document, content, languageId);
+
+			article.setContent(content);
+		}
 
 		journalArticlePersistence.update(article);
 
@@ -5781,13 +5682,13 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	protected void checkStructure(Document contentDoc, Element root)
+	protected void checkStructure(Document contentDocument, Element root)
 		throws PortalException {
 
 		for (Element el : root.elements()) {
-			checkStructureField(el, contentDoc);
+			checkStructureField(el, contentDocument);
 
-			checkStructure(contentDoc, el);
+			checkStructure(contentDocument, el);
 		}
 	}
 
@@ -5812,13 +5713,10 @@ public class JournalArticleLocalServiceImpl
 				article.getStructureId());
 		}
 
-		String content = GetterUtil.getString(article.getContent());
-
 		try {
-			Document contentDocument = SAXReaderUtil.read(content);
 			Document xsdDocument = SAXReaderUtil.read(structure.getXsd());
 
-			checkStructure(contentDocument, xsdDocument.getRootElement());
+			checkStructure(article.getDocument(), xsdDocument.getRootElement());
 		}
 		catch (DocumentException de) {
 			throw new SystemException(de);
@@ -5838,7 +5736,7 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	protected void checkStructureField(Element el, Document contentDoc)
+	protected void checkStructureField(Element el, Document contentDocument)
 		throws PortalException {
 
 		StringBuilder elPath = new StringBuilder();
@@ -5860,7 +5758,7 @@ public class JournalArticleLocalServiceImpl
 
 		String[] elPathNames = StringUtil.split(elPath.toString());
 
-		Element contentEl = contentDoc.getRootElement();
+		Element contentEl = contentDocument.getRootElement();
 
 		for (String _elPathName : elPathNames) {
 			boolean foundEl = false;
@@ -5893,12 +5791,14 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle oldArticle, JournalArticle newArticle)
 		throws Exception {
 
-		Document contentDoc = SAXReaderUtil.read(oldArticle.getContent());
+		Document contentDocument = oldArticle.getDocument();
+
+		contentDocument = contentDocument.clone();
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(
 			"//dynamic-element[@type='image']");
 
-		List<Node> imageNodes = xPathSelector.selectNodes(contentDoc);
+		List<Node> imageNodes = xPathSelector.selectNodes(contentDocument);
 
 		for (Node imageNode : imageNodes) {
 			Element imageEl = (Element)imageNode;
@@ -5939,7 +5839,7 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		newArticle.setContent(contentDoc.formattedString());
+		newArticle.setContent(contentDocument.formattedString());
 	}
 
 	protected void format(
@@ -6378,6 +6278,10 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
+		articleURL = buildArticleURL(
+			articleURL, article.getGroupId(), article.getFolderId(),
+			article.getArticleId());
+
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
 
@@ -6431,14 +6335,14 @@ public class JournalArticleLocalServiceImpl
 			article);
 
 		try {
-			String xmlRequest = PortletRequestUtil.toXML(
+			PortletRequestModel portletRequestModel = new PortletRequestModel(
 				serviceContext.getLiferayPortletRequest(),
 				serviceContext.getLiferayPortletResponse());
 
 			JournalArticleDisplay articleDisplay = getArticleDisplay(
 				article, null, Constants.VIEW,
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), 1,
-				xmlRequest, serviceContext.getThemeDisplay());
+				portletRequestModel, serviceContext.getThemeDisplay());
 
 			articleContent = articleDisplay.getContent();
 
@@ -6446,7 +6350,7 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), article.getArticleId(),
 				previousApprovedArticle.getVersion(), article.getVersion(),
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				xmlRequest, serviceContext.getThemeDisplay());
+				portletRequestModel, serviceContext.getThemeDisplay());
 		}
 		catch (Exception e) {
 		}

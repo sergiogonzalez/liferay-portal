@@ -41,33 +41,33 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 	@Override
 	public String onScript(
-		String script, String xml, String languageId,
+		String script, Document document, String languageId,
 		Map<String, String> tokens) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("onScript");
 		}
 
-		return injectEditInPlace(xml, script);
+		return injectEditInPlace(script, document);
 	}
 
 	@Override
-	public String onXml(
-		String xml, String languageId, Map<String, String> tokens) {
+	public Document onXml(
+		Document document, String languageId, Map<String, String> tokens) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("onXml");
 		}
 
-		return replace(xml, tokens);
+		replace(document, tokens);
+
+		return document;
 	}
 
-	protected String getDynamicContent(String xml, String elementName) {
+	protected String getDynamicContent(Document document, String elementName) {
 		String content = null;
 
 		try {
-			Document document = SAXReaderUtil.read(xml);
-
 			Element rootElement = document.getRootElement();
 
 			for (Element element : rootElement.elements()) {
@@ -88,10 +88,8 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		return GetterUtil.getString(content);
 	}
 
-	protected String injectEditInPlace(String xml, String script) {
+	protected String injectEditInPlace(String script, Document document) {
 		try {
-			Document document = SAXReaderUtil.read(xml);
-
 			List<Node> nodes = document.selectNodes("//dynamic-element");
 
 			for (Node node : nodes) {
@@ -119,6 +117,19 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		}
 
 		return script;
+	}
+
+	protected void replace(Document document, Map<String, String> tokens) {
+		try {
+			Element rootElement = document.getRootElement();
+
+			replace(rootElement, tokens);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+		}
 	}
 
 	protected void replace(Element root, Map<String, String> tokens)
@@ -157,7 +168,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 						dynamicContent.clearContent();
 						dynamicContent.addCDATA(
 							getDynamicContent(
-								article.getContent(), elementName));
+								article.getDocument(), elementName));
 					}
 				}
 
@@ -184,9 +195,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		try {
 			Document document = SAXReaderUtil.read(xml);
 
-			Element rootElement = document.getRootElement();
-
-			replace(rootElement, tokens);
+			replace(document, tokens);
 
 			xml = DDMXMLUtil.formatXML(document);
 		}

@@ -344,12 +344,7 @@
 				<classpath mode="compile">lib/portal/antlr3-runtime.jar</classpath>
 				<classpath mode="compile">lib/portal/antlr3.jar</classpath>
 				<classpath mode="compile">lib/portal/aopalliance.jar</classpath>
-				<classpath mode="compile">lib/portal/asm-analysis.jar</classpath>
-				<classpath mode="compile">lib/portal/asm-commons.jar</classpath>
-				<classpath mode="compile">lib/portal/asm-tree.jar</classpath>
-				<classpath mode="compile">lib/portal/asm-util.jar</classpath>
-				<classpath mode="compile">lib/portal/asm-xml.jar</classpath>
-				<classpath mode="compile">lib/portal/asm.jar</classpath>
+				<classpath mode="compile">lib/portal/asm-debug-all.jar</classpath>
 				<classpath mode="compile">lib/portal/aspectj-rt.jar</classpath>
 				<classpath mode="compile">lib/portal/aspectj-weaver.jar</classpath>
 				<classpath mode="compile">lib/portal/axiom-api.jar</classpath>

@@ -95,9 +95,9 @@ if (browseBy.equals("file-entry-type")) {
 }
 else {
 	if ((folderId != rootFolderId) && (parentFolderId > 0) && (folder != null) && (!folder.isMountPoint() || expandFolder)) {
-		Folder grandParentFolder = DLAppServiceUtil.getFolder(parentFolderId);
+		Folder grandparentFolder = DLAppServiceUtil.getFolder(parentFolderId);
 
-		parentTitle = grandParentFolder.getName();
+		parentTitle = grandparentFolder.getName();
 	}
 	else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == rootFolderId) && (parentFolderId == 0) && expandFolder)) {
 		parentTitle = LanguageUtil.get(pageContext, "home");
