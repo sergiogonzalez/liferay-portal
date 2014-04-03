@@ -1254,16 +1254,6 @@ public class DLImpl implements DL {
 		return thumbnailSrc;
 	}
 
-	private static String[] _mergePropsValues(String... propKeys) {
-		Collection<String> values = new ArrayList<String>();
-
-		for (String propKey : propKeys) {
-			values.addAll(Arrays.asList(PropsUtil.getArray(propKey)));
-		}
-
-		return values.toArray(new String[values.size()]);
-	}
-
 	private static void _populateGenericNamesMap(String genericName) {
 		String[] extensions = PropsUtil.getArray(
 			PropsKeys.DL_FILE_GENERIC_EXTENSIONS, new Filter(genericName));
