@@ -23,8 +23,8 @@ if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	strutsAction = "/document_library";
 }
 
-String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", DLUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", DLUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
+String emailFromName = dlSettings.getEmailFromName();
+String emailFromAddress = dlSettings.getEmailFromAddress();
 
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
@@ -41,9 +41,15 @@ catch (NoSuchFolderException nsfe) {
 }
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
+	<liferay-portlet:param name="serviceName" value="<%= DLConstants.SERVICE_NAME %>" />
+	<liferay-portlet:param name="settingsScope" value="group" />
+</liferay-portlet:actionURL>
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
+	<liferay-portlet:param name="serviceName" value="<%= DLConstants.SERVICE_NAME %>" />
+	<liferay-portlet:param name="settingsScope" value="group" />
+</liferay-portlet:renderURL>
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
@@ -268,21 +274,21 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedBody", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_BODY)) %>'
+				emailBody="<%= dlSettings.getEmailFileEntryAddedBody().getLocalizationXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailFileEntryAddedEnabled--", DLUtil.getEmailFileEntryAddedEnabled(portletPreferences)) %>'
+				emailEnabled="<%= dlSettings.getEmailFileEntryAddedEnabled() %>"
 				emailParam="emailFileEntryAdded"
-				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedSubject", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT)) %>'
+				emailSubject="<%= dlSettings.getEmailFileEntryAddedSubject().getLocalizationXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedBody", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_BODY)) %>'
+				emailBody="<%= dlSettings.getEmailFileEntryUpdatedBody().getLocalizationXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailFileEntryUpdatedEnabled--", DLUtil.getEmailFileEntryUpdatedEnabled(portletPreferences)) %>'
+				emailEnabled="<%= dlSettings.getEmailFileEntryUpdatedEnabled() %>"
 				emailParam="emailFileEntryUpdated"
-				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedSubject", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT)) %>'
+				emailSubject="<%= dlSettings.getEmailFileEntryUpdatedSubject().getLocalizationXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
