@@ -172,13 +172,13 @@ public class DLImpl implements DL {
 
 		portletURL.setParameter("struts_action", "/document_library/view");
 
-		DLSettings settings = getDLSettings(
+		DLSettings dlSettings = getDLSettings(
 			themeDisplay.getScopeGroupId(), request);
 
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("direction-right", Boolean.TRUE.toString());
-		data.put("folder-id", settings.getDefaultFolderId());
+		data.put("folder-id", dlSettings.getDefaultFolderId());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("home"), portletURL.toString(),
@@ -195,10 +195,10 @@ public class DLImpl implements DL {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		DLSettings settings = getDLSettings(
+		DLSettings dlSettings = getDLSettings(
 			themeDisplay.getScopeGroupId(), request);
 
-		long defaultFolderId = settings.getDefaultFolderId();
+		long defaultFolderId = dlSettings.getDefaultFolderId();
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 
