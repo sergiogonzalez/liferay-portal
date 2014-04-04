@@ -34,6 +34,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -57,13 +58,39 @@ public class BaseRepositoryProxyBean
 	@Override
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
+			String description, String changeLog, File file, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = _baseRepository.addFileEntry(
 			folderId, sourceFileName, mimeType, title, description, changeLog,
-			file, serviceContext);
+			file, dlConfig, serviceContext);
+
+		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFileEntry(
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			file, DLConfig.getLiberalDLConfig(), serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = _baseRepository.addFileEntry(
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			is, size, dlConfig, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}
@@ -75,11 +102,9 @@ public class BaseRepositoryProxyBean
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		FileEntry fileEntry = _baseRepository.addFileEntry(
+		return addFileEntry(
 			folderId, sourceFileName, mimeType, title, description, changeLog,
-			is, size, serviceContext);
-
-		return newFileEntryProxyBean(fileEntry);
+			is, size, DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override
@@ -742,12 +767,41 @@ public class BaseRepositoryProxyBean
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
+			boolean majorVersion, File file, DLConfig dlConfig,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = _baseRepository.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
+			changeLog, majorVersion, file, dlConfig, serviceContext);
+
+		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, DLConfig.getLiberalDLConfig(),
+			serviceContext);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = _baseRepository.updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, is, size, dlConfig, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}
@@ -760,11 +814,10 @@ public class BaseRepositoryProxyBean
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		FileEntry fileEntry = _baseRepository.updateFileEntry(
+		return updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
-
-		return newFileEntryProxyBean(fileEntry);
+			changeLog, majorVersion, is, size, DLConfig.getLiberalDLConfig(),
+			serviceContext);
 	}
 
 	@Override

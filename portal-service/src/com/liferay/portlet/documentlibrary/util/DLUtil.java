@@ -422,6 +422,10 @@ public class DLUtil {
 			companyId, groupId, userId, folderId, recursive);
 	}
 
+	public static boolean isValidFileName(String fileName) {
+		return getDL().isValidFileName(fileName);
+	}
+
 	public static boolean isValidVersion(String version) {
 		return getDL().isValidVersion(version);
 	}

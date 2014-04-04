@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -81,7 +82,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is,
+			DLConfig dlConfig)
 		throws SystemException {
 
 		try {
@@ -301,7 +303,7 @@ public class S3Store extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
+			String fileName, DLConfig dlConfig)
 		throws SystemException {
 
 		try {
@@ -353,7 +355,7 @@ public class S3Store extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String newFileName)
+			String newFileName, DLConfig dlConfig)
 		throws SystemException {
 
 		try {
@@ -410,7 +412,7 @@ public class S3Store extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
+			String versionLabel, InputStream is, DLConfig dlConfig)
 		throws SystemException {
 
 		try {

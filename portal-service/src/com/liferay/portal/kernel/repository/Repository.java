@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -39,8 +40,20 @@ public interface Repository {
 
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
 			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry addFileEntry(
@@ -295,7 +308,21 @@ public interface Repository {
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
+			boolean majorVersion, File file, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
 			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size, DLConfig dlConfig,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry updateFileEntry(

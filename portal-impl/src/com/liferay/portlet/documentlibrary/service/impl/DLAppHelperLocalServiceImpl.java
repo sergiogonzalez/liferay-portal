@@ -49,7 +49,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -65,6 +64,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
@@ -103,17 +103,17 @@ public class DLAppHelperLocalServiceImpl
 	@Override
 	public void addFileEntry(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			ServiceContext serviceContext)
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
+		if (dlConfig.isAssetEnabled()) {
 			updateAsset(
 				userId, fileEntry, fileVersion,
 				serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames(),
 				serviceContext.getAssetLinkEntryIds());
 
-			if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
+			if (dlConfig.isCommentsEnabled()) {
 				mbMessageLocalService.addDiscussionMessage(
 					fileEntry.getUserId(), fileEntry.getUserName(),
 					fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
@@ -124,7 +124,7 @@ public class DLAppHelperLocalServiceImpl
 
 		boolean previousEnabled = WorkflowThreadLocal.isEnabled();
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!dlConfig.isWorkflowEnabled()) {
 			WorkflowThreadLocal.setEnabled(false);
 		}
 
@@ -146,14 +146,25 @@ public class DLAppHelperLocalServiceImpl
 			}
 		}
 		finally {
-			if (!DLAppHelperThreadLocal.isEnabled()) {
+			if (!dlConfig.isWorkflowEnabled()) {
 				WorkflowThreadLocal.setEnabled(previousEnabled);
 			}
 		}
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
+		if (dlConfig.isDLProcessorRegistryEnabled()) {
 			registerDLProcessorCallback(fileEntry, null);
 		}
+	}
+
+	@Override
+	public void addFileEntry(
+			long userId, FileEntry fileEntry, FileVersion fileVersion,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		addFileEntry(
+			userId, fileEntry, fileVersion, DLConfig.getLiberalDLConfig(),
+			serviceContext);
 	}
 
 	@Override
@@ -1375,30 +1386,70 @@ public class DLAppHelperLocalServiceImpl
 	@Override
 	public void updateFileEntry(
 			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
+			FileVersion destinationFileVersion, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (dlConfig.isAssetEnabled()) {
+			updateAsset(
+				userId, fileEntry, destinationFileVersion,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds());
+		}
+
+		if (dlConfig.isDLProcessorRegistryEnabled()) {
+			registerDLProcessorCallback(fileEntry, sourceFileVersion);
+		}
+
+		if (dlConfig.isDLSyncEventEnabled()) {
+			registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE, fileEntry);
+		}
+	}
+
+	@Override
+	public void updateFileEntry(
+			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
 			FileVersion destinationFileVersion, long assetClassPk)
 		throws PortalException, SystemException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return;
+		updateFileEntry(
+			userId, fileEntry, sourceFileVersion, destinationFileVersion,
+			assetClassPk, DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFileEntry(
+			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
+			FileVersion destinationFileVersion, long assetClassPk,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		if (dlConfig.isAssetEnabled()) {
+			boolean updateAsset = true;
+
+			if (fileEntry instanceof LiferayFileEntry &&
+				fileEntry.getVersion().equals(
+					destinationFileVersion.getVersion())) {
+
+				updateAsset = false;
+			}
+
+			if (updateAsset) {
+				updateAsset(
+					userId, fileEntry, destinationFileVersion, assetClassPk);
+			}
 		}
 
-		boolean updateAsset = true;
-
-		if (fileEntry instanceof LiferayFileEntry &&
-			fileEntry.getVersion().equals(
-				destinationFileVersion.getVersion())) {
-
-			updateAsset = false;
+		if (dlConfig.isDLProcessorRegistryEnabled()) {
+			registerDLProcessorCallback(fileEntry, sourceFileVersion);
 		}
 
-		if (updateAsset) {
-			updateAsset(
-				userId, fileEntry, destinationFileVersion, assetClassPk);
+		if (dlConfig.isDLSyncEventEnabled()) {
+			registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE, fileEntry);
 		}
-
-		registerDLProcessorCallback(fileEntry, sourceFileVersion);
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
 	}
 
 	@Override
@@ -1407,19 +1458,9 @@ public class DLAppHelperLocalServiceImpl
 			FileVersion destinationFileVersion, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return;
-		}
-
-		updateAsset(
-			userId, fileEntry, destinationFileVersion,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
-		registerDLProcessorCallback(fileEntry, sourceFileVersion);
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
+		updateFileEntry(
+			userId, fileEntry, sourceFileVersion, destinationFileVersion,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override

@@ -55,6 +55,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -81,6 +82,19 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException, SystemException {
 
+		addPortletFileEntries(
+			groupId, userId, className, classPK, portletId, folderId,
+			inputStreamOVPs, DLConfig.getRestrictedDLConfig());
+	}
+
+	@Override
+	public void addPortletFileEntries(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		for (int i = 0; i < inputStreamOVPs.size(); i++) {
 			ObjectValuePair<String, InputStream> inputStreamOVP =
 				inputStreamOVPs.get(i);
@@ -90,7 +104,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			addPortletFileEntry(
 				groupId, userId, className, classPK, portletId, folderId,
-				inputStream, fileName, StringPool.BLANK, true);
+				inputStream, fileName, StringPool.BLANK, true, dlConfig);
 		}
 	}
 
@@ -99,6 +113,19 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, File file, String fileName,
 			String mimeType, boolean indexingEnabled)
+		throws PortalException, SystemException {
+
+		return addPortletFileEntry(
+			groupId, userId, className, classPK, portletId, folderId, file,
+			fileName, mimeType, indexingEnabled,
+			DLConfig.getRestrictedDLConfig());
+	}
+
+	@Override
+	public FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, File file, String fileName,
+			String mimeType, boolean indexingEnabled, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(fileName)) {
@@ -123,19 +150,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			mimeType = MimeTypesUtil.getContentType(file, fileName);
 		}
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
-
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
-			return DLAppLocalServiceUtil.addFileEntry(
-				userId, repository.getRepositoryId(), folderId, fileName,
-				mimeType, fileName, StringPool.BLANK, StringPool.BLANK, file,
-				serviceContext);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+		return DLAppLocalServiceUtil.addFileEntry(
+			userId, repository.getRepositoryId(), folderId, fileName, mimeType,
+			fileName, StringPool.BLANK, StringPool.BLANK, file, dlConfig,
+			serviceContext);
 	}
 
 	@Override
@@ -143,6 +161,20 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
 			String fileName, String mimeType, boolean indexingEnabled)
+		throws PortalException, SystemException {
+
+		return addPortletFileEntry(
+			groupId, userId, className, classPK, portletId, folderId,
+			inputStream, fileName, mimeType, indexingEnabled,
+			DLConfig.getRestrictedDLConfig());
+	}
+
+	@Override
+	public FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, InputStream inputStream,
+			String fileName, String mimeType, boolean indexingEnabled,
+			DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		if (inputStream == null) {
@@ -156,7 +188,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			return addPortletFileEntry(
 				groupId, userId, className, classPK, portletId, folderId, file,
-				fileName, mimeType, indexingEnabled);
+				fileName, mimeType, indexingEnabled, dlConfig);
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);

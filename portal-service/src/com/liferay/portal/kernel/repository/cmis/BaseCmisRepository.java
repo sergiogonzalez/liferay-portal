@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.BaseRepositoryImpl;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.InputStream;
 
@@ -60,8 +61,19 @@ public abstract class BaseCmisRepository extends BaseRepositoryImpl {
 
 	public abstract FileEntry updateFileEntry(
 			String objectId, String mimeType, Map<String, Object> properties,
-			InputStream is, String sourceFileName, long size,
+			InputStream is, String sourceFileName, long size, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
+
+	public FileEntry updateFileEntry(
+			String objectId, String mimeType, Map<String, Object> properties,
+			InputStream is, String sourceFileName, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			objectId, mimeType, properties, is, sourceFileName, size,
+			DLConfig.getLiberalDLConfig(), serviceContext);
+	}
 
 }

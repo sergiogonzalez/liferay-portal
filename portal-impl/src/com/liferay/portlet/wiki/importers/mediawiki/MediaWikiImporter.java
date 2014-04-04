@@ -46,7 +46,9 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.validator.DLValidatorUtil;
+import com.liferay.portlet.documentlibrary.util.validator.FileNameValidator;
+import com.liferay.portlet.documentlibrary.util.validator.FileSizeValidator;
 import com.liferay.portlet.wiki.ImportFilesException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.importers.WikiImporter;
@@ -225,7 +227,15 @@ public class MediaWikiImporter implements WikiImporter {
 		String fileName = paths[paths.length - 1];
 
 		try {
-			DLStoreUtil.validate(fileName, true, inputStream);
+			FileNameValidator fileNameValidator =
+				DLValidatorUtil.getDefaultFileNameValidator(true);
+
+			fileNameValidator.validateFileName(fileName);
+
+			FileSizeValidator fileSizeValidator =
+				DLValidatorUtil.getDefaultFileSizeValidator();
+
+			fileSizeValidator.validateSize(fileName, inputStream);
 		}
 		catch (PortalException pe) {
 			return false;

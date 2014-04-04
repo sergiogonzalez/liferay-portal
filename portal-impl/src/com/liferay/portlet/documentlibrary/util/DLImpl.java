@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1259,6 +1260,48 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public boolean isValidFileName(String fileName) {
+		if (Validator.isNull(fileName)) {
+			return false;
+		}
+
+		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
+			if (fileName.contains(blacklistChar)) {
+				return false;
+			}
+		}
+
+		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
+			if (blacklistLastChar.startsWith(_UNICODE_PREFIX)) {
+				blacklistLastChar = UnicodeFormatter.parseString(
+					blacklistLastChar);
+			}
+
+			if (fileName.endsWith(blacklistLastChar)) {
+				return false;
+			}
+		}
+
+		String nameWithoutExtension = fileName;
+
+		if (fileName.contains(StringPool.PERIOD)) {
+			int index = fileName.lastIndexOf(StringPool.PERIOD);
+
+			nameWithoutExtension = fileName.substring(0, index);
+		}
+
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			if (StringUtil.equalsIgnoreCase(
+					nameWithoutExtension, blacklistName)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isValidVersion(String version) {
 		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 			return true;
@@ -1344,6 +1387,8 @@ public class DLImpl implements DL {
 	};
 
 	private static final String _STRUCTURE_KEY_PREFIX = "AUTO_";
+
+	private static final String _UNICODE_PREFIX = "\\u";
 
 	private static Log _log = LogFactoryUtil.getLog(DLImpl.class);
 

@@ -45,6 +45,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
@@ -83,6 +84,33 @@ import java.util.List;
  * @see    DLAppServiceImpl
  */
 public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, byte[] bytes,
+			DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		File file = null;
+
+		try {
+			if (ArrayUtil.isNotEmpty(bytes)) {
+				file = FileUtil.createTempFile(bytes);
+			}
+
+			return addFileEntry(
+				userId, repositoryId, folderId, sourceFileName, mimeType, title,
+				description, changeLog, file, dlConfig, serviceContext);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
 
 	/**
 	 * Adds a file entry and associated metadata based on a byte array.
@@ -125,23 +153,39 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		File file = null;
+		return addFileEntry(
+			userId, repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, bytes, DLConfig.getLiberalDLConfig(),
+			serviceContext);
+	}
 
-		try {
-			if (ArrayUtil.isNotEmpty(bytes)) {
-				file = FileUtil.createTempFile(bytes);
-			}
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
 
+		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return addFileEntry(
 				userId, repositoryId, folderId, sourceFileName, mimeType, title,
-				description, changeLog, file, serviceContext);
+				description, changeLog, null, 0, dlConfig, serviceContext);
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
+
+		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
+
+		LocalRepository localRepository = getLocalRepository(repositoryId);
+
+		FileEntry fileEntry = localRepository.addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, dlConfig, serviceContext);
+
+		dlAppHelperLocalService.addFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), dlConfig,
+			serviceContext);
+
+		return fileEntry;
 	}
 
 	/**
@@ -186,22 +230,63 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if ((file == null) || !file.exists() || (file.length() == 0)) {
-			return addFileEntry(
-				userId, repositoryId, folderId, sourceFileName, mimeType, title,
-				description, changeLog, null, 0, serviceContext);
+		return addFileEntry(
+			userId, repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, file, DLConfig.getLiberalDLConfig(),
+			serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (is == null) {
+			is = new UnsyncByteArrayInputStream(new byte[0]);
+			size = 0;
 		}
 
-		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
+		if (Validator.isNull(mimeType) ||
+			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+
+			String extension = DLAppUtil.getExtension(title, sourceFileName);
+
+			if (size == 0) {
+				mimeType = MimeTypesUtil.getExtensionContentType(extension);
+			}
+			else {
+				File file = null;
+
+				try {
+					file = FileUtil.createTempFile(is);
+
+					return addFileEntry(
+						userId, repositoryId, folderId, sourceFileName,
+						mimeType, title, description, changeLog, file, dlConfig,
+						serviceContext);
+				}
+				catch (IOException ioe) {
+					throw new SystemException(
+						"Unable to write temporary file", ioe);
+				}
+				finally {
+					FileUtil.delete(file);
+				}
+			}
+		}
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, file, serviceContext);
+			changeLog, is, size, dlConfig, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
+			userId, fileEntry, fileEntry.getFileVersion(), dlConfig,
+			serviceContext);
 
 		return fileEntry;
 	}
@@ -249,50 +334,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (is == null) {
-			is = new UnsyncByteArrayInputStream(new byte[0]);
-			size = 0;
-		}
-
-		if (Validator.isNull(mimeType) ||
-			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-
-			String extension = DLAppUtil.getExtension(title, sourceFileName);
-
-			if (size == 0) {
-				mimeType = MimeTypesUtil.getExtensionContentType(extension);
-			}
-			else {
-				File file = null;
-
-				try {
-					file = FileUtil.createTempFile(is);
-
-					return addFileEntry(
-						userId, repositoryId, folderId, sourceFileName,
-						mimeType, title, description, changeLog, file,
-						serviceContext);
-				}
-				catch (IOException ioe) {
-					throw new SystemException(
-						"Unable to write temporary file", ioe);
-				}
-				finally {
-					FileUtil.delete(file);
-				}
-			}
-		}
-
-		LocalRepository localRepository = getLocalRepository(repositoryId);
-
-		FileEntry fileEntry = localRepository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, is, size, serviceContext);
-
-		dlAppHelperLocalService.addFileEntry(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
-
-		return fileEntry;
+		return addFileEntry(
+			userId, repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, is, size, DLConfig.getLiberalDLConfig(),
+			serviceContext);
 	}
 
 	/**
@@ -959,6 +1004,34 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			assetLinkEntryIds);
 	}
 
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, byte[] bytes, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		File file = null;
+
+		try {
+			if (ArrayUtil.isNotEmpty(bytes)) {
+				file = FileUtil.createTempFile(bytes);
+			}
+
+			return updateFileEntry(
+				userId, fileEntryId, sourceFileName, mimeType, title,
+				description, changeLog, majorVersion, file, dlConfig,
+				serviceContext);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
 	/**
 	 * Updates a file entry and associated metadata based on a byte array
 	 * object. If the file data is <code>null</code>, then only the associated
@@ -1002,23 +1075,43 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean majorVersion, byte[] bytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		File file = null;
+		return updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, bytes, DLConfig.getLiberalDLConfig(),
+			serviceContext);
+	}
 
-		try {
-			if (ArrayUtil.isNotEmpty(bytes)) {
-				file = FileUtil.createTempFile(bytes);
-			}
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, File file, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
 
+		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return updateFileEntry(
 				userId, fileEntryId, sourceFileName, mimeType, title,
-				description, changeLog, majorVersion, file, serviceContext);
+				description, changeLog, majorVersion, null, 0, dlConfig,
+				serviceContext);
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
+
+		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
+
+		LocalRepository localRepository = getFileEntryLocalRepository(
+			fileEntryId);
+
+		FileEntry fileEntry = localRepository.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, dlConfig, serviceContext);
+
+		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion(true));
+
+		dlAppHelperLocalService.updateFileEntry(
+			userId, fileEntry, null, fileEntry.getFileVersion(), dlConfig,
+			serviceContext);
+
+		return fileEntry;
 	}
 
 	/**
@@ -1065,26 +1158,70 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if ((file == null) || !file.exists() || (file.length() == 0)) {
-			return updateFileEntry(
-				userId, fileEntryId, sourceFileName, mimeType, title,
-				description, changeLog, majorVersion, null, 0, serviceContext);
-		}
+		return updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, DLConfig.getLiberalDLConfig(),
+			serviceContext);
+	}
 
-		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (Validator.isNull(mimeType) ||
+			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+
+			String extension = DLAppUtil.getExtension(title, sourceFileName);
+
+			if (size == 0) {
+				mimeType = MimeTypesUtil.getExtensionContentType(extension);
+			}
+			else {
+				File file = null;
+
+				try {
+					file = FileUtil.createTempFile(is);
+
+					return updateFileEntry(
+						userId, fileEntryId, sourceFileName, mimeType, title,
+						description, changeLog, majorVersion, file, dlConfig,
+						serviceContext);
+				}
+				catch (IOException ioe) {
+					throw new SystemException(
+						"Unable to write temporary file", ioe);
+				}
+				finally {
+					FileUtil.delete(file);
+				}
+			}
+		}
 
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
+		FileEntry oldFileEntry = localRepository.getFileEntry(fileEntryId);
+
+		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
+
 		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
+			changeLog, majorVersion, is, size, dlConfig, serviceContext);
 
-		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion(true));
+		if (is != null) {
+			DLProcessorRegistryUtil.cleanUp(
+				fileEntry.getLatestFileVersion(true));
+
+			oldFileVersion = null;
+		}
 
 		dlAppHelperLocalService.updateFileEntry(
-			userId, fileEntry, null, fileEntry.getFileVersion(),
-			serviceContext);
+			userId, fileEntry, oldFileVersion, fileEntry.getFileVersion(),
+			dlConfig, serviceContext);
 
 		return fileEntry;
 	}
@@ -1134,58 +1271,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (Validator.isNull(mimeType) ||
-			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-
-			String extension = DLAppUtil.getExtension(title, sourceFileName);
-
-			if (size == 0) {
-				mimeType = MimeTypesUtil.getExtensionContentType(extension);
-			}
-			else {
-				File file = null;
-
-				try {
-					file = FileUtil.createTempFile(is);
-
-					return updateFileEntry(
-						userId, fileEntryId, sourceFileName, mimeType, title,
-						description, changeLog, majorVersion, file,
-						serviceContext);
-				}
-				catch (IOException ioe) {
-					throw new SystemException(
-						"Unable to write temporary file", ioe);
-				}
-				finally {
-					FileUtil.delete(file);
-				}
-			}
-		}
-
-		LocalRepository localRepository = getFileEntryLocalRepository(
-			fileEntryId);
-
-		FileEntry oldFileEntry = localRepository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
-		FileEntry fileEntry = localRepository.updateFileEntry(
+		return updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
-
-		if (is != null) {
-			DLProcessorRegistryUtil.cleanUp(
-				fileEntry.getLatestFileVersion(true));
-
-			oldFileVersion = null;
-		}
-
-		dlAppHelperLocalService.updateFileEntry(
-			userId, fileEntry, oldFileVersion, fileEntry.getFileVersion(),
+			changeLog, majorVersion, is, size, DLConfig.getLiberalDLConfig(),
 			serviceContext);
-
-		return fileEntry;
 	}
 
 	/**

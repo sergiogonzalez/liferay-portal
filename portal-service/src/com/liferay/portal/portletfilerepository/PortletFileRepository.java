@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -44,6 +45,13 @@ public interface PortletFileRepository {
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException, SystemException;
 
+	public void addPortletFileEntries(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			DLConfig dlConfig)
+		throws PortalException, SystemException;
+
 	public FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, File file, String fileName,
@@ -52,8 +60,21 @@ public interface PortletFileRepository {
 
 	public FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, File file, String fileName,
+			String mimeType, boolean indexingEnabled, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
 			String fileName, String mimeType, boolean indexingEnabled)
+		throws PortalException, SystemException;
+
+	public FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, InputStream inputStream,
+			String fileName, String mimeType, boolean indexingEnabled,
+			DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public Folder addPortletFolder(

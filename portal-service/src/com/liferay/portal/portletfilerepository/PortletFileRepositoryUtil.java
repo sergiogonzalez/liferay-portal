@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -50,6 +51,18 @@ public class PortletFileRepositoryUtil {
 			inputStreamOVPs);
 	}
 
+	public static void addPortletFileEntries(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().addPortletFileEntries(
+			groupId, userId, className, classPK, portletId, folderId,
+			inputStreamOVPs, dlConfig);
+	}
+
 	public static FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, File file, String fileName,
@@ -63,6 +76,17 @@ public class PortletFileRepositoryUtil {
 
 	public static FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, File file, String fileName,
+			String mimeType, boolean indexingEnabled, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletFileEntry(
+			groupId, userId, className, classPK, portletId, folderId, file,
+			fileName, mimeType, indexingEnabled, dlConfig);
+	}
+
+	public static FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
 			String fileName, String mimeType, boolean indexingEnabled)
 		throws PortalException, SystemException {
@@ -70,6 +94,18 @@ public class PortletFileRepositoryUtil {
 		return getPortletFileRepository().addPortletFileEntry(
 			groupId, userId, className, classPK, portletId, folderId,
 			inputStream, fileName, mimeType, indexingEnabled);
+	}
+
+	public static FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, InputStream inputStream,
+			String fileName, String mimeType, boolean indexingEnabled,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletFileEntry(
+			groupId, userId, className, classPK, portletId, folderId,
+			inputStream, fileName, mimeType, indexingEnabled, dlConfig);
 	}
 
 	public static Folder addPortletFolder(

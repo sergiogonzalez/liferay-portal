@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -104,6 +105,30 @@ public class DLStoreUtil {
 	}
 
 	/**
+	 * Adds a file based on a byte array.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  validateFileExtension whether to validate the file's extension
+	 * @param  bytes the files's data
+	 * @param  dlConfig the document library configuration
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void addFile(
+			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, byte[] bytes, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().addFile(
+			companyId, repositoryId, fileName, validateFileExtension, bytes,
+			dlConfig);
+	}
+
+	/**
 	 * Adds a file based on a {@link File} object.
 	 *
 	 * @param  companyId the primary key of the company
@@ -123,6 +148,30 @@ public class DLStoreUtil {
 
 		getStore().addFile(
 			companyId, repositoryId, fileName, validateFileExtension, file);
+	}
+
+	/**
+	 * Adds a file based on a {@link File} object.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  validateFileExtension whether to validate the file's extension
+	 * @param  file Name the file name
+	 * @param  dlConfig the document library configuration
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void addFile(
+			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, File file, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().addFile(
+			companyId, repositoryId, fileName, validateFileExtension, file,
+			dlConfig);
 	}
 
 	/**
@@ -148,6 +197,30 @@ public class DLStoreUtil {
 	}
 
 	/**
+	 * Adds a file based on a {@link InputStream} object.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  validateFileExtension whether to validate the file's extension
+	 * @param  is the files's data
+	 * @param  dlConfig the document library configuration
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void addFile(
+			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, InputStream is, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().addFile(
+			companyId, repositoryId, fileName, validateFileExtension, is,
+			dlConfig);
+	}
+
+	/**
 	 * Adds a file based on a byte array. Enforces validation of file's
 	 * extension.
 	 *
@@ -165,6 +238,28 @@ public class DLStoreUtil {
 		throws PortalException, SystemException {
 
 		getStore().addFile(companyId, repositoryId, fileName, bytes);
+	}
+
+	/**
+	 * Adds a file based on a byte array. Enforces validation of file's
+	 * extension.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  bytes the files's data
+	 * @param  dlConfig  the document library configuration
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void addFile(
+			long companyId, long repositoryId, String fileName, byte[] bytes,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().addFile(companyId, repositoryId, fileName, bytes, dlConfig);
 	}
 
 	/**
@@ -188,6 +283,28 @@ public class DLStoreUtil {
 	}
 
 	/**
+	 * Adds a file based on a {@link File} object. Enforces validation of file's
+	 * extension.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  file Name the file name
+	 * @param  dlConfig  the document library configuration
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void addFile(
+			long companyId, long repositoryId, String fileName, File file,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().addFile(companyId, repositoryId, fileName, file, dlConfig);
+	}
+
+	/**
 	 * Adds a file based on an {@link InputStream} object. Enforces validation
 	 * of file's extension.
 	 *
@@ -205,6 +322,28 @@ public class DLStoreUtil {
 		throws PortalException, SystemException {
 
 		getStore().addFile(companyId, repositoryId, fileName, is);
+	}
+
+	/**
+	 * Adds a file based on an {@link InputStream} object. Enforces validation
+	 * of file's extension.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  is the files's data
+	 * @param  dlConfig  the document library configuration
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void addFile(
+			long companyId, long repositoryId, String fileName, InputStream is,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().addFile(companyId, repositoryId, fileName, is, dlConfig);
 	}
 
 	/**
@@ -604,6 +743,26 @@ public class DLStoreUtil {
 	}
 
 	/**
+	 * Moves a file to a new data repository.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository
+	 * @param  newRepositoryId the primary key of the new data repository
+	 * @param  fileName the file's name
+	 * @param  dlConfig the document library configuration
+	 * @throws PortalException if the file's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().updateFile(
+			companyId, repositoryId, newRepositoryId, fileName, dlConfig);
+	}
+
+	/**
 	 * Update's the file's name
 	 *
 	 * @param  companyId the primary key of the company
@@ -650,6 +809,36 @@ public class DLStoreUtil {
 	}
 
 	/**
+	 * Updates a file based on a {@link File} object.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  fileExtension the file's extension
+	 * @param  validateFileExtension whether to validate the file's extension
+	 * @param  versionLabel the file's new version label
+	 * @param  sourceFileName the new file's original name
+	 * @param  file Name the file name
+	 * @param  dlConfig the document library configuration
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String fileExtension, boolean validateFileExtension,
+			String versionLabel, String sourceFileName, File file,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().updateFile(
+			companyId, repositoryId, fileName, fileExtension,
+			validateFileExtension, versionLabel, sourceFileName, file,
+			dlConfig);
+	}
+
+	/**
 	 * Updates a file based on a {@link InputStream} object.
 	 *
 	 * @param  companyId the primary key of the company
@@ -674,6 +863,56 @@ public class DLStoreUtil {
 		getStore().updateFile(
 			companyId, repositoryId, fileName, fileExtension,
 			validateFileExtension, versionLabel, sourceFileName, is);
+	}
+
+	/**
+	 * Updates a file based on a {@link InputStream} object.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  fileExtension the file's extension
+	 * @param  validateFileExtension whether to validate the file's extension
+	 * @param  versionLabel the file's new version label
+	 * @param  sourceFileName the new file's original name
+	 * @param  is the new file's data
+	 * @param  dlConfig the document library configuration
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String fileExtension, boolean validateFileExtension,
+			String versionLabel, String sourceFileName, InputStream is,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().updateFile(
+			companyId, repositoryId, fileName, fileExtension,
+			validateFileExtension, versionLabel, sourceFileName, is, dlConfig);
+	}
+
+	/**
+	 * Update's the file's name
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param  fileName the file's name
+	 * @param  newFileName the file's new name
+	 * @param  dlConfig the document library configuration
+	 * @throws PortalException if the file's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String newFileName, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getStore().updateFile(
+			companyId, repositoryId, fileName, newFileName, dlConfig);
 	}
 
 	/**

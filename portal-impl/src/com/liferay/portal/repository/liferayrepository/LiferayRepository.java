@@ -47,6 +47,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
@@ -115,7 +116,7 @@ public class LiferayRepository
 	@Override
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
+			String description, String changeLog, File file, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -135,7 +136,45 @@ public class LiferayRepository
 		DLFileEntry dlFileEntry = dlFileEntryService.addFileEntry(
 			getGroupId(), getRepositoryId(), toFolderId(folderId),
 			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, fieldsMap, file, null, size, serviceContext);
+			fileEntryTypeId, fieldsMap, file, null, size, dlConfig,
+			serviceContext);
+
+		addFileEntryResources(dlFileEntry, serviceContext);
+
+		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFileEntry(
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			file, DLConfig.getLiberalDLConfig(), serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			serviceContext, "fileEntryTypeId",
+			getDefaultFileEntryTypeId(serviceContext, folderId));
+
+		Map<String, Fields> fieldsMap = getFieldsMap(
+			serviceContext, fileEntryTypeId);
+
+		DLFileEntry dlFileEntry = dlFileEntryService.addFileEntry(
+			getGroupId(), getRepositoryId(), toFolderId(folderId),
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, fieldsMap, null, is, size, dlConfig,
+			serviceContext);
 
 		addFileEntryResources(dlFileEntry, serviceContext);
 
@@ -149,21 +188,9 @@ public class LiferayRepository
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long fileEntryTypeId = ParamUtil.getLong(
-			serviceContext, "fileEntryTypeId",
-			getDefaultFileEntryTypeId(serviceContext, folderId));
-
-		Map<String, Fields> fieldsMap = getFieldsMap(
-			serviceContext, fileEntryTypeId);
-
-		DLFileEntry dlFileEntry = dlFileEntryService.addFileEntry(
-			getGroupId(), getRepositoryId(), toFolderId(folderId),
-			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, fieldsMap, null, is, size, serviceContext);
-
-		addFileEntryResources(dlFileEntry, serviceContext);
-
-		return new LiferayFileEntry(dlFileEntry);
+		return addFileEntry(
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			is, size, DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override
@@ -780,7 +807,8 @@ public class LiferayRepository
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
+			boolean majorVersion, File file, DLConfig dlConfig,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
@@ -798,7 +826,7 @@ public class LiferayRepository
 		DLFileEntry dlFileEntry = dlFileEntryService.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, fileEntryTypeId, fieldsMap, file, null,
-			size, serviceContext);
+			size, dlConfig, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -807,7 +835,20 @@ public class LiferayRepository
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, DLConfig.getLiberalDLConfig(),
+			serviceContext);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -820,9 +861,23 @@ public class LiferayRepository
 		DLFileEntry dlFileEntry = dlFileEntryService.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, fileEntryTypeId, fieldsMap, null, is, size,
-			serviceContext);
+			dlConfig, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, is, size, DLConfig.getLiberalDLConfig(),
+			serviceContext);
 	}
 
 	@Override

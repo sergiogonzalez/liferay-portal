@@ -251,6 +251,8 @@ public interface DL {
 			boolean recursive)
 		throws PortalException, SystemException;
 
+	public boolean isValidFileName(String fileName);
+
 	public boolean isValidVersion(String version);
 
 }

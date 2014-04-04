@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -40,11 +41,26 @@ public interface Store {
 		throws PortalException, SystemException;
 
 	public void addFile(
+			long companyId, long repositoryId, String fileName, byte[] bytes,
+			DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void addFile(
 			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException, SystemException;
 
 	public void addFile(
+			long companyId, long repositoryId, String fileName, File file,
+			DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
+		throws PortalException, SystemException;
+
+	public void addFile(
+			long companyId, long repositoryId, String fileName, InputStream is,
+			DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void checkRoot(long companyId) throws SystemException;
@@ -122,6 +138,11 @@ public interface Store {
 		throws PortalException, SystemException;
 
 	public void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws PortalException, SystemException;
@@ -133,12 +154,32 @@ public interface Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
+			String versionLabel, byte[] bytes, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String newFileName, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
 		throws PortalException, SystemException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
+			String versionLabel, File file, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void updateFileVersion(

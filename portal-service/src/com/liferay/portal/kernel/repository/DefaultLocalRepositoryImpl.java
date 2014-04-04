@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -49,18 +50,42 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	public FileEntry addFileEntry(
 		long userId, long folderId, String sourceFileName, String mimeType,
 		String title, String description, String changeLog, File file,
-		ServiceContext serviceContext) {
+		DLConfig dlConfig, ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, DLConfig.getLiberalDLConfig(), serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
 		long userId, long folderId, String sourceFileName, String mimeType,
 		String title, String description, String changeLog, InputStream is,
-		long size, ServiceContext serviceContext) {
+		long size, DLConfig dlConfig, ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, InputStream is,
+			long size, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, is, size, DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override
@@ -166,19 +191,47 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	public FileEntry updateFileEntry(
 		long userId, long fileEntryId, String sourceFileName, String mimeType,
 		String title, String description, String changeLog,
-		boolean majorVersion, File file, ServiceContext serviceContext) {
+		boolean majorVersion, File file, DLConfig dlConfig,
+		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, DLConfig.getLiberalDLConfig(),
+			serviceContext);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
 		long userId, long fileEntryId, String sourceFileName, String mimeType,
 		String title, String description, String changeLog,
-		boolean majorVersion, InputStream is, long size,
+		boolean majorVersion, InputStream is, long size, DLConfig dlConfig,
 		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, is, size, DLConfig.getLiberalDLConfig(),
+			serviceContext);
 	}
 
 	@Override
