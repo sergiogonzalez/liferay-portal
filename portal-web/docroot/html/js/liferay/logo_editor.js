@@ -41,8 +41,10 @@ AUI.add(
 						instance._cropRegionNode = instance.one('#cropRegion');
 						instance._fileNameNode = instance.one('#fileName');
 						instance._formNode = instance.one('#fm');
+						instance._formValidator = Liferay.Form.get(instance._formNode.attr('id')).formValidator;
 						instance._portraitPreviewImg = instance.one('#portraitPreviewImg');
 						instance._submitButton = instance.one('#submitButton');
+						instance._tempImageFileName = instance.one('#tempImageFileName').val();
 					},
 
 					bindUI: function() {
@@ -89,44 +91,32 @@ AUI.add(
 
 						var responseText = obj.responseText;
 
-						var exception;
-
-						if (responseText.indexOf('FileSizeException') > -1) {
-							exception = 'FileSizeException';
+						try {
+							responseText = A.JSON.parse(responseText);
 						}
-						else if (responseText.indexOf('TypeException') > -1) {
-							exception = 'TypeException';
+						catch (err) {
 						}
-
-						var message;
-
-						if (exception) {
-							message = '';
-
-							if (exception == 'FileSizeException') {
-								var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
-
-								message = Lang.sub(
-									Liferay.Language.get('upload-images-no-larger-than-x'),
-									[maxFileSize]
-								);
-							}
-							else {
-								message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
-							}
-
-							var messageNode = instance._getMessageNode(message, 'alert alert-error');
-
-							instance._formNode.prepend(messageNode);
-						}
-
-						var previewURL = instance.get('previewURL');
-
-						previewURL = Liferay.Util.addParams('t=' + Lang.now(), previewURL);
 
 						var portraitPreviewImg = instance._portraitPreviewImg;
 
-						portraitPreviewImg.attr('src', previewURL);
+						if (Lang.isObject(responseText)) {
+							if (responseText.errorMessage) {
+								var messageNode = instance._getMessageNode(responseText.errorMessage, 'alert alert-error');
+
+								instance._formNode.prepend(messageNode);
+							}
+
+							if (responseText.tempImageFileName) {
+								instance._tempImageFileName = responseText.tempImageFileName;
+
+								var previewURL = instance.get('previewURL');
+
+								previewURL = Liferay.Util.addParams(instance.get('namespace') + 'tempImageFileName=' + responseText.tempImageFileName, previewURL);
+								previewURL = Liferay.Util.addParams('t=' + Lang.now(), previewURL);
+
+								portraitPreviewImg.attr('src', previewURL);
+							}
+						}
 
 						portraitPreviewImg.removeClass('loading');
 					},
@@ -185,32 +175,34 @@ AUI.add(
 					_onFileNameChange: function(event) {
 						var instance = this;
 
-						var uploadURL = instance.get('uploadURL');
+						instance._formValidator.validateField(instance._fileNameNode);
 
-						var imageCropper = instance._imageCropper;
-						var portraitPreviewImg = instance._portraitPreviewImg;
+						if (!instance._formValidator.hasErrors()) {
+							var imageCropper = instance._imageCropper;
+							var portraitPreviewImg = instance._portraitPreviewImg;
 
-						portraitPreviewImg.addClass('loading');
+							portraitPreviewImg.addClass('loading');
 
-						portraitPreviewImg.attr('src', themeDisplay.getPathThemeImages() + '/spacer.png');
+							portraitPreviewImg.attr('src', themeDisplay.getPathThemeImages() + '/spacer.png');
 
-						if (imageCropper) {
-							imageCropper.disable();
-						}
-
-						A.io.request(
-							uploadURL,
-							{
-								form: {
-									id: instance.ns('fm'),
-									upload: true
-								},
-								on: {
-									complete: A.bind('fire', instance, 'uploadComplete'),
-									start: A.bind('fire', instance, 'uploadStart')
-								}
+							if (imageCropper) {
+								imageCropper.disable();
 							}
-						);
+
+							A.io.request(
+								instance.get('uploadURL'),
+								{
+									form: {
+										id: instance.ns('fm'),
+										upload: true
+									},
+									on: {
+										complete: A.bind('fire', instance, 'uploadComplete'),
+										start: A.bind('fire', instance, 'uploadStart')
+									}
+								}
+							);
+						}
 					},
 
 					_onImageLoad: function(event) {
@@ -279,6 +271,9 @@ AUI.add(
 
 							instance._cropRegionNode.val(A.JSON.stringify(cropRegion));
 						}
+
+						instance.one('#previewURL').val(portraitPreviewImg.attr('src'));
+						instance.one('#tempImageFileName').val(instance._tempImageFileName);
 					},
 
 					_setCropBackgroundSize: function(width, height) {
