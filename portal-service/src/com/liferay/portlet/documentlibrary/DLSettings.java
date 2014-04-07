@@ -70,11 +70,6 @@ public class DLSettings extends BaseServiceSettings {
 		return emailFileEntryAddedSubject.getLocalizationXml();
 	}
 
-	public boolean getEmailFileEntryAnyEventEnabled() {
-		return getEmailFileEntryAddedEnabled() ||
-			getEmailFileEntryUpdatedEnabled();
-	}
-
 	public LocalizedValuesMap getEmailFileEntryUpdatedBody() {
 		return typedSettings.getLocalizedValuesMap("emailFileEntryUpdatedBody");
 	}
