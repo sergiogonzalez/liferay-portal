@@ -2741,6 +2741,8 @@ public interface PropsKeys {
 
 	public static final String WIKI_RSS_ABSTRACT_LENGTH = "wiki.rss.abstract.length";
 
+	public static final String WIKI_RSS_ENABLED = "wiki.rss.enabled";
+
 	public static final String XML_VALIDATION_ENABLED = "xml.validation.enabled";
 
 	public static final String XUGGLER_ENABLED = "xuggler.enabled";
