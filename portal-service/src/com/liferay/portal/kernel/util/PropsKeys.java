@@ -301,6 +301,8 @@ public interface PropsKeys {
 
 	public static final String BLOGS_RSS_ABSTRACT_LENGTH = "blogs.rss.abstract.length";
 
+	public static final String BLOGS_RSS_ENABLED = "blogs.rss.enabled";
+
 	public static final String BLOGS_SOCIAL_BOOKMARKS_DISPLAY_POSITION = "blogs.social.bookmarks.display.position";
 
 	public static final String BLOGS_SOCIAL_BOOKMARKS_ENABLED = "blogs.social.bookmarks.enabled";
