@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -52,7 +52,8 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public LocalizedValuesMap getEmailFileEntryAddedSubject() {
-		return typedSettings.getLocalizedValuesMap("emailFileEntryAddedSubject");
+		return typedSettings.getLocalizedValuesMap(
+			"emailFileEntryAddedSubject");
 	}
 
 	public boolean getEmailFileEntryAnyEventEnabled() {
@@ -69,7 +70,8 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public LocalizedValuesMap getEmailFileEntryUpdatedSubject() {
-		return typedSettings.getLocalizedValuesMap("emailFileEntryUpdatedSubject");
+		return typedSettings.getLocalizedValuesMap(
+			"emailFileEntryUpdatedSubject");
 	}
 
 	public String getEmailFromAddress() {
