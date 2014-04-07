@@ -15,13 +15,10 @@
 package com.liferay.portlet.wiki;
 
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
 
 /**
  * @author Iván Zaera
@@ -50,15 +47,7 @@ public class WikiSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailPageAddedBody() {
-		String emailPageAddedBody = typedSettings.getValue(
-			"emailPageAddedBody");
-
-		if (Validator.isNotNull(emailPageAddedBody)) {
-			return emailPageAddedBody;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
+		return typedSettings.getValue("emailPageAddedBody");
 	}
 
 	public boolean getEmailPageAddedEnabled() {
@@ -70,15 +59,7 @@ public class WikiSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailPageUpdatedBody() {
-		String emailPageUpdatedBody = typedSettings.getValue(
-			"emailPageUpdatedBody");
-
-		if (Validator.isNotNull(emailPageUpdatedBody)) {
-			return emailPageUpdatedBody;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
+		return typedSettings.getValue("emailPageUpdatedBody");
 	}
 
 	public boolean getEmailPageUpdatedEnabled() {
@@ -86,15 +67,7 @@ public class WikiSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailPageUpdatedSubject() {
-		String emailPageUpdatedSubject = typedSettings.getValue(
-			"emailPageUpdatedSubject");
-
-		if (Validator.isNotNull(emailPageUpdatedSubject)) {
-			return emailPageUpdatedSubject;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
+		return typedSettings.getValue("emailPageUpdatedSubject");
 	}
 
 	public boolean getEnableCommentRatings() {
@@ -102,19 +75,11 @@ public class WikiSettings extends BaseServiceSettings {
 	}
 
 	public boolean getEnableComments() {
-		if (!PropsValues.WIKI_PAGE_COMMENTS_ENABLED) {
-			return false;
-		}
-
-		return typedSettings.getBooleanValue("enableComments", true);
+		return typedSettings.getBooleanValue("enableComments");
 	}
 
 	public boolean getEnablePageRatings() {
-		if (!PropsValues.WIKI_PAGE_RATINGS_ENABLED) {
-			return false;
-		}
-
-		return typedSettings.getBooleanValue("enablePageRatings", true);
+		return typedSettings.getBooleanValue("enablePageRatings");
 	}
 
 	public boolean getEnableRelatedAssets() {
@@ -126,7 +91,7 @@ public class WikiSettings extends BaseServiceSettings {
 			return false;
 		}
 
-		return typedSettings.getBooleanValue("enableRss", true);
+		return typedSettings.getBooleanValue("enableRss");
 	}
 
 	public String[] getHiddenNodes() {
@@ -167,16 +132,28 @@ public class WikiSettings extends BaseServiceSettings {
 			"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 		_fallbackKeys.add(
+			"emailPageAddedBody", PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY);
+		_fallbackKeys.add(
 			"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED);
 		_fallbackKeys.add(
 			"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
 		_fallbackKeys.add(
+			"emailPageUpdatedBody", PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY);
+		_fallbackKeys.add(
 			"emailPageUpdatedEnabled",
 			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED);
 		_fallbackKeys.add(
+			"emailPageUpdatedSubject",
+			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
+		_fallbackKeys.add(
+			"enableComments", PropsKeys.WIKI_PAGE_COMMENTS_ENABLED);
+		_fallbackKeys.add(
 			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
 		_fallbackKeys.add(
+			"enablePageRatings", PropsKeys.WIKI_PAGE_RATINGS_ENABLED);
+		_fallbackKeys.add(
 			"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED);
+		_fallbackKeys.add("enableRss", PropsKeys.WIKI_RSS_ENABLED);
 		_fallbackKeys.add(
 			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		_fallbackKeys.add(
