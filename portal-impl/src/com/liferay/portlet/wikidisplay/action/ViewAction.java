@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -58,26 +59,25 @@ public class ViewAction extends PortletAction {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			long nodeId = GetterUtil.getLong(
-				portletPreferences.getValue("nodeId", StringPool.BLANK));
 			String title = ParamUtil.getString(
 				renderRequest, "title",
 				portletPreferences.getValue(
 					"title", WikiPageConstants.FRONT_PAGE));
 			double version = ParamUtil.getDouble(renderRequest, "version");
 
-			WikiNode node = WikiNodeServiceUtil.getNode(nodeId);
+			WikiNode node = getNode(renderRequest);
 
 			if (node.getGroupId() != themeDisplay.getScopeGroupId()) {
-				throw new NoSuchNodeException("{nodeId=" + nodeId + "}");
+				throw new NoSuchNodeException(
+					"{nodeId=" + node.getNodeId() + "}");
 			}
 
 			WikiPage page = WikiPageServiceUtil.fetchPage(
-				nodeId, title, version);
+				node.getNodeId(), title, version);
 
 			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(
-					nodeId, WikiPageConstants.FRONT_PAGE);
+					node.getNodeId(), WikiPageConstants.FRONT_PAGE);
 			}
 
 			renderRequest.setAttribute(WebKeys.WIKI_NODE, node);
@@ -95,6 +95,26 @@ public class ViewAction extends PortletAction {
 			SessionErrors.add(renderRequest, pe.getClass());
 
 			return actionMapping.findForward("portlet.wiki_display.error");
+		}
+	}
+
+	protected WikiNode getNode(RenderRequest renderRequest) throws Exception {
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String nodeName = ParamUtil.getString(renderRequest, "nodeName");
+
+		if (Validator.isNotNull(nodeName)) {
+			return WikiNodeServiceUtil.getNode(
+				themeDisplay.getScopeGroupId(), nodeName);
+		}
+		else {
+			long nodeId = GetterUtil.getLong(
+				portletPreferences.getValue("nodeId", StringPool.BLANK));
+
+			return WikiNodeServiceUtil.getNode(nodeId);
 		}
 	}
 
