@@ -47,6 +47,13 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailFileEntryAddedBody");
 	}
 
+	public String getEmailFileEntryAddedBodyXml() {
+		LocalizedValuesMap emailFileEntryAddedBody =
+			getEmailFileEntryAddedBody();
+
+		return emailFileEntryAddedBody.getLocalizationXml();
+	}
+
 	public boolean getEmailFileEntryAddedEnabled() {
 		return typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
 	}
@@ -54,6 +61,13 @@ public class DLSettings extends BaseServiceSettings {
 	public LocalizedValuesMap getEmailFileEntryAddedSubject() {
 		return typedSettings.getLocalizedValuesMap(
 			"emailFileEntryAddedSubject");
+	}
+
+	public String getEmailFileEntryAddedSubjectXml() {
+		LocalizedValuesMap emailFileEntryAddedSubject =
+			getEmailFileEntryAddedSubject();
+
+		return emailFileEntryAddedSubject.getLocalizationXml();
 	}
 
 	public boolean getEmailFileEntryAnyEventEnabled() {
@@ -65,6 +79,13 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailFileEntryUpdatedBody");
 	}
 
+	public String getEmailFileEntryUpdatedBodyXml() {
+		LocalizedValuesMap emailFileEntryUpdatedBody =
+			getEmailFileEntryUpdatedBody();
+
+		return emailFileEntryUpdatedBody.getLocalizationXml();
+	}
+
 	public boolean getEmailFileEntryUpdatedEnabled() {
 		return typedSettings.getBooleanValue("emailFileEntryUpdatedEnabled");
 	}
@@ -72,6 +93,13 @@ public class DLSettings extends BaseServiceSettings {
 	public LocalizedValuesMap getEmailFileEntryUpdatedSubject() {
 		return typedSettings.getLocalizedValuesMap(
 			"emailFileEntryUpdatedSubject");
+	}
+
+	public String getEmailFileEntryUpdatedSubjectXml() {
+		LocalizedValuesMap emailFileEntryUpdatedSubject =
+			getEmailFileEntryUpdatedSubject();
+
+		return emailFileEntryUpdatedSubject.getLocalizationXml();
 	}
 
 	public String getEmailFromAddress() {

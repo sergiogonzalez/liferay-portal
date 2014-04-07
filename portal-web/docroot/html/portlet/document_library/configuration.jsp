@@ -271,21 +271,21 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= dlSettings.getEmailFileEntryAddedBody().getLocalizationXml() %>"
+				emailBody="<%= dlSettings.getEmailFileEntryAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= dlSettings.getEmailFileEntryAddedEnabled() %>"
 				emailParam="emailFileEntryAdded"
-				emailSubject="<%= dlSettings.getEmailFileEntryAddedSubject().getLocalizationXml() %>"
+				emailSubject="<%= dlSettings.getEmailFileEntryAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= dlSettings.getEmailFileEntryUpdatedBody().getLocalizationXml() %>"
+				emailBody="<%= dlSettings.getEmailFileEntryUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= dlSettings.getEmailFileEntryUpdatedEnabled() %>"
 				emailParam="emailFileEntryUpdated"
-				emailSubject="<%= dlSettings.getEmailFileEntryUpdatedSubject().getLocalizationXml() %>"
+				emailSubject="<%= dlSettings.getEmailFileEntryUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
