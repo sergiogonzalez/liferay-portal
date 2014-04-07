@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+dlSettings = DLUtil.getDLSettings(themeDisplay.getSiteGroupId(), request);
+
 String strutsAction = "/document_library_display";
 
 if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY)) {
