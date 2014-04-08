@@ -46,8 +46,6 @@ if (Validator.isNull(portletId)) {
 String switchGroupURL = PortalUtil.getCurrentURL(request);
 
 switchGroupURL = HttpUtil.removeParameter(switchGroupURL, PortalUtil.getPortletNamespace(portletId) + "struts_action");
-
-switchGroupURL = HttpUtil.setParameter(switchGroupURL, "switchGroup", "1");
 %>
 
 <c:choose>
