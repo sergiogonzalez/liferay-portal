@@ -17,8 +17,9 @@ package com.liferay.portlet.documentlibrary.util.validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
@@ -37,8 +38,8 @@ public class DefaultExtensionValidator implements FileExtensionValidator {
 
 		String sourceFileExtension = FileUtil.getExtension(sourceFileName);
 
-		boolean checkExtensions = PrefsPropsUtil.getBoolean(
-			PropsKeys.DL_FILE_EXTENSIONS_STRICT_CHECK);
+		boolean checkExtensions = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DL_FILE_EXTENSIONS_STRICT_CHECK));
 
 		if (Validator.isNotNull(sourceFileName) && checkExtensions &&
 			!fileExtension.equals(sourceFileExtension)) {

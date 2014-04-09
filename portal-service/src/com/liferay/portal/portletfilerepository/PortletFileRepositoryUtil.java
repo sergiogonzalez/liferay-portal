@@ -110,11 +110,30 @@ public class PortletFileRepositoryUtil {
 
 	public static Folder addPortletFolder(
 			long userId, long repositoryId, long parentFolderId,
+			String folderName, DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletFolder(
+			userId, repositoryId, parentFolderId, folderName, dlConfig,
+			serviceContext);
+	}
+
+	public static Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
 			String folderName, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().addPortletFolder(
 			userId, repositoryId, parentFolderId, folderName, serviceContext);
+	}
+
+	public static Repository addPortletRepository(
+			long groupId, String portletId, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletRepository(
+			groupId, portletId, dlConfig, serviceContext);
 	}
 
 	public static Repository addPortletRepository(
@@ -156,6 +175,14 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static void deletePortletFileEntry(
+			long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().deletePortletFileEntry(
+			fileEntryId, dlConfig);
+	}
+
+	public static void deletePortletFileEntry(
 			long groupId, long folderId, String fileName)
 		throws PortalException, SystemException {
 
@@ -163,10 +190,24 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId, fileName);
 	}
 
+	public static void deletePortletFileEntry(
+			long groupId, long folderId, String fileName, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().deletePortletFileEntry(
+			groupId, folderId, fileName, dlConfig);
+	}
+
 	public static void deletePortletFolder(long folderId)
 		throws PortalException, SystemException {
 
 		getPortletFileRepository().deletePortletFolder(folderId);
+	}
+
+	public static void deletePortletFolder(long folderId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().deletePortletFolder(folderId, dlConfig);
 	}
 
 	public static void deletePortletRepository(long groupId, String portletId)

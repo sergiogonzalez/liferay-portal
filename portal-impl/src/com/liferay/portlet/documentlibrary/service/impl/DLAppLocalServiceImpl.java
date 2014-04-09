@@ -396,6 +396,38 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  parentFolderId the primary key of the folder's parent folder
 	 * @param  name the folder's name
 	 * @param  description the folder's description
+	 * @param  dlConfig the DL configuration object
+	 * @param  serviceContext the service context to be applied. In a Liferay
+	 *         repository, it may include mountPoint which is a boolean
+	 *         specifying whether the folder is a facade for mounting a
+	 *         third-party repository
+	 * @return the folder
+	 * @throws PortalException if the parent folder could not be found or if the
+	 *         new folder's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Folder addFolder(
+			long userId, long repositoryId, long parentFolderId, String name,
+			String description, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = getLocalRepository(repositoryId);
+
+		return localRepository.addFolder(
+			userId, parentFolderId, name, description, dlConfig,
+			serviceContext);
+	}
+
+	/**
+	 * Adds a folder.
+	 *
+	 * @param  userId the primary key of the folder's creator/owner
+	 * @param  repositoryId the primary key of the repository
+	 * @param  parentFolderId the primary key of the folder's parent folder
+	 * @param  name the folder's name
+	 * @param  description the folder's description
 	 * @param  serviceContext the service context to be applied. In a Liferay
 	 *         repository, it may include mountPoint which is a boolean
 	 *         specifying whether the folder is a facade for mounting a
@@ -411,10 +443,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		LocalRepository localRepository = getLocalRepository(repositoryId);
-
-		return localRepository.addFolder(
-			userId, parentFolderId, name, description, serviceContext);
+		return addFolder(
+			userId, repositoryId, parentFolderId, name, description,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	/**
@@ -445,12 +476,27 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	public void deleteFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
+		deleteFileEntry(fileEntryId, DLConfig.getLiberalDLConfig());
+	}
+
+	/**
+	 * Deletes the file entry.
+	 *
+	 * @param  fileEntryId the primary key of the file entry
+	 * @param  dlConfig the DL configuration object
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteFileEntry(long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.deleteFileEntry(fileEntry);
+		dlAppHelperLocalService.deleteFileEntry(fileEntry, dlConfig);
 
 		SystemEventHierarchyEntryThreadLocal.push(FileEntry.class);
 
@@ -545,9 +591,24 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
+		deleteFolder(folderId, DLConfig.getLiberalDLConfig());
+	}
+
+	/**
+	 * Deletes the folder and all of its subfolders and file entries.
+	 *
+	 * @param  folderId the primary key of the folder
+	 * @param  dlConfig the DL configuration object
+	 * @throws PortalException if the folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteFolder(long folderId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
 
-		localRepository.deleteFolder(folderId);
+		localRepository.deleteFolder(folderId, dlConfig);
 	}
 
 	/**

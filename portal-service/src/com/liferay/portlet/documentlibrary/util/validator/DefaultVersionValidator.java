@@ -16,9 +16,11 @@ package com.liferay.portlet.documentlibrary.util.validator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 
 /**
  * @author Adolfo Pérez
@@ -33,9 +35,29 @@ public class DefaultVersionValidator implements VersionValidator {
 			return;
 		}
 
-		if (!DLUtil.isValidVersion(versionLabel)) {
+		if (!_isValidVersion(versionLabel)) {
 			throw new InvalidFileVersionException();
 		}
+	}
+
+	private boolean _isValidVersion(String version) {
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+			return true;
+		}
+
+		String[] versionParts = StringUtil.split(version, StringPool.PERIOD);
+
+		if (versionParts.length != 2) {
+			return false;
+		}
+
+		if (Validator.isNumber(versionParts[0]) &&
+			Validator.isNumber(versionParts[1])) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

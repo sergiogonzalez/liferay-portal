@@ -2546,14 +2546,14 @@ public class DLFileEntryLocalServiceImpl
 			FileNameValidator fileNameAndExtensionValidator =
 				dlConfig.getFileNameAndExtensionValidator();
 
-			fileNameAndExtensionValidator.validateFileName(sourceFileName);
+			fileNameAndExtensionValidator.validate(sourceFileName);
 		}
 
 		validateFileName(title);
 
 		FileNameValidator fileNameValidator = dlConfig.getFileNameValidator();
 
-		fileNameValidator.validateFileName(title);
+		fileNameValidator.validate(title);
 
 		validateFile(groupId, folderId, fileEntryId, title, extension);
 	}

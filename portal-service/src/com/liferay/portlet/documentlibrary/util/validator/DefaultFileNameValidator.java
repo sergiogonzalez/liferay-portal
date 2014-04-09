@@ -17,18 +17,18 @@ package com.liferay.portlet.documentlibrary.util.validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.documentlibrary.FileNameException;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultFileNameValidator implements FileNameValidator {
+public class DefaultFileNameValidator
+	extends BaseNameValidator implements FileNameValidator {
 
 	@Override
-	public void validateFileName(String fileName)
+	public void validate(String fileName)
 		throws PortalException, SystemException {
 
-		if (!DLUtil.isValidFileName(fileName)) {
+		if (!isValidFileName(fileName)) {
 			throw new FileNameException(fileName);
 		}
 	}

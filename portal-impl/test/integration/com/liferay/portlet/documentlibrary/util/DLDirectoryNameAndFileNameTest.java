@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -84,7 +86,9 @@ public class DLDirectoryNameAndFileNameTest {
 	}
 
 	@Test
-	public void testIsValidNameBackSlash() {
+	public void testIsValidNameBackSlash()
+		throws PortalException, SystemException {
+
 		String name =
 			StringUtil.randomString(10) + StringPool.BACK_SLASH +
 				StringUtil.randomString(10);
@@ -123,7 +127,9 @@ public class DLDirectoryNameAndFileNameTest {
 	}
 
 	@Test
-	public void testIsValidNameEmptyString() {
+	public void testIsValidNameEmptyString()
+		throws PortalException, SystemException {
+
 		Assert.assertFalse(DLStoreUtil.isValidName(StringPool.BLANK));
 	}
 
@@ -135,7 +141,7 @@ public class DLDirectoryNameAndFileNameTest {
 	}
 
 	@Test
-	public void testIsValidNameNull() {
+	public void testIsValidNameNull() throws PortalException, SystemException {
 		Assert.assertFalse(DLStoreUtil.isValidName(null));
 	}
 

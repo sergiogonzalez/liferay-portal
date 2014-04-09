@@ -91,9 +91,19 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	@Override
 	public Folder addFolder(
 		long userId, long parentFolderId, String title, String description,
-		ServiceContext serviceContext) {
+		DLConfig dlConfig, ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Folder addFolder(
+		long userId, long parentFolderId, String title, String description,
+		ServiceContext serviceContext) {
+
+		return addFolder(
+			userId, parentFolderId, title, description,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override

@@ -705,7 +705,9 @@ public class DLStoreUtil {
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
-	public static boolean isValidName(String name) {
+	public static boolean isValidName(String name)
+		throws PortalException, SystemException {
+
 		return getStore().isValidName(name);
 	}
 
@@ -1043,7 +1045,7 @@ public class DLStoreUtil {
 	}
 
 	public static void validateDirectoryName(String directoryName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		getStore().validateDirectoryName(directoryName);
 	}

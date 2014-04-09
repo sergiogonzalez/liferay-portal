@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -60,8 +59,8 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -74,6 +73,9 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
+import com.liferay.portlet.documentlibrary.util.validator.DLValidatorUtil;
+import com.liferay.portlet.documentlibrary.util.validator.FileNameValidator;
+import com.liferay.portlet.documentlibrary.util.validator.VersionValidator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -97,6 +99,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.InvalidFileNameException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1260,66 +1264,38 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public boolean isValidFileName(String fileName) {
-		if (Validator.isNull(fileName)) {
+	public boolean isValidFileName(String fileName)
+		throws PortalException, SystemException {
+
+		try {
+			FileNameValidator fileNameValidator =
+				DLValidatorUtil.getDefaultFileNameValidator();
+
+			fileNameValidator.validate(fileName);
+
+			return true;
+		}
+		catch (InvalidFileNameException e) {
 			return false;
 		}
-
-		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
-			if (fileName.contains(blacklistChar)) {
-				return false;
-			}
-		}
-
-		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
-			if (blacklistLastChar.startsWith(_UNICODE_PREFIX)) {
-				blacklistLastChar = UnicodeFormatter.parseString(
-					blacklistLastChar);
-			}
-
-			if (fileName.endsWith(blacklistLastChar)) {
-				return false;
-			}
-		}
-
-		String nameWithoutExtension = fileName;
-
-		if (fileName.contains(StringPool.PERIOD)) {
-			int index = fileName.lastIndexOf(StringPool.PERIOD);
-
-			nameWithoutExtension = fileName.substring(0, index);
-		}
-
-		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
-			if (StringUtil.equalsIgnoreCase(
-					nameWithoutExtension, blacklistName)) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
+	@Deprecated
 	@Override
-	public boolean isValidVersion(String version) {
-		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+	public boolean isValidVersion(String version)
+		throws PortalException, SystemException {
+
+		try {
+			VersionValidator versionValidator =
+				DLValidatorUtil.getDefaultVersionValidator();
+
+			versionValidator.validateVersion(version);
+
 			return true;
 		}
-
-		String[] versionParts = StringUtil.split(version, StringPool.PERIOD);
-
-		if (versionParts.length != 2) {
+		catch (InvalidFileVersionException e) {
 			return false;
 		}
-
-		if (Validator.isNumber(versionParts[0]) &&
-			Validator.isNumber(versionParts[1])) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected long getDefaultFolderId(HttpServletRequest request)

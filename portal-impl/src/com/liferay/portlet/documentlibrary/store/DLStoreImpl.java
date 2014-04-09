@@ -422,7 +422,9 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
-	public boolean isValidName(String name) {
+	public boolean isValidName(String name)
+		throws PortalException, SystemException {
+
 		return DLUtil.isValidFileName(name);
 	}
 
@@ -782,12 +784,12 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public void validateDirectoryName(String directoryName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		DirectoryNameValidator validator =
 			DLValidatorUtil.getDefaultDirectoryNameValidator();
 
-		validator.validateDirectoryName(directoryName);
+		validator.validate(directoryName);
 	}
 
 	protected void validate(
@@ -809,7 +811,7 @@ public class DLStoreImpl implements DLStore {
 		FileNameValidator validator = dlConfig.getFileNameValidator(
 			validateFileExtension);
 
-		validator.validateFileName(fileName);
+		validator.validate(fileName);
 	}
 
 	protected void validate(

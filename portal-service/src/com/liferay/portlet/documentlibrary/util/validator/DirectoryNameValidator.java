@@ -14,14 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.util.validator;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Adolfo Pérez
  */
-public interface DirectoryNameValidator {
-
-	public void validateDirectoryName(String directoryName)
-		throws PortalException;
+public interface DirectoryNameValidator extends NameValidator {
 
 }

@@ -28,14 +28,19 @@ import com.liferay.portlet.documentlibrary.util.validator.VersionValidator;
  */
 public class DLConfig {
 
+
 	public static DLConfig getLiberalDLConfig() {
 		DLConfig liberalConfig = getRestrictedDLConfig();
 
 		liberalConfig.setAssetEnabled(true);
-		liberalConfig.setCommentsEnabled(true);
-		liberalConfig.setWorkflowEnabled(true);
 		liberalConfig.setDLProcessorRegistryEnabled(true);
 		liberalConfig.setDLSyncEventEnabled(true);
+		liberalConfig.setFileRanksEnabled(true);
+		liberalConfig.setFileShortcutsEnabled(true);
+		liberalConfig.setRatingStatsEnabled(true);
+		liberalConfig.setSubscriptionEnabled(true);
+		liberalConfig.setTrashEnabled(false);
+		liberalConfig.setWorkflowEnabled(true);
 
 		return liberalConfig;
 	}
@@ -51,9 +56,14 @@ public class DLConfig {
 		restrictedConfig.setCommentsEnabled(
 			Boolean.valueOf(commentsEnabled));
 
-		restrictedConfig.setWorkflowEnabled(false);
 		restrictedConfig.setDLProcessorRegistryEnabled(false);
 		restrictedConfig.setDLSyncEventEnabled(false);
+		restrictedConfig.setFileRanksEnabled(false);
+		restrictedConfig.setFileShortcutsEnabled(false);
+		restrictedConfig.setRatingStatsEnabled(false);
+		restrictedConfig.setSubscriptionEnabled(false);
+		restrictedConfig.setTrashEnabled(false);
+		restrictedConfig.setWorkflowEnabled(false);
 
 		restrictedConfig.setFileSizeValidator(
 			DLValidatorUtil.getDefaultFileSizeValidator());
@@ -70,13 +80,21 @@ public class DLConfig {
 
 		return restrictedConfig;
 	}
-	
+
+	protected DLConfig() {
+	}
+
 	public DLConfig(DLConfig original) {
 		_isAssetEnabled = original.isAssetEnabled();
-		_isWorkflowEnabled = original.isWorkflowEnabled();
-		_isDLProcessorRegistryEnabled = original.isDLProcessorRegistryEnabled();
 		_isCommentsEnabled = original.isCommentsEnabled();
+		_isDLProcessorRegistryEnabled = original.isDLProcessorRegistryEnabled();
 		_isDLSyncEventEnabled = original.isDLSyncEventEnabled();
+		_isFileRanksEnabled = original.isFileRanksEnabled();
+		_isFileShortcutsEnabled = original.isFileShortcutsEnabled();
+		_isRatingStatsEnabled = original.isRatingStatsEnabled();
+		_isSubscriptionEnabled = original.isSubscriptionEnabled();
+		_isTrashEnabled = original.isTrashEnabled();
+		_isWorkflowEnabled = original.isWorkflowEnabled();
 		_fileSizeValidator = original.getFileSizeValidator();
 		_fileNameValidator = original.getFileNameValidator();
 		_fileNameAndExtensionValidator =
@@ -84,9 +102,6 @@ public class DLConfig {
 		_directoryNameValidator = original.getDirectoryNameValidator();
 		_versionValidator = original.getVersionValidator();
 		_fileExtensionValidator = original.getFileExtensionValidator();
-	}
-
-	protected DLConfig() {
 	}
 
 	public DirectoryNameValidator getDirectoryNameValidator() {
@@ -139,6 +154,26 @@ public class DLConfig {
 		return _isDLSyncEventEnabled;
 	}
 
+	public boolean isFileRanksEnabled() {
+		return _isFileRanksEnabled;
+	}
+
+	public boolean isFileShortcutsEnabled() {
+		return _isFileShortcutsEnabled;
+	}
+
+	public boolean isRatingStatsEnabled() {
+		return _isRatingStatsEnabled;
+	}
+
+	public boolean isSubscriptionEnabled() {
+		return _isSubscriptionEnabled;
+	}
+
+	public boolean isTrashEnabled() {
+		return _isTrashEnabled;
+	}
+
 	public boolean isWorkflowEnabled() {
 		return _isWorkflowEnabled;
 	}
@@ -181,8 +216,28 @@ public class DLConfig {
 		_fileNameValidator = fileNameValidator;
 	}
 
+	public void setFileRanksEnabled(boolean isFileRanksEnabled) {
+		_isFileRanksEnabled = isFileRanksEnabled;
+	}
+
 	public void setFileSizeValidator(FileSizeValidator fileSizeValidator) {
 		_fileSizeValidator = fileSizeValidator;
+	}
+
+	public void setFileShortcutsEnabled(boolean isFileShortcutsEnabled) {
+		_isFileShortcutsEnabled = isFileShortcutsEnabled;
+	}
+
+	public void setRatingStatsEnabled(boolean ratingStatsEnabled) {
+		_isRatingStatsEnabled = ratingStatsEnabled;
+	}
+
+	public void setSubscriptionEnabled(boolean isSubscriptionEnabled) {
+		_isSubscriptionEnabled = isSubscriptionEnabled;
+	}
+
+	public void setTrashEnabled(boolean trashEnabled) {
+		_isTrashEnabled = trashEnabled;
 	}
 
 	public void setVersionValidator(VersionValidator versionValidator) {
@@ -193,16 +248,21 @@ public class DLConfig {
 		_isWorkflowEnabled = workflowEnabled;
 	}
 
+	private DirectoryNameValidator _directoryNameValidator;
+	private FileExtensionValidator _fileExtensionValidator;
+	private FileSizeValidator _fileSizeValidator;
+	private FileNameValidator _fileNameValidator;
+	private FileNameValidator _fileNameAndExtensionValidator;
 	private boolean _isAssetEnabled;
 	private boolean _isCommentsEnabled;
 	private boolean _isDLProcessorRegistryEnabled;
 	private boolean _isDLSyncEventEnabled;
+	private boolean _isFileRanksEnabled;
+	private boolean _isFileShortcutsEnabled;
+	private boolean _isRatingStatsEnabled;
+	private boolean _isSubscriptionEnabled;
+	private boolean _isTrashEnabled;
 	private boolean _isWorkflowEnabled;
-	private DirectoryNameValidator _directoryNameValidator;
-	private FileExtensionValidator _fileExtensionValidator;
-	private FileNameValidator _fileNameAndExtensionValidator;
-	private FileNameValidator _fileNameValidator;
-	private FileSizeValidator _fileSizeValidator;
 	private VersionValidator _versionValidator;
 
 }

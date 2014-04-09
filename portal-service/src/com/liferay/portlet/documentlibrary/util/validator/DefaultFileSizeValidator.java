@@ -16,8 +16,9 @@ package com.liferay.portlet.documentlibrary.util.validator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.File;
@@ -62,9 +63,10 @@ public class DefaultFileSizeValidator implements FileSizeValidator {
 	}
 
 	protected boolean isValidSize(long size) throws SystemException {
-		if ((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			(size > PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE))) {
+		long maxSize = GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.DL_FILE_MAX_SIZE));
 
+		if ((maxSize > 0) && (size > maxSize)) {
 			return false;
 		}
 		else {

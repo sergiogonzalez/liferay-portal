@@ -154,7 +154,8 @@ public interface DLStore {
 			String versionLabel)
 		throws PortalException, SystemException;
 
-	public boolean isValidName(String name);
+	public boolean isValidName(String name)
+		throws PortalException, SystemException;
 
 	public void move(String srcDir, String destDir) throws SystemException;
 
@@ -235,6 +236,6 @@ public interface DLStore {
 		throws PortalException, SystemException;
 
 	public void validateDirectoryName(String directoryName)
-		throws PortalException;
+		throws PortalException, SystemException;
 
 }

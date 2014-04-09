@@ -56,6 +56,11 @@ public interface LocalRepository {
 
 	public Folder addFolder(
 			long userId, long parentFolderId, String title, String description,
+			DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Folder addFolder(
+			long userId, long parentFolderId, String title, String description,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
@@ -65,6 +70,9 @@ public interface LocalRepository {
 		throws PortalException, SystemException;
 
 	public void deleteFolder(long folderId)
+		throws PortalException, SystemException;
+
+	public void deleteFolder(long folderId, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public FileEntry getFileEntry(long fileEntryId)

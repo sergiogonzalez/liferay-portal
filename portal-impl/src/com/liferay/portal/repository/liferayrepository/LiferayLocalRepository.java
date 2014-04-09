@@ -187,17 +187,28 @@ public class LiferayLocalRepository
 	@Override
 	public Folder addFolder(
 			long userId, long parentFolderId, String title, String description,
-			ServiceContext serviceContext)
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		boolean mountPoint = ParamUtil.getBoolean(serviceContext, "mountPoint");
 
 		DLFolder dlFolder = dlFolderLocalService.addFolder(
 			userId, getGroupId(), getRepositoryId(), mountPoint,
-			toFolderId(parentFolderId), title, description, false,
+			toFolderId(parentFolderId), title, description, false, dlConfig,
 			serviceContext);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	@Override
+	public Folder addFolder(
+			long userId, long parentFolderId, String title, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFolder(
+			userId, parentFolderId, title, description,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	public void addRepository(
@@ -221,10 +232,17 @@ public class LiferayLocalRepository
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
+		deleteFolder(folderId, DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void deleteFolder(long folderId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		DLFolder dlFolder = dlFolderLocalService.fetchFolder(folderId);
 
 		if (dlFolder != null) {
-			dlFolderLocalService.deleteFolder(folderId);
+			dlFolderLocalService.deleteFolder(folderId, dlConfig);
 		}
 	}
 

@@ -422,11 +422,16 @@ public class DLUtil {
 			companyId, groupId, userId, folderId, recursive);
 	}
 
-	public static boolean isValidFileName(String fileName) {
+	public static boolean isValidFileName(String fileName)
+		throws PortalException, SystemException {
+
 		return getDL().isValidFileName(fileName);
 	}
 
-	public static boolean isValidVersion(String version) {
+	@Deprecated
+	public static boolean isValidVersion(String version)
+		throws PortalException, SystemException {
+
 		return getDL().isValidVersion(version);
 	}
 

@@ -14,20 +14,25 @@
 
 package com.liferay.portlet.documentlibrary.util.validator;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.runner.RunWith;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultDirectoryNameValidator
-	extends BaseNameValidator implements DirectoryNameValidator {
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class
+	})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DefaultDirectoryNameValidatorTest extends BaseNameValidatorTest {
 
 	@Override
-	public void validate(String directoryName) throws PortalException {
-		if (!isValidFileName(directoryName)) {
-			throw new FolderNameException(directoryName);
-		}
+	protected NameValidator getNameValidator() {
+		return new DefaultDirectoryNameValidator();
 	}
 
 }

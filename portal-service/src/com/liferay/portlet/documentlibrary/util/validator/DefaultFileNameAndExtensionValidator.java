@@ -16,8 +16,8 @@ package com.liferay.portlet.documentlibrary.util.validator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
@@ -27,18 +27,28 @@ import com.liferay.portlet.documentlibrary.FileExtensionException;
  */
 public class DefaultFileNameAndExtensionValidator implements FileNameValidator {
 
+	public DefaultFileNameAndExtensionValidator() {
+		this(DLValidatorUtil.getDefaultFileNameValidator());
+	}
+
+	public DefaultFileNameAndExtensionValidator(
+		FileNameValidator fileNameValidator) {
+
+		_fileNameValidator = fileNameValidator;
+	}
+
 	@Override
-	public void validateFileName(String fileName)
+	public void validate(String fileName)
 		throws PortalException, SystemException {
 
 		FileNameValidator validator = getFileNameValidator();
 
-		validator.validateFileName(fileName);
+		validator.validate(fileName);
 
 		boolean validFileExtension = false;
 
-		String[] fileExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
+		String[] fileExtensions = PropsUtil.getArray(
+			PropsKeys.DL_FILE_EXTENSIONS);
 
 		for (String fileExtension : fileExtensions) {
 			if (StringPool.STAR.equals(fileExtension) ||
@@ -56,7 +66,9 @@ public class DefaultFileNameAndExtensionValidator implements FileNameValidator {
 	}
 
 	protected FileNameValidator getFileNameValidator() {
-		return DLValidatorUtil.getDefaultFileNameValidator();
+		return _fileNameValidator;
 	}
+
+	private final FileNameValidator _fileNameValidator;
 
 }

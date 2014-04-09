@@ -15,19 +15,13 @@
 package com.liferay.portlet.documentlibrary.util.validator;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultDirectoryNameValidator
-	extends BaseNameValidator implements DirectoryNameValidator {
+public interface NameValidator {
 
-	@Override
-	public void validate(String directoryName) throws PortalException {
-		if (!isValidFileName(directoryName)) {
-			throw new FolderNameException(directoryName);
-		}
-	}
+	public void validate(String name) throws PortalException, SystemException;
 
 }

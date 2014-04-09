@@ -230,7 +230,7 @@ public class MediaWikiImporter implements WikiImporter {
 			FileNameValidator fileNameValidator =
 				DLValidatorUtil.getDefaultFileNameValidator(true);
 
-			fileNameValidator.validateFileName(fileName);
+			fileNameValidator.validate(fileName);
 
 			FileSizeValidator fileSizeValidator =
 				DLValidatorUtil.getDefaultFileSizeValidator();

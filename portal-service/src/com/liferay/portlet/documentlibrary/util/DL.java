@@ -251,8 +251,11 @@ public interface DL {
 			boolean recursive)
 		throws PortalException, SystemException;
 
-	public boolean isValidFileName(String fileName);
+	public boolean isValidFileName(String fileName)
+		throws PortalException, SystemException;
 
-	public boolean isValidVersion(String version);
+	@Deprecated
+	public boolean isValidVersion(String version)
+		throws PortalException, SystemException;
 
 }

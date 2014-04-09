@@ -79,7 +79,17 @@ public interface PortletFileRepository {
 
 	public Folder addPortletFolder(
 			long userId, long repositoryId, long parentFolderId,
+			String folderName, DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
 			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Repository addPortletRepository(
+			long groupId, String portletId, DLConfig dlConfig,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public Repository addPortletRepository(
@@ -103,11 +113,21 @@ public interface PortletFileRepository {
 	public void deletePortletFileEntry(long fileEntryId)
 		throws PortalException, SystemException;
 
+	public void deletePortletFileEntry(long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
 	public void deletePortletFileEntry(
 			long groupId, long folderId, String fileName)
 		throws PortalException, SystemException;
 
+	public void deletePortletFileEntry(
+			long groupId, long folderId, String fileName, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
 	public void deletePortletFolder(long folderId)
+		throws PortalException, SystemException;
+
+	void deletePortletFolder(long folderId, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void deletePortletRepository(long groupId, String portletId)

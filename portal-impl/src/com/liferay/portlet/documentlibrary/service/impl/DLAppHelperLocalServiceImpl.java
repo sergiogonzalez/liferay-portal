@@ -169,19 +169,29 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void addFolder(
+			long userId, Folder folder, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (dlConfig.isAssetEnabled()) {
+			updateAsset(
+				userId, folder, serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds());
+		}
+
+		if (dlConfig.isDLSyncEventEnabled()) {
+			registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, folder);
+		}
+	}
+
+	@Override
+	public void addFolder(
 			long userId, Folder folder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return;
-		}
-
-		updateAsset(
-			userId, folder, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, folder);
+		addFolder(
+			userId, folder, DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override
@@ -274,47 +284,57 @@ public class DLAppHelperLocalServiceImpl
 	public void deleteFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
+		deleteFileEntry(fileEntry, DLConfig.getLiberalDLConfig());
+	}
 
-			// Subscriptions
+	@Override
+	public void deleteFileEntry(FileEntry fileEntry, DLConfig dlConfig)
+		throws PortalException, SystemException {
 
+		if (dlConfig.isSubscriptionEnabled()) {
 			subscriptionLocalService.deleteSubscriptions(
 				fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId());
+		}
+
+		if (dlConfig.isDLProcessorRegistryEnabled()) {
 
 			// File previews
 
 			DLProcessorRegistryUtil.cleanUp(fileEntry);
+		}
 
-			// File ranks
-
+		if (dlConfig.isFileRanksEnabled()) {
 			dlFileRankLocalService.deleteFileRanksByFileEntryId(
 				fileEntry.getFileEntryId());
+		}
 
-			// File shortcuts
-
+		if (dlConfig.isFileShortcutsEnabled()) {
 			dlFileShortcutLocalService.deleteFileShortcuts(
 				fileEntry.getFileEntryId());
+		}
 
-			// Sync
-
+		if (dlConfig.isDLSyncEventEnabled()) {
 			registerDLSyncEventCallback(
 				DLSyncConstants.EVENT_DELETE, fileEntry);
+		}
+
+		if (dlConfig.isAssetEnabled()) {
 
 			// Asset
 
 			assetEntryLocalService.deleteEntry(
 				DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId());
+		}
 
-			// Message boards
-
+		if (dlConfig.isCommentsEnabled()) {
 			mbMessageLocalService.deleteDiscussionMessages(
 				DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId());
+		}
 
-			// Ratings
-
+		if (dlConfig.isRatingStatsEnabled()) {
 			ratingsStatsLocalService.deleteStats(
 				DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId());
@@ -347,31 +367,39 @@ public class DLAppHelperLocalServiceImpl
 	public void deleteFolder(Folder folder)
 		throws PortalException, SystemException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return;
+		deleteFolder(folder, DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void deleteFolder(Folder folder, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		if (dlConfig.isDLSyncEventEnabled()) {
+
+			// Sync
+
+			registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
 		}
 
-		// Sync
+		if (dlConfig.isAssetEnabled()) {
+			assetEntryLocalService.deleteEntry(
+				DLFolderConstants.getClassName(), folder.getFolderId());
+		}
 
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
+		if (dlConfig.isTrashEnabled()) {
+			if (folder.getModel() instanceof DLFolder) {
+				DLFolder dlFolder = (DLFolder)folder.getModel();
 
-		// Asset
-
-		assetEntryLocalService.deleteEntry(
-			DLFolderConstants.getClassName(), folder.getFolderId());
-
-		// Trash
-
-		if (folder.getModel() instanceof DLFolder) {
-			DLFolder dlFolder = (DLFolder)folder.getModel();
-
-			if (dlFolder.isInTrashExplicitly()) {
-				trashEntryLocalService.deleteEntry(
-					DLFolderConstants.getClassName(), dlFolder.getFolderId());
-			}
-			else {
-				trashVersionLocalService.deleteTrashVersion(
-					DLFolderConstants.getClassName(), dlFolder.getFolderId());
+				if (dlFolder.isInTrashExplicitly()) {
+					trashEntryLocalService.deleteEntry(
+						DLFolderConstants.getClassName(),
+						dlFolder.getFolderId());
+				}
+				else {
+					trashVersionLocalService.deleteTrashVersion(
+						DLFolderConstants.getClassName(),
+						dlFolder.getFolderId());
+				}
 			}
 		}
 	}

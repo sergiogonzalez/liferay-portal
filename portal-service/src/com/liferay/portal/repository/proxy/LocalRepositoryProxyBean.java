@@ -95,13 +95,25 @@ public class LocalRepositoryProxyBean
 	@Override
 	public Folder addFolder(
 			long userId, long parentFolderId, String title, String description,
-			ServiceContext serviceContext)
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Folder folder = _localRepository.addFolder(
-			userId, parentFolderId, title, description, serviceContext);
+			userId, parentFolderId, title, description, dlConfig,
+			serviceContext);
 
 		return newFolderProxyBean(folder);
+	}
+
+	@Override
+	public Folder addFolder(
+			long userId, long parentFolderId, String title, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFolder(
+			userId, parentFolderId, title, description,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override
