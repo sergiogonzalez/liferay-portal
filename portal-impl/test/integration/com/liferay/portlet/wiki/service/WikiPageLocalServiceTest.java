@@ -329,6 +329,44 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
+	public void testRestoreTrashedPageWithTrashedChildPage() throws Exception {
+		WikiPage[] pages = addTrashedPageWithTrashedChildPage();
+
+		WikiPage page = pages[0];
+		WikiPage childPage = pages[1];
+
+		WikiPageLocalServiceUtil.restorePageFromTrash(
+			TestPropsValues.getUserId(), page);
+
+		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
+		childPage = WikiPageLocalServiceUtil.getPageByPageId(
+			childPage.getPageId());
+
+		Assert.assertFalse(page.isInTrash());
+		Assert.assertFalse(childPage.isInTrash());
+	}
+
+	@Test
+	public void testRestoreTrashedPageWithTrashedRedirectPage()
+		throws Exception {
+
+		WikiPage[] pages = addTrashedPageWithTrashedRedirectPage();
+
+		WikiPage page = pages[0];
+		WikiPage redirectPage = pages[1];
+
+		WikiPageLocalServiceUtil.restorePageFromTrash(
+			TestPropsValues.getUserId(), page);
+
+		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
+		redirectPage = WikiPageLocalServiceUtil.getPageByPageId(
+			redirectPage.getPageId());
+
+		Assert.assertFalse(page.isInTrash());
+		Assert.assertFalse(redirectPage.isInTrash());
+	}
+
+	@Test
 	public void testRevertPage() throws Exception {
 		testRevertPage(false);
 	}
