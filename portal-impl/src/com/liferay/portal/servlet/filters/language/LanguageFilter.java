@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -32,6 +33,7 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -108,6 +110,16 @@ public class LanguageFilter extends BasePortalFilter {
 
 		Matcher matcher = _pattern.matcher(content);
 
+		ResourceBundle resourceBundle = null;
+
+		if (_portletConfig != null) {
+			resourceBundle = _portletConfig.getResourceBundle(locale);
+		}
+
+		if (resourceBundle == null) {
+			resourceBundle = LanguageResources.getResourceBundle(locale);
+		}
+
 		int x = 0;
 
 		while (matcher.find()) {
@@ -118,15 +130,7 @@ public class LanguageFilter extends BasePortalFilter {
 			sb.append(content.substring(x, y));
 			sb.append(StringPool.APOSTROPHE);
 
-			String value = null;
-
-			if (_portletConfig != null) {
-				value = UnicodeLanguageUtil.get(
-					_portletConfig.getResourceBundle(locale), key);
-			}
-			else {
-				value = UnicodeLanguageUtil.get(locale, key);
-			}
+			String value = UnicodeLanguageUtil.get(resourceBundle, key);
 
 			sb.append(value);
 			sb.append(StringPool.APOSTROPHE);
