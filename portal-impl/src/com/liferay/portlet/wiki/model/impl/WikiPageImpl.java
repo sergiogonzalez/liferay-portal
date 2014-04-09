@@ -152,6 +152,9 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			_attachmentsFolderId = folder.getFolderId();
 		}
 		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error retrieving attachments folder id", e);
+			}
 		}
 
 		return _attachmentsFolderId;
@@ -164,10 +167,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 				getNodeId(), true, getTitle());
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			return Collections.emptyList();
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error retrieving child pages", e);
+			}
 		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -216,10 +221,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			return WikiNodeLocalServiceUtil.getNode(getNodeId());
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			return new WikiNodeImpl();
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error retrieving node", e);
+			}
 		}
+
+		return new WikiNodeImpl();
 	}
 
 	@Override
@@ -240,10 +247,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 				getNodeId(), getParentTitle());
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error retrieving parent page", e);
+			}
 		}
+
+		return null;
 	}
 
 	@Override
@@ -271,10 +280,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 				getNodeId(), getRedirectTitle());
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error retrieving redirect page", e);
+			}
 		}
+
+		return null;
 	}
 
 	@Override
@@ -289,10 +300,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 				getGroupId(), getNodeId(), true, getTitle());
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			return Collections.emptyList();
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error retrieving viewable child pages", e);
+			}
 		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -306,10 +319,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 				getGroupId(), getNodeId(), getParentTitle());
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error retrieving viewable parent page", e);
+			}
 		}
+
+		return null;
 	}
 
 	@Override
