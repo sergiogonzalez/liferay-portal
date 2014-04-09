@@ -1042,7 +1042,7 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileEntryLocalService.updateStatus(
 			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
-			new HashMap<String, Serializable>(), new ServiceContext());
+			new ServiceContext(), new HashMap<String, Serializable>());
 
 		if (DLAppHelperThreadLocal.isEnabled()) {
 
@@ -1419,9 +1419,8 @@ public class DLAppHelperLocalServiceImpl
 	@Override
 	public void updateStatus(
 			long userId, FileEntry fileEntry, FileVersion latestFileVersion,
-			int oldStatus, int newStatus,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+			int oldStatus, int newStatus, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
@@ -1596,8 +1595,8 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(), oldStatus,
-			new HashMap<String, Serializable>(), serviceContext);
+			userId, fileVersion.getFileVersionId(), oldStatus, serviceContext,
+			new HashMap<String, Serializable>());
 
 		// File versions
 
@@ -1680,8 +1679,8 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileEntryLocalService.updateStatus(
 			userId, fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<String, Serializable>(), new ServiceContext());
+			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext(),
+			new HashMap<String, Serializable>());
 
 		if (DLAppHelperThreadLocal.isEnabled()) {
 
