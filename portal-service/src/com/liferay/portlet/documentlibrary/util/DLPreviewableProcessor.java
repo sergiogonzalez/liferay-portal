@@ -509,7 +509,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No input stream found for file entry " +
-						fileVersion.getFileEntryId());
+						fileVersion.getTitle());
 			}
 
 			fileEntryElement.detach();
@@ -545,8 +545,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		if (!hasPreview(fileVersion, previewType)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"No preview found for file entry " +
-						fileEntry.getFileEntryId());
+					"No preview found for file entry " + fileEntry.getTitle());
 			}
 
 			return;
@@ -603,12 +602,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		if (!hasThumbnail(fileVersion, index)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No thumbnail found for file entry " +
-						fileEntry.getFileEntryId());
-			}
-
 			return;
 		}
 
@@ -637,7 +630,17 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		if (!isSupported(fileVersion) || !hasThumbnails(fileVersion)) {
+		if (!isSupported(fileVersion)) {
+			return;
+		}
+
+		if (!hasThumbnails(fileVersion)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No thumbnail found for file entry " +
+						fileEntry.getTitle());
+			}
+
 			return;
 		}
 
