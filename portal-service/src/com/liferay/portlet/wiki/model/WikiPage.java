@@ -38,6 +38,10 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.wiki.model.WikiPage fetchParentPage();
+
+	public com.liferay.portlet.wiki.model.WikiPage fetchRedirectPage();
+
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

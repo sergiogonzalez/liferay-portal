@@ -677,6 +677,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public boolean hasDraftPage(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void moveDependentToTrash(
+		com.liferay.portlet.wiki.model.WikiPage page, long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void movePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -707,6 +712,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.wiki.model.WikiPage movePageToTrash(
 		long userId, com.liferay.portlet.wiki.model.WikiPage page)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void restoreDependentFromTrash(
+		com.liferay.portlet.wiki.model.WikiPage page, long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -532,6 +532,23 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByN_H_R() {
+		try {
+			_persistence.countByN_H_R(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(), StringPool.BLANK);
+
+			_persistence.countByN_H_R(0L, ServiceTestUtil.randomBoolean(),
+				StringPool.NULL);
+
+			_persistence.countByN_H_R(0L, ServiceTestUtil.randomBoolean(),
+				(String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByN_H_S() {
 		try {
 			_persistence.countByN_H_S(ServiceTestUtil.nextLong(),
@@ -623,6 +640,21 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByN_H_P_SArrayable() {
+		try {
+			_persistence.countByN_H_P_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(),
+				new String[] {
+					ServiceTestUtil.randomString(), StringPool.BLANK,
+					StringPool.NULL, null, null
+				}, ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByN_H_P_NotS() {
 		try {
 			_persistence.countByN_H_P_NotS(ServiceTestUtil.nextLong(),
@@ -652,6 +684,21 @@ public class WikiPagePersistenceTest {
 
 			_persistence.countByN_H_R_S(0L, ServiceTestUtil.randomBoolean(),
 				(String)null, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByN_H_R_SArrayable() {
+		try {
+			_persistence.countByN_H_R_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(),
+				new String[] {
+					ServiceTestUtil.randomString(), StringPool.BLANK,
+					StringPool.NULL, null, null
+				}, ServiceTestUtil.nextInt());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

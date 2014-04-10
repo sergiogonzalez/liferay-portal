@@ -1031,6 +1031,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchParentPage() {
+		return _wikiPage.fetchParentPage();
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchRedirectPage() {
+		return _wikiPage.fetchRedirectPage();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPage.getAttachmentsFileEntries();
