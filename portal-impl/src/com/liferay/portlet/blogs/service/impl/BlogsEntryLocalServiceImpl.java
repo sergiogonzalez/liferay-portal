@@ -1098,13 +1098,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		saveImages(smallImage, entry.getSmallImageId(), smallImageBytes);
 
-		// Asset
-
-		updateAsset(
-			userId, entry, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
 		// Workflow
 
 		boolean pingOldTrackbacks = false;
@@ -1123,10 +1116,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+		entry = (BlogsEntry) WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			user.getCompanyId(), entry.getGroupId(), userId,
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext);
+
+		// Asset
+
+		updateAsset(
+			userId, entry, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		return entry;
 	}
