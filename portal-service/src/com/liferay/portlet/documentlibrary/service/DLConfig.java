@@ -23,10 +23,12 @@ import com.liferay.portlet.documentlibrary.util.validator.FileNameValidator;
 import com.liferay.portlet.documentlibrary.util.validator.FileSizeValidator;
 import com.liferay.portlet.documentlibrary.util.validator.VersionValidator;
 
+import java.io.Serializable;
+
 /**
  * @author Adolfo Pérez
  */
-public class DLConfig {
+public class DLConfig implements Serializable {
 
 	public static DLConfig getLiberalDLConfig() {
 		DLConfig liberalConfig = getRestrictedDLConfig();
