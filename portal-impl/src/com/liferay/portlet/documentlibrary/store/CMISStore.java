@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.repository.cmis.CMISRepositoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;
@@ -91,10 +93,12 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException {
+			long companyId, long repositoryId, String fileName, InputStream is,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
 
-		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, is);
+		updateFile(
+			companyId, repositoryId, fileName, VERSION_DEFAULT, is, dlConfig);
 	}
 
 	@Override
@@ -319,7 +323,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void updateFile(
 		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
+		String fileName, DLConfig dlConfig) {
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
@@ -344,8 +348,8 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
+		long companyId, long repositoryId, String fileName, String newFileName,
+		DLConfig dlConfig) {
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
@@ -371,7 +375,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
+			String versionLabel, InputStream is, DLConfig dlConfig)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(

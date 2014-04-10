@@ -66,6 +66,23 @@ public class DLFileEntryServiceUtil {
 		java.lang.String changeLog, long fileEntryTypeId,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
 		java.io.File file, java.io.InputStream is, long size,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFileEntry(groupId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, fieldsMap, file, is, size, dlConfig, serviceContext);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
+		long groupId, long repositoryId, long folderId,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -408,6 +425,23 @@ public class DLFileEntryServiceUtil {
 		return getService()
 				   .search(groupId, creatorUserId, folderId, mimeTypes, status,
 			start, end);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(
+		long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.io.File file, java.io.InputStream is, long size,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
+			title, description, changeLog, majorVersion, fileEntryTypeId,
+			fieldsMap, file, is, size, dlConfig, serviceContext);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(

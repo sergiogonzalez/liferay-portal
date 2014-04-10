@@ -65,6 +65,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelCreateDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
@@ -133,7 +134,7 @@ public class CMISRepository extends BaseCmisRepository {
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(title)) {
@@ -1306,7 +1307,7 @@ public class CMISRepository extends BaseCmisRepository {
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
+			boolean majorVersion, InputStream is, long size, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -1407,7 +1408,7 @@ public class CMISRepository extends BaseCmisRepository {
 	@Override
 	public FileEntry updateFileEntry(
 			String objectId, String mimeType, Map<String, Object> properties,
-			InputStream is, String sourceFileName, long size,
+			InputStream is, String sourceFileName, long size, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

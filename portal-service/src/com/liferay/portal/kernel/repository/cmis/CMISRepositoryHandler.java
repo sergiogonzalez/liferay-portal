@@ -36,6 +36,7 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.InputStream;
 
@@ -51,12 +52,12 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return _baseCmisRepository.addFileEntry(
 			folderId, sourceFileName, mimeType, title, description, changeLog,
-			is, size, serviceContext);
+			is, size, dlConfig, serviceContext);
 	}
 
 	@Override
@@ -537,23 +538,23 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
+			boolean majorVersion, InputStream is, long size, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return _baseCmisRepository.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+			changeLog, majorVersion, is, size, dlConfig, serviceContext);
 	}
 
 	public FileEntry updateFileEntry(
 			String objectId, String mimeType, Map<String, Object> properties,
-			InputStream is, String sourceFileName, long size,
+			InputStream is, String sourceFileName, long size, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return _baseCmisRepository.updateFileEntry(
-			objectId, mimeType, properties, is, sourceFileName, size,
+			objectId, mimeType, properties, is, sourceFileName, size, dlConfig,
 			serviceContext);
 	}
 

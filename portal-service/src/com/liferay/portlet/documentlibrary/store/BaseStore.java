@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,6 +55,16 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, byte[] bytes)
+		throws PortalException, SystemException {
+
+		addFile(
+			companyId, repositoryId, fileName, bytes,
+			DLConfig.getLiberalDLConfig());
+	}
+
 	/**
 	 * Adds a file based on a byte array.
 	 *
@@ -67,7 +78,8 @@ public abstract class BaseStore implements Store {
 	 */
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, byte[] bytes)
+			long companyId, long repositoryId, String fileName, byte[] bytes,
+			DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		File file = null;
@@ -75,7 +87,7 @@ public abstract class BaseStore implements Store {
 		try {
 			file = FileUtil.createTempFile(bytes);
 
-			addFile(companyId, repositoryId, fileName, file);
+			addFile(companyId, repositoryId, fileName, file, dlConfig);
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);
@@ -83,6 +95,16 @@ public abstract class BaseStore implements Store {
 		finally {
 			FileUtil.delete(file);
 		}
+	}
+
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, File file)
+		throws PortalException, SystemException {
+
+		addFile(
+			companyId, repositoryId, fileName, file,
+			DLConfig.getLiberalDLConfig());
 	}
 
 	/**
@@ -98,7 +120,8 @@ public abstract class BaseStore implements Store {
 	 */
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, File file)
+			long companyId, long repositoryId, String fileName, File file,
+			DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		InputStream is = null;
@@ -106,7 +129,7 @@ public abstract class BaseStore implements Store {
 		try {
 			is = new FileInputStream(file);
 
-			addFile(companyId, repositoryId, fileName, is);
+			addFile(companyId, repositoryId, fileName, is, dlConfig);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException(fileName);
@@ -123,6 +146,16 @@ public abstract class BaseStore implements Store {
 		}
 	}
 
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, InputStream is)
+		throws PortalException, SystemException {
+
+		addFile(
+			companyId, repositoryId, fileName, is,
+			DLConfig.getLiberalDLConfig());
+	}
+
 	/**
 	 * Adds a file based on an {@link InputStream} object.
 	 *
@@ -136,7 +169,8 @@ public abstract class BaseStore implements Store {
 	 */
 	@Override
 	public abstract void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is,
+			DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	/**
@@ -491,6 +525,17 @@ public abstract class BaseStore implements Store {
 	public abstract void move(String srcDir, String destDir)
 		throws SystemException;
 
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, newRepositoryId, fileName,
+			DLConfig.getLiberalDLConfig());
+	}
+
 	/**
 	 * Moves a file to a new data repository.
 	 *
@@ -498,14 +543,37 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository
 	 * @param  newRepositoryId the primary key of the new data repository
 	 * @param  fileName the file's name
+	 * @param  dlConfig the DL configuration object
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
+			String fileName, DLConfig dlConfig)
 		throws PortalException, SystemException;
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, fileName, newFileName,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, byte[] bytes)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, bytes,
+			DLConfig.getLiberalDLConfig());
+	}
 
 	/**
 	 * Updates a file based on a byte array.
@@ -516,13 +584,14 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
 	 * @param  bytes the new file's data
+	 * @param  dlConfig the DL configuration object
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, byte[] bytes)
+			String versionLabel, byte[] bytes, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		File file = null;
@@ -530,7 +599,9 @@ public abstract class BaseStore implements Store {
 		try {
 			file = FileUtil.createTempFile(bytes);
 
-			updateFile(companyId, repositoryId, fileName, versionLabel, file);
+			updateFile(
+				companyId, repositoryId, fileName, versionLabel, file,
+				dlConfig);
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);
@@ -538,6 +609,17 @@ public abstract class BaseStore implements Store {
 		finally {
 			FileUtil.delete(file);
 		}
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, File file)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, file,
+			DLConfig.getLiberalDLConfig());
 	}
 
 	/**
@@ -549,13 +631,14 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
 	 * @param  file Name the file name
+	 * @param  dlConfig the DL configuration object
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, File file)
+			String versionLabel, File file, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		InputStream is = null;
@@ -563,7 +646,8 @@ public abstract class BaseStore implements Store {
 		try {
 			is = new FileInputStream(file);
 
-			updateFile(companyId, repositoryId, fileName, versionLabel, is);
+			updateFile(
+				companyId, repositoryId, fileName, versionLabel, is, dlConfig);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException(fileName);
@@ -578,6 +662,17 @@ public abstract class BaseStore implements Store {
 				_log.error(ioe);
 			}
 		}
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, is,
+			DLConfig.getLiberalDLConfig());
 	}
 
 	/**
@@ -595,7 +690,7 @@ public abstract class BaseStore implements Store {
 	@Override
 	public abstract void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
+			String versionLabel, InputStream is, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	/**

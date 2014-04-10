@@ -521,6 +521,20 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		long userId, long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean hidden,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.addFolder(userId, groupId, repositoryId,
+			mountPoint, parentFolderId, name, description, hidden, dlConfig,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
+		long userId, long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean hidden,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -574,6 +588,26 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		boolean includeTrashedEntries,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.deleteFolder(dlFolder,
+			includeTrashedEntries, dlConfig);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.deleteFolder(dlFolder, dlConfig);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -591,11 +625,40 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId, boolean includeTrashedEntries,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.deleteFolder(folderId,
+			includeTrashedEntries, dlConfig);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.deleteFolder(folderId, dlConfig);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		long userId, long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderLocalService.deleteFolder(userId, folderId,
 			includeTrashedEntries);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long userId, long folderId, boolean includeTrashedEntries,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.deleteFolder(userId, folderId,
+			includeTrashedEntries, dlConfig);
 	}
 
 	@Override

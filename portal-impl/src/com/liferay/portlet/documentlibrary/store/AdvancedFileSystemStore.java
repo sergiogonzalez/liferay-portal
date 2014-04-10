@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
@@ -61,7 +62,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String newFileName)
+			String newFileName, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		super.updateFile(companyId, repositoryId, fileName, newFileName);

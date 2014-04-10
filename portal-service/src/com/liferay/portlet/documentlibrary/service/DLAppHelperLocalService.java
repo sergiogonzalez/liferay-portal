@@ -62,6 +62,21 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public void addFileEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void addFileEntry(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void addFolder(long userId,
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -92,8 +107,20 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteFileEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteFolder(
 		com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteFolder(
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -154,6 +181,15 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
+		long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Moves the file entry to the recycle bin.
 	*
@@ -166,6 +202,23 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Moves the file entry to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the file entry
+	* @param fileEntry the file entry to be moved
+	* @param dlConfig the DL configuration object
+	* @return the moved file entry
+	* @throws PortalException if a user with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -237,6 +290,12 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void restoreFileEntryFromTrash(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void restoreFileShortcutFromTrash(long userId,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -273,7 +332,25 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateFileEntry(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
 		long assetClassPk)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateFileEntry(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
+		long assetClassPk,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -287,6 +364,16 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 
 	public void updateFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateStatus(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion latestFileVersion,
+		int oldStatus, int newStatus,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

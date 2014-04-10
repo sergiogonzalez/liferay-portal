@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -34,21 +37,54 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 
 	@Override
 	public void addFile(
-		long companyId, long repositoryId, String fileName, byte[] bytes) {
+			long companyId, long repositoryId, String fileName, byte[] bytes)
+		throws PortalException, SystemException {
+
+		addFile(
+			companyId, repositoryId, fileName, bytes,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void addFile(
+		long companyId, long repositoryId, String fileName, byte[] bytes,
+		DLConfig dlConfig) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addFile(
-		long companyId, long repositoryId, String fileName, File file) {
+			long companyId, long repositoryId, String fileName, File file)
+		throws PortalException, SystemException {
+
+		addFile(
+			companyId, repositoryId, fileName, file,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void addFile(
+		long companyId, long repositoryId, String fileName, File file,
+		DLConfig dlConfig) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addFile(
-		long companyId, long repositoryId, String fileName, InputStream is) {
+			long companyId, long repositoryId, String fileName, InputStream is)
+		throws PortalException, SystemException {
+
+		addFile(
+			companyId, repositoryId, fileName, is,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void addFile(
+		long companyId, long repositoryId, String fileName, InputStream is,
+		DLConfig dlConfig) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -179,40 +215,95 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 
 	@Override
 	public void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, newRepositoryId, fileName,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
 		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
+		String fileName, DLConfig dlConfig) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException();
+		updateFile(
+			companyId, repositoryId, fileName, newFileName,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, byte[] bytes)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, bytes,
+			DLConfig.getLiberalDLConfig());
 	}
 
 	@Override
 	public void updateFile(
 		long companyId, long repositoryId, String fileName, String versionLabel,
-		byte[] bytes) {
+		byte[] bytes, DLConfig dlConfig) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName, String versionLabel,
-		File file) {
+		long companyId, long repositoryId, String fileName, String newFileName,
+		DLConfig dlConfig) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, File file)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, file,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
 		long companyId, long repositoryId, String fileName, String versionLabel,
-		InputStream is) {
+		File file, DLConfig dlConfig) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is)
+		throws PortalException, SystemException {
+
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, is,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		InputStream is, DLConfig dlConfig) {
 
 		throw new UnsupportedOperationException();
 	}

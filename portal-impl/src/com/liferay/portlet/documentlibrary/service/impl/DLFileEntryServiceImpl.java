@@ -32,6 +32,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
@@ -62,7 +63,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, long fileEntryTypeId,
 			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
-			ServiceContext serviceContext)
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFolderPermission.check(
@@ -71,7 +72,22 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return dlFileEntryLocalService.addFileEntry(
 			getUserId(), groupId, repositoryId, folderId, sourceFileName,
 			mimeType, title, description, changeLog, fileEntryTypeId, fieldsMap,
-			file, is, size, serviceContext);
+			file, is, size, dlConfig, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry addFileEntry(
+			long groupId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, long fileEntryTypeId,
+			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFileEntry(
+			groupId, repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, fileEntryTypeId, fieldsMap, file, is, size,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override
@@ -692,7 +708,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			String title, String description, String changeLog,
 			boolean majorVersion, long fileEntryTypeId,
 			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
-			ServiceContext serviceContext)
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileEntryPermission.check(
@@ -701,7 +717,22 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return dlFileEntryLocalService.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, majorVersion, fileEntryTypeId, fieldsMap,
-			file, is, size, serviceContext);
+			file, is, size, dlConfig, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, long fileEntryTypeId,
+			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, fileEntryTypeId, fieldsMap, file, is, size,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override

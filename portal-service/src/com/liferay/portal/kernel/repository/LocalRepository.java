@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,13 +33,30 @@ public interface LocalRepository {
 	public FileEntry addFileEntry(
 			long userId, long folderId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog, File file,
+			DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry addFileEntry(
 			long userId, long folderId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog, InputStream is,
+			long size, DLConfig dlConfig, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, InputStream is,
 			long size, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Folder addFolder(
+			long userId, long parentFolderId, String title, String description,
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public Folder addFolder(
@@ -52,6 +70,9 @@ public interface LocalRepository {
 		throws PortalException, SystemException;
 
 	public void deleteFolder(long folderId)
+		throws PortalException, SystemException;
+
+	public void deleteFolder(long folderId, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public FileEntry getFileEntry(long fileEntryId)
@@ -93,7 +114,21 @@ public interface LocalRepository {
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, File file, DLConfig dlConfig,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size, DLConfig dlConfig,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry updateFileEntry(
