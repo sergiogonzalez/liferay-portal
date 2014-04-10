@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -39,7 +40,17 @@ public interface DLStore {
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, byte[] bytes, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void addFile(
+			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, File file)
+		throws PortalException, SystemException;
+
+	public void addFile(
+			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, File file, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void addFile(
@@ -48,7 +59,17 @@ public interface DLStore {
 		throws PortalException, SystemException;
 
 	public void addFile(
+			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, InputStream is, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void addFile(
 			long companyId, long repositoryId, String fileName, byte[] bytes)
+		throws PortalException, SystemException;
+
+	public void addFile(
+			long companyId, long repositoryId, String fileName, byte[] bytes,
+			DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void addFile(
@@ -56,7 +77,17 @@ public interface DLStore {
 		throws PortalException, SystemException;
 
 	public void addFile(
+			long companyId, long repositoryId, String fileName, File file,
+			DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
+		throws PortalException, SystemException;
+
+	public void addFile(
+			long companyId, long repositoryId, String fileName, InputStream is,
+			DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void checkRoot(long companyId) throws SystemException;
@@ -123,13 +154,19 @@ public interface DLStore {
 			String versionLabel)
 		throws PortalException, SystemException;
 
-	public boolean isValidName(String name);
+	public boolean isValidName(String name)
+		throws PortalException, SystemException;
 
 	public void move(String srcDir, String destDir) throws SystemException;
 
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void updateFile(
@@ -146,7 +183,26 @@ public interface DLStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
+			String versionLabel, String sourceFileName, File file,
+			DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String fileExtension, boolean validateFileExtension,
 			String versionLabel, String sourceFileName, InputStream is)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String fileExtension, boolean validateFileExtension,
+			String versionLabel, String sourceFileName, InputStream is,
+			DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String newFileName, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void updateFileVersion(
@@ -180,6 +236,6 @@ public interface DLStore {
 		throws PortalException, SystemException;
 
 	public void validateDirectoryName(String directoryName)
-		throws PortalException;
+		throws PortalException, SystemException;
 
 }

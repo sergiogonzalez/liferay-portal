@@ -59,6 +59,21 @@ public class DLAppLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long userId, long repositoryId, long folderId,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, byte[] bytes,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFileEntry(userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog, bytes,
+			dlConfig, serviceContext);
+	}
+
 	/**
 	* Adds a file entry and associated metadata based on a byte array.
 	*
@@ -104,6 +119,21 @@ public class DLAppLocalServiceUtil {
 				   .addFileEntry(userId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog, bytes,
 			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long userId, long repositoryId, long folderId,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, java.io.File file,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFileEntry(userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog, file,
+			dlConfig, serviceContext);
 	}
 
 	/**
@@ -152,6 +182,21 @@ public class DLAppLocalServiceUtil {
 				   .addFileEntry(userId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog, file,
 			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long userId, long repositoryId, long folderId,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, java.io.InputStream is, long size,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFileEntry(userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog, is, size,
+			dlConfig, serviceContext);
 	}
 
 	/**
@@ -258,6 +303,36 @@ public class DLAppLocalServiceUtil {
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @param name the folder's name
 	* @param description the folder's description
+	* @param dlConfig the DL configuration object
+	* @param serviceContext the service context to be applied. In a Liferay
+	repository, it may include mountPoint which is a boolean
+	specifying whether the folder is a facade for mounting a
+	third-party repository
+	* @return the folder
+	* @throws PortalException if the parent folder could not be found or if the
+	new folder's information was invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.kernel.repository.model.Folder addFolder(
+		long userId, long repositoryId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFolder(userId, repositoryId, parentFolderId, name,
+			description, dlConfig, serviceContext);
+	}
+
+	/**
+	* Adds a folder.
+	*
+	* @param userId the primary key of the folder's creator/owner
+	* @param repositoryId the primary key of the repository
+	* @param parentFolderId the primary key of the folder's parent folder
+	* @param name the folder's name
+	* @param description the folder's description
 	* @param serviceContext the service context to be applied. In a Liferay
 	repository, it may include mountPoint which is a boolean
 	specifying whether the folder is a facade for mounting a
@@ -303,6 +378,21 @@ public class DLAppLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFileEntry(fileEntryId);
+	}
+
+	/**
+	* Deletes the file entry.
+	*
+	* @param fileEntryId the primary key of the file entry
+	* @param dlConfig the DL configuration object
+	* @throws PortalException if the file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteFileEntry(long fileEntryId,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileEntry(fileEntryId, dlConfig);
 	}
 
 	/**
@@ -384,6 +474,21 @@ public class DLAppLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFolder(folderId);
+	}
+
+	/**
+	* Deletes the folder and all of its subfolders and file entries.
+	*
+	* @param folderId the primary key of the folder
+	* @param dlConfig the DL configuration object
+	* @throws PortalException if the folder could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteFolder(long folderId,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFolder(folderId, dlConfig);
 	}
 
 	/**
@@ -567,6 +672,24 @@ public class DLAppLocalServiceUtil {
 		return getService().moveFileEntryToTrash(userId, fileEntryId);
 	}
 
+	/**
+	* Moves the file entry with the primary key to the trash portlet.
+	*
+	* @param userId the primary key of the user
+	* @param fileEntryId the primary key of the file entry
+	* @param dlConfig the DL configuration object
+	* @return the file entry
+	* @throws PortalException if the file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long userId, long fileEntryId,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveFileEntryToTrash(userId, fileEntryId, dlConfig);
+	}
+
 	public static com.liferay.portal.kernel.repository.model.Folder moveFolder(
 		long userId, long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -588,6 +711,22 @@ public class DLAppLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().restoreFileEntryFromTrash(userId, fileEntryId);
+	}
+
+	/**
+	* Restores the file entry with the primary key from the trash portlet.
+	*
+	* @param userId the primary key of the user
+	* @param fileEntryId the primary key of the file entry
+	* @param dlConfig the DL configuration object
+	* @throws PortalException if the file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void restoreFileEntryFromTrash(long userId, long fileEntryId,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreFileEntryFromTrash(userId, fileEntryId, dlConfig);
 	}
 
 	/**
@@ -682,6 +821,21 @@ public class DLAppLocalServiceUtil {
 			assetTagNames, assetLinkEntryIds);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long userId, long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, byte[] bytes,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntry(userId, fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, bytes,
+			dlConfig, serviceContext);
+	}
+
 	/**
 	* Updates a file entry and associated metadata based on a byte array
 	* object. If the file data is <code>null</code>, then only the associated
@@ -730,6 +884,21 @@ public class DLAppLocalServiceUtil {
 				   .updateFileEntry(userId, fileEntryId, sourceFileName,
 			mimeType, title, description, changeLog, majorVersion, bytes,
 			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long userId, long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, java.io.File file,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntry(userId, fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, file,
+			dlConfig, serviceContext);
 	}
 
 	/**
@@ -781,6 +950,21 @@ public class DLAppLocalServiceUtil {
 				   .updateFileEntry(userId, fileEntryId, sourceFileName,
 			mimeType, title, description, changeLog, majorVersion, file,
 			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long userId, long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, java.io.InputStream is, long size,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntry(userId, fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, is, size,
+			dlConfig, serviceContext);
 	}
 
 	/**

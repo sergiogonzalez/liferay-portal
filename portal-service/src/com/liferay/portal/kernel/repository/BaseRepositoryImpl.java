@@ -37,6 +37,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.util.DL;
 
 import java.io.File;
@@ -57,7 +58,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	@Override
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
+			String description, String changeLog, File file, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -70,7 +71,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 			return addFileEntry(
 				folderId, sourceFileName, mimeType, title, description,
-				changeLog, is, size, serviceContext);
+				changeLog, is, size, dlConfig, serviceContext);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -84,6 +85,30 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 				}
 			}
 		}
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFileEntry(
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			file, DLConfig.getLiberalDLConfig(), serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFileEntry(
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			is, size, DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	/**
@@ -411,7 +436,8 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
+			boolean majorVersion, File file, DLConfig dlConfig,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		InputStream is = null;
@@ -423,7 +449,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 			return updateFileEntry(
 				fileEntryId, sourceFileName, mimeType, title, description,
-				changeLog, majorVersion, is, size, serviceContext);
+				changeLog, majorVersion, is, size, dlConfig, serviceContext);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -437,6 +463,33 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 				}
 			}
 		}
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, DLConfig.getLiberalDLConfig(),
+			serviceContext);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, is, size, DLConfig.getLiberalDLConfig(),
+			serviceContext);
 	}
 
 	@Override

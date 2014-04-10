@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -40,9 +41,20 @@ public class StoreProxyImpl implements Store {
 			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException {
 
+		addFile(
+			companyId, repositoryId, fileName, bytes,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, byte[] bytes,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		Store store = StoreFactory.getInstance();
 
-		store.addFile(companyId, repositoryId, fileName, bytes);
+		store.addFile(companyId, repositoryId, fileName, bytes, dlConfig);
 	}
 
 	@Override
@@ -50,9 +62,20 @@ public class StoreProxyImpl implements Store {
 			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException, SystemException {
 
+		addFile(
+			companyId, repositoryId, fileName, file,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, File file,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		Store store = StoreFactory.getInstance();
 
-		store.addFile(companyId, repositoryId, fileName, file);
+		store.addFile(companyId, repositoryId, fileName, file, dlConfig);
 	}
 
 	@Override
@@ -60,9 +83,20 @@ public class StoreProxyImpl implements Store {
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException, SystemException {
 
+		addFile(
+			companyId, repositoryId, fileName, is,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, InputStream is,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		Store store = StoreFactory.getInstance();
 
-		store.addFile(companyId, repositoryId, fileName, is);
+		store.addFile(companyId, repositoryId, fileName, is, dlConfig);
 	}
 
 	@Override
@@ -250,9 +284,21 @@ public class StoreProxyImpl implements Store {
 			String fileName)
 		throws PortalException, SystemException {
 
+		updateFile(
+			companyId, repositoryId, newRepositoryId, fileName,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		Store store = StoreFactory.getInstance();
 
-		store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
+		store.updateFile(
+			companyId, repositoryId, newRepositoryId, fileName, dlConfig);
 	}
 
 	@Override
@@ -261,9 +307,9 @@ public class StoreProxyImpl implements Store {
 			String newFileName)
 		throws PortalException, SystemException {
 
-		Store store = StoreFactory.getInstance();
-
-		store.updateFile(companyId, repositoryId, fileName, newFileName);
+		updateFile(
+			companyId, repositoryId, fileName, newFileName,
+			DLConfig.getLiberalDLConfig());
 	}
 
 	@Override
@@ -272,10 +318,33 @@ public class StoreProxyImpl implements Store {
 			String versionLabel, byte[] bytes)
 		throws PortalException, SystemException {
 
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, bytes,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, byte[] bytes, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		Store store = StoreFactory.getInstance();
 
 		store.updateFile(
-			companyId, repositoryId, fileName, versionLabel, bytes);
+			companyId, repositoryId, fileName, versionLabel, bytes, dlConfig);
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String newFileName, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		Store store = StoreFactory.getInstance();
+
+		store.updateFile(
+			companyId, repositoryId, fileName, newFileName, dlConfig);
 	}
 
 	@Override
@@ -284,9 +353,21 @@ public class StoreProxyImpl implements Store {
 			String versionLabel, File file)
 		throws PortalException, SystemException {
 
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, file,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, File file, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		Store store = StoreFactory.getInstance();
 
-		store.updateFile(companyId, repositoryId, fileName, versionLabel, file);
+		store.updateFile(
+			companyId, repositoryId, fileName, versionLabel, file, dlConfig);
 	}
 
 	@Override
@@ -295,9 +376,21 @@ public class StoreProxyImpl implements Store {
 			String versionLabel, InputStream is)
 		throws PortalException, SystemException {
 
+		updateFile(
+			companyId, repositoryId, fileName, versionLabel, is,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		Store store = StoreFactory.getInstance();
 
-		store.updateFile(companyId, repositoryId, fileName, versionLabel, is);
+		store.updateFile(
+			companyId, repositoryId, fileName, versionLabel, is, dlConfig);
 	}
 
 	@Override
