@@ -14,13 +14,14 @@
 
 package com.liferay.portal.kernel.language;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -31,6 +32,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface Language {
 
 	public String format(Locale locale, String pattern, List<Object> arguments);
@@ -113,8 +115,6 @@ public interface Language {
 	public String getBCP47LanguageId(PortletRequest portletRequest);
 
 	public String getCharset(Locale locale);
-
-	public Set<String> getKeys(Locale locale);
 
 	public String getLanguageId(HttpServletRequest request);
 

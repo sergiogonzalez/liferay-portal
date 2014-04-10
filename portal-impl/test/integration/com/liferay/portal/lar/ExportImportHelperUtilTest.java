@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -56,6 +59,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import java.io.File;
@@ -357,29 +361,53 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			_portletDataContextExport, _referrerStagedModel,
 			rootElement.element("entry"), content, true);
 
-		StringBundler sb = new StringBundler(5);
+		assertLinksToLayouts(content, _stagingPrivateLayout, 0);
+		assertLinksToLayouts(
+			content, _stagingPrivateLayout, _stagingPrivateLayout.getGroupId());
+		assertLinksToLayouts(content, _stagingPublicLayout, 0);
+		assertLinksToLayouts(
+			content, _stagingPublicLayout, _stagingPublicLayout.getGroupId());
+	}
 
-		sb.append(StringPool.OPEN_BRACKET);
-		sb.append(_stagingPrivateLayout.getLayoutId());
-		sb.append("@private@");
-		sb.append(_stagingPrivateLayout.getUuid());
-		sb.append(StringPool.AT);
-		sb.append(_stagingPrivateLayout.getFriendlyURL());
-		sb.append(StringPool.CLOSE_BRACKET);
+	@Test
+	public void testExportLinksToUserLayouts() throws Exception {
+		User user = TestPropsValues.getUser();
 
-		Assert.assertTrue(content.contains(sb.toString()));
+		Group group = user.getGroup();
 
-		sb.setIndex(0);
+		Layout privateLayout = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString(), true);
+		Layout publicLayout = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString(), false);
 
-		sb.append(StringPool.OPEN_BRACKET);
-		sb.append(_stagingPublicLayout.getLayoutId());
-		sb.append("@public@");
-		sb.append(_stagingPublicLayout.getUuid());
-		sb.append(StringPool.AT);
-		sb.append(_stagingPublicLayout.getFriendlyURL());
-		sb.append(StringPool.CLOSE_BRACKET);
+		PortletDataContext portletDataContextExport =
+			PortletDataContextFactoryUtil.createExportPortletDataContext(
+				group.getCompanyId(), group.getGroupId(),
+				new HashMap<String, String[]>(),
+				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
+				new TestReaderWriter());
 
-		Assert.assertTrue(content.contains(sb.toString()));
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			group.getGroupId(), ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString());
+
+		Element rootElement = SAXReaderUtil.createElement("root");
+
+		rootElement.addElement("entry");
+
+		String content = replaceLinksToLayoutsParameters(
+			getContent("layout_links_user_group.txt"), privateLayout,
+			publicLayout);
+
+		content = ExportImportHelperUtil.replaceExportContentReferences(
+			portletDataContextExport, journalArticle,
+			rootElement.element("entry"), content, true);
+
+		assertLinksToLayouts(content, privateLayout, 0);
+		assertLinksToLayouts(
+			content, privateLayout, privateLayout.getGroupId());
+		assertLinksToLayouts(content, publicLayout, 0);
+		assertLinksToLayouts(content, publicLayout, publicLayout.getGroupId());
 	}
 
 	@Test
@@ -400,6 +428,9 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
 			referrerStagedModelElement, content, true);
+
+		_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
+
 		content = ExportImportHelperUtil.replaceImportContentReferences(
 			_portletDataContextImport, _referrerStagedModel,
 			referrerStagedModelElement, content, true);
@@ -484,6 +515,48 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Assert.assertEquals(1, weakMissingReferences.size());
 
 		FileUtil.delete(zipWriter.getFile());
+	}
+
+	protected void assertLinksToLayouts(
+			String content, Layout layout, long groupId)
+		throws SystemException {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.OPEN_BRACKET);
+		sb.append(layout.getLayoutId());
+		sb.append(CharPool.AT);
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (layout.isPrivateLayout()) {
+			if (group == null) {
+				sb.append("private");
+			}
+			else if (group.isUser()) {
+				sb.append("private-user");
+			}
+			else {
+				sb.append("private-group");
+			}
+		}
+		else {
+			sb.append("public");
+		}
+
+		sb.append(CharPool.AT);
+		sb.append(layout.getUuid());
+		sb.append(StringPool.AT);
+		sb.append(layout.getFriendlyURL());
+
+		if (group != null) {
+			sb.append(CharPool.AT);
+			sb.append(String.valueOf(groupId));
+		}
+
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		Assert.assertTrue(content.contains(sb.toString()));
 	}
 
 	protected String getContent(String fileName) throws Exception {

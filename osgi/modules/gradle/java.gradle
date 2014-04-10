@@ -5,8 +5,28 @@ ext.liferayProjectDir = "${rootDir}/../../.."
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
+compileJava {
+	options.compiler = "org.eclipse.jdt.core.JDTCompilerAdapter"
+
+	doFirst {
+		ClassLoader classLoader = org.apache.tools.ant.Project.class.classLoader
+
+		configurations.jdt.each {
+			File file -> injectJarFile: {
+				URI uri = file.toURI()
+
+				classLoader.addURL(uri.toURL())
+			}
+		}
+	}
+}
+
 configurations {
 	bnd
+}
+
+configurations {
+	jdt
 }
 
 dependencies {
@@ -14,7 +34,7 @@ dependencies {
 	bnd files(["${liferayProjectDir}/util-java/classes"])
 
 	bnd fileTree(
-		dir:"${liferayProjectDir}/lib/portal",
+		dir: "${liferayProjectDir}/lib/portal",
 		includes: ["**/bnd.jar", "portal-ant-shared.jar"]
 	)
 }
@@ -24,19 +44,23 @@ dependencies {
 	compile files(["${liferayProjectDir}/util-java/classes"])
 
 	compile fileTree(
-		dir:"${liferayProjectDir}/lib/development",
+		dir: "${liferayProjectDir}/lib/development",
 		includes: ["**/*.jar"]
 	)
 
 	compile fileTree(
-		dir:"${liferayProjectDir}/lib/global",
+		dir: "${liferayProjectDir}/lib/global",
 		includes: ["**/*.jar"]
 	)
 
 	compile fileTree(
-		dir:"${liferayProjectDir}/lib/portal",
+		dir: "${liferayProjectDir}/lib/portal",
 		includes: ["**/*.jar"]
 	)
+}
+
+dependencies {
+	jdt files(["${liferayProjectDir}/lib/development/ecj.jar"])
 }
 
 jar {

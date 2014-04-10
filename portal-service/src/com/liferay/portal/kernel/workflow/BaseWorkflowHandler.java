@@ -20,11 +20,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.WorkflowDefinitionLink;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -39,6 +44,8 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 /**
  * @author Bruno Farache
@@ -149,6 +156,31 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getURLEditWorkflowTask(
+			long workflowTaskId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		try {
+			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
+				serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASKS,
+				PortalUtil.getControlPanelPlid(serviceContext.getCompanyId()),
+				PortletRequest.RENDER_PHASE);
+
+			liferayPortletURL.setControlPanelCategory("my");
+			liferayPortletURL.setParameter(
+				"struts_action", "/my_workflow_tasks/edit_workflow_task");
+			liferayPortletURL.setParameter(
+				"workflowTaskId", String.valueOf(workflowTaskId));
+			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
+
+			return liferayPortletURL.toString();
+		}
+		catch (WindowStateException wse) {
+			throw new PortalException(wse);
+		}
 	}
 
 	@Override

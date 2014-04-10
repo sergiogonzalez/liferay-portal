@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
@@ -37,13 +36,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
 		throws SystemException {
-
-		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromAddress",
-			JournalUtil.getEmailFromAddress(portletPreferences, companyId));
-		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName",
-			JournalUtil.getEmailFromName(portletPreferences, companyId));
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
@@ -110,12 +102,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailArticleAdded", true);
-		validateEmail(actionRequest, "emailArticleApprovalDenied", true);
-		validateEmail(actionRequest, "emailArticleApprovalGranted", true);
-		validateEmail(actionRequest, "emailArticleApprovalRequested", true);
-		validateEmail(actionRequest, "emailArticleReview", true);
-		validateEmail(actionRequest, "emailArticleUpdated", true);
+		validateEmail(actionRequest, "emailArticleAdded");
+		validateEmail(actionRequest, "emailArticleApprovalDenied");
+		validateEmail(actionRequest, "emailArticleApprovalGranted");
+		validateEmail(actionRequest, "emailArticleApprovalRequested");
+		validateEmail(actionRequest, "emailArticleReview");
+		validateEmail(actionRequest, "emailArticleUpdated");
 		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);

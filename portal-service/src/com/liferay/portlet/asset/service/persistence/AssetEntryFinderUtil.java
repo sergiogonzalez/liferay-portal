@@ -24,14 +24,13 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class AssetEntryFinderUtil {
-	public static int countEntries(
-		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery)
+	public static int countEntries(AssetEntryQuery entryQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().countEntries(entryQuery);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findEntries(
-		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery)
+		AssetEntryQuery entryQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findEntries(entryQuery);
 	}

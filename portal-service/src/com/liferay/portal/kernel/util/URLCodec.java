@@ -34,17 +34,11 @@ import java.util.BitSet;
 public class URLCodec {
 
 	public static String decodeURL(String encodedURLString) {
-		return decodeURL(encodedURLString, StringPool.UTF8, false);
+		return decodeURL(encodedURLString, StringPool.UTF8);
 	}
 
 	public static String decodeURL(
-		String encodedURLString, boolean unescapeSpaces) {
-
-		return decodeURL(encodedURLString, StringPool.UTF8, unescapeSpaces);
-	}
-
-	public static String decodeURL(
-		String encodedURLString, String charsetName, boolean unescapeSpaces) {
+		String encodedURLString, String charsetName) {
 
 		if (encodedURLString == null) {
 			return null;
@@ -53,11 +47,6 @@ public class URLCodec {
 		if (encodedURLString.length() == 0) {
 			return StringPool.BLANK;
 		}
-
-		/*if (unescapeSpaces) {
-			encodedURLString = StringUtil.replace(
-				encodedURLString, "%20", StringPool.PLUS);
-		}*/
 
 		StringBuilder sb = null;
 
@@ -144,7 +133,7 @@ public class URLCodec {
 			return null;
 		}
 
-		if (rawURLString.length() == 0) {
+		if (rawURLString.isEmpty()) {
 			return StringPool.BLANK;
 		}
 
@@ -168,7 +157,7 @@ public class URLCodec {
 			if (sb == null) {
 				sb = new StringBuilder(rawURLString.length());
 
-				sb.append(rawURLString.substring(0, i));
+				sb.append(rawURLString, 0, i);
 			}
 
 			// The cases are ordered by frequency and not alphabetically
@@ -201,6 +190,11 @@ public class URLCodec {
 					else {
 						sb.append(CharPool.PLUS);
 					}
+
+					continue;
+
+				case CharPool.PLUS :
+					sb.append("%2B");
 
 					continue;
 
@@ -297,7 +291,7 @@ public class URLCodec {
 	}
 
 	private static CharBuffer _getRawCharBuffer(
-		String rawString, int start, boolean includeSpaces) {
+		String rawString, int start, boolean escapeSpaces) {
 
 		int count = 0;
 
@@ -305,7 +299,7 @@ public class URLCodec {
 			char rawChar = rawString.charAt(i);
 
 			if (!_validChars.get(rawChar) &&
-				((rawChar != CharPool.SPACE) || includeSpaces)) {
+				(escapeSpaces || (rawChar != CharPool.SPACE))) {
 
 				count++;
 

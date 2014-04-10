@@ -92,14 +92,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			PortletPreferences portletPreferences)
 		throws SystemException {
 
-		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromAddress",
-			AssetPublisherUtil.getEmailFromAddress(
-				portletPreferences, companyId));
-		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName",
-			AssetPublisherUtil.getEmailFromName(portletPreferences, companyId));
-
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
@@ -133,7 +125,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
-				validateEmail(actionRequest, "emailAssetEntryAdded", true);
+				validateEmail(actionRequest, "emailAssetEntryAdded");
 				validateEmailFrom(actionRequest);
 
 				updateDisplaySettings(actionRequest);
