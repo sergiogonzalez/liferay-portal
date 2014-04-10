@@ -54,17 +54,20 @@ public class DLValidatorUtil {
 		return _versionValidator;
 	}
 
-	private static final DirectoryNameValidator _directoryNameValidator =
-		new DefaultDirectoryNameValidator();
-	private static final FileExtensionValidator _fileExtensionValidator =
-		new DefaultExtensionValidator();
-	private static final FileNameValidator _fileNameAndExtensionValidator =
-		new DefaultFileNameAndExtensionValidator();
-	private static final FileNameValidator _fileNameValidator =
-		new DefaultFileNameValidator();
-	private static final FileSizeValidator _fileSizeValidator =
-		new DefaultFileSizeValidator();
-	private static final VersionValidator _versionValidator =
-		new DefaultVersionValidator();
+	private static DirectoryNameValidator _directoryNameValidator;
+	private static FileExtensionValidator _fileExtensionValidator;
+	private static FileNameValidator _fileNameAndExtensionValidator;
+	private static FileNameValidator _fileNameValidator;
+	private static FileSizeValidator _fileSizeValidator;
+	private static VersionValidator _versionValidator;
 
+	static {
+		_directoryNameValidator = new DefaultDirectoryNameValidator();
+		_fileExtensionValidator = new DefaultExtensionValidator();
+		_fileNameValidator = new DefaultFileNameValidator();
+		_fileNameAndExtensionValidator =
+			new DefaultFileNameAndExtensionValidator(_fileNameValidator);
+		_fileSizeValidator = new DefaultFileSizeValidator();
+		_versionValidator = new DefaultVersionValidator();
+	}
 }

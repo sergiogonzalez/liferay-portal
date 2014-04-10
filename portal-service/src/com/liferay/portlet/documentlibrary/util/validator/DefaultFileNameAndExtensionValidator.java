@@ -27,12 +27,13 @@ import com.liferay.portlet.documentlibrary.FileExtensionException;
  */
 public class DefaultFileNameAndExtensionValidator implements FileNameValidator {
 
-	public DefaultFileNameAndExtensionValidator() {
-		this(DLValidatorUtil.getDefaultFileNameValidator());
-	}
-
 	public DefaultFileNameAndExtensionValidator(
 		FileNameValidator fileNameValidator) {
+
+		if (fileNameValidator == null) {
+			throw new IllegalArgumentException(
+				"file name validator cannot be null");
+		}
 
 		_fileNameValidator = fileNameValidator;
 	}
