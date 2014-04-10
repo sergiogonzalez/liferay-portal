@@ -47,6 +47,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.util.Date;
 import java.util.List;
@@ -63,7 +64,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
 			UnicodeProperties typeSettingsProperties, boolean hidden,
-			ServiceContext serviceContext)
+			DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -88,7 +89,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		repository.setDlFolderId(
 			getDLFolderId(
 				user, groupId, repositoryId, parentFolderId, name, description,
-				hidden, serviceContext));
+				hidden, dlConfig, serviceContext));
 
 		repositoryPersistence.update(repository);
 
@@ -106,6 +107,20 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		}
 
 		return repository;
+	}
+
+	@Override
+	public Repository addRepository(
+			long userId, long groupId, long classNameId, long parentFolderId,
+			String name, String description, String portletId,
+			UnicodeProperties typeSettingsProperties, boolean hidden,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addRepository(
+			userId, groupId, classNameId, parentFolderId, name, description,
+			portletId, typeSettingsProperties, hidden,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	/**
@@ -498,7 +513,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 	protected long getDLFolderId(
 			User user, long groupId, long repositoryId, long parentFolderId,
-			String name, String description, boolean hidden,
+			String name, String description, boolean hidden, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -508,7 +523,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		DLFolder dlFolder = dlFolderLocalService.addFolder(
 			user.getUserId(), groupId, repositoryId, true, parentFolderId, name,
-			description, hidden, serviceContext);
+			description, hidden, dlConfig, serviceContext);
 
 		return dlFolder.getFolderId();
 	}

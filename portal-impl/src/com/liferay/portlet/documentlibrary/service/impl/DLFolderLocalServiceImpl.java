@@ -59,6 +59,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FolderIdComparator;
@@ -81,7 +82,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
-			boolean hidden, ServiceContext serviceContext)
+			boolean hidden, DLConfig dlConfig, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Folder
@@ -145,9 +146,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// App helper
 
 		dlAppHelperLocalService.addFolder(
-			userId, new LiferayFolder(dlFolder), serviceContext);
+			userId, new LiferayFolder(dlFolder), dlConfig, serviceContext);
 
 		return dlFolder;
+	}
+
+	@Override
+	public DLFolder addFolder(
+			long userId, long groupId, long repositoryId, boolean mountPoint,
+			long parentFolderId, String name, String description,
+			boolean hidden, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFolder(
+			userId, groupId, repositoryId, mountPoint, parentFolderId, name,
+			description, hidden, DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	/**
@@ -207,7 +220,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public DLFolder deleteFolder(DLFolder dlFolder)
 		throws PortalException, SystemException {
 
-		return deleteFolder(dlFolder, true);
+		return deleteFolder(dlFolder, DLConfig.getLiberalDLConfig());
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -219,6 +232,19 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			DLFolder dlFolder, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
+		return deleteFolder(
+			dlFolder, includeTrashedEntries, DLConfig.getLiberalDLConfig());
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP, send = false,
+		type = SystemEventConstants.TYPE_DELETE)
+	public DLFolder deleteFolder(
+			DLFolder dlFolder, boolean includeTrashedEntries, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		// Folders
 
 		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
@@ -227,7 +253,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		for (DLFolder curDLFolder : dlFolders) {
 			if (includeTrashedEntries || !curDLFolder.isInTrashExplicitly()) {
 				dlFolderLocalService.deleteFolder(
-					curDLFolder, includeTrashedEntries);
+					curDLFolder, includeTrashedEntries, dlConfig);
 			}
 		}
 
@@ -279,7 +305,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		// App helper
 
-		dlAppHelperLocalService.deleteFolder(new LiferayFolder(dlFolder));
+		dlAppHelperLocalService.deleteFolder(
+			new LiferayFolder(dlFolder), dlConfig);
 
 		// Folder
 
@@ -326,10 +353,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP, send = false,
+		type = SystemEventConstants.TYPE_DELETE)
+	public DLFolder deleteFolder(DLFolder dlFolder, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		return deleteFolder(dlFolder, true, dlConfig);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public DLFolder deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
-		return dlFolderLocalService.deleteFolder(folderId, true);
+		return deleteFolder(folderId, DLConfig.getLiberalDLConfig());
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -337,16 +375,46 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public DLFolder deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
+		return deleteFolder(
+			folderId, includeTrashedEntries, DLConfig.getLiberalDLConfig());
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public DLFolder deleteFolder(
+			long folderId, boolean includeTrashedEntries, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
 		return dlFolderLocalService.deleteFolder(
-			dlFolder, includeTrashedEntries);
+			dlFolder, includeTrashedEntries, dlConfig);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public DLFolder deleteFolder(long folderId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		return deleteFolder(folderId, true, dlConfig);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DLFolder deleteFolder(
 			long userId, long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
+		return deleteFolder(
+			userId, folderId, includeTrashedEntries,
+			DLConfig.getLiberalDLConfig());
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public DLFolder deleteFolder(
+			long userId, long folderId, boolean includeTrashedEntries,
+			DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		boolean hasLock = hasFolderLock(userId, folderId);
@@ -363,7 +431,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		try {
-			return deleteFolder(folderId, includeTrashedEntries);
+			return deleteFolder(folderId, includeTrashedEntries, dlConfig);
 		}
 		finally {
 			if (!hasLock) {

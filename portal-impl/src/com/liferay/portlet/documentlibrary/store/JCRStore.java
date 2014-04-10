@@ -29,6 +29,7 @@ import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 
 import java.io.InputStream;
 
@@ -107,7 +108,8 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is,
+			DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -640,7 +642,7 @@ public class JCRStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
+			String fileName, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -699,7 +701,7 @@ public class JCRStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String newFileName)
+			String newFileName, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -756,7 +758,7 @@ public class JCRStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
+			String versionLabel, InputStream is, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		Session session = null;

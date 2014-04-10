@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
+import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 
 import java.io.ByteArrayInputStream;
@@ -54,31 +55,35 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, byte[] bytes)
+			long companyId, long repositoryId, String fileName, byte[] bytes,
+			DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		updateFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, bytes);
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, bytes,
+			dlConfig);
 	}
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, File file)
+			long companyId, long repositoryId, String fileName, File file,
+			DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		updateFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, file);
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, file,
+			dlConfig);
 	}
 
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
-			InputStream inputStream)
+			InputStream inputStream, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		updateFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			inputStream);
+			inputStream, dlConfig);
 	}
 
 	@Override
@@ -285,7 +290,7 @@ public class DBStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
+			String fileName, DLConfig dlConfig)
 		throws SystemException {
 
 		DLContentLocalServiceUtil.updateDLContent(
@@ -295,17 +300,7 @@ public class DBStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String newFileName)
-		throws SystemException {
-
-		DLContentLocalServiceUtil.updateDLContent(
-			companyId, repositoryId, repositoryId, fileName, newFileName);
-	}
-
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, byte[] bytes)
+			String versionLabel, byte[] bytes, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		if (DLContentLocalServiceUtil.hasContent(
@@ -321,7 +316,17 @@ public class DBStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, File file)
+			String newFileName, DLConfig dlConfig)
+		throws SystemException {
+
+		DLContentLocalServiceUtil.updateDLContent(
+			companyId, repositoryId, repositoryId, fileName, newFileName);
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, File file, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		if (DLContentLocalServiceUtil.hasContent(
@@ -347,7 +352,7 @@ public class DBStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream inputStream)
+			String versionLabel, InputStream inputStream, DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		if (DLContentLocalServiceUtil.hasContent(
