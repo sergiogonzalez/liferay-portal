@@ -1650,18 +1650,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_NotS(
-			page.getNodeId(), true, oldTitle,
-			WorkflowConstants.STATUS_IN_TRASH);
-
-		for (WikiPage redirectPage : redirectPages) {
-			redirectPage.setRedirectTitle(trashTitle);
-
-			wikiPagePersistence.update(redirectPage);
-
-			movePageToTrash(userId, redirectPage);
-		}
-
 		for (WikiPage pageVersion : pageVersions) {
 			pageVersion.setTitle(trashTitle);
 			pageVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
@@ -1689,6 +1677,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(curPage);
 
 			movePageToTrash(userId, curPage);
+		}
+
+		// Redirect pages
+
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_NotS(
+			page.getNodeId(), true, oldTitle,
+			WorkflowConstants.STATUS_IN_TRASH);
+
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(trashTitle);
+
+			wikiPagePersistence.update(redirectPage);
+
+			movePageToTrash(userId, redirectPage);
 		}
 
 		// Asset
@@ -1766,17 +1768,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String originalTitle = TrashUtil.getOriginalTitle(title);
 
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_S(
-			page.getNodeId(), true, title, WorkflowConstants.STATUS_IN_TRASH);
-
-		for (WikiPage redirectPage : redirectPages) {
-			redirectPage.setRedirectTitle(originalTitle);
-
-			wikiPagePersistence.update(redirectPage);
-
-			restorePageFromTrash(userId, redirectPage);
-		}
-
 		List<WikiPage> pageVersions = wikiPagePersistence.findByR_N_H(
 			page.getResourcePrimKey(), page.getNodeId(), false);
 
@@ -1823,6 +1814,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		for (WikiPage curPage : children) {
 			curPage.setParentTitle(originalTitle);
+
+			wikiPagePersistence.update(curPage);
+
+			restorePageFromTrash(userId, curPage);
+		}
+
+		// Redirect Pages
+
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_S(
+			page.getNodeId(), true, title, WorkflowConstants.STATUS_IN_TRASH);
+
+		for (WikiPage curPage : redirectPages) {
+			curPage.setRedirectTitle(originalTitle);
 
 			wikiPagePersistence.update(curPage);
 
