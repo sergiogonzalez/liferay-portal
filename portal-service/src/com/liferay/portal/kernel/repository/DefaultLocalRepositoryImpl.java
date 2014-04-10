@@ -122,6 +122,13 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
+		deleteFolder(folderId, DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void deleteFolder(long folderId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		_repository.deleteFolder(folderId);
 	}
 

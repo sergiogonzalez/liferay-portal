@@ -127,7 +127,7 @@ public interface PortletFileRepository {
 	public void deletePortletFolder(long folderId)
 		throws PortalException, SystemException;
 
-	void deletePortletFolder(long folderId, DLConfig dlConfig)
+	public void deletePortletFolder(long folderId, DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void deletePortletRepository(long groupId, String portletId)
@@ -186,14 +186,32 @@ public interface PortletFileRepository {
 		throws PortalException, SystemException;
 
 	public FileEntry movePortletFileEntryToTrash(
+			long userId, long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public FileEntry movePortletFileEntryToTrash(
 			long groupId, long userId, long folderId, String fileName)
+		throws PortalException, SystemException;
+
+	public FileEntry movePortletFileEntryToTrash(
+			long groupId, long userId, long folderId, String fileName,
+			DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException;
 
 	public void restorePortletFileEntryFromTrash(
+			long userId, long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException;
+
+	public void restorePortletFileEntryFromTrash(
 			long groupId, long userId, long folderId, String fileName)
+		throws PortalException, SystemException;
+
+	public void restorePortletFileEntryFromTrash(
+			long groupId, long userId, long folderId, String fileName,
+			DLConfig dlConfig)
 		throws PortalException, SystemException;
 
 }

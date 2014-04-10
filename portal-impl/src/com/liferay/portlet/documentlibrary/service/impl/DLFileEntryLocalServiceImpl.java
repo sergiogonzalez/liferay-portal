@@ -1622,7 +1622,7 @@ public class DLFileEntryLocalServiceImpl
 	@Override
 	public DLFileEntry updateStatus(
 			long userId, long fileVersionId, int status,
-			Map<String, Serializable> workflowContext,
+			Map<String, Serializable> workflowContext, DLConfig dlConfig,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -1706,7 +1706,7 @@ public class DLFileEntryLocalServiceImpl
 		dlAppHelperLocalService.updateStatus(
 			userId, new LiferayFileEntry(dlFileEntry),
 			new LiferayFileVersion(dlFileVersion), oldStatus, status,
-			workflowContext, serviceContext);
+			workflowContext, dlConfig, serviceContext);
 
 		// Indexer
 
@@ -1719,6 +1719,18 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileEntry;
+	}
+
+	@Override
+	public DLFileEntry updateStatus(
+			long userId, long fileVersionId, int status,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateStatus(
+			userId, fileVersionId, status, workflowContext,
+			DLConfig.getLiberalDLConfig(), serviceContext);
 	}
 
 	@Override

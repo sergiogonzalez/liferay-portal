@@ -57,7 +57,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLConfig;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
@@ -564,17 +563,17 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public FileEntry movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		return movePortletFileEntryToTrash(
+			userId, fileEntryId, DLConfig.getRestrictedDLConfig());
+	}
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+	@Override
+	public FileEntry movePortletFileEntryToTrash(
+			long userId, long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException {
 
-			return DLAppLocalServiceUtil.moveFileEntryToTrash(
-				userId, fileEntryId);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+		return DLAppLocalServiceUtil.moveFileEntryToTrash(
+			userId, fileEntryId, dlConfig);
 	}
 
 	@Override
@@ -582,27 +581,39 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException, SystemException {
 
+		return movePortletFileEntryToTrash(
+			groupId, userId, folderId, fileName,
+			DLConfig.getRestrictedDLConfig());
+	}
+
+	@Override
+	public FileEntry movePortletFileEntryToTrash(
+			long groupId, long userId, long folderId, String fileName,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			groupId, folderId, fileName);
 
-		return movePortletFileEntryToTrash(userId, fileEntry.getFileEntryId());
+		return movePortletFileEntryToTrash(
+			userId, fileEntry.getFileEntryId(), dlConfig);
 	}
 
 	@Override
 	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		restorePortletFileEntryFromTrash(
+			userId, fileEntryId, DLConfig.getRestrictedDLConfig());
+	}
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+	@Override
+	public void restorePortletFileEntryFromTrash(
+			long userId, long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException {
 
-			DLAppLocalServiceUtil.restoreFileEntryFromTrash(
-				userId, fileEntryId);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+		DLAppLocalServiceUtil.restoreFileEntryFromTrash(
+			userId, fileEntryId, dlConfig);
 	}
 
 	@Override
@@ -610,10 +621,22 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException, SystemException {
 
+		restorePortletFileEntryFromTrash(
+			groupId, userId, folderId, fileName,
+			DLConfig.getRestrictedDLConfig());
+	}
+
+	@Override
+	public void restorePortletFileEntryFromTrash(
+			long groupId, long userId, long folderId, String fileName,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			groupId, folderId, fileName);
 
-		restorePortletFileEntryFromTrash(userId, fileEntry.getFileEntryId());
+		restorePortletFileEntryFromTrash(
+			userId, fileEntry.getFileEntryId(), dlConfig);
 	}
 
 	/**

@@ -867,12 +867,32 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	public FileEntry moveFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
+		return moveFileEntryToTrash(
+			userId, fileEntryId, DLConfig.getLiberalDLConfig());
+	}
+
+	/**
+	 * Moves the file entry with the primary key to the trash portlet.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  fileEntryId the primary key of the file entry
+	 * @param  dlConfig the DL configuration object
+	 * @return the file entry
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public FileEntry moveFileEntryToTrash(
+			long userId, long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		return dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
+		return dlAppHelperLocalService.moveFileEntryToTrash(
+			userId, fileEntry, dlConfig);
 	}
 
 	@Override
@@ -935,12 +955,31 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
+		restoreFileEntryFromTrash(
+			userId, fileEntryId, DLConfig.getLiberalDLConfig());
+	}
+
+	/**
+	 * Restores the file entry with the primary key from the trash portlet.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  fileEntryId the primary key of the file entry
+	 * @param  dlConfig the DL configuration object
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void restoreFileEntryFromTrash(
+			long userId, long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.restoreFileEntryFromTrash(userId, fileEntry);
+		dlAppHelperLocalService.restoreFileEntryFromTrash(
+			userId, fileEntry, dlConfig);
 	}
 
 	/**

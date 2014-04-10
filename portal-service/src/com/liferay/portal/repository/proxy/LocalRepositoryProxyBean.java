@@ -132,7 +132,14 @@ public class LocalRepositoryProxyBean
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
-		_localRepository.deleteFolder(folderId);
+		deleteFolder(folderId, DLConfig.getLiberalDLConfig());
+	}
+
+	@Override
+	public void deleteFolder(long folderId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		_localRepository.deleteFolder(folderId, dlConfig);
 	}
 
 	@Override

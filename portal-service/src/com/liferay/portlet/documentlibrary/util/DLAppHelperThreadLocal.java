@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 /**
  * @author Eudaldo Alonso
  */
+@Deprecated
 public class DLAppHelperThreadLocal {
 
 	public static boolean isEnabled() {

@@ -28,7 +28,6 @@ import com.liferay.portlet.documentlibrary.util.validator.VersionValidator;
  */
 public class DLConfig {
 
-
 	public static DLConfig getLiberalDLConfig() {
 		DLConfig liberalConfig = getRestrictedDLConfig();
 
@@ -38,6 +37,7 @@ public class DLConfig {
 		liberalConfig.setFileRanksEnabled(true);
 		liberalConfig.setFileShortcutsEnabled(true);
 		liberalConfig.setRatingStatsEnabled(true);
+		liberalConfig.setSocialActivityEnabled(true);
 		liberalConfig.setSubscriptionEnabled(true);
 		liberalConfig.setTrashEnabled(false);
 		liberalConfig.setWorkflowEnabled(true);
@@ -61,6 +61,7 @@ public class DLConfig {
 		restrictedConfig.setFileRanksEnabled(false);
 		restrictedConfig.setFileShortcutsEnabled(false);
 		restrictedConfig.setRatingStatsEnabled(false);
+		restrictedConfig.setSocialActivityEnabled(false);
 		restrictedConfig.setSubscriptionEnabled(false);
 		restrictedConfig.setTrashEnabled(false);
 		restrictedConfig.setWorkflowEnabled(false);
@@ -92,6 +93,7 @@ public class DLConfig {
 		_isFileRanksEnabled = original.isFileRanksEnabled();
 		_isFileShortcutsEnabled = original.isFileShortcutsEnabled();
 		_isRatingStatsEnabled = original.isRatingStatsEnabled();
+		_isSocialActivityEnabled = original.isSocialActivityEnabled();
 		_isSubscriptionEnabled = original.isSubscriptionEnabled();
 		_isTrashEnabled = original.isTrashEnabled();
 		_isWorkflowEnabled = original.isWorkflowEnabled();
@@ -166,6 +168,10 @@ public class DLConfig {
 		return _isRatingStatsEnabled;
 	}
 
+	public boolean isSocialActivityEnabled() {
+		return _isSocialActivityEnabled;
+	}
+
 	public boolean isSubscriptionEnabled() {
 		return _isSubscriptionEnabled;
 	}
@@ -232,6 +238,10 @@ public class DLConfig {
 		_isRatingStatsEnabled = ratingStatsEnabled;
 	}
 
+	public void setSocialActivityEnabled(boolean isSocialActivityEnabled) {
+		_isSocialActivityEnabled = isSocialActivityEnabled;
+	}
+
 	public void setSubscriptionEnabled(boolean isSubscriptionEnabled) {
 		_isSubscriptionEnabled = isSubscriptionEnabled;
 	}
@@ -260,6 +270,7 @@ public class DLConfig {
 	private boolean _isFileRanksEnabled;
 	private boolean _isFileShortcutsEnabled;
 	private boolean _isRatingStatsEnabled;
+	private boolean _isSocialActivityEnabled;
 	private boolean _isSubscriptionEnabled;
 	private boolean _isTrashEnabled;
 	private boolean _isWorkflowEnabled;

@@ -338,11 +338,28 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static FileEntry movePortletFileEntryToTrash(
+			long userId, long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().movePortletFileEntryToTrash(
+			userId, fileEntryId, dlConfig);
+	}
+
+	public static FileEntry movePortletFileEntryToTrash(
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().movePortletFileEntryToTrash(
 			groupId, userId, folderId, fileName);
+	}
+
+	public static FileEntry movePortletFileEntryToTrash(
+			long groupId, long userId, long folderId, String fileName,
+			DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().movePortletFileEntryToTrash(
+			groupId, userId, folderId, fileName, dlConfig);
 	}
 
 	public static void restorePortletFileEntryFromTrash(
@@ -354,7 +371,24 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static void restorePortletFileEntryFromTrash(
+			long userId, long fileEntryId, DLConfig dlConfig)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().restorePortletFileEntryFromTrash(
+			userId, fileEntryId);
+	}
+
+	public static void restorePortletFileEntryFromTrash(
 			long groupId, long userId, long folderId, String fileName)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().restorePortletFileEntryFromTrash(
+			groupId, userId, folderId, fileName);
+	}
+
+	public static void restorePortletFileEntryFromTrash(
+			long groupId, long userId, long folderId, String fileName,
+			DLConfig dlConfig)
 		throws PortalException, SystemException {
 
 		getPortletFileRepository().restorePortletFileEntryFromTrash(
