@@ -59,6 +59,20 @@ public class DLAppServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long repositoryId, long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog, byte[] bytes,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFileEntry(repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, bytes, dlConfig,
+			serviceContext);
+	}
+
 	/**
 	* Adds a file entry and associated metadata. It is created based on a byte
 	* array.
@@ -102,6 +116,21 @@ public class DLAppServiceUtil {
 		return getService()
 				   .addFileEntry(repositoryId, folderId, sourceFileName,
 			mimeType, title, description, changeLog, bytes, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long repositoryId, long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		java.io.File file,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFileEntry(repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, file, dlConfig,
+			serviceContext);
 	}
 
 	/**
@@ -148,6 +177,21 @@ public class DLAppServiceUtil {
 		return getService()
 				   .addFileEntry(repositoryId, folderId, sourceFileName,
 			mimeType, title, description, changeLog, file, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long repositoryId, long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		java.io.InputStream is, long size,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFileEntry(repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, is, size, dlConfig,
+			serviceContext);
 	}
 
 	/**
@@ -2225,6 +2269,21 @@ public class DLAppServiceUtil {
 		getService().unsubscribeFolder(groupId, folderId);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, byte[] bytes,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
+			title, description, changeLog, majorVersion, bytes, dlConfig,
+			serviceContext);
+	}
+
 	/**
 	* Updates a file entry and associated metadata based on a byte array
 	* object. If the file data is <code>null</code>, then only the associated
@@ -2271,6 +2330,21 @@ public class DLAppServiceUtil {
 		return getService()
 				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
 			title, description, changeLog, majorVersion, bytes, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, java.io.File file,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
+			title, description, changeLog, majorVersion, file, dlConfig,
+			serviceContext);
 	}
 
 	/**
@@ -2320,6 +2394,21 @@ public class DLAppServiceUtil {
 		return getService()
 				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
 			title, description, changeLog, majorVersion, file, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, java.io.InputStream is, long size,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
+			title, description, changeLog, majorVersion, is, size, dlConfig,
+			serviceContext);
 	}
 
 	/**
@@ -2377,6 +2466,21 @@ public class DLAppServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.File file,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntryAndCheckIn(fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, file,
+			dlConfig, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
+		long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, java.io.File file,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -2384,6 +2488,21 @@ public class DLAppServiceUtil {
 				   .updateFileEntryAndCheckIn(fileEntryId, sourceFileName,
 			mimeType, title, description, changeLog, majorVersion, file,
 			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
+		long fileEntryId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, java.io.InputStream is, long size,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntryAndCheckIn(fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, is, size,
+			dlConfig, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(

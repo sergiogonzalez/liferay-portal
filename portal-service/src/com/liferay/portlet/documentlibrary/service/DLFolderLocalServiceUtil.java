@@ -480,6 +480,19 @@ public class DLFolderLocalServiceUtil {
 		long userId, long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean hidden,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addFolder(userId, groupId, repositoryId, mountPoint,
+			parentFolderId, name, description, hidden, dlConfig, serviceContext);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
+		long userId, long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean hidden,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -528,6 +541,24 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		boolean includeTrashedEntries,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .deleteFolder(dlFolder, includeTrashedEntries, dlConfig);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteFolder(dlFolder, dlConfig);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -542,10 +573,37 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId, boolean includeTrashedEntries,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .deleteFolder(folderId, includeTrashedEntries, dlConfig);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteFolder(folderId, dlConfig);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		long userId, long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteFolder(userId, folderId, includeTrashedEntries);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long userId, long folderId, boolean includeTrashedEntries,
+		com.liferay.portlet.documentlibrary.service.DLConfig dlConfig)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .deleteFolder(userId, folderId, includeTrashedEntries,
+			dlConfig);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
