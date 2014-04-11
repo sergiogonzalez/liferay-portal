@@ -14,11 +14,13 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletResponse;
 
@@ -59,7 +61,12 @@ public class RowChecker {
 	}
 
 	public String getAllRowsCheckBox() {
-		return getAllRowsCheckbox(_allRowIds, StringUtil.quote(_rowIds));
+		return getAllRowsCheckBox(null);
+	}
+
+	public String getAllRowsCheckBox(HttpServletRequest request) {
+		return getAllRowsCheckbox(
+			request, _allRowIds, StringUtil.quote(_rowIds));
 	}
 
 	public String getAllRowsId() {
@@ -95,8 +102,9 @@ public class RowChecker {
 		String primaryKey) {
 
 		return getRowCheckBox(
-			checked, disabled, _rowIds, primaryKey, StringUtil.quote(_rowIds),
-			StringUtil.quote(_allRowIds), StringPool.BLANK);
+			request, checked, disabled, _rowIds, primaryKey,
+			StringUtil.quote(_rowIds), StringUtil.quote(_allRowIds),
+			StringPool.BLANK);
 	}
 
 	public String getRowId() {
@@ -147,14 +155,38 @@ public class RowChecker {
 		_valign = valign;
 	}
 
-	protected String getAllRowsCheckbox(String name, String checkBoxRowIds) {
+	protected String getAllRowsCheckbox(
+		HttpServletRequest request, String name, String checkBoxRowIds) {
+
 		if (Validator.isNull(name)) {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(9);
+		StringBuilder sb = new StringBuilder(20);
 
-		sb.append("<input name=\"");
+		String id = null;
+
+		if (request != null) {
+			id = PortalUtil.generateRandomKey(request, name);
+
+			sb.append("<label class=\"hide-accessible\" for=\"");
+			sb.append(_portletResponse.getNamespace());
+			sb.append(id);
+			sb.append("\">");
+			sb.append(LanguageUtil.get(request.getLocale(), "select-all"));
+			sb.append("</label>");
+		}
+
+		sb.append("<input ");
+
+		if (id != null) {
+			sb.append("id=\"");
+			sb.append(_portletResponse.getNamespace());
+			sb.append(id);
+			sb.append("\" ");
+		}
+
+		sb.append("name=\"");
 		sb.append(name);
 		sb.append("\" type=\"checkbox\" ");
 		sb.append("onClick=\"Liferay.Util.checkAll(");
@@ -180,11 +212,26 @@ public class RowChecker {
 	}
 
 	protected String getRowCheckBox(
-		boolean checked, boolean disabled, String name, String value,
-		String checkBoxRowIds, String checkBoxAllRowIds,
-		String checkBoxPostOnClick) {
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String value, String checkBoxRowIds,
+		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler(30);
+
+		String id = null;
+
+		if (request != null) {
+			id = PortalUtil.generateRandomKey(request, value);
+		}
+
+		if (id != null) {
+			sb.append("<label class=\"hide-accessible\" for=\"");
+			sb.append(_portletResponse.getNamespace());
+			sb.append(id);
+			sb.append("\">");
+			sb.append(LanguageUtil.get(request.getLocale(), "select"));
+			sb.append("</label>");
+		}
 
 		sb.append("<input ");
 
@@ -194,6 +241,13 @@ public class RowChecker {
 
 		if (disabled) {
 			sb.append("disabled ");
+		}
+
+		if (id != null) {
+			sb.append("id=\"");
+			sb.append(_portletResponse.getNamespace());
+			sb.append(id);
+			sb.append("\" ");
 		}
 
 		sb.append("name=\"");

@@ -29,6 +29,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -50,6 +51,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,10 +75,19 @@ public class CompanyLocalServiceTest {
 
 	@Before
 	public void setUp() {
+		_companyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(PortalInstances.getDefaultCompanyId());
+
 		File file = new File("portal-web/docroot");
 
 		_mockServletContext = new MockServletContext(
 			"file:" + file.getAbsolutePath(), new FileSystemResourceLoader());
+	}
+
+	@After
+	public void tearDown() {
+		CompanyThreadLocal.setCompanyId(_companyId);
 	}
 
 	@Test
@@ -453,6 +464,7 @@ public class CompanyLocalServiceTest {
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}
 
+	private long _companyId;
 	private MockServletContext _mockServletContext;
 
 }

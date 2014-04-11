@@ -348,10 +348,6 @@
 		<display-name>Bookmarks</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/bookmarks/configuration.jsp</value>
-		</init-param>
-		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/bookmarks/</value>
 		</init-param>
@@ -1600,24 +1596,6 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<portlet-preferences>
-			<preference>
-				<name>fileEntryColumns</name>
-				<value>name,size</value>
-			</preference>
-			<preference>
-				<name>folderColumns</name>
-				<value>name,num-of-folders,num-of-documents</value>
-			</preference>
-			<preference>
-				<name>showFoldersSearch</name>
-				<value>false</value>
-			</preference>
-			<preference>
-				<name>showSubfolders</name>
-				<value>true</value>
-			</preference>
-		</portlet-preferences>
 		<security-role-ref>
 			<role-name>power-user</role-name>
 		</security-role-ref>
@@ -3445,6 +3423,31 @@
 		<init-param>
 			<name>view-action</name>
 			<value>/shopping_admin/view</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>198</portlet-name>
+		<display-name>Bookmarks Admin</display-name>
+		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<init-param>
+			<name>config-template</name>
+			<value>/html/portlet/bookmarks_admin/configuration.jsp</value>
+		</init-param>
+		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/bookmarks_admin/</value>
+		</init-param>
+		<init-param>
+			<name>view-action</name>
+			<value>/bookmarks_admin/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
