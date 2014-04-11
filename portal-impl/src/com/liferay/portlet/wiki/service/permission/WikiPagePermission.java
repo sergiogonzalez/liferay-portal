@@ -166,7 +166,7 @@ public class WikiPagePermission implements BaseModelPermissionChecker {
 		}
 
 		if (actionId.equals(ActionKeys.VIEW)) {
-			WikiPage redirectPage = page.getRedirectPage();
+			WikiPage redirectPage = page.fetchRedirectPage();
 
 			if (redirectPage != null) {
 				page = redirectPage;
@@ -186,7 +186,7 @@ public class WikiPagePermission implements BaseModelPermissionChecker {
 						return false;
 					}
 
-					page = page.getParentPage();
+					page = page.fetchParentPage();
 				}
 
 				return true;
