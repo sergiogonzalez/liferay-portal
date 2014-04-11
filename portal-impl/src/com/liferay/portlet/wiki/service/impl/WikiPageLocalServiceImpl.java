@@ -1740,7 +1740,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Children & RedirectPages
 
-		moveDependentsToTrash(page, oldTitle, trashEntry.getEntryId());
+		moveDependentsToTrash(
+			page, oldTitle, trashTitle, trashEntry.getEntryId());
 
 		// Asset
 
@@ -1878,9 +1879,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public void restorePageFromTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
 
-		String title = page.getTitle();
+		String trashTitle = page.getTitle();
 
-		String originalTitle = TrashUtil.getOriginalTitle(title);
+		String originalTitle = TrashUtil.getOriginalTitle(trashTitle);
 
 		List<WikiPage> pageVersions = wikiPagePersistence.findByR_N_H(
 			page.getResourcePrimKey(), page.getNodeId(), false);
@@ -1924,7 +1925,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Child and Redirect Pages
 
 		restoreDependentsFromTrash(
-			page, originalTitle, trashEntry.getEntryId());
+			page, originalTitle, trashTitle, trashEntry.getEntryId());
 
 		// Trash
 
@@ -2568,7 +2569,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void moveDependentChildrenToTrash(
-			WikiPage page, String title, long trashEntryId)
+			WikiPage page, String title, String trashTitle, long trashEntryId)
 		throws PortalException, SystemException {
 
 		List<WikiPage> children = wikiPagePersistence.findByN_H_P(
@@ -2576,17 +2577,24 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		for (WikiPage curPage : children) {
 			if (curPage.isInTrashExplicitly()) {
+				if (Validator.isNotNull(trashTitle)) {
+					curPage.setParentTitle(trashTitle);
+
+					wikiPagePersistence.update(curPage);
+				}
+
 				continue;
 			}
 
 			moveDependentToTrash(curPage, trashEntryId);
 
-			moveDependentsToTrash(curPage, curPage.getTitle(), trashEntryId);
+			moveDependentsToTrash(
+				curPage, curPage.getTitle(), null, trashEntryId);
 		}
 	}
 
 	protected void moveDependentRedirectPagesToTrash(
-			WikiPage page, String title, long trashEntryId)
+			WikiPage page, String title, String trashTitle, long trashEntryId)
 		throws PortalException, SystemException {
 
 		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R(
@@ -2594,21 +2602,29 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		for (WikiPage curPage : redirectPages) {
 			if (curPage.isInTrashExplicitly()) {
+				if (Validator.isNotNull(trashTitle)) {
+					curPage.setRedirectTitle(trashTitle);
+
+					wikiPagePersistence.update(curPage);
+				}
+
 				continue;
 			}
 
 			moveDependentToTrash(curPage, trashEntryId);
 
-			moveDependentsToTrash(curPage, curPage.getTitle(), trashEntryId);
+			moveDependentsToTrash(
+				curPage, curPage.getTitle(), null, trashEntryId);
 		}
 	}
 
 	protected void moveDependentsToTrash(
-			WikiPage page, String title, long trashEntryId)
+			WikiPage page, String title, String trashTitle, long trashEntryId)
 		throws PortalException, SystemException {
 
-		moveDependentChildrenToTrash(page, title, trashEntryId);
-		moveDependentRedirectPagesToTrash(page, title, trashEntryId);
+		moveDependentChildrenToTrash(page, title, trashTitle, trashEntryId);
+		moveDependentRedirectPagesToTrash
+			(page, title, trashTitle, trashEntryId);
 	}
 
 	protected void notifySubscribers(
@@ -2764,49 +2780,83 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void restoreDependentChildrenFromTrash(
-			WikiPage page, String title, long trashEntryId)
+			WikiPage page, String title, String trashTitle, long trashEntryId)
 		throws PortalException, SystemException {
 
-		List<WikiPage> children = wikiPagePersistence.findByN_H_P_S(
-			page.getNodeId(), true, title, WorkflowConstants.STATUS_IN_TRASH);
+		List<WikiPage> children = null;
+
+		if (Validator.isNull(trashTitle)) {
+			children = wikiPagePersistence.findByN_H_P_S(
+				page.getNodeId(), true, title,
+				WorkflowConstants.STATUS_IN_TRASH);
+		}
+		else {
+			children = wikiPagePersistence.findByN_H_P_S(
+				page.getNodeId(), true, new String[] {title, trashTitle},
+				WorkflowConstants.STATUS_IN_TRASH);
+		}
 
 		for (WikiPage curPage : children) {
 			if (curPage.isInTrashExplicitly()) {
+				if (Validator.isNotNull(trashTitle)) {
+					curPage.setParentTitle(title);
+
+					wikiPagePersistence.update(curPage);
+				}
+
 				continue;
 			}
 
 			restoreDependentFromTrash(curPage, trashEntryId);
 
 			restoreDependentsFromTrash(
-				curPage, curPage.getTitle(), trashEntryId);
+				curPage, curPage.getTitle(), null, trashEntryId);
 		}
 	}
 
 	protected void restoreDependentRedirectPagesFromTrash
-			(WikiPage page, String title, long trashEntryId)
+			(WikiPage page, String title, String trashTitle, long trashEntryId)
 		throws PortalException, SystemException {
 
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_S(
-			page.getNodeId(), true, title, WorkflowConstants.STATUS_IN_TRASH);
+		List<WikiPage> redirectPages = null;
+
+		if (Validator.isNull(trashTitle)) {
+			redirectPages = wikiPagePersistence.findByN_H_R_S(
+				page.getNodeId(), true, title,
+				WorkflowConstants.STATUS_IN_TRASH);
+		}
+		else {
+			redirectPages = wikiPagePersistence.findByN_H_R_S(
+				page.getNodeId(), true, new String[] {title, trashTitle},
+				WorkflowConstants.STATUS_IN_TRASH);
+		}
 
 		for (WikiPage curPage : redirectPages) {
 			if (curPage.isInTrashExplicitly()) {
+				if (Validator.isNotNull(trashTitle)) {
+					curPage.setRedirectTitle(title);
+
+					wikiPagePersistence.update(curPage);
+				}
+
 				continue;
 			}
 
 			restoreDependentFromTrash(curPage, trashEntryId);
 
 			restoreDependentsFromTrash(
-				curPage, curPage.getTitle(), trashEntryId);
+				curPage, curPage.getTitle(), null, trashEntryId);
 		}
 	}
 
 	protected void restoreDependentsFromTrash(
-			WikiPage page, String title, long trashEntryId)
+			WikiPage page, String title, String trashTitle, long trashEntryId)
 		throws PortalException, SystemException {
 
-		restoreDependentChildrenFromTrash(page, title, trashEntryId);
-		restoreDependentRedirectPagesFromTrash(page, title, trashEntryId);
+		restoreDependentChildrenFromTrash(
+			page, title, trashTitle, trashEntryId);
+		restoreDependentRedirectPagesFromTrash(
+			page, title, trashTitle, trashEntryId);
 	}
 
 	protected void validate(long nodeId, String content, String format)
