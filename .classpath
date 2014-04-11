@@ -118,7 +118,7 @@
 	<classpathentry kind="lib" path="lib/portal/cas-client-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ccpp.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ccpp-ri.jar"/>
-	<classpathentry kind="lib" path="lib/portal/cglib.jar"/>
+	<classpathentry kind="lib" path="lib/portal/cglib-nodep.jar"/>
 	<classpathentry kind="lib" path="lib/portal/chardet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-client-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-client-bindings.jar"/>
