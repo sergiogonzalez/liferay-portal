@@ -318,7 +318,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return addArticleWithWorkflow(
-			groupId, folderId, "title", "content", approved);
+			groupId, folderId, "title", "description", "content", approved);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
@@ -352,8 +352,8 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
-			long groupId, long folderId, String title, String content,
-			boolean approved)
+			long groupId, long folderId, String title, String description,
+			String content, boolean approved)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
@@ -363,12 +363,13 @@ public class JournalTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addArticleWithWorkflow(
-			groupId, folderId, title, content, approved, serviceContext);
+			groupId, folderId, title, description, content, approved,
+			serviceContext);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
-			long groupId, long folderId, String title, String content,
-			boolean approved, ServiceContext serviceContext)
+			long groupId, long folderId, String title, String description,
+			String content, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
@@ -380,7 +381,7 @@ public class JournalTestUtil {
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
 		for (Locale locale : _locales) {
-			descriptionMap.put(locale, title);
+			descriptionMap.put(locale, description);
 		}
 
 		Map<Locale, String> contentMap = new HashMap<Locale, String>();

@@ -141,7 +141,8 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return JournalTestUtil.addArticleWithWorkflow(
 			serviceContext.getScopeGroupId(), folder.getFolderId(),
-			getSearchKeywords(), getSearchKeywords(), approved);
+			getSearchKeywords(), getSearchKeywords(), getSearchKeywords(),
+			approved);
 	}
 
 	@Override
@@ -152,7 +153,8 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return JournalTestUtil.addArticleWithWorkflow(
 			serviceContext.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			getSearchKeywords(), getSearchKeywords(), approved);
+			getSearchKeywords(), getSearchKeywords(), getSearchKeywords(),
+			approved);
 	}
 
 	@Override
