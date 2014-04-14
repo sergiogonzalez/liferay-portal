@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
@@ -29,6 +30,9 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.sites.util.Sites;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -109,6 +113,17 @@ public class PortalImplGetSitesTest {
 		Assert.assertTrue(
 			ArrayUtil.contains(
 				getSharedContentSiteGroupIds(), group.getGroupId()));
+	}
+
+	@Test
+	public void testGetSharedContentSiteGroupIdsReturnsUniqueGroupIds()
+		throws Exception {
+
+		long[] groupIds = getSharedContentSiteGroupIds();
+
+		Set<Long> set = new HashSet<Long>(ListUtil.toList(groupIds));
+
+		Assert.assertFalse(set.size() < groupIds.length);
 	}
 
 	protected long[] getSharedContentSiteGroupIds() throws Exception {

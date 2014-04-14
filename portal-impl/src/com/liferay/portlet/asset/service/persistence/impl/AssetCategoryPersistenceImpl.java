@@ -11740,6 +11740,12 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			EntityCacheUtil.clearCache(AssetCategoryImpl.class);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+			if (_SPRING_HIBERNATE_SESSION_DELEGATED) {
+				Session session = getCurrentSession();
+
+				session.clear();
+			}
 		}
 
 		assetCategory.setLeftCategoryId(leftCategoryId);
@@ -11886,6 +11892,12 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		EntityCacheUtil.clearCache(AssetCategoryImpl.class);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		if (_SPRING_HIBERNATE_SESSION_DELEGATED) {
+			Session session = getCurrentSession();
+
+			session.clear();
+		}
 	}
 
 	protected void updateChildrenTree(long groupId,
@@ -12054,6 +12066,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetCategory exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetCategory exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final boolean _SPRING_HIBERNATE_SESSION_DELEGATED = com.liferay.portal.util.PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED;
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryPersistenceImpl.class);
 	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"

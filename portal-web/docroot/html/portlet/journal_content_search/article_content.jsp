@@ -24,8 +24,8 @@ Object[] objArray = (Object[])row.getObject();
 Document doc = (Document)objArray[0];
 Summary summary = (Summary)objArray[1];
 
+String articleId = doc.get(Field.ARTICLE_ID);
 long articleGroupId = GetterUtil.getLong(doc.get(Field.GROUP_ID));
-String articleId = doc.get("articleId");
 
 List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.getGroupId(), layout.isPrivateLayout(), articleId);
 %>

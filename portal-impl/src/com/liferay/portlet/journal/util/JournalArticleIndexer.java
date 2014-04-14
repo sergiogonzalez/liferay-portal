@@ -90,12 +90,14 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	public JournalArticleIndexer() {
 		setDefaultSelectedFieldNames(
-			new String[] {
-				Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-				Field.GROUP_ID, Field.JOURNAL_ARTICLE_ID, Field.TITLE,
-				Field.VERSION, Field.UID});
+			Field.ARTICLE_ID, Field.COMPANY_ID, Field.DEFAULT_LANGUAGE_ID,
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID,
+			Field.VERSION, Field.UID);
+		setDefaultSelectedLocalizedFieldNames(
+			Field.CONTENT, Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
+		setSelectAllLocales(true);
 	}
 
 	@Override
@@ -217,14 +219,13 @@ public class JournalArticleIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
+		addSearchTerm(searchQuery, searchContext, Field.ARTICLE_ID, false);
 		addSearchTerm(searchQuery, searchContext, Field.CLASS_PK, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(
-			searchQuery, searchContext, Field.JOURNAL_ARTICLE_ID, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.TYPE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
@@ -375,7 +376,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			articleId = TrashUtil.getOriginalTitle(articleId);
 		}
 
-		document.addKeyword(Field.JOURNAL_ARTICLE_ID, articleId);
+		document.addKeyword(Field.ARTICLE_ID, articleId);
 
 		document.addKeyword(Field.LAYOUT_UUID, article.getLayoutUuid());
 		document.addKeyword(
@@ -445,8 +446,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String content = getDDMContentSummary(
 			document, snippetLocale, portletRequest, portletResponse);
 
+		String articleId = document.get(Field.ARTICLE_ID);
 		String groupId = document.get(Field.GROUP_ID);
-		String articleId = document.get(Field.JOURNAL_ARTICLE_ID);
 		String version = document.get(Field.VERSION);
 
 		portletURL.setParameter("struts_action", "/journal/edit_article");
@@ -577,8 +578,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		try {
+			String articleId = document.get(Field.ARTICLE_ID);
 			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-			String articleId = document.get(Field.JOURNAL_ARTICLE_ID);
 			double version = GetterUtil.getDouble(document.get(Field.VERSION));
 			PortletRequestModel portletRequestModel = new PortletRequestModel(
 				portletRequest, portletResponse);

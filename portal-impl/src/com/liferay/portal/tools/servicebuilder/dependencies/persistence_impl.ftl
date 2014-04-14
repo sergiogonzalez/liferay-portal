@@ -1360,6 +1360,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				EntityCacheUtil.clearCache(${entity.name}Impl.class);
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+				if (_SPRING_HIBERNATE_SESSION_DELEGATED) {
+					Session session = getCurrentSession();
+
+					session.clear();
+				}
 			}
 
 			${entity.varName}.setLeft${pkColumn.methodName}(left${pkColumn.methodName});
@@ -1497,6 +1503,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			EntityCacheUtil.clearCache(${entity.name}Impl.class);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+			if (_SPRING_HIBERNATE_SESSION_DELEGATED) {
+				Session session = getCurrentSession();
+
+				session.clear();
+			}
 		}
 
 		protected void updateChildrenTree(long ${scopeColumn.name}, List<Long> children${pkColumn.methodNames}, long delta) {
@@ -1691,6 +1703,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = <#if pluginName != "">GetterUtil.getBoolean(PropsUtil.get(PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE))<#else>com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE</#if>;
+
+	<#if entity.isHierarchicalTree()>
+		private static final boolean _SPRING_HIBERNATE_SESSION_DELEGATED = <#if pluginName != "">GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SPRING_HIBERNATE_SESSION_DELEGATED))<#else>com.liferay.portal.util.PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED</#if>;
+	</#if>
 
 	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
 
