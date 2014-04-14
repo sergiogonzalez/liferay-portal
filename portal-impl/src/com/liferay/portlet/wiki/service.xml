@@ -207,6 +207,11 @@
 			<finder-column name="head" />
 			<finder-column name="parentTitle" case-sensitive="false" />
 		</finder>
+		<finder name="N_H_R" return-type="Collection">
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+			<finder-column name="redirectTitle" case-sensitive="false" />
+		</finder>
 		<finder name="N_H_S" return-type="Collection">
 			<finder-column name="nodeId" />
 			<finder-column name="head" />
@@ -238,7 +243,7 @@
 		<finder name="N_H_P_S" return-type="Collection">
 			<finder-column name="nodeId" />
 			<finder-column name="head" />
-			<finder-column name="parentTitle" case-sensitive="false" />
+			<finder-column name="parentTitle" case-sensitive="false" arrayable-operator="OR" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="N_H_P_NotS" return-type="Collection">
@@ -250,7 +255,7 @@
 		<finder name="N_H_R_S" return-type="Collection">
 			<finder-column name="nodeId" />
 			<finder-column name="head" />
-			<finder-column name="redirectTitle" case-sensitive="false" />
+			<finder-column name="redirectTitle" case-sensitive="false" arrayable-operator="OR" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="N_H_R_NotS" return-type="Collection">

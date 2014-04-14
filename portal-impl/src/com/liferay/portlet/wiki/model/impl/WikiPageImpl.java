@@ -28,6 +28,7 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -77,6 +78,64 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		_attachmentsFolderId = folder.getFolderId();
 
 		return folder;
+	}
+
+	@Override
+	public WikiPage fetchParentPage() {
+		if (Validator.isNull(getParentTitle())) {
+			return null;
+		}
+
+		WikiPage parentPage = null;
+
+		try {
+			parentPage = WikiPageLocalServiceUtil.fetchPage(
+				getNodeId(), getParentTitle());
+
+			if (parentPage == null) {
+				String trashRedirectTitle = TrashUtil.getOriginalTitle(
+					getParentTitle());
+
+				if (Validator.isNotNull(trashRedirectTitle)) {
+					parentPage = WikiPageLocalServiceUtil.fetchPage(
+						getNodeId(), trashRedirectTitle);
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return parentPage;
+	}
+
+	@Override
+	public WikiPage fetchRedirectPage() {
+		if (Validator.isNull(getRedirectTitle())) {
+			return null;
+		}
+
+		WikiPage redirectPage = null;
+
+		try {
+			redirectPage = WikiPageLocalServiceUtil.fetchPage(
+				getNodeId(), getRedirectTitle());
+
+			if (redirectPage == null) {
+				String trashRedirectTitle = TrashUtil.getOriginalTitle(
+					getRedirectTitle());
+
+				if (Validator.isNotNull(trashRedirectTitle)) {
+					redirectPage = WikiPageLocalServiceUtil.fetchPage(
+						getNodeId(), trashRedirectTitle);
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return redirectPage;
 	}
 
 	@Override
