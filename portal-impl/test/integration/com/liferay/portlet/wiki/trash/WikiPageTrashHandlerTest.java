@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -207,7 +206,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount, getNotInTrashBaseModelsCount(node));
 		Assert.assertEquals(
-			initialTrashEntriesCount + 4,
+			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
@@ -253,7 +252,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount + 2, getNotInTrashBaseModelsCount(node));
 		Assert.assertEquals(
-			initialTrashEntriesCount + 2,
+			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
 
 		moveBaseModelToTrash(page.getPrimaryKey());
@@ -261,7 +260,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount, getNotInTrashBaseModelsCount(node));
 		Assert.assertEquals(
-			initialTrashEntriesCount + 4,
+			initialTrashEntriesCount + 2,
 			getTrashEntriesCount(group.getGroupId()));
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
@@ -273,7 +272,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount + 2, getNotInTrashBaseModelsCount(node));
 		Assert.assertEquals(
-			initialTrashEntriesCount + 2,
+			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
 	}
 
@@ -308,24 +307,8 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount, getNotInTrashBaseModelsCount(node));
 		Assert.assertEquals(
-			initialTrashEntriesCount + 4,
+			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			getBaseModelClassName());
-
-		trashHandler.restoreTrashEntry(
-			TestPropsValues.getUserId(), getTrashEntryClassPK(childPage));
-
-		Assert.assertEquals(
-			initialBaseModelsCount + 2, getNotInTrashBaseModelsCount(node));
-		Assert.assertEquals(
-			initialTrashEntriesCount + 2,
-			getTrashEntriesCount(group.getGroupId()));
-
-		childPage = (WikiPage)getBaseModel(page.getPrimaryKey());
-
-		Assert.assertEquals(childPage.getParentTitle(), StringPool.BLANK);
 	}
 
 	@Test
@@ -416,7 +399,6 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 
 		String newTitle = ServiceTestUtil.randomString();
-		String oldTitle = page.getTitle();
 
 		WikiPageLocalServiceUtil.movePage(
 			TestPropsValues.getUserId(), node.getNodeId(), page.getTitle(),
@@ -427,32 +409,13 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 
-		WikiPage oldWikiPage = WikiPageLocalServiceUtil.getPage(
-			node.getNodeId(), oldTitle);
-
 		moveBaseModelToTrash(page.getPrimaryKey());
 
 		Assert.assertEquals(
 			initialBaseModelsCount, getNotInTrashBaseModelsCount(node));
 		Assert.assertEquals(
-			initialTrashEntriesCount + 5,
+			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			getBaseModelClassName());
-
-		trashHandler.restoreTrashEntry(
-			TestPropsValues.getUserId(), getTrashEntryClassPK(oldWikiPage));
-
-		Assert.assertEquals(
-			initialBaseModelsCount + 1, getNotInTrashBaseModelsCount(node));
-		Assert.assertEquals(
-			initialTrashEntriesCount + 4,
-			getTrashEntriesCount(group.getGroupId()));
-
-		oldWikiPage = (WikiPage)getBaseModel(oldWikiPage.getPrimaryKey());
-
-		Assert.assertEquals(oldWikiPage.getRedirectTitle(), StringPool.BLANK);
 	}
 
 	@Override
