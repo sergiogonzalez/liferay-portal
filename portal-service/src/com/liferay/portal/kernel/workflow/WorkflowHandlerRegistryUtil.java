@@ -73,7 +73,7 @@ public class WorkflowHandlerRegistryUtil {
 		_instance._register(workflowHandler);
 	}
 
-	public static Object startWorkflowInstance(
+	public static void startWorkflowInstance(
 			long companyId, long groupId, long userId, String className,
 			long classPK, Object model, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -86,12 +86,12 @@ public class WorkflowHandlerRegistryUtil {
 			workflowContext = Collections.emptyMap();
 		}
 
-		return startWorkflowInstance(
+		startWorkflowInstance(
 			companyId, groupId, userId, className, classPK, model,
 			serviceContext, workflowContext);
 	}
 
-	public static Object startWorkflowInstance(
+	public static void startWorkflowInstance(
 			long companyId, long groupId, long userId, String className,
 			long classPK, Object model, ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
@@ -100,7 +100,7 @@ public class WorkflowHandlerRegistryUtil {
 		if (serviceContext.getWorkflowAction() !=
 				WorkflowConstants.ACTION_PUBLISH) {
 
-			return model;
+			return;
 		}
 
 		WorkflowHandler workflowHandler = getWorkflowHandler(className);
@@ -111,7 +111,7 @@ public class WorkflowHandlerRegistryUtil {
 					"No workflow handler found for " + className);
 			}
 
-			return model;
+			return;
 		}
 
 		boolean hasWorkflowInstanceInProgress =
@@ -126,7 +126,7 @@ public class WorkflowHandlerRegistryUtil {
 							groupId);
 			}
 
-			return model;
+			return;
 		}
 
 		WorkflowDefinitionLink workflowDefinitionLink = null;
@@ -165,15 +165,12 @@ public class WorkflowHandlerRegistryUtil {
 			WorkflowConstants.CONTEXT_TASK_COMMENTS,
 			GetterUtil.getString(serviceContext.getAttribute("comments")));
 
-		Object modelWithStatusUpdated =
-			workflowHandler.updateStatus(status, workflowContext);
+		workflowHandler.updateStatus(status, workflowContext);
 
 		if (workflowDefinitionLink != null) {
 			workflowHandler.startWorkflowInstance(
 				companyId, groupId, userId, classPK, model, workflowContext);
 		}
-
-		return modelWithStatusUpdated;
 	}
 
 	public static void startWorkflowInstance(
