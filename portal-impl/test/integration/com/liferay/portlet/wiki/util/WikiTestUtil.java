@@ -205,6 +205,49 @@ public class WikiTestUtil {
 		return new WikiPage[] {page, redirectPage};
 	}
 
+	public static WikiPage[] addTrashedParentPageWithTrashedRedirectPage(
+			long groupId,  long nodeId, boolean explicitlyRemoveChildPage,
+			boolean explicitlyRemoveRedirectPage)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), groupId, nodeId, "A", true);
+
+		WikiPageLocalServiceUtil.movePage(
+			TestPropsValues.getUserId(), nodeId, "A", "B", serviceContext);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "B");
+		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(nodeId, "A");
+
+		WikiPage childPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), nodeId, "TestChildPage",
+			ServiceTestUtil.randomString(), "B", true, serviceContext);
+
+		if (explicitlyRemoveChildPage) {
+			WikiPageLocalServiceUtil.movePageToTrash(
+				TestPropsValues.getUserId(), nodeId, "TestChildPage");
+		}
+
+		if (explicitlyRemoveRedirectPage) {
+			WikiPageLocalServiceUtil.movePageToTrash(
+				TestPropsValues.getUserId(), nodeId, "A");
+		}
+
+		WikiPageLocalServiceUtil.movePageToTrash(
+			TestPropsValues.getUserId(), nodeId, "B");
+
+		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
+		childPage = WikiPageLocalServiceUtil.getPageByPageId(
+			childPage.getPageId());
+		redirectPage = WikiPageLocalServiceUtil.getPageByPageId(
+			redirectPage.getPageId());
+
+		return new WikiPage[] {page, childPage, redirectPage};
+	}
+
 	public static File addWikiAttachment(
 			long userId, long nodeId, String title, Class<?> clazz)
 		throws Exception {
