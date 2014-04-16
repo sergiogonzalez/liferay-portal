@@ -260,11 +260,11 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 	@Override
 	public List<WikiPage> getParentPages()
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		List<WikiPage> parentPages = new ArrayList<WikiPage>();
 
-		WikiPage parentPage = getParentPage();
+		WikiPage parentPage = fetchParentPage();
 
 		if (parentPage != null) {
 			parentPages.addAll(parentPage.getParentPages());
