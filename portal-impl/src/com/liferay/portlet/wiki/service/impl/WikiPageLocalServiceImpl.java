@@ -2801,22 +2801,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			expandoBridge.getAttributes());
 	}
 
-	protected void startWorkflowInstance(
-			long userId, WikiPage page, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			page.getCompanyId(), page.getGroupId(), userId,
-			WikiPage.class.getName(), page.getPageId(), page, serviceContext,
-			workflowContext);
-	}
-
 	protected void restoreDependentChildrenFromTrash(
 			WikiPage page, String title, String trashTitle, long trashEntryId)
 		throws PortalException, SystemException {
@@ -2843,6 +2827,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			restoreDependentsFromTrash(
 				curPage, title, trashTitle, trashEntryId);
 		}
+	}
+
+	protected void restoreDependentsFromTrash(
+			WikiPage page, String title, String trashTitle, long trashEntryId)
+		throws PortalException, SystemException {
+
+		restoreDependentChildrenFromTrash(
+			page, title, trashTitle, trashEntryId);
+		restoreDependentRedirectPagesFromTrash(
+			page, title, trashTitle, trashEntryId);
 	}
 
 	protected void restoreDependentRedirectPagesFromTrash
@@ -2873,14 +2867,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void restoreDependentsFromTrash(
-			WikiPage page, String title, String trashTitle, long trashEntryId)
+	protected void startWorkflowInstance(
+			long userId, WikiPage page, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		restoreDependentChildrenFromTrash(
-			page, title, trashTitle, trashEntryId);
-		restoreDependentRedirectPagesFromTrash(
-			page, title, trashTitle, trashEntryId);
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			page.getCompanyId(), page.getGroupId(), userId,
+			WikiPage.class.getName(), page.getPageId(), page, serviceContext,
+			workflowContext);
 	}
 
 	protected void validate(long nodeId, String content, String format)

@@ -259,9 +259,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
-	public List<WikiPage> getParentPages()
-		throws SystemException {
-
+	public List<WikiPage> getParentPages() throws SystemException {
 		List<WikiPage> parentPages = new ArrayList<WikiPage>();
 
 		WikiPage parentPage = fetchParentPage();
