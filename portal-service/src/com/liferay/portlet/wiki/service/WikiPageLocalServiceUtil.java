@@ -853,6 +853,15 @@ public class WikiPageLocalServiceUtil {
 		return getService().hasDraftPage(nodeId, title);
 	}
 
+	public static void moveDependentToTrash(
+		com.liferay.portlet.wiki.model.WikiPage page,
+		java.lang.String originalParentTitle, long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.moveDependentToTrash(page, originalParentTitle, trashEntryId);
+	}
+
 	public static void movePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -898,6 +907,15 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().movePageToTrash(userId, page);
+	}
+
+	public static void restoreDependentFromTrash(
+		com.liferay.portlet.wiki.model.WikiPage page,
+		java.lang.String trashParentTitle, long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.restoreDependentFromTrash(page, trashParentTitle, trashEntryId);
 	}
 
 	public static void restorePageAttachmentFromTrash(long userId, long nodeId,
