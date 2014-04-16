@@ -104,7 +104,7 @@ public class JournalIndexerTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title",
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
 			"Liferay Architectural Approach", true);
 
 		Assert.assertEquals(
@@ -140,7 +140,7 @@ public class JournalIndexerTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		JournalArticle article1 = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title",
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
 			"Liferay Architectural Approach", true);
 
 		Assert.assertEquals(
@@ -156,10 +156,11 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		JournalTestUtil.updateArticle(
-			article1, article1.getTitle(), content, serviceContext);
+			article1, article1.getTitle(), content, false, true,
+			serviceContext);
 
 		JournalArticle article2 = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title",
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
 			"Apple Architectural Tablet", true);
 
 		Assert.assertEquals(
@@ -170,7 +171,8 @@ public class JournalIndexerTest {
 			"Architectural Tablet");
 
 		JournalTestUtil.updateArticle(
-			article2, article2.getTitle(), content, serviceContext);
+			article2, article2.getTitle(), content, false, true,
+			serviceContext);
 
 		JournalArticleLocalServiceUtil.deleteArticles(_group.getGroupId());
 
@@ -208,7 +210,8 @@ public class JournalIndexerTest {
 		String content = "Liferay Architectural Approach";
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title", content, true);
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
+			content, true);
 
 		Assert.assertEquals(
 			initialSearchCount  + 1,
@@ -222,7 +225,8 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), serviceContext);
+			article, article.getTitle(), article.getContent(), false, true,
+			serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 2,
@@ -233,7 +237,8 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), serviceContext);
+			article, article.getTitle(), article.getContent(), false, true,
+			serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 3,
@@ -286,7 +291,7 @@ public class JournalIndexerTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title",
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
 			"Liferay Architectural Approach", true);
 
 		Assert.assertEquals(
@@ -471,7 +476,7 @@ public class JournalIndexerTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title",
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
 			"Liferay Architectural Approach", approve);
 
 		if (approve) {
@@ -533,7 +538,7 @@ public class JournalIndexerTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title",
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
 			"Liferay Architectural Approach", true);
 
 		Assert.assertEquals(
@@ -546,7 +551,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
+			article, article.getTitle(), content, false, true, serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount1,
@@ -606,7 +611,8 @@ public class JournalIndexerTest {
 		String content = "Liferay Architectural Approach";
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title", content, true);
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
+			content, true);
 
 		Assert.assertEquals(
 			initialSearchCount + 1,
@@ -618,7 +624,8 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), serviceContext);
+			article, article.getTitle(), article.getContent(), false, true,
+			serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 2,
@@ -698,7 +705,7 @@ public class JournalIndexerTest {
 			_group.getGroupId(), searchContext2);
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder1.getFolderId(), "title",
+			_group.getGroupId(), folder1.getFolderId(), "title", "description",
 			"Liferay Architectural Approach", true);
 
 		Assert.assertEquals(
@@ -780,7 +787,7 @@ public class JournalIndexerTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), folder.getFolderId(), "title",
+			_group.getGroupId(), folder.getFolderId(), "title", "description",
 			"Liferay Architectural Approach", true);
 
 		Assert.assertEquals(
@@ -801,7 +808,7 @@ public class JournalIndexerTest {
 		}
 
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
+			article, article.getTitle(), content, false, true, serviceContext);
 
 		if (approve) {
 			Assert.assertEquals(

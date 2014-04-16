@@ -845,6 +845,10 @@ public class PortletURLImpl
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
+
 		String portalURL = null;
 
 		if (themeDisplay.isFacebook()) {
