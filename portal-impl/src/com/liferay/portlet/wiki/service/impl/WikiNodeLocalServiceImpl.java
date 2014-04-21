@@ -451,7 +451,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Pages
 
-		restoreDependentFromTrash(node.getNodeId(), trashEntry.getEntryId());
+		restoreDependentsFromTrash(node.getNodeId(), trashEntry.getEntryId());
 
 		// Trash
 
@@ -571,6 +571,26 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		}
 
 		return wikiImporter;
+	}
+
+	protected void moveDependentsToTrash(long nodeId, long trashEntryId)
+		throws PortalException, SystemException {
+
+		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
+
+		for (WikiPage page : pages) {
+			wikiPageLocalService.moveDependentToTrash(page, trashEntryId);
+		}
+	}
+
+	protected void restoreDependentsFromTrash(long nodeId, long trashEntryId)
+		throws PortalException, SystemException {
+
+		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
+
+		for (WikiPage page : pages) {
+			wikiPageLocalService.restoreDependentFromTrash(page, trashEntryId);
+		}
 	}
 
 	protected void validate(long nodeId, long groupId, String name)
