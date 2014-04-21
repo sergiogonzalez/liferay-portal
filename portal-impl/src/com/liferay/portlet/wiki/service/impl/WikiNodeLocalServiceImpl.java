@@ -40,7 +40,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.DuplicateNodeNameException;
 import com.liferay.portlet.wiki.NodeNameException;
@@ -48,8 +47,6 @@ import com.liferay.portlet.wiki.importers.WikiImporter;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.base.WikiNodeLocalServiceBaseImpl;
-import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
-import com.liferay.portlet.wiki.util.WikiCacheUtil;
 
 import java.io.InputStream;
 
