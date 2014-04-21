@@ -499,13 +499,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage childrenPage : childrenPages) {
-			if (!childrenPage.isApproved()) {
+			if (childrenPage.isApproved() ||
+				childrenPage.isInTrashImplicitly()) {
+
+				wikiPageLocalService.deletePage(childrenPage);
+			}
+			else {
 				childrenPage.setParentTitle(StringPool.BLANK);
 
 				wikiPagePersistence.update(childrenPage);
-			}
-			else {
-				wikiPageLocalService.deletePage(childrenPage);
 			}
 		}
 
@@ -513,13 +515,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage redirectPage : redirectPages) {
-			if (!redirectPage.isApproved()) {
+			if (redirectPage.isApproved() ||
+				redirectPage.isInTrashImplicitly()) {
+
+				wikiPageLocalService.deletePage(redirectPage);
+			}
+			else {
 				redirectPage.setRedirectTitle(StringPool.BLANK);
 
 				wikiPagePersistence.update(redirectPage);
-			}
-			else {
-				wikiPageLocalService.deletePage(redirectPage);
 			}
 		}
 
@@ -1424,6 +1428,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
+		String parentTitle = page.getParentTitle();
+		String redirectTitle = page.getRedirectTitle();
+
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
@@ -1436,6 +1443,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			int versionPageOldStatus = versionPage.getStatus();
 
 			versionPage.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+			if (Validator.isNotNull(parentTitle)) {
+				versionPage.setParentTitle(parentTitle);
+			}
+
+			if (Validator.isNotNull(redirectTitle)) {
+				versionPage.setRedirectTitle(redirectTitle);
+			}
 
 			wikiPagePersistence.update(versionPage);
 
@@ -1799,6 +1814,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			oldStatus = trashVersion.getStatus();
 		}
 
+		String originalParentTitle = page.getParentTitle();
+		String originalRedirectTitle = page.getRedirectTitle();
+
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
@@ -1807,6 +1825,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage versionPage : versionPages) {
 
 			// Version page
+
+			if (Validator.isNotNull(originalParentTitle)) {
+				versionPage.setParentTitle(originalParentTitle);
+			}
+
+			if (Validator.isNotNull(originalRedirectTitle)) {
+				versionPage.setRedirectTitle(originalRedirectTitle);
+			}
 
 			trashVersion = trashVersionLocalService.fetchVersion(
 				trashEntryId, WikiPage.class.getName(),
