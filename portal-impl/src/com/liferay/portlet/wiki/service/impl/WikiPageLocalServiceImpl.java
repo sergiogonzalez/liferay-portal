@@ -499,13 +499,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage childrenPage : childrenPages) {
-			if (!childrenPage.isApproved()) {
+			if (childrenPage.isApproved() ||
+				childrenPage.isInTrashImplicitly()) {
+
+				wikiPageLocalService.deletePage(childrenPage);
+			}
+			else {
 				childrenPage.setParentTitle(StringPool.BLANK);
 
 				wikiPagePersistence.update(childrenPage);
-			}
-			else {
-				wikiPageLocalService.deletePage(childrenPage);
 			}
 		}
 
@@ -513,13 +515,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage redirectPage : redirectPages) {
-			if (!redirectPage.isApproved()) {
+			if (redirectPage.isApproved() ||
+				redirectPage.isInTrashImplicitly()) {
+
+				wikiPageLocalService.deletePage(redirectPage);
+			}
+			else {
 				redirectPage.setRedirectTitle(StringPool.BLANK);
 
 				wikiPagePersistence.update(redirectPage);
-			}
-			else {
-				wikiPageLocalService.deletePage(redirectPage);
 			}
 		}
 
@@ -1425,6 +1429,22 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
+		String parentTitle = page.getParentTitle();
+
+		String originalParentTitle = null;
+
+		if (Validator.isNotNull(parentTitle)) {
+			originalParentTitle = TrashUtil.getOriginalTitle(parentTitle);
+		}
+
+		String redirectTitle = page.getRedirectTitle();
+
+		String originalRedirectTitle = null;
+
+		if (Validator.isNotNull(redirectTitle)) {
+			originalRedirectTitle = TrashUtil.getOriginalTitle(redirectTitle);
+		}
+
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
@@ -1433,6 +1453,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage versionPage : versionPages) {
 
 			// Version page
+
+			if (Validator.isNotNull(originalParentTitle) &&
+				versionPage.getParentTitle().equals(originalParentTitle)) {
+
+				versionPage.setParentTitle(parentTitle);
+			}
+
+			if (Validator.isNotNull(originalRedirectTitle) &&
+				versionPage.getRedirectPage().equals(originalRedirectTitle)) {
+
+				versionPage.setRedirectTitle(redirectTitle);
+			}
 
 			int versionPageOldStatus = versionPage.getStatus();
 
@@ -1810,6 +1842,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			oldStatus = trashVersion.getStatus();
 		}
 
+		String originalParentTitle = page.getParentTitle();
+		String originalRedirectTitle = page.getRedirectTitle();
+
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
@@ -1818,6 +1853,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage versionPage : versionPages) {
 
 			// Version page
+
+			if (Validator.isNotNull(originalParentTitle)) {
+				versionPage.setParentTitle(originalParentTitle);
+			}
+
+			if (Validator.isNotNull(originalRedirectTitle)) {
+				versionPage.setRedirectTitle(originalRedirectTitle);
+			}
 
 			trashVersion = trashVersionLocalService.fetchVersion(
 				trashEntryId, WikiPage.class.getName(),
