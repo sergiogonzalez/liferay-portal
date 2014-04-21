@@ -576,7 +576,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
 
 		for (WikiPage page : pages) {
-			wikiPageLocalService.moveDependentToTrash(page, trashEntryId);
+			wikiPageLocalService.moveDependentToTrash(page, null, trashEntryId);
 		}
 	}
 
@@ -586,7 +586,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
 
 		for (WikiPage page : pages) {
-			wikiPageLocalService.restoreDependentFromTrash(page, trashEntryId);
+			wikiPageLocalService.restoreDependentFromTrash(
+				page, null, trashEntryId);
 		}
 	}
 
