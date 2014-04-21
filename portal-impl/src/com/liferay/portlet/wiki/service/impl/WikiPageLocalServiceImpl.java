@@ -499,13 +499,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage childrenPage : childrenPages) {
-			if (!childrenPage.isApproved()) {
+			if (childrenPage.isApproved() ||
+				childrenPage.isInTrashImplicitly()) {
+
+				wikiPageLocalService.deletePage(childrenPage);
+			}
+			else {
 				childrenPage.setParentTitle(StringPool.BLANK);
 
 				wikiPagePersistence.update(childrenPage);
-			}
-			else {
-				wikiPageLocalService.deletePage(childrenPage);
 			}
 		}
 
@@ -513,13 +515,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage redirectPage : redirectPages) {
-			if (!redirectPage.isApproved()) {
+			if (redirectPage.isApproved() ||
+				redirectPage.isInTrashImplicitly()) {
+
+				wikiPageLocalService.deletePage(redirectPage);
+			}
+			else {
 				redirectPage.setRedirectTitle(StringPool.BLANK);
 
 				wikiPagePersistence.update(redirectPage);
-			}
-			else {
-				wikiPageLocalService.deletePage(redirectPage);
 			}
 		}
 
