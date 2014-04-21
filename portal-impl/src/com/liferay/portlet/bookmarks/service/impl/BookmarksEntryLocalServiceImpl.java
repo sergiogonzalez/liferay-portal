@@ -136,7 +136,9 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Subscriptions
 
-		notifySubscribers(entry, serviceContext);
+		notifySubscribers(
+			entry, getEntryURL(entry, serviceContext.getLayoutFullURL()),
+			serviceContext);
 
 		return entry;
 	}
@@ -607,7 +609,9 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Subscriptions
 
-		notifySubscribers(entry, serviceContext);
+		notifySubscribers(
+			entry, getEntryURL(entry, serviceContext.getLayoutFullURL()),
+			serviceContext);
 
 		return entry;
 	}
@@ -665,6 +669,22 @@ public class BookmarksEntryLocalServiceImpl
 		return entry;
 	}
 
+	protected String getEntryURL(BookmarksEntry entry, String layoutFullURL) {
+		if (Validator.isNull(layoutFullURL)) {
+			return StringPool.BLANK;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(layoutFullURL);
+		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
+		sb.append("bookmarks");
+		sb.append(StringPool.SLASH);
+		sb.append(entry.getEntryId());
+
+		return sb.toString();
+	}
+
 	protected long getFolder(BookmarksEntry entry, long folderId)
 		throws SystemException {
 
@@ -685,12 +705,11 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			BookmarksEntry entry, ServiceContext serviceContext)
+			BookmarksEntry entry, String entryURL,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!entry.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!entry.isApproved() || Validator.isNull(entryURL)) {
 			return;
 		}
 
@@ -718,9 +737,6 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		String entryTitle = entry.getName();
-		String entryURL =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
-				StringPool.SLASH + entry.getEntryId();
 
 		String fromName = bookmarksSettings.getEmailFromName();
 		String fromAddress = bookmarksSettings.getEmailFromAddress();
