@@ -127,19 +127,19 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			group.getGroupId(), BlogsConstants.SERVICE_NAME);
 
-		String germanSubscriptionBodyPreferenceKey =
+		String germanSubscriptionBodyPreferencesKey =
 			LocalizationUtil.getPreferencesKey(
 				getSubscriptionBodyPreferenceName(),
 				LocaleUtil.toLanguageId(LocaleUtil.GERMANY));
 
-		settings.setValue(germanSubscriptionBodyPreferenceKey, GERMAN_BODY);
+		settings.setValue(germanSubscriptionBodyPreferencesKey, GERMAN_BODY);
 
-		String spanishSubscriptionBodyPreferenceKey =
+		String spanishSubscriptionBodyPreferencesKey =
 			LocalizationUtil.getPreferencesKey(
 				getSubscriptionBodyPreferenceName(),
 				LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
 
-		settings.setValue(spanishSubscriptionBodyPreferenceKey, SPANISH_BODY);
+		settings.setValue(spanishSubscriptionBodyPreferencesKey, SPANISH_BODY);
 
 		settings.store();
 	}

@@ -204,6 +204,11 @@ public class TrashEntryLocalServiceUtil {
 		return getService().getTrashEntry(entryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActionableDynamicQuery();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -278,6 +283,9 @@ public class TrashEntryLocalServiceUtil {
 	* @param groupId the primary key of the entry's group
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
+	* @param classUuid the UUID of the entity's class
+	* @param referrerClassName the referrer class name used to add a deletion
+	{@link SystemEvent}
 	* @param status the status of the entity prior to being moved to trash
 	* @param statusOVPs the primary keys and statuses of any of the entry's
 	versions (e.g., {@link

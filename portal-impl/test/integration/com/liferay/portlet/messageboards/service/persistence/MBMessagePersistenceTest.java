@@ -42,6 +42,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -693,16 +694,18 @@ public class MBMessagePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new MBMessageActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = MBMessageLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					MBMessage mbMessage = (MBMessage)object;
 
 					Assert.assertNotNull(mbMessage);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

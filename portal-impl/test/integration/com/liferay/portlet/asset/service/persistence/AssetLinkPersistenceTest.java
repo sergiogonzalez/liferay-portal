@@ -39,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchLinkException;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.impl.AssetLinkModelImpl;
+import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -307,16 +308,18 @@ public class AssetLinkPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new AssetLinkActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = AssetLinkLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					AssetLink assetLink = (AssetLink)object;
 
 					Assert.assertNotNull(assetLink);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

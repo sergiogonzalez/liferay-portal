@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordModelImpl;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -336,16 +337,18 @@ public class DDLRecordPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new DDLRecordActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = DDLRecordLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					DDLRecord ddlRecord = (DDLRecord)object;
 
 					Assert.assertNotNull(ddlRecord);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

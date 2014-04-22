@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl;
+import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -310,16 +311,18 @@ public class DDMContentPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new DDMContentActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = DDMContentLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					DDMContent ddmContent = (DDMContent)object;
 
 					Assert.assertNotNull(ddmContent);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

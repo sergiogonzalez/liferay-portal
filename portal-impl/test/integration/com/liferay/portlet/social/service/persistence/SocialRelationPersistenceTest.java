@@ -39,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.NoSuchRelationException;
 import com.liferay.portlet.social.model.SocialRelation;
 import com.liferay.portlet.social.model.impl.SocialRelationModelImpl;
+import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -364,16 +365,18 @@ public class SocialRelationPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new SocialRelationActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = SocialRelationLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					SocialRelation socialRelation = (SocialRelation)object;
 
 					Assert.assertNotNull(socialRelation);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

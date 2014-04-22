@@ -36,6 +36,7 @@ import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
 import com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
+import com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -239,16 +240,18 @@ public class SCLicensePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new SCLicenseActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = SCLicenseLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					SCLicense scLicense = (SCLicense)object;
 
 					Assert.assertNotNull(scLicense);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

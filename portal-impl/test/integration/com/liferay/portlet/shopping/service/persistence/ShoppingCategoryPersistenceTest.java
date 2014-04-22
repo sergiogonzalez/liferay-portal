@@ -37,6 +37,7 @@ import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
 import com.liferay.portlet.shopping.NoSuchCategoryException;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
+import com.liferay.portlet.shopping.service.ShoppingCategoryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -271,16 +272,18 @@ public class ShoppingCategoryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new ShoppingCategoryActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = ShoppingCategoryLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					ShoppingCategory shoppingCategory = (ShoppingCategory)object;
 
 					Assert.assertNotNull(shoppingCategory);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

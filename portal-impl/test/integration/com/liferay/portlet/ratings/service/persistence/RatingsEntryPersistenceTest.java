@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ratings.NoSuchEntryException;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -307,16 +308,18 @@ public class RatingsEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new RatingsEntryActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = RatingsEntryLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					RatingsEntry ratingsEntry = (RatingsEntry)object;
 
 					Assert.assertNotNull(ratingsEntry);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

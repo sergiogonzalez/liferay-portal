@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -219,16 +220,18 @@ public class ClassNamePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new ClassNameActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = ClassNameLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					ClassName className = (ClassName)object;
 
 					Assert.assertNotNull(className);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

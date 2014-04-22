@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotModelImpl;
+import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -272,16 +273,18 @@ public class SCProductScreenshotPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new SCProductScreenshotActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = SCProductScreenshotLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					SCProductScreenshot scProductScreenshot = (SCProductScreenshot)object;
 
 					Assert.assertNotNull(scProductScreenshot);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

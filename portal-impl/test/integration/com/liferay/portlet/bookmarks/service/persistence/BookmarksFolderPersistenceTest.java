@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderModelImpl;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -428,16 +429,18 @@ public class BookmarksFolderPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new BookmarksFolderActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = BookmarksFolderLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					BookmarksFolder bookmarksFolder = (BookmarksFolder)object;
 
 					Assert.assertNotNull(bookmarksFolder);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

@@ -242,6 +242,19 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -692,8 +705,8 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param templateKey the unique string identifying the template
-	* @param includeAncestorTemplates whether to include the parent sites in the
-	search
+	* @param includeAncestorTemplates whether to include the parent sites in
+	the search
 	* @return the matching template
 	* @throws PortalException if a matching template could not be found
 	* @throws SystemException if a system exception occurred

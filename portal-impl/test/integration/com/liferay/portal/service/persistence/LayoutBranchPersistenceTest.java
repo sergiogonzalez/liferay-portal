@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutBranchModelImpl;
+import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -294,16 +295,18 @@ public class LayoutBranchPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new LayoutBranchActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = LayoutBranchLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					LayoutBranch layoutBranch = (LayoutBranch)object;
 
 					Assert.assertNotNull(layoutBranch);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

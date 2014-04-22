@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.NoSuchEntryException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -517,16 +518,18 @@ public class BookmarksEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new BookmarksEntryActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = BookmarksEntryLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					BookmarksEntry bookmarksEntry = (BookmarksEntry)object;
 
 					Assert.assertNotNull(bookmarksEntry);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

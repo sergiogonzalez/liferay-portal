@@ -34,6 +34,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 public class JournalArticleExportActionableDynamicQuery

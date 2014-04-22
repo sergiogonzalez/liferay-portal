@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl;
+import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -379,16 +380,18 @@ public class WikiNodePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new WikiNodeActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = WikiNodeLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					WikiNode wikiNode = (WikiNode)object;
 
 					Assert.assertNotNull(wikiNode);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

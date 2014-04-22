@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl;
+import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -237,16 +238,18 @@ public class DLSyncEventPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new DLSyncEventActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = DLSyncEventLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					DLSyncEvent dlSyncEvent = (DLSyncEvent)object;
 
 					Assert.assertNotNull(dlSyncEvent);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

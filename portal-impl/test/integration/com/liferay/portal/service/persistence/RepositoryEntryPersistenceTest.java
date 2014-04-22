@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.impl.RepositoryEntryModelImpl;
+import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -318,16 +319,18 @@ public class RepositoryEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new RepositoryEntryActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = RepositoryEntryLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					RepositoryEntry repositoryEntry = (RepositoryEntry)object;
 
 					Assert.assertNotNull(repositoryEntry);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

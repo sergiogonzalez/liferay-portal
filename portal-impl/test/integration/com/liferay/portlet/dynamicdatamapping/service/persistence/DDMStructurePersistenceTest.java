@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -462,16 +463,18 @@ public class DDMStructurePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new DDMStructureActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = DDMStructureLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					DDMStructure ddmStructure = (DDMStructure)object;
 
 					Assert.assertNotNull(ddmStructure);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

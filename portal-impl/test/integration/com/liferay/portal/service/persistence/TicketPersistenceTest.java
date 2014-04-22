@@ -35,6 +35,7 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Ticket;
 import com.liferay.portal.model.impl.TicketModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.TicketLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -249,16 +250,18 @@ public class TicketPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new TicketActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = TicketLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					Ticket ticket = (Ticket)object;
 
 					Assert.assertNotNull(ticket);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

@@ -39,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ratings.NoSuchStatsException;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -231,16 +232,18 @@ public class RatingsStatsPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new RatingsStatsActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = RatingsStatsLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					RatingsStats ratingsStats = (RatingsStats)object;
 
 					Assert.assertNotNull(ratingsStats);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

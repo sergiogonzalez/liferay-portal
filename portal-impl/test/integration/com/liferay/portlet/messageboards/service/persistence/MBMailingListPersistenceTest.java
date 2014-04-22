@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl;
+import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -379,16 +380,18 @@ public class MBMailingListPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new MBMailingListActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = MBMailingListLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					MBMailingList mbMailingList = (MBMailingList)object;
 
 					Assert.assertNotNull(mbMailingList);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

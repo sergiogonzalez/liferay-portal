@@ -39,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.NoSuchStatsUserException;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl;
+import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -265,16 +266,18 @@ public class MBStatsUserPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new MBStatsUserActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = MBStatsUserLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					MBStatsUser mbStatsUser = (MBStatsUser)object;
 
 					Assert.assertNotNull(mbStatsUser);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

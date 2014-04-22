@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleModelImpl;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -303,16 +304,18 @@ public class MDRRulePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new MDRRuleActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = MDRRuleLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					MDRRule mdrRule = (MDRRule)object;
 
 					Assert.assertNotNull(mdrRule);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

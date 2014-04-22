@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.NoSuchActivitySettingException;
 import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.model.impl.SocialActivitySettingModelImpl;
+import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -294,16 +295,18 @@ public class SocialActivitySettingPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new SocialActivitySettingActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = SocialActivitySettingLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					SocialActivitySetting socialActivitySetting = (SocialActivitySetting)object;
 
 					Assert.assertNotNull(socialActivitySetting);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

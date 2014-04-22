@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -246,16 +247,18 @@ public class DDMStructureLinkPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new DDMStructureLinkActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = DDMStructureLinkLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					DDMStructureLink ddmStructureLink = (DDMStructureLink)object;
 
 					Assert.assertNotNull(ddmStructureLink);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

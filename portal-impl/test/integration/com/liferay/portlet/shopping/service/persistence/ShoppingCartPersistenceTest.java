@@ -39,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.shopping.NoSuchCartException;
 import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl;
+import com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -279,16 +280,18 @@ public class ShoppingCartPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new ShoppingCartActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = ShoppingCartLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					ShoppingCart shoppingCart = (ShoppingCart)object;
 
 					Assert.assertNotNull(shoppingCart);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

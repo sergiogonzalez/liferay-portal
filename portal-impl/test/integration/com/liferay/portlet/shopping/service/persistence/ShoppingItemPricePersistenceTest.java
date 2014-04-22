@@ -37,6 +37,7 @@ import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
 import com.liferay.portlet.shopping.NoSuchItemPriceException;
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
+import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -245,16 +246,18 @@ public class ShoppingItemPricePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new ShoppingItemPriceActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = ShoppingItemPriceLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					ShoppingItemPrice shoppingItemPrice = (ShoppingItemPrice)object;
 
 					Assert.assertNotNull(shoppingItemPrice);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

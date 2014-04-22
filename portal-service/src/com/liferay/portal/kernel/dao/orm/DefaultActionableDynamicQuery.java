@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,22 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/aui/nav/init.jsp" %>
+package com.liferay.portal.kernel.dao.orm;
 
-</ul>
-
-<c:if test="<%= collapsible %>">
-	</div>
-
-	<aui:script use="aui-base,event-outside,liferay-menu-toggle">
-		var toggleMenu = new Liferay.MenuToggle(
-			{
-				content: '#<%= id %>NavbarCollapse, #<%= id %>NavbarBtn',
-				toggleTouch: true,
-				trigger: '#<%= id %>NavbarBtn'
-			}
-		);
-	</aui:script>
-</c:if >
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class DefaultActionableDynamicQuery extends BaseActionableDynamicQuery {
+}

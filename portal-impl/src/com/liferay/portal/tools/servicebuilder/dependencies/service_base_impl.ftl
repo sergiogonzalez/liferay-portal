@@ -8,12 +8,25 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.lar.ManifestSummary;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
@@ -376,6 +389,141 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		public ${entity.name} get${entity.name}(${entity.PKClassName} ${entity.PKVarName}) throws ${stringUtil.merge(serviceBaseExceptions)} {
 			return ${entity.varName}Persistence.findByPrimaryKey(${entity.PKVarName});
 		}
+
+		<#if entity.hasActionableDynamicQuery()>
+			@Override
+			public ActionableDynamicQuery getActionableDynamicQuery() throws SystemException {
+				ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+				actionableDynamicQuery.setBaseLocalService(${packagePath}.service.${entity.name}LocalServiceUtil.getService());
+				actionableDynamicQuery.setClass(${entity.name}.class);
+				actionableDynamicQuery.setClassLoader(getClassLoader());
+
+				<#if entity.hasPrimitivePK()>
+					actionableDynamicQuery.setPrimaryKeyPropertyName("${entity.PKVarName}");
+				<#else>
+					<#assign pkList = entity.getPKList()>
+
+					<#assign pkColumn = pkList?first>
+
+					actionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.${pkColumn.name}");
+
+					<#list entity.getPKList() as pkColumn>
+						<#if pkColumn.name == "groupId">
+							actionableDynamicQuery.setGroupIdPropertyName("primaryKey.groupId");
+						</#if>
+					</#list>
+				</#if>
+
+				return actionableDynamicQuery;
+			}
+
+			protected void initActionableDynamicQuery(ActionableDynamicQuery actionableDynamicQuery) throws SystemException {
+				actionableDynamicQuery.setBaseLocalService(${packagePath}.service.${entity.name}LocalServiceUtil.getService());
+				actionableDynamicQuery.setClass(${entity.name}.class);
+				actionableDynamicQuery.setClassLoader(getClassLoader());
+
+				<#if entity.hasPrimitivePK()>
+					actionableDynamicQuery.setPrimaryKeyPropertyName("${entity.PKVarName}");
+				<#else>
+					<#assign pkList = entity.getPKList()>
+
+					<#assign pkColumn = pkList?first>
+
+					actionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.${pkColumn.name}");
+
+					<#list entity.getPKList() as pkColumn>
+						<#if pkColumn.name == "groupId">
+							actionableDynamicQuery.setGroupIdPropertyName("primaryKey.groupId");
+						</#if>
+					</#list>
+				</#if>
+			}
+
+			<#if entity.isStagedModel()>
+				@Override
+				public ExportActionableDynamicQuery getExportActionableDynamicQuery(final PortletDataContext portletDataContext) throws SystemException {
+					final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+
+						@Override
+						public long performCount() throws PortalException, SystemException {
+							ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+							StagedModelType stagedModelType = getStagedModelType();
+
+							long modelAdditionCount = super.performCount();
+
+							manifestSummary.addModelAdditionCount(stagedModelType.toString(), modelAdditionCount);
+
+							long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext, stagedModelType);
+
+							manifestSummary.addModelDeletionCount(stagedModelType.toString(), modelDeletionCount);
+
+							return modelAdditionCount;
+						}
+
+						<#if entity.isResourcedModel()>
+							@Override
+							protected Projection getCountProjection() {
+								return ProjectionFactoryUtil.countDistinct("resourcePrimKey");
+							}
+						</#if>
+					};
+
+					initActionableDynamicQuery(exportActionableDynamicQuery);
+
+					exportActionableDynamicQuery.setAddCriteriaMethod(
+						new ActionableDynamicQuery.AddCriteriaMethod() {
+
+							@Override
+							public void addCriteria(DynamicQuery dynamicQuery) {
+								portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
+
+								<#if entity.isTypedModel()>
+									StagedModelType stagedModelType = exportActionableDynamicQuery.getStagedModelType();
+
+									if (stagedModelType.getReferrerClassNameId() >= 0) {
+										Property classNameIdProperty = PropertyFactoryUtil.forName("classNameId");
+
+										dynamicQuery.add(classNameIdProperty.eq(stagedModelType.getReferrerClassNameId()));
+									}
+								</#if>
+
+								<#if entity.isWorkflowEnabled()>
+									StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(${entity.name}.class.getName());
+
+									Property workflowStatusProperty = PropertyFactoryUtil.forName("status");
+
+									dynamicQuery.add(workflowStatusProperty.in(stagedModelDataHandler.getExportableStatuses()));
+								</#if>
+							}
+
+						});
+
+					exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+					<#if entity.isStagedGroupedModel()>
+						exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+					</#if>
+
+					exportActionableDynamicQuery.setPerformActionMethod(
+						new ActionableDynamicQuery.PerformActionMethod() {
+
+							@Override
+							@SuppressWarnings("unused")
+							public void performAction(Object object) throws PortalException, SystemException {
+								${entity.name} stagedModel = (${entity.name})object;
+
+								StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, stagedModel);
+							}
+
+						});
+					exportActionableDynamicQuery.setStagedModelType(new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName())));
+
+					return exportActionableDynamicQuery;
+				}
+			</#if>
+		</#if>
 
 		@Override
 		public PersistedModel getPersistedModel(Serializable primaryKeyObj) throws PortalException, SystemException {

@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -394,16 +395,18 @@ public class DLFileShortcutPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new DLFileShortcutActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = DLFileShortcutLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
 
 					Assert.assertNotNull(dlFileShortcut);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

@@ -42,6 +42,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.impl.JournalFeedModelImpl;
+import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -376,16 +377,18 @@ public class JournalFeedPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new JournalFeedActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = JournalFeedLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					JournalFeed journalFeed = (JournalFeed)object;
 
 					Assert.assertNotNull(journalFeed);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

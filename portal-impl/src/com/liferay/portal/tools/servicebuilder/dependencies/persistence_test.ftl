@@ -19,6 +19,7 @@ package ${packagePath}.service.persistence;
 import ${packagePath}.${noSuchEntity}Exception;
 import ${packagePath}.model.${entity.name};
 import ${packagePath}.model.impl.${entity.name}ModelImpl;
+import ${packagePath}.service.${entity.name}LocalServiceUtil;
 
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
@@ -559,18 +560,21 @@ public class ${entity.name}PersistenceTest {
 		public void testActionableDynamicQuery() throws Exception {
 			final IntegerWrapper count = new IntegerWrapper();
 
-			ActionableDynamicQuery actionableDynamicQuery = new ${entity.name}ActionableDynamicQuery() {
+			ActionableDynamicQuery actionableDynamicQuery = ${entity.name}LocalServiceUtil.getActionableDynamicQuery();
 
-				@Override
-				protected void performAction(Object object) {
-					${entity.name} ${entity.varName} = (${entity.name})object;
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod() {
 
-					Assert.assertNotNull(${entity.varName});
+					@Override
+					public void performAction(Object object) {
+						${entity.name} ${entity.varName} = (${entity.name})object;
 
-					count.increment();
-				}
+						Assert.assertNotNull(${entity.varName});
 
-			};
+						count.increment();
+					}
+
+				});
 
 			actionableDynamicQuery.performActions();
 

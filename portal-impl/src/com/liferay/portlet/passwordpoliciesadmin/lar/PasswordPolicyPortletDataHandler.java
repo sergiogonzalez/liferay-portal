@@ -15,7 +15,6 @@
 package com.liferay.portlet.passwordpoliciesadmin.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
-import com.liferay.portal.service.persistence.PasswordPolicyExportActionableDynamicQuery;
 
 import java.util.List;
 
@@ -128,28 +126,30 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			final PortletDataContext portletDataContext, final boolean export)
 		throws SystemException {
 
-		return new PasswordPolicyExportActionableDynamicQuery(
-			portletDataContext) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			PasswordPolicyLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				if (!export) {
-					return;
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					if (!export) {
+						return;
+					}
+
+					PasswordPolicy passwordPolicy = (PasswordPolicy)object;
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, passwordPolicy);
 				}
 
-				PasswordPolicy passwordPolicy = (PasswordPolicy)object;
+			});
 
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, passwordPolicy);
-			}
-
-		};
+		return actionableDynamicQuery;
 	}
 
 	protected static final String RESOURCE_NAME =

@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -460,16 +461,18 @@ public class DLFileVersionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new DLFileVersionActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = DLFileVersionLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					DLFileVersion dlFileVersion = (DLFileVersion)object;
 
 					Assert.assertNotNull(dlFileVersion);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

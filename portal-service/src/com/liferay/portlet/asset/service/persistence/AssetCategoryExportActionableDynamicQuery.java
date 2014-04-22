@@ -28,6 +28,7 @@ import com.liferay.portlet.asset.model.AssetCategory;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 public class AssetCategoryExportActionableDynamicQuery
