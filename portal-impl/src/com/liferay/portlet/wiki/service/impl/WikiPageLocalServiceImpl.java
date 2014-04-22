@@ -1415,6 +1415,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void moveDependentToTrash(WikiPage page, long trashEntryId)
 		throws PortalException, SystemException {
 
@@ -1796,6 +1797,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return page;
 	}
 
+	@Override
 	public void restoreDependentFromTrash(WikiPage page, long trashEntryId)
 		throws PortalException, SystemException {
 
