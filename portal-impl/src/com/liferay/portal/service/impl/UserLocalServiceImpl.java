@@ -132,6 +132,7 @@ import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
+import com.liferay.portal.service.persistence.SocialRelationQuery;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -2392,16 +2393,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long userId, int type, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("socialRelationType", new Long[] {userId, new Long(type)});
-
-		return search(
-			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			params, start, end, obc);
+		return getSocialUsers(
+			userId, null, new int[] { type }, start, end, obc);
 	}
 
 	/**
@@ -2437,7 +2430,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 
-		params.put("socialRelation", new Long[] {userId});
+		SocialRelationQuery socialRelationQuery =
+			SocialRelationQuery.getFriendlyRelations(userId);
+
+		params.put("socialRelationQuery", socialRelationQuery);
 
 		return search(
 			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
@@ -2478,18 +2474,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		User user1 = userPersistence.findByPrimaryKey(userId1);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put(
-			"socialMutualRelationType",
-			new Long[] {userId1, new Long(type), userId2, new Long(type)});
-
-		return search(
-			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			params, start, end, obc);
+		return getSocialUsers(
+			userId1, userId2, null, new int[] {type}, start, end, obc);
 	}
 
 	/**
@@ -2528,10 +2514,58 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 
-		params.put("socialMutualRelation", new Long[] {userId1, userId2});
+		SocialRelationQuery socialRelationQuery =
+			SocialRelationQuery.getMutualRelations(userId1, userId2);
+
+		params.put("socialRelationQuery", socialRelationQuery);
 
 		return search(
 			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, obc);
+	}
+
+	@Override
+	public List<User> getSocialUsers(
+			long userId1, long userId2, long[] groupIds, int[] types, int start,
+			int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		User user1 = userPersistence.findByPrimaryKey(userId1);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		SocialRelationQuery socialRelationQuery =
+			SocialRelationQuery.getMutualRelationsByType(
+				userId1, userId2, types);
+
+		params.put("socialRelationQuery", socialRelationQuery);
+		params.put("usersGroups", groupIds);
+
+		return search(
+			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, obc);
+	}
+
+	@Override
+	public List<User> getSocialUsers(
+			long userId, long[] groupIds, int[] types, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		SocialRelationQuery socialRelationQuery =
+			SocialRelationQuery.getRelationsByType(userId, types);
+
+		params.put("socialRelationQuery", socialRelationQuery);
+		params.put("usersGroups", groupIds);
+
+		return search(
+			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
 			params, start, end, obc);
 	}
 
@@ -2552,7 +2586,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 
-		params.put("socialRelation", new Long[] {userId});
+		SocialRelationQuery socialRelationQuery =
+			SocialRelationQuery.getFriendlyRelations(userId);
+
+		params.put("socialRelationQuery", socialRelationQuery);
 
 		return searchCount(
 			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
@@ -2576,16 +2613,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public int getSocialUsersCount(long userId, int type)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("socialRelationType", new Long[] {userId, new Long(type)});
-
-		return searchCount(
-			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			params);
+		return getSocialUsersCount(userId, null, new int[] {type});
 	}
 
 	/**
@@ -2607,7 +2635,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 
-		params.put("socialMutualRelation", new Long[] {userId1, userId2});
+		SocialRelationQuery socialRelationQuery =
+			SocialRelationQuery.getMutualRelations(userId1, userId2);
+
+		params.put("socialRelationQuery", socialRelationQuery);
 
 		return searchCount(
 			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
@@ -2632,17 +2663,48 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public int getSocialUsersCount(long userId1, long userId2, int type)
 		throws PortalException, SystemException {
 
+		return getSocialUsersCount(userId1, userId2, null, new int[] {type});
+	}
+
+	@Override
+	public int getSocialUsersCount(
+			long userId1, long userId2, long[] groupIds, int[] types)
+		throws PortalException, SystemException {
+
 		User user1 = userPersistence.findByPrimaryKey(userId1);
 
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 
-		params.put(
-			"socialMutualRelationType",
-			new Long[] {userId1, new Long(type), userId2, new Long(type)});
+		SocialRelationQuery socialRelationQuery =
+			SocialRelationQuery.getMutualRelationsByType(
+				userId1, userId2, types);
+
+		params.put("socialRelationQuery", socialRelationQuery);
+		params.put("usersGroups", groupIds);
 
 		return searchCount(
 			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			params);
+	}
+
+	@Override
+	public int getSocialUsersCount(long userId, long[] groupIds, int[] types)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		SocialRelationQuery socialRelationQuery =
+			SocialRelationQuery.getRelationsByType(userId, types);
+
+		params.put("socialRelationQuery", socialRelationQuery);
+		params.put("usersGroups", groupIds);
+
+		return searchCount(
+			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
 			params);
 	}
 
