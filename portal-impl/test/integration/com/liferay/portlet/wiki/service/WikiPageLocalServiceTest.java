@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -184,7 +183,7 @@ public class WikiPageLocalServiceTest {
 		}
 	}
 
-	@Test
+	@Test(expected = NoSuchPageException.class)
 	public void testDeleteTrashedPageWithRestoredChildPage() throws Exception {
 		WikiPage[] wikiPages = WikiTestUtil.addTrashedPageWithTrashedChildPage(
 			_group.getGroupId(), _node.getNodeId(), true);
@@ -203,16 +202,11 @@ public class WikiPageLocalServiceTest {
 			Assert.fail("Parent page should be deleted");
 		}
 		catch (NoSuchPageException nspe) {
-			childPage = WikiPageLocalServiceUtil.getPage(
-				childPage.getResourcePrimKey());
-
-			Assert.assertNull(childPage.getParentPage());
-			Assert.assertEquals(
-				childPage.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			WikiPageLocalServiceUtil.getPageByPageId(childPage.getPageId());
 		}
 	}
 
-	@Test
+	@Test(expected = NoSuchPageException.class)
 	public void testDeleteTrashedPageWithRestoredRedirectPage()
 		throws Exception {
 
@@ -234,12 +228,7 @@ public class WikiPageLocalServiceTest {
 			Assert.fail("Page should be deleted");
 		}
 		catch (NoSuchPageException nspe) {
-			redirectPage = WikiPageLocalServiceUtil.getPageByPageId(
-				redirectPage.getPageId());
-
-			Assert.assertNull(redirectPage.fetchRedirectPage());
-			Assert.assertEquals(
-				redirectPage.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			WikiPageLocalServiceUtil.getPageByPageId(redirectPage.getPageId());
 		}
 	}
 
