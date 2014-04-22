@@ -3369,64 +3369,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
-		if (!PropsValues.USERS_INDEXER_ENABLED ||
-			!PropsValues.USERS_SEARCH_WITH_INDEX) {
-
-			return userFinder.countByKeywords(
-				companyId, keywords, status, params);
-		}
-
-		try {
-			String firstName = null;
-			String middleName = null;
-			String lastName = null;
-			String fullName = null;
-			String screenName = null;
-			String emailAddress = null;
-			String street = null;
-			String city = null;
-			String zip = null;
-			String region = null;
-			String country = null;
-			boolean andOperator = false;
-
-			if (Validator.isNotNull(keywords)) {
-				firstName = keywords;
-				middleName = keywords;
-				lastName = keywords;
-				fullName = keywords;
-				screenName = keywords;
-				emailAddress = keywords;
-				street = keywords;
-				city = keywords;
-				zip = keywords;
-				region = keywords;
-				country = keywords;
-			}
-			else {
-				andOperator = true;
-			}
-
-			if (params != null) {
-				params.put("keywords", keywords);
-			}
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				User.class);
-
-			SearchContext searchContext = buildSearchContext(
-				companyId, firstName, middleName, lastName, fullName,
-				screenName, emailAddress, street, city, zip, region, country,
-				status, params, andOperator, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-			Hits hits = indexer.search(searchContext);
-
-			return hits.getLength();
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+		return userFinder.countByKeywords(companyId, keywords, status, params);
 	}
 
 	/**
