@@ -38,6 +38,7 @@ import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
 import com.liferay.portlet.shopping.NoSuchOrderItemException;
 import com.liferay.portlet.shopping.model.ShoppingOrderItem;
+import com.liferay.portlet.shopping.service.ShoppingOrderItemLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -247,16 +248,18 @@ public class ShoppingOrderItemPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new ShoppingOrderItemActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = ShoppingOrderItemLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					ShoppingOrderItem shoppingOrderItem = (ShoppingOrderItem)object;
 
 					Assert.assertNotNull(shoppingOrderItem);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

@@ -119,6 +119,10 @@ public class Validator_IW {
 		return Validator.isChar(s);
 	}
 
+	public boolean isContent(java.lang.String s) {
+		return Validator.isContent(s);
+	}
+
 	public boolean isDate(int month, int day, int year) {
 		return Validator.isDate(month, day, year);
 	}

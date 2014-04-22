@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -369,16 +370,18 @@ public class AssetVocabularyPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new AssetVocabularyActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = AssetVocabularyLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					AssetVocabulary assetVocabulary = (AssetVocabulary)object;
 
 					Assert.assertNotNull(assetVocabulary);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.NoSuchDeliveryException;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl;
+import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -251,16 +252,18 @@ public class AnnouncementsDeliveryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new AnnouncementsDeliveryActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = AnnouncementsDeliveryLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)object;
 
 					Assert.assertNotNull(announcementsDelivery);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

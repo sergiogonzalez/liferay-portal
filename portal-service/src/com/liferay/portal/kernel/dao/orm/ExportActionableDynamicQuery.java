@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/aui/nav/init.jsp" %>
+package com.liferay.portal.kernel.dao.orm;
 
-<c:if test="<%= collapsible %>">
-	<div class="collapse nav-collapse" id="<%= id %>NavbarCollapse">
-</c:if>
+import com.liferay.portal.kernel.lar.StagedModelType;
 
-<ul aria-label="<%= Validator.isNull(ariaLabel) ? portletDisplay.getTitle() : ariaLabel %>" class="nav <%= cssClass %>" id="<%= id %>" role="<%= Validator.isNull(ariaRole) ? "menubar" : ariaRole %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class ExportActionableDynamicQuery
+	extends DefaultActionableDynamicQuery {
+
+	public StagedModelType getStagedModelType() {
+		return _stagedModelType;
+	}
+
+	public void setStagedModelType(StagedModelType stagedModelType) {
+		_stagedModelType = stagedModelType;
+	}
+
+	private StagedModelType _stagedModelType;
+
+}

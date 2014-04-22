@@ -32,7 +32,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.persistence.RoleExportActionableDynamicQuery;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
@@ -144,44 +143,60 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 			final PortletDataContext portletDataContext, final boolean export)
 		throws SystemException {
 
-		return new RoleExportActionableDynamicQuery(portletDataContext) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			RoleLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				long classNameId = PortalUtil.getClassNameId(Team.class);
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
 
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
+					long classNameId = PortalUtil.getClassNameId(Team.class);
 
-				dynamicQuery.add(classNameIdProperty.ne(classNameId));
-			}
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
-				if (!export) {
-					return;
+					dynamicQuery.add(classNameIdProperty.ne(classNameId));
 				}
 
-				Role role = (Role)object;
+			});
 
-				long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-					portletDataContext.getCompanyId());
+		final ActionableDynamicQuery.PerformActionMethod performActionMethod =
+			actionableDynamicQuery.getPerformActionMethod();
 
-				if (!portletDataContext.getBooleanParameter(
-						NAMESPACE, "system-roles") &&
-					(role.getUserId() == defaultUserId)) {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-					return;
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
+
+					if (!export) {
+						return;
+					}
+
+					Role role = (Role)object;
+
+					long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+						portletDataContext.getCompanyId());
+
+					if (!portletDataContext.getBooleanParameter(
+							NAMESPACE, "system-roles") &&
+						(role.getUserId() == defaultUserId)) {
+
+						return;
+					}
+
+					performActionMethod.performAction(object);
 				}
 
-				super.performAction(object);
-			}
-		};
+			});
+
+		return actionableDynamicQuery;
 	}
 
 }
