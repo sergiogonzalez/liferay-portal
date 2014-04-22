@@ -2617,13 +2617,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : children) {
 			curPage.setParentTitle(trashTitle);
 
-			if (curPage.isInTrashExplicitly()) {
-				wikiPagePersistence.update(curPage);
+			wikiPagePersistence.update(curPage);
 
-				continue;
+			if (!curPage.isInTrashExplicitly()) {
+				moveDependentToTrash(curPage, trashEntryId);
 			}
-
-			moveDependentToTrash(curPage, trashEntryId);
 		}
 	}
 
@@ -2637,13 +2635,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : redirectPages) {
 			curPage.setRedirectTitle(trashTitle);
 
-			if (curPage.isInTrashExplicitly()) {
-				wikiPagePersistence.update(curPage);
+			wikiPagePersistence.update(curPage);
 
-				continue;
+			if (!curPage.isInTrashExplicitly()) {
+				moveDependentToTrash(curPage, trashEntryId);
 			}
-
-			moveDependentToTrash(curPage, trashEntryId);
 		}
 	}
 
@@ -2816,13 +2812,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : children) {
 			curPage.setParentTitle(title);
 
-			if (curPage.isInTrashExplicitly()) {
-				wikiPagePersistence.update(curPage);
+			wikiPagePersistence.update(curPage);
 
-				continue;
+			if (!curPage.isInTrashExplicitly()) {
+				restoreDependentFromTrash(curPage, trashEntryId);
 			}
-
-			restoreDependentFromTrash(curPage, trashEntryId);
 		}
 	}
 
@@ -2837,13 +2831,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : redirectPages) {
 			curPage.setRedirectTitle(title);
 
-			if (curPage.isInTrashExplicitly()) {
-				wikiPagePersistence.update(curPage);
+			wikiPagePersistence.update(curPage);
 
-				continue;
+			if (!curPage.isInTrashExplicitly()) {
+				restoreDependentFromTrash(curPage, trashEntryId);
 			}
-
-			restoreDependentFromTrash(curPage, trashEntryId);
 		}
 	}
 
