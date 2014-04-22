@@ -80,6 +80,7 @@ public class EditCompanyAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				validateCAS(actionRequest);
 				validateLDAP(actionRequest);
+				validateRelations(actionRequest);
 
 				if (!SessionErrors.isEmpty(actionRequest)) {
 					setForward(
@@ -273,6 +274,36 @@ public class EditCompanyAction extends PortletAction {
 			SessionErrors.add(
 				actionRequest, "ldapExportAndImportOnPasswordAutogeneration");
 		}
+	}
+
+	protected void validateRelations(ActionRequest actionRequest)
+		throws Exception {
+
+		boolean interactionsEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--interactionsEnabled--");
+
+		if (!interactionsEnabled) {
+			return;
+		}
+
+		boolean anyUserEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--interactionsAnyUser--");
+
+		if (anyUserEnabled) {
+			return;
+		}
+
+		boolean socialRelationTypesEnabled = ParamUtil.getBoolean(
+			actionRequest,
+			"settings--interactionsSocialRelationTypesEnabled--");
+		boolean sitesEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--interactionsSitesEnabled--");
+
+		if (socialRelationTypesEnabled || sitesEnabled) {
+			return;
+		}
+
+		SessionErrors.add(actionRequest, "restrictedRelationInvalid");
 	}
 
 }
