@@ -19,65 +19,32 @@
 <liferay-ui:error-marker key="errorSection" value="relations" />
 <liferay-ui:error key="restrictedRelationInvalid" message="you-must-restrict-by-site-or-type" />
 
-<h3><liferay-ui:message key="relations" /><h3>
+<h3><liferay-ui:message key="relations" /></h3>
 
 <%
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
-
-boolean companyInteractionsEnabled = PrefsParamUtil.getBoolean(companyPortletPreferences, request, "interactionsEnabled", true);
-
-boolean companyInteractionsAnyUser = PrefsParamUtil.getBoolean(companyPortletPreferences, request, "interactionsAnyUser", true);
-
-boolean companyInteractionsSitesEnabled = PrefsParamUtil.getBoolean(companyPortletPreferences, request, "interactionsSitesEnabled", true);
-
-boolean companyInteractionsSocialRelationTypesEnabled = PrefsParamUtil.getBoolean(companyPortletPreferences, request, "interactionsSocialRelationTypesEnabled", true);
-
-String companyInteractionsSocialRelationTypesString = companyPortletPreferences.getValue("interactionsSocialRelationTypes", StringPool.BLANK);
-
-Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-
-UnicodeProperties typeSettingsProperties = null;
-
-if (liveGroup != null) {
-	typeSettingsProperties = liveGroup.getTypeSettingsProperties();
-}
-else {
-	typeSettingsProperties = new UnicodeProperties();
-}
-
-boolean interactionsEnabled = GetterUtil.getBoolean(typeSettingsProperties.getProperty("interactionsEnabled"), companyInteractionsEnabled);
-
-boolean interactionsAnyUser = GetterUtil.getBoolean(typeSettingsProperties.getProperty("interactionsAnyUser"), companyInteractionsAnyUser);
-
-boolean interactionsSitesEnabled = GetterUtil.getBoolean(typeSettingsProperties.getProperty("interactionsSitesEnabled"), companyInteractionsSitesEnabled);
-
-boolean interactionsSocialRelationTypesEnabled = GetterUtil.getBoolean(typeSettingsProperties.getProperty("interactionsSocialRelationTypesEnabled"), companyInteractionsSocialRelationTypesEnabled);
-
-String interactionsSocialRelationTypesString = GetterUtil.getString(typeSettingsProperties.getProperty("interactionsSocialRelationTypes"), companyInteractionsSocialRelationTypesString);
-
-int[] interactionsSocialRelationTypes = GetterUtil.getIntegerValues(StringUtil.split(interactionsSocialRelationTypesString));
+SocialRelationConfiguration socialRelationConfiguration = SocialRelationConfigurationUtil.getGroupSettings(company.getCompanyId(), scopeGroupId);
 %>
 
 <c:choose>
-	<c:when test="<%= !companyInteractionsEnabled %>">
+	<c:when test="<%= !socialRelationConfiguration.isInteractionsEnabled() %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="interactions-are-disabled-in-the-portal" />
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:input checked="<%= interactionsEnabled %>" label="enable-interactions" name="TypeSettingsProperties--interactionsEnabled--" type="checkbox" value="<%= interactionsEnabled %>" />
+		<aui:input checked="<%= socialRelationConfiguration.isInteractionsEnabled() %>" label="enable-interactions" name="TypeSettingsProperties--interactionsEnabled--" type="checkbox" value="<%= socialRelationConfiguration.isInteractionsEnabled() %>" />
 
 		<div class="interactions-settings" id="<portlet:namespace />interactionsSettings">
-			<aui:input checked="<%= interactionsAnyUser %>" id="interactionsAnyUser" label="each-user-can-interact-with-any-user" name="TypeSettingsProperties--interactionsAnyUser--" type="radio" value="<%= true %>" />
+			<aui:input checked="<%= socialRelationConfiguration.isAnyUserEnabled() %>" id="interactionsAnyUser" label="each-user-can-interact-with-any-user" name="TypeSettingsProperties--interactionsAnyUser--" type="radio" value="<%= true %>" />
 
-			<aui:input checked="<%= !interactionsAnyUser %>" id="interactionsChooseUsers" label="each-user-can-interact-only-with" name="TypeSettingsProperties--interactionsAnyUser--" type="radio" value="<%= false %>" />
+			<aui:input checked="<%= !socialRelationConfiguration.isAnyUserEnabled() %>" id="interactionsChooseUsers" label="each-user-can-interact-only-with" name="TypeSettingsProperties--interactionsAnyUser--" type="radio" value="<%= false %>" />
 
 			<div class="interactions-users" id="<portlet:namespace />interactionsUsersWrapper">
-				<aui:input checked="<%= interactionsSitesEnabled %>" label="users-that-belong-to-the-sites-that-the-user-also-belongs-to" name="TypeSettingsProperties--interactionsSitesEnabled--" type="checkbox" value="<%= interactionsSitesEnabled %>" />
+				<aui:input checked="<%= socialRelationConfiguration.isSameSitesEnabled() %>" label="users-that-belong-to-the-sites-that-the-user-also-belongs-to" name="TypeSettingsProperties--interactionsSitesEnabled--" type="checkbox" value="<%= socialRelationConfiguration.isSameSitesEnabled() %>" />
 
-				<aui:input checked="<%= interactionsSocialRelationTypesEnabled %>" label="users-with-the-following-social-relations" name="TypeSettingsProperties--interactionsSocialRelationTypesEnabled--" type="checkbox" value="<%= interactionsSocialRelationTypesEnabled %>" />
+				<aui:input checked="<%= socialRelationConfiguration.isSocialRelationTypesEnabled() %>" label="users-with-the-following-social-relations" name="TypeSettingsProperties--interactionsSocialRelationTypesEnabled--" type="checkbox" value="<%= socialRelationConfiguration.isSocialRelationTypesEnabled() %>" />
 
-				<aui:input name="TypeSettingsProperties--interactionsSocialRelationTypes--" type="hidden" value="<%= interactionsSocialRelationTypesString %>" />
+				<aui:input name="TypeSettingsProperties--interactionsSocialRelationTypes--" type="hidden" value="<%= socialRelationConfiguration.getSocialRelationTypesString() %>" />
 
 				<%
 					List<Integer> allSocialRelationTypes = SocialRelationConstants.getAllSocialRelationTypes();
@@ -92,7 +59,7 @@ int[] interactionsSocialRelationTypes = GetterUtil.getIntegerValues(StringUtil.s
 
 						List leftList = new ArrayList();
 
-						int[] socialRelationTypesArray = interactionsSocialRelationTypes;
+						int[] socialRelationTypesArray = socialRelationConfiguration.getSocialRelationTypes();
 
 						for (int socialRelationType : socialRelationTypesArray) {
 							leftList.add(new KeyValuePair(Integer.toString(socialRelationType), LanguageUtil.get(pageContext, SocialRelationConstants.getTypeLabel(socialRelationType))));
