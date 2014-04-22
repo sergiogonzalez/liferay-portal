@@ -35,6 +35,7 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.TeamModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -268,16 +269,18 @@ public class TeamPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new TeamActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = TeamLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					Team team = (Team)object;
 
 					Assert.assertNotNull(team);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

@@ -42,6 +42,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -533,16 +534,18 @@ public class MBThreadPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new MBThreadActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = MBThreadLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					MBThread mbThread = (MBThread)object;
 
 					Assert.assertNotNull(mbThread);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

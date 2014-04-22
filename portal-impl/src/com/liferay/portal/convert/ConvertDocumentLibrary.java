@@ -51,7 +51,6 @@ import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.persistence.MBMessageActionableDynamicQuery;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.persistence.WikiPageActionableDynamicQuery;
@@ -236,29 +235,33 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			"Migrating message boards attachments in " + count + " messages");
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new MBMessageActionableDynamicQuery() {
+			MBMessageLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-				MBMessage mbMessage = (MBMessage)object;
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
 
-				for (FileEntry fileEntry :
-						mbMessage.getAttachmentsFileEntries()) {
+					MBMessage mbMessage = (MBMessage)object;
 
-					DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+					for (FileEntry fileEntry :
+							mbMessage.getAttachmentsFileEntries()) {
 
-					migrateDLFileEntry(
-						mbMessage.getCompanyId(),
-						DLFolderConstants.getDataRepositoryId(
-							dlFileEntry.getRepositoryId(),
-							dlFileEntry.getFolderId()),
-						dlFileEntry);
+						DLFileEntry dlFileEntry =
+							(DLFileEntry)fileEntry.getModel();
+
+						migrateDLFileEntry(
+							mbMessage.getCompanyId(),
+							DLFolderConstants.getDataRepositoryId(
+								dlFileEntry.getRepositoryId(),
+								dlFileEntry.getFolderId()),
+							dlFileEntry);
+					}
 				}
-			}
 
-		};
+			});
 
 		actionableDynamicQuery.performActions();
 	}

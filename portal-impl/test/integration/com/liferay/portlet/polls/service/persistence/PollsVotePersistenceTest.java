@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.polls.NoSuchVoteException;
 import com.liferay.portlet.polls.model.PollsVote;
 import com.liferay.portlet.polls.model.impl.PollsVoteModelImpl;
+import com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -324,16 +325,18 @@ public class PollsVotePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new PollsVoteActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = PollsVoteLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					PollsVote pollsVote = (PollsVote)object;
 
 					Assert.assertNotNull(pollsVote);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

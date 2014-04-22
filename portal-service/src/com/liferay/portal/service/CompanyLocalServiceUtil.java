@@ -200,6 +200,11 @@ public class CompanyLocalServiceUtil {
 		return getService().getCompany(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActionableDynamicQuery();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -353,6 +358,7 @@ public class CompanyLocalServiceUtil {
 	* Deletes the company's logo.
 	*
 	* @param companyId the primary key of the company
+	* @return the deleted logo's company
 	* @throws PortalException if the company with the primary key could not be
 	found or if the company's logo could not be found
 	* @throws SystemException if a system exception occurred

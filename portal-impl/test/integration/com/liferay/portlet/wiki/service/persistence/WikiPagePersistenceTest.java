@@ -42,6 +42,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.impl.WikiPageModelImpl;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -547,6 +548,23 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByN_H_R() {
+		try {
+			_persistence.countByN_H_R(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(), StringPool.BLANK);
+
+			_persistence.countByN_H_R(0L, ServiceTestUtil.randomBoolean(),
+				StringPool.NULL);
+
+			_persistence.countByN_H_R(0L, ServiceTestUtil.randomBoolean(),
+				(String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByN_H_S() {
 		try {
 			_persistence.countByN_H_S(ServiceTestUtil.nextLong(),
@@ -775,16 +793,18 @@ public class WikiPagePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new WikiPageActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = WikiPageLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					WikiPage wikiPage = (WikiPage)object;
 
 					Assert.assertNotNull(wikiPage);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

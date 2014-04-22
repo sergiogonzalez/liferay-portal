@@ -35,6 +35,7 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -313,16 +314,18 @@ public class UserGroupPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new UserGroupActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = UserGroupLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					UserGroup userGroup = (UserGroup)object;
 
 					Assert.assertNotNull(userGroup);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

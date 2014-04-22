@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.NoSuchArticleResourceException;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl;
+import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -269,16 +270,18 @@ public class JournalArticleResourcePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new JournalArticleResourceActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = JournalArticleResourceLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					JournalArticleResource journalArticleResource = (JournalArticleResource)object;
 
 					Assert.assertNotNull(journalArticleResource);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

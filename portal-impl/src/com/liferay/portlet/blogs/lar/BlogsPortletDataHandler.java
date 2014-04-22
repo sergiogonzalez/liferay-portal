@@ -27,7 +27,6 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryExportActionableDynamicQuery;
 
 import java.util.List;
 
@@ -96,7 +95,8 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new BlogsEntryExportActionableDynamicQuery(portletDataContext);
+			BlogsEntryLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		actionableDynamicQuery.performActions();
 
@@ -136,7 +136,8 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new BlogsEntryExportActionableDynamicQuery(portletDataContext);
+			BlogsEntryLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		actionableDynamicQuery.performCount();
 	}

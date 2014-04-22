@@ -28,6 +28,7 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 
 /**
  * @author Edward C. Han
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 public class MDRRuleExportActionableDynamicQuery

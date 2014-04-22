@@ -36,7 +36,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryActionableDynamicQuery;
 
 import java.util.Date;
 import java.util.Locale;
@@ -172,38 +171,47 @@ public class BlogsIndexer extends BaseIndexer {
 	protected void reindexEntries(long companyId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new BlogsEntryActionableDynamicQuery() {
+		final ActionableDynamicQuery actionableDynamicQuery =
+			BlogsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property displayDateProperty = PropertyFactoryUtil.forName(
-					"displayDate");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				dynamicQuery.add(displayDateProperty.lt(new Date()));
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property displayDateProperty = PropertyFactoryUtil.forName(
+						"displayDate");
 
-				Property statusProperty = PropertyFactoryUtil.forName("status");
+					dynamicQuery.add(displayDateProperty.lt(new Date()));
 
-				Integer[] statuses = {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_IN_TRASH
-				};
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
 
-				dynamicQuery.add(statusProperty.in(statuses));
-			}
+					Integer[] statuses = {
+						WorkflowConstants.STATUS_APPROVED,
+						WorkflowConstants.STATUS_IN_TRASH
+					};
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				BlogsEntry entry = (BlogsEntry)object;
+					dynamicQuery.add(statusProperty.in(statuses));
+				}
 
-				Document document = getDocument(entry);
-
-				addDocument(document);
-			}
-
-		};
-
+			});
 		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					BlogsEntry entry = (BlogsEntry)object;
+
+					Document document = getDocument(entry);
+
+					actionableDynamicQuery.addDocument(document);
+				}
+
+			});
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();

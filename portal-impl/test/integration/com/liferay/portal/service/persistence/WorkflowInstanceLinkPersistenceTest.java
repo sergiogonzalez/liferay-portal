@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -256,16 +257,18 @@ public class WorkflowInstanceLinkPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new WorkflowInstanceLinkActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = WorkflowInstanceLinkLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)object;
 
 					Assert.assertNotNull(workflowInstanceLink);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

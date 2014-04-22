@@ -41,6 +41,34 @@ public abstract class BaseActionableDynamicQuery
 	implements ActionableDynamicQuery {
 
 	@Override
+	public void addDocument(Document document) throws PortalException {
+		if (_documents == null) {
+			_documents = new ArrayList<Document>();
+		}
+
+		_documents.add(document);
+
+		if (_documents.size() >= _interval) {
+			indexInterval();
+		}
+	}
+
+	@Override
+	public AddCriteriaMethod getAddCriteriaMethod() {
+		return _addCriteriaMethod;
+	}
+
+	@Override
+	public PerformActionMethod getPerformActionMethod() {
+		return _performActionMethod;
+	}
+
+	@Override
+	public PerformCountMethod getPerformCountMethod() {
+		return _performCountMethod;
+	}
+
+	@Override
 	public void performActions() throws PortalException, SystemException {
 		long previousPrimaryKey = -1;
 
@@ -59,6 +87,10 @@ public abstract class BaseActionableDynamicQuery
 
 	@Override
 	public long performCount() throws PortalException, SystemException {
+		if (_performCountMethod != null) {
+			return _performCountMethod.performCount();
+		}
+
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
 
@@ -68,6 +100,11 @@ public abstract class BaseActionableDynamicQuery
 
 		return (Long)executeDynamicQuery(
 			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
+	}
+
+	@Override
+	public void setAddCriteriaMethod(AddCriteriaMethod addCriteriaMethod) {
+		_addCriteriaMethod = addCriteriaMethod;
 	}
 
 	@Override
@@ -120,6 +157,18 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
+	public void setPerformActionMethod(
+		PerformActionMethod performActionMethod) {
+
+		_performActionMethod = performActionMethod;
+	}
+
+	@Override
+	public void setPerformCountMethod(PerformCountMethod performCountMethod) {
+		_performCountMethod = performCountMethod;
+	}
+
+	@Override
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName) {
 		_primaryKeyPropertyName = primaryKeyPropertyName;
 	}
@@ -137,6 +186,9 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	protected void addCriteria(DynamicQuery dynamicQuery) {
+		if (_addCriteriaMethod != null) {
+			_addCriteriaMethod.addCriteria(dynamicQuery);
+		}
 	}
 
 	protected void addDefaultCriteria(DynamicQuery dynamicQuery) {
@@ -151,18 +203,6 @@ public abstract class BaseActionableDynamicQuery
 				_groupIdPropertyName);
 
 			dynamicQuery.add(property.eq(_groupId));
-		}
-	}
-
-	protected void addDocument(Document document) throws PortalException {
-		if (_documents == null) {
-			_documents = new ArrayList<Document>();
-		}
-
-		_documents.add(document);
-
-		if (_documents.size() >= _interval) {
-			indexInterval();
 		}
 	}
 
@@ -305,8 +345,13 @@ public abstract class BaseActionableDynamicQuery
 		throws PortalException, SystemException {
 	}
 
-	protected abstract void performAction(Object object)
-		throws PortalException, SystemException;
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
+
+		if (_performActionMethod != null) {
+			_performActionMethod.performAction(object);
+		}
+	}
 
 	protected static final TransactionAttribute
 		REQUIRES_NEW_TRANSACTION_ATTRIBUTE;
@@ -322,6 +367,7 @@ public abstract class BaseActionableDynamicQuery
 		REQUIRES_NEW_TRANSACTION_ATTRIBUTE = builder.build();
 	}
 
+	private AddCriteriaMethod _addCriteriaMethod;
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;
 	private Class<?> _clazz;
@@ -332,6 +378,8 @@ public abstract class BaseActionableDynamicQuery
 	private long _groupId;
 	private String _groupIdPropertyName = "groupId";
 	private int _interval = Indexer.DEFAULT_INTERVAL;
+	private PerformActionMethod _performActionMethod;
+	private PerformCountMethod _performCountMethod;
 	private String _primaryKeyPropertyName;
 	private String _searchEngineId;
 	private TransactionAttribute _transactionAttribute;

@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatalists.lar;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -36,13 +37,12 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission;
-import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordExportActionableDynamicQuery;
-import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetExportActionableDynamicQuery;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureExportActionableDynamicQuery;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +120,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
 			ActionableDynamicQuery recordSetActionableDynamicQuery =
-				new DDLRecordSetExportActionableDynamicQuery(
+				DDLRecordSetLocalServiceUtil.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			recordSetActionableDynamicQuery.performActions();
@@ -214,7 +214,8 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		ddmStructureActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery recordSetActionableDynamicQuery =
-			new DDLRecordSetExportActionableDynamicQuery(portletDataContext);
+			DDLRecordSetLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		recordSetActionableDynamicQuery.performCount();
 
@@ -229,90 +230,113 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			final List<DDMTemplate> ddmTemplates)
 		throws SystemException {
 
-		return new DDMStructureExportActionableDynamicQuery(
-			portletDataContext) {
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
+			DDMStructureLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
+		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			exportActionableDynamicQuery.getAddCriteriaMethod();
 
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				long classNameId = PortalUtil.getClassNameId(
-					DDLRecordSet.class);
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					addCriteriaMethod.addCriteria(dynamicQuery);
 
-				dynamicQuery.add(classNameIdProperty.eq(classNameId));
-			}
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
 
-			@Override
-			protected StagedModelType getStagedModelType() {
-				return new StagedModelType(
-					DDMStructure.class.getName(), DDLRecordSet.class.getName());
-			}
+					long classNameId = PortalUtil.getClassNameId(
+						DDLRecordSet.class);
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				DDMStructure ddmStructure = (DDMStructure)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, ddmStructure);
-
-				try {
-					ddmTemplates.addAll(ddmStructure.getTemplates());
+					dynamicQuery.add(classNameIdProperty.eq(classNameId));
 				}
-				catch (SystemException se) {
-				}
-			}
 
-		};
+			});
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					DDMStructure ddmStructure = (DDMStructure)object;
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, ddmStructure);
+
+					try {
+						ddmTemplates.addAll(ddmStructure.getTemplates());
+					}
+					catch (SystemException se) {
+					}
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				DDMStructure.class.getName(), DDLRecordSet.class.getName()));
+
+		return exportActionableDynamicQuery;
 	}
 
 	protected ActionableDynamicQuery getRecordActionableDynamicQuery(
 			final PortletDataContext portletDataContext)
 		throws SystemException {
 
-		return new DDLRecordExportActionableDynamicQuery(
-			portletDataContext) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			DDLRecordLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
+		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			actionableDynamicQuery.getAddCriteriaMethod();
 
-				Property recordIdProperty = PropertyFactoryUtil.forName(
-					"recordId");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				DynamicQuery recordVersionDynamicQuery =
-					DynamicQueryFactoryUtil.forClass(
-						DDLRecordVersion.class, "recordVersion",
-						PortalClassLoaderUtil.getClassLoader());
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					addCriteriaMethod.addCriteria(dynamicQuery);
 
-				recordVersionDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("recordId"));
+					Property recordIdProperty = PropertyFactoryUtil.forName(
+						"recordId");
 
-				Property statusProperty = PropertyFactoryUtil.forName("status");
+					DynamicQuery recordVersionDynamicQuery =
+						DynamicQueryFactoryUtil.forClass(
+							DDLRecordVersion.class, "recordVersion",
+							PortalClassLoaderUtil.getClassLoader());
 
-				StagedModelDataHandler<?> stagedModelDataHandler =
-					StagedModelDataHandlerRegistryUtil.
-						getStagedModelDataHandler(DDLRecord.class.getName());
+					recordVersionDynamicQuery.setProjection(
+						ProjectionFactoryUtil.property("recordId"));
 
-				recordVersionDynamicQuery.add(
-					statusProperty.in(
-						stagedModelDataHandler.getExportableStatuses()));
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
 
-				recordVersionDynamicQuery.add(
-					RestrictionsFactoryUtil.eqProperty(
-						"recordVersion.version", "version"));
+					StagedModelDataHandler<?> stagedModelDataHandler =
+						StagedModelDataHandlerRegistryUtil.
+							getStagedModelDataHandler(
+								DDLRecord.class.getName());
 
-				recordVersionDynamicQuery.add(
-					RestrictionsFactoryUtil.eqProperty(
-						"recordVersion.recordId", "recordId"));
+					recordVersionDynamicQuery.add(
+						statusProperty.in(
+							stagedModelDataHandler.getExportableStatuses()));
 
-				dynamicQuery.add(
-					recordIdProperty.in(recordVersionDynamicQuery));
-			}
+					recordVersionDynamicQuery.add(
+						RestrictionsFactoryUtil.eqProperty(
+							"recordVersion.version", "version"));
 
-		};
+					recordVersionDynamicQuery.add(
+						RestrictionsFactoryUtil.eqProperty(
+							"recordVersion.recordId", "recordId"));
+
+					dynamicQuery.add(
+						recordIdProperty.in(recordVersionDynamicQuery));
+				}
+
+			});
+
+		return actionableDynamicQuery;
 	}
 
 }

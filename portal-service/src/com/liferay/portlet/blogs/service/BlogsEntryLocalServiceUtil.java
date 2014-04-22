@@ -232,6 +232,17 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().getBlogsEntry(entryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -777,6 +788,7 @@ public class BlogsEntryLocalServiceUtil {
 	*
 	* @param userId the primary key of the user restoring the blogs entry
 	* @param entryId the primary key of the blogs entry to be restored
+	* @return the restored blogs entry from the recycle bin
 	* @throws PortalException if a user or blogs entry with the primary key
 	could not be found or if the blogs entry owner's social activity
 	counter could not be updated
@@ -841,17 +853,6 @@ public class BlogsEntryLocalServiceUtil {
 			.updateEntryResources(entry, groupPermissions, guestPermissions);
 	}
 
-	public static com.liferay.portlet.blogs.model.BlogsEntry updateStatus(
-		long userId, long entryId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateStatus(userId, entryId, status, serviceContext,
-			workflowContext);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
@@ -863,6 +864,17 @@ public class BlogsEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateStatus(userId, entryId, status, serviceContext);
+	}
+
+	public static com.liferay.portlet.blogs.model.BlogsEntry updateStatus(
+		long userId, long entryId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStatus(userId, entryId, status, serviceContext,
+			workflowContext);
 	}
 
 	public static BlogsEntryLocalService getService() {

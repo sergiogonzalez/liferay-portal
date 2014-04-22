@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl;
+import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -238,16 +239,18 @@ public class ExpandoTablePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new ExpandoTableActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = ExpandoTableLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					ExpandoTable expandoTable = (ExpandoTable)object;
 
 					Assert.assertNotNull(expandoTable);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

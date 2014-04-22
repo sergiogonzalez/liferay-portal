@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl;
+import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -317,16 +318,18 @@ public class MBThreadFlagPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new MBThreadFlagActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = MBThreadFlagLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					MBThreadFlag mbThreadFlag = (MBThreadFlag)object;
 
 					Assert.assertNotNull(mbThreadFlag);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

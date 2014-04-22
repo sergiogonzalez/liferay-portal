@@ -16,6 +16,7 @@ package com.liferay.portlet.portletdisplaytemplate.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,7 +32,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateExportActionableDynamicQuery;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,35 +145,41 @@ public class PortletDisplayTemplatePortletDataHandler
 			final Long[] classNameIds, final StagedModelType stagedModelType)
 		throws SystemException {
 
-		return new DDMTemplateExportActionableDynamicQuery(
-			portletDataContext) {
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
+			DDMTemplateLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
+		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			exportActionableDynamicQuery.getAddCriteriaMethod();
 
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				dynamicQuery.add(classNameIdProperty.in(classNameIds));
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					addCriteriaMethod.addCriteria(dynamicQuery);
 
-				Property classPKProperty = PropertyFactoryUtil.forName(
-					"classPK");
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
 
-				dynamicQuery.add(classPKProperty.eq(0L));
+					dynamicQuery.add(classNameIdProperty.in(classNameIds));
 
-				Property typeProperty = PropertyFactoryUtil.forName("type");
+					Property classPKProperty = PropertyFactoryUtil.forName(
+						"classPK");
 
-				dynamicQuery.add(
-					typeProperty.eq(
-						DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY));
-			}
+					dynamicQuery.add(classPKProperty.eq(0L));
 
-			@Override
-			protected StagedModelType getStagedModelType() {
-				return stagedModelType;
-			}
-		};
+					Property typeProperty = PropertyFactoryUtil.forName("type");
+
+					dynamicQuery.add(
+						typeProperty.eq(
+							DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY));
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(stagedModelType);
+
+		return exportActionableDynamicQuery;
 	}
 
 	protected StagedModelType[] getStagedModelTypes() {

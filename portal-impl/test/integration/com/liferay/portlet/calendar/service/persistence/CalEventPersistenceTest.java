@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.calendar.NoSuchEventException;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.model.impl.CalEventModelImpl;
+import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -457,16 +458,18 @@ public class CalEventPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new CalEventActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = CalEventLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					CalEvent calEvent = (CalEvent)object;
 
 					Assert.assertNotNull(calEvent);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

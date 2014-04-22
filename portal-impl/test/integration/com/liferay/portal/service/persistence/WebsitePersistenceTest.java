@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -338,16 +339,18 @@ public class WebsitePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new WebsiteActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = WebsiteLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					Website website = (Website)object;
 
 					Assert.assertNotNull(website);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

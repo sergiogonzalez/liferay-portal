@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.polls.NoSuchQuestionException;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.model.impl.PollsQuestionModelImpl;
+import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -317,16 +318,18 @@ public class PollsQuestionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new PollsQuestionActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = PollsQuestionLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					PollsQuestion pollsQuestion = (PollsQuestion)object;
 
 					Assert.assertNotNull(pollsQuestion);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

@@ -38,6 +38,7 @@ import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
 import com.liferay.portlet.announcements.NoSuchEntryException;
 import com.liferay.portlet.announcements.model.AnnouncementsEntry;
+import com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -335,16 +336,18 @@ public class AnnouncementsEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new AnnouncementsEntryActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = AnnouncementsEntryLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)object;
 
 					Assert.assertNotNull(announcementsEntry);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

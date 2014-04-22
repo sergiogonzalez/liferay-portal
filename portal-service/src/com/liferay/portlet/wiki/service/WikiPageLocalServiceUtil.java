@@ -231,6 +231,17 @@ public class WikiPageLocalServiceUtil {
 		return getService().getWikiPage(pageId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -842,6 +853,13 @@ public class WikiPageLocalServiceUtil {
 		return getService().hasDraftPage(nodeId, title);
 	}
 
+	public static void moveDependentToTrash(
+		com.liferay.portlet.wiki.model.WikiPage page, long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().moveDependentToTrash(page, trashEntryId);
+	}
+
 	public static void movePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -887,6 +905,13 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().movePageToTrash(userId, page);
+	}
+
+	public static void restoreDependentFromTrash(
+		com.liferay.portlet.wiki.model.WikiPage page, long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreDependentFromTrash(page, trashEntryId);
 	}
 
 	public static void restorePageAttachmentFromTrash(long userId, long nodeId,
@@ -960,17 +985,6 @@ public class WikiPageLocalServiceUtil {
 				   .updateStatus(userId, resourcePrimKey, status, serviceContext);
 	}
 
-	public static com.liferay.portlet.wiki.model.WikiPage updateStatus(
-		long userId, com.liferay.portlet.wiki.model.WikiPage page, int status,
-		com.liferay.portal.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateStatus(userId, page, status, serviceContext,
-			workflowContext);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
 	int, ServiceContext, Map)}
@@ -982,6 +996,17 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateStatus(userId, page, status, serviceContext);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPage updateStatus(
+		long userId, com.liferay.portlet.wiki.model.WikiPage page, int status,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStatus(userId, page, status, serviceContext,
+			workflowContext);
 	}
 
 	public static void validateTitle(java.lang.String title)

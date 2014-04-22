@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -306,16 +307,18 @@ public class MDRRuleGroupPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new MDRRuleGroupActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = MDRRuleGroupLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)object;
 
 					Assert.assertNotNull(mdrRuleGroup);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

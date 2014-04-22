@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.NoSuchActivityCounterException;
 import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterModelImpl;
+import com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -325,16 +326,18 @@ public class SocialActivityCounterPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new SocialActivityCounterActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = SocialActivityCounterLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					SocialActivityCounter socialActivityCounter = (SocialActivityCounter)object;
 
 					Assert.assertNotNull(socialActivityCounter);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

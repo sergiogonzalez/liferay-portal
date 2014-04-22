@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchTagStatsException;
 import com.liferay.portlet.asset.model.AssetTagStats;
 import com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl;
+import com.liferay.portlet.asset.service.AssetTagStatsLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -246,16 +247,18 @@ public class AssetTagStatsPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new AssetTagStatsActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = AssetTagStatsLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					AssetTagStats assetTagStats = (AssetTagStats)object;
 
 					Assert.assertNotNull(assetTagStats);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

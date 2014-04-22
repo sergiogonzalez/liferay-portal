@@ -212,6 +212,15 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -593,6 +602,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* Deletes the web content article and its resources.
 	*
 	* @param article the web content article
+	* @return the deleted web content article
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -612,6 +622,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	<code>null</code>). Can set the portlet preferences that include
 	email information to notify recipients of the unapproved web
 	content's denial.
+	* @return the deleted web content article
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -634,6 +645,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
+	* @return the deleted web content article
 	* @throws PortalException if a matching web content article could not be
 	found or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
@@ -2104,6 +2116,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user restoring the web content
 	article
 	* @param article the web content article
+	* @return the restored web content article from the Recycle Bin
 	* @throws PortalException if the web content article with the primary key
 	could not be found in the Recycle Bin, if the user did not have
 	permission to restore the article, or if a portal exception

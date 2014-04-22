@@ -32,6 +32,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 public class BlogsEntryExportActionableDynamicQuery
