@@ -2083,6 +2083,16 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.getSocialUsers(userId, start, end, obc);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
+		long userId, long[] groupIds, int[] types, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsers(userId, groupIds, types, start,
+			end, obc);
+	}
+
 	/**
 	* Returns an ordered range of all the users with a mutual social relation
 	* of the type with both of the given users.
@@ -2156,6 +2166,16 @@ public class UserLocalServiceWrapper implements UserLocalService,
 			obc);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
+		long userId1, long userId2, long[] groupIds, int[] types, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsers(userId1, userId2, groupIds,
+			types, start, end, obc);
+	}
+
 	/**
 	* Returns the number of users with a social relation with the user.
 	*
@@ -2189,6 +2209,13 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.getSocialUsersCount(userId, type);
+	}
+
+	@Override
+	public int getSocialUsersCount(long userId, long[] groupIds, int[] types)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsersCount(userId, groupIds, types);
 	}
 
 	/**
@@ -2227,6 +2254,15 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.getSocialUsersCount(userId1, userId2, type);
+	}
+
+	@Override
+	public int getSocialUsersCount(long userId1, long userId2, long[] groupIds,
+		int[] types)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsersCount(userId1, userId2,
+			groupIds, types);
 	}
 
 	/**
