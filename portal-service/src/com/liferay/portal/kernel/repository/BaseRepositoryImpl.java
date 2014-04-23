@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
@@ -382,6 +383,13 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	@Override
+	public void setRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+
+		this.repositoryEntryLocalService = repositoryEntryLocalService;
+	}
+
+	@Override
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
 	}
@@ -493,6 +501,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	protected CompanyLocalService companyLocalService;
 	protected CounterLocalService counterLocalService;
 	protected DLAppHelperLocalService dlAppHelperLocalService;
+	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	protected UserLocalService userLocalService;
 
 	private long _companyId;
