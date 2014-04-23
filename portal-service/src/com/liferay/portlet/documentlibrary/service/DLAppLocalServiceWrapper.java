@@ -841,14 +841,15 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
 		long userId, long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.InputStream is, long size,
+		java.lang.String extension, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, boolean majorVersion,
+		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppLocalService.updateFileEntry(userId, fileEntryId,
-			sourceFileName, mimeType, title, description, changeLog,
+			sourceFileName, extension, mimeType, title, description, changeLog,
 			majorVersion, is, size, serviceContext);
 	}
 
