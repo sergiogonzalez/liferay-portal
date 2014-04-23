@@ -22,8 +22,10 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link RepositoryLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class RepositoryActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public RepositoryActionableDynamicQuery() throws SystemException {

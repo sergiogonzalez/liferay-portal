@@ -23,8 +23,10 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DDMTemplateLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DDMTemplateActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DDMTemplateActionableDynamicQuery() throws SystemException {

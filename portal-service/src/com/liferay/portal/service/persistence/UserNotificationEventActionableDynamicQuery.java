@@ -22,8 +22,10 @@ import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link UserNotificationEventLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class UserNotificationEventActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public UserNotificationEventActionableDynamicQuery()

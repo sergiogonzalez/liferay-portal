@@ -28,8 +28,10 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public class DDLRecordSetExportActionableDynamicQuery
 	extends DDLRecordSetActionableDynamicQuery {
 	public DDLRecordSetExportActionableDynamicQuery(

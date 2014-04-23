@@ -21,8 +21,10 @@ import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author ${author}
+ * @deprecated As of 7.0.0, replaced by {@link ${packagePath}.service.${entity.name}LocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public class ${entity.name}ExportActionableDynamicQuery extends ${entity.name}ActionableDynamicQuery {
 
 	public ${entity.name}ExportActionableDynamicQuery(PortletDataContext portletDataContext) throws SystemException {

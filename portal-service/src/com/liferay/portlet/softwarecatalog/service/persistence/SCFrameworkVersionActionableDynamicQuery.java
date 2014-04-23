@@ -23,8 +23,10 @@ import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalServic
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link SCFrameworkVersionLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class SCFrameworkVersionActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public SCFrameworkVersionActionableDynamicQuery() throws SystemException {

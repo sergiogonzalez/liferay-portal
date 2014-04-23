@@ -23,8 +23,10 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link AssetVocabularyLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class AssetVocabularyActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public AssetVocabularyActionableDynamicQuery() throws SystemException {

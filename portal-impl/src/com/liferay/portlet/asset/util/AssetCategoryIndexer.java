@@ -38,7 +38,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
-import com.liferay.portlet.asset.service.persistence.AssetCategoryActionableDynamicQuery;
 
 import java.util.Locale;
 
@@ -209,23 +208,27 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	protected void reindexCategories(final long companyId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new AssetCategoryActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				AssetCategory category = (AssetCategory)object;
-
-				Document document = getDocument(category);
-
-				if (document != null) {
-					addDocument(document);
-				}
-			}
-
-		};
+		final ActionableDynamicQuery actionableDynamicQuery =
+			AssetCategoryLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					AssetCategory category = (AssetCategory)object;
+
+					Document document = getDocument(category);
+
+					if (document != null) {
+						actionableDynamicQuery.addDocument(document);
+					}
+				}
+
+			});
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();

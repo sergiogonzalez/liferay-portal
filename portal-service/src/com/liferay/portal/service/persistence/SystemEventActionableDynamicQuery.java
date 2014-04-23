@@ -22,8 +22,10 @@ import com.liferay.portal.service.SystemEventLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link SystemEventLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class SystemEventActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public SystemEventActionableDynamicQuery() throws SystemException {

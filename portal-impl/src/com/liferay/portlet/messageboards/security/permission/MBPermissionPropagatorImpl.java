@@ -28,7 +28,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.persistence.MBMessageActionableDynamicQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,31 +124,37 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 						roleIds);
 
 					ActionableDynamicQuery actionableDynamicQuery =
-						new MBMessageActionableDynamicQuery() {
+						MBMessageLocalServiceUtil.getActionableDynamicQuery();
 
-						@Override
-						protected void addCriteria(DynamicQuery dynamicQuery) {
-							Property categoryIdProperty =
-								PropertyFactoryUtil.forName("categoryId");
+					actionableDynamicQuery.setAddCriteriaMethod(
+						new ActionableDynamicQuery.AddCriteriaMethod() {
 
-							dynamicQuery.add(
-								categoryIdProperty.eq(addCategoryId));
-						}
+							@Override
+							public void addCriteria(DynamicQuery dynamicQuery) {
+								Property categoryIdProperty =
+									PropertyFactoryUtil.forName("categoryId");
 
-						@Override
-						protected void performAction(Object object)
-							throws PortalException, SystemException {
+								dynamicQuery.add(
+									categoryIdProperty.eq(addCategoryId));
+							}
 
-							MBMessage message = (MBMessage)object;
-
-							propagateMessageRolePermissions(
-								actionRequest, className, categoryId,
-								message.getMessageId(), roleIds);
-						}
-
-					};
-
+						});
 					actionableDynamicQuery.setGroupId(category.getGroupId());
+					actionableDynamicQuery.setPerformActionMethod(
+						new ActionableDynamicQuery.PerformActionMethod() {
+
+							@Override
+							public void performAction(Object object)
+								throws PortalException, SystemException {
+
+								MBMessage message = (MBMessage)object;
+
+								propagateMessageRolePermissions(
+									actionRequest, className, categoryId,
+									message.getMessageId(), roleIds);
+							}
+
+						});
 
 					actionableDynamicQuery.performActions();
 				}
@@ -174,22 +179,24 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new MBMessageActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
-				MBMessage message = (MBMessage)object;
-
-				propagateMessageRolePermissions(
-					actionRequest, className, groupId, message.getMessageId(),
-					roleIds);
-			}
-
-		};
+			MBMessageLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setGroupId(groupId);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
+
+					MBMessage message = (MBMessage)object;
+
+					propagateMessageRolePermissions(
+						actionRequest, className, groupId,
+						message.getMessageId(), roleIds);
+				}
+
+			});
 
 		actionableDynamicQuery.performActions();
 	}

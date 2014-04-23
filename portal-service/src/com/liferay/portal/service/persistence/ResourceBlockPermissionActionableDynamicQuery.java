@@ -22,8 +22,10 @@ import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link ResourceBlockPermissionLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class ResourceBlockPermissionActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public ResourceBlockPermissionActionableDynamicQuery()

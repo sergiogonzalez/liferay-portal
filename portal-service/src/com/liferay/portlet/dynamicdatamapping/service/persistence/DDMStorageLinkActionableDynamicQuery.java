@@ -23,8 +23,10 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DDMStorageLinkLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DDMStorageLinkActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DDMStorageLinkActionableDynamicQuery() throws SystemException {

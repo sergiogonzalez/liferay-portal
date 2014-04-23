@@ -23,8 +23,10 @@ import com.liferay.portlet.expando.service.ExpandoRowLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link ExpandoRowLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class ExpandoRowActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public ExpandoRowActionableDynamicQuery() throws SystemException {

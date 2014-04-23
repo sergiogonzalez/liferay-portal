@@ -845,23 +845,16 @@ create database lportal2 character set utf8;</echo>
 				<available file="${previous.changelog.dir}/git-commit-portal" />
 			</and>
 			<then>
-				<loadfile
-					property="previous.git.commit.plugins.rev.parse"
-					srcfile="${previous.changelog.dir}/git-commit-plugins"
-				/>
-
-				<loadfile
-					property="previous.git.commit.portal.rev.parse"
-					srcfile="${previous.changelog.dir}/git-commit-portal"
-				/>
-
 				<copy
 					file="${previous.changelog.dir}/git-build-log.html"
 					tofile="${changelog.dir}/git-build-log.html"
 				/>
 
 				<if>
-					<equals arg1="${git.commit.plugins.rev.parse}" arg2="${previous.git.commit.plugins.rev.parse}" />
+					<resourcecontains
+						resource="${previous.changelog.dir}/git-commit-plugins"
+						substring="${previous.git.commit.plugins.rev.parse}"
+					/>
 					<then>
 						<property
 							name="git.log.content.plugins"
@@ -881,7 +874,10 @@ create database lportal2 character set utf8;</echo>
 				</if>
 
 				<if>
-					<equals arg1="${git.commit.portal.rev.parse}" arg2="${previous.git.commit.portal.rev.parse}" />
+					<resourcecontains
+						resource="${previous.changelog.dir}/git-commit-portal"
+						substring="${previous.git.commit.portal.rev.parse}"
+					/>
 					<then>
 						<property
 							name="git.log.content.portal"
@@ -1166,6 +1162,8 @@ create database lportal2 character set utf8;</echo>
 				</fileset>
 			</path>
 			<sequential>
+				<echo>Merging @{jenkins.results.xml.file}.</echo>
+
 				<var name="jenkins.results.xml.suite.file.body" unset="true" />
 
 				<loadfile property="jenkins.results.xml.suite.file.body" srcfile="@{jenkins.results.xml.file}" />
@@ -1191,6 +1189,13 @@ create database lportal2 character set utf8;</echo>
 		</for>
 
 		<echo append="true" file="${jenkins.results.xml.suite.file}">&lt;/testsuite&gt;</echo>
+
+		<if>
+			<isset property="jenkins.testray.results.dir" />
+			<then>
+				<copy file="${jenkins.results.xml.suite.file}" todir="${jenkins.testray.results.dir}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="merge-test-results">
@@ -2931,11 +2936,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="start-selenium">
-		<loadfile failonerror="false" property="system-ext.properties.content" srcfile="portal-impl/classes/system-ext.properties" />
-
 		<if>
 			<not>
-				<contains string="${system-ext.properties.content}" substring="java.awt.headless=false" />
+				<resourcecontains
+					resource="portal-impl/classes/system-ext.properties"
+					substring="java.awt.headless=false"
+				/>
 			</not>
 			<then>
 				<echo append="true" file="portal-impl/classes/system-ext.properties">

@@ -32,8 +32,10 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public class DLFileShortcutExportActionableDynamicQuery
 	extends DLFileShortcutActionableDynamicQuery {
 	public DLFileShortcutExportActionableDynamicQuery(

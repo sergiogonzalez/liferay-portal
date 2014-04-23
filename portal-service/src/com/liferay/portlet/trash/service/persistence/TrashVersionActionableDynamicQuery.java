@@ -23,8 +23,10 @@ import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link TrashVersionLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class TrashVersionActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public TrashVersionActionableDynamicQuery() throws SystemException {

@@ -23,8 +23,10 @@ import com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceU
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link AnnouncementsEntryLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class AnnouncementsEntryActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public AnnouncementsEntryActionableDynamicQuery() throws SystemException {

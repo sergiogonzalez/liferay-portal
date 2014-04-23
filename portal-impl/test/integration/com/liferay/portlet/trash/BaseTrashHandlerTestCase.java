@@ -42,7 +42,7 @@ import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.SystemEventActionableDynamicQuery;
+import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
@@ -350,36 +350,34 @@ public abstract class BaseTrashHandlerTestCase {
 			trashHandler.getSystemEventClassName());
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new SystemEventActionableDynamicQuery() {
+			SystemEventLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				dynamicQuery.add(
-					classNameIdProperty.eq(systemEventClassNameId));
-
-				if (systemEventSetKey > 0) {
-					Property systemEventSetKeyProperty =
-						PropertyFactoryUtil.forName("systemEventSetKey");
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
 
 					dynamicQuery.add(
-						systemEventSetKeyProperty.eq(systemEventSetKey));
+						classNameIdProperty.eq(systemEventClassNameId));
+
+					if (systemEventSetKey > 0) {
+						Property systemEventSetKeyProperty =
+							PropertyFactoryUtil.forName("systemEventSetKey");
+
+						dynamicQuery.add(
+							systemEventSetKeyProperty.eq(systemEventSetKey));
+					}
+
+					Property typeProperty = PropertyFactoryUtil.forName("type");
+
+					dynamicQuery.add(
+						typeProperty.eq(SystemEventConstants.TYPE_DELETE));
 				}
 
-				Property typeProperty = PropertyFactoryUtil.forName("type");
-
-				dynamicQuery.add(
-					typeProperty.eq(SystemEventConstants.TYPE_DELETE));
-			}
-
-			@Override
-			protected void performAction(Object object) {
-			}
-
-		};
-
+			});
 		actionableDynamicQuery.setGroupId(group.getGroupId());
 
 		return actionableDynamicQuery.performCount();

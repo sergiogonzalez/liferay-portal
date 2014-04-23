@@ -23,8 +23,10 @@ import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link CalEventLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class CalEventActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public CalEventActionableDynamicQuery() throws SystemException {

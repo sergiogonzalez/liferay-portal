@@ -23,8 +23,10 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DDLRecordSetLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DDLRecordSetActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DDLRecordSetActionableDynamicQuery() throws SystemException {

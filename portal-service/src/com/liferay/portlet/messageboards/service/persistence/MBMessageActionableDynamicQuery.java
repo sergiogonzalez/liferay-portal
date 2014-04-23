@@ -23,8 +23,10 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link MBMessageLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class MBMessageActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public MBMessageActionableDynamicQuery() throws SystemException {

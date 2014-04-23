@@ -22,8 +22,10 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link PortletLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class PortletActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public PortletActionableDynamicQuery() throws SystemException {

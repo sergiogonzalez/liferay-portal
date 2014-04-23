@@ -23,8 +23,10 @@ import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
 
 /**
  * @author Edward C. Han
+ * @deprecated As of 7.0.0, replaced by {@link MDRActionLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class MDRActionActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public MDRActionActionableDynamicQuery() throws SystemException {

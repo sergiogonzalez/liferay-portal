@@ -22,8 +22,10 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link OrganizationLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class OrganizationActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public OrganizationActionableDynamicQuery() throws SystemException {

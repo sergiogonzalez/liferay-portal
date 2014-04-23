@@ -40,11 +40,12 @@
 	</web>
 </application>]]></echo>
 
-			<loadfile failonerror="false" property="system-ext.properties.content" srcfile="portal-impl/src/system-ext.properties" />
-
 			<if>
 				<not>
-					<contains string="${system-ext.properties.content}"  substring="liferay.lib.portal.dir" />
+					<resourcecontains
+						resource="portal-impl/src/system-ext.properties"
+						substring="liferay.lib.portal.dir"
+					/>
 				</not>
 				<then>
 					<echo

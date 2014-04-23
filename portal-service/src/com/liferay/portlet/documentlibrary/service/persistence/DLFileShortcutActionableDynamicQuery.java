@@ -23,8 +23,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DLFileShortcutLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DLFileShortcutActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DLFileShortcutActionableDynamicQuery() throws SystemException {

@@ -23,8 +23,10 @@ import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link JournalArticleImageLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class JournalArticleImageActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public JournalArticleImageActionableDynamicQuery()

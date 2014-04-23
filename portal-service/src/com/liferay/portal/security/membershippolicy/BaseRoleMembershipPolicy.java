@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.service.persistence.RoleActionableDynamicQuery;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 
 /**
  * @author Roberto Díaz
@@ -59,18 +59,21 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 	@Override
 	public void verifyPolicy() throws PortalException, SystemException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			new RoleActionableDynamicQuery() {
+			RoleLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-				Role role = (Role)object;
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
 
-				verifyPolicy(role);
-			}
+					Role role = (Role)object;
 
-		};
+					verifyPolicy(role);
+				}
+
+			});
 
 		actionableDynamicQuery.performActions();
 	}

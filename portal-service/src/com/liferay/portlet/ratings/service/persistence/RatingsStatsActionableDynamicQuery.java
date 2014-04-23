@@ -23,8 +23,10 @@ import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link RatingsStatsLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class RatingsStatsActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public RatingsStatsActionableDynamicQuery() throws SystemException {

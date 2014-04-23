@@ -23,8 +23,10 @@ import com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link PollsVoteLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class PollsVoteActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public PollsVoteActionableDynamicQuery() throws SystemException {

@@ -22,8 +22,10 @@ import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link LayoutPrototypeLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class LayoutPrototypeActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public LayoutPrototypeActionableDynamicQuery() throws SystemException {

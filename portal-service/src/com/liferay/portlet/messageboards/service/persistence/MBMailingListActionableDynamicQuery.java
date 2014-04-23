@@ -23,8 +23,10 @@ import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link MBMailingListLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class MBMailingListActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public MBMailingListActionableDynamicQuery() throws SystemException {

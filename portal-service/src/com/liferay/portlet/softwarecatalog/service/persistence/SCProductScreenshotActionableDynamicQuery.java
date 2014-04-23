@@ -23,8 +23,10 @@ import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServi
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link SCProductScreenshotLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class SCProductScreenshotActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public SCProductScreenshotActionableDynamicQuery()

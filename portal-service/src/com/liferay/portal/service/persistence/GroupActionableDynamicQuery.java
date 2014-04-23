@@ -22,8 +22,10 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link GroupLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class GroupActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public GroupActionableDynamicQuery() throws SystemException {

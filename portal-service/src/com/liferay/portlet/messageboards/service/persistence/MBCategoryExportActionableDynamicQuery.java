@@ -32,8 +32,10 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public class MBCategoryExportActionableDynamicQuery
 	extends MBCategoryActionableDynamicQuery {
 	public MBCategoryExportActionableDynamicQuery(

@@ -23,8 +23,10 @@ import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link ShoppingItemPriceLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class ShoppingItemPriceActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public ShoppingItemPriceActionableDynamicQuery() throws SystemException {

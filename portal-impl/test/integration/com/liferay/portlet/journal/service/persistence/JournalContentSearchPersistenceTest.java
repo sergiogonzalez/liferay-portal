@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.NoSuchContentSearchException;
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.impl.JournalContentSearchModelImpl;
+import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -348,16 +349,18 @@ public class JournalContentSearchPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new JournalContentSearchActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = JournalContentSearchLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					JournalContentSearch journalContentSearch = (JournalContentSearch)object;
 
 					Assert.assertNotNull(journalContentSearch);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

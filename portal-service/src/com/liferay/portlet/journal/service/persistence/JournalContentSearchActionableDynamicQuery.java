@@ -23,8 +23,10 @@ import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link JournalContentSearchLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class JournalContentSearchActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public JournalContentSearchActionableDynamicQuery()

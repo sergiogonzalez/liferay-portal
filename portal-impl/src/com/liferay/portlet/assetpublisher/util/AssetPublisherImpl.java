@@ -59,7 +59,6 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.service.persistence.PortletPreferencesActionableDynamicQuery;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -301,29 +300,37 @@ public class AssetPublisherImpl implements AssetPublisher {
 	@Override
 	public void checkAssetEntries() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
-			new PortletPreferencesActionableDynamicQuery() {
+			PortletPreferencesLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property property = PropertyFactoryUtil.forName("portletId");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				String portletId =
-					PortletKeys.ASSET_PUBLISHER +
-						PortletConstants.INSTANCE_SEPARATOR +
-							StringPool.PERCENT;
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property property = PropertyFactoryUtil.forName(
+						"portletId");
 
-				dynamicQuery.add(property.like(portletId));
-			}
+					String portletId =
+						PortletKeys.ASSET_PUBLISHER +
+							PortletConstants.INSTANCE_SEPARATOR +
+								StringPool.PERCENT;
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
+					dynamicQuery.add(property.like(portletId));
+				}
 
-				_checkAssetEntries(
-					(com.liferay.portal.model.PortletPreferences)object);
-			}
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-		};
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
+
+					_checkAssetEntries(
+						(com.liferay.portal.model.PortletPreferences)object);
+				}
+
+			});
 
 		actionableDynamicQuery.performActions();
 	}

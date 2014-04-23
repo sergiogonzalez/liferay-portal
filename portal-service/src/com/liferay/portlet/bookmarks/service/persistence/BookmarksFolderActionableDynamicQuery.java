@@ -23,8 +23,10 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link BookmarksFolderLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class BookmarksFolderActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public BookmarksFolderActionableDynamicQuery() throws SystemException {

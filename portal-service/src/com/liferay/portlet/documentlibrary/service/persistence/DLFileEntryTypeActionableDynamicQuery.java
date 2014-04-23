@@ -23,8 +23,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DLFileEntryTypeLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DLFileEntryTypeActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DLFileEntryTypeActionableDynamicQuery() throws SystemException {

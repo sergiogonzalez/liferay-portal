@@ -42,11 +42,10 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
-import com.liferay.portlet.wiki.service.persistence.WikiNodeActionableDynamicQuery;
-import com.liferay.portlet.wiki.service.persistence.WikiPageActionableDynamicQuery;
 
 import java.util.Locale;
 
@@ -294,20 +293,23 @@ public class WikiPageIndexer extends BaseIndexer {
 		throws PortalException, SystemException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new WikiNodeActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
-				WikiNode node = (WikiNode)object;
-
-				reindexPages(companyId, node.getGroupId(), node.getNodeId());
-			}
-
-		};
+			WikiNodeLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
+
+					WikiNode node = (WikiNode)object;
+
+					reindexPages(
+						companyId, node.getGroupId(), node.getNodeId());
+				}
+
+			});
 
 		actionableDynamicQuery.performActions();
 	}
@@ -315,33 +317,42 @@ public class WikiPageIndexer extends BaseIndexer {
 	protected void reindexPages(long companyId, long groupId, final long nodeId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new WikiPageActionableDynamicQuery() {
+		final ActionableDynamicQuery actionableDynamicQuery =
+			WikiPageLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property nodeIdProperty = PropertyFactoryUtil.forName("nodeId");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				dynamicQuery.add(nodeIdProperty.eq(nodeId));
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property nodeIdProperty = PropertyFactoryUtil.forName(
+						"nodeId");
 
-				Property headProperty = PropertyFactoryUtil.forName("head");
+					dynamicQuery.add(nodeIdProperty.eq(nodeId));
 
-				dynamicQuery.add(headProperty.eq(true));
-			}
+					Property headProperty = PropertyFactoryUtil.forName("head");
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				WikiPage page = (WikiPage)object;
+					dynamicQuery.add(headProperty.eq(true));
+				}
 
-				Document document = getDocument(page);
-
-				addDocument(document);
-			}
-
-		};
-
+			});
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setGroupId(groupId);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					WikiPage page = (WikiPage)object;
+
+					Document document = getDocument(page);
+
+					actionableDynamicQuery.addDocument(document);
+				}
+
+			});
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();

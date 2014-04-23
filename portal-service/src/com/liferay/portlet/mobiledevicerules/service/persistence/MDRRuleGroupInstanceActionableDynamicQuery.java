@@ -23,8 +23,10 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalSe
 
 /**
  * @author Edward C. Han
+ * @deprecated As of 7.0.0, replaced by {@link MDRRuleGroupInstanceLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class MDRRuleGroupInstanceActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public MDRRuleGroupInstanceActionableDynamicQuery()

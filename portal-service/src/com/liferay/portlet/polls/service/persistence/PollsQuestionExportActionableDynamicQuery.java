@@ -28,8 +28,10 @@ import com.liferay.portlet.polls.model.PollsQuestion;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public class PollsQuestionExportActionableDynamicQuery
 	extends PollsQuestionActionableDynamicQuery {
 	public PollsQuestionExportActionableDynamicQuery(

@@ -23,8 +23,10 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
 /**
  * @author Edward C. Han
+ * @deprecated As of 7.0.0, replaced by {@link MDRRuleLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class MDRRuleActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public MDRRuleActionableDynamicQuery() throws SystemException {

@@ -23,8 +23,10 @@ import com.liferay.portlet.asset.service.AssetTagStatsLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link AssetTagStatsLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class AssetTagStatsActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public AssetTagStatsActionableDynamicQuery() throws SystemException {

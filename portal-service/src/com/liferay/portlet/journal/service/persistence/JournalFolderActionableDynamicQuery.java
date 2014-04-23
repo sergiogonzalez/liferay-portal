@@ -23,8 +23,10 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link JournalFolderLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class JournalFolderActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public JournalFolderActionableDynamicQuery() throws SystemException {

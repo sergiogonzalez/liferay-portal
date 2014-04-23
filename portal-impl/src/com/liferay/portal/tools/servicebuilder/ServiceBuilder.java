@@ -221,57 +221,67 @@ public class ServiceBuilder {
 
 		ToolDependencies.wireServiceBuilder();
 
-		String fileName = arguments.get("service.input.file");
-		String hbmFileName = arguments.get("service.hbm.file");
-		String modelHintsFileName = arguments.get("service.model.hints.file");
-		String springFileName = arguments.get("service.spring.file");
 		String apiDir = arguments.get("service.api.dir");
+		boolean autoImportDefaultReferences = GetterUtil.getBoolean(arguments.get("service.auto.import.default.references"), true);
+		boolean autoNamespaceTables = GetterUtil.getBoolean(arguments.get("service.auto.namespace.tables"));
+		String beanLocatorUtil = arguments.get("service.bean.locator.util");
+		long buildNumber = GetterUtil.getLong(arguments.get("service.build.number"), 1);
+		boolean buildNumberIncrement = GetterUtil.getBoolean(arguments.get("service.build.number.increment"), true);
+		String hbmFileName = arguments.get("service.hbm.file");
 		String implDir = arguments.get("service.impl.dir");
+		String inputFileName = arguments.get("service.input.file");
+		String modelHintsFileName = arguments.get("service.model.hints.file");
+		boolean osgiModule = GetterUtil.getBoolean(arguments.get("service.osgi.module"));
+		String pluginName = arguments.get("service.plugin.name");
+		String propsUtil = arguments.get("service.props.util");
 		String remotingFileName = arguments.get("service.remoting.file");
+		String resourcesDir = arguments.get("service.resources.dir");
+		String springFileName = arguments.get("service.spring.file");
+		String[] springNamespaces = StringUtil.split(arguments.get("service.spring.namespaces"));
 		String sqlDir = arguments.get("service.sql.dir");
 		String sqlFileName = arguments.get("service.sql.file");
 		String sqlIndexesFileName = arguments.get("service.sql.indexes.file");
 		String sqlSequencesFileName = arguments.get("service.sql.sequences.file");
-		boolean autoImportDefaultReferences = GetterUtil.getBoolean(arguments.get("service.auto.import.default.references"), true);
-		boolean autoNamespaceTables = GetterUtil.getBoolean(arguments.get("service.auto.namespace.tables"));
-		String beanLocatorUtil = arguments.get("service.bean.locator.util");
-		String propsUtil = arguments.get("service.props.util");
-		String pluginName = arguments.get("service.plugin.name");
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDir = arguments.get("service.test.dir");
-		long buildNumber = GetterUtil.getLong(arguments.get("service.build.number"), 1);
-		boolean buildNumberIncrement = GetterUtil.getBoolean(arguments.get("service.build.number.increment"), true);
 
 		try {
 			new ServiceBuilder(
-				fileName, hbmFileName, modelHintsFileName, springFileName,
-				apiDir, implDir, remotingFileName, sqlDir, sqlFileName,
-				sqlIndexesFileName, sqlSequencesFileName,
-				autoImportDefaultReferences, autoNamespaceTables,
-				beanLocatorUtil, propsUtil, pluginName, targetEntityName,
-				testDir, true, buildNumber, buildNumberIncrement);
+				apiDir, autoImportDefaultReferences, autoNamespaceTables,
+				beanLocatorUtil, buildNumber, buildNumberIncrement, hbmFileName,
+				implDir, inputFileName, modelHintsFileName, osgiModule,
+				pluginName, propsUtil, remotingFileName, resourcesDir,
+				springFileName, springNamespaces, sqlDir, sqlFileName,
+				sqlIndexesFileName, sqlSequencesFileName, targetEntityName,
+				testDir, true);
 		}
 		catch (RuntimeException re) {
 			System.out.println(
-				"Please set these required arguments. Sample values are:\n" +
+				"Please set these arguments. Sample values are:\n" +
 				"\n" +
-				"\tservice.input.file=${service.file}\n" +
-				"\tservice.hbm.file=${basedir}/src/META-INF/portal-hbm.xml\n" +
-				"\tservice.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml\n" +
-				"\tservice.spring.file=${basedir}/src/META-INF/portal-spring.xml\n" +
 				"\tservice.api.dir=${basedir}/../portal-service/src\n" +
+				"\tservice.auto.import.default.references=true\n" +
+				"\tservice.auto.namespace.tables=false\n" +
+				"\tservice.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil\n" +
+				"\tservice.build.number=1\n" +
+				"\tservice.build.number.increment=true\n" +
+				"\tservice.hbm.file=${basedir}/src/META-INF/portal-hbm.xml\n" +
 				"\tservice.impl.dir=${basedir}/src\n" +
+				"\tservice.input.file=${service.file}\n" +
+				"\tservice.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml\n" +
+				"\tservice.osgi.module=false\n" +
+				"\tservice.plugin.name=\n" +
+				"\tservice.props.util=com.liferay.portal.util.PropsUtil\n" +
 				"\tservice.remoting.file=${basedir}/../portal-web/docroot/WEB-INF/remoting-servlet.xml\n" +
+				"\tservice.resources.dir=${basedir}/src\n" +
+				"\tservice.spring.file=${basedir}/src/META-INF/portal-spring.xml\n" +
+				"\tservice.spring.namespaces=beans\n" +
 				"\tservice.sql.dir=${basedir}/../sql\n" +
 				"\tservice.sql.file=portal-tables.sql\n" +
 				"\tservice.sql.indexes.file=indexes.sql\n" +
 				"\tservice.sql.sequences.file=sequences.sql\n" +
-				"\tservice.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil\n" +
-				"\tservice.props.util=com.liferay.portal.util.PropsUtil\n" +
 				"\tservice.target.entity.name=${service.target.entity.name}\n" +
 				"\tservice.test.dir=${basedir}/test/integration\n" +
-				"\tservice.build.number=1\n" +
-				"\tservice.build.number.increment=true\n" +
 				"\n" +
 				"You can also customize the generated code by overriding the default templates with these optional system properties:\n" +
 				"\n" +
@@ -501,31 +511,15 @@ public class ServiceBuilder {
 	}
 
 	public ServiceBuilder(
-		String fileName, String hbmFileName, String modelHintsFileName,
-		String springFileName, String apiDir, String implDir,
-		String remotingFileName, String sqlDir, String sqlFileName,
-		String sqlIndexesFileName, String sqlSequencesFileName,
-		boolean autoImportDefaultReferences, boolean autoNamespaceTables,
-		String beanLocatorUtil, String propsUtil, String pluginName,
-		String targetEntityName, String testDir) {
-
-		this(
-			fileName, hbmFileName, modelHintsFileName, springFileName, apiDir,
-			implDir, remotingFileName, sqlDir, sqlFileName, sqlIndexesFileName,
-			sqlSequencesFileName, autoImportDefaultReferences,
-			autoNamespaceTables, beanLocatorUtil, propsUtil, pluginName,
-			targetEntityName, testDir, true, 1, true);
-	}
-
-	public ServiceBuilder(
-		String fileName, String hbmFileName, String modelHintsFileName,
-		String springFileName, String apiDir, String implDir,
-		String remotingFileName, String sqlDir, String sqlFileName,
-		String sqlIndexesFileName, String sqlSequencesFileName,
-		boolean autoImportDefaultReferences, boolean autoNamespaceTables,
-		String beanLocatorUtil, String propsUtil, String pluginName,
-		String targetEntityName, String testDir, boolean build,
-		long buildNumber, boolean buildNumberIncrement) {
+		String apiDir, boolean autoImportDefaultReferences,
+		boolean autoNamespaceTables, String beanLocatorUtil, long buildNumber,
+		boolean buildNumberIncrement, String hbmFileName, String implDir,
+		String inputFileName, String modelHintsFileName, boolean osgiModule,
+		String pluginName, String propsUtil, String remotingFileName,
+		String resourcesDir, String springFileName, String[] springNamespaces,
+		String sqlDir, String sqlFileName, String sqlIndexesFileName,
+		String sqlSequencesFileName, String targetEntityName, String testDir,
+		boolean build) {
 
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
@@ -587,8 +581,17 @@ public class ServiceBuilder {
 			_hbmFileName = hbmFileName;
 			_modelHintsFileName = modelHintsFileName;
 			_springFileName = springFileName;
+
+			_springNamespaces = springNamespaces;
+
+			if (!ArrayUtil.contains(_springNamespaces, "beans")) {
+				_springNamespaces = ArrayUtil.append(
+					_springNamespaces, "beans");
+			}
+
 			_apiDir = apiDir;
 			_implDir = implDir;
+			_resourcesDir = resourcesDir;
 			_remotingFileName = remotingFileName;
 			_sqlDir = sqlDir;
 			_sqlFileName = sqlFileName;
@@ -606,8 +609,9 @@ public class ServiceBuilder {
 			_build = build;
 			_buildNumber = buildNumber;
 			_buildNumberIncrement = buildNumberIncrement;
+			_osgiModule = osgiModule;
 
-			String content = getContent(fileName);
+			String content = getContent(inputFileName);
 
 			Document document = SAXReaderUtil.read(content, true);
 
@@ -842,6 +846,25 @@ public class ServiceBuilder {
 		}
 	}
 
+	public ServiceBuilder(
+		String apiDir, boolean autoImportDefaultReferences,
+		boolean autoNamespaceTables, String beanLocatorUtil, String hbmFileName,
+		String implDir, String inputFileName, String modelHintsFileName,
+		boolean osgiModule, String pluginName, String propsUtil,
+		String remotingFileName, String resourcesDir, String springFileName,
+		String[] springNamespaces, String sqlDir, String sqlFileName,
+		String sqlIndexesFileName, String sqlSequencesFileName,
+		String targetEntityName, String testDir) {
+
+		this(
+			apiDir, autoImportDefaultReferences, autoNamespaceTables,
+			beanLocatorUtil, 1, true, hbmFileName, implDir, inputFileName,
+			modelHintsFileName, osgiModule, pluginName, propsUtil,
+			remotingFileName, resourcesDir, springFileName, springNamespaces,
+			sqlDir, sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
+			targetEntityName, testDir, true);
+	}
+
 	public String getClassName(Type type) {
 		int dimensions = type.getDimensions();
 		String name = type.getValue();
@@ -993,12 +1016,13 @@ public class ServiceBuilder {
 		}
 
 		ServiceBuilder serviceBuilder = new ServiceBuilder(
-			refFileName, _hbmFileName, _modelHintsFileName, _springFileName,
-			_apiDir, _implDir, _remotingFileName, _sqlDir, _sqlFileName,
-			_sqlIndexesFileName, _sqlSequencesFileName,
-			_autoImportDefaultReferences, _autoNamespaceTables,
-			_beanLocatorUtil, _propsUtil, _pluginName, _targetEntityName,
-			_testDir, false, _buildNumber, _buildNumberIncrement);
+			_apiDir, _autoImportDefaultReferences, _autoNamespaceTables,
+			_beanLocatorUtil, _buildNumber, _buildNumberIncrement, _hbmFileName,
+			_implDir, refFileName, _modelHintsFileName, _osgiModule,
+			_pluginName, _propsUtil, _remotingFileName, _resourcesDir,
+			_springFileName, _springNamespaces, _sqlDir, _sqlFileName,
+			_sqlIndexesFileName, _sqlSequencesFileName, _targetEntityName,
+			_testDir, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -1746,6 +1770,10 @@ public class ServiceBuilder {
 	}
 
 	private void _createActionableDynamicQuery(Entity entity) throws Exception {
+		if (_osgiModule) {
+			return;
+		}
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
@@ -1886,6 +1914,10 @@ public class ServiceBuilder {
 
 	private void _createExportActionableDynamicQuery(Entity entity)
 		throws Exception {
+
+		if (_osgiModule) {
+			return;
+		}
 
 		Map<String, Object> context = _getContext();
 
@@ -2576,7 +2608,17 @@ public class ServiceBuilder {
 
 		// Content
 
-		File propsFile = new File(_implDir + "/service.properties");
+		File propsFile = null;
+
+		if (Validator.isNotNull(_resourcesDir)) {
+			propsFile = new File(_resourcesDir + "/service.properties");
+		}
+		else {
+
+			// Backwards compatibility
+
+			propsFile = new File(_implDir + "/service.properties");
+		}
 
 		long buildNumber = 1;
 		long buildDate = System.currentTimeMillis();
@@ -3142,9 +3184,9 @@ public class ServiceBuilder {
 			"<beans\n" +
 			"\tdefault-destroy-method=\"destroy\"\n" +
 			"\tdefault-init-method=\"afterPropertiesSet\"\n" +
-			"\txmlns=\"http://www.springframework.org/schema/beans\"\n" +
+			_getSpringNamespacesDeclarations() +
 			"\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-			"\txsi:schemaLocation=\"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd\"\n" +
+			_getSpringSchemaLocations() +
 			">\n" +
 			"</beans>";
 
@@ -3757,30 +3799,30 @@ public class ServiceBuilder {
 
 		Map<String, Object> context = new HashMap<String, Object>();
 
-		context.put("hbmFileName", _hbmFileName);
-		context.put("modelHintsFileName", _modelHintsFileName);
-		context.put("springFileName", _springFileName);
 		context.put("apiDir", _apiDir);
-		context.put("implDir", _implDir);
-		context.put("sqlDir", _sqlDir);
-		context.put("sqlFileName", _sqlFileName);
+		context.put("arrayUtil", ArrayUtil_IW.getInstance());
+		context.put("author", _author);
 		context.put("beanLocatorUtil", _beanLocatorUtil);
 		context.put("beanLocatorUtilShortName", _beanLocatorUtilShortName);
-		context.put("propsUtil", _propsUtil);
-		context.put("portletName", _portletName);
-		context.put("portletShortName", _portletShortName);
-		context.put("portletPackageName", _portletPackageName);
+		context.put("hbmFileName", _hbmFileName);
+		context.put("implDir", _implDir);
+		context.put("modelHintsFileName", _modelHintsFileName);
+		context.put("modelHintsUtil", ModelHintsUtil.getModelHints());
+		context.put("osgiModule", _osgiModule);
 		context.put("outputPath", _outputPath);
-		context.put("serviceOutputPath", _serviceOutputPath);
 		context.put("packagePath", _packagePath);
 		context.put("pluginName", _pluginName);
-		context.put("author", _author);
-		context.put("serviceBuilder", this);
-
-		context.put("arrayUtil", ArrayUtil_IW.getInstance());
-		context.put("modelHintsUtil", ModelHintsUtil.getModelHints());
+		context.put("portletName", _portletName);
+		context.put("portletPackageName", _portletPackageName);
+		context.put("portletShortName", _portletShortName);
+		context.put("propsUtil", _propsUtil);
 		context.put(
 			"resourceActionsUtil", ResourceActionsUtil.getResourceActions());
+		context.put("serviceBuilder", this);
+		context.put("serviceOutputPath", _serviceOutputPath);
+		context.put("springFileName", _springFileName);
+		context.put("sqlDir", _sqlDir);
+		context.put("sqlFileName", _sqlFileName);
 		context.put("stringUtil", StringUtil_IW.getInstance());
 		context.put("system", staticModels.get("java.lang.System"));
 		context.put("tempMap", wrapper.wrap(new HashMap<String, Object>()));
@@ -4161,6 +4203,36 @@ public class ServiceBuilder {
 		else {
 			return "";
 		}
+	}
+
+	private String _getSpringNamespacesDeclarations() {
+		StringBundler sb = new StringBundler(_springNamespaces.length * 4);
+
+		for (String namespace : _springNamespaces) {
+			sb.append("\txmlns:");
+			sb.append(namespace);
+			sb.append("=\"http://www.springframework.org/schema/");
+			sb.append(namespace);
+			sb.append("\"\n");
+		}
+
+		return sb.toString();
+	}
+
+	private String _getSpringSchemaLocations() {
+		StringBundler sb = new StringBundler(_springNamespaces.length * 6);
+
+		for (String namespace : _springNamespaces) {
+			sb.append("\thttp://www.springframework.org/schema/");
+			sb.append(namespace);
+			sb.append(" http://www.springframework.org/schema/");
+			sb.append(namespace);
+			sb.append("/spring-");
+			sb.append(namespace);
+			sb.append(".xsd");
+		}
+
+		return sb.toString();
 	}
 
 	private String _getTplProperty(String key, String defaultValue) {
@@ -4893,6 +4965,7 @@ public class ServiceBuilder {
 		new HashMap<String, JavaClass>();
 	private String _modelHintsFileName;
 	private boolean _mvccEnabled;
+	private boolean _osgiModule;
 	private String _outputPath;
 	private String _packagePath;
 	private String _pluginName;
@@ -4901,8 +4974,10 @@ public class ServiceBuilder {
 	private String _portletShortName = StringPool.BLANK;
 	private String _propsUtil;
 	private String _remotingFileName;
+	private String _resourcesDir;
 	private String _serviceOutputPath;
 	private String _springFileName;
+	private String[] _springNamespaces;
 	private String _sqlDir;
 	private String _sqlFileName;
 	private String _sqlIndexesFileName;

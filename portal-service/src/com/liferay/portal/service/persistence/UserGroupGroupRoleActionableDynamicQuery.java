@@ -22,8 +22,10 @@ import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link UserGroupGroupRoleLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class UserGroupGroupRoleActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public UserGroupGroupRoleActionableDynamicQuery() throws SystemException {

@@ -22,8 +22,10 @@ import com.liferay.portal.service.WebDAVPropsLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link WebDAVPropsLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class WebDAVPropsActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public WebDAVPropsActionableDynamicQuery() throws SystemException {

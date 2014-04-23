@@ -22,8 +22,10 @@ import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link PasswordTrackerLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class PasswordTrackerActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public PasswordTrackerActionableDynamicQuery() throws SystemException {

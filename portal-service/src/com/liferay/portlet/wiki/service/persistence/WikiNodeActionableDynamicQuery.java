@@ -23,8 +23,10 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link WikiNodeLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class WikiNodeActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public WikiNodeActionableDynamicQuery() throws SystemException {

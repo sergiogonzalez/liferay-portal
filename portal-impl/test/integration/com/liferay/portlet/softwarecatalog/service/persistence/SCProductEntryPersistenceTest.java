@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl;
+import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -328,16 +329,18 @@ public class SCProductEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new SCProductEntryActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = SCProductEntryLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					SCProductEntry scProductEntry = (SCProductEntry)object;
 
 					Assert.assertNotNull(scProductEntry);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

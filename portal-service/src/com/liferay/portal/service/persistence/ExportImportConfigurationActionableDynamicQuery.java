@@ -22,8 +22,10 @@ import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link ExportImportConfigurationLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class ExportImportConfigurationActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public ExportImportConfigurationActionableDynamicQuery()

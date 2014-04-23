@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.persistence.UserGroupActionableDynamicQuery;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
 /**
  * @author Roberto Díaz
@@ -62,18 +62,21 @@ public abstract class BaseUserGroupMembershipPolicy
 	@Override
 	public void verifyPolicy() throws PortalException, SystemException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			new UserGroupActionableDynamicQuery() {
+			UserGroupLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-				UserGroup userGroup = (UserGroup)object;
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
 
-				verifyPolicy(userGroup);
-			}
+					UserGroup userGroup = (UserGroup)object;
 
-		};
+					verifyPolicy(userGroup);
+				}
+
+			});
 
 		actionableDynamicQuery.performActions();
 	}

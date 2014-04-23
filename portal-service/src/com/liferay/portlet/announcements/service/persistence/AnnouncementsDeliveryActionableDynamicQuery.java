@@ -23,8 +23,10 @@ import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServi
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link AnnouncementsDeliveryLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class AnnouncementsDeliveryActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public AnnouncementsDeliveryActionableDynamicQuery()

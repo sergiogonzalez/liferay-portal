@@ -23,8 +23,10 @@ import com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUt
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link AnnouncementsFlagLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class AnnouncementsFlagActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public AnnouncementsFlagActionableDynamicQuery() throws SystemException {

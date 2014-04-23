@@ -9,8 +9,10 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 /**
  * @author ${author}
+ * @deprecated As of 7.0.0, replaced by {@link ${entity.name}LocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class ${entity.name}ActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 

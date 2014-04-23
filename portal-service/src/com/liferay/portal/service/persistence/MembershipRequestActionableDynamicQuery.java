@@ -22,8 +22,10 @@ import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link MembershipRequestLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class MembershipRequestActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public MembershipRequestActionableDynamicQuery() throws SystemException {

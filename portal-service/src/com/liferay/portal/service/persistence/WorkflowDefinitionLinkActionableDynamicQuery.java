@@ -22,8 +22,10 @@ import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link WorkflowDefinitionLinkLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class WorkflowDefinitionLinkActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public WorkflowDefinitionLinkActionableDynamicQuery()

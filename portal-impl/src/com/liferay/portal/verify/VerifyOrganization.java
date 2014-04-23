@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.persistence.OrganizationActionableDynamicQuery;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -52,37 +51,41 @@ public class VerifyOrganization extends VerifyProcess {
 
 	protected void updateOrganizationAssetEntries() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
-			new OrganizationActionableDynamicQuery() {
+			OrganizationLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void performAction(Object object) {
-				Organization organization = (Organization)object;
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-				try {
-					AssetEntry assetEntry =
-						AssetEntryLocalServiceUtil.getEntry(
-							Organization.class.getName(),
-							organization.getOrganizationId());
+				@Override
+				public void performAction(Object object) {
+					Organization organization = (Organization)object;
 
-					if (Validator.isNotNull(assetEntry.getClassUuid())) {
-						return;
+					try {
+						AssetEntry assetEntry =
+							AssetEntryLocalServiceUtil.getEntry(
+								Organization.class.getName(),
+								organization.getOrganizationId());
+
+						if (Validator.isNotNull(assetEntry.getClassUuid())) {
+							return;
+						}
+
+						assetEntry.setClassUuid(organization.getUuid());
+
+						AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
 					}
-
-					assetEntry.setClassUuid(organization.getUuid());
-
-					AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to update asset entry for organization " +
-								organization.getOrganizationId(),
-							e);
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to update asset entry for " +
+									"organization " +
+										organization.getOrganizationId(),
+								e);
+						}
 					}
 				}
-			}
 
-		};
+			});
 
 		actionableDynamicQuery.performActions();
 	}

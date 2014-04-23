@@ -7,6 +7,10 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 <#if sessionTypeName == "Local">
 /**
  * Provides the local service utility for ${entity.name}. This utility wraps
@@ -125,7 +129,9 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 
 	public static ${entity.name}${sessionTypeName}Service getService() {
 		if (_service == null) {
-			<#if pluginName != "">
+			<#if osgiModule>
+				return _serviceTracker.getService();
+			<#elseif pluginName != "">
 				Invokable${sessionTypeName}Service invokable${sessionTypeName}Service = (Invokable${sessionTypeName}Service)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(), ${entity.name}${sessionTypeName}Service.class.getName());
 
 				if (invokable${sessionTypeName}Service instanceof ${entity.name}${sessionTypeName}Service) {
@@ -151,6 +157,18 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 	public void setService(${entity.name}${sessionTypeName}Service service) {
 	}
 
-	private static ${entity.name}${sessionTypeName}Service _service;
+	<#if osgiModule>
+		private static ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service> _serviceTracker;
+
+		static {
+			Bundle bundle = FrameworkUtil.getBundle(${entity.name}${sessionTypeName}ServiceUtil.class);
+
+			_serviceTracker = new ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service>(bundle.getBundleContext(), ${entity.name}${sessionTypeName}Service.class, null);
+
+			_serviceTracker.open();
+		}
+	<#else>
+		private static ${entity.name}${sessionTypeName}Service _service;
+	</#if>
 
 }

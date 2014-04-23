@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchTagPropertyException;
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.model.impl.AssetTagPropertyModelImpl;
+import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -288,16 +289,18 @@ public class AssetTagPropertyPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new AssetTagPropertyActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = AssetTagPropertyLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					AssetTagProperty assetTagProperty = (AssetTagProperty)object;
 
 					Assert.assertNotNull(assetTagProperty);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 

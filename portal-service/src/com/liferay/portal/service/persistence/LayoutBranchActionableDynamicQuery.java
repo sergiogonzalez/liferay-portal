@@ -22,8 +22,10 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link LayoutBranchLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class LayoutBranchActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public LayoutBranchActionableDynamicQuery() throws SystemException {

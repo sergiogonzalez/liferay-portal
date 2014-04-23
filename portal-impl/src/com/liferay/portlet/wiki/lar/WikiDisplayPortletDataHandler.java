@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPermission;
 import com.liferay.portlet.wiki.service.persistence.WikiNodeUtil;
-import com.liferay.portlet.wiki.service.persistence.WikiPageExportActionableDynamicQuery;
 
 import java.util.Map;
 
@@ -156,26 +156,43 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 			final String portletId)
 		throws SystemException {
 
-		return new WikiPageExportActionableDynamicQuery(portletDataContext) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			WikiPageLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
+		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			actionableDynamicQuery.getAddCriteriaMethod();
 
-				Property property = PropertyFactoryUtil.forName("nodeId");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				dynamicQuery.add(property.eq(nodeId));
-			}
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					addCriteriaMethod.addCriteria(dynamicQuery);
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				WikiPage page = (WikiPage)object;
+					Property property = PropertyFactoryUtil.forName("nodeId");
 
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletId, page);
-			}
+					dynamicQuery.add(property.eq(nodeId));
+				}
 
-		};
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					WikiPage page = (WikiPage)object;
+
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletId, page);
+				}
+
+			});
+
+		return actionableDynamicQuery;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

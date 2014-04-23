@@ -22,8 +22,10 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link CompanyLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class CompanyActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public CompanyActionableDynamicQuery() throws SystemException {

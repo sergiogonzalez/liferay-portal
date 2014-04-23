@@ -23,8 +23,10 @@ import com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceU
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link SocialActivityAchievementLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class SocialActivityAchievementActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public SocialActivityAchievementActionableDynamicQuery()

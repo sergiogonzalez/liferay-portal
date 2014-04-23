@@ -23,8 +23,10 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DLFolderLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DLFolderActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DLFolderActionableDynamicQuery() throws SystemException {

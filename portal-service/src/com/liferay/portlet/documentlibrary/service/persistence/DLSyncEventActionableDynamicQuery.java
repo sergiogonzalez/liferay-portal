@@ -23,8 +23,10 @@ import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DLSyncEventLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DLSyncEventActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DLSyncEventActionableDynamicQuery() throws SystemException {

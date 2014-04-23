@@ -22,8 +22,10 @@ import com.liferay.portal.service.LockLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link LockLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class LockActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public LockActionableDynamicQuery() throws SystemException {

@@ -34,15 +34,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
-import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryActionableDynamicQuery;
-import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderActionableDynamicQuery;
 
 import java.util.Locale;
 
@@ -172,39 +171,48 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 			long companyId, final long groupId, final long folderId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new BookmarksEntryActionableDynamicQuery() {
+		final ActionableDynamicQuery actionableDynamicQuery =
+			BookmarksEntryLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property folderIdProperty = PropertyFactoryUtil.forName(
-					"folderId");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-				dynamicQuery.add(folderIdProperty.eq(folderId));
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property folderIdProperty = PropertyFactoryUtil.forName(
+						"folderId");
 
-				Property statusProperty = PropertyFactoryUtil.forName("status");
+					dynamicQuery.add(folderIdProperty.eq(folderId));
 
-				Integer[] statuses = {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_IN_TRASH
-				};
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
 
-				dynamicQuery.add(statusProperty.in(statuses));
-			}
+					Integer[] statuses = {
+						WorkflowConstants.STATUS_APPROVED,
+						WorkflowConstants.STATUS_IN_TRASH
+					};
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				BookmarksEntry entry = (BookmarksEntry)object;
+					dynamicQuery.add(statusProperty.in(statuses));
+				}
 
-				Document document = getDocument(entry);
-
-				addDocument(document);
-			}
-
-		};
-
+			});
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setGroupId(groupId);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					BookmarksEntry entry = (BookmarksEntry)object;
+
+					Document document = getDocument(entry);
+
+					actionableDynamicQuery.addDocument(document);
+				}
+
+			});
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();
@@ -213,24 +221,26 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 	protected void reindexFolders(final long companyId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new BookmarksFolderActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
-				BookmarksFolder folder = (BookmarksFolder)object;
-
-				long groupId = folder.getGroupId();
-				long folderId = folder.getFolderId();
-
-				reindexEntries(companyId, groupId, folderId);
-			}
-
-		};
+		final ActionableDynamicQuery actionableDynamicQuery =
+			BookmarksFolderLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
+
+					BookmarksFolder folder = (BookmarksFolder)object;
+
+					long groupId = folder.getGroupId();
+					long folderId = folder.getFolderId();
+
+					reindexEntries(companyId, groupId, folderId);
+				}
+
+			});
 
 		actionableDynamicQuery.performActions();
 	}
@@ -239,24 +249,26 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 		throws PortalException, SystemException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new GroupActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
-				Group group = (Group)object;
-
-				long groupId = group.getGroupId();
-				long folderId =
-					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-				reindexEntries(companyId, groupId, folderId);
-			}
-
-		};
+			GroupLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
+
+					Group group = (Group)object;
+
+					long groupId = group.getGroupId();
+					long folderId =
+						BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+					reindexEntries(companyId, groupId, folderId);
+				}
+
+			});
 
 		actionableDynamicQuery.performActions();
 	}

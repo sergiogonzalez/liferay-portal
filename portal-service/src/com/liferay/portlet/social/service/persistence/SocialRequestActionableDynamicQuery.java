@@ -23,8 +23,10 @@ import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link SocialRequestLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class SocialRequestActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public SocialRequestActionableDynamicQuery() throws SystemException {

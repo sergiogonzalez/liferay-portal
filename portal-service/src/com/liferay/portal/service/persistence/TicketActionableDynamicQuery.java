@@ -22,8 +22,10 @@ import com.liferay.portal.service.TicketLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link TicketLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class TicketActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public TicketActionableDynamicQuery() throws SystemException {

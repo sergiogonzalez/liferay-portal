@@ -22,8 +22,10 @@ import com.liferay.portal.service.OrgLaborLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link OrgLaborLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class OrgLaborActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public OrgLaborActionableDynamicQuery() throws SystemException {

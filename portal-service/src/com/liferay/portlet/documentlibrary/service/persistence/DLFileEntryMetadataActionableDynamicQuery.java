@@ -23,8 +23,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DLFileEntryMetadataLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DLFileEntryMetadataActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DLFileEntryMetadataActionableDynamicQuery()

@@ -23,8 +23,10 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link AssetLinkLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class AssetLinkActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public AssetLinkActionableDynamicQuery() throws SystemException {

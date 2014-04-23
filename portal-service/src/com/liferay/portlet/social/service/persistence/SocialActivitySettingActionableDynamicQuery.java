@@ -23,8 +23,10 @@ import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link SocialActivitySettingLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class SocialActivitySettingActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public SocialActivitySettingActionableDynamicQuery()

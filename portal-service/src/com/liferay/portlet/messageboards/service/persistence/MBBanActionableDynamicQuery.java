@@ -23,8 +23,10 @@ import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link MBBanLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class MBBanActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public MBBanActionableDynamicQuery() throws SystemException {

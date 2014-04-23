@@ -15,6 +15,7 @@
 package com.liferay.portlet.trash.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
@@ -131,39 +130,41 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public void checkEntries() throws PortalException, SystemException {
+
 		ActionableDynamicQuery actionableDynamicQuery =
-			new GroupActionableDynamicQuery() {
+			groupLocalService.getActionableDynamicQuery();
 
-			@Override
-			protected TransactionAttribute getTransactionAttribute() {
-				return REQUIRES_NEW_TRANSACTION_ATTRIBUTE;
-			}
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
 
-				Group group = (Group)object;
+					Group group = (Group)object;
 
-				if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
-					return;
+					if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
+						return;
+					}
+
+					Date date = getMaxAge(group);
+
+					List<TrashEntry> entries =
+						trashEntryPersistence.findByG_LtCD(
+							group.getGroupId(), date);
+
+					for (TrashEntry entry : entries) {
+						TrashHandler trashHandler =
+							TrashHandlerRegistryUtil.getTrashHandler(
+								entry.getClassName());
+
+						trashHandler.deleteTrashEntry(entry.getClassPK());
+					}
 				}
 
-				Date date = getMaxAge(group);
-
-				List<TrashEntry> entries = trashEntryPersistence.findByG_LtCD(
-					group.getGroupId(), date);
-
-				for (TrashEntry entry : entries) {
-					TrashHandler trashHandler =
-						TrashHandlerRegistryUtil.getTrashHandler(
-							entry.getClassName());
-
-					trashHandler.deleteTrashEntry(entry.getClassPK());
-				}
-			}
-
-		};
+			});
+		actionableDynamicQuery.setTransactionAttribute(
+			BaseActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_ATTRIBUTE);
 
 		actionableDynamicQuery.performActions();
 	}

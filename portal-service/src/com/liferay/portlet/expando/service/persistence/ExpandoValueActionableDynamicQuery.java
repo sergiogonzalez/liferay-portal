@@ -23,8 +23,10 @@ import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link ExpandoValueLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class ExpandoValueActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public ExpandoValueActionableDynamicQuery() throws SystemException {

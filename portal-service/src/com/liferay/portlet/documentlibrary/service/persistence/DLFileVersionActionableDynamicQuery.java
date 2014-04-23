@@ -23,8 +23,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link DLFileVersionLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public abstract class DLFileVersionActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
 	public DLFileVersionActionableDynamicQuery() throws SystemException {

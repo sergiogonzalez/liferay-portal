@@ -32,8 +32,10 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
+@Deprecated
 public class DLFolderExportActionableDynamicQuery
 	extends DLFolderActionableDynamicQuery {
 	public DLFolderExportActionableDynamicQuery(

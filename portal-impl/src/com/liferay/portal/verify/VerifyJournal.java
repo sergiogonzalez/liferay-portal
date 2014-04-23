@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -41,7 +40,6 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -243,101 +241,96 @@ public class VerifyJournal extends VerifyProcess {
 
 	protected void verifyPermissionsAndAssets() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
-			new JournalArticleActionableDynamicQuery() {
+			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-				JournalArticle article = (JournalArticle)object;
+				@Override
+				public void performAction(Object object)
+					throws PortalException, SystemException {
 
-				long groupId = article.getGroupId();
-				String articleId = article.getArticleId();
-				double version = article.getVersion();
-				String structureId = article.getStructureId();
+					JournalArticle article = (JournalArticle)object;
 
-				if (article.getResourcePrimKey() <= 0) {
-					article =
-						JournalArticleLocalServiceUtil.
-							checkArticleResourcePrimKey(
-								groupId, articleId, version);
+					verifyPermissionsAndAssets(article);
 				}
 
-				ResourceLocalServiceUtil.addResources(
-					article.getCompanyId(), 0, 0,
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey(), false, false, false);
-
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey());
-
-				if (assetEntry == null) {
-					try {
-						JournalArticleLocalServiceUtil.updateAsset(
-							article.getUserId(), article, null, null, null);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to update asset for article " +
-									article.getId() + ": " + e.getMessage());
-						}
-					}
-				}
-				else if ((article.getStatus() ==
-							WorkflowConstants.STATUS_DRAFT) &&
-						 (article.getVersion() ==
-							JournalArticleConstants.VERSION_DEFAULT)) {
-
-					AssetEntryLocalServiceUtil.updateEntry(
-						assetEntry.getClassName(), assetEntry.getClassPK(),
-						null, assetEntry.isVisible());
-				}
-
-				String content = GetterUtil.getString(article.getContent());
-
-				String newContent = HtmlUtil.replaceMsWordCharacters(content);
-
-				if (Validator.isNotNull(structureId)) {
-					/*JournalStructure structure =
-						JournalStructureLocalServiceUtil.getStructure(
-							groupId, structureId);
-
-					newContent = JournalUtil.removeOldContent(
-						newContent, structure.getXsd());*/
-				}
-
-				if (!content.equals(newContent)) {
-					JournalArticleLocalServiceUtil.updateContent(
-						groupId, articleId, version, newContent);
-				}
-
-				try {
-					JournalArticleLocalServiceUtil.checkStructure(
-						groupId, articleId, version);
-				}
-				catch (NoSuchStructureException nsse) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Removing reference to missing structure for " +
-								"article " + article.getId());
-					}
-
-					article.setStructureId(StringPool.BLANK);
-					article.setTemplateId(StringPool.BLANK);
-
-					JournalArticleLocalServiceUtil.updateJournalArticle(
-						article);
-				}
-			}
-
-		};
+			});
 
 		actionableDynamicQuery.performActions();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Permissions and assets verified for articles");
+		}
+	}
+
+	protected void verifyPermissionsAndAssets(JournalArticle article)
+		throws PortalException, SystemException {
+
+		long groupId = article.getGroupId();
+		String articleId = article.getArticleId();
+		double version = article.getVersion();
+
+		if (article.getResourcePrimKey() <= 0) {
+			article =
+				JournalArticleLocalServiceUtil.checkArticleResourcePrimKey(
+					groupId, articleId, version);
+		}
+
+		ResourceLocalServiceUtil.addResources(
+			article.getCompanyId(), 0, 0, JournalArticle.class.getName(),
+			article.getResourcePrimKey(), false, false, false);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		if (assetEntry == null) {
+			try {
+				JournalArticleLocalServiceUtil.updateAsset(
+					article.getUserId(), article, null, null, null);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to update asset for article " +
+							article.getId() + ": " + e.getMessage());
+				}
+			}
+		}
+		else if ((article.getStatus() ==
+					WorkflowConstants.STATUS_DRAFT) &&
+				 (article.getVersion() ==
+					JournalArticleConstants.VERSION_DEFAULT)) {
+
+			AssetEntryLocalServiceUtil.updateEntry(
+				assetEntry.getClassName(), assetEntry.getClassPK(), null,
+				assetEntry.isVisible());
+		}
+
+		String content = GetterUtil.getString(article.getContent());
+
+		String newContent = HtmlUtil.replaceMsWordCharacters(content);
+
+		if (!content.equals(newContent)) {
+			JournalArticleLocalServiceUtil.updateContent(
+				groupId, articleId, version, newContent);
+		}
+
+		try {
+			JournalArticleLocalServiceUtil.checkStructure(
+				groupId, articleId, version);
+		}
+		catch (NoSuchStructureException nsse) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Removing reference to missing structure for article " +
+						article.getId());
+			}
+
+			article.setStructureId(StringPool.BLANK);
+			article.setTemplateId(StringPool.BLANK);
+
+			JournalArticleLocalServiceUtil.updateJournalArticle(article);
 		}
 	}
 
