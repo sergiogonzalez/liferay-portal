@@ -688,8 +688,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public DLFileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
+			long fileEntryId, String sourceFileName, String extension,
+			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, long fileEntryTypeId,
 			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
 			ServiceContext serviceContext)
@@ -699,9 +699,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			getPermissionChecker(), fileEntryId, ActionKeys.UPDATE);
 
 		return dlFileEntryLocalService.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, majorVersion, fileEntryTypeId, fieldsMap,
-			file, is, size, serviceContext);
+			getUserId(), fileEntryId, sourceFileName, extension, mimeType,
+			title, description, changeLog, majorVersion, fileEntryTypeId,
+			fieldsMap, file, is, size, serviceContext);
 	}
 
 	@Override
