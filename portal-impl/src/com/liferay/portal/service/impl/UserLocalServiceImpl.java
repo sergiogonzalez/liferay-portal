@@ -2392,7 +2392,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return getSocialUsers(
-			userId, null, new int[] { type }, null, start, end, obc);
+			userId, null, new int[] {type}, null, start, end, obc);
 	}
 
 	/**
@@ -2429,7 +2429,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			new LinkedHashMap<String, Object>();
 
 		SocialRelationQuery socialRelationQuery =
-			SocialRelationQuery.getFriendlyRelations(userId);
+			SocialRelationQuery.getRelations(userId);
 
 		params.put("socialRelationQuery", socialRelationQuery);
 
@@ -2599,7 +2599,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			new LinkedHashMap<String, Object>();
 
 		SocialRelationQuery socialRelationQuery =
-			SocialRelationQuery.getFriendlyRelations(userId);
+			SocialRelationQuery.getRelations(userId);
 
 		params.put("socialRelationQuery", socialRelationQuery);
 
@@ -2728,7 +2728,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			params.put("usersGroups", usersGroups);
 		}
-		
+
 		return searchCount(
 			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
 			params);

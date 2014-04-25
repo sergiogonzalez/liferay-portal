@@ -271,7 +271,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testIntArrayToLongArray() throws Exception {
-		int[] intArray = { 1, 2, 3, 4 };
+		int[] intArray = {1, 2, 3, 4};
 
 		Long[] longArray = ArrayUtil.toLongArray(intArray);
 

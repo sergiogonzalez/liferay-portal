@@ -988,7 +988,7 @@ public class UserFinderImpl
 			SocialRelationQuery socialRelationQuery =
 				(SocialRelationQuery)value;
 
-			join = socialRelationQuery.getJoinClause();
+			join = socialRelationQuery.getJoin();
 		}
 
 		if (Validator.isNotNull(join)) {
@@ -1161,7 +1161,7 @@ public class UserFinderImpl
 		else if (key.equals("socialRelationQuery")) {
 			SocialRelationQuery query = (SocialRelationQuery)value;
 
-			join = query.getWhereClause();
+			join = query.getWhere();
 		}
 		else if (value instanceof CustomSQLParam) {
 			CustomSQLParam customSQLParam = (CustomSQLParam)value;

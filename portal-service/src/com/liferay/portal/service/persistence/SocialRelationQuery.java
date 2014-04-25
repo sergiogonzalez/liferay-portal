@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class SocialRelationQuery {
 
-	public static SocialRelationQuery getFriendlyRelations(long userId) {
+	public static SocialRelationQuery getRelations(long userId) {
 		return new SocialRelationQuery(
-			userId, null, 0, null, QueryType.NO_ENEMIES);
+			userId, null, 0, null, QueryType.NO_ENEMY);
 	}
 
 	public static SocialRelationQuery getMutualRelations(
@@ -41,45 +41,44 @@ public class SocialRelationQuery {
 	public static SocialRelationQuery getMutualRelationsByType(
 		long userId1, long userId2, int... socialRelationTypeIds) {
 
-		Long[] types = ArrayUtil.toLongArray(socialRelationTypeIds);
+		Long[] socialRelationTypes = ArrayUtil.toLongArray(
+			socialRelationTypeIds);
 
 		return new SocialRelationQuery(
-			userId1, types, userId2, types, QueryType.MUTUAL);
+			userId1, socialRelationTypes, userId2, socialRelationTypes,
+			QueryType.MUTUAL);
 	}
 
 	public static SocialRelationQuery getRelationsByType(
 		long userId, int... socialRelationTypeIds) {
 
-		Long[] types = ArrayUtil.toLongArray(socialRelationTypeIds);
+		Long[] socialRelationTypes = ArrayUtil.toLongArray(
+			socialRelationTypeIds);
 
 		return new SocialRelationQuery(
-			userId, types, 0, null, QueryType.ANY_RELATIONSHIP);
+			userId, socialRelationTypes, 0, null, QueryType.ANY_RELATIONSHIP);
 	}
 
-	public int addParameters(QueryPos qPos) {
-		int paramCount = 1;
-
+	public void addParameters(QueryPos qPos) {
 		qPos.add(_userId1);
 
 		if (isMutualRelationship()) {
 			qPos.add(_userId2);
-			paramCount++;
 		}
-
-		return paramCount;
 	}
 
-	public String getJoinClause() {
+	public String getJoin() {
 		String clause = null;
 
 		if (isAnyRelationship()) {
-			clause = PortalCustomSQLUtil.get(_JOIN_BY_SOCIAL_RELATION_TYPE);
-		}
-		else if (isFriendlyRelationship()) {
 			clause = PortalCustomSQLUtil.get(_JOIN_BY_SOCIAL_RELATION);
 		}
 		else if (isMutualRelationship()) {
 			clause = PortalCustomSQLUtil.get(_JOIN_BY_SOCIAL_MUTUAL_RELATION);
+		}
+		else if (isNoEnemyRelationship()) {
+			clause = PortalCustomSQLUtil.get(
+				_JOIN_BY_SOCIAL_RELATION_BUT_ENEMY);
 		}
 		else {
 			throw new IllegalStateException(
@@ -89,17 +88,18 @@ public class SocialRelationQuery {
 		return clause;
 	}
 
-	public String getWhereClause() {
+	public String getWhere() {
 		String clause = null;
 
 		if (isAnyRelationship()) {
 			clause = addPersonalRelationWhereClause();
 		}
-		else if (isFriendlyRelationship()) {
-			clause = PortalCustomSQLUtil.get(_JOIN_BY_SOCIAL_RELATION);
-		}
 		else if (isMutualRelationship()) {
 			clause = addMutualRelationWhereClause();
+		}
+		else if (isNoEnemyRelationship()) {
+			clause = PortalCustomSQLUtil.get(
+				_JOIN_BY_SOCIAL_RELATION_BUT_ENEMY);
 		}
 		else {
 			throw new IllegalStateException(
@@ -121,36 +121,28 @@ public class SocialRelationQuery {
 	}
 
 	protected String addInOrEqual(String sql, String fieldName, Long[] values) {
-		String result = null;
-
-		if ((values == null) || (values.length == 0)) {
-			result = sql;
+		if (ArrayUtil.isEmpty(values)) {
+			return sql;
 		}
-		else if (values.length == 1) {
-			StringBundler sb = new StringBundler(sql);
 
-			sb.append(" AND (");
-			sb.append(fieldName);
+		StringBundler sb = new StringBundler(sql);
+
+		sb.append(" AND (");
+		sb.append(fieldName);
+
+		if (values.length == 1) {
 			sb.append(" = ");
 			sb.append(values[0]);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			result = sb.toString();
 		}
 		else {
-			StringBundler sb = new StringBundler(sql);
-
-			sb.append(" AND (");
-			sb.append(fieldName);
 			sb.append(" IN (");
 			sb.append(StringUtil.merge(values));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			result = sb.toString();
 		}
 
-		return result;
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	protected String addMutualRelationWhereClause() {
@@ -165,7 +157,7 @@ public class SocialRelationQuery {
 	}
 
 	protected String addPersonalRelationWhereClause() {
-		String sql = PortalCustomSQLUtil.get(_JOIN_BY_SOCIAL_RELATION_TYPE);
+		String sql = PortalCustomSQLUtil.get(_JOIN_BY_SOCIAL_RELATION);
 
 		return addInOrEqual(
 			sql, "SocialRelation.type_", _firstUserRelationTypeIds);
@@ -175,12 +167,12 @@ public class SocialRelationQuery {
 		return _queryType == QueryType.ANY_RELATIONSHIP;
 	}
 
-	protected boolean isFriendlyRelationship() {
-		return _queryType == QueryType.NO_ENEMIES;
-	}
-
 	protected boolean isMutualRelationship() {
 		return _queryType == QueryType.MUTUAL;
+	}
+
+	protected boolean isNoEnemyRelationship() {
+		return _queryType == QueryType.NO_ENEMY;
 	}
 
 	private static final String _JOIN_BY_SOCIAL_MUTUAL_RELATION =
@@ -189,8 +181,8 @@ public class SocialRelationQuery {
 	private static final String _JOIN_BY_SOCIAL_RELATION =
 		UserFinder.class.getName() + ".joinBySocialRelation";
 
-	private static final String _JOIN_BY_SOCIAL_RELATION_TYPE =
-		UserFinder.class.getName() + ".joinBySocialRelationType";
+	private static final String _JOIN_BY_SOCIAL_RELATION_BUT_ENEMY =
+		UserFinder.class.getName() + ".joinBySocialRelationButEnemy";
 
 	private static final String _QUERY_TYPE_ERROR_MESSAGE =
 		"expected one of: " + QueryType.values() + "; found: ";
@@ -203,7 +195,7 @@ public class SocialRelationQuery {
 
 	private static enum QueryType {
 
-		ANY_RELATIONSHIP, MUTUAL, NO_ENEMIES
+		ANY_RELATIONSHIP, MUTUAL, NO_ENEMY
 
 	}
 
