@@ -1515,8 +1515,8 @@ public class DLFileEntryLocalServiceImpl
 	@Override
 	public DLFileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, long fileEntryTypeId,
+			String extension, String mimeType, String title, String description,
+			String changeLog, boolean majorVersion, long fileEntryTypeId,
 			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1524,7 +1524,9 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		String extension = DLAppUtil.getExtension(title, sourceFileName);
+		if (Validator.isNull(extension)) {
+			extension = DLAppUtil.getExtension(title, sourceFileName);
+		}
 
 		String extraSettings = StringPool.BLANK;
 

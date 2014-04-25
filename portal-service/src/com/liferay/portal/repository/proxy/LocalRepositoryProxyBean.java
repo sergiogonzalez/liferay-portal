@@ -209,14 +209,14 @@ public class LocalRepositoryProxyBean
 	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
+			String extension, String mimeType, String title, String description,
+			String changeLog, boolean majorVersion, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = _localRepository.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+			userId, fileEntryId, sourceFileName, extension, mimeType, title,
+			description, changeLog, majorVersion, is, size, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}

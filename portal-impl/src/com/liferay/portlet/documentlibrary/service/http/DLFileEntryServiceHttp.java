@@ -1594,9 +1594,10 @@ public class DLFileEntryServiceHttp {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, long fileEntryTypeId,
+		java.lang.String sourceFileName, java.lang.String extension,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		boolean majorVersion, long fileEntryTypeId,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
 		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1607,9 +1608,9 @@ public class DLFileEntryServiceHttp {
 					"updateFileEntry", _updateFileEntryParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, sourceFileName, mimeType, title, description,
-					changeLog, majorVersion, fileEntryTypeId, fieldsMap, file,
-					is, size, serviceContext);
+					fileEntryId, sourceFileName, extension, mimeType, title,
+					description, changeLog, majorVersion, fileEntryTypeId,
+					fieldsMap, file, is, size, serviceContext);
 
 			Object returnObj = null;
 
@@ -1863,9 +1864,10 @@ public class DLFileEntryServiceHttp {
 	private static final Class<?>[] _updateFileEntryParameterTypes42 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, long.class,
-			java.util.Map.class, java.io.File.class, java.io.InputStream.class,
-			long.class, com.liferay.portal.service.ServiceContext.class
+			java.lang.String.class, java.lang.String.class, boolean.class,
+			long.class, java.util.Map.class, java.io.File.class,
+			java.io.InputStream.class, long.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes43 = new Class[] {
 			long.class, java.lang.String.class

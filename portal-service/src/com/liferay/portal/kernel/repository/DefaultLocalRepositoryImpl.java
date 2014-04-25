@@ -173,8 +173,8 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 
 	@Override
 	public FileEntry updateFileEntry(
-		long userId, long fileEntryId, String sourceFileName, String mimeType,
-		String title, String description, String changeLog,
+		long userId, long fileEntryId, String sourceFileName, String extension,
+		String mimeType, String title, String description, String changeLog,
 		boolean majorVersion, InputStream is, long size,
 		ServiceContext serviceContext) {
 

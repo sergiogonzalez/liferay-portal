@@ -438,16 +438,16 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(
 		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, long fileEntryTypeId,
+		java.lang.String extension, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, boolean majorVersion, long fileEntryTypeId,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
 		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryService.updateFileEntry(fileEntryId, sourceFileName,
-			mimeType, title, description, changeLog, majorVersion,
+			extension, mimeType, title, description, changeLog, majorVersion,
 			fileEntryTypeId, fieldsMap, file, is, size, serviceContext);
 	}
 

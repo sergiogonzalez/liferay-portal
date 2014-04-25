@@ -398,8 +398,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		return dlFileEntryLocalService.updateFileEntry(
 			serviceContext.getUserId(), dlFileEntry.getFileEntryId(), null,
-			null, null, null, null, false, defaultFileEntryTypeId, null, null,
-			null, 0, serviceContext);
+			null, null, null, null, null, false, defaultFileEntryTypeId, null,
+			null, null, 0, serviceContext);
 	}
 
 	@Override
@@ -536,7 +536,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 			dlFileEntryLocalService.updateFileEntry(
 				userId, dlFileEntry.getFileEntryId(), null, null, null, null,
-				null, false, defaultFileEntryTypeId, null, null, null, 0,
+				null, null, false, defaultFileEntryTypeId, null, null, null, 0,
 				serviceContext);
 		}
 

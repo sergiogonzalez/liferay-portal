@@ -1060,7 +1060,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return updateFileEntry(
-				userId, fileEntryId, sourceFileName, mimeType, title,
+				userId, fileEntryId, sourceFileName, null, mimeType, title,
 				description, changeLog, majorVersion, null, 0, serviceContext);
 		}
 
@@ -1122,15 +1122,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
+			String extension, String mimeType, String title, String description,
+			String changeLog, boolean majorVersion, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(mimeType) ||
 			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
 
-			String extension = DLAppUtil.getExtension(title, sourceFileName);
+			if (Validator.isNull(extension)) {
+				extension = DLAppUtil.getExtension(title, sourceFileName);
+			}
 
 			if (size == 0) {
 				mimeType = MimeTypesUtil.getExtensionContentType(extension);
@@ -1164,8 +1166,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
 
 		FileEntry fileEntry = localRepository.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+			userId, fileEntryId, sourceFileName, extension, mimeType, title,
+			description, changeLog, majorVersion, is, size, serviceContext);
 
 		if (is != null) {
 			DLProcessorRegistryUtil.cleanUp(
@@ -1310,7 +1312,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			try {
 				destinationFileEntry = toLocalRepository.updateFileEntry(
 					userId, destinationFileEntry.getFileEntryId(),
-					fileEntry.getTitle(), destinationFileEntry.getMimeType(),
+					fileEntry.getTitle(), destinationFileEntry.getExtension(),
+					destinationFileEntry.getMimeType(),
 					destinationFileEntry.getTitle(),
 					destinationFileEntry.getDescription(), StringPool.BLANK,
 					DLAppUtil.isMajorVersion(fileVersion, previousFileVersion),

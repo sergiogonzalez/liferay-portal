@@ -796,7 +796,7 @@ public class LiferayRepository
 		}
 
 		DLFileEntry dlFileEntry = dlFileEntryService.updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, description,
+			fileEntryId, sourceFileName, null, mimeType, title, description,
 			changeLog, majorVersion, fileEntryTypeId, fieldsMap, file, null,
 			size, serviceContext);
 
@@ -818,7 +818,7 @@ public class LiferayRepository
 			serviceContext, fileEntryTypeId);
 
 		DLFileEntry dlFileEntry = dlFileEntryService.updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, description,
+			fileEntryId, sourceFileName, null, mimeType, title, description,
 			changeLog, majorVersion, fileEntryTypeId, fieldsMap, null, is, size,
 			serviceContext);
 
