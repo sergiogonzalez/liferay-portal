@@ -47,6 +47,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.social.util.RelationUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.List;
@@ -80,6 +81,8 @@ public class EditCompanyAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				validateCAS(actionRequest);
 				validateLDAP(actionRequest);
+				RelationUtil.validateRelations(
+					actionRequest, "settings--", "--");
 
 				if (!SessionErrors.isEmpty(actionRequest)) {
 					setForward(

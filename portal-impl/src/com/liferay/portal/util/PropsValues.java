@@ -432,6 +432,8 @@ public class PropsValues {
 
 	public static String[] COMPANY_SETTINGS_FORM_MISCELLANEOUS = PropsUtil.getArray(PropsKeys.COMPANY_SETTINGS_FORM_MISCELLANEOUS);
 
+	public static String[] COMPANY_SETTINGS_FORM_SOCIAL = PropsUtil.getArray(PropsKeys.COMPANY_SETTINGS_FORM_SOCIAL);
+
 	public static final String CONTROL_PANEL_DEFAULT_ENTRY_CLASS = PropsUtil.get(PropsKeys.CONTROL_PANEL_DEFAULT_ENTRY_CLASS);
 
 	public static final String CONTROL_PANEL_HOME_PORTLET_ID = PropsUtil.get(PropsKeys.CONTROL_PANEL_HOME_PORTLET_ID);
@@ -1690,6 +1692,8 @@ public class PropsValues {
 
 	public static String[] SITES_FORM_ADD_SEO = PropsUtil.getArray(PropsKeys.SITES_FORM_ADD_SEO);
 
+	public static String[] SITES_FORM_ADD_SOCIAL = PropsUtil.getArray(PropsKeys.SITES_FORM_ADD_SOCIAL);
+
 	public static String[] SITES_FORM_UPDATE_ADVANCED = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_ADVANCED);
 
 	public static String[] SITES_FORM_UPDATE_MAIN = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_MAIN);
@@ -1697,6 +1701,8 @@ public class PropsValues {
 	public static String[] SITES_FORM_UPDATE_MISCELLANEOUS = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_MISCELLANEOUS);
 
 	public static String[] SITES_FORM_UPDATE_SEO = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_SEO);
+
+	public static String[] SITES_FORM_UPDATE_SOCIAL = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_SOCIAL);
 
 	public static final String SITES_FRIENDLY_URL_PAGE_NOT_FOUND = PropsUtil.get(PropsKeys.SITES_FRIENDLY_URL_PAGE_NOT_FOUND);
 

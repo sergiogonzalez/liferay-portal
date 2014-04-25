@@ -525,6 +525,8 @@ public interface PropsKeys {
 
 	public static final String COMPANY_SETTINGS_FORM_MISCELLANEOUS = "company.settings.form.miscellaneous";
 
+	public static final String COMPANY_SETTINGS_FORM_SOCIAL = "company.settings.form.social";
+
 	public static final String CONTROL_PANEL_DEFAULT_ENTRY_CLASS = "control.panel.default.entry.class";
 
 	public static final String CONTROL_PANEL_HOME_PORTLET_ID = "control.panel.home.portlet.id";
@@ -2373,6 +2375,8 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_ADD_SEO = "sites.form.add.seo";
 
+	public static final String SITES_FORM_ADD_SOCIAL = "sites.form.add.socila";
+
 	public static final String SITES_FORM_UPDATE_ADVANCED = "sites.form.update.advanced";
 
 	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";
@@ -2380,6 +2384,8 @@ public interface PropsKeys {
 	public static final String SITES_FORM_UPDATE_MISCELLANEOUS = "sites.form.update.miscellaneous";
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
+
+	public static final String SITES_FORM_UPDATE_SOCIAL = "sites.form.update.social";
 
 	public static final String SITES_FRIENDLY_URL_PAGE_NOT_FOUND = "sites.friendly.url.page.not.found";
 
