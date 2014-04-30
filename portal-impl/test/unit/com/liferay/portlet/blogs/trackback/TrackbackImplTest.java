@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.trackback;
 
+import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
@@ -110,7 +111,7 @@ public class TrackbackImplTest extends PowerMockito {
 		);
 
 		when(
-			_trackbackComments.addTrackbackComment(
+			_comments.addComment(
 				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
 				Matchers.anyString(),
@@ -120,7 +121,7 @@ public class TrackbackImplTest extends PowerMockito {
 			99999L
 		);
 
-		Trackback trackback = new TrackbackImpl(_trackbackComments);
+		Trackback trackback = new TrackbackImpl(_comments);
 
 		trackback.addTrackback(
 			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",
@@ -128,8 +129,8 @@ public class TrackbackImplTest extends PowerMockito {
 		);
 
 		Mockito.verify(
-			_trackbackComments
-		).addTrackbackComment(
+			_comments
+		).addComment(
 			Matchers.eq(userId), Matchers.eq(groupId),
 			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(entryId),
 			Matchers.eq("__blogName__"), Matchers.eq("__title__"),
@@ -182,15 +183,15 @@ public class TrackbackImplTest extends PowerMockito {
 	private BlogsEntry _blogsEntry;
 
 	@Mock
+	private Comments _comments;
+
+	@Mock
 	private Portal _portal;
 
 	@Mock
 	private Function<String, ServiceContext> _serviceContextFunction;
 
 	private ThemeDisplay _themeDisplay;
-
-	@Mock
-	private TrackbackComments _trackbackComments;
 
 	@Mock
 	private UserLocalService _userLocalService;
