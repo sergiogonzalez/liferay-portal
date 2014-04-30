@@ -256,7 +256,7 @@
 							'aui-io-request',
 							'event-mouseenter',
 							'liferay-dockbar',
-							'liferay-dockbar-add-content-content-preview',
+							'liferay-dockbar-add-content-preview',
 							'liferay-dockbar-add-content-search',
 							'liferay-portlet-base'
 						]
@@ -530,12 +530,21 @@
 							'aui-node'
 						]
 					},
+					'liferay-menu-filter': {
+						path: 'menu_filter.js',
+						requires: [
+							'autocomplete-base',
+							'autocomplete-filters',
+							'autocomplete-highlighters'
+						]
+					},
 					'liferay-menu-toggle': {
 						path: 'menu_toggle.js',
 						requires: [
 							'aui-node',
 							'event-move',
 							'event-outside',
+							'liferay-menu-filter',
 							'liferay-store'
 						]
 					},

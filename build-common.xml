@@ -41,8 +41,6 @@
 	<property file="${project.dir}/sql/sql.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/sql/sql.properties" />
 
-	<property name="liferay.home" value="${app.server.parent.dir}" />
-
 	<path id="lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
@@ -217,6 +215,8 @@
 			<var name="temp.app.server.version" unset="true" />
 		</sequential>
 	</for>
+
+	<property name="liferay.home" value="${app.server.parent.dir}" />
 
 	<basename file="${basedir}" property="basedir.name" />
 

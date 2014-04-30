@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -56,9 +54,7 @@ public class DLActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isFolderMenuVisible()
-		throws PortalException, SystemException {
-
+	public boolean isFolderMenuVisible() {
 		String portletId = _portletDisplay.getId();
 
 		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
@@ -94,7 +90,7 @@ public class DLActionsDisplayContext {
 		return ParamUtil.getBoolean(_request, "showMinimalActionButtons");
 	}
 
-	public boolean isShowTabs() throws PortalException, SystemException {
+	public boolean isShowTabs() {
 		String portletId = _portletDisplay.getId();
 
 		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||

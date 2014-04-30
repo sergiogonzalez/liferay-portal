@@ -40,6 +40,10 @@ import org.xml.sax.InputSource;
  */
 public class DeletionSystemEventImporter {
 
+	public static DeletionSystemEventImporter getInstance() {
+		return _instance;
+	}
+
 	public void importDeletionSystemEvents(
 			final PortletDataContext portletDataContext)
 		throws Exception {
@@ -109,7 +113,13 @@ public class DeletionSystemEventImporter {
 		}
 	}
 
+	private DeletionSystemEventImporter() {
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventImporter.class);
+
+	private static DeletionSystemEventImporter _instance =
+		new DeletionSystemEventImporter();
 
 }

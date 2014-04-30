@@ -166,6 +166,11 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-file-alt";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

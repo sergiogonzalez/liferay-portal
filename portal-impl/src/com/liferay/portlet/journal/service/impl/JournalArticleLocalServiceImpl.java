@@ -896,7 +896,7 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
+		action = SystemEventConstants.ACTION_SKIP, send = false,
 		type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(JournalArticle article)
 		throws PortalException, SystemException {
@@ -923,7 +923,7 @@ public class JournalArticleLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
+		action = SystemEventConstants.ACTION_SKIP, send = false,
 		type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(
 			JournalArticle article, String articleURL,
@@ -6958,6 +6958,8 @@ public class JournalArticleLocalServiceImpl
 			long groupId, long folderId, String ddmStructureKey)
 		throws PortalException, SystemException {
 
+		int restrictionType = JournalUtil.getRestrictionType(folderId);
+
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
 			PortalUtil.getSiteGroupId(groupId),
 			classNameLocalService.getClassNameId(JournalArticle.class),
@@ -6966,7 +6968,7 @@ public class JournalArticleLocalServiceImpl
 		List<DDMStructure> folderDDMStructures =
 			ddmStructureLocalService.getJournalFolderStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
-				true);
+				restrictionType);
 
 		for (DDMStructure folderDDMStructure : folderDDMStructures) {
 			if (folderDDMStructure.getStructureId() ==

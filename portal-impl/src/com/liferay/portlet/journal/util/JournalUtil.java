@@ -1032,6 +1032,19 @@ public class JournalUtil {
 		return recentDDMTemplates;
 	}
 
+	public static int getRestrictionType(long folderId) throws SystemException {
+		int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
+
+		JournalFolder folder = JournalFolderLocalServiceUtil.fetchFolder(
+			folderId);
+
+		if (folder != null) {
+			restrictionType = folder.getRestrictionType();
+		}
+
+		return restrictionType;
+	}
+
 	public static long[] getStructureClassPKs(
 			long[] groupIds, String structureId)
 		throws SystemException {

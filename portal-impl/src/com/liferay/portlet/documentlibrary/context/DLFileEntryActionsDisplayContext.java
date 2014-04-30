@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -51,10 +50,9 @@ public class DLFileEntryActionsDisplayContext {
 	}
 
 	public DLFileEntryActionsDisplayContext(
-			HttpServletRequest request,
-			DLPortletInstanceSettings dlPortletInstanceSettings,
-			FileEntry fileEntry, FileVersion fileVersion)
-		throws PortalException, SystemException {
+		HttpServletRequest request,
+		DLPortletInstanceSettings dlPortletInstanceSettings,
+		FileEntry fileEntry, FileVersion fileVersion) {
 
 		_request = request;
 
@@ -79,7 +77,6 @@ public class DLFileEntryActionsDisplayContext {
 		}
 
 		_folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
-		_permissionChecker = themeDisplay.getPermissionChecker();
 		_portletDisplay = themeDisplay.getPortletDisplay();
 		_scopeGroupId = themeDisplay.getScopeGroupId();
 	}
@@ -385,7 +382,6 @@ public class DLFileEntryActionsDisplayContext {
 	private long _fileEntryTypeId;
 	private long _folderId;
 	private Boolean _ieOnWin32;
-	private PermissionChecker _permissionChecker;
 	private PortletDisplay _portletDisplay;
 	private HttpServletRequest _request;
 	private long _scopeGroupId;

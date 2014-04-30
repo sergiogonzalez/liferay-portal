@@ -45,6 +45,10 @@ import java.util.Set;
  */
 public class DeletionSystemEventExporter {
 
+	public static DeletionSystemEventExporter getInstance() {
+		return _instance;
+	}
+
 	public void exportDeletionSystemEvents(
 			PortletDataContext portletDataContext)
 		throws Exception {
@@ -211,5 +215,11 @@ public class DeletionSystemEventExporter {
 				systemEvent.getClassNameId(),
 				systemEvent.getReferrerClassNameId()));
 	}
+
+	private DeletionSystemEventExporter() {
+	}
+
+	private static DeletionSystemEventExporter _instance =
+		new DeletionSystemEventExporter();
 
 }

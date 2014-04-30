@@ -174,6 +174,25 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testMerge() {
+		Assert.assertEquals(
+			"1,2,3", StringUtil.merge(new String[] {"1", " 2 ", "3"}));
+		Assert.assertEquals("1", StringUtil.merge(new String[] {"1"}));
+		Assert.assertEquals("", StringUtil.merge(new String[0]));
+		Assert.assertEquals(
+			"true,false,true",
+			StringUtil.merge(new boolean[] {true, false, true}));
+		Assert.assertEquals("true", StringUtil.merge(new boolean[] {true}));
+		Assert.assertEquals(
+			"1.1,2.2,3.3", StringUtil.merge(new double[] {1.1, 2.2, 3.3}));
+		Assert.assertEquals("1.1", StringUtil.merge(new double[] {1.1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new int[] {1, 2, 3}));
+		Assert.assertEquals("1", StringUtil.merge(new int[] {1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new long[] {1, 2, 3}));
+		Assert.assertEquals("1", StringUtil.merge(new long[] {1}));
+	}
+
+	@Test
 	public void testReplaceChar() throws Exception {
 		Assert.assertEquals(
 			"127_0_0_1", StringUtil.replace("127.0.0.1", '.', '_'));

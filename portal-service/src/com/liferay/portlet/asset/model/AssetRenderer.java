@@ -64,6 +64,8 @@ public interface AssetRenderer {
 
 	public long getGroupId();
 
+	public String getIconCssClass() throws PortalException, SystemException;
+
 	public String getIconPath(PortletRequest portletRequest);
 
 	public String getNewName(String oldName, String token);
@@ -85,6 +87,8 @@ public interface AssetRenderer {
 
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse);
+
+	public String[] getSupportedConversions();
 
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception;

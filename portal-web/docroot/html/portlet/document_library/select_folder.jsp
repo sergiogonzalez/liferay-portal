@@ -95,6 +95,10 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 			</liferay-portlet:renderURL>
 
 			<%
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+
 			int foldersCount = 0;
 			int fileEntriesCount = 0;
 
@@ -114,31 +118,17 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 			catch (com.liferay.portal.security.auth.PrincipalException pe) {
 				rowURL = null;
 			}
-
-			String image = null;
-
-			if (curFolder.isMountPoint()) {
-				if (rowURL != null) {
-					image = "drive";
-				}
-				else {
-					image = "drive_error";
-				}
-			}
-			else {
-				if ((foldersCount + fileEntriesCount) > 0) {
-					image = "folder_full_document";
-				}
-				else {
-					image = "folder_empty";
-				}
-			}
 			%>
 
 			<liferay-ui:search-container-column-text
 				name="folder"
 			>
-				<liferay-ui:icon image="<%= image %>" label="<%= true %>" message="<%= HtmlUtil.escape(curFolder.getName()) %>" url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>" />
+				<liferay-ui:icon
+					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+					label="<%= true %>"
+					message="<%= HtmlUtil.escape(curFolder.getName()) %>"
+					url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
+				/>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

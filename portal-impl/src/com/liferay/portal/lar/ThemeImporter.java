@@ -30,6 +30,10 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
  */
 public class ThemeImporter {
 
+	public static ThemeImporter getInstance() {
+		return _instance;
+	}
+
 	public void importTheme(
 			PortletDataContext portletDataContext, LayoutSet layoutSet)
 		throws Exception {
@@ -73,6 +77,11 @@ public class ThemeImporter {
 			colorSchemeId, css, false);
 	}
 
+	private ThemeImporter() {
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ThemeImporter.class);
+
+	private static ThemeImporter _instance = new ThemeImporter();
 
 }

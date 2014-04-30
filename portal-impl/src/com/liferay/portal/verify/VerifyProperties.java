@@ -455,6 +455,9 @@ public class VerifyProperties extends VerifyProcess {
 			"field.editable.user.types"
 		},
 		new String[] {
+			"icon.menu.max.display.items", "menu.max.display.items"
+		},
+		new String[] {
 			"journal.error.template.freemarker", "journal.error.template[ftl]"
 		},
 		new String[] {

@@ -66,6 +66,14 @@ if (Validator.isNotNull(script)) {
 	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 </portlet:actionURL>
 
+<%
+String requestEditStructureURL = ParamUtil.getString(request, "editStructureURL");
+
+if (Validator.isNotNull(requestEditStructureURL)) {
+	editStructureURL = requestEditStructureURL;
+}
+%>
+
 <aui:form action="<%= editStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (structure != null) ? Constants.UPDATE : Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

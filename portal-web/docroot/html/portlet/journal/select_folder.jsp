@@ -93,6 +93,10 @@ if (folder != null) {
 			</liferay-portlet:renderURL>
 
 			<%
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+
 			int foldersCount = 0;
 			int articlesCount = 0;
 
@@ -109,21 +113,17 @@ if (folder != null) {
 			catch (com.liferay.portal.kernel.repository.RepositoryException re) {
 				rowURL = null;
 			}
-
-			String image = null;
-
-			if ((foldersCount + articlesCount) > 0) {
-				image = "folder_full_document";
-			}
-			else {
-				image = "folder_empty";
-			}
 			%>
 
 			<liferay-ui:search-container-column-text
 				name="folder"
 			>
-				<liferay-ui:icon image="<%= image %>" label="<%= true %>" message="<%= HtmlUtil.escape(curFolder.getName()) %>" url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>" />
+				<liferay-ui:icon
+					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+					label="<%= true %>"
+					message="<%= HtmlUtil.escape(curFolder.getName()) %>"
+					url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
+				/>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

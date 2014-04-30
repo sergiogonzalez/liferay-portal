@@ -151,22 +151,28 @@
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<if>
-			<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-			<then>
-				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-
-				<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
-			</then>
-		</if>
-
-		<if>
 			<not>
-				<contains string="${portletName}" substring="{portletName}" />
+				<isset var="nonAdminUser" />
 			</not>
 			<then>
-				<var name="key_portletName" value="${portletName}" />
+				<if>
+					<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+					<then>
+						<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+						<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
+					</then>
+				</if>
 
-				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+				<if>
+					<not>
+						<contains string="${portletName}" substring="{portletName}" />
+					</not>
+					<then>
+						<var name="key_portletName" value="${portletName}" />
+
+						<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+					</then>
+				</if>
 			</then>
 		</if>
 	</command>
@@ -566,6 +572,45 @@
 
 			<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${pageName}" />
 		</for>
+	</command>
+
+	<command name="viewTooltipCP">
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="Home#mouseOver" locator-key1="CONTROL_PANEL_NAVIGATION_TOOLTIP_ICON" />
+		<execute action="Home#assertTextEquals" locator-key1="CONTROL_PANEL_NAVIGATION_TOOLTIP_MESSAGE" value1="${tooltipMessage}" />
+
+		<take-screenshot />
+	</command>
+
+	<command name="viewTranslationsPG">
+		<execute action="Home#open" locator1="${sitePageURL}" />
+		<execute action="Home#assertLocation" value1="${sitePageURL}" />
+
+		<if>
+			<isset var="childPageName" />
+			<then>
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${childPageName}" />
+			</then>
+			<else>
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+			</else>
+		</if>
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_MESSAGE_INFO" value1="${pageLocalizationMessage}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Display the page in English (United States)." />
+		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="${pageLocalizationPreferredLanguage}" />
+
+		<execute action="Dockbar#assertTextEquals" locator-key1="ADMIN" value1="${adminTranslation}" />
+		<execute action="Dockbar#assertTextEquals" locator-key1="MY_SITES" value1="${mySitesTranslation}" />
+	</command>
+
+	<command name="viewUserPageLayoutPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertTextNotPresent" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute action="Dockbar#assertTextNotPresent" locator-key1="USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
 	<command name="viewWithWorkflowPG">

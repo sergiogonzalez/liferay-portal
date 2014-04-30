@@ -720,6 +720,8 @@ public class PropsValues {
 
 	public static final boolean FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED));
 
+	public static final String[] FIELD_ALL_USERS_EDITABLE_ROLES = PropsUtil.getArray(PropsKeys.FIELD_ALL_USERS_EDITABLE_ROLES);
+
 	public static final String[] FIELD_EDITABLE_DOMAINS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_DOMAINS);
 
 	public static final String[] FIELD_EDITABLE_ROLES = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_ROLES);
@@ -1165,6 +1167,8 @@ public class PropsValues {
 	public static final String MEMBERSHIP_POLICY_SITES = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_SITES);
 
 	public static final String MEMBERSHIP_POLICY_USER_GROUPS = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_USER_GROUPS);
+
+	public static final int MENU_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
 
 	public static final boolean MESSAGE_BOARDS_EMAIL_BULK = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_BULK));
 

@@ -21,13 +21,13 @@ JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-boolean inherited = true;
+int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
 
 if (folder != null) {
-	inherited = !folder.isOverrideDDMStructures();
+	restrictionType = folder.getRestrictionType();
 }
 
-List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
+List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, restrictionType);
 %>
 
 <aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
@@ -39,7 +39,11 @@ List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStruc
 			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="icon-folder-open" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
+		<%
+		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+		%>
+
+		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
 	</c:if>
 
 	<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ARTICLE) %>">
@@ -56,7 +60,11 @@ List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStruc
 				<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
 			</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= addArticleURL %>" iconCssClass="icon-tasks" label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>" localizeLabel="<%= false %>" />
+			<%
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+			%>
+
+			<aui:nav-item href="<%= addArticleURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>" localizeLabel="<%= false %>" />
 
 		<%
 		}

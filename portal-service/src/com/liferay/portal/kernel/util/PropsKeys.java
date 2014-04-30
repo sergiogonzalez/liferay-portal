@@ -911,6 +911,8 @@ public interface PropsKeys {
 
 	public static final String FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED = "facebook.connect.verified.account.required";
 
+	public static final String FIELD_ALL_USERS_EDITABLE_ROLES = "field.all.users.editable.roles";
+
 	public static final String FIELD_EDITABLE_DOMAINS = "field.editable.domains";
 
 	public static final String FIELD_EDITABLE_ROLES = "field.editable.roles";
@@ -994,8 +996,6 @@ public interface PropsKeys {
 	public static final String HTTP_HEADER_SECURE_X_XSS_PROTECTION = "http.header.secure.x.xss.protection";
 
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = "http.header.version.verbosity";
-
-	public static final String ICON_MENU_MAX_DISPLAY_ITEMS = "icon.menu.max.display.items";
 
 	public static final String ICQ_JAR = "icq.jar";
 
@@ -1648,6 +1648,8 @@ public interface PropsKeys {
 	public static final String MEMBERSHIP_POLICY_SITES = "membership.policy.sites";
 
 	public static final String MEMBERSHIP_POLICY_USER_GROUPS = "membership.policy.user.groups";
+
+	public static final String MENU_MAX_DISPLAY_ITEMS = "menu.max.display.items";
 
 	public static final String MESSAGE_BOARDS_ALLOW_ANONYMOUS_POSTING = "message.boards.anonymous.posting.enabled";
 

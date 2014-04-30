@@ -103,6 +103,12 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
+	@SuppressWarnings("unused")
+	public String getIconCssClass() throws PortalException, SystemException {
+		return getAssetRendererFactory().getIconCssClass();
+	}
+
+	@Override
 	public String getIconPath(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -141,6 +147,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	@Override
 	public String getSummary(Locale locale) {
 		return getSummary(null, null);
+	}
+
+	@Override
+	public String[] getSupportedConversions() {
+		return null;
 	}
 
 	@Override

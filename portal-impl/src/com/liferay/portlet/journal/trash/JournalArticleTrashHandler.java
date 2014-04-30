@@ -326,11 +326,13 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			PortalUtil.getClassNameId(JournalArticle.class),
 			article.getStructureId(), true);
 
+		int restrictionType = JournalUtil.getRestrictionType(containerModelId);
+
 		List<DDMStructure> folderDDMStructures =
 			DDMStructureLocalServiceUtil.getJournalFolderStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					article.getGroupId()),
-				containerModelId, true);
+				containerModelId, restrictionType);
 
 		for (DDMStructure folderDDMStructure : folderDDMStructures) {
 			if (folderDDMStructure.getStructureId() ==

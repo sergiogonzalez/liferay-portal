@@ -75,7 +75,7 @@
 
 	<command name="click">
 		<case locator-key1="ADD">
-			<execute function="Click#clickAtSidebarClickAt" />
+			<execute function="Click#clickAtSidebarClickAtWaitForScript" />
 		</case>
 
 		<case locator-key1="ADMIN">
@@ -88,6 +88,10 @@
 
 		<case locator-key1="MY_SITES">
 			<execute function="Click#textClickAtClickDockbar" />
+		</case>
+
+		<case locator-key1="PREVIEW">
+			<execute function="Click#clickAtSidebarClickAt" />
 		</case>
 
 		<case locator-key1="USER_NAME">

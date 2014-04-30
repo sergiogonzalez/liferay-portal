@@ -26,12 +26,6 @@ AUI.add(
 				prototype: {
 					ELEMENT_TEMPLATE: '<input type="hidden" />',
 
-					initializer: function() {
-						var instance = this;
-
-						window[Liferay.Util.getPortletNamespace('166') + 'selectDocumentLibrary'] = A.bind('_selectFileEntry', instance);
-					},
-
 					getElementsValue: function() {
 						var instance = this;
 
@@ -70,16 +64,26 @@ AUI.add(
 						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
 						portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
+						portletURL.setParameter('eventName', 'selectDocumentLibrary');
 						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
 						portletURL.setParameter('struts_action', '/dynamic_data_mapping/select_document_library');
 						portletURL.setPortletId('166');
 						portletURL.setWindowState('pop_up');
 
-						Liferay.Util.openWindow(
+						Liferay.Util.selectEntity(
 							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true
+								},
+								eventName: 'selectDocumentLibrary',
 								id: 'selectDocumentLibrary',
 								title: Liferay.Language.get('javax.portlet.title.20'),
 								uri: portletURL.toString()
+							},
+							function(event) {
+								instance._selectFileEntry(event.url, event.uuid, event.groupid, event.title, event.version);
 							}
 						);
 					},
@@ -347,6 +351,8 @@ AUI.add(
 
 						instance._setDataStableSort(instance.get('data'));
 
+						instance.set('scrollable', true);
+
 						instance.on('dataChange', instance._onDataChange);
 						instance.on('model:change', instance._onRecordUpdate);
 					},
@@ -388,6 +394,36 @@ AUI.add(
 							},
 							callback
 						);
+					},
+
+					_afterActiveCellIndexChange: function(event) {
+						var instance = this;
+
+						var activeCell = instance.get('activeCell');
+						var boundingBox = instance.get('boundingBox');
+
+						var scrollableElement = boundingBox.one('.table-x-scroller');
+
+						var tableHighlightBorder = instance.highlight.get('activeBorderWidth')[0];
+
+						var activeCellWidth = activeCell.outerWidth() + tableHighlightBorder;
+						var scrollableWidth = scrollableElement.outerWidth();
+
+						var activeCellOffsetLeft = activeCell.get('offsetLeft');
+						var scrollLeft = scrollableElement.get('scrollLeft');
+
+						var activeCellOffsetRight = activeCellOffsetLeft + activeCellWidth;
+
+						var scrollTo = scrollLeft;
+
+						if ((scrollLeft + scrollableWidth) < activeCellOffsetRight) {
+							scrollTo = activeCellOffsetRight - scrollableWidth;
+						}
+						else if (activeCellOffsetLeft < scrollLeft) {
+							scrollTo = activeCellOffsetLeft;
+						}
+
+						scrollableElement.set('scrollLeft', scrollTo);
 					},
 
 					_normalizeRecordData: function(record) {

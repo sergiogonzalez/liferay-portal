@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -49,7 +47,7 @@ public class DLEntryListDisplayContext {
 		return _dlActionsDisplayContext;
 	}
 
-	public String[] getEntryColumns() throws PortalException, SystemException {
+	public String[] getEntryColumns() {
 		String[] entryColumns = _dlPortletInstanceSettings.getEntryColumns();
 
 		String portletId = _portletDisplay.getId();
@@ -67,9 +65,7 @@ public class DLEntryListDisplayContext {
 		return entryColumns;
 	}
 
-	public String[] getFileEntryColumns()
-		throws PortalException, SystemException {
-
+	public String[] getFileEntryColumns() {
 		String[] fileEntryColumns =
 			_dlPortletInstanceSettings.getFileEntryColumns();
 
@@ -80,7 +76,7 @@ public class DLEntryListDisplayContext {
 		return fileEntryColumns;
 	}
 
-	public String[] getFolderColumns() throws PortalException, SystemException {
+	public String[] getFolderColumns() {
 		String[] folderColumns = _dlPortletInstanceSettings.getFolderColumns();
 
 		if (!_dlActionsDisplayContext.isShowActions()) {

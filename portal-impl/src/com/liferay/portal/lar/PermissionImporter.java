@@ -55,6 +55,10 @@ import java.util.Map;
  */
 public class PermissionImporter {
 
+	public static PermissionImporter getInstance() {
+		return _instance;
+	}
+
 	protected Role checkRole(
 			LayoutCache layoutCache, long companyId, long groupId, long userId,
 			Element roleElement)
@@ -243,5 +247,10 @@ public class PermissionImporter {
 				resourceName, resourcePK, permissions);
 		}
 	}
+
+	private PermissionImporter() {
+	}
+
+	private static PermissionImporter _instance = new PermissionImporter();
 
 }

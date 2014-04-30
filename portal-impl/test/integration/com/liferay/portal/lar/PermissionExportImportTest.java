@@ -155,7 +155,8 @@ public class PermissionExportImportTest extends PowerMockito {
 
 		Element portletElement = SAXReaderUtil.createElement("portlet");
 
-		PermissionExporter permissionExporter = new PermissionExporter();
+		PermissionExporter permissionExporter =
+			PermissionExporter.getInstance();
 
 		permissionExporter.exportPortletPermissions(
 			portletDataContext, new LayoutCache(), _PORTLET_ID, exportLayout,
@@ -168,7 +169,8 @@ public class PermissionExportImportTest extends PowerMockito {
 			Group importGroup, Layout importLayout, Element portletElement)
 		throws Exception {
 
-		PermissionImporter permissionImporter = new PermissionImporter();
+		PermissionImporter permissionImporter =
+			PermissionImporter.getInstance();
 
 		permissionImporter.importPortletPermissions(
 			new LayoutCache(), TestPropsValues.getCompanyId(),

@@ -558,9 +558,10 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		baseRepository.setAssetEntryLocalService(assetEntryLocalService);
 		baseRepository.setCompanyId(repository.getCompanyId());
 		baseRepository.setCompanyLocalService(companyLocalService);
-		baseRepository.setCounterLocalService(counterLocalService);
 		baseRepository.setDLAppHelperLocalService(dlAppHelperLocalService);
 		baseRepository.setGroupId(repository.getGroupId());
+		baseRepository.setRepositoryEntryLocalService(
+			repositoryEntryLocalService);
 		baseRepository.setRepositoryId(repositoryId);
 		baseRepository.setTypeSettingsProperties(
 			repository.getTypeSettingsProperties());

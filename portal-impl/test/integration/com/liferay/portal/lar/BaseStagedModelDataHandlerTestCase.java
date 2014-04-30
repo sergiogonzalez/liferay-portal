@@ -277,7 +277,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	protected void initImport() throws Exception {
-		PortletExporter portletExporter = new PortletExporter();
+		PortletExporter portletExporter = PortletExporter.getInstance();
 
 		portletExporter.exportAssetTags(portletDataContext);
 
@@ -299,7 +299,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		portletDataContext.setSourceGroupId(stagingGroup.getGroupId());
 
-		PortletImporter portletImporter = new PortletImporter();
+		PortletImporter portletImporter = PortletImporter.getInstance();
 
 		portletImporter.readAssetTags(portletDataContext);
 	}

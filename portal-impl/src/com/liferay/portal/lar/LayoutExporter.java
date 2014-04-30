@@ -694,9 +694,10 @@ public class LayoutExporter {
 	private static Log _log = LogFactoryUtil.getLog(LayoutExporter.class);
 
 	private DeletionSystemEventExporter _deletionSystemEventExporter =
-		new DeletionSystemEventExporter();
-	private PermissionExporter _permissionExporter = new PermissionExporter();
-	private PortletExporter _portletExporter = new PortletExporter();
-	private ThemeExporter _themeExporter = new ThemeExporter();
+		DeletionSystemEventExporter.getInstance();
+	private PermissionExporter _permissionExporter =
+		PermissionExporter.getInstance();
+	private PortletExporter _portletExporter = PortletExporter.getInstance();
+	private ThemeExporter _themeExporter = ThemeExporter.getInstance();
 
 }

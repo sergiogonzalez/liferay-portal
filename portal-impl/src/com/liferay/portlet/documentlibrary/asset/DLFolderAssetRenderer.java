@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -34,6 +37,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -73,6 +77,39 @@ public class DLFolderAssetRenderer
 	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
+	}
+
+	@Override
+	public String getIconCssClass() throws PortalException, SystemException {
+		try {
+			if (_folder.isMountPoint()) {
+				return "icon-drive";
+			}
+
+			List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(
+				_folder.getRepositoryId(), _folder.getFolderId(), false);
+
+			if (!subfolderIds.isEmpty()) {
+				return "icon-folder-close";
+			}
+
+			int count = DLAppServiceUtil.getFoldersFileEntriesCount(
+				_folder.getRepositoryId(),
+				ListUtil.fromArray(new Long[] {_folder.getFolderId()}),
+				WorkflowConstants.STATUS_APPROVED);
+
+			if (count > 0) {
+				return "icon-folder-close";
+			}
+		}
+		catch (PrincipalException pe) {
+			return "icon-remove";
+		}
+		catch (RepositoryException re) {
+			return "icon-remove";
+		}
+
+		return super.getIconCssClass();
 	}
 
 	@Override

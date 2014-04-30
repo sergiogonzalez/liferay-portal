@@ -30,6 +30,10 @@ import com.liferay.portlet.layoutsadmin.lar.StagedThemeImpl;
  */
 public class ThemeExporter {
 
+	public static ThemeExporter getInstance() {
+		return _instance;
+	}
+
 	public void exportTheme(
 			PortletDataContext portletDataContext, LayoutSet layoutSet)
 		throws Exception {
@@ -114,6 +118,11 @@ public class ThemeExporter {
 		cssElement.addCDATA(css);
 	}
 
+	private ThemeExporter() {
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ThemeExporter.class);
+
+	private static ThemeExporter _instance = new ThemeExporter();
 
 }

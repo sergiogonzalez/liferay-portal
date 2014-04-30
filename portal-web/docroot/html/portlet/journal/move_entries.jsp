@@ -93,9 +93,14 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalFolder folder : validMoveFolders) {
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="move-folder">
+						<i class="<%= assetRendererFactory.getIconCssClass() %>"></i>
+
 						<span class="folder-title">
 							<%= folder.getName() %>
 						</span>
@@ -119,9 +124,14 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalFolder folder : invalidMoveFolders) {
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
-					<li class="move-error move-folder">
+					<li class="icon-warning-sign move-error move-folder">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="folder-title">
 							<%= folder.getName() %>
 						</span>
@@ -151,9 +161,14 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalArticle validMoveArticle : validMoveArticles) {
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(validMoveArticle));
 				%>
 
 					<li class="move-article">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="article-title" title="<%= HtmlUtil.escapeAttribute(validMoveArticle.getTitle(locale)) %>">
 							<%= HtmlUtil.escape(validMoveArticle.getTitle(locale)) %>
 						</span>
@@ -177,9 +192,14 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalArticle invalidMoveArticle : invalidMoveArticles) {
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(invalidMoveArticle));
 				%>
 
-					<li class="move-article move-error">
+					<li class="icon-warning-sign move-article move-error">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="article-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveArticle.getTitle()) %>">
 							<%= HtmlUtil.escape(invalidMoveArticle.getTitle()) %>
 						</span>
@@ -230,11 +250,6 @@ for (JournalArticle curArticle : articles) {
 	</aui:fieldset>
 </aui:form>
 
-<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/journal/select_folder" />
-	<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
-</portlet:renderURL>
-
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />selectFolderButton').on(
 		'click',
@@ -249,6 +264,12 @@ for (JournalArticle curArticle : articles) {
 					},
 					id: '<portlet:namespace />selectFolder',
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="struts_action" value="/journal/select_folder" />
+						<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
+					</portlet:renderURL>
+
 					uri: '<%= selectFolderURL.toString() %>'
 				},
 				function(event) {

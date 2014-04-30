@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -30,10 +29,8 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.util.HashMap;
@@ -54,6 +51,10 @@ import java.util.Set;
 public class PermissionExporter {
 
 	public static final String ROLE_TEAM_PREFIX = "ROLE_TEAM_,*";
+
+	public static PermissionExporter getInstance() {
+		return _instance;
+	}
 
 	protected void exportPermissions(
 			LayoutCache layoutCache, long companyId, long groupId,
@@ -187,86 +188,9 @@ public class PermissionExporter {
 			permissionsElement, true);
 	}
 
-	protected Element exportRoles(
-			long companyId, String resourceName, int scope,
-			String resourcePrimKey, Element parentElement, String elName,
-			List<Role> roles)
-		throws Exception {
-
-		Element element = parentElement.addElement(elName);
-
-		Map<String, List<String>> resourceRoles =
-			RoleLocalServiceUtil.getResourceRoles(
-				companyId, resourceName, scope, resourcePrimKey);
-
-		for (Map.Entry<String, List<String>> entry : resourceRoles.entrySet()) {
-			String roleName = entry.getKey();
-
-			if (!hasRole(roles, roleName)) {
-				continue;
-			}
-
-			Element roleElement = element.addElement("role");
-
-			roleElement.addAttribute("name", roleName);
-
-			List<String> actions = entry.getValue();
-
-			for (String action : actions) {
-				Element actionKeyElement = roleElement.addElement("action-key");
-
-				actionKeyElement.addText(action);
-				actionKeyElement.addAttribute("scope", String.valueOf(scope));
-			}
-		}
-
-		return element;
+	private PermissionExporter() {
 	}
 
-	protected void exportUserRoles(
-			LayoutCache layoutCache, long companyId, long groupId,
-			String resourceName, Element parentElement)
-		throws Exception {
-
-		Element userRolesElement = SAXReaderUtil.createElement("user-roles");
-
-		List<User> users = layoutCache.getGroupUsers(groupId);
-
-		for (User user : users) {
-			long userId = user.getUserId();
-			String uuid = user.getUuid();
-
-			List<Role> userRoles = layoutCache.getUserRoles(userId);
-
-			Element userElement = exportRoles(
-				companyId, resourceName, ResourceConstants.SCOPE_GROUP,
-				String.valueOf(groupId), userRolesElement, "user", userRoles);
-
-			if (userElement.elements().isEmpty()) {
-				userRolesElement.remove(userElement);
-			}
-			else {
-				userElement.addAttribute("uuid", uuid);
-			}
-		}
-
-		if (!userRolesElement.elements().isEmpty()) {
-			parentElement.add(userRolesElement);
-		}
-	}
-
-	protected boolean hasRole(List<Role> roles, String roleName) {
-		if (ListUtil.isEmpty(roles)) {
-			return false;
-		}
-
-		for (Role role : roles) {
-			if (roleName.equals(role.getName())) {
-				return true;
-			}
-		}
-
-		return false;
-	}
+	private static PermissionExporter _instance = new PermissionExporter();
 
 }

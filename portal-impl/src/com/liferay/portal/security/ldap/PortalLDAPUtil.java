@@ -301,6 +301,7 @@ public class PortalLDAPUtil {
 		if ((preferredLDAPServerId >= 0) &&
 			hasUser(
 				preferredLDAPServerId, companyId, screenName, emailAddress)) {
+
 			return preferredLDAPServerId;
 		}
 

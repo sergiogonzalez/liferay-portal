@@ -3,8 +3,8 @@
 <root>
 	<template>
 		<template-key>wiki-social-ftl</template-key>
-		<name>Social</name>
-		<description>Displays social bookmarks and ratings for wiki pages and their child pages.</description>
+		<name>portlet-display-template-name-social</name>
+		<description>portlet-display-template-description-social</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portlet/wiki/dependencies/portlet_display_template_social.ftl</script-file>
 		<cacheable>false</cacheable>

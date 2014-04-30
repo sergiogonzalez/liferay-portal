@@ -49,7 +49,11 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="icon-folder-open" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
+		<%
+		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+		%>
+
+		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
 	</c:if>
 
 	<c:if test="<%= ((folder == null) || folder.isSupportsShortcuts()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
@@ -60,7 +64,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= editFileShortcutURL %>" label="shortcut" />
+		<aui:nav-item href="<%= editFileShortcutURL %>" iconCssClass="icon-external-link" label="shortcut" />
 	</c:if>
 
 	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY)) %>">
@@ -81,7 +85,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= editFileEntryURL %>" label="multiple-documents" />
+		<aui:nav-item href="<%= editFileEntryURL %>" iconCssClass="icon-copy" label="multiple-documents" />
 	</c:if>
 
 	<c:choose>
@@ -112,7 +116,11 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 					<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 				</portlet:renderURL>
 
-				<aui:nav-item href="<%= addFileEntryTypeURL %>" iconCssClass="icon-file" label="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>" localizeLabel="<%= false %>" />
+				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+				%>
+
+				<aui:nav-item href="<%= addFileEntryTypeURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>" localizeLabel="<%= false %>" />
 
 			<%
 			}
