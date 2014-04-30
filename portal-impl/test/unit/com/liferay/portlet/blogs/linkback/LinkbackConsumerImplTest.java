@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.portlet.blogs.linkback;
 
 import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumerImpl;
 
 import java.io.IOException;
 
@@ -42,7 +40,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest({PortalSocketPermission.class})
 @RunWith(PowerMockRunner.class)
-public class LinkbackConsumerUtilTest extends PowerMockito {
+public class LinkbackConsumerImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {

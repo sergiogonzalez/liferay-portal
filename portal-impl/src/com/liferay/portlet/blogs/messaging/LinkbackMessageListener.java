@@ -17,7 +17,7 @@ package com.liferay.portlet.blogs.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
-import com.liferay.portlet.blogs.util.LinkbackConsumerStaticSingleton;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerStaticSingleton;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 
 /**

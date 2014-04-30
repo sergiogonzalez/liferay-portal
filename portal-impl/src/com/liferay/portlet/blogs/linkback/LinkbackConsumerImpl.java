@@ -35,10 +35,6 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 		_comments = new CommentsImpl();
 	}
 
-	public LinkbackConsumerImpl(Comments comments) {
-		_comments = comments;
-	}
-
 	@Override
 	public void addNewTrackback(long messageId, String url, String entryUrl) {
 		_trackbacks.add(new Tuple(messageId, url, entryUrl));
@@ -80,6 +76,10 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 			_log.error(
 				"Error trying to delete trackback message " + messageId, e);
 		}
+	}
+
+	protected LinkbackConsumerImpl(Comments comments) {
+		_comments = comments;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerImpl.class);

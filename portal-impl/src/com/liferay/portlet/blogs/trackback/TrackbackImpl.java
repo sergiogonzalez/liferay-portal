@@ -26,8 +26,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerStaticSingleton;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.LinkbackConsumerStaticSingleton;
 
 /**
  * @author Alexander Chow

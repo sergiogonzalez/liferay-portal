@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
-
-import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumerImpl;
+package com.liferay.portlet.blogs.linkback;
 
 /**
  * @author André de Oliveira
