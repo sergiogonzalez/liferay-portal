@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerImpl;
 
 import java.io.IOException;
 
@@ -48,7 +50,7 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 
 		setUpHttp();
 
-		_linkbackConsumer = new LinkbackConsumerUtil();
+		_linkbackConsumer = new LinkbackConsumerImpl();
 	}
 
 	@Test
@@ -148,6 +150,6 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 	@Mock
 	private Http _http;
 
-	private LinkbackConsumerUtil _linkbackConsumer;
+	private LinkbackConsumer _linkbackConsumer;
 
 }

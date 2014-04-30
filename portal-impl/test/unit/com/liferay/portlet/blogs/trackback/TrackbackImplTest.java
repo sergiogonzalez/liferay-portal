@@ -22,12 +22,9 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
-import java.util.Arrays;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,22 +42,14 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({LinkbackConsumerUtil.class, UserLocalServiceUtil.class})
+@PrepareForTest({UserLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
 public class TrackbackImplTest extends PowerMockito {
-
-	public static void addNewTrackback(
-		long messageId, String url, String entryURL) {
-
-		_linkback = String.valueOf(
-			Arrays.<Object>asList(messageId, url, entryURL));
-	}
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpLinkbackConsumer();
 		setUpPortal();
 		setUpThemeDisplay();
 		setUpUserLocalService();
@@ -121,7 +110,7 @@ public class TrackbackImplTest extends PowerMockito {
 			99999L
 		);
 
-		Trackback trackback = new TrackbackImpl(_comments);
+		Trackback trackback = new TrackbackImpl(_comments, _linkbackConsumer);
 
 		trackback.addTrackback(
 			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",
@@ -139,21 +128,10 @@ public class TrackbackImplTest extends PowerMockito {
 			Matchers.same(_serviceContextFunction)
 		);
 
-		Assert.assertEquals(
-			"[99999, __url__, __LayoutFullURL__/-/blogs/__UrlTitle__]",
-			_linkback);
-	}
-
-	protected void setUpLinkbackConsumer() throws Exception {
-		mockStatic(LinkbackConsumerUtil.class, new CallsRealMethods());
-
-		Class<?> clazz = getClass();
-
-		replace(
-			method(LinkbackConsumerUtil.class, "addNewTrackback")
-		).with(
-			clazz.getMethod(
-				"addNewTrackback", Long.TYPE,String.class, String.class)
+		Mockito.verify(
+			_linkbackConsumer
+		).addNewTrackback(
+			99999L, "__url__", "__LayoutFullURL__/-/blogs/__UrlTitle__"
 		);
 	}
 
@@ -177,13 +155,14 @@ public class TrackbackImplTest extends PowerMockito {
 		);
 	}
 
-	private static String _linkback;
-
 	@Mock
 	private BlogsEntry _blogsEntry;
 
 	@Mock
 	private Comments _comments;
+
+	@Mock
+	private LinkbackConsumer _linkbackConsumer;
 
 	@Mock
 	private Portal _portal;

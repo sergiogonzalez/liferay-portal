@@ -12,20 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.portlet.blogs.linkback;
 
-import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumerImpl;
+import com.liferay.portal.kernel.comments.Comments;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 /**
  * @author André de Oliveira
  */
-public class LinkbackConsumerStaticSingleton {
+public interface LinkbackConsumer {
 
-	public static LinkbackConsumer getInstance() {
-		return _instance;
-	}
+	public void addNewTrackback(long messageId, String url, String entryUrl);
 
-	private static LinkbackConsumer _instance = new LinkbackConsumerImpl();
+	public void verifyNewTrackbacks(Comments comments);
+
+	public void verifyPost(BlogsEntry entry, MBMessage message)
+		throws PortalException, SystemException;
 
 }

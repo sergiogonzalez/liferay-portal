@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.portlet.blogs.linkback;
 
 import com.liferay.portal.comments.CommentsImpl;
 import com.liferay.portal.kernel.comments.Comments;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -32,13 +34,16 @@ import java.util.List;
 
 /**
  * @author Alexander Chow
+ * @author André de Oliveira
  */
-public class LinkbackConsumerUtil {
+public class LinkbackConsumerImpl implements LinkbackConsumer {
 
+	@Override
 	public void addNewTrackback(long messageId, String url, String entryUrl) {
 		_trackbacks.add(new Tuple(messageId, url, entryUrl));
 	}
 
+	@Override
 	public void verifyNewTrackbacks(Comments comments) {
 		Tuple tuple = null;
 
@@ -55,8 +60,9 @@ public class LinkbackConsumerUtil {
 		}
 	}
 
+	@Override
 	public void verifyPost(BlogsEntry entry, MBMessage message)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long messageId = message.getMessageId();
 		String entryURL =
@@ -110,7 +116,7 @@ public class LinkbackConsumerUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerImpl.class);
 
 	private List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());
