@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.LinkbackConsumerStaticSingleton;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -56,7 +57,10 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 						threadId, WorkflowConstants.STATUS_APPROVED);
 
 				for (MBMessage message : messages) {
-					LinkbackConsumerUtil.verifyPost(entry, message);
+					LinkbackConsumerUtil linkbackConsumer =
+						LinkbackConsumerStaticSingleton.getInstance();
+
+					linkbackConsumer.verifyPost(entry, message);
 				}
 			}
 			catch (Exception e) {

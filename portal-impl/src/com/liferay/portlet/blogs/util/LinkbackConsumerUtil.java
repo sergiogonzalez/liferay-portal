@@ -35,13 +35,11 @@ import java.util.List;
  */
 public class LinkbackConsumerUtil {
 
-	public static void addNewTrackback(
-		long messageId, String url, String entryUrl) {
-
+	public void addNewTrackback(long messageId, String url, String entryUrl) {
 		_trackbacks.add(new Tuple(messageId, url, entryUrl));
 	}
 
-	public static void verifyNewTrackbacks(Comments comments) {
+	public void verifyNewTrackbacks(Comments comments) {
 		Tuple tuple = null;
 
 		while (!_trackbacks.isEmpty()) {
@@ -57,7 +55,7 @@ public class LinkbackConsumerUtil {
 		}
 	}
 
-	public static void verifyPost(BlogsEntry entry, MBMessage message)
+	public void verifyPost(BlogsEntry entry, MBMessage message)
 		throws Exception {
 
 		long messageId = message.getMessageId();
@@ -114,7 +112,7 @@ public class LinkbackConsumerUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerUtil.class);
 
-	private static List<Tuple> _trackbacks = Collections.synchronizedList(
+	private List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());
 
 }
