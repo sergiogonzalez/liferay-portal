@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.trackback;
 import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -57,7 +58,7 @@ public class TrackbackImplTest extends PowerMockito {
 
 	@Test
 	public void testAddTrackback() throws Exception {
-		long entryId = 142857;
+		long entryId = ServiceTestUtil.randomLong();
 
 		when(
 			_blogsEntry.getEntryId()
@@ -65,7 +66,7 @@ public class TrackbackImplTest extends PowerMockito {
 			entryId
 		);
 
-		long groupId = 16;
+		long groupId = ServiceTestUtil.randomLong();
 
 		when(
 			_blogsEntry.getGroupId()
@@ -91,13 +92,15 @@ public class TrackbackImplTest extends PowerMockito {
 			"__read-more__"
 		);
 
-		long userId = 42;
+		long userId = ServiceTestUtil.randomLong();
 
 		when(
 			_userLocalService.getDefaultUserId(Matchers.anyLong())
 		).thenReturn(
 			userId
 		);
+
+		long messageId = ServiceTestUtil.randomLong();
 
 		when(
 			_comments.addComment(
@@ -107,7 +110,7 @@ public class TrackbackImplTest extends PowerMockito {
 				(Function<String, ServiceContext>)Matchers.any()
 			)
 		).thenReturn(
-			99999L
+			messageId
 		);
 
 		Trackback trackback = new TrackbackImpl(_comments, _linkbackConsumer);
@@ -131,7 +134,7 @@ public class TrackbackImplTest extends PowerMockito {
 		Mockito.verify(
 			_linkbackConsumer
 		).addNewTrackback(
-			99999L, "__url__", "__LayoutFullURL__/-/blogs/__UrlTitle__"
+			messageId, "__url__", "__LayoutFullURL__/-/blogs/__UrlTitle__"
 		);
 	}
 

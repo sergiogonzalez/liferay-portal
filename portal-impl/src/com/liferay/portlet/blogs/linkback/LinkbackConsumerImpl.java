@@ -36,8 +36,8 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 	}
 
 	@Override
-	public void addNewTrackback(long messageId, String url, String entryUrl) {
-		_trackbacks.add(new Tuple(messageId, url, entryUrl));
+	public void addNewTrackback(long messageId, String url, String entryURL) {
+		_trackbacks.add(new Tuple(messageId, url, entryURL));
 	}
 
 	@Override

@@ -17,12 +17,13 @@ package com.liferay.portlet.blogs.linkback;
 /**
  * @author André de Oliveira
  */
-public class LinkbackConsumerStaticSingleton {
+public class LinkbackConsumerUtil {
 
-	public static LinkbackConsumer getInstance() {
-		return _instance;
+	public static LinkbackConsumer getLinkbackConsumer() {
+		return _linkbackConsumer;
 	}
 
-	private static LinkbackConsumer _instance = new LinkbackConsumerImpl();
+	private static LinkbackConsumer _linkbackConsumer =
+		new LinkbackConsumerImpl();
 
 }

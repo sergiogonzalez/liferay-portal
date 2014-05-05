@@ -17,7 +17,7 @@ package com.liferay.portlet.blogs.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumerStaticSingleton;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 
 /**
@@ -27,12 +27,13 @@ import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 public class LinkbackMessageListener extends BaseMessageListener {
 
 	public LinkbackMessageListener() {
-		_linkbackConsumer = LinkbackConsumerStaticSingleton.getInstance();
+		_linkbackConsumer = LinkbackConsumerUtil.getLinkbackConsumer();
 	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		_linkbackConsumer.verifyNewTrackbacks();
+
 		LinkbackProducerUtil.sendQueuedPingbacks();
 	}
 

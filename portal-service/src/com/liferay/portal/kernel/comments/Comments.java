@@ -25,10 +25,10 @@ import com.liferay.portal.service.ServiceContext;
 public interface Comments {
 
 	public long addComment(
-		long userId, long groupId, String className, long classPK,
-		String userName, String subject, String body,
-		Function<String, ServiceContext> serviceContextFunction)
-	throws PortalException, SystemException;
+			long userId, long groupId, String className, long classPK,
+			String userName, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException, SystemException;
 
 	public void deleteComment(long messageId)
 		throws PortalException, SystemException;

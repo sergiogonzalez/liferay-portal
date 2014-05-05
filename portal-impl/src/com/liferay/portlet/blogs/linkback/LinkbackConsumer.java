@@ -19,7 +19,7 @@ package com.liferay.portlet.blogs.linkback;
  */
 public interface LinkbackConsumer {
 
-	public void addNewTrackback(long messageId, String url, String entryUrl);
+	public void addNewTrackback(long messageId, String url, String entryURL);
 
 	public void verifyNewTrackbacks();
 

@@ -26,7 +26,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumerStaticSingleton;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
 /**
@@ -37,7 +37,8 @@ public class TrackbackImpl implements Trackback {
 
 	public TrackbackImpl() {
 		_comments = new CommentsImpl();
-		_linkbackConsumer = LinkbackConsumerStaticSingleton.getInstance();
+
+		_linkbackConsumer = LinkbackConsumerUtil.getLinkbackConsumer();
 	}
 
 	@Override

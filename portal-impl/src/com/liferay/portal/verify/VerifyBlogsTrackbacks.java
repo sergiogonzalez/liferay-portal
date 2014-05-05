@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumerStaticSingleton;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -44,7 +44,7 @@ import java.util.List;
 public class VerifyBlogsTrackbacks extends VerifyProcess {
 
 	public VerifyBlogsTrackbacks() {
-		_linkbackConsumer = LinkbackConsumerStaticSingleton.getInstance();
+		_linkbackConsumer = LinkbackConsumerUtil.getLinkbackConsumer();
 	}
 
 	@Override
