@@ -218,6 +218,18 @@ public class TrashImpl implements Trash {
 	}
 
 	@Override
+	public String getDependentOriginalTitle(String title, long classPK) {
+		return getDependentOriginalTitle(
+			title, classPK, StringPool.SLASH, StringPool.POUND);
+	}
+
+	@Override
+	public String getDependentTrashTitle(String title, long classPK) {
+		return getDependentTrashTitle(
+			title, classPK, StringPool.SLASH, StringPool.POUND);
+	}
+
+	@Override
 	public List<TrashEntry> getEntries(Hits hits) {
 		List<TrashEntry> entries = new ArrayList<TrashEntry>();
 
@@ -533,6 +545,34 @@ public class TrashImpl implements Trash {
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, trashRenderer.getTitle(themeDisplay.getLocale()), null);
+	}
+
+	protected String getDependentOriginalTitle(
+		String title, long classPK, String prefix, String separator) {
+
+		if (!title.startsWith(prefix) && !title.contains(separator)) {
+			return title;
+		}
+
+		title = title.substring(
+			prefix.length(),
+			title.length() -
+				(separator.length() + (int)Math.log10(classPK) + 1));
+
+		return title;
+	}
+
+	protected String getDependentTrashTitle(
+		String title, long classPK, String prefix, String separator) {
+
+		StringBuilder sb = new StringBuilder(4);
+
+		sb.append(prefix);
+		sb.append(title);
+		sb.append(separator);
+		sb.append(String.valueOf(classPK));
+
+		return sb.toString();
 	}
 
 	protected String getOriginalTitle(String title, String prefix) {

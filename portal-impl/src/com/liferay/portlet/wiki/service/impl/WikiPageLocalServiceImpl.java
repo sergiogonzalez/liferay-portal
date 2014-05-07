@@ -2620,7 +2620,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : childPages) {
 			curPage.setParentTitle(trashTitle);
 
+			String curPageTrashTitle =
+				TrashUtil.getDependentTrashTitle(
+					curPage.getTitle(), curPage.getResourcePrimKey());
+
+			curPage.setTitle(curPageTrashTitle);
+
 			wikiPagePersistence.update(curPage);
+
+			WikiPageResource wikiPageResource =
+				wikiPageResourceLocalService.getPageResource(
+					curPage.getResourcePrimKey());
+
+			wikiPageResource.setTitle(curPageTrashTitle);
+
+			wikiPageResourcePersistence.update(wikiPageResource);
 
 			if (!curPage.isInTrashExplicitly()) {
 				moveDependentToTrash(curPage, trashEntryId);
@@ -2638,7 +2652,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : redirectPages) {
 			curPage.setRedirectTitle(trashTitle);
 
+			String curPageTrashTitle =
+				TrashUtil.getDependentTrashTitle(
+					curPage.getTitle(), curPage.getResourcePrimKey());
+
+			curPage.setTitle(curPageTrashTitle);
+
 			wikiPagePersistence.update(curPage);
+
+			WikiPageResource wikiPageResource =
+				wikiPageResourceLocalService.getPageResource(
+					curPage.getResourcePrimKey());
+
+			wikiPageResource.setTitle(curPageTrashTitle);
+
+			wikiPageResourcePersistence.update(wikiPageResource);
 
 			if (!curPage.isInTrashExplicitly()) {
 				moveDependentToTrash(curPage, trashEntryId);
@@ -2815,7 +2843,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : childPages) {
 			curPage.setParentTitle(title);
 
+			String curPageOriginalTitle = TrashUtil.getDependentOriginalTitle(
+				curPage.getTitle(), curPage.getResourcePrimKey());
+
+			curPage.setTitle(curPageOriginalTitle);
+
 			wikiPagePersistence.update(curPage);
+
+			WikiPageResource wikiPageResource =
+				wikiPageResourceLocalService.getPageResource(
+					curPage.getResourcePrimKey());
+
+			wikiPageResource.setTitle(curPageOriginalTitle);
+
+			wikiPageResourcePersistence.update(wikiPageResource);
 
 			if (!curPage.isInTrashExplicitly()) {
 				restoreDependentFromTrash(curPage, trashEntryId);
@@ -2834,7 +2875,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : redirectPages) {
 			curPage.setRedirectTitle(title);
 
+			String curPageOriginalTitle =
+				TrashUtil.getDependentOriginalTitle(
+					curPage.getTitle(), curPage.getResourcePrimKey());
+
+			curPage.setTitle(curPageOriginalTitle);
+
 			wikiPagePersistence.update(curPage);
+
+			WikiPageResource wikiPageResource =
+				wikiPageResourceLocalService.getPageResource(
+					curPage.getResourcePrimKey());
+
+			wikiPageResource.setTitle(curPageOriginalTitle);
+
+			wikiPageResourcePersistence.update(wikiPageResource);
 
 			if (!curPage.isInTrashExplicitly()) {
 				restoreDependentFromTrash(curPage, trashEntryId);
