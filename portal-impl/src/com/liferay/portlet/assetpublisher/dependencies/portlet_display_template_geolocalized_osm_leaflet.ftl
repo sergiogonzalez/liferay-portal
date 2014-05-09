@@ -39,6 +39,7 @@
 <style type="text/css">
 	.asset-entry-abstract {
 		min-width: ${minWidth};
+		overflow: auto;
 	}
 
 	.asset-entry-abstract .asset-entry-abstract-image {

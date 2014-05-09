@@ -74,10 +74,7 @@
 
 		.asset-entry-abstract .asset-entry-abstract-image img {
 			display: block;
-		}
-
-		.asset-entry-abstract .asset-entry-abstract-content {
-			margin-left: 10em;
+			margin-right: 2em;
 		}
 
 		.asset-entry-abstract .taglib-icon {
@@ -88,7 +85,7 @@
 			min-height: ${minHeight};
 		}
 
-		.gmnoprint img {
+		.map-canvas img {
 			max-width: none;
 		}
 	</style>
