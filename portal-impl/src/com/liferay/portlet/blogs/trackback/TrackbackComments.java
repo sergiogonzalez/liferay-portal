@@ -16,7 +16,6 @@ package com.liferay.portlet.blogs.trackback;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -27,7 +26,7 @@ public interface TrackbackComments {
 	public long addTrackbackComment(
 			long userId, long groupId, String className, long classPK,
 			String blogName, String title, String body,
-			Function<String, ServiceContext> serviceContextFunction)
+			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 }

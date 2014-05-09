@@ -16,7 +16,6 @@ package com.liferay.portlet.blogs.trackback;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -40,7 +39,7 @@ public class TrackbackImpl implements Trackback {
 	public void addTrackback(
 			BlogsEntry entry, ThemeDisplay themeDisplay, String excerpt,
 			String url, String blogName, String title,
-			Function<String, ServiceContext> serviceContextFunction)
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		long userId = UserLocalServiceUtil.getDefaultUserId(
@@ -53,7 +52,7 @@ public class TrackbackImpl implements Trackback {
 
 		long messageId = _trackbackComments.addTrackbackComment(
 			userId, groupId, className, classPK, blogName, title, body,
-			serviceContextFunction);
+			serviceContext);
 
 		String entryURL = buildEntryURL(entry, themeDisplay);
 
