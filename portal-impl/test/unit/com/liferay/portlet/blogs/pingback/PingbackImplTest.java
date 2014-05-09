@@ -14,16 +14,12 @@
 
 package com.liferay.portlet.blogs.pingback;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -84,8 +80,7 @@ public class PingbackImplTest extends PowerMockito {
 			_pingbackComments
 		).addComment(
 			Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
-			Matchers.anyLong(), Matchers.anyString(),
-			(Function<String, ServiceContext>)Matchers.any());
+			Matchers.anyLong(), Matchers.anyString(), Matchers.anyString());
 
 		execute();
 	}
@@ -103,12 +98,12 @@ public class PingbackImplTest extends PowerMockito {
 		Mockito.verify(
 			_pingbackComments
 		).addComment(
-			Matchers.eq(USER_ID), Matchers.eq(GROUP_ID),
-			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(ENTRY_ID),
+			Matchers.eq(_COMPANY_ID), Matchers.eq(_GROUP_ID),
+			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(_ENTRY_ID),
 			Matchers.eq(
 				"[...] __excerpt__ [...]" +
 					" [url=__sourceURI__]__read_more__[/url]"),
-			(Function<String, ServiceContext>)Matchers.any());
+			Matchers.anyString());
 	}
 
 	@Test(expected = PingbackDisabledException.class)
@@ -147,7 +142,7 @@ public class PingbackImplTest extends PowerMockito {
 		long plid = ServiceTestUtil.randomLong();
 
 		when(
-			_portal.getPlidFromFriendlyURL(COMPANY_ID, "/__blogs__")
+			_portal.getPlidFromFriendlyURL(_COMPANY_ID, "/__blogs__")
 		).thenReturn(
 			plid
 		);
@@ -294,20 +289,20 @@ public class PingbackImplTest extends PowerMockito {
 		pingback.setSourceUri("__sourceURI__");
 		pingback.setTargetUri(targetURI);
 
-		pingback.addPingback(COMPANY_ID);
+		pingback.addPingback(_COMPANY_ID);
 	}
 
 	protected void setUpBlogsEntry() throws Exception {
 		when(
 			_blogsEntry.getEntryId()
 		).thenReturn(
-			ENTRY_ID
+			_ENTRY_ID
 		);
 
 		when(
 			_blogsEntry.getGroupId()
 		).thenReturn(
-			GROUP_ID
+			_GROUP_ID
 		);
 
 		when(
@@ -346,10 +341,10 @@ public class PingbackImplTest extends PowerMockito {
 		languageUtil.setLanguage(_language);
 	}
 
-	protected void setUpPortal() throws PortalException, SystemException {
+	protected void setUpPortal() throws Exception {
 		when(
 			_portal.getPlidFromFriendlyURL(
-				Matchers.eq(COMPANY_ID), Matchers.anyString())
+				Matchers.eq(_COMPANY_ID), Matchers.anyString())
 		).thenReturn(
 			ServiceTestUtil.randomLong()
 		);
@@ -365,7 +360,7 @@ public class PingbackImplTest extends PowerMockito {
 		portalUtil.setPortal(_portal);
 	}
 
-	protected void setUpPortlet() throws SystemException {
+	protected void setUpPortlet() throws Exception {
 		Portlet portlet = Mockito.mock(Portlet.class);
 
 		when(
@@ -392,14 +387,14 @@ public class PingbackImplTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpUser() throws PortalException, SystemException {
+	protected void setUpUser() throws Exception {
 		UserLocalService userLocalService = Mockito.mock(
 			UserLocalService.class);
 
 		when(
 			userLocalService.getDefaultUserId(Matchers.anyLong())
 		).thenReturn(
-			USER_ID
+			_USER_ID
 		);
 
 		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
@@ -443,13 +438,13 @@ public class PingbackImplTest extends PowerMockito {
 		);
 	}
 
-	private static final long COMPANY_ID = ServiceTestUtil.randomLong();
+	private static final long _COMPANY_ID = ServiceTestUtil.randomLong();
 
-	private static final long ENTRY_ID = ServiceTestUtil.randomLong();
+	private static final long _ENTRY_ID = ServiceTestUtil.randomLong();
 
-	private static final long GROUP_ID = ServiceTestUtil.randomLong();
+	private static final long _GROUP_ID = ServiceTestUtil.randomLong();
 
-	private static final long USER_ID = ServiceTestUtil.randomLong();
+	private static final long _USER_ID = ServiceTestUtil.randomLong();
 
 	@Mock
 	private BlogsEntry _blogsEntry;

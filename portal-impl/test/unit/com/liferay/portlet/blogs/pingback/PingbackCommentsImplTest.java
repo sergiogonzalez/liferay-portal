@@ -14,12 +14,21 @@
 
 package com.liferay.portlet.blogs.pingback;
 
-import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -28,6 +37,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,8 +56,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author André de Oliveira
+ * @author Roberto Díaz
  */
-@PrepareForTest({MBMessageLocalServiceUtil.class})
+@PrepareForTest(
+	{BlogsEntryLocalServiceUtil.class, LanguageUtil.class,
+	MBMessageLocalServiceUtil.class, PortalUtil.class,
+	PortletLocalServiceUtil.class, UserLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
 public class PingbackCommentsImplTest extends PowerMockito {
 
@@ -55,8 +69,12 @@ public class PingbackCommentsImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
+		setUpBlogs();
+		setUpLanguage();
 		setUpMessageBoards();
-		setUpServiceContext();
+		setUpPortal();
+		setupPortlet();
+		setUpUser();
 	}
 
 	@Test
@@ -79,9 +97,11 @@ public class PingbackCommentsImplTest extends PowerMockito {
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			_USER_ID, StringPool.BLANK, _GROUP_ID, BlogsEntry.class.getName(),
-			_ENTRY_ID, _THREAD_ID, _PARENT_MESSAGE_ID, StringPool.BLANK,
-			"__body__", _serviceContext
+			Matchers.eq(_USER_ID), Matchers.eq(StringPool.BLANK),
+			Matchers.eq(_GROUP_ID), Matchers.eq(BlogsEntry.class.getName()),
+			Matchers.eq(_ENTRY_ID), Matchers.eq(_THREAD_ID),
+			Matchers.eq(_PARENT_MESSAGE_ID), Matchers.eq(StringPool.BLANK),
+			Matchers.eq("__body__"), Matchers.any(ServiceContext.class)
 		);
 	}
 
@@ -111,8 +131,53 @@ public class PingbackCommentsImplTest extends PowerMockito {
 
 	protected void addComment() throws Exception {
 		_pingbackComments.addComment(
-			_USER_ID, _GROUP_ID, BlogsEntry.class.getName(), _ENTRY_ID,
-			"__body__", _serviceContextFunction);
+			_COMPANY_ID, _GROUP_ID, BlogsEntry.class.getName(), _ENTRY_ID,
+			"__body__", _URL_TITLE);
+	}
+
+	protected void setUpBlogs() throws Exception {
+		when(
+			_blogsEntryLocalService.getBlogsEntry(Matchers.anyLong())
+		).thenReturn(
+			_entry
+		);
+
+		when(
+			_entry.getGroupId()
+		).thenReturn(
+			_GROUP_ID
+		);
+
+		when(
+			_entry.getEntryId()
+		).thenReturn(
+			_ENTRY_ID
+		);
+
+		when(
+			_entry.getUrlTitle()
+		).thenReturn(
+			_URL_TITLE
+		);
+
+		mockStatic(BlogsEntryLocalServiceUtil.class, new CallsRealMethods());
+
+		stub(
+			method(BlogsEntryLocalServiceUtil.class, "getService")
+		).toReturn(
+			_blogsEntryLocalService
+		);
+	}
+
+	protected void setUpLanguage() throws Exception {
+		mockStatic(LanguageUtil.class, new CallsRealMethods());
+
+		stub(
+			method(
+				LanguageUtil.class, "get", Locale.class, String.class)
+		).toReturn(
+			_USER_NAME
+		);
 	}
 
 	protected void setUpMessageBoards() throws Exception {
@@ -152,23 +217,91 @@ public class PingbackCommentsImplTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpServiceContext() {
+	protected void setUpPortal() throws Exception {
 		when(
-			_serviceContextFunction.apply(null)
+			_portal.getLayoutFullURL(
+				Matchers.anyLong(), Matchers.anyString(), Matchers.anyBoolean())
 		).thenReturn(
-			_serviceContext
+			_LAYOUT_FULL_URL
+		);
+
+		mockStatic(PortalUtil.class, new CallsRealMethods());
+
+		stub(
+			method(
+				PortalUtil.class, "getPortal")
+		).toReturn(
+			_portal
 		);
 	}
+
+	protected void setupPortlet() throws Exception {
+		when(
+			_portletLocalService.getPortletById(
+				Matchers.anyLong(), Matchers.anyString())
+		).thenReturn(
+			_portlet
+		);
+
+		when(
+			_portlet.getFriendlyURLMapping()
+		).thenReturn(
+			"blogs"
+		);
+
+		mockStatic(PortletLocalServiceUtil.class, new CallsRealMethods());
+
+		stub(
+			method(
+				PortletLocalServiceUtil.class, "getService")
+		).toReturn(
+			_portletLocalService
+		);
+	}
+
+	protected void setUpUser() throws Exception {
+		when(
+			_userLocalService.getDefaultUserId(Matchers.anyLong())
+		).thenReturn(
+			_USER_ID
+		);
+
+		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
+
+		stub(
+			method(UserLocalServiceUtil.class, "getService")
+		).toReturn(
+			_userLocalService
+		);
+	}
+
+	private static final long _COMPANY_ID = ServiceTestUtil.randomLong();
 
 	private static final long _ENTRY_ID = ServiceTestUtil.randomLong();
 
 	private static final long _GROUP_ID = ServiceTestUtil.randomLong();
 
+	private static final String _LAYOUT_FULL_URL = ServiceTestUtil.randomString(
+		10);
+
 	private static final long _PARENT_MESSAGE_ID = ServiceTestUtil.randomLong();
 
 	private static final long _THREAD_ID = ServiceTestUtil.randomLong();
 
+	private static final String _URL_TITLE = ServiceTestUtil.randomString(25);
+
 	private static final long _USER_ID = ServiceTestUtil.randomLong();
+
+	private static final String _USER_NAME = ServiceTestUtil.randomString(5);
+
+	@Mock
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Mock
+	private BlogsEntry _entry;
+
+	@Mock
+	private LanguageUtil _languageUtil;
 
 	@Mock
 	private MBMessageDisplay _mbMessageDisplay;
@@ -180,9 +313,17 @@ public class PingbackCommentsImplTest extends PowerMockito {
 	private MBThread _mbThread;
 
 	private PingbackComments _pingbackComments = new PingbackCommentsImpl();
-	private ServiceContext _serviceContext = new ServiceContext();
 
 	@Mock
-	private Function<String, ServiceContext> _serviceContextFunction;
+	private Portal _portal;
+
+	@Mock
+	private Portlet _portlet;
+
+	@Mock
+	private PortletLocalService _portletLocalService;
+
+	@Mock
+	private UserLocalService _userLocalService;
 
 }

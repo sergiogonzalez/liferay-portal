@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.blogs.trackback;
 
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -25,6 +25,8 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
 import java.util.Arrays;
+
+import javax.portlet.PortletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -62,6 +64,7 @@ public class TrackbackImplTest extends PowerMockito {
 		setUpLinkbackConsumer();
 		setUpPortal();
 		setUpThemeDisplay();
+		setUpServiceContext();
 		setUpUserLocalService();
 	}
 
@@ -113,8 +116,7 @@ public class TrackbackImplTest extends PowerMockito {
 			_trackbackComments.addTrackbackComment(
 				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
-				Matchers.anyString(),
-				(Function<String, ServiceContext>)Matchers.any()
+				Matchers.anyString(), Matchers.any(ServiceContext.class)
 			)
 		).thenReturn(
 			99999L
@@ -124,7 +126,7 @@ public class TrackbackImplTest extends PowerMockito {
 
 		trackback.addTrackback(
 			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",
-			"__blogName__", "__title__", _serviceContextFunction
+			"__blogName__", "__title__", new ServiceContext()
 		);
 
 		Mockito.verify(
@@ -135,7 +137,7 @@ public class TrackbackImplTest extends PowerMockito {
 			Matchers.eq("__blogName__"), Matchers.eq("__title__"),
 			Matchers.eq(
 				"[...] __excerpt__ [...] [url=__url__]__read-more__[/url]"),
-			Matchers.same(_serviceContextFunction)
+			Matchers.any(ServiceContext.class)
 		);
 
 		Assert.assertEquals(
@@ -162,6 +164,18 @@ public class TrackbackImplTest extends PowerMockito {
 		portalUtil.setPortal(_portal);
 	}
 
+	protected void setUpServiceContext() {
+		mockStatic(ServiceContextFactory.class, new CallsRealMethods());
+
+		stub(
+			method(
+				ServiceContextFactory.class, "getInstance", String.class,
+				PortletRequest.class)
+		).toReturn(
+			new ServiceContext()
+		);
+	}
+
 	protected void setUpThemeDisplay() throws Exception {
 		_themeDisplay = PowerMockito.mock(ThemeDisplay.class);
 	}
@@ -183,9 +197,6 @@ public class TrackbackImplTest extends PowerMockito {
 
 	@Mock
 	private Portal _portal;
-
-	@Mock
-	private Function<String, ServiceContext> _serviceContextFunction;
 
 	private ThemeDisplay _themeDisplay;
 
