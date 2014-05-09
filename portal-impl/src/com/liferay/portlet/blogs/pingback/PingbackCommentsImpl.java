@@ -16,10 +16,10 @@ package com.liferay.portlet.blogs.pingback;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -35,10 +35,11 @@ public class PingbackCommentsImpl implements PingbackComments {
 
 	@Override
 	public void addComment(
-			long userId, long groupId, String className, long classPK,
-			String body,
-			Function<String, ServiceContext> serviceContextFunction)
+			long companyId, long groupId, String className, long classPK,
+			String body, String urlTitle)
 		throws PortalException, SystemException {
+
+		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
 		MBMessageDisplay messageDisplay =
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
@@ -48,7 +49,6 @@ public class PingbackCommentsImpl implements PingbackComments {
 		MBThread thread = messageDisplay.getThread();
 
 		long threadId = thread.getThreadId();
-		long parentMessageId = thread.getRootMessageId();
 
 		List<MBMessage> messages =
 			MBMessageLocalServiceUtil.getThreadMessages(
@@ -60,11 +60,15 @@ public class PingbackCommentsImpl implements PingbackComments {
 			}
 		}
 
-		ServiceContext serviceContext = serviceContextFunction.apply(null);
+		PingbackServiceContextFunction pingbackServiceContextFunction =
+			new PingbackServiceContextFunction(companyId, groupId, urlTitle);
+
+		ServiceContext serviceContext = pingbackServiceContextFunction.apply(
+			StringPool.BLANK);
 
 		MBMessageLocalServiceUtil.addDiscussionMessage(
 			userId, StringPool.BLANK, groupId, className, classPK, threadId,
-			parentMessageId, StringPool.BLANK, body, serviceContext);
+			thread.getRootMessageId(), StringPool.BLANK, body, serviceContext);
 	}
 
 }

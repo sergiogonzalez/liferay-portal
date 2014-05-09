@@ -16,8 +16,6 @@ package com.liferay.portlet.blogs.pingback;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Function;
-import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author André de Oliveira
@@ -25,9 +23,8 @@ import com.liferay.portal.service.ServiceContext;
 public interface PingbackComments {
 
 	public void addComment(
-			long userId, long groupId, String className, long classPK,
-			String body,
-			Function<String, ServiceContext> serviceContextFunction)
+			long companyId, long groupId, String className, long classPK,
+			String body, String urlTitle)
 		throws PortalException, SystemException;
 
 }

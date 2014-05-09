@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -66,15 +65,9 @@ public class PingbackImpl implements Pingback {
 			throw new PingbackDisabledException("Pingbacks are disabled");
 		}
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
-		long groupId = entry.getGroupId();
-		String className = BlogsEntry.class.getName();
-		long classPK = entry.getEntryId();
-		String body = buildBody();
-		String urlTitle = entry.getUrlTitle();
-
 		addComment(
-			userId, groupId, className, classPK, body, companyId, urlTitle);
+			companyId, entry.getGroupId(), BlogsEntry.class.getName(),
+			entry.getEntryId(), getBody(), entry.getUrlTitle());
 	}
 
 	@Override
@@ -98,27 +91,12 @@ public class PingbackImpl implements Pingback {
 	}
 
 	protected void addComment(
-			long userId, long groupId, String className, long classPK,
-			String body, long companyId, String urlTitle)
+			long companyId, long groupId, String className, long classPK,
+			String body, String urlTitle)
 		throws PortalException, SystemException {
 
 		_pingbackComments.addComment(
-			userId, groupId, className, classPK, body,
-			new PingbackServiceContextFunction(companyId, groupId, urlTitle));
-	}
-
-	protected String buildBody() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("[...] ");
-		sb.append(_pingbackExcerptExtractor.getExcerpt());
-		sb.append(" [...] [url=");
-		sb.append(_sourceUri);
-		sb.append("]");
-		sb.append(LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more"));
-		sb.append("[/url]");
-
-		return sb.toString();
+			companyId, groupId, className, classPK, body, urlTitle);
 	}
 
 	protected BlogsEntry getBlogsEntry(long companyId) throws Exception {
@@ -161,20 +139,29 @@ public class PingbackImpl implements Pingback {
 
 		String param = getParam(params, "entryId");
 
-		BlogsEntry entry;
-
 		if (Validator.isNotNull(param)) {
 			long entryId = GetterUtil.getLong(param);
 
-			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
-		}
-		else {
-			String urlTitle = getParam(params, "urlTitle");
-
-			entry = BlogsEntryLocalServiceUtil.getEntry(groupId, urlTitle);
+			return BlogsEntryLocalServiceUtil.getEntry(entryId);
 		}
 
-		return entry;
+		String urlTitle = getParam(params, "urlTitle");
+
+		return BlogsEntryLocalServiceUtil.getEntry(groupId, urlTitle);
+	}
+
+	protected String getBody() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("[...] ");
+		sb.append(_pingbackExcerptExtractor.getExcerpt());
+		sb.append(" [...] [url=");
+		sb.append(_sourceUri);
+		sb.append("]");
+		sb.append(LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more"));
+		sb.append("[/url]");
+
+		return sb.toString();
 	}
 
 	protected String getParam(Map<String, String[]> params, String name) {
@@ -190,9 +177,8 @@ public class PingbackImpl implements Pingback {
 		if (ArrayUtil.isNotEmpty(paramArray)) {
 			return paramArray[0];
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	private PingbackComments _pingbackComments;

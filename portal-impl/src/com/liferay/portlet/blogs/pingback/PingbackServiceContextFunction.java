@@ -46,7 +46,11 @@ public class PingbackServiceContextFunction
 	@Override
 	public ServiceContext apply(String className) {
 		try {
-			return buildServiceContext();
+			ServiceContext serviceContext = new ServiceContext();
+
+			populateServiceContext(serviceContext);
+
+			return serviceContext;
 		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);
@@ -56,9 +60,7 @@ public class PingbackServiceContextFunction
 		}
 	}
 
-	protected String buildRedirect(String layoutFullURL)
-		throws SystemException {
-
+	protected String getRedirect(String layoutFullURL) throws SystemException {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			_companyId, PortletKeys.BLOGS);
 
@@ -73,10 +75,8 @@ public class PingbackServiceContextFunction
 		return sb.toString();
 	}
 
-	protected ServiceContext buildServiceContext()
+	protected void populateServiceContext(ServiceContext serviceContext)
 		throws PortalException, SystemException {
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		String pingbackUserName = LanguageUtil.get(
 			LocaleUtil.getSiteDefault(), "pingback");
@@ -86,12 +86,9 @@ public class PingbackServiceContextFunction
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			_groupId, PortletKeys.BLOGS);
 
-		String redirect = buildRedirect(layoutFullURL);
-		serviceContext.setAttribute("redirect", redirect);
+		serviceContext.setAttribute("redirect", getRedirect(layoutFullURL));
 
 		serviceContext.setLayoutFullURL(layoutFullURL);
-
-		return serviceContext;
 	}
 
 	private long _companyId;
