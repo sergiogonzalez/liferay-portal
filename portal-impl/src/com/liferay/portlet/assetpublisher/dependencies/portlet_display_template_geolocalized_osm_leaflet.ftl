@@ -60,59 +60,65 @@
 	}
 </style>
 
-<div id="${namespace}map-canvas" class="map-canvas"></div>
+<div class="map-canvas" id="${namespace}map-canvas"></div>
 
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<link href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" rel="stylesheet" />
 
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
 <@liferay_aui.script>
-	(function () {
-		function putMarkers(map) {
-			L.tileLayer(
-				'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-				{
-					attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-				}).addTo(map);
-
-			var bounds = L.latLngBounds([]);
-			var points = ${jsonArray};
-
-			var len = points.length;
-
-			for (var i = 0; i < len; i++) {
-				var point = points[i];
-
-				var latLng = L.latLng(point['latitude'], point['longitude']);
-
-				L.marker(latLng).addTo(map).bindPopup(
-					point['abstract'],
-					{
-						maxWidth: ${maxWidth}
-					});
-
-				bounds.extend(latLng);
+	var putMarkers = function (map) {
+		L.tileLayer(
+			'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+			{
+				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
+		).addTo(map);
 
-			return bounds;
+		var bounds = L.latLngBounds([]);
+		var points = ${jsonArray};
+
+		var len = points.length;
+
+		for (var i = 0; i < len; i++) {
+			var point = points[i];
+
+			var latLng = L.latLng(point['latitude'], point['longitude']);
+
+			L.marker(latLng).addTo(map).bindPopup(
+				point['abstract'],
+				{
+					maxWidth: ${maxWidth}
+				}
+			);
+
+			bounds.extend(latLng);
 		}
 
-		function drawMap(lat, lng) {
-			var map = L.map('${namespace}map-canvas').setView([lat, lng], 8);
+		return bounds;
+	};
 
-			map.fitBounds(putMarkers(map));
-		}
+	var drawMap = function (lat, lng) {
+		var map = L.map('${namespace}map-canvas').setView([lat, lng], 8);
 
-		if ("geolocation" in navigator) {
-			navigator.geolocation.getCurrentPosition(
-				function (pos) {
-					drawMap(pos.coords.latitude, pos.coords.longitude);
-				});
-		}
-		else {
-			drawMap(${defaultLatitude}, ${defaultLongitude});
-		}
-	})();
+		map.fitBounds(putMarkers(map));
+	};
+
+	var drawDefaultMap = function() {
+		drawMap(${defaultLatitude}, ${defaultLongitude});
+	};
+
+	if ('geolocation' in navigator) {
+		navigator.geolocation.getCurrentPosition(
+			function (pos) {
+				drawMap(pos.coords.latitude, pos.coords.longitude);
+			},
+			drawDefaultMap
+		);
+	}
+	else {
+		drawDefaultMap();
+	}
 </@liferay_aui.script>
 
 <#macro getAbstract asset>

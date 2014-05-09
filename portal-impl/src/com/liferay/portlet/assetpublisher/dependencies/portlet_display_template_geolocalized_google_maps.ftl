@@ -90,82 +90,91 @@
 		}
 	</style>
 
-	<div id="${namespace}map-canvas" class="map-canvas"></div>
+	<div class="map-canvas" id="${namespace}map-canvas"></div>
 
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=${apiKey}&sensor=true"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=${apiKey}&sensor=true" type="text/javascript"></script>
 
 	<@liferay_aui.script>
-		(function () {
-			function putMarkers(map) {
-				var points = ${jsonArray};
+		var putMarkers = function (map) {
+			var points = ${jsonArray};
 
-				var len = points.length;
+			var len = points.length;
 
-				if (len == 0) {
-					return null;
-				}
+			if (len == 0) {
+				return null;
+			}
 
-				var bounds = new google.maps.LatLngBounds();
+			var bounds = new google.maps.LatLngBounds();
 
-				for (var i = 0; i < len; i++) {
-					var point = points[i];
+			for (var i = 0; i < len; i++) {
+				var point = points[i];
 
-					var marker = new google.maps.Marker(
+				var marker = new google.maps.Marker(
+					{
+						icon: point['icon'],
+						map: map,
+						position: new google.maps.LatLng(point['latitude'], point['longitude']),
+						title: point['title']
+					}
+				);
+
+				bounds.extend(marker.position);
+
+				(function (marker) {
+					var infoWindow = new google.maps.InfoWindow(
 						{
-							icon: point["icon"],
-							map: map,
-							position: new google.maps.LatLng(point["latitude"], point["longitude"]),
-							title: point["title"]
+							content: point['abstract'] || point['title']
 						}
 					);
 
-					bounds.extend(marker.position);
-
-					(function (marker) {
-						var infoWindow = new google.maps.InfoWindow(
-							{
-								content: point["abstract"] || point["title"]
-							});
-
-						google.maps.event.addListener(
-							marker, 'click',
-							function () {
-								infoWindow.open(map, marker);
-							});
-					})(marker);
-				}
-
-				return bounds;
+					google.maps.event.addListener(
+						marker, 'click',
+						function () {
+							infoWindow.open(map, marker);
+						}
+					);
+				})(marker);
 			}
 
-			function drawMap(mapOptions) {
-				var map = new google.maps.Map(document.getElementById("${namespace}map-canvas"), mapOptions);
+			return bounds;
+		};
 
-				var bounds = putMarkers(map);
+		var drawMap = function (mapOptions) {
+			var map = new google.maps.Map(document.getElementById('${namespace}map-canvas'), mapOptions);
 
-				if (bounds) {
-					map.fitBounds(bounds);
-					map.panToBounds(bounds);
-				}
+			var bounds = putMarkers(map);
+
+			if (bounds) {
+				map.fitBounds(bounds);
+				map.panToBounds(bounds);
 			}
+		};
 
-			if ("geolocation" in navigator) {
-				navigator.geolocation.getCurrentPosition(
-					function (pos) {
-						drawMap(
-							{
-								center: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-								zoom: 8
-							});
-					});
-			}
-			else {
-				drawMap({
+		var drawDefaultMap = function () {
+			drawMap(
+				{
 					center: new google.maps.LatLng(${defaultLatitude}, ${defaultLongitude}),
 					zoom: 8
-				});
-			}
-		})();
+				}
+			);
+		};
+
+		if ('geolocation' in navigator) {
+			navigator.geolocation.getCurrentPosition(
+				function (pos) {
+					drawMap(
+						{
+							center: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+							zoom: 8
+						}
+					);
+				},
+				drawDefaultMap
+			);
+		}
+		else {
+			drawDefaultMap();
+		}
 	</@liferay_aui.script>
 
 	<#macro getAbstract asset>
