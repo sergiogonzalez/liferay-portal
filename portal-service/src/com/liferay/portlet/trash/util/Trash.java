@@ -69,6 +69,10 @@ public interface Trash {
 			String[] attachmentFileNames)
 		throws PortalException, SystemException;
 
+	public String getDependentOriginalTitle(String title, long classPK);
+
+	public String getDependentTrashTitle(String title, long classPK);
+
 	public List<TrashEntry> getEntries(Hits hits)
 		throws PortalException, SystemException;
 

@@ -92,6 +92,14 @@ public class TrashUtil {
 			companyId, repositoryId, date, attachmentFileNames);
 	}
 
+	public static String getDependentOriginalTitle(String title, long classPK) {
+		return getTrash().getDependentOriginalTitle(title, classPK);
+	}
+
+	public static String getDependentTrashTitle(String title, long classPK) {
+		return getTrash().getDependentTrashTitle(title, classPK);
+	}
+
 	public static List<TrashEntry> getEntries(Hits hits)
 		throws PortalException, SystemException {
 
