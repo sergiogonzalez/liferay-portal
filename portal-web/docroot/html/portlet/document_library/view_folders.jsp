@@ -77,7 +77,12 @@ if (browseBy.equals("file-entry-type")) {
 	total = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(groupIds);
 }
 else if ((folderId != rootFolderId) || expandFolder) {
-	total = DLAppServiceUtil.getFoldersCount(repositoryId, parentFolderId, false);
+	if (folder.isMountPoint()) {
+		total = 0;		
+	} 
+	else {
+		total = DLAppServiceUtil.getFoldersCount(repositoryId, parentFolderId, false);
+	}
 }
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
