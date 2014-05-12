@@ -17,12 +17,15 @@ package com.liferay.portlet.blogs.trackback;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+
+import javax.portlet.PortletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +45,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({MBMessageLocalServiceUtil.class})
+@PrepareForTest({MBMessageLocalServiceUtil.class, ServiceContextFactory.class})
 @RunWith(PowerMockRunner.class)
 public class TrackbackCommentsImplTest extends PowerMockito {
 
@@ -89,7 +92,7 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 			messageId,
 			_trackbackComments.addTrackbackComment(
 				userId, groupId, className, classPK, "__blogName__",
-				"__title__", "__body__", _serviceContextFunction));
+				"__title__", "__body__", new ServiceContext()));
 
 		Mockito.verify(
 			_mbMessageLocalService
@@ -105,7 +108,7 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 			Matchers.eq(groupId), Matchers.eq(className), Matchers.eq(classPK),
 			Matchers.eq(threadId), Matchers.eq(parentMessageId),
 			Matchers.eq("__title__"), Matchers.eq("__body__"),
-			Matchers.same(_serviceContext)
+			Matchers.any(ServiceContext.class)
 		);
 	}
 
@@ -147,10 +150,14 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 	}
 
 	protected void setUpServiceContext() {
-		when(
-			_serviceContextFunction.apply(MBMessage.class.getName())
-		).thenReturn(
-			_serviceContext
+		mockStatic(ServiceContextFactory.class, new CallsRealMethods());
+
+		stub(
+			method(
+				ServiceContextFactory.class, "getInstance", String.class,
+				PortletRequest.class)
+		).toReturn(
+			new ServiceContext()
 		);
 	}
 

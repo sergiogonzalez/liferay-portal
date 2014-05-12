@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -58,7 +58,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({ActionUtil.class})
+@PrepareForTest({ActionUtil.class, ServiceContextFactory.class})
 @RunWith(PowerMockRunner.class)
 public class TrackbackActionTest extends PowerMockito {
 
@@ -69,6 +69,7 @@ public class TrackbackActionTest extends PowerMockito {
 		setUpActionRequest();
 		setUpActionUtil();
 		setUpBlogsEntry();
+		setUpServiceContext();
 		setUpPortal();
 	}
 
@@ -143,7 +144,7 @@ public class TrackbackActionTest extends PowerMockito {
 			Matchers.same(_blogsEntry), Matchers.same(_themeDisplay),
 			Matchers.eq("__excerpt__"), Matchers.eq("__url__"),
 			Matchers.eq("__blogName__"), Matchers.eq("__title__"),
-			(Function<String, ServiceContext>)Matchers.any()
+			Matchers.any(ServiceContext.class)
 		);
 	}
 
@@ -263,6 +264,18 @@ public class TrackbackActionTest extends PowerMockito {
 		HttpUtil httpUtil = new HttpUtil();
 
 		httpUtil.setHttp(_http);
+	}
+
+	protected void setUpServiceContext() {
+		mockStatic(ServiceContextFactory.class, new CallsRealMethods());
+
+		stub(
+			method(
+				ServiceContextFactory.class, "getInstance", String.class,
+				PortletRequest.class)
+		).toReturn(
+			new ServiceContext()
+		);
 	}
 
 	protected void whenGetEntryThenThrow(Throwable toBeThrown)

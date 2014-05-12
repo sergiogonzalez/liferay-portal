@@ -12,21 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trackback;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.ServiceContext;
+package com.liferay.portlet.blogs.pingback;
 
 /**
- * @author André de Oliveira
+ * @author Marcellus Tavares
  */
-public interface TrackbackComments {
+public class UnavailableSourceURIException extends RuntimeException {
 
-	public long addTrackbackComment(
-			long userId, long groupId, String className, long classPK,
-			String blogName, String title, String body,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException;
+	public UnavailableSourceURIException() {
+		super();
+	}
+
+	public UnavailableSourceURIException(String msg) {
+		super(msg);
+	}
+
+	public UnavailableSourceURIException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public UnavailableSourceURIException(Throwable cause) {
+		super(cause);
+	}
 
 }

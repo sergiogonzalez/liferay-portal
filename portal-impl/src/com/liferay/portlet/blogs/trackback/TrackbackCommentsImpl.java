@@ -16,7 +16,6 @@ package com.liferay.portlet.blogs.trackback;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -34,7 +33,7 @@ public class TrackbackCommentsImpl implements TrackbackComments {
 	public long addTrackbackComment(
 			long userId, long groupId, String className, long classPK,
 			String blogName, String title, String body,
-			Function<String, ServiceContext> serviceContextFunction)
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		MBMessageDisplay messageDisplay =
@@ -46,9 +45,6 @@ public class TrackbackCommentsImpl implements TrackbackComments {
 
 		long threadId = thread.getThreadId();
 		long parentMessageId = thread.getRootMessageId();
-
-		ServiceContext serviceContext = serviceContextFunction.apply(
-			MBMessage.class.getName());
 
 		MBMessage message = MBMessageLocalServiceUtil.addDiscussionMessage(
 			userId, blogName, groupId, className, classPK, threadId,

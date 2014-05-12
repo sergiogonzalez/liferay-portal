@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trackback;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.ServiceContext;
+package com.liferay.portlet.blogs.pingback;
 
 /**
  * @author André de Oliveira
  */
-public interface TrackbackComments {
+public interface PingbackExcerptExtractor {
 
-	public long addTrackbackComment(
-			long userId, long groupId, String className, long classPK,
-			String blogName, String title, String body,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException;
+	public String getExcerpt() throws UnavailableSourceURIException;
+
+	public void setSourceUri(String sourceUri);
+
+	public void setTargetUri(String targetUri);
+
+	public void validateSource()
+		throws InvalidSourceURIException, UnavailableSourceURIException;
 
 }
