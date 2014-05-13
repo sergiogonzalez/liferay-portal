@@ -264,6 +264,11 @@ public class ArrayUtil_IW {
 		return ArrayUtil.containsAll(array1, array2);
 	}
 
+	public <T> int count(T[] array,
+		com.liferay.portal.kernel.util.PredicateFilter<T> predicateFilter) {
+		return ArrayUtil.count(array, predicateFilter);
+	}
+
 	public java.lang.String[] distinct(java.lang.String[] array) {
 		return ArrayUtil.distinct(array);
 	}
@@ -271,6 +276,11 @@ public class ArrayUtil_IW {
 	public java.lang.String[] distinct(java.lang.String[] array,
 		java.util.Comparator<java.lang.String> comparator) {
 		return ArrayUtil.distinct(array, comparator);
+	}
+
+	public <T> boolean exists(T[] array,
+		com.liferay.portal.kernel.util.PredicateFilter<T> predicateFilter) {
+		return ArrayUtil.exists(array, predicateFilter);
 	}
 
 	public boolean[] filter(boolean[] array,

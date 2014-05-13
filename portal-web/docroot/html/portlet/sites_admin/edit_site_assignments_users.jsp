@@ -234,8 +234,9 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 				<%
 				portletURL.setParameter("tabs2", "current");
+				portletURL.setParameter("cur", String.valueOf(cur));
 
-				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + redirect + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + redirect + "');";
 				%>
 
 				<aui:button-row>
