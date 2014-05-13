@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -396,8 +397,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String fixCopyright(
-			String content, String copyright, String oldCopyright, File file,
-			String fileName)
+			String content, String copyright, String oldCopyright,
+			String absolutePath, String fileName)
 		throws IOException {
 
 		if (fileName.endsWith(".vm")) {
@@ -411,7 +412,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (!content.contains(copyright)) {
-			String customCopyright = getCustomCopyright(file);
+			String customCopyright = getCustomCopyright(absolutePath);
 
 			if (Validator.isNotNull(customCopyright)) {
 				copyright = customCopyright;
@@ -623,8 +624,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _copyright;
 	}
 
-	protected String getCustomCopyright(File file) throws IOException {
-		String absolutePath = fileUtil.getAbsolutePath(file);
+	protected String getCustomCopyright(String absolutePath)
+		throws IOException {
 
 		for (int x = absolutePath.length();;) {
 			x = absolutePath.lastIndexOf(StringPool.SLASH, x);
@@ -646,10 +647,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected InputStream getExclusionsInputStream(String fileName)
+	protected List<Tuple> getExclusionsTuples(String fileName)
 		throws IOException {
 
-		_pluginsDirectorylevel = 0;
+		List<Tuple> exclusionsTuples = new ArrayList<Tuple>();
 
 		if (portalSource) {
 			ClassLoader classLoader =
@@ -661,58 +662,68 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			URL url = classLoader.getResource(sourceFormatterExclusions);
 
-			if (url == null) {
-				return null;
+			if (url != null) {
+				exclusionsTuples.add(new Tuple(url.openStream(), 0));
 			}
 
-			return url.openStream();
+			return exclusionsTuples;
 		}
 
 		try {
-			return new FileInputStream(fileName);
+			exclusionsTuples.add(new Tuple(new FileInputStream(fileName), 0));
 		}
 		catch (FileNotFoundException fnfe) {
 		}
 
 		try {
-			_pluginsDirectorylevel = 1;
-
-			return new FileInputStream("../" + fileName);
+			exclusionsTuples.add(
+				new Tuple(new FileInputStream("../" + fileName), 1));
 		}
 		catch (FileNotFoundException fnfe) {
 		}
 
 		try {
-			_pluginsDirectorylevel = 2;
-
-			return new FileInputStream("../../" + fileName);
+			exclusionsTuples.add(
+				new Tuple(new FileInputStream("../../" + fileName), 2));
 		}
 		catch (FileNotFoundException fnfe) {
-			return null;
 		}
+
+		return exclusionsTuples;
 	}
 
 	protected Properties getExclusionsProperties(String fileName)
 		throws IOException {
 
-		InputStream inputStream = getExclusionsInputStream(fileName);
+		List<Tuple> exclusionsTuples = getExclusionsTuples(fileName);
 
-		if (inputStream == null) {
+		if (exclusionsTuples.isEmpty()) {
 			return null;
 		}
 
-		Properties properties = new Properties();
+		Properties allProperties = new Properties();
 
-		properties.load(inputStream);
+		for (Tuple exclusionsTuple : exclusionsTuples) {
+			InputStream inputStream = (InputStream)exclusionsTuple.getObject(0);
 
-		inputStream.close();
+			Properties properties = new Properties();
 
-		if (_pluginsDirectorylevel > 0) {
-			properties = stripTopLevelDirectories(
-				properties, _pluginsDirectorylevel);
+			properties.load(inputStream);
+
+			inputStream.close();
+
+			if (!portalSource) {
+				int pluginsDirectoryLevel = (Integer)exclusionsTuple.getObject(
+					1);
+
+				properties = stripTopLevelDirectories(
+					properties, pluginsDirectoryLevel);
+			}
+
+			allProperties.putAll(properties);
 		}
 
-		return properties;
+		return allProperties;
 	}
 
 	protected List<String> getFileNames(
@@ -910,6 +921,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
+	protected boolean isAttributName(String attributeName) {
+		if (Validator.isNull(attributeName)) {
+			return false;
+		}
+
+		Matcher matcher = attributeNamePattern.matcher(attributeName);
+
+		return matcher.matches();
+	}
+
 	protected boolean isExcluded(Properties properties, String fileName) {
 		return isExcluded(properties, fileName, -1);
 	}
@@ -992,6 +1013,170 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newLine;
 	}
 
+	protected String sortAttributes(
+		String fileName, String line, int lineCount,
+		boolean allowApostropheDelimeter) {
+
+		String s = line;
+
+		int x = s.indexOf(StringPool.SPACE);
+
+		if (x == -1) {
+			return line;
+		}
+
+		s = s.substring(x + 1);
+
+		String previousAttribute = null;
+		String previousAttributeAndValue = null;
+
+		boolean wrongOrder = false;
+
+		for (x = 0;;) {
+			x = s.indexOf(StringPool.EQUAL);
+
+			if ((x == -1) || (s.length() <= (x + 1))) {
+				return line;
+			}
+
+			String attribute = s.substring(0, x);
+
+			if (!isAttributName(attribute)) {
+				return line;
+			}
+
+			if (Validator.isNotNull(previousAttribute) &&
+				(previousAttribute.compareTo(attribute) > 0)) {
+
+				wrongOrder = true;
+			}
+
+			s = s.substring(x + 1);
+
+			char delimeter = s.charAt(0);
+
+			if ((delimeter != CharPool.APOSTROPHE) &&
+				(delimeter != CharPool.QUOTE)) {
+
+				if (delimeter != CharPool.AMPERSAND) {
+					processErrorMessage(
+						fileName, "delimeter: " + fileName + " " + lineCount);
+				}
+
+				return line;
+			}
+
+			s = s.substring(1);
+
+			String value = null;
+
+			int y = -1;
+
+			while (true) {
+				y = s.indexOf(delimeter, y + 1);
+
+				if ((y == -1) || (s.length() <= (y + 1))) {
+					return line;
+				}
+
+				value = s.substring(0, y);
+
+				if (value.startsWith("<%")) {
+					int endJavaCodeSignCount = StringUtil.count(value, "%>");
+					int startJavaCodeSignCount = StringUtil.count(value, "<%");
+
+					if (endJavaCodeSignCount == startJavaCodeSignCount) {
+						break;
+					}
+				}
+				else {
+					int greaterThanCount = StringUtil.count(
+						value, StringPool.GREATER_THAN);
+					int lessThanCount = StringUtil.count(
+						value, StringPool.LESS_THAN);
+
+					if (greaterThanCount == lessThanCount) {
+						break;
+					}
+				}
+			}
+
+			if (delimeter == CharPool.APOSTROPHE) {
+				if (!value.contains(StringPool.QUOTE)) {
+					line = StringUtil.replace(
+						line,
+						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
+						StringPool.QUOTE + value + StringPool.QUOTE);
+
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
+				}
+				else if (!allowApostropheDelimeter) {
+					String newValue = StringUtil.replace(
+						value, StringPool.QUOTE, "&quot;");
+
+					line = StringUtil.replace(
+						line,
+						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
+						StringPool.QUOTE + newValue + StringPool.QUOTE);
+
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
+				}
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(attribute);
+			sb.append(StringPool.EQUAL);
+			sb.append(delimeter);
+			sb.append(value);
+			sb.append(delimeter);
+
+			String currentAttributeAndValue = sb.toString();
+
+			if (wrongOrder) {
+				if ((StringUtil.count(line, currentAttributeAndValue) == 1) &&
+					(StringUtil.count(line, previousAttributeAndValue) == 1)) {
+
+					line = StringUtil.replaceFirst(
+						line, previousAttributeAndValue,
+						currentAttributeAndValue);
+
+					line = StringUtil.replaceLast(
+						line, currentAttributeAndValue,
+						previousAttributeAndValue);
+
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
+				}
+
+				return line;
+			}
+
+			s = s.substring(y + 1);
+
+			if (s.startsWith(StringPool.GREATER_THAN)) {
+				x = s.indexOf(StringPool.SPACE);
+
+				if (x == -1) {
+					return line;
+				}
+
+				s = s.substring(x + 1);
+
+				previousAttribute = null;
+				previousAttributeAndValue = null;
+			}
+			else {
+				s = StringUtil.trimLeading(s);
+
+				previousAttribute = attribute;
+				previousAttributeAndValue = currentAttributeAndValue;
+			}
+		}
+	}
+
 	protected String stripQuotes(String s, char delimeter) {
 		boolean insideQuotes = false;
 
@@ -1047,6 +1232,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected Properties stripTopLevelDirectories(
 			Properties properties, int level)
 		throws IOException {
+
+		if (level == 0) {
+			return properties;
+		}
 
 		File dir = new File(".");
 
@@ -1157,6 +1346,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected static final String MAIN_RELEASE_VERSION_7_0_0 = "7.0.0";
 
+	protected static Pattern attributeNamePattern = Pattern.compile(
+		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static FileImpl fileUtil = FileImpl.getInstance();
@@ -1179,10 +1370,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
-		InputStream inputStream = getExclusionsInputStream(
+		List<Tuple> exclusionsTuples = getExclusionsTuples(
 			"source_formatter_excludes.txt");
 
-		if (inputStream != null) {
+		for (Tuple exclusionsTuple : exclusionsTuples) {
+			InputStream inputStream = (InputStream)exclusionsTuple.getObject(0);
+
 			StringUtil.readLines(inputStream, excludesList);
 		}
 
@@ -1234,7 +1427,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceMismatchException _firstSourceMismatchException;
 	private boolean _initialized;
 	private String _oldCopyright;
-	private int _pluginsDirectorylevel;
 	private Properties _portalLanguageKeysProperties;
 	private boolean _printErrors;
 
