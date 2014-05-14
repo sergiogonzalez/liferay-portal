@@ -484,6 +484,19 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Long> getFolderIds(long groupId, long parentFolderId)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(parentFolderId);
+
+		getSubfolderIds(folderIds, groupId, parentFolderId);
+
+		return folderIds;
+	}
+
+	@Override
 	public List<DLFolder> getFolders(long groupId, long parentFolderId)
 		throws SystemException {
 
