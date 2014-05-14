@@ -1439,6 +1439,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			int versionPageOldStatus = versionPage.getStatus();
 
 			versionPage.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+			versionPage.setTitle(page.getTitle());
 
 			wikiPagePersistence.update(versionPage);
 
@@ -1455,10 +1456,27 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			if (versionPageOldStatus !=
 					WorkflowConstants.STATUS_APPROVED) {
 
-				trashVersionLocalService.addTrashVersion(
-					trashEntryId, WikiPage.class.getName(),
-					versionPage.getPageId(), status, null);
+				TrashVersion trashVersion =
+					trashVersionLocalService.fetchVersion(
+						trashEntryId, WikiPage.class.getName(),
+						versionPage.getPageId());
+
+				if (trashVersion == null) {
+					trashVersion = trashVersionLocalService.addTrashVersion(
+						trashEntryId, WikiPage.class.getName(),
+						versionPage.getPageId(), status, null);
+				}
+				else {
+					trashVersion.setStatus(status);
+
+					trashVersionLocalService.updateTrashVersion(trashVersion);
+				}
+
+				versionPage.setTitle(
+					TrashUtil.getTrashTitle(trashVersion.getEntryId()));
 			}
+
+			wikiPagePersistence.update(versionPage);
 		}
 
 		// Asset
@@ -1491,13 +1509,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Child pages
 
-		String title = page.getTitle();
+		String originalTitle = TrashUtil.getOriginalTitle(page.getTitle());
 
-		moveDependentChildPagesToTrash(page, title, title, trashEntryId);
+		moveDependentChildPagesToTrash(
+			page, originalTitle, page.getTitle(), trashEntryId);
 
 		// Redirect pages
 
-		moveDependentRedirectPagesToTrash(page, title, title, trashEntryId);
+		moveDependentRedirectPagesToTrash(
+			page, originalTitle, page.getTitle(), trashEntryId);
 	}
 
 	@Override
@@ -2620,12 +2640,42 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : childPages) {
 			curPage.setParentTitle(trashTitle);
 
+			if (!curPage.isInTrashExplicitly()) {
+				addDependentTrashVersion(
+					trashEntryId, curPage);
+			}
+
 			wikiPagePersistence.update(curPage);
 
 			if (!curPage.isInTrashExplicitly()) {
 				moveDependentToTrash(curPage, trashEntryId);
 			}
 		}
+	}
+
+	protected void addDependentTrashVersion(
+			long trashEntryId, WikiPage page)
+		throws SystemException, PortalException {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", page.getTitle());
+
+		TrashVersion trashVersion = trashVersionLocalService.addTrashVersion(
+			trashEntryId, WikiPage.class.getName(),
+			page.getPageId(), page.getStatus(), typeSettingsProperties);
+
+		String trashTitle = TrashUtil.getTrashTitle(trashVersion.getEntryId());
+
+		WikiPageResource pageResource =
+			wikiPageResourceLocalService.getWikiPageResource(
+				page.getResourcePrimKey());
+
+		pageResource.setTitle(trashTitle);
+
+		wikiPageResourcePersistence.update(pageResource);
+
+		page.setTitle(trashTitle);
 	}
 
 	protected void moveDependentRedirectPagesToTrash(
@@ -2637,6 +2687,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		for (WikiPage curPage : redirectPages) {
 			curPage.setRedirectTitle(trashTitle);
+
+			if (!curPage.isInTrashExplicitly()) {
+				addDependentTrashVersion(
+					trashEntryId, curPage);
+			}
 
 			wikiPagePersistence.update(curPage);
 
@@ -2814,6 +2869,22 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		for (WikiPage curPage : childPages) {
 			curPage.setParentTitle(title);
+
+			if (!curPage.isInTrashExplicitly()) {
+				String versionPageOriginalTitle = curPage.getTitle();
+
+				TrashVersion trashVersion =
+					trashVersionLocalService.fetchVersion(
+						trashEntryId, WikiPage.class.getName(),
+						curPage.getPageId());
+
+				if (trashVersion != null) {
+					versionPageOriginalTitle = TrashUtil.getOriginalTitle(
+						curPage.getTitle());
+				}
+
+				curPage.setTitle(versionPageOriginalTitle);
+			}
 
 			wikiPagePersistence.update(curPage);
 
