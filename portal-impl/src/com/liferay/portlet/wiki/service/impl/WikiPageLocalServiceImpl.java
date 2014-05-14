@@ -1461,17 +1461,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					trashEntryId, WikiPage.class.getName(),
 					versionPage.getPageId(), status, typeSettingsProperties);
 
-			trashTitle = TrashUtil.getTrashTitle(trashVersion.getEntryId());
+			trashTitle = TrashUtil.getTrashTitle(trashVersion.getVersionId());
 
-			WikiPageResource pageResource =
-				wikiPageResourceLocalService.getWikiPageResource(
+			WikiPageResource pageResource = wikiPageResourcePersistence.findByPrimaryKey(
 					page.getResourcePrimKey());
 
 			pageResource.setTitle(trashTitle);
 
 			wikiPageResourcePersistence.update(pageResource);
 
-			page.setTitle(TrashUtil.getTrashTitle(trashVersion.getEntryId()));
+			versionPage.setTitle(TrashUtil.getTrashTitle(trashVersion.getEntryId()));
 
 			wikiPagePersistence.update(versionPage);
 		}
