@@ -687,9 +687,6 @@ public class DLFileEntryLocalServiceImpl
 				if (includeTrashedEntries ||
 					!dlFileEntry.isInTrashExplicitly()) {
 
-					dlAppHelperLocalService.deleteFileEntry(
-						new LiferayFileEntry(dlFileEntry));
-
 					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 				}
 			}
