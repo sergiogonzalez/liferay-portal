@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.NoSuchClassTypeException;
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 
@@ -61,23 +59,12 @@ public class BaseDDMStructureClassTypeReader implements ClassTypeReader {
 	public ClassType getClassType(long classTypeId, Locale locale)
 		throws PortalException, SystemException {
 
-		try {
-			DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
-				classTypeId);
+		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
+			classTypeId);
 
-			return new DDMStructureClassType(
-				classTypeId, ddmStructure.getName(locale),
-				LocaleUtil.toLanguageId(locale));
-		}
-		catch (NoSuchStructureException e) {
-			throw new NoSuchClassTypeException(e);
-		}
-		catch (PortalException e) {
-			throw e;
-		}
-		catch (SystemException e) {
-			throw e;
-		}
+		return new DDMStructureClassType(
+			classTypeId, ddmStructure.getName(locale),
+			LocaleUtil.toLanguageId(locale));
 	}
 
 	private String _className;

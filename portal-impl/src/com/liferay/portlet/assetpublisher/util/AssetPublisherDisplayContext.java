@@ -826,12 +826,11 @@ public class AssetPublisherDisplayContext {
 		ClassTypeField classTypeField = classType.getClassTypeField(
 			getDDMStructureFieldName());
 
-		long ddmStructureId = classTypeField.getClassTypeId();
-
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldName",
 			DDMIndexerUtil.encodeName(
-				ddmStructureId, getDDMStructureFieldName(), locale));
+				classTypeField.getClassTypeId(), getDDMStructureFieldName(),
+				locale));
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldValue", getDDMStructureFieldValue());
 	}

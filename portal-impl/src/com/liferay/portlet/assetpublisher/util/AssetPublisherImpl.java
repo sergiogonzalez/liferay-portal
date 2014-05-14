@@ -838,10 +838,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 		Long[] availableClassTypeIds = new Long[availableClassTypes.size()];
 
-		Iterator<ClassType> iterator = availableClassTypes.iterator();
-
 		for (int i = 0; i < availableClassTypeIds.length; i++) {
-			ClassType classType = iterator.next();
+			ClassType classType = availableClassTypes.get(i);
 
 			availableClassTypeIds[i] = classType.getClassTypeId();
 		}

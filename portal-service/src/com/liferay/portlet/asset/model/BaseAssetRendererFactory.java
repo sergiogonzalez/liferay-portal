@@ -347,8 +347,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		public ClassType getClassType(long classTypeId, Locale locale)
 			throws PortalException, SystemException {
 
-			throw new NoSuchClassTypeException(
-				String.format("no class type found with id %d", classTypeId));
+			throw new NoSuchClassTypeException();
 		}
 
 	}

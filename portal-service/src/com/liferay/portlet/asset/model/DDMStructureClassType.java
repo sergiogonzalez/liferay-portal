@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.asset.NoSuchClassTypeException;
 import com.liferay.portlet.asset.NoSuchClassTypeFieldException;
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
@@ -53,34 +51,19 @@ public class DDMStructureClassType implements ClassType {
 			}
 		}
 
-		throw new NoSuchClassTypeFieldException(
-			String.format(
-				"No field found with name %s in type class %s", fieldName,
-				getName()));
+		throw new NoSuchClassTypeFieldException();
 	}
 
 	@Override
 	public List<ClassTypeField> getClassTypeFields()
 		throws PortalException, SystemException {
 
-		try {
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getDDMStructure(getClassTypeId());
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(getClassTypeId());
 
-			List<ClassTypeField> classTypeFields = getClassTypeFields(
-				ddmStructure);
+		List<ClassTypeField> classTypeFields = getClassTypeFields(ddmStructure);
 
-			return classTypeFields;
-		}
-		catch (NoSuchStructureException e) {
-			throw new NoSuchClassTypeException(e);
-		}
-		catch (PortalException e) {
-			throw e;
-		}
-		catch (SystemException e) {
-			throw e;
-		}
+		return classTypeFields;
 	}
 
 	@Override

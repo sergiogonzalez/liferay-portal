@@ -164,7 +164,7 @@ public interface AssetPublisher {
 	public long[] getClassNameIds(
 		PortletPreferences portletPreferences, long[] availableClassNameIds);
 
-	Long[] getClassTypeIds(
+	public Long[] getClassTypeIds(
 		PortletPreferences portletPreferences, String className,
 		List<ClassType> availableClassTypes);
 
