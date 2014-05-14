@@ -16,9 +16,15 @@ package com.liferay.portlet.documentlibrary.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.asset.NoSuchClassTypeException;
 import com.liferay.portlet.asset.model.ClassTypeField;
 import com.liferay.portlet.asset.model.DDMStructureClassType;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +42,32 @@ public class DLFileEntryClassType extends DDMStructureClassType {
 	public List<ClassTypeField> getClassTypeFields()
 		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		try {
+			List<ClassTypeField> classTypeFields =
+				new ArrayList<ClassTypeField>();
+
+			DLFileEntryType dlFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
+					getClassTypeId());
+
+			List<DDMStructure> ddmStructures =
+				dlFileEntryType.getDDMStructures();
+
+			for (DDMStructure ddmStructure : ddmStructures) {
+				classTypeFields.addAll(super.getClassTypeFields(ddmStructure));
+			}
+
+			return classTypeFields;
+		}
+		catch (NoSuchFileEntryTypeException e) {
+			throw new NoSuchClassTypeException(e);
+		}
+		catch (PortalException e) {
+			throw e;
+		}
+		catch (SystemException e) {
+			throw e;
+		}
 	}
 
 }

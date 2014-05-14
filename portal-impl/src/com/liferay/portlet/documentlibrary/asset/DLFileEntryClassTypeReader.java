@@ -16,9 +16,16 @@ package com.liferay.portlet.documentlibrary.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.asset.model.ClassType;
 import com.liferay.portlet.asset.model.ClassTypeReader;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,14 +39,55 @@ public class DLFileEntryClassTypeReader implements ClassTypeReader {
 			long[] groupIds, Locale locale)
 		throws SystemException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		List<ClassType> classTypes = new ArrayList<ClassType>();
+
+		classTypes.add(getBasicDocumentClassType(locale));
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		List<DLFileEntryType> dlFileEntryTypes =
+			DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds);
+
+		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+			classTypes.add(
+				new DLFileEntryClassType(
+					dlFileEntryType.getFileEntryTypeId(),
+					dlFileEntryType.getName(locale), languageId));
+		}
+
+		return classTypes;
 	}
 
 	@Override
 	public ClassType getClassType(long classTypeId, Locale locale)
 		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		if (classTypeId ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			return getBasicDocumentClassType(locale);
+		}
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeServiceUtil.getFileEntryType(classTypeId);
+
+		return new DLFileEntryClassType(
+			dlFileEntryType.getFileEntryTypeId(),
+			dlFileEntryType.getName(locale), LocaleUtil.toLanguageId(locale));
+	}
+
+	protected ClassType getBasicDocumentClassType(Locale locale)
+		throws SystemException {
+
+		DLFileEntryType basicDocumentDLFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+		return new DLFileEntryClassType(
+			basicDocumentDLFileEntryType.getFileEntryTypeId(),
+			LanguageUtil.get(
+				locale, DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT),
+			LocaleUtil.toLanguageId(locale));
 	}
 
 }
