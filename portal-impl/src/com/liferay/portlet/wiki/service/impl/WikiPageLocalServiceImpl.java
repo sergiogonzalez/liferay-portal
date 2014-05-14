@@ -1421,88 +1421,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public void moveDependentToTrash(WikiPage page, long trashEntryId)
 		throws PortalException, SystemException {
 
-		int oldStatus = page.getStatus();
-
-		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-			return;
-		}
-
-		// Version pages
-
-		List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
-			page.getResourcePrimKey(), page.getNodeId());
-
-		for (WikiPage versionPage : versionPages) {
-
-			// Version page
-
-			int versionPageOldStatus = versionPage.getStatus();
-
-			versionPage.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-			versionPage.setTitle(page.getTitle());
-
-			// Trash
-
-			int status = versionPageOldStatus;
-
-			if (versionPageOldStatus ==
-					WorkflowConstants.STATUS_PENDING) {
-
-				status = WorkflowConstants.STATUS_DRAFT;
-			}
-
-			if (versionPageOldStatus !=
-					WorkflowConstants.STATUS_APPROVED) {
-
-				trashVersionLocalService.addTrashVersion(
-					trashEntryId, WikiPage.class.getName(),
-					versionPage.getPageId(), status, null);
-			}
-
-			wikiPagePersistence.update(versionPage);
-		}
-
-		// Asset
-
-		if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
-			assetEntryLocalService.updateVisible(
-				WikiPage.class.getName(), page.getResourcePrimKey(), false);
-		}
-
-		// Index
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			WikiPage.class);
-
-		indexer.reindex(page);
-
-		// Cache
-
-		if (WikiCacheThreadLocal.isClearCache()) {
-			WikiCacheUtil.clearCache(page.getNodeId());
-		}
-
-		// Workflow
-
-		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-				page.getCompanyId(), page.getGroupId(),
-				WikiPage.class.getName(), page.getResourcePrimKey());
-		}
-
-		// Child pages
-
-		String trashTitle = page.getTitle();
-
-		String orinalTitle = TrashUtil.getOriginalTitle(trashTitle);
-
-		moveDependentChildPagesToTrash(
-			page, orinalTitle, trashTitle, trashEntryId);
-
-		// Redirect pages
-
-		moveDependentRedirectPagesToTrash(
-			page, orinalTitle, trashTitle, trashEntryId);
+		moveDependentToTrash(page, trashEntryId, false);
 	}
 
 	@Override
@@ -1759,12 +1678,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Child pages
 
 		moveDependentChildPagesToTrash(
-			page, oldTitle, trashTitle, trashEntry.getEntryId());
+			page, oldTitle, trashTitle, trashEntry.getEntryId(), true);
 
 		// Redirect pages
 
 		moveDependentRedirectPagesToTrash(
-			page, oldTitle, trashTitle, trashEntry.getEntryId());
+			page, oldTitle, trashTitle, trashEntry.getEntryId(), true);
 
 		// Asset
 
@@ -2643,7 +2562,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void moveDependentChildPagesToTrash(
-			WikiPage page, String title, String trashTitle, long trashEntryId)
+			WikiPage page, String title, String trashTitle, long trashEntryId,
+			boolean createTrashVersion)
 		throws PortalException, SystemException {
 
 		List<WikiPage> childPages = wikiPagePersistence.findByN_H_P(
@@ -2653,11 +2573,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			curPage.setParentTitle(trashTitle);
 
 			if (!curPage.isInTrashExplicitly()) {
-				addDependentTrashVersion(curPage, trashEntryId);
+				if (createTrashVersion) {
+					addDependentTrashVersion(curPage, trashEntryId);
+				}
 
 				wikiPagePersistence.update(curPage);
 
-				moveDependentToTrash(curPage, trashEntryId);
+				moveDependentToTrash(curPage, trashEntryId, createTrashVersion);
 
 				continue;
 			}
@@ -2667,7 +2589,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void moveDependentRedirectPagesToTrash(
-			WikiPage page, String title, String trashTitle, long trashEntryId)
+			WikiPage page, String title, String trashTitle, long trashEntryId,
+			boolean createTrashVersion)
 		throws PortalException, SystemException {
 
 		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R(
@@ -2677,17 +2600,107 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			curPage.setRedirectTitle(trashTitle);
 
 			if (!curPage.isInTrashExplicitly()) {
-				addDependentTrashVersion(curPage, trashEntryId);
+				if (createTrashVersion) {
+					addDependentTrashVersion(curPage, trashEntryId);
+				}
 
 				wikiPagePersistence.update(curPage);
 
-				moveDependentToTrash(curPage, trashEntryId);
+				moveDependentToTrash(curPage, trashEntryId, createTrashVersion);
 
 				continue;
 			}
 
 			wikiPagePersistence.update(curPage);
 		}
+	}
+
+	protected void moveDependentToTrash(
+			WikiPage page, long trashEntryId, boolean createTrashVersion)
+		throws PortalException, SystemException {
+
+		int oldStatus = page.getStatus();
+
+		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+			return;
+		}
+
+		// Version pages
+
+		List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
+			page.getResourcePrimKey(), page.getNodeId());
+
+		for (WikiPage versionPage : versionPages) {
+
+			// Version page
+
+			int versionPageOldStatus = versionPage.getStatus();
+
+			versionPage.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+			versionPage.setTitle(page.getTitle());
+
+			// Trash
+
+			int status = versionPageOldStatus;
+
+			if (versionPageOldStatus ==
+					WorkflowConstants.STATUS_PENDING) {
+
+				status = WorkflowConstants.STATUS_DRAFT;
+			}
+
+			if (versionPageOldStatus !=
+					WorkflowConstants.STATUS_APPROVED) {
+
+				trashVersionLocalService.addTrashVersion(
+					trashEntryId, WikiPage.class.getName(),
+					versionPage.getPageId(), status, null);
+			}
+
+			wikiPagePersistence.update(versionPage);
+		}
+
+		// Asset
+
+		if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
+			assetEntryLocalService.updateVisible(
+				WikiPage.class.getName(), page.getResourcePrimKey(), false);
+		}
+
+		// Index
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			WikiPage.class);
+
+		indexer.reindex(page);
+
+		// Cache
+
+		if (WikiCacheThreadLocal.isClearCache()) {
+			WikiCacheUtil.clearCache(page.getNodeId());
+		}
+
+		// Workflow
+
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+				page.getCompanyId(), page.getGroupId(),
+				WikiPage.class.getName(), page.getResourcePrimKey());
+		}
+
+		// Child pages
+
+		String trashTitle = page.getTitle();
+
+		String orinalTitle = TrashUtil.getOriginalTitle(trashTitle);
+
+		moveDependentChildPagesToTrash(
+			page, orinalTitle, trashTitle, trashEntryId, createTrashVersion);
+
+		// Redirect pages
+
+		moveDependentRedirectPagesToTrash(
+			page, orinalTitle, trashTitle, trashEntryId, createTrashVersion);
 	}
 
 	protected void notifySubscribers(
