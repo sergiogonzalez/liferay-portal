@@ -386,7 +386,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		localRepository.deleteAll();
+		deleteRepository(localRepository);
 	}
 
 	/**
@@ -1356,6 +1356,16 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			throw pe;
 		}
+	}
+
+	protected void deleteRepository(LocalRepository localRepository)
+		throws PortalException, SystemException {
+
+		long repositoryId = localRepository.getRepositoryId();
+
+		dlAppHelperLocalService.deleteRepositoryFileEntries(repositoryId);
+
+		localRepository.deleteAll();
 	}
 
 	protected LocalRepository getFileEntryLocalRepository(long fileEntryId)
