@@ -1432,12 +1432,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
 			page.getResourcePrimKey(), page.getNodeId());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("title", page.getTitle());
-
-		String trashTitle = StringPool.BLANK;
-
 		for (WikiPage versionPage : versionPages) {
 
 			// Version page
@@ -1445,6 +1439,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			int versionPageOldStatus = versionPage.getStatus();
 
 			versionPage.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+			versionPage.setTitle(page.getTitle());
 
 			// Trash
 
@@ -1456,23 +1451,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				status = WorkflowConstants.STATUS_DRAFT;
 			}
 
-			TrashVersion trashVersion =
+			if (versionPageOldStatus !=
+					WorkflowConstants.STATUS_APPROVED) {
+
 				trashVersionLocalService.addTrashVersion(
 					trashEntryId, WikiPage.class.getName(),
-					versionPage.getPageId(), status, typeSettingsProperties);
-
-			trashTitle = TrashUtil.getTrashTitle(trashVersion.getVersionId());
-
-			WikiPageResource pageResource =
-				wikiPageResourcePersistence.findByPrimaryKey(
-					page.getResourcePrimKey());
-
-			pageResource.setTitle(trashTitle);
-
-			wikiPageResourcePersistence.update(pageResource);
-
-			versionPage.setTitle(
-				TrashUtil.getTrashTitle(trashVersion.getVersionId()));
+					versionPage.getPageId(), status, null);
+			}
 
 			wikiPagePersistence.update(versionPage);
 		}
@@ -1506,6 +1491,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		// Child pages
+
+		String trashTitle = page.getTitle();
 
 		String orinalTitle = TrashUtil.getOriginalTitle(trashTitle);
 
@@ -2472,6 +2459,32 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
+	protected void addDependentTrashVersion(WikiPage page, long trashEntryId)
+		throws PortalException, SystemException {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", page.getTitle());
+
+		TrashVersion trashVersion =
+			trashVersionLocalService.addTrashVersion(
+				trashEntryId, WikiPage.class.getName(), page.getPageId(),
+				page.getStatus(), typeSettingsProperties);
+
+		String curPageTrashtitle = TrashUtil.getTrashTitle(
+			trashVersion.getVersionId());
+
+		WikiPageResource pageResource =
+			wikiPageResourcePersistence.findByPrimaryKey(
+				page.getResourcePrimKey());
+
+		pageResource.setTitle(curPageTrashtitle);
+
+		wikiPageResourcePersistence.update(pageResource);
+
+		page.setTitle(TrashUtil.getTrashTitle(trashVersion.getVersionId()));
+	}
+
 	protected void clearPageCache(WikiPage page) {
 		if (!WikiCacheThreadLocal.isClearCache()) {
 			return;
@@ -2639,11 +2652,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : childPages) {
 			curPage.setParentTitle(trashTitle);
 
-			wikiPagePersistence.update(curPage);
-
 			if (!curPage.isInTrashExplicitly()) {
+				addDependentTrashVersion(curPage, trashEntryId);
+
+				wikiPagePersistence.update(curPage);
+
 				moveDependentToTrash(curPage, trashEntryId);
+
+				continue;
 			}
+
+			wikiPagePersistence.update(curPage);
 		}
 	}
 
@@ -2657,11 +2676,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage curPage : redirectPages) {
 			curPage.setRedirectTitle(trashTitle);
 
-			wikiPagePersistence.update(curPage);
-
 			if (!curPage.isInTrashExplicitly()) {
+				addDependentTrashVersion(curPage, trashEntryId);
+
+				wikiPagePersistence.update(curPage);
+
 				moveDependentToTrash(curPage, trashEntryId);
+
+				continue;
 			}
+
+			wikiPagePersistence.update(curPage);
 		}
 	}
 
