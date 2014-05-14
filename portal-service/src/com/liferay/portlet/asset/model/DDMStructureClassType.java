@@ -16,10 +16,19 @@ package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.asset.NoSuchClassTypeException;
 import com.liferay.portlet.asset.NoSuchClassTypeFieldException;
+import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Adolfo Pérez
@@ -54,7 +63,24 @@ public class DDMStructureClassType implements ClassType {
 	public List<ClassTypeField> getClassTypeFields()
 		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		try {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.getDDMStructure(getClassTypeId());
+
+			List<ClassTypeField> classTypeFields = getClassTypeFields(
+				ddmStructure);
+
+			return classTypeFields;
+		}
+		catch (NoSuchStructureException e) {
+			throw new NoSuchClassTypeException(e);
+		}
+		catch (PortalException e) {
+			throw e;
+		}
+		catch (SystemException e) {
+			throw e;
+		}
 	}
 
 	@Override
@@ -80,6 +106,43 @@ public class DDMStructureClassType implements ClassType {
 	public String getName() {
 		return _classTypeName;
 	}
+
+	protected List<ClassTypeField> getClassTypeFields(DDMStructure ddmStructure)
+		throws PortalException, SystemException {
+
+		List<ClassTypeField> fields = new ArrayList<ClassTypeField>();
+
+		Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(
+			_languageId);
+
+		for (Map<String, String> fieldMap : fieldsMap.values()) {
+			String indexType = fieldMap.get("indexType");
+			boolean privateField = GetterUtil.getBoolean(
+				fieldMap.get("private"));
+
+			String type = fieldMap.get("type");
+
+			if (Validator.isNull(indexType) || privateField ||
+				!ArrayUtil.contains(_SELECTABLE_DDM_STRUCTURE_FIELDS, type)) {
+
+				continue;
+			}
+
+			String label = fieldMap.get("label");
+			String name = fieldMap.get("name");
+
+			fields.add(
+				new ClassTypeField(
+					label, name, type, ddmStructure.getStructureId()));
+		}
+
+		return fields;
+	}
+
+	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {
+		"checkbox", "ddm-date", "ddm-decimal", "ddm-integer", "ddm-number",
+		"radio", "select", "text"
+	};
 
 	private final long _classTypeId;
 	private final String _classTypeName;
