@@ -1470,7 +1470,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			wikiPageResourcePersistence.update(pageResource);
 
-			versionPage.setTitle(TrashUtil.getTrashTitle(trashVersion.getEntryId()));
+			versionPage.setTitle(TrashUtil.getTrashTitle(trashVersion.getVersionId()));
 
 			wikiPagePersistence.update(versionPage);
 		}
