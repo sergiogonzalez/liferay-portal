@@ -20,6 +20,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
+import com.liferay.portlet.asset.model.BaseDDMStructureClassTypeReader;
 import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
@@ -71,7 +72,7 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 
 	@Override
 	public ClassTypeReader getClassTypeReader() {
-		return new DDLRecordClassTypeReader();
+		return new BaseDDMStructureClassTypeReader(getClassName());
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.portlet.asset.model;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.NoSuchClassTypeException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -29,8 +30,11 @@ import java.util.Locale;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseDDMStructureClassTypeReader
-	implements ClassTypeReader {
+public class BaseDDMStructureClassTypeReader implements ClassTypeReader {
+
+	public BaseDDMStructureClassTypeReader(String className) {
+		_className = className;
+	}
 
 	@Override
 	public List<ClassType> getAvailableClassTypes(
@@ -40,7 +44,8 @@ public abstract class BaseDDMStructureClassTypeReader
 		List<ClassType> classTypes = new ArrayList<ClassType>();
 
 		List<DDMStructure> ddmStructures =
-			DDMStructureServiceUtil.getStructures(groupIds, getClassNameId());
+			DDMStructureServiceUtil.getStructures(
+				groupIds, PortalUtil.getClassNameId(_className));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			classTypes.add(
@@ -75,6 +80,6 @@ public abstract class BaseDDMStructureClassTypeReader
 		}
 	}
 
-	protected abstract long getClassNameId();
+	private String _className;
 
 }

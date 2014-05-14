@@ -26,6 +26,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
+import com.liferay.portlet.asset.model.BaseDDMStructureClassTypeReader;
 import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -123,7 +124,7 @@ public class JournalArticleAssetRendererFactory
 
 	@Override
 	public ClassTypeReader getClassTypeReader() {
-		return new JournalArticleClassTypeReader();
+		return new BaseDDMStructureClassTypeReader(getClassName());
 	}
 
 	@Override
