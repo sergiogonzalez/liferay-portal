@@ -1432,6 +1432,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N(
 			page.getResourcePrimKey(), page.getNodeId());
 
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", page.getTitle());
+
+		String trashTitle = StringPool.BLANK;
+
 		for (WikiPage versionPage : versionPages) {
 
 			// Version page
@@ -1439,8 +1445,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			int versionPageOldStatus = versionPage.getStatus();
 
 			versionPage.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-			wikiPagePersistence.update(versionPage);
 
 			// Trash
 
@@ -1452,13 +1456,25 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				status = WorkflowConstants.STATUS_DRAFT;
 			}
 
-			if (versionPageOldStatus !=
-					WorkflowConstants.STATUS_APPROVED) {
-
+			TrashVersion trashVersion =
 				trashVersionLocalService.addTrashVersion(
 					trashEntryId, WikiPage.class.getName(),
-					versionPage.getPageId(), status, null);
-			}
+					versionPage.getPageId(), status, typeSettingsProperties);
+
+			trashTitle = TrashUtil.getTrashTitle(trashVersion.getVersionId());
+
+			WikiPageResource pageResource =
+				wikiPageResourcePersistence.findByPrimaryKey(
+					page.getResourcePrimKey());
+
+			pageResource.setTitle(trashTitle);
+
+			wikiPageResourcePersistence.update(pageResource);
+
+			versionPage.setTitle(
+				TrashUtil.getTrashTitle(trashVersion.getVersionId()));
+
+			wikiPagePersistence.update(versionPage);
 		}
 
 		// Asset
@@ -1491,13 +1507,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Child pages
 
-		String title = page.getTitle();
+		String orinalTitle = TrashUtil.getOriginalTitle(trashTitle);
 
-		moveDependentChildPagesToTrash(page, title, title, trashEntryId);
+		moveDependentChildPagesToTrash(
+			page, orinalTitle, trashTitle, trashEntryId);
 
 		// Redirect pages
 
-		moveDependentRedirectPagesToTrash(page, title, title, trashEntryId);
+		moveDependentRedirectPagesToTrash(
+			page, orinalTitle, trashTitle, trashEntryId);
 	}
 
 	@Override
@@ -1833,6 +1851,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 
 			versionPage.setStatus(versionPageOldStatus);
+			versionPage.setTitle(
+				TrashUtil.getOriginalTitle(versionPage.getTitle()));
 
 			wikiPagePersistence.update(versionPage);
 
@@ -1859,17 +1879,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Child pages
 
-		String trashTitle = page.getTitle();
-
-		String originalTitle = TrashUtil.getOriginalTitle(trashTitle);
+		String trashTitle = TrashUtil.getTrashTitle(
+			trashVersion.getVersionId());
 
 		restoreDependentChildPagesFromTrash(
-			page, originalTitle, trashTitle, trashEntryId);
+			page, page.getTitle(), trashTitle, trashEntryId);
 
 		// Redirect pages
 
 		restoreDependentRedirectPagesFromTrash(
-			page, originalTitle, trashTitle, trashEntryId);
+			page, page.getTitle(), trashTitle, trashEntryId);
 	}
 
 	@Override
