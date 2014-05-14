@@ -232,7 +232,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		double version = WikiPageConstants.VERSION_DEFAULT;
 		String format = WikiPageConstants.DEFAULT_FORMAT;
-		boolean head = false;
+		boolean head = true;
 		String parentTitle = null;
 		String redirectTitle = null;
 
