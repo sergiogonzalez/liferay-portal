@@ -8,6 +8,12 @@
 <#assign defaultLatitude = -3.6833 />
 <#assign defaultLongitude = 40.40 />
 
+<#if themeDisplay.isSecure()>
+	<#assign uriScheme = "https" />
+<#else>
+	<#assign uriScheme = "http" />
+</#if>
+
 <#if apiKey = "">
 	<#assign companyPrefs = prefsPropsUtil.getPreferences(companyId) />
 
@@ -27,10 +33,10 @@
 	<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
 	<#assign images = {
-		"com.liferay.portlet.documentlibrary.model.DLFileEntry": "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-		"com.liferay.portlet.dynamicdatalists.model.DDLRecord": "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-		"com.liferay.portlet.journal.model.JournalArticle": "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-		"default": "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+		"com.liferay.portlet.documentlibrary.model.DLFileEntry": "${uriScheme}://maps.google.com/mapfiles/ms/icons/green-dot.png",
+		"com.liferay.portlet.dynamicdatalists.model.DDLRecord": "${uriScheme}://maps.google.com/mapfiles/ms/icons/red-dot.png",
+		"com.liferay.portlet.journal.model.JournalArticle": "${uriScheme}://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+		"default": "${uriScheme}://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
 	} />
 
 	<#assign jsonArray = jsonFactoryUtil.createJSONArray() />
@@ -92,7 +98,7 @@
 
 	<div class="map-canvas" id="${namespace}mapCanvas"></div>
 
-	<script src="http://maps.googleapis.com/maps/api/js?key=${apiKey}&sensor=true" type="text/javascript"></script>
+	<script src="${uriScheme}://maps.googleapis.com/maps/api/js?key=${apiKey}&sensor=true" type="text/javascript"></script>
 
 	<@liferay_aui.script>
 	(function() {

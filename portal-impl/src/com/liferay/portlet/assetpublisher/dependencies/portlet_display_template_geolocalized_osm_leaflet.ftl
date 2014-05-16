@@ -8,6 +8,12 @@
 <#assign defaultLatitude = -3.6833 />
 <#assign defaultLongitude = 40.40 />
 
+<#if themeDisplay.isSecure()>
+	<#assign uriScheme = "https" />
+<#else>
+	<#assign uriScheme = "http" />
+</#if>
+
 <#assign namespace = renderResponse.getNamespace() />
 
 <#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
@@ -62,15 +68,15 @@
 
 <div class="map-canvas" id="${namespace}mapCanvas"></div>
 
-<link href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" rel="stylesheet" />
+<link href="${uriScheme}://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" rel="stylesheet" />
 
-<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script src="${uriScheme}://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
 <@liferay_aui.script>
 (function() {
 	var putMarkers = function(map) {
 		L.tileLayer(
-			'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+			'${uriScheme}://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			{
 				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
