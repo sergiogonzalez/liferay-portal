@@ -316,7 +316,6 @@
 				<classpath mode="compile">lib/development/spring-test.jar</classpath>
 				<classpath mode="compile">lib/development/tomcat-coyote.jar</classpath>
 				<classpath mode="compile">lib/development/xmltask.jar</classpath>
-				<classpath mode="compile">lib/global/portal-settings-shared.jar</classpath>
 				<classpath mode="compile">lib/global/portlet.jar</classpath>
 				<classpath mode="compile">lib/portal/abdera.jar</classpath>
 				<classpath mode="compile">lib/portal/alloy-taglib.jar</classpath>
@@ -476,7 +475,6 @@
 				<classpath mode="compile">lib/portal/poi.jar</classpath>
 				<classpath mode="compile">lib/portal/portal-ant-shared.jar</classpath>
 				<classpath mode="compile">lib/portal/portal-client.jar</classpath>
-				<classpath mode="compile">lib/portal/portal-settings-impl-shared.jar</classpath>
 				<classpath mode="compile">lib/portal/portals-bridges.jar</classpath>
 				<classpath mode="compile">lib/portal/portletbridge-core.jar</classpath>
 				<classpath mode="compile">lib/portal/portletbridge-portlet.jar</classpath>

@@ -97,6 +97,7 @@ import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
+import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
@@ -637,8 +638,6 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
-
 		List<DDMStructure> ddmStructures = null;
 
 		if (fileEntryTypeId > 0) {
@@ -657,7 +656,8 @@ public class DLFileEntryLocalServiceImpl
 
 		copyFileEntryMetadata(
 			companyId, fileEntryTypeId, fileEntryId, fromFileVersionId,
-			toFileVersionId, serviceContext, fieldsMap, ddmStructures);
+			toFileVersionId, serviceContext, new HashMap<String, Fields>(),
+			ddmStructures);
 	}
 
 	@Override
@@ -1899,22 +1899,33 @@ public class DLFileEntryLocalServiceImpl
 			List<DDMStructure> ddmStructures)
 		throws PortalException, SystemException {
 
-		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata dlFileEntryMetadata =
-				dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
-					ddmStructure.getStructureId(), fromFileVersionId);
+		try {
+			for (DDMStructure ddmStructure : ddmStructures) {
+				DLFileEntryMetadata dlFileEntryMetadata =
+					dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+						ddmStructure.getStructureId(), fromFileVersionId);
 
-			if (dlFileEntryMetadata == null) {
-				continue;
+				if (dlFileEntryMetadata == null) {
+					continue;
+				}
+
+				Fields fields = StorageEngineUtil.getFields(
+					dlFileEntryMetadata.getDDMStorageId());
+
+				fieldsMap.put(ddmStructure.getStructureKey(), fields);
 			}
 
-			Fields fields = StorageEngineUtil.getFields(
-				dlFileEntryMetadata.getDDMStorageId());
-
-			fieldsMap.put(ddmStructure.getStructureKey(), fields);
+			if (!fieldsMap.isEmpty()) {
+				dlFileEntryMetadataLocalService.updateFileEntryMetadata(
+					companyId, ddmStructures, fileEntryTypeId, fileEntryId,
+					toFileVersionId, fieldsMap, serviceContext);
+			}
 		}
+		catch (StorageFieldRequiredException sfre) {
+			fieldsMap.clear();
 
-		if (!fieldsMap.isEmpty()) {
+			fieldsMap = DLAppUtil.getFieldsMap(ddmStructures, serviceContext);
+
 			dlFileEntryMetadataLocalService.updateFileEntryMetadata(
 				companyId, ddmStructures, fileEntryTypeId, fileEntryId,
 				toFileVersionId, fieldsMap, serviceContext);
@@ -2218,6 +2229,9 @@ public class DLFileEntryLocalServiceImpl
 		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
 
 		if (autoCheckIn) {
+
+			///////////////////////////////////////7
+
 			dlFileEntry = checkOutFileEntry(
 				userId, fileEntryId, serviceContext);
 		}
@@ -2265,6 +2279,8 @@ public class DLFileEntryLocalServiceImpl
 			if (size == 0) {
 				size = dlFileVersion.getSize();
 			}
+
+			/////////////////////////////////////
 
 			updateFileVersion(
 				user, dlFileVersion, sourceFileName, extension, mimeType, title,
