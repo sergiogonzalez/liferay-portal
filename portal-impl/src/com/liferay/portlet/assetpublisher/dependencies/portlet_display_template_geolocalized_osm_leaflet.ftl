@@ -43,30 +43,30 @@
 </#list>
 
 <style type="text/css">
-	.asset-entry-abstract {
+	.${namespace}asset-entry-abstract {
 		min-width: ${minWidth};
 		overflow: auto;
 	}
 
-	.asset-entry-abstract .asset-entry-abstract-image {
+	.${namespace}asset-entry-abstract .asset-entry-abstract-image {
 		float: left;
 		margin-right: 2em;
 	}
 
-	.asset-entry-abstract .asset-entry-abstract-image img {
+	.${namespace}asset-entry-abstract .asset-entry-abstract-image img {
 		display: block;
 	}
 
-	.asset-entry-abstract .taglib-icon {
+	.${namespace}asset-entry-abstract .taglib-icon {
 		float: right;
 	}
 
-	.map-canvas {
+	.${namespace}map-canvas {
 		min-height: ${minHeight};
 	}
 </style>
 
-<div class="map-canvas" id="${namespace}mapCanvas"></div>
+<div class="${namespace}map-canvas" id="${namespace}mapCanvas"></div>
 
 <link href="${uriScheme}://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" rel="stylesheet" />
 
@@ -131,7 +131,7 @@
 
 	${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
 
-	<div class="asset-entry-abstract">
+	<div class="${namespace}asset-entry-abstract">
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse,  windowStateFactory.getWindowState("POP_UP"), redirectURL) />
 
 		<#assign taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});" />

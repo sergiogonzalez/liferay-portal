@@ -70,33 +70,33 @@
 	</#list>
 
 	<style type="text/css">
-		.asset-entry-abstract {
+		.${namespace}asset-entry-abstract {
 			min-width: ${minWidth};
 		}
 
-		.asset-entry-abstract .asset-entry-abstract-image {
+		.${namespace}asset-entry-abstract .asset-entry-abstract-image {
 			float: left;
 		}
 
-		.asset-entry-abstract .asset-entry-abstract-image img {
+		.${namespace}asset-entry-abstract .asset-entry-abstract-image img {
 			display: block;
 			margin-right: 2em;
 		}
 
-		.asset-entry-abstract .taglib-icon {
+		.${namespace}asset-entry-abstract .taglib-icon {
 			float: right;
 		}
 
-		.map-canvas {
+		.${namespace}map-canvas {
 			min-height: ${minHeight};
 		}
 
-		.map-canvas img {
+		.${namespace}map-canvas img {
 			max-width: none;
 		}
 	</style>
 
-	<div class="map-canvas" id="${namespace}mapCanvas"></div>
+	<div class="${namespace}map-canvas" id="${namespace}mapCanvas"></div>
 
 	<script src="${uriScheme}://maps.googleapis.com/maps/api/js?key=${apiKey}&sensor=true" type="text/javascript"></script>
 
@@ -187,7 +187,7 @@
 
 		${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
 
-		<div class="asset-entry-abstract">
+		<div class="${namespace}asset-entry-abstract">
 			<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), redirectURL) />
 
 			<#assign taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});" />
