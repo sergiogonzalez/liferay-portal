@@ -60,7 +60,7 @@
 	}
 </style>
 
-<div class="map-canvas" id="${namespace}map-canvas"></div>
+<div class="map-canvas" id="${namespace}mapCanvas"></div>
 
 <link href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" rel="stylesheet" />
 
@@ -100,7 +100,7 @@
 	};
 
 	var drawMap = function(lat, lng) {
-		var map = L.map('${namespace}map-canvas').setView([lat, lng], 8);
+		var map = L.map('${namespace}mapCanvas').setView([lat, lng], 8);
 
 		map.fitBounds(putMarkers(map));
 	};

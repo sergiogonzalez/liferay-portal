@@ -90,7 +90,7 @@
 		}
 	</style>
 
-	<div class="map-canvas" id="${namespace}map-canvas"></div>
+	<div class="map-canvas" id="${namespace}mapCanvas"></div>
 
 	<script src="http://maps.googleapis.com/maps/api/js?key=${apiKey}&sensor=true" type="text/javascript"></script>
 
@@ -141,7 +141,7 @@
 		};
 
 		var drawMap = function(mapOptions) {
-			var map = new google.maps.Map(document.getElementById('${namespace}map-canvas'), mapOptions);
+			var map = new google.maps.Map(document.getElementById('${namespace}mapCanvas'), mapOptions);
 
 			var bounds = putMarkers(map);
 
