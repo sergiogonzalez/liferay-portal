@@ -95,7 +95,8 @@
 	<script src="http://maps.googleapis.com/maps/api/js?key=${apiKey}&sensor=true" type="text/javascript"></script>
 
 	<@liferay_aui.script>
-		var putMarkers = function (map) {
+	(function() {
+		var putMarkers = function(map) {
 			var points = ${jsonArray};
 
 			var len = points.length;
@@ -120,7 +121,7 @@
 
 				bounds.extend(marker.position);
 
-				(function (marker) {
+				(function(marker) {
 					var infoWindow = new google.maps.InfoWindow(
 						{
 							content: point['abstract'] || point['title']
@@ -129,7 +130,7 @@
 
 					google.maps.event.addListener(
 						marker, 'click',
-						function () {
+						function() {
 							infoWindow.open(map, marker);
 						}
 					);
@@ -139,7 +140,7 @@
 			return bounds;
 		};
 
-		var drawMap = function (mapOptions) {
+		var drawMap = function(mapOptions) {
 			var map = new google.maps.Map(document.getElementById('${namespace}map-canvas'), mapOptions);
 
 			var bounds = putMarkers(map);
@@ -161,7 +162,7 @@
 
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition(
-				function (pos) {
+				function(pos) {
 					drawMap(
 						{
 							center: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
@@ -175,6 +176,7 @@
 		else {
 			drawDefaultMap();
 		}
+	})();
 	</@liferay_aui.script>
 
 	<#macro getAbstract asset>

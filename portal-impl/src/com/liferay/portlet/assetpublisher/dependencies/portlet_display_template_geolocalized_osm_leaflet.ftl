@@ -67,7 +67,8 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
 <@liferay_aui.script>
-	var putMarkers = function (map) {
+(function() {
+	var putMarkers = function(map) {
 		L.tileLayer(
 			'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 			{
@@ -98,7 +99,7 @@
 		return bounds;
 	};
 
-	var drawMap = function (lat, lng) {
+	var drawMap = function(lat, lng) {
 		var map = L.map('${namespace}map-canvas').setView([lat, lng], 8);
 
 		map.fitBounds(putMarkers(map));
@@ -110,7 +111,7 @@
 
 	if ('geolocation' in navigator) {
 		navigator.geolocation.getCurrentPosition(
-			function (pos) {
+			function(pos) {
 				drawMap(pos.coords.latitude, pos.coords.longitude);
 			},
 			drawDefaultMap
@@ -119,6 +120,7 @@
 	else {
 		drawDefaultMap();
 	}
+})();
 </@liferay_aui.script>
 
 <#macro getAbstract asset>
