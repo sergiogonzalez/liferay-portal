@@ -14,19 +14,51 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.io.File;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Alexander Chow
  */
 public class DLAppUtil {
+
+	public static HashMap<String, Fields>getFieldsMap(
+			List<DDMStructure> ddmStructures, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			String namespace = String.valueOf(ddmStructure.getStructureId());
+
+			Fields fields = (Fields)serviceContext.getAttribute(
+				Fields.class.getName() + ddmStructure.getStructureId());
+
+			if (fields == null) {
+				fields = DDMUtil.getFields(
+					ddmStructure.getStructureId(), namespace, serviceContext);
+			}
+
+			fieldsMap.put(ddmStructure.getStructureKey(), fields);
+		}
+
+		return fieldsMap;
+	}
 
 	public static String getExtension(String title, String sourceFileName) {
 		String extension = FileUtil.getExtension(sourceFileName);
