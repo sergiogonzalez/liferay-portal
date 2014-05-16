@@ -270,7 +270,7 @@ public class LiferayLocalRepository
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryLocalService.getGroupFileEntries(
-				getGroupId(), start, end);
+				getGroupId(), 0, rootFolderId, start, end, obc);
 
 		return toFileEntries(dlFileEntries);
 	}
