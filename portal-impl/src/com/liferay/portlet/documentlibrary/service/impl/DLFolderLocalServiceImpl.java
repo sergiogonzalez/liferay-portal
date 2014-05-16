@@ -277,10 +277,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(dlFolder.getFolderId());
 
-		// App helper
-
-		dlAppHelperLocalService.deleteFolder(new LiferayFolder(dlFolder));
-
 		// Folder
 
 		dlFolderPersistence.remove(dlFolder);
