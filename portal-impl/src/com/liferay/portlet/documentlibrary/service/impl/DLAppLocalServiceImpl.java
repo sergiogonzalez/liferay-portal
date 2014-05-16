@@ -507,7 +507,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
 
+		List<FileEntry> fileEntries =
+			localRepository.getRepositoryFileEntries(
+				folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Folder folder = getFolder(folderId);
+
 		localRepository.deleteFolder(folderId);
+
+		for (FileEntry fileEntry : fileEntries) {
+			dlAppHelperLocalService.deleteFileEntry(fileEntry);
+		}
+
+		dlAppHelperLocalService.deleteFolder(folder);
 	}
 
 	/**
