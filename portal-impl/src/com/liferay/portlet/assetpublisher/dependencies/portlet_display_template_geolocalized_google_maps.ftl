@@ -151,7 +151,7 @@
 			}
 		};
 
-		var drawDefaultMap = function () {
+		var drawDefaultMap = function() {
 			drawMap(
 				{
 					center: new google.maps.LatLng(${defaultLatitude}, ${defaultLongitude}),
@@ -160,22 +160,17 @@
 			);
 		};
 
-		if ('geolocation' in navigator) {
-			navigator.geolocation.getCurrentPosition(
-				function(pos) {
-					drawMap(
-						{
-							center: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-							zoom: 8
-						}
-					);
-				},
-				drawDefaultMap
-			);
-		}
-		else {
-			drawDefaultMap();
-		}
+		Liferay.Util.getGeolocation(
+			function(latitude, longitude) {
+				drawMap(
+					{
+						center: new google.maps.LatLng(latitude, longitude),
+						zoom: 8
+					}
+				);
+			},
+			drawDefaultMap
+		);
 	})();
 	</@liferay_aui.script>
 

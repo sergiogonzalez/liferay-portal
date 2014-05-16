@@ -109,17 +109,12 @@
 		drawMap(${defaultLatitude}, ${defaultLongitude});
 	};
 
-	if ('geolocation' in navigator) {
-		navigator.geolocation.getCurrentPosition(
-			function(pos) {
-				drawMap(pos.coords.latitude, pos.coords.longitude);
-			},
-			drawDefaultMap
-		);
-	}
-	else {
-		drawDefaultMap();
-	}
+	Liferay.Util.getGeolocation(
+		function(latitude, longitude) {
+			drawMap(latitude, longitude);
+		},
+		drawDefaultMap
+	);
 })();
 </@liferay_aui.script>
 
