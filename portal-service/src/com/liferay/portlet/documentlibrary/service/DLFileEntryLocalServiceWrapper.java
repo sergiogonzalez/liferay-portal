@@ -580,6 +580,25 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public java.io.File getFile(long fileEntryId, java.lang.String version,
+		boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFile(fileEntryId, version,
+			incrementCounter);
+	}
+
+	@Override
+	public java.io.File getFile(long fileEntryId, java.lang.String version,
+		boolean incrementCounter, int increment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFile(fileEntryId, version,
+			incrementCounter, increment);
+	}
+
+	@Deprecated
+	@Override
 	public java.io.File getFile(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -588,6 +607,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			incrementCounter);
 	}
 
+	@Deprecated
 	@Override
 	public java.io.File getFile(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
