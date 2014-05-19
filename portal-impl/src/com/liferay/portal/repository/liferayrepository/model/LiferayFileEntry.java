@@ -26,10 +26,12 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -137,12 +139,28 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	public InputStream getContentStream()
 		throws PortalException, SystemException {
 
+		try {
+			DLAppHelperLocalServiceUtil.getFileAsStream(
+				PrincipalThreadLocal.getUserId(), this, true);
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
 		return _dlFileEntry.getContentStream();
 	}
 
 	@Override
 	public InputStream getContentStream(String version)
 		throws PortalException, SystemException {
+
+		try {
+			DLAppHelperLocalServiceUtil.getFileAsStream(
+				PrincipalThreadLocal.getUserId(), this, true);
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
 
 		return _dlFileEntry.getContentStream(version);
 	}
