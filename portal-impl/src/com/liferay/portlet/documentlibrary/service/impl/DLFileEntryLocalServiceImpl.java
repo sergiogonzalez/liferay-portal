@@ -2367,15 +2367,6 @@ public class DLFileEntryLocalServiceImpl
 					serviceContext.getModifiedDate(now));
 			}
 
-			// App helper
-
-			dlAppHelperLocalService.updateAsset(
-				userId, new LiferayFileEntry(dlFileEntry),
-				new LiferayFileVersion(dlFileVersion),
-				serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds());
-
 			// File
 
 			if ((file != null) || (is != null)) {
