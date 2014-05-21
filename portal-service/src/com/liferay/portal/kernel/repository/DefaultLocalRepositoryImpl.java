@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -142,11 +140,8 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 			long rootFolderId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		return _repository.getRepositoryFileEntries(
-			permissionChecker.getUserId(), rootFolderId, start, end, obc);
+			0, rootFolderId, start, end, obc);
 	}
 
 	@Override
