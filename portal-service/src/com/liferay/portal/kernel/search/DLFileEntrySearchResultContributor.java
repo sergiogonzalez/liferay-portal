@@ -34,7 +34,8 @@ public class DLFileEntrySearchResultContributor
 	implements SearchResultContributor {
 
 	public static SearchResultContributor newInstance(
-		long entryClassPK, Locale locale, PortletURL portletURL)
+		long entryClassPK, Locale locale, PortletURL portletURL,
+		SearchResultSummaryFactory searchResultSummaryFactory)
 	throws PortalException, SystemException {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(entryClassPK);
@@ -44,15 +45,17 @@ public class DLFileEntrySearchResultContributor
 		}
 
 		return new DLFileEntrySearchResultContributor(
-			fileEntry, locale, portletURL);
+			fileEntry, locale, portletURL, searchResultSummaryFactory);
 	}
 
 	public DLFileEntrySearchResultContributor(
-		FileEntry fileEntry, Locale locale, PortletURL portletURL) {
+		FileEntry fileEntry, Locale locale, PortletURL portletURL,
+		SearchResultSummaryFactory searchResultSummaryFactory) {
 
 		_fileEntry = fileEntry;
 		_locale = locale;
 		_portletURL = portletURL;
+		_searchResultSummaryFactory = searchResultSummaryFactory;
 	}
 
 	@Override
@@ -61,7 +64,7 @@ public class DLFileEntrySearchResultContributor
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException, SystemException {
 
-		Summary summary = SearchResultSummaryFactory.getSummary(
+		Summary summary = _searchResultSummaryFactory.getSummary(
 			document, DLFileEntry.class.getName(), _fileEntry.getFileEntryId(),
 			_locale, _portletURL, portletRequest, portletResponse);
 
@@ -71,5 +74,6 @@ public class DLFileEntrySearchResultContributor
 	private FileEntry _fileEntry;
 	private Locale _locale;
 	private PortletURL _portletURL;
+	private SearchResultSummaryFactory _searchResultSummaryFactory;
 
 }

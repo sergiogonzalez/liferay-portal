@@ -16,8 +16,11 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -40,12 +43,25 @@ public class SearchDocumentsToResultsTranslator {
 		Locale locale, PortletURL portletURL, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
+		this(
+			locale, portletURL, portletRequest, portletResponse,
+			new AssetRendererFactoryByClassName(), new IndexerByClassName());
+	}
+
+	public SearchDocumentsToResultsTranslator(
+		Locale locale, PortletURL portletURL, PortletRequest portletRequest,
+		PortletResponse portletResponse,
+		Function<String, AssetRendererFactory> assetRendererFactoryByClassName,
+		Function<String, Indexer> indexerByClassName) {
+
 		_locale = locale;
 		_portletURL = portletURL;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 
 		_searchResults = new ArrayList<SearchResult>();
+		_searchResultSummaryFactory = new SearchResultSummaryFactoryImpl(
+			assetRendererFactoryByClassName, indexerByClassName);
 	}
 
 	public List<SearchResult> translate(Document[] documents) {
@@ -76,7 +92,8 @@ public class SearchDocumentsToResultsTranslator {
 
 							contributor =
 								DLFileEntrySearchResultContributor.newInstance(
-									entryClassPK, _locale, _portletURL);
+									entryClassPK, _locale, _portletURL,
+									_searchResultSummaryFactory);
 						}
 						else if (entryClassName.equals(
 									MBMessage.class.getName())) {
@@ -117,7 +134,7 @@ public class SearchDocumentsToResultsTranslator {
 				}
 
 				if (contributor == null) {
-					Summary summary = SearchResultSummaryFactory.getSummary(
+					Summary summary = _searchResultSummaryFactory.getSummary(
 						document, className, classPK, _locale, _portletURL,
 						_portletRequest, _portletResponse);
 
@@ -125,8 +142,9 @@ public class SearchDocumentsToResultsTranslator {
 				}
 				else {
 					if (searchResult.getSummary() == null) {
-						Summary summary = SearchResultSummaryFactory.getSummary(
-							className, classPK, _locale, _portletURL);
+						Summary summary =
+							_searchResultSummaryFactory.getSummary(
+								className, classPK, _locale, _portletURL);
 
 						searchResult.setSummary(summary);
 					}
@@ -152,5 +170,27 @@ public class SearchDocumentsToResultsTranslator {
 	private PortletResponse _portletResponse;
 	private PortletURL _portletURL;
 	private List<SearchResult> _searchResults;
+	private SearchResultSummaryFactory _searchResultSummaryFactory;
+
+	private static class AssetRendererFactoryByClassName
+		implements Function<String, AssetRendererFactory> {
+
+		@Override
+		public AssetRendererFactory apply(String className) {
+			return AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassName(className);
+		}
+
+	}
+
+	private static class IndexerByClassName
+		implements Function<String, Indexer> {
+
+		@Override
+		public Indexer apply(String className) {
+			return IndexerRegistryUtil.getIndexer(className);
+		}
+
+	}
 
 }
