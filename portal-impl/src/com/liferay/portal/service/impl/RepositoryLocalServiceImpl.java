@@ -17,6 +17,9 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -47,6 +50,7 @@ import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -286,6 +290,29 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryEntryId, localRepositoryImpl);
 
 		return localRepositoryImpl;
+	}
+
+	@Override
+	public List<LocalRepository> getLocalRepositoryImplByGroupId(long groupId)
+		throws PortalException, SystemException {
+
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Repository.class);
+
+		query.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+
+		List<Repository> repositories = (List<Repository>)dynamicQuery(query);
+
+		List<LocalRepository> localRepositories =
+			new ArrayList<LocalRepository>(repositories.size() + 1);
+
+		for (Repository repository : repositories) {
+			localRepositories.add(
+				getLocalRepositoryImpl(repository.getRepositoryId()));
+		}
+
+		localRepositories.add(getLocalRepositoryImpl(groupId));
+
+		return localRepositories;
 	}
 
 	@Override

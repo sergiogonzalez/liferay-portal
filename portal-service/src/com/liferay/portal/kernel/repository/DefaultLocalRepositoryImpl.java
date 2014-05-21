@@ -19,10 +19,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.util.List;
 
 /**
  * This class is designed for third party repository implementations. Since the
@@ -130,6 +135,18 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throws PortalException, SystemException {
 
 		return _repository.getFolder(parentFolderId, title);
+	}
+
+	@Override
+	public List<FileEntry> getRepositoryFileEntries(
+			long rootFolderId, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return _repository.getRepositoryFileEntries(
+			permissionChecker.getUserId(), rootFolderId, start, end, obc);
 	}
 
 	@Override
