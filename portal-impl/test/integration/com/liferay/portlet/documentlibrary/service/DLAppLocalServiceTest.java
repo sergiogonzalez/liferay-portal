@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -26,7 +27,10 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.junit.Assert;
@@ -63,6 +67,46 @@ public class DLAppLocalServiceTest {
 		Folder folder = addFolder(false);
 
 		Assert.assertTrue(folder != null);
+	}
+
+	@Test
+	public void testUpdatingAFileEntryUpdatesItsAsset() throws Throwable {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "foo.txt", "text/plain",
+			"foo", "foo", null, "foo".getBytes(), serviceContext);
+
+		DLAppLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), fileEntry.getFileEntryId(), "foo.txt",
+			"text/plain", "bar", "bar", null, true, "bar".getBytes(),
+			serviceContext);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		Assert.assertEquals("bar", assetEntry.getTitle());
+	}
+
+	@Test
+	public void testUpdatingAFolderUpdatesItsAsset() throws Throwable {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		Folder folder = addFolder(false);
+
+		Assert.assertNotEquals(folder.getName(), "foo");
+
+		DLAppLocalServiceUtil.updateFolder(
+			folder.getFolderId(), folder.getParentFolderId(), "foo", "bar",
+			serviceContext);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			DLFolderConstants.getClassName(), folder.getFolderId());
+
+		Assert.assertEquals("foo", assetEntry.getTitle());
 	}
 
 	protected Folder addFolder(boolean rootFolder) throws Exception {
