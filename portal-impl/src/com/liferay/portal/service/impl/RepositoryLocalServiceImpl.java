@@ -17,9 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -296,11 +293,8 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	public List<LocalRepository> getLocalRepositoryImplByGroupId(long groupId)
 		throws PortalException, SystemException {
 
-		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Repository.class);
-
-		query.add(RestrictionsFactoryUtil.eq("groupId", groupId));
-
-		List<Repository> repositories = (List<Repository>)dynamicQuery(query);
+		List<Repository> repositories = repositoryPersistence.findByGroupId(
+			groupId);
 
 		List<LocalRepository> localRepositories =
 			new ArrayList<LocalRepository>(repositories.size() + 1);
