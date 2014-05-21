@@ -686,7 +686,11 @@ public class LiferayRepository
 		DLFileEntry dlFileEntry = dlFileEntryService.moveFileEntry(
 			fileEntryId, toFolderId(newFolderId), serviceContext);
 
-		return new LiferayFileEntry(dlFileEntry);
+		FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+
+		dlAppHelperLocalService.moveFileEntry(fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override
