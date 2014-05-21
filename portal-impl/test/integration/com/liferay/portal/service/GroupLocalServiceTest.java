@@ -70,9 +70,10 @@ public class GroupLocalServiceTest {
 
 		try {
 			DLAppLocalServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+
 			Assert.fail();
 		}
-		catch (NoSuchFileEntryException e) {
+		catch (NoSuchFileEntryException nsfee) {
 		}
 	}
 

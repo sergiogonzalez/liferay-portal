@@ -57,6 +57,7 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -219,7 +220,6 @@ public class GroupServiceTest {
 
 		Assert.assertNotNull(
 			DLAppLocalServiceUtil.getFileEntry(fileEntry.getFileEntryId()));
-
 		Assert.assertNotNull(
 			AssetEntryLocalServiceUtil.getEntry(
 				DLFileEntryConstants.getClassName(),
@@ -240,9 +240,10 @@ public class GroupServiceTest {
 
 		try {
 			DLAppLocalServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+
 			Assert.fail();
 		}
-		catch (NoSuchRepositoryEntryException e) {
+		catch (NoSuchFileEntryException nsfee) {
 		}
 	}
 

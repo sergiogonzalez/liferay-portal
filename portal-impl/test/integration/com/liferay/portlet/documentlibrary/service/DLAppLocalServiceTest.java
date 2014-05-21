@@ -60,7 +60,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testAddFileEntry() throws Throwable {
+	public void testAddFileEntry() throws Exception {
 		FileEntry fileEntry = addFileEntry();
 
 		Assert.assertNotNull(fileEntry);
@@ -81,7 +81,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testFileEntryAssetExistsAfterAdding() throws Throwable {
+	public void testFileEntryAssetExistsAfterAdding() throws Exception {
 		FileEntry fileEntry = addFileEntry();
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
@@ -91,7 +91,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchEntryException.class)
-	public void testFileEntryAssetIsRemovedAfterDeleting() throws Throwable {
+	public void testFileEntryAssetIsRemovedAfterDeleting() throws Exception {
 		FileEntry fileEntry = addFileEntry();
 
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
@@ -102,7 +102,7 @@ public class DLAppLocalServiceTest {
 
 	@Test(expected = NoSuchEntryException.class)
 	public void testFileEntryAssetIsRemovedAfterDeletingAllEntries()
-		throws Throwable {
+		throws Exception {
 
 		FileEntry fileEntry = addFileEntry();
 
@@ -114,7 +114,7 @@ public class DLAppLocalServiceTest {
 
 	@Test(expected = NoSuchEntryException.class)
 	public void testFileEntryAssetIsRemovedAfterDeletingFolder()
-		throws Throwable {
+		throws Exception {
 
 		Folder folder = addFolder(true);
 
@@ -127,7 +127,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testFileEntryIsRemovedAfterDeletingFolder() throws Throwable {
+	public void testFileEntryIsRemovedAfterDeletingFolder() throws Exception {
 		Folder folder = addFolder(true);
 
 		FileEntry fileEntry = addFileEntry(folder.getFolderId());
