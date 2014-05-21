@@ -43,8 +43,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest({IndexerRegistryUtil.class})
 @RunWith(PowerMockRunner.class)
-public class SearchResultUtilJournalArticleTest
-	extends BaseSearchResultUtilTestCase {
+public class JournalArticleSearchDocumentsToResultsTranslatorTest
+	extends BaseSearchDocumentsToResultsTranslatorTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -53,7 +53,7 @@ public class SearchResultUtilJournalArticleTest
 
 	@Test
 	public void testJournalArticle() {
-		searchSingleDocument(newDocumentJournalArticleWithVersion());
+		translateSingleDocument(newDocumentJournalArticleWithVersion());
 
 		assertThatSearchResultHasVersion();
 
@@ -83,7 +83,7 @@ public class SearchResultUtilJournalArticleTest
 
 		Document document = newDocumentJournalArticleWithVersion();
 
-		searchSingleDocument(document);
+		translateSingleDocument(document);
 
 		assertThatSearchResultHasVersion();
 

@@ -46,7 +46,8 @@ import org.powermock.api.mockito.PowerMockito;
 /**
  * @author André de Oliveira
  */
-public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
+public abstract class BaseSearchDocumentsToResultsTranslatorTestCase
+	extends PowerMockito {
 
 	protected void doSetUp() {
 		MockitoAnnotations.initMocks(this);
@@ -55,14 +56,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		setUpPortal();
 		setUpProps();
 		setUpRegistries();
-	}
-
-	protected List<SearchResult> getSearchResults(Document... documents) {
-		Hits hits = new HitsImpl();
-
-		hits.setDocs(documents);
-
-		return SearchResultUtil.getSearchResults(hits, null, portletURL);
 	}
 
 	protected Document newDocument(String entryClassName) {
@@ -85,14 +78,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		setKeyInDocument(document);
 
 		return document;
-	}
-
-	protected void searchSingleDocument(Document document) {
-		List<SearchResult> searchResults = getSearchResults(document);
-
-		Assert.assertEquals("one hit, one result", 1, searchResults.size());
-
-		result = searchResults.get(0);
 	}
 
 	protected void setKeyInDocument(Document document) {
@@ -159,6 +144,22 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 			AssetRendererFactoryRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
 
 		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
+	}
+
+	protected List<SearchResult> translate(Document... documents) {
+		SearchDocumentsToResultsTranslator translator =
+			new SearchDocumentsToResultsTranslator(
+				null, portletURL, null, null);
+
+		return translator.translate(documents);
+	}
+
+	protected void translateSingleDocument(Document document) {
+		List<SearchResult> searchResults = translate(document);
+
+		Assert.assertEquals("one hit, one result", 1, searchResults.size());
+
+		result = searchResults.get(0);
 	}
 
 	protected static final String DOCUMENT_CLASS_NAME =

@@ -55,8 +55,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 	IndexerRegistryUtil.class
 })
 @RunWith(PowerMockRunner.class)
-public class SearchResultUtilDLFileEntryTest
-	extends BaseSearchResultUtilTestCase {
+public class DLFileEntrySearchDocumentsToResultsTranslatorTest
+	extends BaseSearchDocumentsToResultsTranslatorTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -73,7 +73,7 @@ public class SearchResultUtilDLFileEntryTest
 			null
 		);
 
-		searchSingleDocument(newDocumentDLFileEntryWithAlternateKey());
+		translateSingleDocument(newDocumentDLFileEntryWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
@@ -133,7 +133,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		document.add(new Field(Field.SNIPPET, "__snippet__"));
 
-		searchSingleDocument(document);
+		translateSingleDocument(document);
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
@@ -261,7 +261,7 @@ public class SearchResultUtilDLFileEntryTest
 			fileEntry
 		);
 
-		searchSingleDocument(newDocumentDLFileEntryWithAlternateKey());
+		translateSingleDocument(newDocumentDLFileEntryWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
@@ -299,7 +299,7 @@ public class SearchResultUtilDLFileEntryTest
 
 	@Test
 	public void testDLFileEntryWithoutKeyInDocument() throws Exception {
-		searchSingleDocument(newDocumentDLFileEntry());
+		translateSingleDocument(newDocumentDLFileEntry());
 
 		Assert.assertEquals(DLFILEENTRY_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(ENTRY_CLASS_PK, result.getClassPK());

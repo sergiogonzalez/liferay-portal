@@ -43,8 +43,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 	MBMessageLocalServiceUtil.class
 })
 @RunWith(PowerMockRunner.class)
-public class SearchResultUtilMBMessageTest
-	extends BaseSearchResultUtilTestCase {
+public class MBMessageSearchDocumentsToResultsTranslatorTest
+	extends BaseSearchDocumentsToResultsTranslatorTestCase {
 
 	@Before
 	public void setUp() {
@@ -61,7 +61,7 @@ public class SearchResultUtilMBMessageTest
 			null
 		);
 
-		searchSingleDocument(newDocumentMBMessageWithAlternateKey());
+		translateSingleDocument(newDocumentMBMessageWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
@@ -104,7 +104,7 @@ public class SearchResultUtilMBMessageTest
 			IndexerRegistryUtil.class,
 			new ThrowsExceptionClass(IllegalStateException.class));
 
-		searchSingleDocument(newDocumentMBMessageWithAlternateKey());
+		translateSingleDocument(newDocumentMBMessageWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
@@ -121,7 +121,7 @@ public class SearchResultUtilMBMessageTest
 
 	@Test
 	public void testMBMessageWithoutKeyInDocument() throws Exception {
-		searchSingleDocument(newDocumentMBMessage());
+		translateSingleDocument(newDocumentMBMessage());
 
 		Assert.assertEquals(MBMESSAGE_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(ENTRY_CLASS_PK, result.getClassPK());
@@ -145,8 +145,7 @@ public class SearchResultUtilMBMessageTest
 		Document documentB = newDocumentMBMessageWithAlternateKey(
 			baseEntryPK + 1);
 
-		List<SearchResult> searchResults = getSearchResults(
-			documentA, documentB);
+		List<SearchResult> searchResults = translate(documentA, documentB);
 
 		Assert.assertEquals("two hits, one result", 1, searchResults.size());
 
