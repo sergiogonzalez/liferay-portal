@@ -266,7 +266,7 @@ public class LiferayLocalRepository
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long rootFolderId, int start, int end, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryLocalService.getGroupFileEntries(

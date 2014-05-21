@@ -1295,7 +1295,7 @@ public class DLFileEntryLocalServiceImpl
 	public List<DLFileEntry> getGroupFileEntries(
 			long groupId, long userId, long rootFolderId, int start, int end,
 			OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		List<Long> folderIds = dlFolderLocalService.getFolderIds(
 			groupId, rootFolderId);
