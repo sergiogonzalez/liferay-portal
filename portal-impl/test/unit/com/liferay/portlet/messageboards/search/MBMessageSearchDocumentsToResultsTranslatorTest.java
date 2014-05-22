@@ -12,8 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portlet.messageboards.search;
 
+import com.liferay.portal.kernel.search.BaseSearchDocumentsToResultsTranslatorTestCase;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;

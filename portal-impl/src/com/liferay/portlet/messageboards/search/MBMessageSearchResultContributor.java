@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portlet.messageboards.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultContributor;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
 import javax.portlet.PortletRequest;

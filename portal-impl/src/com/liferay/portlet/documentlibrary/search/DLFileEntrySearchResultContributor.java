@@ -12,11 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portlet.documentlibrary.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultContributor;
+import com.liferay.portal.kernel.search.SearchResultSummaryFactory;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 import java.util.Locale;

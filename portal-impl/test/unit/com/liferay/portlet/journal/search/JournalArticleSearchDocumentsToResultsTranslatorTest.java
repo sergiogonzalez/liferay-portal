@@ -12,8 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portlet.journal.search;
 
+import com.liferay.portal.kernel.search.BaseSearchDocumentsToResultsTranslatorTestCase;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalArticleIndexer;

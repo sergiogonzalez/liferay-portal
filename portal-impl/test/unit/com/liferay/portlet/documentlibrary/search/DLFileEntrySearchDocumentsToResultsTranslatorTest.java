@@ -12,9 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portlet.documentlibrary.search;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.BaseSearchDocumentsToResultsTranslatorTestCase;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
