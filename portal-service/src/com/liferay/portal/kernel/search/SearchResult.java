@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
@@ -27,9 +26,8 @@ import java.util.List;
  */
 public class SearchResult {
 
-	public SearchResult(String className, long classPK) {
-		_className = className;
-		_classPK = classPK;
+	public SearchResult(SearchResultKey key) {
+		_key = key;
 	}
 
 	public void addFileEntry(FileEntry fileEntry, Summary summary) {
@@ -46,33 +44,12 @@ public class SearchResult {
 		_versions.add(version);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SearchResult)) {
-			return false;
-		}
-
-		SearchResult searchResult = (SearchResult)obj;
-
-		if (Validator.equals(_classPK, searchResult._classPK) &&
-			Validator.equals(_className, searchResult._className)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public String getClassName() {
-		return _className;
+		return _key.getClassName();
 	}
 
 	public long getClassPK() {
-		return _classPK;
+		return _key.getClassPK();
 	}
 
 	public List<Tuple> getFileEntryTuples() {
@@ -91,14 +68,6 @@ public class SearchResult {
 		return _versions;
 	}
 
-	public void setClassName(String className) {
-		_className = className;
-	}
-
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
-	}
-
 	public void setMessages(List<MBMessage> mbMessages) {
 		_mbMessages = mbMessages;
 	}
@@ -107,9 +76,8 @@ public class SearchResult {
 		_summary = summary;
 	}
 
-	private String _className;
-	private long _classPK;
 	private List<Tuple> _fileEntryTuples = new ArrayList<Tuple>();
+	private final SearchResultKey _key;
 	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	private Summary _summary;
 	private List<String> _versions = new ArrayList<String>();

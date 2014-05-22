@@ -28,8 +28,10 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -62,7 +64,8 @@ public class SearchDocumentsToResultsTranslator {
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 
-		_searchResults = new ArrayList<SearchResult>();
+		_searchResults = new HashMap<SearchResultKey, SearchResult>();
+
 		_searchResultSummaryFactory = new SearchResultSummaryFactoryImpl(
 			assetRendererFactoryByClassName, indexerByClassName);
 	}
@@ -83,7 +86,7 @@ public class SearchDocumentsToResultsTranslator {
 			}
 		}
 
-		return _searchResults;
+		return getSearchResultList();
 	}
 
 	protected void add(Document document)
@@ -94,20 +97,16 @@ public class SearchDocumentsToResultsTranslator {
 		long entryClassPK = GetterUtil.getLong(
 			document.get(Field.ENTRY_CLASS_PK));
 
-		String className = entryClassName;
-		long classPK = entryClassPK;
-
 		SearchResultContributor contributor = null;
+		SearchResultKey key = null;
 
 		if (entryClassName.equals(DLFileEntry.class.getName()) ||
 			entryClassName.equals(MBMessage.class.getName())) {
 
-			classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
-			long classNameId = GetterUtil.getLong(
-				document.get(Field.CLASS_NAME_ID));
+			SearchResultKey keyInDocument = getSearchResultKey(document);
 
-			if ((classPK > 0) && (classNameId > 0)) {
-				className = PortalUtil.getClassName(classNameId);
+			if (keyInDocument != null) {
+				key = keyInDocument;
 
 				Indexer indexer = _indexerByClassName.apply(entryClassName);
 
@@ -115,21 +114,17 @@ public class SearchDocumentsToResultsTranslator {
 					entryClassPK, _locale, _portletURL,
 					_searchResultSummaryFactory);
 			}
-			else {
-				className = entryClassName;
-				classPK = entryClassPK;
-			}
 		}
 
-		SearchResult searchResult = new SearchResult(className, classPK);
-
-		int index = _searchResults.indexOf(searchResult);
-
-		if (index < 0) {
-			_searchResults.add(searchResult);
+		if (key == null) {
+			key = new SearchResultKey(entryClassName, entryClassPK);
 		}
-		else {
-			searchResult = _searchResults.get(index);
+
+		SearchResult searchResult = _searchResults.get(key);
+
+		if (searchResult == null) {
+			searchResult = new SearchResult(key);
+			_searchResults.put(key, searchResult);
 		}
 
 		if (contributor != null) {
@@ -145,20 +140,38 @@ public class SearchDocumentsToResultsTranslator {
 
 		if (contributor == null) {
 			Summary summary = _searchResultSummaryFactory.getSummary(
-				document, className, classPK, _locale, _portletURL,
+				document, searchResult.getClassName(),
+				searchResult.getClassPK(), _locale, _portletURL,
 				_portletRequest, _portletResponse);
 
 			searchResult.setSummary(summary);
 		}
 		else {
 			if (searchResult.getSummary() == null) {
-				Summary summary =
-					_searchResultSummaryFactory.getSummary(
-						className, classPK, _locale, _portletURL);
+				Summary summary = _searchResultSummaryFactory.getSummary(
+					searchResult.getClassName(), searchResult.getClassPK(),
+					_locale, _portletURL);
 
 				searchResult.setSummary(summary);
 			}
 		}
+	}
+
+	protected SearchResultKey getSearchResultKey(Document document) {
+		long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+		long classNameId = GetterUtil.getLong(
+			document.get(Field.CLASS_NAME_ID));
+
+		if ((classPK > 0) && (classNameId > 0)) {
+			return new SearchResultKey(
+				PortalUtil.getClassName(classNameId), classPK);
+		}
+
+		return null;
+	}
+
+	protected List<SearchResult> getSearchResultList() {
+		return new ArrayList<SearchResult>(_searchResults.values());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -169,7 +182,7 @@ public class SearchDocumentsToResultsTranslator {
 	private PortletRequest _portletRequest;
 	private PortletResponse _portletResponse;
 	private PortletURL _portletURL;
-	private List<SearchResult> _searchResults;
+	private Map<SearchResultKey, SearchResult> _searchResults;
 	private SearchResultSummaryFactory _searchResultSummaryFactory;
 
 	private static class AssetRendererFactoryByClassName
