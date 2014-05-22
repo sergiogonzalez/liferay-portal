@@ -54,6 +54,7 @@ public class SearchDocumentsToResultsTranslator {
 		Function<String, AssetRendererFactory> assetRendererFactoryByClassName,
 		Function<String, Indexer> indexerByClassName) {
 
+		_indexerByClassName = indexerByClassName;
 		_locale = locale;
 		_portletURL = portletURL;
 		_portletRequest = portletRequest;
@@ -87,21 +88,12 @@ public class SearchDocumentsToResultsTranslator {
 					if ((classPK > 0) && (classNameId > 0)) {
 						className = PortalUtil.getClassName(classNameId);
 
-						if (entryClassName.equals(
-								DLFileEntry.class.getName())) {
+						Indexer indexer = _indexerByClassName.apply(
+							entryClassName);
 
-							contributor =
-								DLFileEntrySearchResultContributor.newInstance(
-									entryClassPK, _locale, _portletURL,
-									_searchResultSummaryFactory);
-						}
-						else if (entryClassName.equals(
-									MBMessage.class.getName())) {
-
-							contributor =
-								MBMessageSearchResultContributor.newInstance(
-									entryClassPK);
-						}
+						contributor = indexer.getSearchResultContributor(
+							entryClassPK, _locale, _portletURL,
+							_searchResultSummaryFactory);
 					}
 					else {
 						className = entryClassName;
@@ -165,6 +157,7 @@ public class SearchDocumentsToResultsTranslator {
 	private static Log _log = LogFactoryUtil.getLog(
 		SearchDocumentsToResultsTranslator.class);
 
+	private Function<String, Indexer> _indexerByClassName;
 	private Locale _locale;
 	private PortletRequest _portletRequest;
 	private PortletResponse _portletResponse;

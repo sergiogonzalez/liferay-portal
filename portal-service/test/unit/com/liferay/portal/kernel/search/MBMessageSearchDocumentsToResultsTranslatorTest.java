@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 
 import java.util.List;
 
@@ -54,6 +55,14 @@ public class MBMessageSearchDocumentsToResultsTranslatorTest
 			mbMessageLocalService.getMessage(ENTRY_CLASS_PK)
 		).thenReturn(
 			null
+		);
+
+		Indexer indexer = new MBMessageIndexer();
+
+		when(
+			indexerByClassName.apply(MBMESSAGE_CLASS_NAME)
+		).thenReturn(
+			indexer
 		);
 
 		translateSingleDocument(newDocumentMBMessageWithAlternateKey());
@@ -98,6 +107,14 @@ public class MBMessageSearchDocumentsToResultsTranslatorTest
 			mbMessage
 		);
 
+		Indexer indexer = new MBMessageIndexer();
+
+		when(
+			indexerByClassName.apply(MBMESSAGE_CLASS_NAME)
+		).thenReturn(
+			indexer
+		);
+
 		translateSingleDocument(newDocumentMBMessageWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
@@ -111,9 +128,15 @@ public class MBMessageSearchDocumentsToResultsTranslatorTest
 		Assert.assertNull(result.getSummary());
 
 		Mockito.verify(
+			indexerByClassName, Mockito.times(1)
+		).apply(
+			MBMESSAGE_CLASS_NAME
+		);
+
+		Mockito.verify(
 			indexerByClassName, Mockito.never()
 		).apply(
-			Mockito.anyString()
+			DOCUMENT_CLASS_NAME
 		);
 
 		assertThatEverythingUnrelatedIsEmpty();
@@ -139,6 +162,14 @@ public class MBMessageSearchDocumentsToResultsTranslatorTest
 
 	@Test
 	public void testTwoDocumentsWithSameAlternateKey() {
+		Indexer indexer = new MBMessageIndexer();
+
+		when(
+			indexerByClassName.apply(MBMESSAGE_CLASS_NAME)
+		).thenReturn(
+			indexer
+		);
+
 		long baseEntryPK = ENTRY_CLASS_PK;
 
 		Document documentA = newDocumentMBMessageWithAlternateKey(baseEntryPK);

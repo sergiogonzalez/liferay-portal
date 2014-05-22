@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
@@ -92,6 +94,16 @@ public class IndexerWrapper implements Indexer {
 	@Override
 	public String getSearchEngineId() {
 		return _indexer.getSearchEngineId();
+	}
+
+	@Override
+	public SearchResultContributor getSearchResultContributor(
+			long entryClassPK, Locale locale, PortletURL portletURL,
+			SearchResultSummaryFactory searchResultSummaryFactory)
+		throws PortalException, SystemException {
+
+		return _indexer.getSearchResultContributor(
+			entryClassPK, locale, portletURL, searchResultSummaryFactory);
 	}
 
 	@Override

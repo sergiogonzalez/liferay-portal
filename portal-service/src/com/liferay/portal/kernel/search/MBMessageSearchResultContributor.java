@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -28,19 +27,6 @@ import javax.portlet.PortletResponse;
  */
 public class MBMessageSearchResultContributor
 	implements SearchResultContributor {
-
-	public static SearchResultContributor newInstance(long entryClassPK)
-		throws PortalException, SystemException {
-
-		MBMessage mbMessage = MBMessageLocalServiceUtil.getMessage(
-			entryClassPK);
-
-		if (mbMessage == null) {
-			return null;
-		}
-
-		return new MBMessageSearchResultContributor(mbMessage);
-	}
 
 	public MBMessageSearchResultContributor(MBMessage mbMessage) {
 		_mbMessage = mbMessage;

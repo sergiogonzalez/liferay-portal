@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 
 import java.util.List;
 import java.util.Locale;
@@ -65,6 +66,14 @@ public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 			null
 		);
 
+		Indexer indexer = new DLFileEntryIndexer();
+
+		when(
+			indexerByClassName.apply(DLFILEENTRY_CLASS_NAME)
+		).thenReturn(
+			indexer
+		);
+
 		translateSingleDocument(newDocumentDLFileEntryWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
@@ -101,7 +110,7 @@ public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 
 	@Test
 	public void testDLFileEntryWithDefectiveIndexer() throws Exception {
-		Indexer indexer = Mockito.mock(Indexer.class);
+		Indexer indexer = Mockito.spy(new DLFileEntryIndexer());
 
 		Mockito.doThrow(
 			IllegalArgumentException.class
@@ -158,7 +167,7 @@ public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 
 	@Test
 	public void testDLFileEntryWithKeyInDocument() throws Exception {
-		final Indexer indexer = Mockito.mock(Indexer.class);
+		Indexer indexer = Mockito.spy(new DLFileEntryIndexer());
 
 		when(
 			indexerByClassName.apply(DLFILEENTRY_CLASS_NAME)
