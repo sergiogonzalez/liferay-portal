@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Function;
@@ -67,83 +69,13 @@ public class SearchDocumentsToResultsTranslator {
 
 	public List<SearchResult> translate(Document[] documents) {
 		for (Document document : documents) {
-			String entryClassName = GetterUtil.getString(
-				document.get(Field.ENTRY_CLASS_NAME));
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
 			try {
-				String className = entryClassName;
-				long classPK = entryClassPK;
-
-				SearchResultContributor contributor = null;
-
-				if (entryClassName.equals(DLFileEntry.class.getName()) ||
-					entryClassName.equals(MBMessage.class.getName())) {
-
-					classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
-					long classNameId = GetterUtil.getLong(
-						document.get(Field.CLASS_NAME_ID));
-
-					if ((classPK > 0) && (classNameId > 0)) {
-						className = PortalUtil.getClassName(classNameId);
-
-						Indexer indexer = _indexerByClassName.apply(
-							entryClassName);
-
-						contributor = indexer.getSearchResultContributor(
-							entryClassPK, _locale, _portletURL,
-							_searchResultSummaryFactory);
-					}
-					else {
-						className = entryClassName;
-						classPK = entryClassPK;
-					}
-				}
-
-				SearchResult searchResult = new SearchResult(
-					className, classPK);
-
-				int index = _searchResults.indexOf(searchResult);
-
-				if (index < 0) {
-					_searchResults.add(searchResult);
-				}
-				else {
-					searchResult = _searchResults.get(index);
-				}
-
-				if (contributor != null) {
-					contributor.contributeTo(
-						searchResult, document, _portletRequest,
-						_portletResponse);
-				}
-
-				if (entryClassName.equals(JournalArticle.class.getName())) {
-					String version = document.get(Field.VERSION);
-
-					searchResult.addVersion(version);
-				}
-
-				if (contributor == null) {
-					Summary summary = _searchResultSummaryFactory.getSummary(
-						document, className, classPK, _locale, _portletURL,
-						_portletRequest, _portletResponse);
-
-					searchResult.setSummary(summary);
-				}
-				else {
-					if (searchResult.getSummary() == null) {
-						Summary summary =
-							_searchResultSummaryFactory.getSummary(
-								className, classPK, _locale, _portletURL);
-
-						searchResult.setSummary(summary);
-					}
-				}
+				add(document);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
+					long entryClassPK = GetterUtil.getLong(
+						document.get(Field.ENTRY_CLASS_PK));
 					_log.warn(
 						"Search index is stale and contains entry {" +
 							entryClassPK + "}");
@@ -152,6 +84,81 @@ public class SearchDocumentsToResultsTranslator {
 		}
 
 		return _searchResults;
+	}
+
+	protected void add(Document document)
+		throws PortalException, SystemException {
+
+		String entryClassName = GetterUtil.getString(
+			document.get(Field.ENTRY_CLASS_NAME));
+		long entryClassPK = GetterUtil.getLong(
+			document.get(Field.ENTRY_CLASS_PK));
+
+		String className = entryClassName;
+		long classPK = entryClassPK;
+
+		SearchResultContributor contributor = null;
+
+		if (entryClassName.equals(DLFileEntry.class.getName()) ||
+			entryClassName.equals(MBMessage.class.getName())) {
+
+			classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+			long classNameId = GetterUtil.getLong(
+				document.get(Field.CLASS_NAME_ID));
+
+			if ((classPK > 0) && (classNameId > 0)) {
+				className = PortalUtil.getClassName(classNameId);
+
+				Indexer indexer = _indexerByClassName.apply(entryClassName);
+
+				contributor = indexer.getSearchResultContributor(
+					entryClassPK, _locale, _portletURL,
+					_searchResultSummaryFactory);
+			}
+			else {
+				className = entryClassName;
+				classPK = entryClassPK;
+			}
+		}
+
+		SearchResult searchResult = new SearchResult(className, classPK);
+
+		int index = _searchResults.indexOf(searchResult);
+
+		if (index < 0) {
+			_searchResults.add(searchResult);
+		}
+		else {
+			searchResult = _searchResults.get(index);
+		}
+
+		if (contributor != null) {
+			contributor.contributeTo(
+				searchResult, document, _portletRequest, _portletResponse);
+		}
+
+		if (entryClassName.equals(JournalArticle.class.getName())) {
+			String version = document.get(Field.VERSION);
+
+			searchResult.addVersion(version);
+		}
+
+		if (contributor == null) {
+			Summary summary = _searchResultSummaryFactory.getSummary(
+				document, className, classPK, _locale, _portletURL,
+				_portletRequest, _portletResponse);
+
+			searchResult.setSummary(summary);
+		}
+		else {
+			if (searchResult.getSummary() == null) {
+				Summary summary =
+					_searchResultSummaryFactory.getSummary(
+						className, classPK, _locale, _portletURL);
+
+				searchResult.setSummary(summary);
+			}
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
