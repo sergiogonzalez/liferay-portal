@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.util.JournalArticleIndexer;
 
 import java.util.List;
 
@@ -47,6 +48,14 @@ public class JournalArticleSearchDocumentsToResultsTranslatorTest
 
 	@Test
 	public void testJournalArticle() {
+		Indexer indexer = new JournalArticleIndexer();
+
+		Mockito.when(
+			indexerByClassName.apply(JOURNALARTICLE_CLASS_NAME)
+		).thenReturn(
+			indexer
+		);
+
 		translateSingleDocument(newDocumentJournalArticleWithVersion());
 
 		assertThatSearchResultHasVersion();
@@ -58,7 +67,7 @@ public class JournalArticleSearchDocumentsToResultsTranslatorTest
 
 	@Test
 	public void testJournalArticleWithDefectiveIndexer() throws Exception {
-		Indexer indexer = Mockito.mock(Indexer.class);
+		Indexer indexer = Mockito.spy(new JournalArticleIndexer());
 
 		Mockito.doThrow(
 			IllegalArgumentException.class

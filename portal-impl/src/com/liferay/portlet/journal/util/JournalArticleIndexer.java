@@ -30,8 +30,11 @@ import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.JournalArticleSearchResultContributor;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchResultContributor;
+import com.liferay.portal.kernel.search.SearchResultSummaryFactory;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
@@ -107,6 +110,15 @@ public class JournalArticleIndexer extends BaseIndexer {
 	@Override
 	public String getPortletId() {
 		return PORTLET_ID;
+	}
+
+	@Override
+	public SearchResultContributor getSearchResultContributor(
+			long entryClassPK, Locale locale, PortletURL portletURL,
+			SearchResultSummaryFactory searchResultSummaryFactory)
+		throws PortalException, SystemException {
+
+		return new JournalArticleSearchResultContributor();
 	}
 
 	@Override

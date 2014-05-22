@@ -100,16 +100,27 @@ public class SearchDocumentsToResultsTranslator {
 		SearchResultContributor contributor = null;
 		SearchResultKey key = null;
 
-		if (entryClassName.equals(DLFileEntry.class.getName()) ||
-			entryClassName.equals(MBMessage.class.getName())) {
+		Indexer indexer = _indexerByClassName.apply(entryClassName);
 
-			SearchResultKey keyInDocument = getSearchResultKey(document);
+		if (indexer != null) {
+			boolean useContributor = true;
 
-			if (keyInDocument != null) {
-				key = keyInDocument;
+			boolean isKeyInDocumentRequiredToUseSearchResultContributor =
+				entryClassName.equals(DLFileEntry.class.getName()) ||
+					entryClassName.equals(MBMessage.class.getName());
 
-				Indexer indexer = _indexerByClassName.apply(entryClassName);
+			if (isKeyInDocumentRequiredToUseSearchResultContributor) {
+				SearchResultKey keyInDocument = getSearchResultKey(document);
 
+				if (keyInDocument != null) {
+					key = keyInDocument;
+				}
+				else {
+					useContributor = false;
+				}
+			}
+
+			if (useContributor) {
 				contributor = indexer.getSearchResultContributor(
 					entryClassPK, _locale, _portletURL,
 					_searchResultSummaryFactory);
@@ -132,13 +143,10 @@ public class SearchDocumentsToResultsTranslator {
 				searchResult, document, _portletRequest, _portletResponse);
 		}
 
-		if (entryClassName.equals(JournalArticle.class.getName())) {
-			String version = document.get(Field.VERSION);
+		boolean isSummaryOfDocumentPreferred = entryClassName.equals(
+			JournalArticle.class.getName());
 
-			searchResult.addVersion(version);
-		}
-
-		if (contributor == null) {
+		if ((contributor == null) || isSummaryOfDocumentPreferred) {
 			Summary summary = _searchResultSummaryFactory.getSummary(
 				document, searchResult.getClassName(),
 				searchResult.getClassPK(), _locale, _portletURL,
