@@ -16,17 +16,13 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.List;
 
@@ -36,9 +32,7 @@ import org.apache.commons.lang.math.RandomUtils;
 
 import org.junit.Assert;
 
-import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -55,7 +49,6 @@ public abstract class BaseSearchDocumentsToResultsTranslatorTestCase
 		setUpFastDateFormatFactory();
 		setUpPortal();
 		setUpProps();
-		setUpRegistries();
 	}
 
 	protected Document newDocument(String entryClassName) {
@@ -112,44 +105,11 @@ public abstract class BaseSearchDocumentsToResultsTranslatorTestCase
 		PropsUtil.setProps(props);
 	}
 
-	protected void setUpRegistries() {
-		Registry registry = mock(Registry.class);
-
-		when(
-			registry.setRegistry(registry)
-		).thenReturn(
-			registry
-		);
-
-		when(
-			registry.getRegistry()
-		).thenReturn(
-			registry
-		);
-
-		ServiceTracker<Object, Object> serviceTracker = mock(
-			ServiceTracker.class);
-
-		when(
-			registry.trackServices(
-				(Class<Object>)Matchers.any(),
-				(ServiceTrackerCustomizer<Object, Object>)Matchers.any())
-		).thenReturn(
-			serviceTracker
-		);
-
-		RegistryUtil.setRegistry(registry);
-
-		mockStatic(
-			AssetRendererFactoryRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
-	}
-
 	protected List<SearchResult> translate(Document... documents) {
 		SearchDocumentsToResultsTranslator translator =
 			new SearchDocumentsToResultsTranslator(
-				null, portletURL, null, null);
+				null, portletURL, null, null, assetRendererFactoryByClassName,
+				indexerByClassName);
 
 		return translator.translate(documents);
 	}
@@ -181,6 +141,13 @@ public abstract class BaseSearchDocumentsToResultsTranslatorTestCase
 
 	@Mock
 	protected AssetRendererFactory assetRendererFactory;
+
+	@Mock
+	protected Function<String, AssetRendererFactory>
+		assetRendererFactoryByClassName;
+
+	@Mock
+	protected Function<String, Indexer> indexerByClassName;
 
 	@Mock
 	protected Portal portal;

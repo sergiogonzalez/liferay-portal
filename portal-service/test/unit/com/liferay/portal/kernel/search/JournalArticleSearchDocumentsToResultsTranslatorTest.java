@@ -30,19 +30,13 @@ import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({IndexerRegistryUtil.class})
-@RunWith(PowerMockRunner.class)
 public class JournalArticleSearchDocumentsToResultsTranslatorTest
 	extends BaseSearchDocumentsToResultsTranslatorTestCase {
 
@@ -75,9 +69,9 @@ public class JournalArticleSearchDocumentsToResultsTranslatorTest
 			(PortletURL)Matchers.any(), (PortletRequest)Matchers.any(),
 			(PortletResponse)Matchers.any());
 
-		stub(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).toReturn(
+		Mockito.when(
+			indexerByClassName.apply(JOURNALARTICLE_CLASS_NAME)
+		).thenReturn(
 			indexer
 		);
 

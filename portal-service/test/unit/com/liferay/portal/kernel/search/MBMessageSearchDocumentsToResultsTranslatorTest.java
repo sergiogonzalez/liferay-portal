@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -30,7 +29,6 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.stubbing.answers.ThrowsExceptionClass;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -38,10 +36,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
-	MBMessageLocalServiceUtil.class
-})
+@PrepareForTest({MBMessageLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
 public class MBMessageSearchDocumentsToResultsTranslatorTest
 	extends BaseSearchDocumentsToResultsTranslatorTestCase {
@@ -80,14 +75,17 @@ public class MBMessageSearchDocumentsToResultsTranslatorTest
 			"Indexer and AssetRenderer are both attempted, no summary returned",
 			result.getSummary());
 
-		verifyStatic();
+		Mockito.verify(
+			indexerByClassName
+		).apply(
+			DOCUMENT_CLASS_NAME
+		);
 
-		IndexerRegistryUtil.getIndexer(DOCUMENT_CLASS_NAME);
-
-		verifyStatic();
-
-		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-			DOCUMENT_CLASS_NAME);
+		Mockito.verify(
+			assetRendererFactoryByClassName
+		).apply(
+			DOCUMENT_CLASS_NAME
+		);
 
 		assertThatEverythingUnrelatedIsEmpty();
 	}
@@ -100,10 +98,6 @@ public class MBMessageSearchDocumentsToResultsTranslatorTest
 			mbMessage
 		);
 
-		mockStatic(
-			IndexerRegistryUtil.class,
-			new ThrowsExceptionClass(IllegalStateException.class));
-
 		translateSingleDocument(newDocumentMBMessageWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
@@ -115,6 +109,12 @@ public class MBMessageSearchDocumentsToResultsTranslatorTest
 		Assert.assertSame(mbMessage, mbMessages.get(0));
 
 		Assert.assertNull(result.getSummary());
+
+		Mockito.verify(
+			indexerByClassName, Mockito.never()
+		).apply(
+			Mockito.anyString()
+		);
 
 		assertThatEverythingUnrelatedIsEmpty();
 	}

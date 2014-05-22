@@ -16,14 +16,9 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Locale;
@@ -50,10 +45,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, DLAppLocalServiceUtil.class,
-	IndexerRegistryUtil.class
-})
+@PrepareForTest({DLAppLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
 public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 	extends BaseSearchDocumentsToResultsTranslatorTestCase {
@@ -92,14 +84,17 @@ public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 			"Indexer and AssetRenderer are both attempted, no summary returned",
 			result.getSummary());
 
-		verifyStatic();
+		Mockito.verify(
+			indexerByClassName
+		).apply(
+			DOCUMENT_CLASS_NAME
+		);
 
-		IndexerRegistryUtil.getIndexer(DOCUMENT_CLASS_NAME);
-
-		verifyStatic();
-
-		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-			DOCUMENT_CLASS_NAME);
+		Mockito.verify(
+			assetRendererFactoryByClassName
+		).apply(
+			DOCUMENT_CLASS_NAME
+		);
 
 		assertThatEverythingUnrelatedIsEmpty();
 	}
@@ -117,9 +112,9 @@ public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 			(PortletURL)Matchers.any(), (PortletRequest)Matchers.any(),
 			(PortletResponse)Matchers.any());
 
-		stub(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).toReturn(
+		when(
+			indexerByClassName.apply(DLFILEENTRY_CLASS_NAME)
+		).thenReturn(
 			indexer
 		);
 
@@ -141,10 +136,6 @@ public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 		Assert.assertNull(
 			"Indexer is attempted, exception is discarded, no summary returned",
 			result.getSummary());
-
-		verifyStatic();
-
-		IndexerRegistryUtil.getIndexer(DLFILEENTRY_CLASS_NAME);
 
 		Mockito.verify(
 			indexer
@@ -169,30 +160,16 @@ public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 	public void testDLFileEntryWithKeyInDocument() throws Exception {
 		final Indexer indexer = Mockito.mock(Indexer.class);
 
-		class IndexerRegistryGetIndexer implements InvocationHandler {
+		when(
+			indexerByClassName.apply(DLFILEENTRY_CLASS_NAME)
+		).thenReturn(
+			indexer
+		);
 
-			@Override
-			public Indexer invoke(Object proxy, Method method, Object[] args)
-				throws Throwable {
-
-				String className = (String)args[0];
-
-				if (DLFILEENTRY_CLASS_NAME.equals(className)) {
-					return indexer;
-				}
-
-				if (DOCUMENT_CLASS_NAME.equals(className)) {
-					return null;
-				}
-
-				throw new IllegalArgumentException();
-			}
-		}
-
-		replace(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).with(
-			new IndexerRegistryGetIndexer()
+		when(
+			indexerByClassName.apply(DOCUMENT_CLASS_NAME)
+		).thenReturn(
+			null
 		);
 
 		Summary summary = new Summary(
@@ -207,34 +184,16 @@ public class DLFileEntrySearchDocumentsToResultsTranslatorTest
 			(PortletURL)Matchers.any(), (PortletRequest)Matchers.isNull(),
 			(PortletResponse)Matchers.isNull());
 
-		class AssetRendererFactoryRegistryGetAssetRendererFactoryByClassName
-		implements InvocationHandler {
+		when(
+			assetRendererFactoryByClassName.apply(DLFILEENTRY_CLASS_NAME)
+		).thenReturn(
+			null
+		);
 
-			@Override
-			public AssetRendererFactory invoke(
-					Object proxy, Method method, Object[] args)
-				throws Throwable {
-
-				String className = (String)args[0];
-
-				if (DLFILEENTRY_CLASS_NAME.equals(className)) {
-					return null;
-				}
-
-				if (DOCUMENT_CLASS_NAME.equals(className)) {
-					return assetRendererFactory;
-				}
-
-				throw new IllegalArgumentException();
-			}
-		}
-
-		replace(
-			method(
-				AssetRendererFactoryRegistryUtil.class,
-				"getAssetRendererFactoryByClassName", String.class)
-		).with(
-			new AssetRendererFactoryRegistryGetAssetRendererFactoryByClassName()
+		when(
+			assetRendererFactoryByClassName.apply(DOCUMENT_CLASS_NAME)
+		).thenReturn(
+			assetRendererFactory
 		);
 
 		when(

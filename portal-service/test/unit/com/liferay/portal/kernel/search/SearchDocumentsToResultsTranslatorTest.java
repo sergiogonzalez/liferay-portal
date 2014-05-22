@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -29,21 +28,13 @@ import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 /**
  * @author André de Oliveira
  */
-@PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class
-})
-@RunWith(PowerMockRunner.class)
 public class SearchDocumentsToResultsTranslatorTest
 	extends BaseSearchDocumentsToResultsTranslatorTestCase {
 
@@ -90,11 +81,9 @@ public class SearchDocumentsToResultsTranslatorTest
 			SUMMARY_CONTENT
 		);
 
-		stub(
-			method(
-				AssetRendererFactoryRegistryUtil.class,
-				"getAssetRendererFactoryByClassName", String.class)
-		).toReturn(
+		Mockito.when(
+			assetRendererFactoryByClassName.apply(Matchers.anyString())
+		).thenReturn(
 			assetRendererFactory
 		);
 
@@ -126,9 +115,9 @@ public class SearchDocumentsToResultsTranslatorTest
 			summary
 		);
 
-		stub(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).toReturn(
+		Mockito.when(
+			indexerByClassName.apply(Mockito.anyString())
+		).thenReturn(
 			indexer
 		);
 
