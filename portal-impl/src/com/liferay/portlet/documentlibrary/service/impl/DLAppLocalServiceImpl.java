@@ -1304,8 +1304,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
 
-		return localRepository.updateFolder(
+		Folder folder = localRepository.updateFolder(
 			folderId, parentFolderId, name, description, serviceContext);
+
+		List<FileEntry> fileEntries = localRepository.getRepositoryFileEntries(
+			folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (FileEntry fileEntry : fileEntries) {
+			dlAppHelperLocalService.updateAsset(
+				serviceContext.getUserId(), fileEntry,
+				fileEntry.getLatestFileVersion(), null, null, null);
+		}
+
+		return folder;
 	}
 
 	protected FileEntry copyFileEntry(
