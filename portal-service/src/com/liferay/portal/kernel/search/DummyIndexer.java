@@ -139,6 +139,11 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
+		return false;
+	}
+
+	@Override
 	public boolean isPermissionAware() {
 		return false;
 	}

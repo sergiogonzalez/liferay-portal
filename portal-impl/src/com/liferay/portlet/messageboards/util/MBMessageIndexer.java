@@ -156,6 +156,11 @@ public class MBMessageIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
+		return true;
+	}
+
+	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
 

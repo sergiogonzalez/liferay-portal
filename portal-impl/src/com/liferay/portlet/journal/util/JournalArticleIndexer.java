@@ -132,6 +132,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
+		return false;
+	}
+
+	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
 		List<JournalArticle> articles =
 			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(

@@ -156,6 +156,11 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
+		return _indexer.isKeyInDocumentRequiredToUseSearchResultContributor();
+	}
+
+	@Override
 	public boolean isPermissionAware() {
 		return _indexer.isPermissionAware();
 	}

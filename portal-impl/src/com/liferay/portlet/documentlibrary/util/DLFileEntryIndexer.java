@@ -178,6 +178,11 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
+		return true;
+	}
+
+	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
 

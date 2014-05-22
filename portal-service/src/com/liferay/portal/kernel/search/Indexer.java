@@ -91,6 +91,8 @@ public interface Indexer {
 
 	public boolean isFilterSearch();
 
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor();
+
 	public boolean isPermissionAware();
 
 	public boolean isStagingAware();

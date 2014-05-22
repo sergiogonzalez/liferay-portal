@@ -390,6 +390,11 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
+		return false;
+	}
+
+	@Override
 	public boolean isPermissionAware() {
 		return _permissionAware;
 	}

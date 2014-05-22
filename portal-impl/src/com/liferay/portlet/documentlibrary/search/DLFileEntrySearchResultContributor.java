@@ -60,6 +60,11 @@ public class DLFileEntrySearchResultContributor
 		searchResult.addFileEntry(_fileEntry, summary);
 	}
 
+	@Override
+	public boolean isSummaryOfDocumentPreferred() {
+		return false;
+	}
+
 	private FileEntry _fileEntry;
 	private Locale _locale;
 	private PortletURL _portletURL;

@@ -42,4 +42,9 @@ public class JournalArticleSearchResultContributor
 		searchResult.addVersion(version);
 	}
 
+	@Override
+	public boolean isSummaryOfDocumentPreferred() {
+		return true;
+	}
+
 }

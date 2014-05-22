@@ -30,4 +30,6 @@ public interface SearchResultContributor {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException, SystemException;
 
+	public boolean isSummaryOfDocumentPreferred();
+
 }

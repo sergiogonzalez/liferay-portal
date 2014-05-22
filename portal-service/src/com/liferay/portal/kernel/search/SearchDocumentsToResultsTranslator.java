@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,11 +102,7 @@ public class SearchDocumentsToResultsTranslator {
 		if (indexer != null) {
 			boolean useContributor = true;
 
-			boolean isKeyInDocumentRequiredToUseSearchResultContributor =
-				entryClassName.equals(DLFileEntry.class.getName()) ||
-					entryClassName.equals(MBMessage.class.getName());
-
-			if (isKeyInDocumentRequiredToUseSearchResultContributor) {
+			if (indexer.isKeyInDocumentRequiredToUseSearchResultContributor()) {
 				SearchResultKey keyInDocument = getSearchResultKey(document);
 
 				if (keyInDocument != null) {
@@ -143,10 +136,9 @@ public class SearchDocumentsToResultsTranslator {
 				searchResult, document, _portletRequest, _portletResponse);
 		}
 
-		boolean isSummaryOfDocumentPreferred = entryClassName.equals(
-			JournalArticle.class.getName());
+		if ((contributor == null) ||
+			contributor.isSummaryOfDocumentPreferred()) {
 
-		if ((contributor == null) || isSummaryOfDocumentPreferred) {
 			Summary summary = _searchResultSummaryFactory.getSummary(
 				document, searchResult.getClassName(),
 				searchResult.getClassPK(), _locale, _portletURL,
