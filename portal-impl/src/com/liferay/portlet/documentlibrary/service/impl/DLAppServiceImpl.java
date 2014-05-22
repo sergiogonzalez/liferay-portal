@@ -3178,8 +3178,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			repository = getFolderRepository(folderId);
 		}
 
-		return repository.updateFolder(
+		Folder folder = repository.updateFolder(
 			folderId, name, description, serviceContext);
+
+		List<FileEntry> fileEntries = repository.getRepositoryFileEntries(
+			0, folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+
+		for (FileEntry fileEntry : fileEntries) {
+			dlAppHelperLocalService.updateAsset(
+				serviceContext.getUserId(), fileEntry,
+				fileEntry.getLatestFileVersion(), null, null, null);
+		}
+
+		return folder;
 	}
 
 	/**
