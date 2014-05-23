@@ -417,9 +417,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.deleteFileEntry(fileEntry);
-
 		localRepository.deleteFileEntry(fileEntryId);
+
+		dlAppHelperLocalService.deleteFileEntry(fileEntry);
 	}
 
 	/**
