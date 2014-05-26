@@ -29,7 +29,7 @@ import java.util.Random;
  */
 public class RandomTestUtil {
 
-	public static Date nextDate() throws Exception {
+	public static Date nextDate() {
 		return new Date();
 	}
 
@@ -45,11 +45,11 @@ public class RandomTestUtil {
 		return CounterLocalServiceUtil.increment();
 	}
 
-	public static boolean randomBoolean() throws Exception {
+	public static boolean randomBoolean() {
 		return _random.nextBoolean();
 	}
 
-	public static int randomInt() throws Exception {
+	public static int randomInt() {
 		int value = _random.nextInt();
 
 		if (value > 0) {
@@ -63,13 +63,11 @@ public class RandomTestUtil {
 		}
 	}
 
-	public static Map<Locale, String> randomLocaleStringMap() throws Exception {
+	public static Map<Locale, String> randomLocaleStringMap() {
 		return randomLocaleStringMap(LocaleUtil.getDefault());
 	}
 
-	public static Map<Locale, String> randomLocaleStringMap(Locale locale)
-		throws Exception {
-
+	public static Map<Locale, String> randomLocaleStringMap(Locale locale) {
 		Map<Locale, String> map = new HashMap<Locale, String>();
 
 		map.put(LocaleUtil.getDefault(), randomString());
@@ -77,7 +75,7 @@ public class RandomTestUtil {
 		return map;
 	}
 
-	public static long randomLong() throws Exception {
+	public static long randomLong() {
 		long value = _random.nextLong();
 
 		if (value > 0) {
@@ -91,11 +89,11 @@ public class RandomTestUtil {
 		}
 	}
 
-	public static String randomString() throws Exception {
+	public static String randomString() {
 		return StringUtil.randomString();
 	}
 
-	public static String randomString(int length) throws Exception {
+	public static String randomString(int length) {
 		return StringUtil.randomString(length);
 	}
 
