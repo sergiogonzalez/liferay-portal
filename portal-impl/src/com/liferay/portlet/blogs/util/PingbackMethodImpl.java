@@ -148,6 +148,10 @@ public class PingbackMethodImpl implements Method {
 		}
 	}
 
+	protected PingbackMethodImpl(PingbackComments pingbackComments) {
+		_pingbackComments = pingbackComments;
+	}
+
 	protected void addPingback(long companyId) throws Exception {
 		if (!PropsValues.BLOGS_PINGBACK_ENABLED) {
 			throw new PingbackDisabledException("Pingbacks are disabled");
