@@ -23,17 +23,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * @author Adolfo Pérez
  * @author Mika Koivisto
- *
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil}
  */
-@Deprecated
-public class RepositoryFactoryUtil {
+public class ExternalRepositoryFactoryUtil {
 
 	public static BaseRepository getInstance(String className)
 		throws Exception {
 
-		RepositoryFactory repositoryFactory = _repositoryFactories.get(
+		ExternalRepositoryFactory repositoryFactory = _repositoryFactories.get(
 			className);
 
 		BaseRepository baseRepository = null;
@@ -57,7 +55,7 @@ public class RepositoryFactoryUtil {
 	}
 
 	public static void registerRepositoryFactory(
-		String className, RepositoryFactory repositoryFactory) {
+		String className, ExternalRepositoryFactory repositoryFactory) {
 
 		_repositoryFactories.put(className, repositoryFactory);
 	}
@@ -66,16 +64,16 @@ public class RepositoryFactoryUtil {
 		_repositoryFactories.remove(className);
 	}
 
-	private static ConcurrentHashMap<String, RepositoryFactory>
+	private static ConcurrentHashMap<String, ExternalRepositoryFactory>
 		_repositoryFactories =
-			new ConcurrentHashMap<String, RepositoryFactory>();
+			new ConcurrentHashMap<String, ExternalRepositoryFactory>();
 
 	static {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
-			RepositoryFactory repositoryFactory = new RepositoryFactoryImpl(
-				className, classLoader);
+			ExternalRepositoryFactory repositoryFactory =
+				new ExternalRepositoryFactoryImpl(className, classLoader);
 
 			_repositoryFactories.put(className, repositoryFactory);
 		}
