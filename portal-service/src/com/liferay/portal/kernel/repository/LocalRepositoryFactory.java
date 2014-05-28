@@ -12,18 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.repository.util;
+package com.liferay.portal.kernel.repository;
 
-import com.liferay.portal.kernel.repository.BaseRepository;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
- * @author Mika Koivisto
- *
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.repository.util.ExternalRepositoryFactory}
+ * @author Adolfo Pérez
  */
-@Deprecated
-public interface RepositoryFactory {
+public interface LocalRepositoryFactory {
 
-	public BaseRepository getInstance() throws Exception;
+	public LocalRepository create(long repositoryId)
+		throws PortalException, SystemException;
+
+	public LocalRepository create(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException;
 
 }
