@@ -37,6 +37,7 @@ import com.liferay.portal.security.permission.ResourceActions;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ResourceActionLocalService;
+import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.util.WebKeys;
@@ -89,19 +90,27 @@ public class PortletTracker
 		String portletName = (String)serviceReference.getProperty(
 			"javax.portlet.name");
 
-		String portletId = JS.getSafeName(portletName);
-
-		if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
-			throw new RuntimeException(
-				"Portlet id " + portletId + " has more than " +
-					_PORTLET_ID_MAX_LENGTH + " characters");
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Adding " + serviceReference);
-		}
-
 		try {
+			String portletId = JS.getSafeName(portletName);
+
+			if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
+				throw new IllegalArgumentException(
+					"Portlet id " + portletId + " has more than " +
+						_PORTLET_ID_MAX_LENGTH + " characters");
+			}
+
+			com.liferay.portal.model.Portlet portletModel =
+				_portletLocalService.getPortletById(portletId);
+
+			if (portletModel != null) {
+				throw new IllegalArgumentException(
+					"Portlet id " + portletId + " is already in use.");
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Adding " + serviceReference);
+			}
+
 			BundleContext bundleContext = _componentContext.getBundleContext();
 
 			Portlet portlet = bundleContext.getService(serviceReference);
@@ -218,14 +227,8 @@ public class PortletTracker
 
 		portletModel.setPortletClass(portletClazz.getName());
 
-		collectCacheScope(serviceReference, portletModel);
-		collectExpirationCache(serviceReference, portletModel);
-		collectInitParams(serviceReference, portletModel);
-		collectPortletInfo(serviceReference, portletModel, displayName);
-		collectPortletModes(serviceReference, portletModel);
-		collectPortletPreferences(serviceReference, portletModel);
-		collectSecurityRoleRefs(serviceReference, portletModel);
-		collectWindowStates(serviceReference, portletModel);
+		collectJxPortletFeatures(serviceReference, portletModel);
+		collectLiferayFeatures(serviceReference, portletModel);
 
 		Bundle bundle = serviceReference.getBundle();
 
@@ -272,6 +275,7 @@ public class PortletTracker
 
 		portletModel.setPluginPackage(portalPortletModel.getPluginPackage());
 		portletModel.setPortletApp(portalPortletModel.getPortletApp());
+		portletModel.setRoleMappers(portalPortletModel.getRoleMappers());
 		portletModel.setTimestamp(System.currentTimeMillis());
 
 		return portletModel;
@@ -319,8 +323,8 @@ public class PortletTracker
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.model.Portlet portletModel) {
 
-		Integer expirationCache = (Integer)serviceReference.getProperty(
-			"javax.portlet.expiration-cache");
+		int expirationCache = GetterUtil.getInteger(
+			serviceReference.getProperty("javax.portlet.expiration-cache"));
 
 		portletModel.setExpCache(expirationCache);
 	}
@@ -345,23 +349,231 @@ public class PortletTracker
 		portletModel.setInitParams(initParams);
 	}
 
-	protected void collectPortletInfo(
+	protected void collectJxPortletFeatures(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel, String displayName) {
+		com.liferay.portal.model.Portlet portletModel) {
 
-		String portletInfoTitle = (String)serviceReference.getProperty(
-			"javax.portlet.info.title");
+		collectCacheScope(serviceReference, portletModel);
+		collectExpirationCache(serviceReference, portletModel);
+		collectInitParams(serviceReference, portletModel);
+		collectPortletInfo(serviceReference, portletModel);
+		collectPortletModes(serviceReference, portletModel);
+		collectPortletPreferences(serviceReference, portletModel);
+		collectSecurityRoleRefs(serviceReference, portletModel);
+		collectWindowStates(serviceReference, portletModel);
+	}
 
-		if (portletInfoTitle == null) {
-			portletInfoTitle = displayName;
+	protected void collectLiferayFeatures(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.model.Portlet portletModel) {
+
+		portletModel.setActionTimeout(
+			GetterUtil.getInteger(
+				get(serviceReference, "action-timeout"),
+				portletModel.getActionTimeout()));
+		portletModel.setActionURLRedirect(
+			GetterUtil.getBoolean(
+				get(serviceReference, "action-url-redirect"),
+				portletModel.getActionURLRedirect()));
+		portletModel.setActive(
+			GetterUtil.getBoolean(
+				get(serviceReference, "active"), portletModel.isActive()));
+		portletModel.setAddDefaultResource(
+			GetterUtil.getBoolean(
+				get(serviceReference, "add-default-resource"),
+				portletModel.isAddDefaultResource()));
+		portletModel.setAjaxable(
+			GetterUtil.getBoolean(
+				get(serviceReference, "ajaxable"), portletModel.isAjaxable()));
+
+		Set<String> autopropagatedParameters = SetUtil.fromCollection(
+			StringPlus.asList(
+				get(serviceReference, "autopropagated-parameters")));
+
+		portletModel.setAutopropagatedParameters(autopropagatedParameters);
+
+		String controlPanelEntryCategory = GetterUtil.getString(
+			get(serviceReference, "control-panel-entry-category"),
+			portletModel.getControlPanelEntryCategory());
+
+		if (Validator.equals(controlPanelEntryCategory, "content")) {
+			controlPanelEntryCategory =
+				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
+		}
+		else if (Validator.equals(controlPanelEntryCategory, "marketplace")) {
+			controlPanelEntryCategory = PortletCategoryKeys.APPS;
+		}
+		else if (Validator.equals(controlPanelEntryCategory, "portal")) {
+			controlPanelEntryCategory = PortletCategoryKeys.USERS;
+		}
+		else if (Validator.equals(controlPanelEntryCategory, "server")) {
+			controlPanelEntryCategory = PortletCategoryKeys.APPS;
 		}
 
-		String portletInfoShortTitle = (String)serviceReference.getProperty(
-			"javax.portlet.info.short-title");
-		String portletInfoKeyWords = (String)serviceReference.getProperty(
-			"javax.portlet.info.keywords");
-		String portletDescription = (String)serviceReference.getProperty(
-			"javax.portlet.description");
+		portletModel.setControlPanelEntryCategory(controlPanelEntryCategory);
+
+		portletModel.setControlPanelEntryWeight(
+			GetterUtil.getDouble(
+				get(serviceReference, "control-panel-entry-weight"),
+				portletModel.getControlPanelEntryWeight()));
+		portletModel.setCssClassWrapper(
+			GetterUtil.getString(
+				get(serviceReference, "css-class-wrapper"),
+				portletModel.getCssClassWrapper()));
+		portletModel.setFacebookIntegration(
+			GetterUtil.getString(
+				get(serviceReference, "facebook-integration"),
+				portletModel.getFacebookIntegration()));
+		portletModel.setFooterPortalCss(
+			StringPlus.asList(get(serviceReference, "footer-portal-css")));
+		portletModel.setFooterPortalJavaScript(
+			StringPlus.asList(
+				get(serviceReference, "footer-portal-javascript")));
+		portletModel.setFooterPortletCss(
+			StringPlus.asList(get(serviceReference, "footer-portlet-css")));
+		portletModel.setFooterPortletJavaScript(
+			StringPlus.asList(
+				get(serviceReference, "footer-portlet-javascript")));
+		portletModel.setFriendlyURLMapping(
+			GetterUtil.getString(
+				get(serviceReference, "friendly-url-mapping"),
+				portletModel.getFriendlyURLMapping()));
+		portletModel.setFriendlyURLRoutes(
+			GetterUtil.getString(
+				get(serviceReference, "friendly-url-routes"),
+				portletModel.getFriendlyURLRoutes()));
+		portletModel.setHeaderPortalCss(
+			StringPlus.asList(get(serviceReference, "header-portal-css")));
+		portletModel.setHeaderPortalJavaScript(
+			StringPlus.asList(
+				get(serviceReference, "header-portal-javascript")));
+		portletModel.setHeaderPortletCss(
+			StringPlus.asList(get(serviceReference, "header-portlet-css")));
+		portletModel.setHeaderPortletJavaScript(
+			StringPlus.asList(
+				get(serviceReference, "header-portlet-javascript")));
+		portletModel.setIcon(
+			GetterUtil.getString(
+				get(serviceReference, "icon"), portletModel.getIcon()));
+		portletModel.setInclude(
+			GetterUtil.getBoolean(
+				get(serviceReference, "include"), portletModel.isInclude()));
+		portletModel.setInstanceable(
+			GetterUtil.getBoolean(
+				get(serviceReference, "instanceable"),
+				portletModel.isInstanceable()));
+		portletModel.setLayoutCacheable(
+			GetterUtil.getBoolean(
+				get(serviceReference, "layout-cacheable"),
+				portletModel.isLayoutCacheable()));
+		portletModel.setMaximizeEdit(
+			GetterUtil.getBoolean(
+				get(serviceReference, "maximize-edit"),
+				portletModel.isMaximizeEdit()));
+		portletModel.setMaximizeHelp(
+			GetterUtil.getBoolean(
+				get(serviceReference, "maximize-help"),
+				portletModel.isMaximizeHelp()));
+		portletModel.setParentStrutsPath(
+			GetterUtil.getString(
+				get(serviceReference, "parent-struts-path"),
+				portletModel.getParentStrutsPath()));
+		portletModel.setPopUpPrint(
+			GetterUtil.getBoolean(
+				get(serviceReference, "pop-up-print"),
+				portletModel.isPopUpPrint()));
+		portletModel.setPreferencesCompanyWide(
+			GetterUtil.getBoolean(
+				get(serviceReference, "preferences-company-wide"),
+				portletModel.isPreferencesCompanyWide()));
+		portletModel.setPreferencesOwnedByGroup(
+			GetterUtil.getBoolean(
+				get(serviceReference, "preferences-owned-by-group"),
+				portletModel.isPreferencesOwnedByGroup()));
+		portletModel.setPreferencesUniquePerLayout(
+			GetterUtil.getBoolean(
+				get(serviceReference, "preferences-unique-per-layout"),
+				portletModel.isPreferencesUniquePerLayout()));
+		portletModel.setPrivateRequestAttributes(
+			GetterUtil.getBoolean(
+				get(serviceReference, "private-request-attributes"),
+				portletModel.isPrivateRequestAttributes()));
+		portletModel.setPrivateSessionAttributes(
+			GetterUtil.getBoolean(
+				get(serviceReference, "private-session-attributes"),
+				portletModel.isPrivateSessionAttributes()));
+		portletModel.setRemoteable(
+			GetterUtil.getBoolean(
+				get(serviceReference, "remoteable"),
+				portletModel.isRemoteable()));
+		portletModel.setRenderTimeout(
+			GetterUtil.getInteger(
+				get(serviceReference, "render-timeout"),
+				portletModel.getRenderTimeout()));
+		portletModel.setRenderWeight(
+			GetterUtil.getInteger(
+				get(serviceReference, "render-weight"),
+				portletModel.getRenderWeight()));
+
+		if (!portletModel.isAjaxable() &&
+			(portletModel.getRenderWeight() < 1)) {
+
+			portletModel.setRenderWeight(1);
+		}
+
+		portletModel.setRequiresNamespacedParameters(
+			GetterUtil.getBoolean(
+				get(serviceReference, "requires-namespaced-parameters"),
+				portletModel.isRequiresNamespacedParameters()));
+		portletModel.setRestoreCurrentView(
+			GetterUtil.getBoolean(
+				get(serviceReference, "restore-current-view"),
+				portletModel.isRestoreCurrentView()));
+		portletModel.setScopeable(
+			GetterUtil.getBoolean(
+				get(serviceReference, "scopeable"),
+				portletModel.isScopeable()));
+		portletModel.setShowPortletAccessDenied(
+			GetterUtil.getBoolean(
+				get(serviceReference, "show-portlet-access-denied"),
+				portletModel.isShowPortletAccessDenied()));
+		portletModel.setShowPortletInactive(
+			GetterUtil.getBoolean(
+				get(serviceReference, "show-portlet-inactive"),
+				portletModel.isShowPortletInactive()));
+		portletModel.setStrutsPath(
+			GetterUtil.getString(
+				get(serviceReference, "struts-path"),
+				portletModel.getStrutsPath()));
+		portletModel.setSystem(
+			GetterUtil.getBoolean(
+				get(serviceReference, "system"), portletModel.isSystem()));
+		portletModel.setUseDefaultTemplate(
+			GetterUtil.getBoolean(
+				get(serviceReference, "use-default-template"),
+				portletModel.isUseDefaultTemplate()));
+		portletModel.setUserPrincipalStrategy(
+			GetterUtil.getString(
+				get(serviceReference, "user-principal-strategy"),
+				portletModel.getUserPrincipalStrategy()));
+		portletModel.setVirtualPath(
+			GetterUtil.getString(
+				get(serviceReference, "virtual-path"),
+				portletModel.getVirtualPath()));
+	}
+
+	protected void collectPortletInfo(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.model.Portlet portletModel) {
+
+		String portletInfoTitle = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.info.title"));
+		String portletInfoShortTitle = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.info.short-title"));
+		String portletInfoKeyWords = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.info.keywords"));
+		String portletDescription = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.description"));
 
 		PortletInfo portletInfo = new PortletInfo(
 			portletInfoTitle, portletInfoShortTitle, portletInfoKeyWords,
@@ -410,8 +622,8 @@ public class PortletTracker
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.model.Portlet portletModel) {
 
-		String defaultPreferences = (String)serviceReference.getProperty(
-			"javax.portlet.preferences");
+		String defaultPreferences = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.preferences"));
 
 		if ((defaultPreferences != null) &&
 			defaultPreferences.startsWith("classpath:")) {
@@ -444,6 +656,8 @@ public class PortletTracker
 		Set<String> unlinkedRoles = new HashSet<String>(roleRefs);
 
 		portletModel.setUnlinkedRoles(unlinkedRoles);
+
+		portletModel.linkRoles();
 	}
 
 	protected void collectWindowStates(
@@ -539,6 +753,12 @@ public class PortletTracker
 		}
 	}
 
+	protected Object get(
+		ServiceReference<Portlet> serviceReference, String property) {
+
+		return serviceReference.getProperty(_NAMESPACE + property);
+	}
+
 	@Reference
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -620,6 +840,8 @@ public class PortletTracker
 	protected void unsetServletContext(ServletContext servletContext) {
 		_servletContext = null;
 	}
+
+	private static final String _NAMESPACE = "com.liferay.portal.portlet.";
 
 	private static final int _PORTLET_ID_MAX_LENGTH =
 		255 - PortletConstants.INSTANCE_SEPARATOR.length() +

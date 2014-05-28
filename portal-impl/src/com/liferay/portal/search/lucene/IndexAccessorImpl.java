@@ -242,27 +242,29 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 		IndexReader indexReader = IndexReader.open(tempDirectory, false);
 
-		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
+		if (indexReader.numDocs() > 0) {
+			IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
-		try {
-			TopDocs topDocs = indexSearcher.search(
-				new MatchAllDocsQuery(), indexReader.numDocs());
+			try {
+				TopDocs topDocs = indexSearcher.search(
+					new MatchAllDocsQuery(), indexReader.numDocs());
 
-			ScoreDoc[] scoreDocs = topDocs.scoreDocs;
+				ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 
-			for (ScoreDoc scoreDoc : scoreDocs) {
-				Document document = indexSearcher.doc(scoreDoc.doc);
+				for (ScoreDoc scoreDoc : scoreDocs) {
+					Document document = indexSearcher.doc(scoreDoc.doc);
 
-				addDocument(document);
+					addDocument(document);
+				}
 			}
-		}
-		catch (IllegalArgumentException iae) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(iae.getMessage());
+			catch (IllegalArgumentException iae) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(iae.getMessage());
+				}
 			}
-		}
 
-		indexSearcher.close();
+			indexSearcher.close();
+		}
 
 		indexReader.flush();
 		indexReader.close();
