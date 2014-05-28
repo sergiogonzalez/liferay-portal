@@ -42,7 +42,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory
 				getResourceLocalService(), repositoryId);
 		}
 		else {
-			return createRepositoryImpl(repositoryId, classNameId);
+			return createExternalRepositoryImpl(repositoryId, classNameId);
 		}
 	}
 
