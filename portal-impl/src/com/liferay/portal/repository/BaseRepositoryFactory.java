@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -119,8 +120,29 @@ public abstract class BaseRepositoryFactory<T> {
 		return baseRepository;
 	}
 
-	protected abstract T createLiferayRepository(long repositoryId)
-		throws PortalException, SystemException;
+	protected T createLiferayRepository(long repositoryId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		long groupId;
+		long actualRepositoryId;
+		long dlFolderId;
+
+		if (repository == null) {
+			groupId = repositoryId;
+			actualRepositoryId = repositoryId;
+			dlFolderId = 0;
+		}
+		else {
+			groupId = repository.getGroupId();
+			actualRepositoryId = repository.getRepositoryId();
+			dlFolderId = repository.getDlFolderId();
+		}
+
+		return createLiferayRepositoryInstance(
+			groupId, actualRepositoryId, dlFolderId);
+	}
 
 	protected T createLiferayRepository(
 			long folderId, long fileEntryId, long fileVersionId)
