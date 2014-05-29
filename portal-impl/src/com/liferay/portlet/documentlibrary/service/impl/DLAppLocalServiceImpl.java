@@ -762,6 +762,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 				dlAppHelperLocalService.moveFileEntry(fileEntry);
 
+				dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
+
 				return fileEntry;
 			}
 
@@ -815,7 +817,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		return dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
+		FileEntry trashedFileEntry =
+			dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
+
+		dlAppHelperLocalService.updateLockedFileEntry(trashedFileEntry);
+
+		return trashedFileEntry;
 	}
 
 	@Override
@@ -1141,6 +1148,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 
+		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
+
 		return fileEntry;
 	}
 
@@ -1239,6 +1248,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		dlAppHelperLocalService.updateFileEntry(
 			userId, fileEntry, oldFileVersion, fileEntry.getFileVersion(),
 			serviceContext);
+
+		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
 
 		return fileEntry;
 	}
