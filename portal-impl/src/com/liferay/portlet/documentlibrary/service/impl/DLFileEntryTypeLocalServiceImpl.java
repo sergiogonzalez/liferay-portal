@@ -541,6 +541,9 @@ public class DLFileEntryTypeLocalServiceImpl
 				null, false, defaultFileEntryTypeId, null, null, null, 0,
 				serviceContext);
 
+			dlAppHelperLocalService.updateLockedFileEntry(
+				new LiferayFileEntry(dlFileEntry));
+
 			dlAppHelperLocalService.updateAsset(
 				userId, new LiferayFileEntry(dlFileEntry),
 				new LiferayFileVersion(dlFileVersion),
