@@ -251,6 +251,12 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
+		long fileEntryId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Delete all data associated to the given repository. This method is only
 	* supported by the Liferay repository.
