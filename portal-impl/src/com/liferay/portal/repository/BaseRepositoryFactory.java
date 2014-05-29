@@ -30,7 +30,7 @@ import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
-import com.liferay.portal.repository.util.RepositoryFactoryUtil;
+import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
@@ -38,7 +38,11 @@ import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
@@ -51,9 +55,41 @@ import com.liferay.portlet.documentlibrary.service.DLFolderService;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseRepositoryFactory {
+public abstract class BaseRepositoryFactory<T> {
 
-	protected BaseRepository createRepositoryImpl(
+	public T create(long repositoryId) throws PortalException, SystemException {
+		long classNameId = getRepositoryClassNameId(repositoryId);
+
+		if (classNameId == getDefaultClassNameId()) {
+			return createLiferayRepository(repositoryId);
+		}
+		else {
+			return createExternalRepository(repositoryId, classNameId);
+		}
+	}
+
+	public T create(long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
+
+		T liferayRepository = createLiferayRepository(
+			folderId, fileEntryId, fileVersionId);
+
+		if (liferayRepository != null) {
+			return liferayRepository;
+		}
+
+		return createExternalRepository(folderId, fileEntryId, fileVersionId);
+	}
+
+	protected abstract T createExternalRepository(
+			long repositoryId, long classNameId)
+		throws PortalException, SystemException;
+
+	protected abstract T createExternalRepository(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException;
+
+	protected BaseRepository createExternalRepositoryImpl(
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {
 
@@ -69,7 +105,7 @@ public abstract class BaseRepositoryFactory {
 
 			String repositoryImplClassName = className.getValue();
 
-			baseRepository = RepositoryFactoryUtil.getInstance(
+			baseRepository = ExternalRepositoryFactoryUtil.getInstance(
 				repositoryImplClassName);
 		}
 		catch (Exception e) {
@@ -116,6 +152,68 @@ public abstract class BaseRepositoryFactory {
 
 		return baseRepository;
 	}
+
+	protected T createLiferayRepository(long repositoryId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		long groupId;
+		long actualRepositoryId;
+		long dlFolderId;
+
+		if (repository == null) {
+			groupId = repositoryId;
+			actualRepositoryId = repositoryId;
+			dlFolderId = 0;
+		}
+		else {
+			groupId = repository.getGroupId();
+			actualRepositoryId = repository.getRepositoryId();
+			dlFolderId = repository.getDlFolderId();
+		}
+
+		return createLiferayRepositoryInstance(
+			groupId, actualRepositoryId, dlFolderId);
+	}
+
+	protected T createLiferayRepository(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
+
+		try {
+			long repositoryId;
+
+			if (folderId != 0) {
+				repositoryId = getFolderRepositoryId(folderId);
+			}
+			else if (fileEntryId != 0) {
+				repositoryId = getFileEntryRepositoryId(fileEntryId);
+			}
+			else if (fileVersionId != 0) {
+				repositoryId = getFileVersionRepositoryId(fileVersionId);
+			}
+			else {
+				throw new InvalidRepositoryIdException(
+					"Missing a valid ID for folder, file entry or file " +
+						"version");
+			}
+
+			return createLiferayRepository(repositoryId);
+		}
+		catch (NoSuchFolderException nsfe) {
+			return null;
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			return null;
+		}
+		catch (NoSuchFileVersionException nsfve) {
+			return null;
+		}
+	}
+
+	protected abstract T createLiferayRepositoryInstance(
+		long groupId, long repositoryId, long dlFolderId);
 
 	protected AssetEntryLocalService getAssetEntryLocalService() {
 		return _assetEntryLocalService;
@@ -170,6 +268,19 @@ public abstract class BaseRepositoryFactory {
 		return _dlFolderService;
 	}
 
+	protected abstract long getFileEntryRepositoryId(long fileEntryId)
+		throws PortalException, SystemException;
+
+	protected abstract long getFileVersionRepositoryId(long fileVersionId)
+		throws PortalException, SystemException;
+
+	protected abstract long getFolderRepositoryId(long folderId)
+		throws PortalException, SystemException;
+
+	protected abstract com.liferay.portal.model.Repository getRepository(
+			long repositoryId)
+		throws PortalException, SystemException;
+
 	protected long getRepositoryClassNameId(long repositoryId)
 		throws SystemException {
 
@@ -184,30 +295,6 @@ public abstract class BaseRepositoryFactory {
 			LiferayRepository.class.getName());
 	}
 
-	protected long getRepositoryEntryId(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws RepositoryException {
-
-		long repositoryEntryId = 0;
-
-		if (folderId != 0) {
-			repositoryEntryId = folderId;
-		}
-		else if (fileEntryId != 0) {
-			repositoryEntryId = fileEntryId;
-		}
-		else if (fileVersionId != 0) {
-			repositoryEntryId = fileVersionId;
-		}
-
-		if (repositoryEntryId == 0) {
-			throw new InvalidRepositoryIdException(
-				"Missing a valid ID for folder, file entry, or file version");
-		}
-
-		return repositoryEntryId;
-	}
-
 	protected RepositoryEntryLocalService getRepositoryEntryLocalService() {
 		return _repositoryEntryLocalService;
 	}
@@ -216,7 +303,7 @@ public abstract class BaseRepositoryFactory {
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
 
-		long repositoryEntryId = getRepositoryEntryId(
+		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
 
 		RepositoryEntry repositoryEntry =
@@ -318,7 +405,6 @@ public abstract class BaseRepositoryFactory {
 	}
 
 	protected void setRepositoryService(RepositoryService repositoryService) {
-
 		_repositoryService = repositoryService;
 	}
 
@@ -346,7 +432,6 @@ public abstract class BaseRepositoryFactory {
 	}
 
 	protected void setUserLocalService(UserLocalService userLocalService) {
-
 		_userLocalService = userLocalService;
 	}
 
