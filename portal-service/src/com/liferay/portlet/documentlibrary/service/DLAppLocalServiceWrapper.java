@@ -271,6 +271,16 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 			parentFolderId, name, description, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
+		long fileEntryId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.moveFileEntryFromTrash(fileEntryId,
+			newFolderId, serviceContext);
+	}
+
 	/**
 	* Delete all data associated to the given repository. This method is only
 	* supported by the Liferay repository.
