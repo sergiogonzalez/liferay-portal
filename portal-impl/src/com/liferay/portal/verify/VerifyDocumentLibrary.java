@@ -16,7 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -35,11 +35,13 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -309,10 +311,33 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			DLFileEntry.class);
 
-		Criterion criterion1 = RestrictionsFactoryUtil.like("title", "%/%");
-		Criterion criterion2 = RestrictionsFactoryUtil.like("title", "%\\\\%");
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.or(criterion1, criterion2));
+		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
+			blacklistChar = blacklistChar.replace(
+				StringPool.BACK_SLASH, "\\\\");
+
+			disjunction.add(
+				RestrictionsFactoryUtil.like(
+					"title", "%" + blacklistChar + "%"));
+		}
+
+		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
+			if (blacklistLastChar.startsWith(UnicodeFormatter.UNICODE_PREFIX)) {
+				blacklistLastChar = UnicodeFormatter.parseString(
+					blacklistLastChar);
+			}
+
+			disjunction.add(
+				RestrictionsFactoryUtil.like("title", "%" + blacklistLastChar));
+		}
+
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			disjunction.add(
+				RestrictionsFactoryUtil.like("title", blacklistName + "%"));
+		}
+
+		dynamicQuery.add(disjunction);
 
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
@@ -326,26 +351,89 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			}
 
 			String title = dlFileEntry.getTitle();
+			String newTitle = title;
 
-			String newTitle = title.replace(StringPool.SLASH, StringPool.BLANK);
+			for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
+				newTitle = newTitle.replace(
+					blacklistChar, StringPool.UNDERLINE);
+			}
 
-			newTitle = newTitle.replace(
-				StringPool.BACK_SLASH, StringPool.UNDERLINE);
+			boolean replaced = true;
 
-			dlFileEntry.setTitle(newTitle);
+			while (replaced) {
+				replaced = false;
 
-			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+				for (
+					String blacklistLastChar :
+						PropsValues.DL_CHAR_LAST_BLACKLIST) {
 
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+					if (blacklistLastChar.startsWith(
+							UnicodeFormatter.UNICODE_PREFIX)) {
 
-			dlFileVersion.setTitle(newTitle);
+						blacklistLastChar = UnicodeFormatter.parseString(
+							blacklistLastChar);
+					}
 
-			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+					while (newTitle.endsWith(blacklistLastChar))
+					{
+						newTitle = StringUtil.replaceLast(
+							newTitle, blacklistLastChar, StringPool.BLANK);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Invalid document title " + title + "renamed to " +
-						newTitle);
+						replaced = true;
+					}
+				}
+			}
+
+			String nameWithoutExtension = newTitle;
+
+			String extension = StringPool.BLANK;
+
+			if (newTitle.contains(StringPool.PERIOD)) {
+				int index = newTitle.lastIndexOf(StringPool.PERIOD);
+
+				nameWithoutExtension = newTitle.substring(0, index);
+
+				extension = newTitle.substring(index);
+			}
+
+			for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+				if (StringUtil.equalsIgnoreCase(
+						nameWithoutExtension, blacklistName)) {
+
+					newTitle =
+						nameWithoutExtension + StringPool.UNDERLINE + extension;
+
+					break;
+				}
+			}
+
+			try {
+				dlFileEntry.setTitle(newTitle);
+
+				DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+				DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+				dlFileVersion.setTitle(newTitle);
+
+				DLFileVersionLocalServiceUtil.updateDLFileVersion(
+					dlFileVersion);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Invalid document title " + title + "renamed to " +
+							newTitle+ " for file entry " +
+								dlFileEntry.getFileEntryId());
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to rename invalid document title " +
+							title + " to " + newTitle + " for file entry " +
+								dlFileEntry.getFileEntryId() + " :" +
+									e.getMessage());
+				}
 			}
 		}
 	}
