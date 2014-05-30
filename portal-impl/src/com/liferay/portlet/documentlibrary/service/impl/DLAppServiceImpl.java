@@ -625,8 +625,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, oldFileVersion, fileVersion, fileEntryId);
-
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
 	}
 
 	/**
@@ -731,8 +729,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
-
 		repository.deleteFileEntry(fileEntryId);
 	}
 
@@ -755,8 +751,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.getFileEntry(folderId, title);
 
 		dlAppHelperLocalService.deleteFileEntry(fileEntry);
-
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
 
 		repository.deleteFileEntry(folderId, title);
 	}
@@ -2261,8 +2255,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			dlAppHelperLocalService.moveFileEntry(fileEntry);
 
-			dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
-
 			return fileEntry;
 		}
 
@@ -2306,8 +2298,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			dlAppHelperLocalService.moveFileEntryFromTrash(
 				getUserId(), fileEntry, newFolderId, serviceContext);
 
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
-
 		return movedFileEntry;
 	}
 
@@ -2339,8 +2329,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry trashedFileEntry =
 			dlAppHelperLocalService.moveFileEntryToTrash(
 				getUserId(), fileEntry);
-
-		dlAppHelperLocalService.updateLockedFileEntry(trashedFileEntry);
 
 		return trashedFileEntry;
 	}
@@ -2661,8 +2649,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, fileEntry.getFileVersion(version),
 			fileEntry.getFileVersion(), serviceContext);
-
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
 	}
 
 	@Override
@@ -2987,8 +2973,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
-
 		return fileEntry;
 	}
 
@@ -3085,8 +3069,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getUserId(), fileEntry, oldFileVersion, fileEntry.getFileVersion(),
 			serviceContext);
 
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
-
 		return fileEntry;
 	}
 
@@ -3117,8 +3099,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
-
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
 
 		return fileEntry;
 	}
@@ -3153,8 +3133,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, oldFileVersion, fileEntry.getFileVersion(),
 			serviceContext);
-
-		dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
 
 		return fileEntry;
 	}
@@ -3331,8 +3309,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 					getUserId(), destinationFileEntry,
 					oldDestinationFileVersion, destinationFileVersion,
 					serviceContext);
-
-				dlAppHelperLocalService.updateLockedFileEntry(fileEntry);
 
 				oldDestinationFileVersion = destinationFileVersion;
 			}

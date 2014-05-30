@@ -277,6 +277,8 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
+			updateLockedFileEntry(fileEntry);
+
 			registerDLSyncEventCallback(
 				DLSyncConstants.EVENT_DELETE, fileEntry);
 
@@ -1684,6 +1686,8 @@ public class DLAppHelperLocalServiceImpl
 			fileEntry.getFileEntryId(), newFolderId, serviceContext);
 
 		// Sync
+
+		updateLockedFileEntry(fileEntry);
 
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, fileEntry);
 
