@@ -1450,16 +1450,6 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
-	public void updateLockedFileEntry(FileEntry fileEntry)
-		throws PortalException, SystemException {
-
-		if (fileEntry.isCheckedOut() != fileEntry.hasLock()) {
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_UPDATE, fileEntry);
-		}
-	}
-
-	@Override
 	public void updateStatus(
 			long userId, FileEntry fileEntry, FileVersion latestFileVersion,
 			int oldStatus, int newStatus, ServiceContext serviceContext,
@@ -2213,6 +2203,15 @@ public class DLAppHelperLocalServiceImpl
 
 			}
 		);
+	}
+
+	protected void updateLockedFileEntry(FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		if (fileEntry.isCheckedOut() != fileEntry.hasLock()) {
+			registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE, fileEntry);
+		}
 	}
 
 }
