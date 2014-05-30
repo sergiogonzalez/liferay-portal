@@ -612,6 +612,8 @@ public class DLAppHelperLocalServiceImpl
 	public void moveFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
+		updateLockedFileEntry(fileEntry);
+
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, fileEntry);
 	}
 
@@ -1733,6 +1735,8 @@ public class DLAppHelperLocalServiceImpl
 			dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
 
 			// Sync
+
+			updateLockedFileEntry(fileEntry);
 
 			registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, fileEntry);
 		}
