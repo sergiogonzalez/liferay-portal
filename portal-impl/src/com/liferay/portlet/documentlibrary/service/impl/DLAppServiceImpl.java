@@ -2286,8 +2286,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.UPDATE);
 
-		return dlAppHelperLocalService.moveFileEntryFromTrash(
-			getUserId(), fileEntry, newFolderId, serviceContext);
+		FileEntry movedFileEntry =
+			dlAppHelperLocalService.moveFileEntryFromTrash(
+				getUserId(), fileEntry, newFolderId, serviceContext);
+
+		return movedFileEntry;
 	}
 
 	/**
@@ -2315,8 +2318,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
 
-		return dlAppHelperLocalService.moveFileEntryToTrash(
-			getUserId(), fileEntry);
+		FileEntry trashedFileEntry =
+			dlAppHelperLocalService.moveFileEntryToTrash(
+				getUserId(), fileEntry);
+
+		return trashedFileEntry;
 	}
 
 	/**

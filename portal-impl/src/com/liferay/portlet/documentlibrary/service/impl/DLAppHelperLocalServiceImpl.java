@@ -277,6 +277,8 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
+			updateLockedFileEntry(fileEntry);
+
 			registerDLSyncEventCallback(
 				DLSyncConstants.EVENT_DELETE, fileEntry);
 
@@ -611,6 +613,8 @@ public class DLAppHelperLocalServiceImpl
 	@Override
 	public void moveFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
+
+		updateLockedFileEntry(fileEntry);
 
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, fileEntry);
 	}
@@ -1673,6 +1677,8 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
+		updateLockedFileEntry(fileEntry);
+
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, fileEntry);
 
 		// Social
@@ -1723,6 +1729,8 @@ public class DLAppHelperLocalServiceImpl
 			dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
 
 			// Sync
+
+			updateLockedFileEntry(fileEntry);
 
 			registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, fileEntry);
 		}
@@ -2195,6 +2203,15 @@ public class DLAppHelperLocalServiceImpl
 
 			}
 		);
+	}
+
+	protected void updateLockedFileEntry(FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		if (fileEntry.isCheckedOut() != fileEntry.hasLock()) {
+			registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE, fileEntry);
+		}
 	}
 
 }

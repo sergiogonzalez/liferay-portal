@@ -1362,8 +1362,6 @@ public class DLFileEntryLocalServiceImpl
 	public boolean hasFileEntryLock(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
-		boolean checkedOut = isFileEntryCheckedOut(fileEntryId);
-
 		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
 
 		long folderId = dlFileEntry.getFolderId();
@@ -1375,12 +1373,6 @@ public class DLFileEntryLocalServiceImpl
 			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
 			hasLock = dlFolderService.hasInheritableLock(folderId);
-		}
-
-		if (checkedOut != hasLock) {
-			dlAppHelperLocalService.registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_UPDATE,
-				new LiferayFileEntry(dlFileEntry));
 		}
 
 		return hasLock;
