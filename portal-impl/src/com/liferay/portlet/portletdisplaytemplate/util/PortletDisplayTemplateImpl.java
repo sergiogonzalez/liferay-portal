@@ -44,11 +44,14 @@ import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
+import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
+import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
 
 import java.lang.reflect.InvocationHandler;
 
@@ -332,12 +335,48 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		contextObjects.put(
 			PortletDisplayTemplateConstants.THEME_DISPLAY, themeDisplay);
 
-		// Taglibs
+		// Custom context objects
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			ddmTemplateId);
 
 		String language = ddmTemplate.getLanguage();
+
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				ddmTemplate.getClassNameId());
+
+		if (templateHandler instanceof BasePortletDisplayTemplateHandler) {
+			BasePortletDisplayTemplateHandler portletDisplayTemplateHandler =
+				(BasePortletDisplayTemplateHandler)templateHandler;
+
+			Map<String, Object> customContextObjects =
+				portletDisplayTemplateHandler.getCustomContextObjects();
+
+			for (String variableName : customContextObjects.keySet()) {
+				if (contextObjects.containsKey(variableName)) {
+					continue;
+				}
+
+				Object object = customContextObjects.get(variableName);
+
+				if (object instanceof Class) {
+					if (language.equals(TemplateConstants.LANG_TYPE_FTL)) {
+						_addStaticClassSupportFTL(
+							contextObjects, variableName, (Class<?>)object);
+					}
+					else if (language.equals(TemplateConstants.LANG_TYPE_VM)) {
+						_addStaticClassSupportVM(
+							contextObjects, variableName, (Class<?>)object);
+					}
+				}
+				else {
+					contextObjects.put(variableName, object);
+				}
+			}
+		}
+
+		// Taglibs
 
 		if (language.equals(TemplateConstants.LANG_TYPE_FTL)) {
 			_addTaglibSupportFTL(contextObjects, pageContext);
@@ -350,6 +389,35 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(), language);
+	}
+
+	private void _addStaticClassSupportFTL(
+		Map<String, Object> contextObjects, String variableName,
+		Class<?> variableClass) {
+
+		try {
+			BeansWrapper beansWrapper = BeansWrapper.getDefaultInstance();
+
+			TemplateHashModel templateHashModel =
+				beansWrapper.getStaticModels();
+
+			TemplateModel templateModel = templateHashModel.get(
+				variableClass.getCanonicalName());
+
+			contextObjects.put(variableName, templateModel);
+		}
+		catch (TemplateModelException e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Variable " + variableName + " registration fail", e);
+			}
+		}
+	}
+
+	private void _addStaticClassSupportVM(
+		Map<String, Object> contextObjects, String variableName,
+		Class<?> variableClass) {
+
+		contextObjects.put(variableName, variableClass);
 	}
 
 	private void _addTaglibSupportFTL(

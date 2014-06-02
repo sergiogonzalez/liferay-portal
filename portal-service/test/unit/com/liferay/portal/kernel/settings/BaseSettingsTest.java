@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.settings;
 
-import java.util.Collection;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,40 +26,66 @@ import org.powermock.api.mockito.PowerMockito;
  */
 public class BaseSettingsTest extends PowerMockito {
 
-	@Test
-	public void testReset() {
-		Settings settings = new MemorySettings();
+	public BaseSettingsTest() {
+		_parentSettings = new MemorySettings();
 
-		settings.setValue("key1", "value2");
-		settings.setValue("key2", "value2");
-
-		settings.reset();
-
-		Collection<String> keys = settings.getKeys();
-
-		Assert.assertEquals(0, keys.size());
+		_baseSettings = new MemorySettings(_parentSettings);
 	}
 
 	@Test
-	public void testSetValues() {
-		Settings sourceSettings = new MemorySettings();
+	public void testGetModifiableSettingsForModifiableBaseSettings() {
+		BaseSettings baseSettings = new MemorySettings();
 
-		sourceSettings.setValue("key1", "value1");
-		sourceSettings.setValue("key2", "value2");
+		Assert.assertTrue(baseSettings instanceof ModifiableSettings);
+		Assert.assertSame(baseSettings, baseSettings.getModifiableSettings());
+	}
 
-		Settings targetSettings = new MemorySettings();
+	@Test
+	public void testGetModifiableSettingsForUnmodifiableBaseSettings() {
+		ModifiableSettings modifiableSettings = new MemorySettings();
+		BaseSettings baseSettings = new ParameterMapSettings(
+			Collections.<String, String[]> emptyMap(), modifiableSettings);
 
-		targetSettings.setValue("otherKey", "otherValue");
+		Assert.assertFalse(baseSettings instanceof ModifiableSettings);
+		Assert.assertSame(
+			modifiableSettings, baseSettings.getModifiableSettings());
+	}
 
-		sourceSettings.setValues(targetSettings);
+	@Test
+	public void testGetParentSettings() {
+		Assert.assertSame(_parentSettings, _baseSettings.getParentSettings());
+	}
 
-		Collection<String> keys = sourceSettings.getKeys();
-
-		Assert.assertEquals(3, keys.size());
+	@Test
+	public void testGetValueReturnsDefaultWhenValueAndParentNotSet() {
 		Assert.assertEquals(
-			"otherValue", sourceSettings.getValue("otherKey", null));
-		Assert.assertEquals("value1", sourceSettings.getValue("key1", null));
-		Assert.assertEquals("value2", sourceSettings.getValue("key2", null));
+			_DEFAULT_VALUE, _baseSettings.getValue(_KEY, _DEFAULT_VALUE));
+		Assert.assertArrayEquals(
+			_DEFAULT_VALUES, _baseSettings.getValues(_KEY, _DEFAULT_VALUES));
+
+		_parentSettings.setValue(_KEY, _VALUE);
+
+		Assert.assertEquals(
+			_VALUE, _baseSettings.getValue(_KEY, _DEFAULT_VALUE));
+
+		_parentSettings.setValues(_KEY, _VALUES);
+
+		Assert.assertArrayEquals(
+			_VALUES, _baseSettings.getValues(_KEY, _DEFAULT_VALUES));
 	}
+
+	private static final String _DEFAULT_VALUE = "defaultValue";
+
+	private static final String[] _DEFAULT_VALUES = {
+		"defaultValue0", "defaultValue1"};
+
+	private static final String _KEY = "key";
+
+	private static final String _VALUE = "value";
+
+	private static final String[] _VALUES = {"value0", "value1"};
+
+	private BaseSettings _baseSettings;
+	private MemorySettings _parentSettings;
 
 }

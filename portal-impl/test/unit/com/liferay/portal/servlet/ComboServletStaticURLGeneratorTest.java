@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -31,12 +33,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import org.springframework.mock.web.MockServletContext;
 
 import org.testng.Assert;
 
@@ -79,6 +85,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 			"/portlet", "/css/main.css", "/css/more.css",
 			"http://www.test.com/test1.css", "http://www.test.com/test2.css");
 
+		setPortletTimestamp("/portlet", 0);
+
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
@@ -101,6 +109,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		Portlet portlet = buildPortlet(
 			"portlet", "/css/main.css", "/css/more.css");
 
+		setPortletTimestamp("portlet", 0);
+
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
@@ -119,8 +129,13 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		Portlet portlet1 = buildPortlet(
 			"portlet1", "/css/main2.css", "/css/main1.css");
+
+		setPortletTimestamp("portlet1", 0);
+
 		Portlet portlet2 = buildPortlet(
 			"portlet2", "/css/main3.css", "/css/main4.css");
+
+		setPortletTimestamp("portlet2", 0);
 
 		List<String> urls1 = comboServletStaticURLGenerator.generate(
 			toList(portlet1, portlet2));
@@ -146,6 +161,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		Portlet portlet = buildPortlet(
 			"portlet", "/css/more.css", "/css/main.css");
 
+		setPortletTimestamp("portlet", 0);
+
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
@@ -168,6 +185,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		Portlet portlet = buildPortlet("portlet", "/css/main.css");
 
+		setPortletTimestamp("portlet", 0);
+
 		comboServletStaticURLGenerator.generate(toList(portlet));
 
 		Assert.assertTrue(visitedURLs.contains("/css/main.css"));
@@ -185,7 +204,7 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		Portlet portlet = buildPortlet("portlet", "/css/main.css");
 
-		portlet.setTimestamp(10000);
+		setPortletTimestamp("portlet", 10000);
 
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
@@ -206,7 +225,7 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		Portlet portlet = buildPortlet("portlet", "/css/main.css");
 
-		portlet.setTimestamp(10000);
+		setPortletTimestamp("portlet", 2000);
 
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
@@ -226,6 +245,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		Portlet portlet = buildPortlet(
 			"portlet", "http://www.test.com/test.css", "/css/main.css");
+
+		setPortletTimestamp("portlet", 0);
 
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
@@ -248,6 +269,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		Portlet portlet = buildPortlet(
 			"portlet", "http://www.test.com/test.css");
 
+		setPortletTimestamp("portlet", 0);
+
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
@@ -267,6 +290,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		Portlet portlet = buildPortlet("portlet", "/css/main.css");
 
+		setPortletTimestamp("portlet", 0);
+
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
@@ -285,6 +310,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		Portlet portlet = buildPortlet(
 			"portlet", "/css/main.css", "/css/more.css");
+
+		setPortletTimestamp("portlet", 0);
 
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
@@ -306,6 +333,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		Portlet portlet = buildPortlet(
 			"portlet", "/css/main.css", "/css/more.css");
+
+		setPortletTimestamp("portlet", 0);
 
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
@@ -342,6 +371,17 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		).getContextName();
 
 		return portlet;
+	}
+
+	protected void setPortletTimestamp(
+		String servletContextName, long timestamp) {
+
+		ServletContext servletContext = new MockServletContext();
+
+		servletContext.setAttribute(
+			ServletContextUtil.class.getName() + "./", timestamp);
+
+		ServletContextPool.put(servletContextName, servletContext);
 	}
 
 	private <T> List<T> toList(T... t) {

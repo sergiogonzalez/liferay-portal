@@ -21,18 +21,15 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
-import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -88,56 +85,34 @@ public class EditVocabularyAction extends PortletAction {
 				renderRequest, "portlet.asset_category_admin.edit_vocabulary"));
 	}
 
-	protected UnicodeProperties getSettingsProperties(
-		ActionRequest actionRequest) {
-
-		UnicodeProperties settingsProperties = new UnicodeProperties();
-
-		boolean multiValued = ParamUtil.getBoolean(
-			actionRequest, "multiValued");
-
-		settingsProperties.setProperty(
-			"multiValued", String.valueOf(multiValued));
+	protected String getSettings(ActionRequest actionRequest) {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
 
 		int[] indexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
-		Set<Long> selectedClassNameIds = new LinkedHashSet<Long>();
-		Set<Long> requiredClassNameIds = new LinkedHashSet<Long>();
+		long[] classNameIds = new long[indexes.length];
+		boolean[] requireds = new boolean[indexes.length];
 
-		for (int index : indexes) {
-			long classNameId = ParamUtil.getLong(
+		for (int i = 0; i < indexes.length; i++) {
+			int index = indexes[i];
+
+			classNameIds[i] = ParamUtil.getLong(
 				actionRequest, "classNameId" + index);
 
-			boolean required = ParamUtil.getBoolean(
+			requireds[i] = ParamUtil.getBoolean(
 				actionRequest, "required" + index);
-
-			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_IDS) {
-				selectedClassNameIds.clear();
-				selectedClassNameIds.add(classNameId);
-
-				if (required) {
-					requiredClassNameIds.clear();
-					requiredClassNameIds.add(classNameId);
-				}
-
-				break;
-			}
-			else {
-				selectedClassNameIds.add(classNameId);
-
-				if (required) {
-					requiredClassNameIds.add(classNameId);
-				}
-			}
 		}
 
-		settingsProperties.setProperty(
-			"selectedClassNameIds", StringUtil.merge(selectedClassNameIds));
-		settingsProperties.setProperty(
-			"requiredClassNameIds", StringUtil.merge(requiredClassNameIds));
+		vocabularySettingsHelper.setClassNameIds(classNameIds, requireds);
 
-		return settingsProperties;
+		boolean multiValued = ParamUtil.getBoolean(
+			actionRequest, "multiValued");
+
+		vocabularySettingsHelper.setMultiValued(multiValued);
+
+		return vocabularySettingsHelper.toString();
 	}
 
 	protected JSONObject updateVocabulary(ActionRequest actionRequest)
@@ -150,9 +125,6 @@ public class EditVocabularyAction extends PortletAction {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		UnicodeProperties settingsProperties = getSettingsProperties(
-			actionRequest);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetVocabulary.class.getName(), actionRequest);
 
@@ -164,7 +136,7 @@ public class EditVocabularyAction extends PortletAction {
 
 			vocabulary = AssetVocabularyServiceUtil.addVocabulary(
 				StringPool.BLANK, titleMap, descriptionMap,
-				settingsProperties.toString(), serviceContext);
+				getSettings(actionRequest), serviceContext);
 		}
 		else {
 
@@ -172,7 +144,7 @@ public class EditVocabularyAction extends PortletAction {
 
 			vocabulary = AssetVocabularyServiceUtil.updateVocabulary(
 				vocabularyId, StringPool.BLANK, titleMap, descriptionMap,
-				settingsProperties.toString(), serviceContext);
+				getSettings(actionRequest), serviceContext);
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

@@ -2010,6 +2010,18 @@ tck.url=true</echo>
 		</if>
 	</target>
 
+	<target name="prepare-so-plugins">
+		<property file="${lp.plugins.dir}/portlets/so-portlet/docroot/WEB-INF/liferay-releng.properties" />
+
+		<property name="plugins.includes" value="so-portlet,${dependent-apps}" />
+
+		<ant dir="${lp.plugins.dir}" target="clean" />
+
+		<ant dir="${lp.plugins.dir}" target="compile" />
+
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" />
+	</target>
+
 	<target name="prepare-test-build">
 		<antcall target="record-git-commit-portal" inheritAll="false" />
 

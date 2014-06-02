@@ -50,25 +50,15 @@ public class PortletPreferencesSettingsTest {
 			_PORTLET_PREFERENCES_MULTIPLE_VALUES
 		);
 
-		Settings defaultSettings = PowerMockito.mock(Settings.class);
+		ModifiableSettings modifiableSettings = new MemorySettings();
 
-		Mockito.when(
-			defaultSettings.getValue(
-				Matchers.eq(_DEFAULT_SETTINGS_SINGLE_KEY), Matchers.anyString())
-		).thenReturn(
-			_DEFAULT_SETTINGS_SINGLE_VALUE
-		);
-
-		Mockito.when(
-			defaultSettings.getValues(
-				Matchers.eq(_DEFAULT_SETTINGS_MULTIPLE_KEY),
-				(String[])Matchers.any())
-		).thenReturn(
-			_DEFAULT_SETTINGS_MULTIPLE_VALUES
-		);
+		modifiableSettings.setValue(
+			_DEFAULT_SETTINGS_SINGLE_KEY, _DEFAULT_SETTINGS_SINGLE_VALUE);
+		modifiableSettings.setValues(
+			_DEFAULT_SETTINGS_MULTIPLE_KEY, _DEFAULT_SETTINGS_MULTIPLE_VALUES);
 
 		_portletPreferencesSettings = new PortletPreferencesSettings(
-			_portletPreferences, defaultSettings);
+			_portletPreferences, modifiableSettings);
 	}
 
 	@Test

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trackback;
+package com.liferay.portal.comment;
 
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
@@ -25,36 +26,41 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
- * @author Alexander Chow
  * @author André de Oliveira
+ * @author Alexander Chow
  */
-public class TrackbackCommentsImpl implements TrackbackComments {
+public class CommentManagerImpl implements CommentManager {
 
 	@Override
-	public long addTrackbackComment(
+	public long addComment(
 			long userId, long groupId, String className, long classPK,
-			String blogName, String title, String body,
+			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException, SystemException {
 
-		MBMessageDisplay messageDisplay =
+		MBMessageDisplay mbMessageDisplay =
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
 				userId, groupId, className, classPK,
 				WorkflowConstants.STATUS_APPROVED);
 
-		MBThread thread = messageDisplay.getThread();
-
-		long threadId = thread.getThreadId();
-		long parentMessageId = thread.getRootMessageId();
+		MBThread mbThread = mbMessageDisplay.getThread();
 
 		ServiceContext serviceContext = serviceContextFunction.apply(
 			MBMessage.class.getName());
 
-		MBMessage message = MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, blogName, groupId, className, classPK, threadId,
-			parentMessageId, title, body, serviceContext);
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addDiscussionMessage(
+			userId, userName, groupId, className, classPK,
+			mbThread.getThreadId(), mbThread.getRootMessageId(), subject, body,
+			serviceContext);
 
-		return message.getMessageId();
+		return mbMessage.getMessageId();
+	}
+
+	@Override
+	public void deleteComment(long commentId)
+		throws PortalException, SystemException {
+
+		MBMessageLocalServiceUtil.deleteDiscussionMessage(commentId);
 	}
 
 }

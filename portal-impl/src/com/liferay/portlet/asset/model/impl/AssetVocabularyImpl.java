@@ -18,18 +18,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.List;
 import java.util.Locale;
@@ -51,39 +49,44 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public long[] getRequiredClassNameIds() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper();
 
-		return StringUtil.split(
-			settingsProperties.getProperty("requiredClassNameIds"), 0L);
+		return vocabularySettingsHelper.getRequiredClassNameIds();
 	}
 
 	@Override
 	public long[] getSelectedClassNameIds() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper();
 
-		return StringUtil.split(
-			settingsProperties.getProperty("selectedClassNameIds"), 0L);
+		return vocabularySettingsHelper.getClassNameIds();
 	}
 
 	@Override
 	public String getSettings() {
-		if (_settingsProperties == null) {
+		if (_vocabularySettingsHelper == null) {
 			return super.getSettings();
 		}
 		else {
-			return _settingsProperties.toString();
+			return _vocabularySettingsHelper.toString();
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public UnicodeProperties getSettingsProperties() {
-		if (_settingsProperties == null) {
-			_settingsProperties = new UnicodeProperties(true);
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper();
 
-			_settingsProperties.fastLoad(super.getSettings());
-		}
+		UnicodeProperties settingsProperties = new UnicodeProperties(true);
 
-		return _settingsProperties;
+		settingsProperties.fastLoad(vocabularySettingsHelper.toString());
+
+		return settingsProperties;
 	}
 
 	@Override
@@ -170,7 +173,10 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isAssociatedToAssetRendererFactory(long classNameId) {
-		return isClassNameIdSpecified(classNameId, getSelectedClassNameIds());
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper();
+
+		return vocabularySettingsHelper.hasClassNameId(classNameId);
 	}
 
 	@Override
@@ -178,7 +184,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			long classNameId, final long[] categoryIds)
 		throws SystemException {
 
-		if (!isClassNameIdSpecified(classNameId, getRequiredClassNameIds())) {
+		if (!isRequired(classNameId)) {
 			return false;
 		}
 
@@ -198,48 +204,47 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMultiValued() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper();
 
-		return GetterUtil.getBoolean(
-			settingsProperties.getProperty("multiValued"), true);
+		return vocabularySettingsHelper.isMultiValued();
 	}
 
 	@Override
 	public boolean isRequired(long classNameId) {
-		return ArrayUtil.contains(getRequiredClassNameIds(), classNameId);
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper();
+
+		return vocabularySettingsHelper.isClassNameIdRequired(classNameId);
 	}
 
 	@Override
 	public void setSettings(String settings) {
-		_settingsProperties = null;
+		_vocabularySettingsHelper = null;
 
 		super.setSettings(settings);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void setSettingsProperties(UnicodeProperties settingsProperties) {
-		_settingsProperties = settingsProperties;
-
 		super.setSettings(settingsProperties.toString());
+
+		_vocabularySettingsHelper = getVocabularySettingsHelper();
 	}
 
-	protected boolean isClassNameIdSpecified(
-		long classNameId, long[] classNameIds) {
-
-		if (classNameIds.length == 0) {
-			return false;
+	protected AssetVocabularySettingsHelper getVocabularySettingsHelper() {
+		if (_vocabularySettingsHelper == null) {
+			_vocabularySettingsHelper = new AssetVocabularySettingsHelper(
+				super.getSettings());
 		}
 
-		if ((classNameIds[0] !=
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS) &&
-			!ArrayUtil.contains(classNameIds, classNameId)) {
-
-			return false;
-		}
-
-		return true;
+		return _vocabularySettingsHelper;
 	}
 
-	private UnicodeProperties _settingsProperties;
+	private AssetVocabularySettingsHelper _vocabularySettingsHelper;
 
 }

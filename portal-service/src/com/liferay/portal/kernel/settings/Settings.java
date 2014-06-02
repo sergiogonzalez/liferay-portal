@@ -14,12 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import java.io.IOException;
-
-import java.util.Collection;
-
-import javax.portlet.ValidatorException;
-
 /**
  * @author Raymond Augé
  * @author Jorge Ferrer
@@ -27,24 +21,12 @@ import javax.portlet.ValidatorException;
  */
 public interface Settings {
 
-	public Settings getDefaultSettings();
+	public ModifiableSettings getModifiableSettings();
 
-	public Collection<String> getKeys();
+	public Settings getParentSettings();
 
 	public String getValue(String key, String defaultValue);
 
 	public String[] getValues(String key, String[] defaultValue);
-
-	public void reset();
-
-	public void reset(String key);
-
-	public Settings setValue(String key, String value);
-
-	public Settings setValues(Settings settings);
-
-	public Settings setValues(String key, String[] values);
-
-	public void store() throws IOException, ValidatorException;
 
 }

@@ -41,5 +41,6 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	lib/${original.lib.name}.jar=lib/${original.lib.name}.jar,\
-	META-INF/LPS-35513.patch=patches/LPS-35513.patch
+	META-INF/LPS-35513.patch=patches/LPS-35513.patch,\
+	META-INF/LPS-47183.patch=patches/LPS-47183.patch
 Private-Package: com.liferay.portal.servlet.jsp.compiler.compiler.internal

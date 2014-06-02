@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trackback;
+package com.liferay.portal.comment;
 
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -44,7 +46,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest({MBMessageLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
-public class TrackbackCommentsImplTest extends PowerMockito {
+public class CommentManagerImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -55,16 +57,16 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void testAddTrackbackComment() throws Exception {
-		long messageId = 99999L;
+	public void testAddComment() throws Exception {
+		long mbMessageId = RandomTestUtil.randomLong();
 
 		when(
 			_mbMessage.getMessageId()
 		).thenReturn(
-			messageId
+			mbMessageId
 		);
 
-		long parentMessageId = 37;
+		long parentMessageId = RandomTestUtil.randomLong();
 
 		when(
 			_mbThread.getRootMessageId()
@@ -72,7 +74,7 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 			parentMessageId
 		);
 
-		long threadId = 7;
+		long threadId = RandomTestUtil.randomLong();
 
 		when(
 			_mbThread.getThreadId()
@@ -80,14 +82,14 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 			threadId
 		);
 
-		long userId = 42;
-		long groupId = 16;
+		long userId = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
 		String className = BlogsEntry.class.getName();
-		long classPK = 142857;
+		long classPK = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
-			messageId,
-			_trackbackComments.addTrackbackComment(
+			mbMessageId,
+			_commentManager.addComment(
 				userId, groupId, className, classPK, "__blogName__",
 				"__title__", "__body__", _serviceContextFunction));
 
@@ -106,6 +108,19 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 			Matchers.eq(threadId), Matchers.eq(parentMessageId),
 			Matchers.eq("__title__"), Matchers.eq("__body__"),
 			Matchers.same(_serviceContext)
+		);
+	}
+
+	@Test
+	public void testDeleteComment() throws Exception {
+		long mbMessageId = RandomTestUtil.randomLong();
+
+		_commentManager.deleteComment(mbMessageId);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).deleteDiscussionMessage(
+			mbMessageId
 		);
 	}
 
@@ -154,6 +169,8 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 		);
 	}
 
+	private CommentManager _commentManager = new CommentManagerImpl();
+
 	@Mock
 	private MBMessage _mbMessage;
 
@@ -170,7 +187,5 @@ public class TrackbackCommentsImplTest extends PowerMockito {
 
 	@Mock
 	private Function<String, ServiceContext> _serviceContextFunction;
-
-	private TrackbackComments _trackbackComments = new TrackbackCommentsImpl();
 
 }
