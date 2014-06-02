@@ -61,6 +61,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidationUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FolderIdComparator;
 
 import java.io.Serializable;
@@ -1194,7 +1195,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		validateFolderName(name);
 
-		DLStoreUtil.validateDirectoryName(name);
+		DLValidationUtil.validateDirectoryName(name);
 
 		try {
 			dlFileEntryLocalService.getFileEntry(groupId, parentFolderId, name);
