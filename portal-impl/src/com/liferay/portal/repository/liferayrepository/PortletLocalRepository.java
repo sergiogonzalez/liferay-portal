@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -32,11 +31,11 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
 /**
- * @author Alexander Chow
+ * @author Adolfo Pérez
  */
-public class LiferayLocalRepository extends InternalLocalRepository {
+public class PortletLocalRepository extends InternalLocalRepository {
 
-	public LiferayLocalRepository(
+	public PortletLocalRepository(
 		RepositoryLocalService repositoryLocalService,
 		RepositoryService repositoryService,
 		DLAppHelperLocalService dlAppHelperLocalService,
@@ -48,19 +47,14 @@ public class LiferayLocalRepository extends InternalLocalRepository {
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService,
 		ResourceLocalService resourceLocalService, long groupId,
-		long repositoryId, long dlFolderId) {
+		long repositoryId, long folderId) {
 
 		super(
 			repositoryLocalService, repositoryService, dlAppHelperLocalService,
 			dlFileEntryLocalService, dlFileEntryService,
 			dlFileEntryTypeLocalService, dlFileVersionLocalService,
 			dlFileVersionService, dlFolderLocalService, dlFolderService,
-			resourceLocalService, groupId, repositoryId, dlFolderId);
-	}
-
-	public void addRepository(
-		long groupId, String name, String description, String portletKey,
-		UnicodeProperties typeSettingsProperties) {
+			resourceLocalService, groupId, repositoryId, folderId);
 	}
 
 	@Override
@@ -69,16 +63,6 @@ public class LiferayLocalRepository extends InternalLocalRepository {
 			long[] assetCategoryIds, String[] assetTagNames,
 			long[] assetLinkEntryIds)
 		throws PortalException, SystemException {
-
-		dlAppHelperLocalService.updateAsset(
-			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
-	}
-
-	public UnicodeProperties updateRepository(
-		UnicodeProperties typeSettingsProperties) {
-
-		return typeSettingsProperties;
 	}
 
 }
