@@ -268,8 +268,9 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			String line = lines[i];
 
 			line = StringUtil.replace(
-				line, StringPool.THREE_SPACES, "&nbsp; &nbsp;");
-			line = StringUtil.replace(line, StringPool.DOUBLE_SPACE, "&nbsp; ");
+				line, StringPool.THREE_SPACES, "&nbsp; &nbsp; &nbsp;");
+			line = StringUtil.replace(
+				line, StringPool.DOUBLE_SPACE, "&nbsp; &nbsp;");
 
 			if (Validator.isNull(line)) {
 				line = "<br />";
