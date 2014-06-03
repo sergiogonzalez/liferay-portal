@@ -17,23 +17,13 @@ package com.liferay.portal.repository.liferayrepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
-import com.liferay.portal.model.Repository;
-import com.liferay.portal.repository.BaseRepositoryFactory;
-import com.liferay.portal.service.RepositoryLocalService;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
+import com.liferay.portal.repository.BaseLocalRepositoryFactory;
 
 /**
  * @author Adolfo Pérez
  */
 public class PortletLocalRepositoryFactoryImpl
-	extends BaseRepositoryFactory<LocalRepository>
-	implements LocalRepositoryFactory {
+	extends BaseLocalRepositoryFactory {
 
 	@Override
 	protected LocalRepository createExternalRepository(
@@ -64,53 +54,6 @@ public class PortletLocalRepositoryFactoryImpl
 			getDlFileVersionLocalService(), getDlFileVersionService(),
 			getDlFolderLocalService(), getDlFolderService(),
 			getResourceLocalService(), groupId, repositoryId, dlFolderId);
-	}
-
-	@Override
-	protected long getFileEntryRepositoryId(long fileEntryId)
-		throws PortalException, SystemException {
-
-		DLFileEntryLocalService dlFileEntryLocalService =
-			getDlFileEntryLocalService();
-
-		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
-			fileEntryId);
-
-		return dlFileEntry.getRepositoryId();
-	}
-
-	@Override
-	protected long getFileVersionRepositoryId(long fileVersionId)
-		throws PortalException, SystemException {
-
-		DLFileVersionLocalService dlFileVersionLocalService =
-			getDlFileVersionLocalService();
-
-		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
-			fileVersionId);
-
-		return dlFileVersion.getRepositoryId();
-	}
-
-	@Override
-	protected long getFolderRepositoryId(long folderId)
-		throws PortalException, SystemException {
-
-		DLFolderLocalService dlFolderLocalService = getDlFolderLocalService();
-
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
-		return dlFolder.getRepositoryId();
-	}
-
-	@Override
-	protected Repository getRepository(long repositoryId)
-		throws SystemException {
-
-		RepositoryLocalService repositoryLocalService =
-			getRepositoryLocalService();
-
-		return repositoryLocalService.fetchRepository(repositoryId);
 	}
 
 }
