@@ -74,25 +74,21 @@ import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
+import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.StartTag;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
-
-import net.htmlparser.jericho.Source;
-import net.htmlparser.jericho.StartTag;
 
 /**
  * Provides the local service for accessing, adding, checking, deleting,
@@ -1129,7 +1125,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		startWorkflowInstance(userId, entry, serviceContext);
 
-		return entry;
+		return blogsEntryPersistence.fetchByPrimaryKey(entryId);
 	}
 
 	@Override
