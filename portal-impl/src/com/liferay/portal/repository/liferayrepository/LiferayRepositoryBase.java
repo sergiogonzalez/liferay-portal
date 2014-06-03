@@ -36,9 +36,9 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -138,21 +138,7 @@ public abstract class LiferayRepositoryBase {
 
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
-		for (DDMStructure ddmStructure : ddmStructures) {
-			String namespace = String.valueOf(ddmStructure.getStructureId());
-
-			Fields fields = (Fields)serviceContext.getAttribute(
-				Fields.class.getName() + ddmStructure.getStructureId());
-
-			if (fields == null) {
-				fields = DDMUtil.getFields(
-					ddmStructure.getStructureId(), namespace, serviceContext);
-			}
-
-			fieldsMap.put(ddmStructure.getStructureKey(), fields);
-		}
-
-		return fieldsMap;
+		return DLAppUtil.getFieldsMap(ddmStructures, serviceContext);
 	}
 
 	protected long getGroupId() {

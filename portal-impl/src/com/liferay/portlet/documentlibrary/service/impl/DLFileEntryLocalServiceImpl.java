@@ -601,7 +601,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
-			copyFileEntryMetadata(
+			updateOrCopyFileEntryMetadata(
 				dlFileEntry.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
 				fileEntryId, dlFileVersionId, dlFileVersion.getFileVersionId(),
 				serviceContext);
@@ -640,21 +640,8 @@ public class DLFileEntryLocalServiceImpl
 
 		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
 
-		List<DDMStructure> ddmStructures = null;
-
-		if (fileEntryTypeId > 0) {
-			DLFileEntryType dlFileEntryType =
-				dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
-
-			ddmStructures = dlFileEntryType.getDDMStructures();
-		}
-		else {
-			long classNameId = classNameLocalService.getClassNameId(
-				DLFileEntryMetadata.class);
-
-			ddmStructures = ddmStructureLocalService.getClassStructures(
-				companyId, classNameId);
-		}
+		List<DDMStructure> ddmStructures = getDDMStructures(
+			companyId, fileEntryTypeId);
 
 		copyFileEntryMetadata(
 			companyId, fileEntryTypeId, fileEntryId, fromFileVersionId,
@@ -2002,6 +1989,29 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	protected List<DDMStructure> getDDMStructures(
+			long companyId, long fileEntryTypeId)
+		throws PortalException, SystemException {
+
+		List<DDMStructure> ddmStructures = null;
+
+		if (fileEntryTypeId > 0) {
+			DLFileEntryType dlFileEntryType =
+				dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
+
+			ddmStructures = dlFileEntryType.getDDMStructures();
+		}
+		else {
+			long classNameId = classNameLocalService.getClassNameId(
+				DLFileEntryMetadata.class);
+
+			ddmStructures = ddmStructureLocalService.getClassStructures(
+				companyId, classNameId);
+		}
+
+		return ddmStructures;
+	}
+
 	protected String getNextVersion(
 			DLFileEntry dlFileEntry, boolean majorVersion, int workflowAction)
 		throws PortalException, SystemException {
@@ -2498,6 +2508,30 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileVersion;
+	}
+
+	protected void updateOrCopyFileEntryMetadata(
+			long companyId, long fileEntryTypeId, long fileEntryId,
+			long fromFileVersionId, long toFileVersionId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
+
+		List<DDMStructure> ddmStructures = getDDMStructures(
+			companyId, fileEntryTypeId);
+
+		fieldsMap = DLAppUtil.getFieldsMap(ddmStructures, serviceContext);
+
+		if (fieldsMap.isEmpty()) {
+			copyFileEntryMetadata(
+				companyId, fileEntryTypeId, fileEntryId, fromFileVersionId,
+				toFileVersionId, serviceContext, fieldsMap, ddmStructures);
+		}
+
+		dlFileEntryMetadataLocalService.updateFileEntryMetadata(
+			companyId, ddmStructures, fileEntryTypeId, fileEntryId,
+			toFileVersionId, fieldsMap, serviceContext);
 	}
 
 	protected void validateFile(
