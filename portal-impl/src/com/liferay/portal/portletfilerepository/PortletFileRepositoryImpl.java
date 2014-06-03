@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -43,7 +42,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -59,14 +57,12 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -328,7 +324,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException {
 
-		return toFileEntries(
+		return RepositoryModelUtil.toFileEntries(
 			DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId));
 	}
 
@@ -348,7 +344,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return toFileEntries(
+		return RepositoryModelUtil.toFileEntries(
 			DLFileEntryLocalServiceUtil.getFileEntries(
 				groupId, folderId, status, start, end, obc));
 	}
@@ -580,27 +576,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		throws PortalException, SystemException {
 
 		return PortletLocalRepositoryFactoryUtil.create(repositoryId);
-	}
-
-	/**
-	 * @see com.liferay.portlet.documentlibrary.util.RepositoryModelUtil#toFileEntries
-	 */
-	protected List<FileEntry> toFileEntries(List<DLFileEntry> dlFileEntries) {
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>(
-			dlFileEntries.size());
-
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-
-			fileEntries.add(fileEntry);
-		}
-
-		if (ListUtil.isUnmodifiableList(dlFileEntries)) {
-			return Collections.unmodifiableList(fileEntries);
-		}
-		else {
-			return fileEntries;
-		}
 	}
 
 	private LocalRepository getFileEntryPortletLocalRepository(long fileEntryId)
