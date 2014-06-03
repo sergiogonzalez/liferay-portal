@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SearchResultContributor;
+import com.liferay.portal.kernel.search.SearchResultSummaryFactory;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -62,6 +64,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.search.DLFileEntrySearchResultContributor;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
@@ -149,6 +152,22 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public SearchResultContributor getSearchResultContributor(
+			long entryClassPK, Locale locale, PortletURL portletURL,
+			SearchResultSummaryFactory searchResultSummaryFactory)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(entryClassPK);
+
+		if (fileEntry == null) {
+			return null;
+		}
+
+		return new DLFileEntrySearchResultContributor(
+			fileEntry, locale, portletURL, searchResultSummaryFactory);
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String entryClassName,
 			long entryClassPK, String actionId)
@@ -156,6 +175,11 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		return DLFileEntryPermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
+	}
+
+	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
+		return true;
 	}
 
 	@Override

@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchResultContributor;
+import com.liferay.portal.kernel.search.SearchResultSummaryFactory;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -50,6 +52,7 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.search.MBMessageSearchResultContributor;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -117,6 +120,21 @@ public class MBMessageIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public SearchResultContributor getSearchResultContributor(
+			long entryClassPK, Locale locale, PortletURL portletURL,
+			SearchResultSummaryFactory searchResultSummaryFactory)
+		throws PortalException, SystemException {
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+
+		if (message == null) {
+			return null;
+		}
+
+		return new MBMessageSearchResultContributor(message);
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String entryClassName,
 			long entryClassPK, String actionId)
@@ -135,6 +153,11 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		return MBMessagePermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
+	}
+
+	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
+		return true;
 	}
 
 	@Override

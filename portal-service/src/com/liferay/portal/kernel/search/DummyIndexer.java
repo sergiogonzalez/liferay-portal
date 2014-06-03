@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -84,6 +86,15 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
+	public SearchResultContributor getSearchResultContributor(
+			long entryClassPK, Locale locale, PortletURL portletURL,
+			SearchResultSummaryFactory searchResultSummaryFactory)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
+	@Override
 	public String getSortField(String orderByCol) {
 		return StringPool.BLANK;
 	}
@@ -124,6 +135,11 @@ public class DummyIndexer implements Indexer {
 
 	@Override
 	public boolean isFilterSearch() {
+		return false;
+	}
+
+	@Override
+	public boolean isKeyInDocumentRequiredToUseSearchResultContributor() {
 		return false;
 	}
 
