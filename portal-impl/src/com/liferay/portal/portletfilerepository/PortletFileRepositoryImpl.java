@@ -63,6 +63,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.List;
 
 /**
@@ -124,9 +125,24 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		LocalRepository portletLocalRepository = getPortletLocalRepository(
 			repository.getRepositoryId());
 
-		return portletLocalRepository.addFileEntry(
+		FileEntry fileEntry = portletLocalRepository.addFileEntry(
 			userId, folderId, fileName, mimeType, fileName, StringPool.BLANK,
 			StringPool.BLANK, file, serviceContext);
+
+		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+
+		try {
+			DLAppHelperThreadLocal.setEnabled(false);
+
+			DLAppHelperLocalServiceUtil.addFileEntry(
+				userId, fileEntry, fileEntry.getLatestFileVersion(),
+				serviceContext);
+		}
+		finally {
+			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+		}
+
+		return fileEntry;
 	}
 
 	@Override
