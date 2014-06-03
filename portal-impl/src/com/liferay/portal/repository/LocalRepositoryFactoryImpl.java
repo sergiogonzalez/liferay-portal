@@ -63,7 +63,7 @@ public class LocalRepositoryFactoryImpl
 	}
 
 	@Override
-	protected LiferayLocalRepository createLiferayRepositoryInstance(
+	protected LocalRepository createLiferayRepositoryInstance(
 		long groupId, long repositoryId, long dlFolderId) {
 
 		return new LiferayLocalRepository(
